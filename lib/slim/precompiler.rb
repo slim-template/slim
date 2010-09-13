@@ -17,6 +17,8 @@ module Slim
       last_indent = 0; tags = []
 
       @template.each_line do |line|
+        line.chomp!; line.rstrip!
+
         if line =~ HTML_REGEX
           indent = $1.to_s.length; tag = $2; attributes = $3; ruby = $4; text = $5;
 
@@ -31,17 +33,16 @@ module Slim
           last_indent = indent
           attributes.gsub!('"','\"') if attributes
 
-          @precompiled << "_buf << \"<#{tag}#{attributes || ''}\";"
 
           if AUTOCLOSED.include?(tag)
             tags << [nil, indent]
-            @precompiled << "_buf << \"/>\";"
+            @precompiled << "_buf << \"<#{tag}#{attributes || ''}/>\";"
           else
             tags << [tag, indent]
-            @precompiled << "_buf << \">\";"
+            @precompiled << "_buf << \"<#{tag}#{attributes || ''}>\";"
           end
 
-          if text
+          if text.strip!
             @precompiled << "_buf << \"#{text.strip}\";"
           end
         elsif line =~ CODE_REGEX

@@ -9,7 +9,7 @@ class TestEngine
   end
 
   def render
-    eval(@precompiled)
+    @precompiled
   end
 end
 
@@ -17,14 +17,14 @@ class TestSlimEngine < MiniTest::Unit::TestCase
 
   def test_simple_html
     string = <<-HTML
-    html 
+    html
       head
         title Simple Test Title
       body
         p Hello World, meet Slim.
     HTML
 
-    expected = "<html><head><title>Simple Test Title</title></head><body><p>Hello World, meet Slim.</p></body></html>"
+    expected = "_buf = [];_buf << \"<html>\";_buf << \"<head>\";_buf << \"<title>\";_buf << \"Simple Test Title\";_buf << \"</title>\";_buf << \"</head>\";_buf << \"<body>\";_buf << \"<p>\";_buf << \"Hello World, meet Slim.\";_buf << \"</p>\";_buf << \"</body>\";_buf << \"</html>\";_buf.join;"
 
     output = TestEngine.new(string).render
 
@@ -41,7 +41,7 @@ class TestSlimEngine < MiniTest::Unit::TestCase
         p Hello World, meet Slim.
     HTML
 
-    expected = "<html><head><title>Simple Test Title</title><meta name=\"description\" content=\"This is a Slim Test, that's all\"/></head><body><p>Hello World, meet Slim.</p></body></html>"
+    expected = "_buf = [];_buf << \"<html>\";_buf << \"<head>\";_buf << \"<title>\";_buf << \"Simple Test Title\";_buf << \"</title>\";_buf << \"<meta name=\\\"description\\\" content=\\\"This is a Slim Test, that's all\\\"/>\";_buf << \"</head>\";_buf << \"<body>\";_buf << \"<p>\";_buf << \"Hello World, meet Slim.\";_buf << \"</p>\";_buf << \"</body>\";_buf << \"</html>\";_buf.join;"
 
     output = TestEngine.new(string).render
 
@@ -58,7 +58,7 @@ class TestSlimEngine < MiniTest::Unit::TestCase
         p Hello World, meet Slim.
     HTML
 
-    expected = "<html><head><meta name=\"description\" content=\"This is a Slim Test, that's all\"/><title>Simple Test Title</title></head><body><p>Hello World, meet Slim.</p></body></html>"
+    expected = "_buf = [];_buf << \"<html>\";_buf << \"<head>\";_buf << \"<meta name=\\\"description\\\" content=\\\"This is a Slim Test, that's all\\\"/>\";_buf << \"<title>\";_buf << \"Simple Test Title\";_buf << \"</title>\";_buf << \"</head>\";_buf << \"<body>\";_buf << \"<p>\";_buf << \"Hello World, meet Slim.\";_buf << \"</p>\";_buf << \"</body>\";_buf << \"</html>\";_buf.join;"
 
     output = TestEngine.new(string).render
 
