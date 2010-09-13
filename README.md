@@ -20,14 +20,14 @@ So here's what I'm looking to achieve:
         div id="content" class="example1"
           p Nest by indentation
 
-        < yield
+        = yield
 
         - unless items.empty?
           table
             - for item in items do
               tr 
-                td < item.name
-                td < item.price
+                td = item.name
+                td = item.price
         - else
           p No items found
 
@@ -42,9 +42,6 @@ So here's what I'm looking to achieve:
 
 So some basic rules:
 
-* Standard Ruby syntax after '<'
+* Standard Ruby syntax after '-' and '='
   * using end is not required
-* A block object is always the local object.
-  ** Methods don't need to be qualified, will go against block object first 
-     then fall back
-
+* Can put content on same line or nest it.
