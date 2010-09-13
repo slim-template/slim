@@ -12,7 +12,7 @@ module Slim
     CODE_REGEX = /^(\s+)?-/
 
     def precompile
-      @precompiled = ""
+      @precompiled = "_buf = [];"
 
       last_indent = 0; tags = []
 
@@ -20,41 +20,42 @@ module Slim
         if line =~ HTML_REGEX
           indent = $1.to_s.length; tag = $2; attributes = $3; ruby = $4; text = $5;
 
-          attributes.gsub!('"','\"') if attributes
-
           unless indent > last_indent
             pop_tag_indent = indent + 1
             until indent >= pop_tag_indent do
               pop_tag, pop_tag_indent = tags.pop
-              @precompiled << "\"</#{pop_tag}>\"" if pop_tag
+              @precompiled << "_buf << \"</#{pop_tag}>\";" if pop_tag
             end
           end
 
           last_indent = indent
+          attributes.gsub!('"','\"') if attributes
 
-          @precompiled << "\"<#{tag}#{attributes || ''}\""
+          @precompiled << "_buf << \"<#{tag}#{attributes || ''}\";"
 
           if AUTOCLOSED.include?(tag)
             tags << [nil, indent]
-            @precompiled << "\"/>\""
+            @precompiled << "_buf << \"/>\";"
           else
             tags << [tag, indent]
-            @precompiled << "\">\""
+            @precompiled << "_buf << \">\";"
           end
 
           if text
-            @precompiled << "\"#{text.strip}\""
+            @precompiled << "_buf << \"#{text.strip}\";"
           end
         elsif line =~ CODE_REGEX
-          @precompiled << line
+          @precompiled << "_buf << \"#{line}\";"
         else 
-          @precompiled << "\"#{line}\""
+          @precompiled << "_buf << \"#{line}\";"
         end
       end # template iterator
 
       tags.reverse_each do |t|
-        @precompiled << "\"</#{t[0]}>\""
+        @precompiled << "_buf << \"</#{t[0]}>\";"
       end
+
+      @precompiled << "_buf.join;"
     end
   end
 end
