@@ -8,7 +8,7 @@ class TestEngine
     precompile
   end
 
-  def render
+  def precompiled
     @precompiled
   end
 end
@@ -24,9 +24,9 @@ class TestSlimEngine < MiniTest::Unit::TestCase
         p Hello World, meet Slim.
     HTML
 
-    expected = "_buf = [];_buf << \"<html>\";_buf << \"<head>\";_buf << \"<title>\";_buf << \"Simple Test Title\";_buf << \"</title>\";_buf << \"</head>\";_buf << \"<body>\";_buf << \"<p>\";_buf << \"Hello World, meet Slim.\";_buf << \"</p>\";_buf << \"</body>\";_buf << \"</html>\";_buf.join;"
+    expected = %q|_buf = [];_buf << "<html>";_buf << "<head>";_buf << "<title>";_buf << "Simple Test Title";_buf << "</title>";_buf << "</head>";_buf << "<body>";_buf << "<p>";_buf << "Hello World, meet Slim.";_buf << "</p>";_buf << "</body>";_buf << "</html>";_buf.join;|
 
-    output = TestEngine.new(string).render
+    output = TestEngine.new(string).precompiled
 
     assert_equal expected, output
   end
@@ -41,9 +41,9 @@ class TestSlimEngine < MiniTest::Unit::TestCase
         p Hello World, meet Slim.
     HTML
 
-    expected = "_buf = [];_buf << \"<html>\";_buf << \"<head>\";_buf << \"<title>\";_buf << \"Simple Test Title\";_buf << \"</title>\";_buf << \"<meta name=\\\"description\\\" content=\\\"This is a Slim Test, that's all\\\"/>\";_buf << \"</head>\";_buf << \"<body>\";_buf << \"<p>\";_buf << \"Hello World, meet Slim.\";_buf << \"</p>\";_buf << \"</body>\";_buf << \"</html>\";_buf.join;"
+    expected = %q|_buf = [];_buf << "<html>";_buf << "<head>";_buf << "<title>";_buf << "Simple Test Title";_buf << "</title>";_buf << "<meta name=\"description\" content=\"This is a Slim Test, that's all\"/>";_buf << "</head>";_buf << "<body>";_buf << "<p>";_buf << "Hello World, meet Slim.";_buf << "</p>";_buf << "</body>";_buf << "</html>";_buf.join;|
 
-    output = TestEngine.new(string).render
+    output = TestEngine.new(string).precompiled
 
     assert_equal expected, output
   end
@@ -58,9 +58,9 @@ class TestSlimEngine < MiniTest::Unit::TestCase
         p Hello World, meet Slim.
     HTML
 
-    expected = "_buf = [];_buf << \"<html>\";_buf << \"<head>\";_buf << \"<meta name=\\\"description\\\" content=\\\"This is a Slim Test, that's all\\\"/>\";_buf << \"<title>\";_buf << \"Simple Test Title\";_buf << \"</title>\";_buf << \"</head>\";_buf << \"<body>\";_buf << \"<p>\";_buf << \"Hello World, meet Slim.\";_buf << \"</p>\";_buf << \"</body>\";_buf << \"</html>\";_buf.join;"
+    expected = %q|_buf = [];_buf << "<html>";_buf << "<head>";_buf << "<meta name=\"description\" content=\"This is a Slim Test, that's all\"/>";_buf << "<title>";_buf << "Simple Test Title";_buf << "</title>";_buf << "</head>";_buf << "<body>";_buf << "<p>";_buf << "Hello World, meet Slim.";_buf << "</p>";_buf << "</body>";_buf << "</html>";_buf.join;|
 
-    output = TestEngine.new(string).render
+    output = TestEngine.new(string).precompiled
 
     assert_equal expected, output
   end
