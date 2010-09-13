@@ -14,7 +14,7 @@ module Slim
     def precompile
       @precompiled = "_buf = [];"
 
-      last_indent = 0; tags = []
+      last_indent = -1; tags = []
 
       @template.each_line do |line|
         line.chomp!; line.rstrip!
