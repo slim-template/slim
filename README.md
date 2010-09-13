@@ -1,10 +1,8 @@
 ## Slim 
 
-Slim is the result of cross breeding Haml and Ruhl resulting in a indention based, minimal markup, code restricting templating language.
+Slim is a template language whose goal is reduce the syntax to the essential parts without becoming cryptic.
 
 ## Why?
-
-I think having your template language accept arbitrary code invites poor design.  I developed Ruhl as a test to see if I could make a typically static HTML document dynamic via a single data-ruhl attribute and minimal keywords.  Well, turns out, I could.  The only problem is that people don't like HTML.  It's not sexy and you have to close your own tags!  
 
 I actually like the indentation and tag closing nature of Haml.  I don't like the overall result of the view, it takes work to decipher.  I'm sure, with practice, people read it like the Matrix, but it's never suited me.  So why not try to improve it for me?  There may be one or two other people with the same thoughts.
 
@@ -45,3 +43,4 @@ So some basic rules:
 * Standard Ruby syntax after '-' and '='
   * using end is not required
 * Can put content on same line or nest it.
+
