@@ -9,7 +9,10 @@ module Slim
     AUTOCLOSED = %w(meta img link br hr input area param col base)
 
     HTML_REGEX = /^(\s+)?(#{HTML.join('|')})(\s+?\w*=".+")?(\s*?=.*)?(.*)?/
-    CODE_REGEX = /^(\s+)?-/
+
+    ESCAPED_TEXT_REGEX =  /^\s*`(.*)/
+
+    CODE_REGEX = /^\s*-(.*)/
 
     def precompile
       @precompiled = "_buf = [];"
@@ -45,8 +48,10 @@ module Slim
           if text.strip!
             @precompiled << "_buf << \"#{text.strip}\";"
           end
+        elsif line =~ ESCAPED_TEXT_REGEX
+          @precompiled << "_buf << \"#{$1.strip}\";"
         elsif line =~ CODE_REGEX
-          @precompiled << "_buf << \"#{line}\";"
+          @precompiled << "#{$1.strip};"
         else 
           @precompiled << "_buf << \"#{line}\";"
         end

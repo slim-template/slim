@@ -122,5 +122,34 @@ HTML
   end
 
 
+  def test_text_that_starts_with_tag_name
+    string = <<HTML
+html
+  head
+    meta name="description" content="This is a Slim Test, that's all"
+    title Simple Test Title
+  body
+    img width="100" height="50" src="/images/test.jpg"
+    p 
+      `another one bites the dust
+    p
+      `i am iron man
+HTML
 
+    expected = %q|_buf = [];_buf << "<html>";_buf << "<head>";_buf << "<meta name=\"description\" content=\"This is a Slim Test, that's all\"/>";_buf << "<title>";_buf << "Simple Test Title";_buf << "</title>";_buf << "</head>";_buf << "<body>";_buf << "<img width=\"100\" height=\"50\" src=\"/images/test.jpg\"/>";_buf << "<p>";_buf << "another one bites the dust";_buf << "</p>";_buf << "<p>";_buf << "i am iron man";_buf << "</p>";_buf << "</body>";_buf << "</html>";_buf.join;|
+
+    output = TestEngine.new(string).precompiled
+
+    assert_equal expected, output
+  end
+
+
+
+  # Use this to do a line by line check. Much easier to see where the problem is.
+  def iterate_it(expected, output)
+    es = expected.split(';')
+    output.split(';').each_with_index do |text, index|
+      assert_equal(text, es[index])
+    end
+  end
 end
