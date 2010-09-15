@@ -31,6 +31,23 @@ HTML
     assert_equal expected, output
   end
 
+  def test_simple_html_with_empty_lines
+    string = <<HTML
+html
+  head
+    title Simple Test Title
+  body
+
+    p Hello World, meet Slim.
+HTML
+
+    expected = %q|_buf = [];_buf << "<html>";_buf << "<head>";_buf << "<title>";_buf << "Simple Test Title";_buf << "</title>";_buf << "</head>";_buf << "<body>";_buf << "<p>";_buf << "Hello World, meet Slim.";_buf << "</p>";_buf << "</body>";_buf << "</html>";_buf.join;|
+
+    output = TestEngine.new(string).compiled
+
+    assert_equal expected, output
+  end
+
   def test_simple_html_with_wraparound_text
     string = <<HTML
 html
@@ -195,19 +212,11 @@ html
         ` i am iron man
 HTML
 
-expected = %q|_buf = [];_buf << "<html>";_buf << "<head>";_buf << "<meta name=\"description\" content=\"This is a Slim Test, that's all\"/>";_buf << "<title>";_buf << "Simple Test Title";_buf << "</title>";_buf << "</head>";_buf << "<body>";if something;_buf << "<p>";_buf << "another one bites the dust";_buf << "</p>";else;_buf << "<p>";_buf << "i am iron man";_buf << "</p>";end;_buf << "</body>";_buf << "</html>";_buf.join;|
+    expected = %q|_buf = [];_buf << "<html>";_buf << "<head>";_buf << "<meta name=\"description\" content=\"This is a Slim Test, that's all\"/>";_buf << "<title>";_buf << "Simple Test Title";_buf << "</title>";_buf << "</head>";_buf << "<body>";if something;_buf << "<p>";_buf << "another one bites the dust";_buf << "</p>";else;_buf << "<p>";_buf << "i am iron man";_buf << "</p>";end;_buf << "</body>";_buf << "</html>";_buf.join;|
 
     output = TestEngine.new(string).compiled
 
     assert_equal expected, output
-  end
-
-  # Use this to do a line by line check. Much easier to see where the problem is.
-  def iterate_it(expected, output)
-    es = expected.split(';')
-    output.split(';').each_with_index do |text, index|
-      assert_equal(text, es[index])
-    end
   end
 
   def test_simple_output_code
@@ -244,5 +253,12 @@ HTML
     assert_equal expected, output
   end
 
+  # Use this to do a line by line check. Much easier to see where the problem is.
+  def iterate_it(expected, output)
+    es = expected.split(';')
+    output.split(';').each_with_index do |text, index|
+      assert_equal(text, es[index])
+    end
+  end
 
 end

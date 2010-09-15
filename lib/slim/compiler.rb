@@ -14,6 +14,8 @@ module Slim
       @template.each_line do |line|
         line.chomp!; line.rstrip!
 
+        next if line.length == 0
+
         line =~ REGEX
 
         indent        =   $1.to_s.length
