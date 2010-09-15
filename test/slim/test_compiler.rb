@@ -75,7 +75,7 @@ html
     p Hello World, meet Slim.
 HTML
 
-    expected = %q|_buf = [];_buf << "<! doctype html5 >";_buf << "<html>";_buf << "<head>";_buf << "<title>";_buf << "Simple Test Title";_buf << "</title>";_buf << "</head>";_buf << "<body>";_buf << "<p>";_buf << "Hello World, meet Slim.";_buf << "</p>";_buf << "</body>";_buf << "</html>";_buf.join;|
+    expected = %q|_buf = [];_buf << "<!doctype html5>";_buf << "<html>";_buf << "<head>";_buf << "<title>";_buf << "Simple Test Title";_buf << "</title>";_buf << "</head>";_buf << "<body>";_buf << "<p>";_buf << "Hello World, meet Slim.";_buf << "</p>";_buf << "</body>";_buf << "</html>";_buf.join;|
 
     output = TestEngine.new(string).compiled
 

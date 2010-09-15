@@ -23,9 +23,10 @@ Gem::Specification.new do |s|
      "lib/slim/compiler.rb",
      "lib/slim/engine.rb",
      "lib/slim/rails.rb",
+     "slim.gemspec",
      "test/helper.rb",
+     "test/slim/test_compiler.rb",
      "test/slim/test_engine.rb",
-     "test/slim/test_precompiler.rb",
      "test/test_slim.rb"
   ]
   s.homepage = %q{http://github.com/stonean/slim}
@@ -37,8 +38,8 @@ Gem::Specification.new do |s|
   s.test_files = [
     "test/helper.rb",
      "test/test_slim.rb",
-     "test/slim/test_precompiler.rb",
-     "test/slim/test_engine.rb"
+     "test/slim/test_engine.rb",
+     "test/slim/test_compiler.rb"
   ]
 
   if s.respond_to? :specification_version then
