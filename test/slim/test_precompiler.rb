@@ -16,13 +16,13 @@ end
 class TestSlimEngine < MiniTest::Unit::TestCase
 
   def test_simple_html
-    string = <<-HTML
-    html
-      head
-        title Simple Test Title
-      body
-        p Hello World, meet Slim.
-    HTML
+    string = <<HTML
+html
+  head
+    title Simple Test Title
+  body
+    p Hello World, meet Slim.
+HTML
 
     expected = %q|_buf = [];_buf << "<html>";_buf << "<head>";_buf << "<title>";_buf << "Simple Test Title";_buf << "</title>";_buf << "</head>";_buf << "<body>";_buf << "<p>";_buf << "Hello World, meet Slim.";_buf << "</p>";_buf << "</body>";_buf << "</html>";_buf.join;|
 
@@ -73,10 +73,10 @@ html
     title Simple Test Title
   body
     p 
-      Hello World, meet Slim.
+      ` Hello World, meet Slim.
 HTML
 
-    expected = %q|_buf = [];_buf << "<html>";_buf << "<head>";_buf << "<meta name=\"description\" content=\"This is a Slim Test, that's all\"/>";_buf << "<title>";_buf << "Simple Test Title";_buf << "</title>";_buf << "</head>";_buf << "<body>";_buf << "<p>";_buf << "      Hello World, meet Slim.";_buf << "</p>";_buf << "</body>";_buf << "</html>";_buf.join;|
+    expected = %q|_buf = [];_buf << "<html>";_buf << "<head>";_buf << "<meta name=\"description\" content=\"This is a Slim Test, that's all\"/>";_buf << "<title>";_buf << "Simple Test Title";_buf << "</title>";_buf << "</head>";_buf << "<body>";_buf << "<p>";_buf << "Hello World, meet Slim.";_buf << "</p>";_buf << "</body>";_buf << "</html>";_buf.join;|
 
     output = TestEngine.new(string).precompiled
 
@@ -92,15 +92,16 @@ html
   body
     hr
     p 
-      Hello World, meet Slim.
+      ` Hello World, meet Slim.
 HTML
 
-    expected = %q|_buf = [];_buf << "<html>";_buf << "<head>";_buf << "<meta name=\"description\" content=\"This is a Slim Test, that's all\"/>";_buf << "<title>";_buf << "Simple Test Title";_buf << "</title>";_buf << "</head>";_buf << "<body>";_buf << "<hr/>";_buf << "<p>";_buf << "      Hello World, meet Slim.";_buf << "</p>";_buf << "</body>";_buf << "</html>";_buf.join;|
+    expected = %q|_buf = [];_buf << "<html>";_buf << "<head>";_buf << "<meta name=\"description\" content=\"This is a Slim Test, that's all\"/>";_buf << "<title>";_buf << "Simple Test Title";_buf << "</title>";_buf << "</head>";_buf << "<body>";_buf << "<hr/>";_buf << "<p>";_buf << "Hello World, meet Slim.";_buf << "</p>";_buf << "</body>";_buf << "</html>";_buf.join;|
 
     output = TestEngine.new(string).precompiled
 
     assert_equal expected, output
   end
+
 
   def test_closing_tag_without_content
     string = <<HTML
@@ -111,10 +112,10 @@ html
   body
     img width="100" height="50" src="/images/test.jpg"
     p 
-      Hello World, meet Slim.
+      ` Hello World, meet Slim.
 HTML
 
-    expected = %q|_buf = [];_buf << "<html>";_buf << "<head>";_buf << "<meta name=\"description\" content=\"This is a Slim Test, that's all\"/>";_buf << "<title>";_buf << "Simple Test Title";_buf << "</title>";_buf << "</head>";_buf << "<body>";_buf << "<img width=\"100\" height=\"50\" src=\"/images/test.jpg\"/>";_buf << "<p>";_buf << "      Hello World, meet Slim.";_buf << "</p>";_buf << "</body>";_buf << "</html>";_buf.join;|
+    expected = %q|_buf = [];_buf << "<html>";_buf << "<head>";_buf << "<meta name=\"description\" content=\"This is a Slim Test, that's all\"/>";_buf << "<title>";_buf << "Simple Test Title";_buf << "</title>";_buf << "</head>";_buf << "<body>";_buf << "<img width=\"100\" height=\"50\" src=\"/images/test.jpg\"/>";_buf << "<p>";_buf << "Hello World, meet Slim.";_buf << "</p>";_buf << "</body>";_buf << "</html>";_buf.join;|
 
     output = TestEngine.new(string).precompiled
 
@@ -131,16 +132,15 @@ html
   body
     img width="100" height="50" src="/images/test.jpg"
     p 
-      `another one bites the dust
+      ` another one bites the dust
     p
-      `i am iron man
+      ` i am iron man
 HTML
 
     expected = %q|_buf = [];_buf << "<html>";_buf << "<head>";_buf << "<meta name=\"description\" content=\"This is a Slim Test, that's all\"/>";_buf << "<title>";_buf << "Simple Test Title";_buf << "</title>";_buf << "</head>";_buf << "<body>";_buf << "<img width=\"100\" height=\"50\" src=\"/images/test.jpg\"/>";_buf << "<p>";_buf << "another one bites the dust";_buf << "</p>";_buf << "<p>";_buf << "i am iron man";_buf << "</p>";_buf << "</body>";_buf << "</html>";_buf.join;|
 
     output = TestEngine.new(string).precompiled
 
-    iterate_it(expected, output)
     assert_equal expected, output
   end
 
@@ -154,10 +154,10 @@ html
   body
     - if something
       p 
-        `another one bites the dust
+        ` another one bites the dust
     - else
       p
-        `i am iron man
+        ` i am iron man
     - end
 HTML
 
@@ -165,10 +165,8 @@ expected = %q|_buf = [];_buf << "<html>";_buf << "<head>";_buf << "<meta name=\"
 
     output = TestEngine.new(string).precompiled
 
-    #iterate_it(expected, output)
     assert_equal expected, output
   end
-
 
   # Use this to do a line by line check. Much easier to see where the problem is.
   def iterate_it(expected, output)
