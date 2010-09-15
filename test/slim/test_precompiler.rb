@@ -31,6 +31,24 @@ HTML
     assert_equal expected, output
   end
 
+  def test_simple_html_with_doctype
+    string = <<HTML
+! doctype html5
+html
+  head
+    title Simple Test Title
+  body
+    p Hello World, meet Slim.
+HTML
+
+    expected = %q|_buf = [];_buf << "<! doctype html5 >";_buf << "<html>";_buf << "<head>";_buf << "<title>";_buf << "Simple Test Title";_buf << "</title>";_buf << "</head>";_buf << "<body>";_buf << "<p>";_buf << "Hello World, meet Slim.";_buf << "</p>";_buf << "</body>";_buf << "</html>";_buf.join;|
+
+    output = TestEngine.new(string).precompiled
+
+    assert_equal expected, output
+  end
+
+
   def test_simple_html_with_params
     string = <<HTML
 html 

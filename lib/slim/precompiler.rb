@@ -81,7 +81,7 @@ module Slim
         when :ouput_code
           @precompiled << "_buf << #{string};"
         when :declaration
-          @precompiled << "_buf << \"<! #{string}>\""
+          @precompiled << "_buf << \"<! #{string} >\";"
         else
           raise NotImplementedError.new("Don't know how to parse line: #{line}")
         end
