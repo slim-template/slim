@@ -9,9 +9,8 @@ module Slim
       precompile
     end
 
-
     def render(scope = Object.new, locals = {})
-      eval(@precompiled)
+      scope.instance_eval(@precompiled)
     end
   end
 end
