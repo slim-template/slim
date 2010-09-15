@@ -8,8 +8,7 @@ module Slim
 
     AUTOCLOSED = %w(meta img link br hr input area param col base)
 
-    #REGEX = /^(\s*)(`.*)?(-.*)?(#{HTML.join('|')})(\s+?\w*=".+")?(\s*?=.*)?(.*)?/
-    REGEX = /^(\s*)(`?-?=?\w*)(\s*\w*=".+")?(.*)/
+    REGEX = /^(\s*)(!?`?-?=?\w*)(\s*\w*=".+")?(.*)/
 
     def precompile
       @precompiled = "_buf = [];"
