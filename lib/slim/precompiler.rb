@@ -8,7 +8,9 @@ module Slim
 
     AUTOCLOSED = %w(meta img link br hr input area param col base)
 
-    HTML_REGEX = /^(\s+)?(#{HTML.join('|')})(\s+?\w*=".+")?(\s*?=.*)?(.*)?/
+    INDENT_REGEX = /^(\s*).*/
+
+    HTML_REGEX = /^\s*(#{HTML.join('|')})(\s+?\w*=".+")?(\s*?=.*)?(.*)?/
 
     ESCAPED_TEXT_REGEX =  /^\s*`(.*)/
 
@@ -22,26 +24,34 @@ module Slim
       @template.each_line do |line|
         line.chomp!; line.rstrip!
 
-        if line =~ HTML_REGEX
-          indent = $1.to_s.length; tag = $2; attributes = $3; ruby = $4; text = $5;
+        line =~ INDENT_REGEX
+        indent = $1.to_s.length
 
-          unless indent > last_indent
-            pop_tag_indent = indent + 1
-            until indent >= pop_tag_indent do
-              pop_tag, pop_tag_indent = tags.pop
-              @precompiled << "_buf << \"</#{pop_tag}>\";" if pop_tag
+        unless indent > last_indent
+          begin
+            break if tags.empty?
+            pop_tag, pop_tag_indent = tags.pop
+            if pop_tag_indent >= indent
+              continue_closing = true
+              @precompiled << pop_tag
+            else
+              tags << [pop_tag, pop_tag_indent]
+              continue_closing = false
             end
-          end
+          end while continue_closing == true
+        end
 
-          last_indent = indent
+        last_indent = indent
+
+        if line =~ HTML_REGEX
+          tag = $1; attributes = $2; ruby = $3; text = $4;
+
           attributes.gsub!('"','\"') if attributes
 
-
           if AUTOCLOSED.include?(tag)
-            tags << [nil, indent]
             @precompiled << "_buf << \"<#{tag}#{attributes || ''}/>\";"
           else
-            tags << [tag, indent]
+            tags << ["_buf << \"</#{tag}>\";", indent]
             @precompiled << "_buf << \"<#{tag}#{attributes || ''}>\";"
           end
 
@@ -58,7 +68,7 @@ module Slim
       end # template iterator
 
       tags.reverse_each do |t|
-        @precompiled << "_buf << \"</#{t[0]}>\";"
+        @precompiled << t[0].to_s
       end
 
       @precompiled << "_buf.join;"
