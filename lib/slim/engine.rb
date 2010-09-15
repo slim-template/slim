@@ -2,15 +2,17 @@ module Slim
   class Engine
     include Precompiler
 
+    attr_reader :compiled
+
     # @param template The .slim template to convert
     # @return [Slim::Engine] instance of engine
     def initialize(template)
       @template = template
-      precompile
+      compile
     end
 
     def render(scope = Object.new, locals = {})
-      scope.instance_eval(@precompiled)
+      scope.instance_eval(compiled)
     end
   end
 end

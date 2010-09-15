@@ -6,8 +6,8 @@ module Slim
 
     REGEX = /^(\s*)(!?`?-?=?\w*)(\s*\w*=".+")?(.*)/
 
-    def precompile
-      @precompiled = "_buf = [];"
+    def compile
+      @compiled = "_buf = [];"
 
       last_indent = -1; enders = []
 
@@ -44,7 +44,7 @@ module Slim
 
             if ender_indent >= indent
               unless ender == 'end;' && line_type == :control_code
-                @precompiled << ender
+                @compiled << ender
               end
             else
               enders << [ender, ender_indent] 
@@ -58,36 +58,36 @@ module Slim
         case line_type
         when :markup
           if AUTOCLOSED.include?(marker)
-            @precompiled << "_buf << \"<#{marker}#{tag_attrs || ''}/>\";"
+            @compiled << "_buf << \"<#{marker}#{tag_attrs || ''}/>\";"
           else
             enders << ["_buf << \"</#{marker}>\";", indent]
-            @precompiled << "_buf << \"<#{marker}#{tag_attrs || ''}>\";"
+            @compiled << "_buf << \"<#{marker}#{tag_attrs || ''}>\";"
           end
 
           if string
-            @precompiled << "_buf << \"#{string}\";"
+            @compiled << "_buf << \"#{string}\";"
           end
         when :text
-          @precompiled << "_buf << \"#{string}\";"
+          @compiled << "_buf << \"#{string}\";"
         when :control_code
           unless enders.detect{|e| e[0] == 'end;' && e[1] == indent}
             enders << ['end;', indent]
           end
-          @precompiled << "#{string};"
+          @compiled << "#{string};"
         when :output_code
-          @precompiled << "_buf << #{string};"
+          @compiled << "_buf << #{string};"
         when :declaration
-          @precompiled << "_buf << \"<! #{string} >\";"
+          @compiled << "_buf << \"<! #{string} >\";"
         else
           raise NotImplementedError.new("Don't know how to parse line: #{line}")
         end
       end # template iterator
 
       enders.reverse_each do |t|
-        @precompiled << t[0].to_s
+        @compiled << t[0].to_s
       end
 
-      @precompiled << "_buf.join;"
+      @compiled << "_buf.join;"
     end
   end
 end
