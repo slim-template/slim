@@ -6,7 +6,7 @@ require File.join(File.dirname(__FILE__), "lib", "slim")
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
-    gem.name = "Slim"
+    gem.name = "slim"
     gem.version = Slim.version
     gem.rubyforge_project = "slim"
     gem.summary = "Slim is a template language."
