@@ -192,4 +192,40 @@ expected = %q|_buf = [];_buf << "<html>";_buf << "<head>";_buf << "<meta name=\"
       assert_equal(text, es[index])
     end
   end
+
+  def test_simple_output_code
+    string = <<HTML
+html
+  head
+    title Simple Test Title
+  body
+    p 
+      = hello_world
+HTML
+
+    expected = %q|_buf = [];_buf << "<html>";_buf << "<head>";_buf << "<title>";_buf << "Simple Test Title";_buf << "</title>";_buf << "</head>";_buf << "<body>";_buf << "<p>";_buf << hello_world;_buf << "</p>";_buf << "</body>";_buf << "</html>";_buf.join;|
+
+    output = TestEngine.new(string).precompiled
+
+    assert_equal expected, output
+  end
+
+  def test_simple_output_code_with_params
+    string = <<HTML
+html
+  head
+    title Simple Test Title
+  body
+    p 
+      = hello_world(params[:key])
+HTML
+
+    expected = %q|_buf = [];_buf << "<html>";_buf << "<head>";_buf << "<title>";_buf << "Simple Test Title";_buf << "</title>";_buf << "</head>";_buf << "<body>";_buf << "<p>";_buf << hello_world(params[:key]);_buf << "</p>";_buf << "</body>";_buf << "</html>";_buf.join;|
+
+    output = TestEngine.new(string).precompiled
+
+    assert_equal expected, output
+  end
+
+
 end

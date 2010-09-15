@@ -78,7 +78,7 @@ module Slim
             enders << ['end;', indent]
           end
           @precompiled << "#{string};"
-        when :ouput_code
+        when :output_code
           @precompiled << "_buf << #{string};"
         when :declaration
           @precompiled << "_buf << \"<! #{string} >\";"
