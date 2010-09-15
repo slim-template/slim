@@ -158,7 +158,6 @@ html
     - else
       p
         ` i am iron man
-    - end
 HTML
 
 expected = %q|_buf = [];_buf << "<html>";_buf << "<head>";_buf << "<meta name=\"description\" content=\"This is a Slim Test, that's all\"/>";_buf << "<title>";_buf << "Simple Test Title";_buf << "</title>";_buf << "</head>";_buf << "<body>";if something;_buf << "<p>";_buf << "another one bites the dust";_buf << "</p>";else;_buf << "<p>";_buf << "i am iron man";_buf << "</p>";end;_buf << "</body>";_buf << "</html>";_buf.join;|

@@ -43,12 +43,15 @@ module Slim
         unless indent > last_indent
           begin
             break if enders.empty?
+            continue_closing = true
             ender, ender_indent = enders.pop
+
             if ender_indent >= indent
-              continue_closing = true
-              @precompiled << ender
+              unless ender == 'end;' && line_type == :control_code
+                @precompiled << ender
+              end
             else
-              enders << [ender, ender_indent]
+              enders << [ender, ender_indent] 
               continue_closing = false
             end
           end while continue_closing == true
@@ -71,6 +74,9 @@ module Slim
         when :text
           @precompiled << "_buf << \"#{string}\";"
         when :control_code
+          unless enders.detect{|e| e[0] == 'end;' && e[1] == indent}
+            enders << ['end;', indent]
+          end
           @precompiled << "#{string};"
         when :ouput_code
           @precompiled << "_buf << #{string};"
