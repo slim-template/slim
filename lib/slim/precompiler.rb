@@ -2,10 +2,6 @@
 
 module Slim
   module Precompiler
-    
-    # All HTML 5 compatible tags
-    HTML = %w(abbr address area article aside audio base bdo blockquote body br button canvas caption cite code colgroup col command datalist dd del details dfn div dl dt embed em fieldset figcaption figure footer form h1 h2 h3 h4 h5 h6 header head hgroup hr html iframe img input ins keygen kbd label legend link li map mark menu meta meter nav noscript object ol optgroup option output param pre progress q rp rt ruby samp script section select small source span strong style sub summary sup table tbody td textarea tfoot thead th time title tr ul var video a b i p)
-
     AUTOCLOSED = %w(meta img link br hr input area param col base)
 
     REGEX = /^(\s*)(!?`?-?=?\w*)(\s*\w*=".+")?(.*)/
