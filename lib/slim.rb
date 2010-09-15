@@ -2,7 +2,7 @@
 
 $:.unshift File.dirname(__FILE__)
 
-require 'slim/precompiler'
+require 'slim/compiler'
 require 'slim/engine'
 
 module Slim

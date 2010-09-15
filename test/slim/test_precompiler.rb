@@ -1,7 +1,7 @@
 require 'helper'
 
 class TestEngine
-  include Slim::Precompiler
+  include Slim::Compiler
 
   def initialize(template)
     @template = template

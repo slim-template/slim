@@ -1,6 +1,6 @@
 module Slim
   class Engine
-    include Precompiler
+    include Compiler
 
     attr_reader :compiled
 

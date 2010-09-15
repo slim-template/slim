@@ -1,7 +1,7 @@
 # encoding: utf-8
 
 module Slim
-  module Precompiler
+  module Compiler
     AUTOCLOSED = %w(meta img link br hr input area param col base)
 
     REGEX = /^(\s*)(!?`?-?=?\w*)(\s*\w*=".+")?(.*)/
