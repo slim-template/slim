@@ -24,18 +24,20 @@ So here's what I'm looking to achieve:
           table
             - for item in items do
               tr 
-                td = item.name
-                td = item.price
+                td 
+                  = item.name
+                td 
+                  = item.price
         - else
           p No items found
 
         div id="footer"
-          Copyright &copy; 2010 Andrew Stone
+          ` Copyright &copy; 2010 Andrew Stone
 
         = render partial: 'tracking_code' 
 
         script
-          $(content).do_something();
+          ` $(content).do_something();
 
 
 So some basic rules:

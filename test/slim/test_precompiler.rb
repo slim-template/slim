@@ -31,6 +31,23 @@ HTML
     assert_equal expected, output
   end
 
+  def test_simple_html_with_wraparound_text
+    string = <<HTML
+html
+  head
+    title Simple Test Title
+  body
+    p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean gravida porta neque eu tincidunt. Aenean auctor blandit est sed consectetur. Quisque feugiat massa quis diam vestibulum accumsan. Morbi pharetra accumsan augue, in imperdiet sapien viverra non. Suspendisse molestie metus in sapien hendrerit dictum sit amet et leo. Donec accumsan, justo id porttitor luctus, velit erat tincidunt lorem, eu euismod enim nisl quis justo. Aliquam orci odio, ultricies sed ultrices nec, ultrices at mi. Vestibulum vel lacus eu massa mattis venenatis. In porta, quam ut dignissim varius, neque lectus laoreet felis, eget scelerisque odio lacus sed massa. Donec fringilla laoreet mi in dignissim. Curabitur porttitor ullamcorper ultrices. Quisque hendrerit odio ut ipsum blandit quis molestie diam vehicula. Suspendisse diam nibh, sollicitudin id faucibus et, pharetra sit amet massa. Mauris molestie elit id nulla euismod tempus.
+HTML
+
+    expected = %q|_buf = [];_buf << "<html>";_buf << "<head>";_buf << "<title>";_buf << "Simple Test Title";_buf << "</title>";_buf << "</head>";_buf << "<body>";_buf << "<p>";_buf << "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean gravida porta neque eu tincidunt. Aenean auctor blandit est sed consectetur. Quisque feugiat massa quis diam vestibulum accumsan. Morbi pharetra accumsan augue, in imperdiet sapien viverra non. Suspendisse molestie metus in sapien hendrerit dictum sit amet et leo. Donec accumsan, justo id porttitor luctus, velit erat tincidunt lorem, eu euismod enim nisl quis justo. Aliquam orci odio, ultricies sed ultrices nec, ultrices at mi. Vestibulum vel lacus eu massa mattis venenatis. In porta, quam ut dignissim varius, neque lectus laoreet felis, eget scelerisque odio lacus sed massa. Donec fringilla laoreet mi in dignissim. Curabitur porttitor ullamcorper ultrices. Quisque hendrerit odio ut ipsum blandit quis molestie diam vehicula. Suspendisse diam nibh, sollicitudin id faucibus et, pharetra sit amet massa. Mauris molestie elit id nulla euismod tempus.";_buf << "</p>";_buf << "</body>";_buf << "</html>";_buf.join;|
+
+    output = TestEngine.new(string).precompiled
+
+    assert_equal expected, output
+  end
+
+
   def test_simple_html_with_doctype
     string = <<HTML
 ! doctype html5
