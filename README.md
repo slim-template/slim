@@ -8,7 +8,7 @@ Slim is a Rails 3, Ruby 1.9.2 templating option.  I do not intend on making a Ra
 
 ## Why?
 
-Simply put, I wanted to see if I could pull of a minimalistic template language that at least matched Erb's speed.  Yes, Slim is speedy.
+Simply put, I wanted to see if I could pull of a template language that required minimum use of special characters and at least matched Erb's speed.  Yes, Slim is speedy.
 
 ### The syntax
 
