@@ -8,7 +8,7 @@ require 'slim/engine'
 module Slim
   class << self
     def version
-      '0.0.1'
+      '0.1.0'
     end
   end
 end
