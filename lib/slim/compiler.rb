@@ -14,12 +14,15 @@ module Slim
       @template.each_line do |line|
         line.chomp!; line.rstrip!
 
+
         next if line.length == 0
 
         line =~ REGEX
 
         indent        =   $1.to_s.length
         marker        =   $2
+        attrs         =   $3
+        string        =   $4 
 
         line_type     = case marker
                         when '`' then :text
@@ -29,12 +32,12 @@ module Slim
                         else :markup
                         end
 
-        if $3
-          tag_attrs = $3.gsub('"', '\"') 
+        if attrs
+          attrs.gsub!('"', '\"') 
         end
 
-        if $4
-          string    = $4.strip 
+        if string
+          string.strip!
           string    = nil unless string.strip.length > 0
         end
 
@@ -60,10 +63,10 @@ module Slim
         case line_type
         when :markup
           if AUTOCLOSED.include?(marker)
-            @compiled << "_buf << \"<#{marker}#{tag_attrs || ''}/>\";"
+            @compiled << "_buf << \"<#{marker}#{attrs || ''}/>\";"
           else
             enders << ["_buf << \"</#{marker}>\";", indent]
-            @compiled << "_buf << \"<#{marker}#{tag_attrs || ''}>\";"
+            @compiled << "_buf << \"<#{marker}#{attrs || ''}>\";"
           end
 
           if string

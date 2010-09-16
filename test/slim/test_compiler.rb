@@ -253,6 +253,23 @@ HTML
     assert_equal expected, output
   end
 
+  def test_simple_html_with_params_and_content_on_same_line
+    string = <<TEMPLATE
+html 
+  head
+    title Simple Test Title
+    meta name="description" content="This is a Slim Test, that's all"
+  body
+    p id="first" Hello World, meet Slim.
+TEMPLATE
+
+    expected = %q|_buf = [];_buf << "<html>";_buf << "<head>";_buf << "<title>";_buf << "Simple Test Title";_buf << "</title>";_buf << "<meta name=\"description\" content=\"This is a Slim Test, that's all\"/>";_buf << "</head>";_buf << "<body>";_buf << "<p id=\"first\">";_buf << "Hello World, meet Slim.";_buf << "</p>";_buf << "</body>";_buf << "</html>";_buf.join;|
+
+    output = TestEngine.new(string).compiled
+
+    assert_equal expected, output
+  end
+
   # Use this to do a line by line check. Much easier to see where the problem is.
   def iterate_it(expected, output)
     es = expected.split(';')
