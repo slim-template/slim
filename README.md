@@ -4,13 +4,14 @@ Slim is a template language whose goal is reduce the syntax to the essential par
 
 ## What?
 
-Slim a Rails 3, Ruby 1.9.2 templating option.  I do not intend on making a Rails 2.x compatible version.  I don't think it would be difficult, so if you want it, I will happily accept contributions with tests.
+Slim is a Rails 3, Ruby 1.9.2 templating option.  I do not intend on making a Rails 2.x compatible version.  I don't think it would be difficult, so if you want it, I will happily accept contributions with tests.
 
 ## Why?
 
 Simply put, I wanted to see if I could pull of a minimalistic template language that was at least matched Erb's speed.  Yes, Slim is speedy.
 
 ### The syntax
+
 I actually like the indentation and tag closing nature of Haml.  I don't like the overall result of the markup though, it's a little cryptic.  I'm sure, with practice, people read it like the Matrix, but it's never suited me.  So why not try to improve it for me?  There may be one or two other people with the same thoughts.
 
 
