@@ -3,6 +3,7 @@ module Slim
     include Compiler
 
     attr_reader :compiled
+    attr_reader :optimized
 
     # @param template The .slim template to convert
     # @return [Slim::Engine] instance of engine
@@ -12,7 +13,7 @@ module Slim
     end
 
     def render(scope = Object.new, locals = {})
-      scope.instance_eval(compiled)
+      scope.instance_eval(optimized)
     end
   end
 end

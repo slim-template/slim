@@ -1,13 +1,16 @@
 # encoding: utf-8
 
+require 'slim/optimizer'
+
 module Slim
   module Compiler
+    include Optimizer
     AUTOCLOSED = %w(meta img link br hr input area param col base)
 
     REGEX = /^(\s*)(!?`?-?=?\w*)(\s*\w*=".+")?(.*)/
 
     def compile
-      @compiled = "_buf = [];"
+      @_buffer = ["_buf = [];"]
 
       last_indent = -1; enders = []
 
@@ -49,7 +52,7 @@ module Slim
 
             if ender_indent >= indent
               unless ender == 'end;' && line_type == :control_code
-                @compiled << ender
+                @_buffer << ender
               end
             else
               enders << [ender, ender_indent] 
@@ -63,41 +66,47 @@ module Slim
         case line_type
         when :markup
           if AUTOCLOSED.include?(marker)
-            @compiled << "_buf << \"<#{marker}#{attrs || ''}/>\";"
+            @_buffer << "_buf << \"<#{marker}#{attrs || ''}/>\";"
           else
             enders << ["_buf << \"</#{marker}>\";", indent]
-            @compiled << "_buf << \"<#{marker}#{attrs || ''}>\";"
+            @_buffer << "_buf << \"<#{marker}#{attrs || ''}>\";"
           end
 
           if string
             string.lstrip!
             if string =~ /^=(.*)/
-              @compiled << "_buf << #{$1.strip};"
+              @_buffer << "_buf << #{$1.strip};"
             else
-              @compiled << "_buf << \"#{string}\";"
+              @_buffer << "_buf << \"#{string}\";"
             end
           end
         when :text
-          @compiled << "_buf << \"#{string}\";"
+          @_buffer << "_buf << \"#{string}\";"
         when :control_code
           unless enders.detect{|e| e[0] == 'end;' && e[1] == indent}
             enders << ['end;', indent]
           end
-          @compiled << "#{string};"
+          @_buffer << "#{string};"
         when :output_code
-          @compiled << "_buf << #{string};"
+          @_buffer << "_buf << #{string};"
         when :declaration
-          @compiled << "_buf << \"<!#{string}>\";"
+          @_buffer << "_buf << \"<!#{string}>\";"
         else
           raise NotImplementedError.new("Don't know how to parse line: #{line}")
         end
       end # template iterator
 
       enders.reverse_each do |t|
-        @compiled << t[0].to_s
+        @_buffer << t[0].to_s
       end
 
-      @compiled << "_buf.join;"
+      @_buffer << "_buf.join;"
+
+      @compiled = @_buffer.join
+
+      optimize
+
+      return nil
     end
   end
 end
