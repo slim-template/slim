@@ -70,7 +70,12 @@ module Slim
           end
 
           if string
-            @compiled << "_buf << \"#{string}\";"
+            string.lstrip!
+            if string =~ /^=(.*)/
+              @compiled << "_buf << #{$1.strip};"
+            else
+              @compiled << "_buf << \"#{string}\";"
+            end
           end
         when :text
           @compiled << "_buf << \"#{string}\";"

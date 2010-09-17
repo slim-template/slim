@@ -64,6 +64,19 @@ So here's what I came up with:
         h1 id="headline" 
           ` Welcome to my site.
 
+#### Add content to a tag with code
+
+      # Can make the call on the same line
+
+      body
+        h1 id="headline" = page_headline
+
+      # Or nest it.  
+
+      body
+        h1 id="headline" 
+          = page_headline
+
 #### Set an attribute's value with a method?
 
       # Just use standard Ruby interpolation.
@@ -78,7 +91,6 @@ So here's what I came up with:
 
 * Standard Ruby syntax after '-' and '='
   * __end__ is not required
-  * Ruby code must be on it's own line (__TODO:__ allow inline)
   * If you're making a method call, wrap the arguments in parenthesis (__TODO:__ make this a non requirement)
 * Can put content on same line or nest it.
   * If you nest content (e.g. put it on the next line), start the line with a backtick ('`')
