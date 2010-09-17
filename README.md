@@ -16,7 +16,8 @@ I actually like the indentation and tag closing nature of Haml.  I don't like th
 
 
 So here's what I came up with:
-
+    
+    ! doctype html
     html 
       head 
         title Slim Examples
@@ -48,6 +49,31 @@ So here's what I came up with:
           ` $(content).do_something();
 
 
+### How do I?
+
+#### Add content to a tag
+
+      # Either start on the same line as the tag
+
+      body
+        h1 id="headline" Welcome to my site.
+
+      # Or nest it.  __Note:__ Must use backtick (with following space) to escape processing
+
+      body
+        h1 id="headline" 
+          ` Welcome to my site.
+
+#### Set an attribute's value with a method?
+
+      # Just use standard Ruby interpolation.
+
+      body
+        table 
+          - for user in users do 
+            tr id="user_#{user.id}"
+          
+
 ### Things to know:
 
 * Standard Ruby syntax after '-' and '='
@@ -61,6 +87,7 @@ So here's what I came up with:
 
 
 ### Line indicators:
+  __Please note that all line indicators must be followed by a space__
 
 * ` 
   * The backtick tells Slim to just copy the line.  It essentially escapes any processing.
@@ -73,9 +100,4 @@ So here's what I came up with:
         ` ! doctype html renders  <!doctype html> `
 
 
-### Stuff I need to do (in no particular order)
-
-* Tackle Encoding.
-* Optimize the compiled code.  I know it can be even faster.
-* Tackle the __TODO's__ above
-* ??? Suggestions...
+### Please add feature requests and bugs to the Github issue tracker.
