@@ -10,6 +10,10 @@ require 'slim'
 
 
 class Env
+  def id_helper
+    "notice"
+  end
+
   def show_first?
     false
   end
