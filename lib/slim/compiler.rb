@@ -51,7 +51,7 @@ module Slim
             ender, ender_indent = enders.pop
 
             if ender_indent >= indent
-              unless ender == 'end;' && line_type == :control_code
+              unless ender == 'end;' && line_type == :control_code && ender_indent == indent
                 @_buffer << ender
               end
             else
