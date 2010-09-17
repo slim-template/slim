@@ -1,3 +1,5 @@
 *.swp
 pkg
 readme.html
+.yardoc/
+doc/
