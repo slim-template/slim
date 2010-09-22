@@ -30,7 +30,7 @@ module Slim
 
         if @in_text && indent > text_indent
           spaces = indent - text_indent
-          @_buffer << "_buf << \"#{(' '*spaces) + line.lstrip}\";"
+          @_buffer << "_buf << \"#{(' '*(spaces - 1)) + line.lstrip}\";"
           next
         end
 
