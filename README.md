@@ -87,6 +87,31 @@ So here's what I came up with:
             tr id="user_#{user.id}"
           
 
+#### Treat multiple lines of code as text that should bypass parsing.
+
+      # Use a backtick to start the escape.  Each following line that is 
+      # indented greater than the backtick is copied over.
+
+      body
+        p
+          '
+           This is a test of the text block.
+        
+      # The parsed result of the above:
+
+      <body><p>This is a test of the text block.</p></body>
+      
+      # The left margin is set at the indent of the backtick + one space.  
+      # Any additional spaces will be copied over.
+
+      body
+        p
+          '
+           This line is on the left margin.
+            This line will have one space in front of it.
+             This line will have two spaces in front of it.
+              And so on...
+
 ### Things to know:
 
 * Standard Ruby syntax after '-' and '='
