@@ -287,6 +287,28 @@ TEMPLATE
     assert_equal expected, output
   end
 
+  def test_text_that_starts_with_tag_name
+    string = <<HTML
+html
+  head
+    meta name="description" content="This is a Slim Test, that's all"
+    title Simple Test Title
+  body
+    img width="100" height="50" src="/images/test.jpg"
+    p 
+      ` 
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam malesuada, dui at condimentum dapibus, purus sapien fringilla est, vel eleifend massa purus ut lectus. Praesent aliquam, ipsum eu ornare porta, tellus lacus viverra diam, nec scelerisque ipsum nunc et lacus. Nam adipiscing velit eget dolor ultricies in dignissim augue ultricies. Sed sed leo in sapien pretium dictum. Fusce sem quam, tincidunt vel lobortis sed, tincidunt vulputate est. Phasellus et ipsum quam, ac fringilla orci. In facilisis est et ante tempus suscipit. Morbi elementum quam ut urna laoreet vel malesuada justo adipiscing. Suspendisse eu lorem id lacus molestie dapibus fringilla ut orci. Cras pellentesque auctor leo, nec bibendum est suscipit id. Mauris dignissim aliquet libero vitae vulputate. Maecenas viverra sodales suscipit. Aenean eu nisi velit.
+
+        Phasellus ultricies vulputate lacus, eget pretium orci tincidunt tristique. Duis vitae luctus risus. Aliquam turpis massa, adipiscing in adipiscing ut, congue sed justo. Sed egestas ullamcorper nisl placerat dictum. Sed a leo lectus, sit amet vehicula nisl. Duis adipiscing congue tortor ut vulputate. Phasellus ligula lectus, congue non lobortis sed, dictum sed tellus. Vestibulum viverra vestibulum felis convallis pharetra. Phasellus a dignissim tellus. Proin dapibus malesuada lorem, et porttitor diam bibendum a. Donec et dui mauris, et tempus metus. Etiam pharetra varius dignissim. Maecenas lacinia, ligula ut tincidunt porttitor, sapien nisi pulvinar magna, nec sollicitudin libero odio bibendum nisi. Aenean ipsum eros, convallis id consequat nec, commodo eget diam. Integer malesuada, libero non dignissim varius, velit metus malesuada lectus, a consequat turpis purus ut elit.
+HTML
+
+    expected = %q|_buf = [];_buf << "<html>";_buf << "<head>";_buf << "<meta name=\"description\" content=\"This is a Slim Test, that's all\"/>";_buf << "<title>";_buf << "Simple Test Title";_buf << "</title>";_buf << "</head>";_buf << "<body>";_buf << "<img width=\"100\" height=\"50\" src=\"/images/test.jpg\"/>";_buf << "<p>";_buf << "  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam malesuada, dui at condimentum dapibus, purus sapien fringilla est, vel eleifend massa purus ut lectus. Praesent aliquam, ipsum eu ornare porta, tellus lacus viverra diam, nec scelerisque ipsum nunc et lacus. Nam adipiscing velit eget dolor ultricies in dignissim augue ultricies. Sed sed leo in sapien pretium dictum. Fusce sem quam, tincidunt vel lobortis sed, tincidunt vulputate est. Phasellus et ipsum quam, ac fringilla orci. In facilisis est et ante tempus suscipit. Morbi elementum quam ut urna laoreet vel malesuada justo adipiscing. Suspendisse eu lorem id lacus molestie dapibus fringilla ut orci. Cras pellentesque auctor leo, nec bibendum est suscipit id. Mauris dignissim aliquet libero vitae vulputate. Maecenas viverra sodales suscipit. Aenean eu nisi velit.";_buf << "<br/>";_buf << "  Phasellus ultricies vulputate lacus, eget pretium orci tincidunt tristique. Duis vitae luctus risus. Aliquam turpis massa, adipiscing in adipiscing ut, congue sed justo. Sed egestas ullamcorper nisl placerat dictum. Sed a leo lectus, sit amet vehicula nisl. Duis adipiscing congue tortor ut vulputate. Phasellus ligula lectus, congue non lobortis sed, dictum sed tellus. Vestibulum viverra vestibulum felis convallis pharetra. Phasellus a dignissim tellus. Proin dapibus malesuada lorem, et porttitor diam bibendum a. Donec et dui mauris, et tempus metus. Etiam pharetra varius dignissim. Maecenas lacinia, ligula ut tincidunt porttitor, sapien nisi pulvinar magna, nec sollicitudin libero odio bibendum nisi. Aenean ipsum eros, convallis id consequat nec, commodo eget diam. Integer malesuada, libero non dignissim varius, velit metus malesuada lectus, a consequat turpis purus ut elit.";_buf << "</p>";_buf << "</body>";_buf << "</html>";_buf.join;|
+
+    output = TestEngine.new(string).compiled
+
+    iterate_it expected, output
+  end
+
 
   # Use this to do a line by line check. Much easier to see where the problem is.
   def iterate_it(expected, output)

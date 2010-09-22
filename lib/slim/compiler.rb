@@ -12,17 +12,28 @@ module Slim
     def compile
       @_buffer = ["_buf = [];"]
 
-      last_indent = -1; enders = []
+      @in_text = false
+
+      text_indent = last_indent = -1; enders = []
 
       @template.each_line do |line|
         line.chomp!; line.rstrip!
 
+        if line.length == 0
+          @_buffer << "_buf << \"<br/>\";" if @in_text
+          next 
+        end
 
-        next if line.length == 0
+        line    =~ REGEX
 
-        line =~ REGEX
+        indent  =   $1.to_s.length
 
-        indent        =   $1.to_s.length
+        if @in_text && indent > text_indent
+          spaces = indent - text_indent
+          @_buffer << "_buf << \"#{(' '*spaces) + line.lstrip}\";"
+          next
+        end
+
         marker        =   $2
         attrs         =   $3
         string        =   $4 
@@ -34,6 +45,11 @@ module Slim
                         when '!' then :declaration
                         else :markup
                         end
+
+        if line_type != :text
+          @in_text    = false
+          text_indent = -1
+        end
 
         if attrs
           attrs.gsub!('"', '\"') 
@@ -81,7 +97,10 @@ module Slim
             end
           end
         when :text
-          @_buffer << "_buf << \"#{string}\";"
+          @in_text = true
+          text_indent = indent
+          
+          @_buffer << "_buf << \"#{string}\";" if string.to_s.length > 0
         when :control_code
           unless enders.detect{|e| e[0] == 'end;' && e[1] == indent}
             enders << ['end;', indent]
