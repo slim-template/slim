@@ -10,6 +10,18 @@ Slim is a Rails 3, Ruby 1.9.2 templating option.  I do not intend on making a Ra
 
 Simply put, I wanted to see if I could pull of a template language that required minimum use of special characters and at least matched Erb's speed.  Yes, Slim is speedy.
 
+## How?
+
+Include Slim in your Gemfile:
+
+    gem 'slim'
+
+In `config/application.rb`, add the following line near the top:
+
+    require 'slim/rails'
+
+That's it!
+
 ### The syntax
 
 I actually like the indentation and tag closing nature of Haml.  I don't like the overall result of the markup though, it's a little cryptic.  I'm sure, with practice, people read it like the Matrix, but it's never suited me.  So why not try to improve it for me?  There may be one or two other people with the same thoughts.
