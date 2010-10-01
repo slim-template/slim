@@ -7,7 +7,7 @@ module Slim
     include Optimizer
     AUTOCLOSED = %w(meta img link br hr input area param col base)
 
-    REGEX = /^(\s*)(!?`?-?=?\w*)(\s*\w*=".+")?(.*)/
+    REGEX = /^(\s*)(!?`?\|?-?=?\w*)(\s*\w*=".+")?(.*)/
 
     def compile
       @_buffer = ["_buf = [];"]
@@ -39,7 +39,7 @@ module Slim
         string        =   $4 
 
         line_type     = case marker
-                        when '`' then :text
+                        when '`', '|' then :text
                         when '-' then :control_code
                         when '=' then :output_code
                         when '!' then :declaration

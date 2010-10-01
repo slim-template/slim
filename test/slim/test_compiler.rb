@@ -126,9 +126,11 @@ html
   body
     p 
       ` Hello World, meet Slim.
+    p
+      | Hello World, meet Slim again.
 HTML
 
-    expected = %q|_buf = [];_buf << "<html>";_buf << "<head>";_buf << "<meta name=\"description\" content=\"This is a Slim Test, that's all\"/>";_buf << "<title>";_buf << "Simple Test Title";_buf << "</title>";_buf << "</head>";_buf << "<body>";_buf << "<p>";_buf << "Hello World, meet Slim.";_buf << "</p>";_buf << "</body>";_buf << "</html>";_buf.join;|
+    expected = %q|_buf = [];_buf << "<html>";_buf << "<head>";_buf << "<meta name=\"description\" content=\"This is a Slim Test, that's all\"/>";_buf << "<title>";_buf << "Simple Test Title";_buf << "</title>";_buf << "</head>";_buf << "<body>";_buf << "<p>";_buf << "Hello World, meet Slim.";_buf << "</p>";_buf << "<p>";_buf << "Hello World, meet Slim again.";_buf << "</p>";_buf << "</body>";_buf << "</html>";_buf.join;|
 
     output = TestEngine.new(string).compiled
 

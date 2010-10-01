@@ -1,4 +1,4 @@
-## Slim 
+## Slim
 
 Slim is a template language whose goal is reduce the syntax to the essential parts without becoming cryptic.  
 
@@ -130,7 +130,7 @@ So here's what I came up with:
   * __end__ is not required
   * If you're making a method call, wrap the arguments in parenthesis (__TODO:__ make this a non requirement)
 * Can put content on same line or nest it.
-  * If you nest content (e.g. put it on the next line), start the line with a backtick ('`')
+  * If you nest content (e.g. put it on the next line), start the line with a backtick ('`') or a pipe ('|')
 * Indentation matters, but it's not as strict as Haml.
   * If you want to indent 2 spaces, then 5.  It's your choice. To nest markup you only need to indent by one space, the rest is gravy.
 
@@ -138,8 +138,10 @@ So here's what I came up with:
 ### Line indicators:
   __Please note that all line indicators must be followed by a space__
 
-* ` 
+* `
   * The backtick tells Slim to just copy the line.  It essentially escapes any processing.
+* |
+  * *Same as `\``.*
 * -
   * The dash denotes control code (similar to Haml).  Examples of control code are loops and conditionals.
 * =
