@@ -41,6 +41,25 @@ HTML
     assert_equal expected, engine.render(@env)
   end
 
+  def test_render_with_parameterized_conditional
+    string = <<HTML
+html
+  head
+    title Simple Test Title
+  body
+    - if show_first? false
+        p The first paragraph
+    - else
+        p The second paragraph
+HTML
+
+    engine = Slim::Engine.new(string)
+
+    expected = "<html><head><title>Simple Test Title</title></head><body><p>The second paragraph</p></body></html>"
+
+    assert_equal expected, engine.render(@env)
+  end
+
   def test_render_with_call
     string = <<HTML
 html
@@ -54,6 +73,57 @@ HTML
     engine = Slim::Engine.new(string)
 
     expected = "<html><head><title>Simple Test Title</title></head><body><p>Hello World from @env</p></body></html>"
+
+    assert_equal expected, engine.render(@env)
+  end
+
+  def test_render_with_parameterized_call
+    string = <<HTML
+html
+  head
+    title Simple Test Title
+  body
+    p
+      = hello_world("Hello Ruby!")
+HTML
+
+    engine = Slim::Engine.new(string)
+
+    expected = "<html><head><title>Simple Test Title</title></head><body><p>Hello Ruby!</p></body></html>"
+
+    assert_equal expected, engine.render(@env)
+  end
+
+  def test_render_with_spaced_parameterized_call
+    string = <<HTML
+html
+  head
+    title Simple Test Title
+  body
+    p
+      = hello_world "Hello Ruby!"
+HTML
+
+    engine = Slim::Engine.new(string)
+
+    expected = "<html><head><title>Simple Test Title</title></head><body><p>Hello Ruby!</p></body></html>"
+
+    assert_equal expected, engine.render(@env)
+  end
+
+  def test_render_with_spaced_parameterized_call_2
+    string = <<HTML
+html
+  head
+    title Simple Test Title
+  body
+    p
+      = hello_world "Hello Ruby!", :dummy => "value"
+HTML
+
+    engine = Slim::Engine.new(string)
+
+    expected = "<html><head><title>Simple Test Title</title></head><body><p>Hello Ruby!dummy value</p></body></html>"
 
     assert_equal expected, engine.render(@env)
   end

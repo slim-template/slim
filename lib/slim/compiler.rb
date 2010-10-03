@@ -107,6 +107,7 @@ module Slim
           end
           @_buffer << "#{string};"
         when :output_code
+          string.sub!(/ /, "(") << ")" if string =~ /^\w+( )/
           @_buffer << "_buf << #{string};"
         when :declaration
           @_buffer << "_buf << \"<!#{string}>\";"

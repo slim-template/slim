@@ -14,11 +14,12 @@ class Env
     "notice"
   end
 
-  def show_first?
-    false
+  def show_first?(show = false)
+    show
   end
 
-  def hello_world
-    "Hello World from @env"
+  def hello_world(text = "Hello World from @env", opts = {})
+    text << opts.to_a * " " if opts.any?
+    text
   end
 end

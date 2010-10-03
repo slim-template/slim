@@ -128,7 +128,6 @@ So here's what I came up with:
 
 * Standard Ruby syntax after '-' and '='
   * __end__ is not required
-  * If you're making a method call, wrap the arguments in parenthesis (__TODO:__ make this a non requirement)
 * Can put content on same line or nest it.
   * If you nest content (e.g. put it on the next line), start the line with a backtick ('`') or a pipe ('|')
 * Indentation matters, but it's not as strict as Haml.
