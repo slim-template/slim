@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{slim}
-  s.version = "0.4.0"
+  s.version = "0.4.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Andrew Stone"]
-  s.date = %q{2010-09-21}
+  s.date = %q{2010-10-03}
   s.description = %q{Slim is a template language whose goal is reduce the syntax to the essential parts without becoming cryptic.}
   s.email = %q{andy@stonean.com}
   s.extra_rdoc_files = [
@@ -28,7 +28,9 @@ Gem::Specification.new do |s|
      "test/helper.rb",
      "test/slim/test_compiler.rb",
      "test/slim/test_engine.rb",
-     "test/test_slim.rb"
+     "test/test_slim.rb",
+     "vim/slim.vim",
+     "vim/test.slim"
   ]
   s.homepage = %q{http://github.com/stonean/slim}
   s.rdoc_options = ["--charset=UTF-8"]
