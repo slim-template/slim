@@ -141,7 +141,7 @@ So here's what I came up with:
 * `
   * The backtick tells Slim to just copy the line.  It essentially escapes any processing.
 * |
-  * *Same as `\``.*
+  * *Same as '`'*.
 * -
   * The dash denotes control code (similar to Haml).  Examples of control code are loops and conditionals.
 * =
