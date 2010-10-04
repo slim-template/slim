@@ -85,7 +85,7 @@ HTML
 
   def test_simple_html_with_params
     string = <<HTML
-html 
+html
   head
     title Simple Test Title
     meta name="description" content="This is a Slim Test, that's all"
@@ -102,7 +102,7 @@ HTML
 
   def test_simple_html_with_params_meta_first
     string = <<HTML
-html 
+html
   head
     meta name="description" content="This is a Slim Test, that's all"
     title Simple Test Title
@@ -119,7 +119,7 @@ HTML
 
   def test_nested_content
     string = <<HTML
-html 
+html
   head
     meta name="description" content="This is a Slim Test, that's all"
     title Simple Test Title
@@ -139,7 +139,7 @@ HTML
 
   def test_closing_tag_without_content_or_attributes
     string = <<HTML
-html 
+html
   head
     meta name="description" content="This is a Slim Test, that's all"
     title Simple Test Title
@@ -159,7 +159,7 @@ HTML
 
   def test_closing_tag_without_content
     string = <<HTML
-html 
+html
   head
     meta name="description" content="This is a Slim Test, that's all"
     title Simple Test Title
@@ -257,7 +257,7 @@ HTML
 
   def test_simple_html_with_params_and_content_on_same_line
     string = <<TEMPLATE
-html 
+html
   head
     title Simple Test Title
     meta name="description" content="This is a Slim Test, that's all"
@@ -274,7 +274,7 @@ TEMPLATE
 
   def test_simple_html_with_params_and_code_call
     string = <<TEMPLATE
-html 
+html
   head
     title Simple Test Title
     meta name="description" content="This is a Slim Test, that's all"
@@ -283,6 +283,57 @@ html
 TEMPLATE
 
     expected = %q|_buf = [];_buf << "<html>";_buf << "<head>";_buf << "<title>";_buf << "Simple Test Title";_buf << "</title>";_buf << "<meta name=\"description\" content=\"This is a Slim Test, that's all\"/>";_buf << "</head>";_buf << "<body>";_buf << "<p id=\"first\">";_buf << hello_world;_buf << "</p>";_buf << "</body>";_buf << "</html>";_buf.join;|
+
+    output = TestEngine.new(string).compiled
+
+    assert_equal expected, output
+  end
+
+  def test_simple_html_with_params_and_parameterized_code_call
+    string = <<TEMPLATE
+html
+  head
+    title Simple Test Title
+    meta name="description" content="This is a Slim Test, that's all"
+  body
+    p id="first" = hello_world("Hello Ruby!")
+TEMPLATE
+
+    expected = %q|_buf = [];_buf << "<html>";_buf << "<head>";_buf << "<title>";_buf << "Simple Test Title";_buf << "</title>";_buf << "<meta name=\"description\" content=\"This is a Slim Test, that's all\"/>";_buf << "</head>";_buf << "<body>";_buf << "<p id=\"first\">";_buf << hello_world("Hello Ruby!");_buf << "</p>";_buf << "</body>";_buf << "</html>";_buf.join;|
+
+    output = TestEngine.new(string).compiled
+
+    assert_equal expected, output
+  end
+
+  def test_simple_html_with_params_and_spaced_parameterized_code_call
+    string = <<TEMPLATE
+html
+  head
+    title Simple Test Title
+    meta name="description" content="This is a Slim Test, that's all"
+  body
+    p id="first" = hello_world "Hello Ruby!"
+TEMPLATE
+
+    expected = %q|_buf = [];_buf << "<html>";_buf << "<head>";_buf << "<title>";_buf << "Simple Test Title";_buf << "</title>";_buf << "<meta name=\"description\" content=\"This is a Slim Test, that's all\"/>";_buf << "</head>";_buf << "<body>";_buf << "<p id=\"first\">";_buf << hello_world("Hello Ruby!");_buf << "</p>";_buf << "</body>";_buf << "</html>";_buf.join;|
+
+    output = TestEngine.new(string).compiled
+
+    assert_equal expected, output
+  end
+
+  def test_simple_html_with_params_and_spaced_parameterized_code_call_2
+    string = <<TEMPLATE
+html
+  head
+    title Simple Test Title
+    meta name="description" content="This is a Slim Test, that's all"
+  body
+    p id="first" = hello_world "Hello Ruby!", :dummy => "value"
+TEMPLATE
+
+    expected = %q|_buf = [];_buf << "<html>";_buf << "<head>";_buf << "<title>";_buf << "Simple Test Title";_buf << "</title>";_buf << "<meta name=\"description\" content=\"This is a Slim Test, that's all\"/>";_buf << "</head>";_buf << "<body>";_buf << "<p id=\"first\">";_buf << hello_world("Hello Ruby!", :dummy => "value");_buf << "</p>";_buf << "</body>";_buf << "</html>";_buf.join;|
 
     output = TestEngine.new(string).compiled
 

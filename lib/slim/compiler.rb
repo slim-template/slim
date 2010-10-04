@@ -7,7 +7,13 @@ module Slim
     include Optimizer
     AUTOCLOSED = %w(meta img link br hr input area param col base)
 
-    REGEX = /^(\s*)(!?`?\|?-?=?\w*)(\s*\w*=".+")?(.*)/
+    REGEX = /^(\s*)(!?`?\|?-?=?\w*)((?:\s*\w*="[^=]+")+)?(.*)/
+
+    # adds a pair of parentheses to the method
+    def parenthesesify_method(string)
+      string.sub!(/ /, "(") << ")" if string =~ /^\w+( )/
+      string
+    end
 
     def compile
       @_buffer = ["_buf = [];"]
@@ -91,7 +97,7 @@ module Slim
           if string
             string.lstrip!
             if string =~ /^=(.*)/
-              @_buffer << "_buf << #{$1.strip};"
+              @_buffer << "_buf << #{parenthesesify_method($1.strip)};"
             else
               @_buffer << "_buf << \"#{string}\";"
             end
@@ -107,8 +113,7 @@ module Slim
           end
           @_buffer << "#{string};"
         when :output_code
-          string.sub!(/ /, "(") << ")" if string =~ /^\w+( )/
-          @_buffer << "_buf << #{string};"
+          @_buffer << "_buf << #{parenthesesify_method(string.strip)};"
         when :declaration
           @_buffer << "_buf << \"<!#{string}>\";"
         else
