@@ -146,88 +146,88 @@ HTML
     assert_equal expected, engine.render(@env)
   end
 
-  def test_render_with_call_to_set_attribute
+  def test_render_with_call_to_set_attributes
     string = <<HTML
 html
   head
     title Simple Test Title
   body
     h1 This is my title
-    p id="#\{id_helper}"
+    p id="#\{id_helper}" class="hello world"
       = hello_world
 HTML
 
     engine = Slim::Engine.new(string)
 
-    expected = "<html><head><title>Simple Test Title</title></head><body><h1>This is my title</h1><p id=\"notice\">Hello World from @env</p></body></html>"
+    expected = "<html><head><title>Simple Test Title</title></head><body><h1>This is my title</h1><p id=\"notice\" class=\"hello world\">Hello World from @env</p></body></html>"
 
     assert_equal expected, engine.render(@env)
   end
 
-  def test_render_with_call_to_set_attribute_and_call_to_set_content
+  def test_render_with_call_to_set_attributes_and_call_to_set_content
     string = <<HTML
 html
   head
     title Simple Test Title
   body
     h1 This is my title
-    p id="#\{id_helper}" = hello_world
+    p id="#\{id_helper}" class="hello world" = hello_world
 HTML
 
     engine = Slim::Engine.new(string)
 
-    expected = "<html><head><title>Simple Test Title</title></head><body><h1>This is my title</h1><p id=\"notice\">Hello World from @env</p></body></html>"
+    expected = "<html><head><title>Simple Test Title</title></head><body><h1>This is my title</h1><p id=\"notice\" class=\"hello world\">Hello World from @env</p></body></html>"
 
     assert_equal expected, engine.render(@env)
   end
 
-  def test_render_with_parameterized_call_to_set_attribute_and_call_to_set_content
+  def test_render_with_parameterized_call_to_set_attributes_and_call_to_set_content
     string = <<HTML
 html
   head
     title Simple Test Title
   body
     h1 This is my title
-    p id="#\{id_helper}" = hello_world("Hello Ruby!")
+    p id="#\{id_helper}" class="hello world" = hello_world("Hello Ruby!")
 HTML
 
     engine = Slim::Engine.new(string)
 
-    expected = "<html><head><title>Simple Test Title</title></head><body><h1>This is my title</h1><p id=\"notice\">Hello Ruby!</p></body></html>"
+    expected = "<html><head><title>Simple Test Title</title></head><body><h1>This is my title</h1><p id=\"notice\" class=\"hello world\">Hello Ruby!</p></body></html>"
 
     assert_equal expected, engine.render(@env)
   end
 
-  def test_render_with_spaced_parameterized_call_to_set_attribute_and_call_to_set_content
+  def test_render_with_spaced_parameterized_call_to_set_attributes_and_call_to_set_content
     string = <<HTML
 html
   head
     title Simple Test Title
   body
     h1 This is my title
-    p id="#\{id_helper}" = hello_world "Hello Ruby!"
+    p id="#\{id_helper}" class="hello world" = hello_world "Hello Ruby!"
 HTML
 
     engine = Slim::Engine.new(string)
 
-    expected = "<html><head><title>Simple Test Title</title></head><body><h1>This is my title</h1><p id=\"notice\">Hello Ruby!</p></body></html>"
+    expected = "<html><head><title>Simple Test Title</title></head><body><h1>This is my title</h1><p id=\"notice\" class=\"hello world\">Hello Ruby!</p></body></html>"
 
     assert_equal expected, engine.render(@env)
   end
 
-  def test_render_with_spaced_parameterized_call_to_set_attribute_and_call_to_set_content_2
+  def test_render_with_spaced_parameterized_call_to_set_attributes_and_call_to_set_content_2
     string = <<HTML
 html
   head
     title Simple Test Title
   body
     h1 This is my title
-    p id="#\{id_helper}" = hello_world "Hello Ruby!", :dummy => "value"
+    p id="#\{id_helper}" class="hello world" = hello_world "Hello Ruby!", :dummy => "value"
 HTML
 
     engine = Slim::Engine.new(string)
 
-    expected = "<html><head><title>Simple Test Title</title></head><body><h1>This is my title</h1><p id=\"notice\">Hello Ruby!dummy value</p></body></html>"
+    expected = "<html><head><title>Simple Test Title</title></head><body><h1>This is my title</h1><p id=\"notice\" class=\"hello world\">Hello Ruby!dummy value</p></body></html>"
 
     assert_equal expected, engine.render(@env)
   end
