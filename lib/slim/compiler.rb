@@ -7,7 +7,8 @@ module Slim
     include Optimizer
     AUTOCLOSED = %w(meta img link br hr input area param col base)
 
-    REGEX = /^(\s*)(!?`?\|?-?=?\w*)((?:\s*\w*="[^=]+")+|(\s*\w*[#.]\S+))?(.*)/
+    REGEX_LINE_PARSER = /^(\s*)(!?`?\|?-?=?\w*)((?:\s*\w*="[^=]+")+|(\s*\w*[#.]\S+))?(.*)/
+    REGEX_CODE_BLOCK  = / do ?(.*)$/
 
     def compile
       @_buffer = ["_buf = [];"]
@@ -23,7 +24,7 @@ module Slim
           next 
         end
 
-        line =~ REGEX
+        line =~ REGEX_LINE_PARSER
 
         indent = $1.to_s.length
 
@@ -107,12 +108,11 @@ module Slim
           text_indent = indent
           @_buffer << "_buf << \"#{string}\";" if string.to_s.length > 0
         when :control_code
-          unless enders.detect{|e| e[0] == 'end;' && e[1] == indent}
-            enders << ['end;', indent]
-          end
+          enders   << ['end;', indent] unless enders_detected?(enders, indent)
           @_buffer << "#{string};"
         when :output_code
-          @_buffer << "_buf << #{parenthesesify_method(string.strip)};"
+          enders   << ['end;', indent] unless enders_detected?(enders, indent) || string !~ REGEX_CODE_BLOCK
+          @_buffer << "_buf << #{parenthesesify_method(string)};"
         when :declaration
           @_buffer << "_buf << \"<!#{string}>\";"
         else
@@ -135,9 +135,22 @@ module Slim
 
     private
 
+    def enders_detected?(enders, indent)
+      enders.detect{|e| e[0] == 'end;' && e[1] == indent}
+    end
+
     # adds a pair of parentheses to the method
     def parenthesesify_method(string)
-      string.sub!(' ', '(') << ')' if string =~ /^\w+( )/
+      return string unless string =~ /^\w+( )/
+
+      string.sub!(' ', '(')
+
+      if string =~ REGEX_CODE_BLOCK
+        string.sub!(REGEX_CODE_BLOCK, ') do \1')
+      else
+        string << ')'
+      end
+
       string
     end
 

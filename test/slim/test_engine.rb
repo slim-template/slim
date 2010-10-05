@@ -269,7 +269,6 @@ HTML
     assert_equal expected, engine.render(@env)
   end
 
-
   def test_render_with_text_block_with_subsequent_markup
     string = <<HTML
 html
@@ -290,5 +289,41 @@ HTML
     assert_equal expected, engine.render(@env)
   end
 
+  def test_render_with_output_code_block
+    string = <<HTML
+html
+  head
+    title Simple Test Title
+  body
+    h1 This is my title
+    p id="#\{id_helper}" class="hello world"
+      = hello_world "Hello Ruby!" do
+        | Hello from within a block!
+HTML
 
+    engine = Slim::Engine.new(string)
+
+    expected = "<html><head><title>Simple Test Title</title></head><body><h1>This is my title</h1><p id=\"notice\" class=\"hello world\">Hello from within a block!Hello Ruby!</p></body></html>"
+
+    assert_equal expected, engine.render(@env)
+  end
+
+  def test_render_with_output_code_within_block
+    string = <<HTML
+html
+  head
+    title Simple Test Title
+  body
+    h1 This is my title
+    p id="#\{id_helper}" class="hello world"
+      = hello_world "Hello Ruby!" do
+        = hello_world "Hello from within a block! "
+HTML
+
+    engine = Slim::Engine.new(string)
+
+    expected = "<html><head><title>Simple Test Title</title></head><body><h1>This is my title</h1><p id=\"notice\" class=\"hello world\">Hello from within a block! Hello Ruby!</p></body></html>"
+
+    assert_equal expected, engine.render(@env)
+  end
 end

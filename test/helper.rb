@@ -19,6 +19,7 @@ class Env
 
   def hello_world(text = "Hello World from @env", opts = {})
     text << opts.to_a * " " if opts.any?
+    yield if block_given?
     text
   end
 end
