@@ -7,8 +7,12 @@ module Slim
     include Optimizer
     AUTOCLOSED = %w(meta img link br hr input area param col base)
 
-    REGEX_LINE_PARSER = /^(\s*)(!?`?\|?-?=?\w*)((?:\s*\w*="[^=]+")+|(\s*\w*[#.]\S+))?(.*)/
-    REGEX_CODE_BLOCK  = / do ?(.*)$/
+    REGEX_LINE_PARSER               = /^(\s*)(!?`?\|?-?=?\w*)((?:\s*\w*="[^=]+")+|(\s*\w*[#.]\S+))?(.*)/
+    REGEX_LINE_CONTAINS_OUTPUT_CODE = /^=(.*)/
+    REGEX_METHOD_HAS_NO_PARENTHESES = /^\w+( )/
+    REGEX_CODE_BLOCK_DETECTED       = / do ?(.*)$/
+    REGEX_FIND_ATTR_ID              = /#([^.\s]+)/
+    REGEX_FIND_ATTR_CLASS           = /\.([^#\s]+)/
 
     def compile
       @_buffer = ["_buf = [];"]
@@ -97,7 +101,7 @@ module Slim
 
           if string
             string.lstrip!
-            if string =~ /^=(.*)/
+            if string =~ REGEX_LINE_CONTAINS_OUTPUT_CODE
               @_buffer << "_buf << #{parenthesesify_method($1.strip)};"
             else
               @_buffer << "_buf << \"#{string}\";"
@@ -111,7 +115,7 @@ module Slim
           enders   << ['end;', indent] unless enders.detect{|e| e[0] == 'end;' && e[1] == indent}
           @_buffer << "#{string};"
         when :output_code
-          enders   << ['end;', indent] if string =~ REGEX_CODE_BLOCK
+          enders   << ['end;', indent] if string =~ REGEX_CODE_BLOCK_DETECTED
           @_buffer << "_buf << #{parenthesesify_method(string)};"
         when :declaration
           @_buffer << "_buf << \"<!#{string}>\";"
@@ -137,12 +141,12 @@ module Slim
 
     # adds a pair of parentheses to the method
     def parenthesesify_method(string)
-      return string unless string =~ /^\w+( )/
+      return string unless string =~ REGEX_METHOD_HAS_NO_PARENTHESES
 
       string.sub!(' ', '(')
 
-      if string =~ REGEX_CODE_BLOCK
-        string.sub!(REGEX_CODE_BLOCK, ') do \1')
+      if string =~ REGEX_CODE_BLOCK_DETECTED
+        string.sub!(REGEX_CODE_BLOCK_DETECTED, ') do \1')
       else
         string << ')'
       end
@@ -152,8 +156,8 @@ module Slim
 
     # converts 'p#hello.world' to 'p id="hello" class="world"'
     def normalize_attributes(string)
-      string.sub!(/#([^.\s]+)/, ' id="\1"')
-      string.sub!(/\.([^#\s]+)/, ' class="\1"')
+      string.sub!(REGEX_FIND_ATTR_ID, ' id="\1"')
+      string.sub!(REGEX_FIND_ATTR_CLASS, ' class="\1"')
       string.gsub!('.', ' ')
       string
     end
