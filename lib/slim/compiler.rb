@@ -7,13 +7,7 @@ module Slim
     include Optimizer
     AUTOCLOSED = %w(meta img link br hr input area param col base)
 
-    REGEX = /^(\s*)(!?`?\|?-?=?\w*)((?:\s*\w*="[^=]+")+)?(.*)/
-
-    # adds a pair of parentheses to the method
-    def parenthesesify_method(string)
-      string.sub!(/ /, "(") << ")" if string =~ /^\w+( )/
-      string
-    end
+    REGEX = /^(\s*)(!?`?\|?-?=?\w*)((?:\s*\w*="[^=]+")+|(\s*\w*[#.]\S+))?(.*)/
 
     def compile
       @_buffer = ["_buf = [];"]
@@ -42,7 +36,13 @@ module Slim
 
         marker        =   $2
         attrs         =   $3
-        string        =   $4 
+        short_attrs   =   $4
+        string        =   $5
+
+        # prepends "div" to the shortcut form of attrs if no marker is given
+        if short_attrs && marker.empty?
+          marker = "div"
+        end
 
         line_type     = case marker
                         when '`', '|' then :text
@@ -58,7 +58,8 @@ module Slim
         end
 
         if attrs
-          attrs.gsub!('"', '\"') 
+          attrs = normalize_attributes(attrs) if short_attrs
+          attrs.gsub!('"', '\"')
         end
 
         if string
@@ -132,6 +133,22 @@ module Slim
       optimize
 
       return nil
+    end
+
+    private
+
+    # adds a pair of parentheses to the method
+    def parenthesesify_method(string)
+      string.sub!(' ', '(') << ')' if string =~ /^\w+( )/
+      string
+    end
+
+    # converts 'p#hello.world' to 'p id="hello" class="world"'
+    def normalize_attributes(string)
+      string.sub!(/#([^.\s]+)/, ' id="\1"')
+      string.sub!(/\.([^#\s]+)/, ' class="\1"')
+      string.gsub!('.', ' ')
+      string
     end
   end
 end

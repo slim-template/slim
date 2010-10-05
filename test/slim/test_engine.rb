@@ -164,6 +164,24 @@ HTML
     assert_equal expected, engine.render(@env)
   end
 
+  def test_render_with_shortcut_attributes
+    string = <<HTML
+html
+  head
+    title Simple Test Title
+  body
+    h1#title This is my title
+    p#notice.hello.world
+      = hello_world
+HTML
+
+    engine = Slim::Engine.new(string)
+
+    expected = "<html><head><title>Simple Test Title</title></head><body><h1 id=\"title\">This is my title</h1><p id=\"notice\" class=\"hello world\">Hello World from @env</p></body></html>"
+
+    assert_equal expected, engine.render(@env)
+  end
+
   def test_render_with_call_to_set_attributes_and_call_to_set_content
     string = <<HTML
 html

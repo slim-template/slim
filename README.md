@@ -86,8 +86,32 @@ So here's what I came up with:
       # Or nest it.  
 
       body
-        h1 id="headline" 
+        h1 id="headline"
           = page_headline
+
+#### Shortcut form for `id` and `class` attributes
+
+      # Similarly to Haml, you can specify the `id` and `class`
+      # attributes in the following shortcut form
+      # Note: the shortcut form does not evaluate ruby code
+
+      body
+        h1#headline
+          = page_headline
+        h2#tagline.small.tagline
+          = page_tagline
+        .content
+          = show_content
+
+      # this is the same as
+
+      body
+        h1 id="headline"
+          = page_headline
+        h2 id="tagline" class="small tagline"
+          = page_tagline
+        div class="content"
+          = show_content
 
 #### Set an attribute's value with a method?
 

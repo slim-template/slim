@@ -362,6 +362,37 @@ HTML
     iterate_it expected, output
   end
 
+  def test_shortcut_html_with_params
+    string = <<TEMPLATE
+html
+  head
+    title Simple Test Title
+  body
+    p#first.hello.world Hello World, meet Slim.
+TEMPLATE
+
+    expected = %q|_buf = [];_buf << "<html>";_buf << "<head>";_buf << "<title>";_buf << "Simple Test Title";_buf << "</title>";_buf << "</head>";_buf << "<body>";_buf << "<p id=\"first\" class=\"hello world\">";_buf << "Hello World, meet Slim.";_buf << "</p>";_buf << "</body>";_buf << "</html>";_buf.join;|
+
+    output = TestEngine.new(string).compiled
+
+    assert_equal expected, output
+  end
+
+  def test_shortcut_div_tag_with_params
+    string = <<TEMPLATE
+html
+  head
+    title Simple Test Title
+  body
+    #first.hello.world Hello World, meet Slim.
+TEMPLATE
+
+    expected = %q|_buf = [];_buf << "<html>";_buf << "<head>";_buf << "<title>";_buf << "Simple Test Title";_buf << "</title>";_buf << "</head>";_buf << "<body>";_buf << "<div id=\"first\" class=\"hello world\">";_buf << "Hello World, meet Slim.";_buf << "</div>";_buf << "</body>";_buf << "</html>";_buf.join;|
+
+    output = TestEngine.new(string).compiled
+
+    assert_equal expected, output
+  end
 
   # Use this to do a line by line check. Much easier to see where the problem is.
   def iterate_it(expected, output)
