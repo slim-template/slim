@@ -33,13 +33,13 @@ module Slim
           next
         end
 
-        marker      = $2
-        attrs       = $3
-        short_attrs = $4
-        string      = $5
+        marker         = $2
+        attrs          = $3
+        shortcut_attrs = $4
+        string         = $5
 
         # prepends "div" to the shortcut form of attrs if no marker is given
-        if short_attrs && marker.empty?
+        if shortcut_attrs && marker.empty?
           marker = "div"
         end
 
@@ -57,7 +57,7 @@ module Slim
         end
 
         if attrs
-          attrs = normalize_attributes(attrs) if short_attrs
+          attrs = normalize_attributes(attrs) if shortcut_attrs
           attrs.gsub!('"', '\"')
         end
 
