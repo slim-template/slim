@@ -11,7 +11,6 @@ module Slim
 
     def compile
       @_buffer = ["_buf = [];"]
-
       @in_text = false
 
       text_indent = last_indent = -1; enders = []
@@ -24,9 +23,9 @@ module Slim
           next 
         end
 
-        line    =~ REGEX
+        line =~ REGEX
 
-        indent  =   $1.to_s.length
+        indent = $1.to_s.length
 
         if @in_text && indent > text_indent
           spaces = indent - text_indent
@@ -34,23 +33,23 @@ module Slim
           next
         end
 
-        marker        =   $2
-        attrs         =   $3
-        short_attrs   =   $4
-        string        =   $5
+        marker      = $2
+        attrs       = $3
+        short_attrs = $4
+        string      = $5
 
         # prepends "div" to the shortcut form of attrs if no marker is given
         if short_attrs && marker.empty?
           marker = "div"
         end
 
-        line_type     = case marker
-                        when '`', '|' then :text
-                        when '-' then :control_code
-                        when '=' then :output_code
-                        when '!' then :declaration
-                        else :markup
-                        end
+        line_type = case marker
+                    when '`', '|' then :text
+                    when '-' then :control_code
+                    when '=' then :output_code
+                    when '!' then :declaration
+                    else :markup
+                    end
 
         if line_type != :text
           @in_text    = false
@@ -64,7 +63,7 @@ module Slim
 
         if string
           string.strip!
-          string    = nil unless string.strip.length > 0
+          string = nil unless string.strip.length > 0
         end
 
         unless indent > last_indent
@@ -91,7 +90,7 @@ module Slim
           if AUTOCLOSED.include?(marker)
             @_buffer << "_buf << \"<#{marker}#{attrs || ''}/>\";"
           else
-            enders << ["_buf << \"</#{marker}>\";", indent]
+            enders   << ["_buf << \"</#{marker}>\";", indent]
             @_buffer << "_buf << \"<#{marker}#{attrs || ''}>\";"
           end
 
@@ -104,9 +103,8 @@ module Slim
             end
           end
         when :text
-          @in_text = true
+          @in_text    = true
           text_indent = indent
-          
           @_buffer << "_buf << \"#{string}\";" if string.to_s.length > 0
         when :control_code
           unless enders.detect{|e| e[0] == 'end;' && e[1] == indent}

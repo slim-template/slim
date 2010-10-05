@@ -51,7 +51,8 @@ module Slim
   module Optimizer
     def optimize
       @optimized = ""
-      string = nil
+      string     = nil
+
       @_buffer.each do |line|
         if line =~ /^_buf << "(.+)"/
           string ||= ""
