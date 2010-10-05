@@ -108,10 +108,10 @@ module Slim
           text_indent = indent
           @_buffer << "_buf << \"#{string}\";" if string.to_s.length > 0
         when :control_code
-          enders   << ['end;', indent] unless enders_detected?(enders, indent)
+          enders   << ['end;', indent] unless enders.detect{|e| e[0] == 'end;' && e[1] == indent}
           @_buffer << "#{string};"
         when :output_code
-          enders   << ['end;', indent] unless enders_detected?(enders, indent) || string !~ REGEX_CODE_BLOCK
+          enders   << ['end;', indent] if string =~ REGEX_CODE_BLOCK
           @_buffer << "_buf << #{parenthesesify_method(string)};"
         when :declaration
           @_buffer << "_buf << \"<!#{string}>\";"
@@ -134,10 +134,6 @@ module Slim
     end
 
     private
-
-    def enders_detected?(enders, indent)
-      enders.detect{|e| e[0] == 'end;' && e[1] == indent}
-    end
 
     # adds a pair of parentheses to the method
     def parenthesesify_method(string)
