@@ -141,16 +141,10 @@ module Slim
 
     # adds a pair of parentheses to the method
     def parenthesesify_method(string)
-      return string unless string =~ REGEX_METHOD_HAS_NO_PARENTHESES
-
-      string.sub!(' ', '(')
-
-      if string =~ REGEX_CODE_BLOCK_DETECTED
-        string.sub!(REGEX_CODE_BLOCK_DETECTED, ') do \1')
-      else
-        string << ')'
+      if string =~ REGEX_METHOD_HAS_NO_PARENTHESES
+        string.sub!(' ', '(')
+        string.sub!(REGEX_CODE_BLOCK_DETECTED, ') do \1') || string << ')'
       end
-
       string
     end
 
