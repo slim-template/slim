@@ -15,315 +15,204 @@ html
     p Hello World, meet Slim.
 HTML
 
-    engine = Slim::Engine.new(string)
-
     expected = "<html><head><title>Simple Test Title</title></head><body><p>Hello World, meet Slim.</p></body></html>"
 
-    assert_equal expected, engine.render
+    assert_equal expected, Slim::Engine.new(string).render
   end
 
   def test_render_with_conditional
     string = <<HTML
-html
-  head
-    title Simple Test Title
-  body
-    - if show_first?
-        p The first paragraph
-    - else
-        p The second paragraph
+div
+  - if show_first?
+      p The first paragraph
+  - else
+      p The second paragraph
 HTML
 
-    engine = Slim::Engine.new(string)
+    expected = "<div><p>The second paragraph</p></div>"
 
-    expected = "<html><head><title>Simple Test Title</title></head><body><p>The second paragraph</p></body></html>"
-
-    assert_equal expected, engine.render(@env)
+    assert_equal expected, Slim::Engine.new(string).render(@env)
   end
 
   def test_render_with_parameterized_conditional
     string = <<HTML
-html
-  head
-    title Simple Test Title
-  body
-    - if show_first? false
-        p The first paragraph
-    - else
-        p The second paragraph
+div
+  - if show_first? false
+      p The first paragraph
+  - else
+      p The second paragraph
 HTML
 
-    engine = Slim::Engine.new(string)
+    expected = "<div><p>The second paragraph</p></div>"
 
-    expected = "<html><head><title>Simple Test Title</title></head><body><p>The second paragraph</p></body></html>"
-
-    assert_equal expected, engine.render(@env)
+    assert_equal expected, Slim::Engine.new(string).render(@env)
   end
 
   def test_render_with_call
     string = <<HTML
-html
-  head
-    title Simple Test Title
-  body
-    p
-      = hello_world
+p
+  = hello_world
 HTML
 
-    engine = Slim::Engine.new(string)
+    expected = "<p>Hello World from @env</p>"
 
-    expected = "<html><head><title>Simple Test Title</title></head><body><p>Hello World from @env</p></body></html>"
-
-    assert_equal expected, engine.render(@env)
+    assert_equal expected, Slim::Engine.new(string).render(@env)
   end
 
   def test_render_with_parameterized_call
     string = <<HTML
-html
-  head
-    title Simple Test Title
-  body
-    p
-      = hello_world("Hello Ruby!")
+p
+  = hello_world("Hello Ruby!")
 HTML
 
-    engine = Slim::Engine.new(string)
+    expected = "<p>Hello Ruby!</p>"
 
-    expected = "<html><head><title>Simple Test Title</title></head><body><p>Hello Ruby!</p></body></html>"
-
-    assert_equal expected, engine.render(@env)
+    assert_equal expected, Slim::Engine.new(string).render(@env)
   end
 
   def test_render_with_spaced_parameterized_call
     string = <<HTML
-html
-  head
-    title Simple Test Title
-  body
-    p
-      = hello_world "Hello Ruby!"
+p
+  = hello_world "Hello Ruby!"
 HTML
 
-    engine = Slim::Engine.new(string)
+    expected = "<p>Hello Ruby!</p>"
 
-    expected = "<html><head><title>Simple Test Title</title></head><body><p>Hello Ruby!</p></body></html>"
-
-    assert_equal expected, engine.render(@env)
+    assert_equal expected, Slim::Engine.new(string).render(@env)
   end
 
   def test_render_with_spaced_parameterized_call_2
     string = <<HTML
-html
-  head
-    title Simple Test Title
-  body
-    p
-      = hello_world "Hello Ruby!", :dummy => "value"
+p
+  = hello_world "Hello Ruby!", :dummy => "value"
 HTML
 
-    engine = Slim::Engine.new(string)
+    expected = "<p>Hello Ruby!dummy value</p>"
 
-    expected = "<html><head><title>Simple Test Title</title></head><body><p>Hello Ruby!dummy value</p></body></html>"
-
-    assert_equal expected, engine.render(@env)
+    assert_equal expected, Slim::Engine.new(string).render(@env)
   end
 
   def test_render_with_call_and_inline_text
     string = <<HTML
-html
-  head
-    title Simple Test Title
-  body
-    h1 This is my title
-    p
-      = hello_world
+h1 This is my title
+p
+  = hello_world
 HTML
 
-    engine = Slim::Engine.new(string)
+    expected = "<h1>This is my title</h1><p>Hello World from @env</p>"
 
-    expected = "<html><head><title>Simple Test Title</title></head><body><h1>This is my title</h1><p>Hello World from @env</p></body></html>"
-
-    assert_equal expected, engine.render(@env)
+    assert_equal expected, Slim::Engine.new(string).render(@env)
   end
 
   def test_render_with_call_to_set_attributes
     string = <<HTML
-html
-  head
-    title Simple Test Title
-  body
-    h1 This is my title
-    p id="#\{id_helper}" class="hello world"
-      = hello_world
+p id="#\{id_helper}" class="hello world"
+  = hello_world
 HTML
 
-    engine = Slim::Engine.new(string)
+    expected = "<p id=\"notice\" class=\"hello world\">Hello World from @env</p>"
 
-    expected = "<html><head><title>Simple Test Title</title></head><body><h1>This is my title</h1><p id=\"notice\" class=\"hello world\">Hello World from @env</p></body></html>"
-
-    assert_equal expected, engine.render(@env)
+    assert_equal expected, Slim::Engine.new(string).render(@env)
   end
 
   def test_render_with_shortcut_attributes
     string = <<HTML
-html
-  head
-    title Simple Test Title
-  body
-    h1#title This is my title
-    #notice.hello.world
-      = hello_world
+h1#title This is my title
+#notice.hello.world
+  = hello_world
 HTML
 
-    engine = Slim::Engine.new(string)
+    expected = "<h1 id=\"title\">This is my title</h1><div id=\"notice\" class=\"hello world\">Hello World from @env</div>"
 
-    expected = "<html><head><title>Simple Test Title</title></head><body><h1 id=\"title\">This is my title</h1><div id=\"notice\" class=\"hello world\">Hello World from @env</div></body></html>"
-
-    assert_equal expected, engine.render(@env)
+    assert_equal expected, Slim::Engine.new(string).render(@env)
   end
 
   def test_render_with_call_to_set_attributes_and_call_to_set_content
     string = <<HTML
-html
-  head
-    title Simple Test Title
-  body
-    h1 This is my title
-    p id="#\{id_helper}" class="hello world" = hello_world
+p id="#\{id_helper}" class="hello world" = hello_world
 HTML
 
-    engine = Slim::Engine.new(string)
+    expected = "<p id=\"notice\" class=\"hello world\">Hello World from @env</p>"
 
-    expected = "<html><head><title>Simple Test Title</title></head><body><h1>This is my title</h1><p id=\"notice\" class=\"hello world\">Hello World from @env</p></body></html>"
-
-    assert_equal expected, engine.render(@env)
+    assert_equal expected, Slim::Engine.new(string).render(@env)
   end
 
   def test_render_with_parameterized_call_to_set_attributes_and_call_to_set_content
     string = <<HTML
-html
-  head
-    title Simple Test Title
-  body
-    h1 This is my title
-    p id="#\{id_helper}" class="hello world" = hello_world("Hello Ruby!")
+p id="#\{id_helper}" class="hello world" = hello_world("Hello Ruby!")
 HTML
 
-    engine = Slim::Engine.new(string)
+    expected = "<p id=\"notice\" class=\"hello world\">Hello Ruby!</p>"
 
-    expected = "<html><head><title>Simple Test Title</title></head><body><h1>This is my title</h1><p id=\"notice\" class=\"hello world\">Hello Ruby!</p></body></html>"
-
-    assert_equal expected, engine.render(@env)
+    assert_equal expected, Slim::Engine.new(string).render(@env)
   end
 
   def test_render_with_spaced_parameterized_call_to_set_attributes_and_call_to_set_content
     string = <<HTML
-html
-  head
-    title Simple Test Title
-  body
-    h1 This is my title
-    p id="#\{id_helper}" class="hello world" = hello_world "Hello Ruby!"
+p id="#\{id_helper}" class="hello world" = hello_world "Hello Ruby!"
 HTML
 
-    engine = Slim::Engine.new(string)
+    expected = "<p id=\"notice\" class=\"hello world\">Hello Ruby!</p>"
 
-    expected = "<html><head><title>Simple Test Title</title></head><body><h1>This is my title</h1><p id=\"notice\" class=\"hello world\">Hello Ruby!</p></body></html>"
-
-    assert_equal expected, engine.render(@env)
+    assert_equal expected, Slim::Engine.new(string).render(@env)
   end
 
   def test_render_with_spaced_parameterized_call_to_set_attributes_and_call_to_set_content_2
     string = <<HTML
-html
-  head
-    title Simple Test Title
-  body
-    h1 This is my title
-    p id="#\{id_helper}" class="hello world" = hello_world "Hello Ruby!", :dummy => "value"
+p id="#\{id_helper}" class="hello world" = hello_world "Hello Ruby!", :dummy => "value"
 HTML
 
-    engine = Slim::Engine.new(string)
+    expected = "<p id=\"notice\" class=\"hello world\">Hello Ruby!dummy value</p>"
 
-    expected = "<html><head><title>Simple Test Title</title></head><body><h1>This is my title</h1><p id=\"notice\" class=\"hello world\">Hello Ruby!dummy value</p></body></html>"
-
-    assert_equal expected, engine.render(@env)
+    assert_equal expected, Slim::Engine.new(string).render(@env)
   end
 
   def test_render_with_text_block
     string = <<HTML
-html
-  head
-    title Simple Test Title
-  body
-    h1 This is my title
-    p id="#\{id_helper}"
-      `
-       Phasellus ultricies vulputate lacus, eget pretium orci tincidunt tristique. Duis vitae luctus risus. Aliquam turpis massa, adipiscing in adipiscing ut, congue sed justo. Sed egestas ullamcorper nisl placerat dictum. Sed a leo lectus, sit amet vehicula nisl. Duis adipiscing congue tortor ut vulputate. Phasellus ligula lectus, congue non lobortis sed, dictum sed tellus. Vestibulum viverra vestibulum felis convallis pharetra. Phasellus a dignissim tellus. Proin dapibus malesuada lorem, et porttitor diam bibendum a. Donec et dui mauris, et tempus metus. Etiam pharetra varius dignissim. Maecenas lacinia, ligula ut tincidunt porttitor, sapien nisi pulvinar magna, nec sollicitudin libero odio bibendum nisi. Aenean ipsum eros, convallis id consequat nec, commodo eget diam. Integer malesuada, libero non dignissim varius, velit metus malesuada lectus, a consequat turpis purus ut elit.
+p
+  `
+   Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 HTML
 
-    engine = Slim::Engine.new(string)
+    expected = "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>"
 
-    expected = "<html><head><title>Simple Test Title</title></head><body><h1>This is my title</h1><p id=\"notice\">Phasellus ultricies vulputate lacus, eget pretium orci tincidunt tristique. Duis vitae luctus risus. Aliquam turpis massa, adipiscing in adipiscing ut, congue sed justo. Sed egestas ullamcorper nisl placerat dictum. Sed a leo lectus, sit amet vehicula nisl. Duis adipiscing congue tortor ut vulputate. Phasellus ligula lectus, congue non lobortis sed, dictum sed tellus. Vestibulum viverra vestibulum felis convallis pharetra. Phasellus a dignissim tellus. Proin dapibus malesuada lorem, et porttitor diam bibendum a. Donec et dui mauris, et tempus metus. Etiam pharetra varius dignissim. Maecenas lacinia, ligula ut tincidunt porttitor, sapien nisi pulvinar magna, nec sollicitudin libero odio bibendum nisi. Aenean ipsum eros, convallis id consequat nec, commodo eget diam. Integer malesuada, libero non dignissim varius, velit metus malesuada lectus, a consequat turpis purus ut elit.</p></body></html>"
-
-    assert_equal expected, engine.render(@env)
+    assert_equal expected, Slim::Engine.new(string).render(@env)
   end
 
   def test_render_with_text_block_with_subsequent_markup
     string = <<HTML
-html
-  head
-    title Simple Test Title
-  body
-    h1 This is my title
-    p id="#\{id_helper}"
-      `
-        Phasellus ultricies vulputate lacus, eget pretium orci tincidunt tristique. Duis vitae luctus risus. Aliquam turpis massa, adipiscing in adipiscing ut, congue sed justo. Sed egestas ullamcorper nisl placerat dictum. Sed a leo lectus, sit amet vehicula nisl. Duis adipiscing congue tortor ut vulputate. Phasellus ligula lectus, congue non lobortis sed, dictum sed tellus. Vestibulum viverra vestibulum felis convallis pharetra. Phasellus a dignissim tellus. Proin dapibus malesuada lorem, et porttitor diam bibendum a. Donec et dui mauris, et tempus metus. Etiam pharetra varius dignissim. Maecenas lacinia, ligula ut tincidunt porttitor, sapien nisi pulvinar magna, nec sollicitudin libero odio bibendum nisi. Aenean ipsum eros, convallis id consequat nec, commodo eget diam. Integer malesuada, libero non dignissim varius, velit metus malesuada lectus, a consequat turpis purus ut elit.
-    p Some more markup
+p
+  `
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+p Some more markup
 HTML
 
-    engine = Slim::Engine.new(string)
+    expected = "<p> Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p><p>Some more markup</p>"
 
-    expected = "<html><head><title>Simple Test Title</title></head><body><h1>This is my title</h1><p id=\"notice\"> Phasellus ultricies vulputate lacus, eget pretium orci tincidunt tristique. Duis vitae luctus risus. Aliquam turpis massa, adipiscing in adipiscing ut, congue sed justo. Sed egestas ullamcorper nisl placerat dictum. Sed a leo lectus, sit amet vehicula nisl. Duis adipiscing congue tortor ut vulputate. Phasellus ligula lectus, congue non lobortis sed, dictum sed tellus. Vestibulum viverra vestibulum felis convallis pharetra. Phasellus a dignissim tellus. Proin dapibus malesuada lorem, et porttitor diam bibendum a. Donec et dui mauris, et tempus metus. Etiam pharetra varius dignissim. Maecenas lacinia, ligula ut tincidunt porttitor, sapien nisi pulvinar magna, nec sollicitudin libero odio bibendum nisi. Aenean ipsum eros, convallis id consequat nec, commodo eget diam. Integer malesuada, libero non dignissim varius, velit metus malesuada lectus, a consequat turpis purus ut elit.</p><p>Some more markup</p></body></html>"
-
-    assert_equal expected, engine.render(@env)
+    assert_equal expected, Slim::Engine.new(string).render(@env)
   end
 
   def test_render_with_output_code_block
     string = <<HTML
-html
-  head
-    title Simple Test Title
-  body
-    h1 This is my title
-    p id="#\{id_helper}" class="hello world"
-      = hello_world "Hello Ruby!" do
-        | Hello from within a block!
+p
+  = hello_world "Hello Ruby!" do
+    | Hello from within a block!
 HTML
 
-    engine = Slim::Engine.new(string)
+    expected = "<p>Hello from within a block!Hello Ruby!</p>"
 
-    expected = "<html><head><title>Simple Test Title</title></head><body><h1>This is my title</h1><p id=\"notice\" class=\"hello world\">Hello from within a block!Hello Ruby!</p></body></html>"
-
-    assert_equal expected, engine.render(@env)
+    assert_equal expected, Slim::Engine.new(string).render(@env)
   end
 
   def test_render_with_output_code_within_block
     string = <<HTML
-html
-  head
-    title Simple Test Title
-  body
-    h1 This is my title
-    p id="#\{id_helper}" class="hello world"
-      = hello_world "Hello Ruby!" do
-        = hello_world "Hello from within a block! "
+p
+  = hello_world "Hello Ruby!" do
+    = hello_world "Hello from within a block! "
 HTML
 
-    engine = Slim::Engine.new(string)
+    expected = "<p>Hello from within a block! Hello Ruby!</p>"
 
-    expected = "<html><head><title>Simple Test Title</title></head><body><h1>This is my title</h1><p id=\"notice\" class=\"hello world\">Hello from within a block! Hello Ruby!</p></body></html>"
-
-    assert_equal expected, engine.render(@env)
+    assert_equal expected, Slim::Engine.new(string).render(@env)
   end
 end
