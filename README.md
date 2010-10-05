@@ -70,7 +70,7 @@ So here's what I came up with:
       body
         h1 id="headline" Welcome to my site.
 
-      # Or nest it.  __Note:__ Must use a pipe or a backtick (followed bya a space) to escape processing
+      # Or nest it.  __Note:__ Must use a pipe or a backtick (followed by a space) to escape processing
 
       body
         h1 id="headline" 
