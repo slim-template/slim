@@ -45,9 +45,9 @@ module Slim
 
         line_type = case marker
                     when '`', '|' then :text
-                    when '-' then :control_code
-                    when '=' then :output_code
-                    when '!' then :declaration
+                    when '-'      then :control_code
+                    when '='      then :output_code
+                    when '!'      then :declaration
                     else :markup
                     end
 
