@@ -53,12 +53,12 @@ So here's what I came up with:
           p No items found
 
         div id="footer"
-          ` Copyright &copy; 2010 Andrew Stone
+          | Copyright &copy; 2010 Andrew Stone
 
         = render partial: 'tracking_code' 
 
         script
-          ` $(content).do_something();
+          | $(content).do_something();
 
 
 ### How do I?
@@ -70,11 +70,11 @@ So here's what I came up with:
       body
         h1 id="headline" Welcome to my site.
 
-      # Or nest it.  __Note:__ Must use backtick (with following space) to escape processing
+      # Or nest it.  __Note:__ Must use a pipe or a backtick (followed bya a space) to escape processing
 
       body
         h1 id="headline" 
-          ` Welcome to my site.
+          | Welcome to my site.
 
 #### Add content to a tag with code
 
@@ -106,7 +106,7 @@ So here's what I came up with:
 
       body
         p
-          '
+          |
            This is a test of the text block.
         
       # The parsed result of the above:
@@ -118,7 +118,7 @@ So here's what I came up with:
 
       body
         p
-          '
+          |
            This line is on the left margin.
             This line will have one space in front of it.
              This line will have two spaces in front of it.
@@ -129,7 +129,7 @@ So here's what I came up with:
 * Standard Ruby syntax after '-' and '='
   * __end__ is not required
 * Can put content on same line or nest it.
-  * If you nest content (e.g. put it on the next line), start the line with a backtick ('`') or a pipe ('|')
+  * If you nest content (e.g. put it on the next line), start the line with a pipe ('|') a backtick ('`').
 * Indentation matters, but it's not as strict as Haml.
   * If you want to indent 2 spaces, then 5.  It's your choice. To nest markup you only need to indent by one space, the rest is gravy.
 
@@ -137,10 +137,10 @@ So here's what I came up with:
 ### Line indicators:
   __Please note that all line indicators must be followed by a space__
 
-* `
-  * The backtick tells Slim to just copy the line.  It essentially escapes any processing.
 * |
-  * *Same as '`'*.
+  * The pipe tells Slim to just copy the line. It essentially escapes any processing.
+* `
+  * _Same as the pipe ('|')._
 * -
   * The dash denotes control code (similar to Haml).  Examples of control code are loops and conditionals.
 * =
