@@ -7,7 +7,7 @@ module Slim
     include Optimizer
     AUTOCLOSED = %w(meta img link br hr input area param col base)
 
-    REGEX_LINE_PARSER               = /^(\s*)(!?`?\|?-?=?\w*)((?:\s*\w*="[^=]+")+|(\s*[#.]\S+))?(.*)/
+    REGEX_LINE_PARSER               = /^(\s*)(!?`?\|?-?=?\w*)((?:\s*(?:\w|-)*="[^=]+")+|(\s*[#.]\S+))?(.*)/
     REGEX_LINE_CONTAINS_OUTPUT_CODE = /^=(.*)/
     REGEX_METHOD_HAS_NO_PARENTHESES = /^\w+( )/
     REGEX_CODE_BLOCK_DETECTED       = / do ?(.*)$/

@@ -115,6 +115,17 @@ HTML
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
 
+  def test_render_with_call_to_set_custom_attributes
+    string = <<HTML
+p data-id="#\{id_helper}" data-class="hello world"
+  = hello_world
+HTML
+
+    expected = "<p data-id=\"notice\" data-class=\"hello world\">Hello World from @env</p>"
+
+    assert_equal expected, Slim::Engine.new(string).render(@env)
+  end
+
   def test_render_with_shortcut_attributes
     string = <<HTML
 h1#title This is my title
