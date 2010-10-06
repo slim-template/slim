@@ -279,6 +279,18 @@ TEMPLATE
     assert_equal expected, TestEngine.new(string).compiled
   end
 
+  def test_control_code_loop
+    string = <<TEMPLATE
+p
+  - 3.times do
+    | Hey!
+TEMPLATE
+
+    expected = %q|_buf = [];_buf << "<p>";3.times do;_buf << "Hey!";end;_buf << "</p>";_buf.join;|
+
+    assert_equal expected, TestEngine.new(string).compiled
+  end
+
   # Use this to do a line by line check. Much easier to see where the problem is.
   def iterate_it(expected, output)
     es = expected.split(';')

@@ -215,4 +215,16 @@ HTML
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
+
+  def test_render_with_control_code_loop
+    string = <<HTML
+p
+  - 3.times do
+    | Hey!
+HTML
+
+    expected = "<p>Hey!Hey!Hey!</p>"
+
+    assert_equal expected, Slim::Engine.new(string).render(@env)
+  end
 end
