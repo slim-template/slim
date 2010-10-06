@@ -68,7 +68,7 @@ module Slim
 
         if string
           string.strip!
-          string = nil unless string.strip.length > 0
+          string = nil if string.empty?
         end
 
         unless indent > last_indent
