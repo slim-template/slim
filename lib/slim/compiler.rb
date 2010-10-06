@@ -7,12 +7,15 @@ module Slim
     include Optimizer
     AUTOCLOSED = %w(meta img link br hr input area param col base)
 
-    REGEX_LINE_PARSER               = /^(\s*)(!?`?\|?-?=?\w*)((?:\s*(?:\w|-)*="[^=]+")+|(\s*[#.]\S+))?(.*)/
-    REGEX_LINE_CONTAINS_OUTPUT_CODE = /^=(.*)/
-    REGEX_METHOD_HAS_NO_PARENTHESES = /^\w+( )/
-    REGEX_CODE_BLOCK_DETECTED       = / do ?(.*)$/
-    REGEX_FIND_ATTR_ID              = /#([^.\s]+)/
-    REGEX_FIND_ATTR_CLASS           = /\.([^#\s]+)/
+    CONTROL_WORDS = %w{if else elsif do}
+
+    REGEX_LINE_PARSER                = /^(\s*)(!?`?\|?-?=?\w*)((?:\s*(?:\w|-)*="[^=]+")+|(\s*[#.]\S+))?(.*)/
+    REGEX_LINE_CONTAINS_OUTPUT_CODE  = /^=(.*)/
+    REGEX_METHOD_HAS_NO_PARENTHESES  = /^\w+( )/
+    REGEX_CODE_BLOCK_DETECTED        = / do ?(.*)$/
+    REGEX_CODE_CONTROL_WORD_DETECTED = /(?:( )|(\())(#{CONTROL_WORDS * '|'})\b ?(.*)$/
+    REGEX_FIND_ATTR_ID               = /#([^.\s]+)/
+    REGEX_FIND_ATTR_CLASS            = /\.([^#\s]+)/
 
     def compile
       @_buffer = ["_buf = [];"]
@@ -142,8 +145,7 @@ module Slim
     # adds a pair of parentheses to the method
     def parenthesesify_method(string)
       if string =~ REGEX_METHOD_HAS_NO_PARENTHESES
-        string.sub!(' ', '(')
-        string.sub!(REGEX_CODE_BLOCK_DETECTED, ') do \1') || string << ')'
+        string.sub!(' ', '(') && string.sub!(REGEX_CODE_CONTROL_WORD_DETECTED, '\2) \3 \4') || string << ')'
       end
       string
     end

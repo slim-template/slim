@@ -22,4 +22,8 @@ class Env
     yield if block_given?
     text
   end
+
+  def in_keyword
+    "starts with keyword"
+  end
 end

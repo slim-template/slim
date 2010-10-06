@@ -59,6 +59,17 @@ HTML
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
 
+  def test_render_with_conditional_call
+    string = <<HTML
+p
+  = hello_world if true
+HTML
+
+    expected = "<p>Hello World from @env</p>"
+
+    assert_equal expected, Slim::Engine.new(string).render(@env)
+  end
+
   def test_render_with_parameterized_call
     string = <<HTML
 p
@@ -235,6 +246,26 @@ p
 HTML
 
     expected = "<p>Hey!Hey!Hey!</p>"
+
+    assert_equal expected, Slim::Engine.new(string).render(@env)
+  end
+
+  def test_render_with_inline_condition
+    string = <<HTML
+p = hello_world if true
+HTML
+
+    expected = "<p>Hello World from @env</p>"
+
+    assert_equal expected, Slim::Engine.new(string).render(@env)
+  end
+
+  def test_render_with_attribute_starts_with_keyword
+    string = <<HTML
+p = hello_world in_keyword
+HTML
+
+    expected = "<p>starts with keyword</p>"
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
