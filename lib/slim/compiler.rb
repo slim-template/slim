@@ -17,7 +17,7 @@ module Slim
     REGEX_CODE_CONTROL_WORD_DETECTED      = /(?:( )|(\())(#{CONTROL_WORDS * '|'})\b ?(.*)$/
     REGEX_CODE_ELSE_CONTROL_WORD_DETECTED = /^(#{ELSE_CONTROL_WORDS * '|'})\b/
     REGEX_FIND_ATTR_ID                    = /#([^.\s]+)/
-    REGEX_FIND_ATTR_CLASS                 = /\.([^#\s]+)/
+    REGEX_FIND_ATTR_CLASSES               = /\.([^#\s]+)/
 
     def compile
       @_buffer = ["_buf = [];"]
@@ -154,7 +154,7 @@ module Slim
     # converts 'p#hello.world' to 'p id="hello" class="world"'
     def normalize_attributes(string)
       string.sub!(REGEX_FIND_ATTR_ID, ' id="\1"')
-      string.sub!(REGEX_FIND_ATTR_CLASS, ' class="\1"')
+      string.sub!(REGEX_FIND_ATTR_CLASSES, ' class="\1"')
       string.gsub!('.', ' ')
       string
     end
