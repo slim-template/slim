@@ -58,9 +58,7 @@ module Slim
           string ||= ""
           string << $1
         else
-          if string
-            @optimized << "_buf << \"#{string}\";"
-          end
+          @optimized << "_buf << \"#{string}\";" if string
           @optimized << line
           string = nil
         end
