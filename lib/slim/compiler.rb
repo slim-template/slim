@@ -28,7 +28,7 @@ module Slim
 
         if line.length == 0
           @_buffer << "_buf << \"<br/>\";" if @in_text
-          next 
+          next
         end
 
         line =~ REGEX_LINE_PARSER

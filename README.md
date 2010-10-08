@@ -1,6 +1,6 @@
-## Slim
+# Slim
 
-Slim is a template language whose goal is reduce the syntax to the essential parts without becoming cryptic.  
+Slim is a template language whose goal is reduce the syntax to the essential parts without becoming cryptic.
 
 ## What?
 
@@ -28,10 +28,10 @@ I actually like the indentation and tag closing nature of Haml.  I don't like th
 
 
 So here's what I came up with:
-    
+
     ! doctype html
-    html 
-      head 
+    html
+      head
         title Slim Examples
         meta name="keywords" content="template language"
       body
@@ -44,10 +44,10 @@ So here's what I came up with:
         - unless items.empty?
           table
             - for item in items do
-              tr 
-                td 
+              tr
+                td
                   = item.name
-                td 
+                td
                   = item.price
         - else
           p No items found
@@ -55,7 +55,7 @@ So here's what I came up with:
         div id="footer"
           | Copyright &copy; 2010 Andrew Stone
 
-        = render partial: 'tracking_code' 
+        = render partial: 'tracking_code'
 
         script
           | $(content).do_something();
@@ -73,7 +73,7 @@ So here's what I came up with:
       # Or nest it.  __Note:__ Must use a pipe or a backtick (followed by a space) to escape processing
 
       body
-        h1 id="headline" 
+        h1 id="headline"
           | Welcome to my site.
 
 #### Add content to a tag with code
@@ -83,7 +83,7 @@ So here's what I came up with:
       body
         h1 id="headline" = page_headline
 
-      # Or nest it.  
+      # Or nest it.
 
       body
         h1 id="headline"
@@ -118,26 +118,26 @@ So here's what I came up with:
       # Just use standard Ruby interpolation.
 
       body
-        table 
-          - for user in users do 
+        table
+          - for user in users do
             tr id="user_#{user.id}"
-          
+
 
 #### Treat multiple lines of code as text that should bypass parsing.
 
-      # Use a backtick to start the escape.  Each following line that is 
+      # Use a backtick to start the escape.  Each following line that is
       # indented greater than the backtick is copied over.
 
       body
         p
           |
            This is a test of the text block.
-        
+
       # The parsed result of the above:
 
       <body><p>This is a test of the text block.</p></body>
-      
-      # The left margin is set at the indent of the backtick + one space.  
+
+      # The left margin is set at the indent of the backtick + one space.
       # Any additional spaces will be copied over.
 
       body
@@ -168,7 +168,7 @@ So here's what I came up with:
 * -
   * The dash denotes control code (similar to Haml).  Examples of control code are loops and conditionals.
 * =
-  * The equal sign tells Slim it's a Ruby call that produces output to add to the buffer (similar to Erb and Haml). 
+  * The equal sign tells Slim it's a Ruby call that produces output to add to the buffer (similar to Erb and Haml).
 * !
   * This is a directive.  Most common example:
         ` ! doctype html renders  <!doctype html> `

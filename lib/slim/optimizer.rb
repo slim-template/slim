@@ -6,13 +6,13 @@ module Slim
   #       title Simple Test Title
   #     body
   #       - if logged_in?
-  #         p 
+  #         p
   #           ` Welcome!
   #       - else
   #         p
   #           ` Please sign in.
   #
-  # When compiling the above code to be eval'd, Slim produces a 
+  # When compiling the above code to be eval'd, Slim produces a
   # compiled string that looks like:
   #
   #     buf = [];

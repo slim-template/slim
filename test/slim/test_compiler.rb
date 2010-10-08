@@ -99,7 +99,7 @@ HTML
   def test_nested_content
     string = <<HTML
 body
-  p 
+  p
     ` Hello World, meet Slim.
   p
     | Hello World, meet Slim again.
@@ -113,7 +113,7 @@ HTML
   def test_closing_tag_without_content_or_attributes
     string = <<HTML
 hr
-p 
+p
   ` Hello World, meet Slim.
 HTML
 
@@ -126,7 +126,7 @@ HTML
   def test_closing_tag_without_content
     string = <<HTML
 img width="100" height="50" src="/images/test.jpg"
-p 
+p
   ` Hello World, meet Slim.
 HTML
 
@@ -138,7 +138,7 @@ HTML
 
   def test_text_that_starts_with_tag_name
     string = <<HTML
-p 
+p
   ` another one bites the dust
 p
   ` i am iron man
@@ -154,7 +154,7 @@ HTML
     string = <<HTML
 body
   - if something
-    p 
+    p
       ` another one bites the dust
   - else
     p
@@ -168,7 +168,7 @@ HTML
 
   def test_simple_output_code
     string = <<HTML
-p 
+p
   = hello_world
 HTML
 
@@ -179,7 +179,7 @@ HTML
 
   def test_simple_output_code_with_params
     string = <<HTML
-p 
+p
   = hello_world(params[:key])
 HTML
 
@@ -245,8 +245,8 @@ TEMPLATE
 
   def test_simple_html_with_multiple_wraparound_text
     string = <<HTML
-p 
-  ` 
+p
+  `
     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam malesuada, dui at condimentum dapibus, purus sapien fringilla est, vel eleifend massa purus ut lectus. Praesent aliquam, ipsum eu ornare porta, tellus lacus viverra diam, nec scelerisque ipsum nunc et lacus. Nam adipiscing velit eget dolor ultricies in dignissim augue ultricies. Sed sed leo in sapien pretium dictum. Fusce sem quam, tincidunt vel lobortis sed, tincidunt vulputate est. Phasellus et ipsum quam, ac fringilla orci. In facilisis est et ante tempus suscipit. Morbi elementum quam ut urna laoreet vel malesuada justo adipiscing. Suspendisse eu lorem id lacus molestie dapibus fringilla ut orci. Cras pellentesque auctor leo, nec bibendum est suscipit id. Mauris dignissim aliquet libero vitae vulputate. Maecenas viverra sodales suscipit. Aenean eu nisi velit.
 
    Phasellus ultricies vulputate lacus, eget pretium orci tincidunt tristique. Duis vitae luctus risus. Aliquam turpis massa, adipiscing in adipiscing ut, congue sed justo. Sed egestas ullamcorper nisl placerat dictum. Sed a leo lectus, sit amet vehicula nisl. Duis adipiscing congue tortor ut vulputate. Phasellus ligula lectus, congue non lobortis sed, dictum sed tellus. Vestibulum viverra vestibulum felis convallis pharetra. Phasellus a dignissim tellus. Proin dapibus malesuada lorem, et porttitor diam bibendum a. Donec et dui mauris, et tempus metus. Etiam pharetra varius dignissim. Maecenas lacinia, ligula ut tincidunt porttitor, sapien nisi pulvinar magna, nec sollicitudin libero odio bibendum nisi. Aenean ipsum eros, convallis id consequat nec, commodo eget diam. Integer malesuada, libero non dignissim varius, velit metus malesuada lectus, a consequat turpis purus ut elit.
