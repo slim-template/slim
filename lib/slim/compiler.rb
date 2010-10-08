@@ -5,8 +5,8 @@ require 'slim/optimizer'
 module Slim
   module Compiler
     include Optimizer
-    AUTOCLOSED = %w(meta img link br hr input area param col base)
 
+    AUTOCLOSED         = %w{meta img link br hr input area param col base}
     CONTROL_WORDS      = %w{if unless do}
     ELSE_CONTROL_WORDS = %w{else elsif}
 
