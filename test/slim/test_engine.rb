@@ -34,6 +34,20 @@ HTML
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
 
+  def test_render_with_consecutive_conditionals
+    string = <<HTML
+div
+  - if show_first? true
+      p The first paragraph
+  - if show_first? true
+      p The second paragraph
+HTML
+
+    expected = "<div><p>The first paragraph</p><p>The second paragraph</p></div>"
+
+    assert_equal expected, Slim::Engine.new(string).render(@env)
+  end
+
   def test_render_with_parameterized_conditional
     string = <<HTML
 div

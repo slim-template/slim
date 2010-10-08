@@ -166,6 +166,22 @@ HTML
     assert_equal expected, TestEngine.new(string).compiled
   end
 
+  def test_consecutive_if_code_blocks
+    string = <<HTML
+body
+  - if something
+    p
+      ` another one bites the dust
+  - if something_else
+    p
+      ` i am iron man
+HTML
+
+    expected = %q|_buf = [];_buf << "<body>";if something;_buf << "<p>";_buf << "another one bites the dust";_buf << "</p>";end;if something_else;_buf << "<p>";_buf << "i am iron man";_buf << "</p>";end;_buf << "</body>";_buf.join;|
+
+    assert_equal expected, TestEngine.new(string).compiled
+  end
+
   def test_simple_output_code
     string = <<HTML
 p

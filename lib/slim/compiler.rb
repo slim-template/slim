@@ -7,15 +7,17 @@ module Slim
     include Optimizer
     AUTOCLOSED = %w(meta img link br hr input area param col base)
 
-    CONTROL_WORDS = %w{if unless else elsif do}
+    CONTROL_WORDS      = %w{if unless do}
+    ELSE_CONTROL_WORDS = %w{else elsif}
 
-    REGEX_LINE_PARSER                = /^(\s*)(!?`?\|?-?=?\w*)((?:\s*(?:\w|-)*="[^=]+")+|(\s*[#.]\S+))?(.*)/
-    REGEX_LINE_CONTAINS_OUTPUT_CODE  = /^=(.*)/
-    REGEX_METHOD_HAS_NO_PARENTHESES  = /^\w+( )/
-    REGEX_CODE_BLOCK_DETECTED        = / do ?(.*)$/
-    REGEX_CODE_CONTROL_WORD_DETECTED = /(?:( )|(\())(#{CONTROL_WORDS * '|'})\b ?(.*)$/
-    REGEX_FIND_ATTR_ID               = /#([^.\s]+)/
-    REGEX_FIND_ATTR_CLASS            = /\.([^#\s]+)/
+    REGEX_LINE_PARSER                     = /^(\s*)(!?`?\|?-?=?\w*)((?:\s*(?:\w|-)*="[^=]+")+|(\s*[#.]\S+))?(.*)/
+    REGEX_LINE_CONTAINS_OUTPUT_CODE       = /^=(.*)/
+    REGEX_METHOD_HAS_NO_PARENTHESES       = /^\w+( )/
+    REGEX_CODE_BLOCK_DETECTED             = / do ?(.*)$/
+    REGEX_CODE_CONTROL_WORD_DETECTED      = /(?:( )|(\())(#{CONTROL_WORDS * '|'})\b ?(.*)$/
+    REGEX_CODE_ELSE_CONTROL_WORD_DETECTED = /^(#{ELSE_CONTROL_WORDS * '|'})\b/
+    REGEX_FIND_ATTR_ID                    = /#([^.\s]+)/
+    REGEX_FIND_ATTR_CLASS                 = /\.([^#\s]+)/
 
     def compile
       @_buffer = ["_buf = [];"]
@@ -81,11 +83,11 @@ module Slim
             ender, ender_indent = enders.pop
 
             if ender_indent >= indent
-              unless ender == 'end;' && line_type == :control_code && ender_indent == indent
+              unless ender == 'end;' && line_type == :control_code && ender_indent == indent && string =~ REGEX_CODE_ELSE_CONTROL_WORD_DETECTED
                 @_buffer << ender
               end
             else
-              enders << [ender, ender_indent] 
+              enders << [ender, ender_indent]
               continue_closing = false
             end
           end while continue_closing == true
