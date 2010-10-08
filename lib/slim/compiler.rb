@@ -82,10 +82,9 @@ module Slim
             continue_closing = true
             ender, ender_indent = enders.pop
 
-            if ender_indent >= indent
-              unless ender == 'end;' && line_type == :control_code && ender_indent == indent && string =~ REGEX_CODE_ELSE_CONTROL_WORD_DETECTED
+            unless ender_indent < indent || ender == 'end;' && line_type == :control_code &&
+              ender_indent == indent && string =~ REGEX_CODE_ELSE_CONTROL_WORD_DETECTED
                 @_buffer << ender
-              end
             else
               enders << [ender, ender_indent]
               continue_closing = false
