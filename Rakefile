@@ -15,6 +15,7 @@ begin
     gem.homepage = "http://github.com/stonean/slim"
     gem.authors = ["Andrew Stone"]
     gem.add_dependency 'escape_utils'
+    gem.add_development_dependency 'rake'
     gem.add_development_dependency 'jeweler'
   end
   Jeweler::GemcutterTasks.new

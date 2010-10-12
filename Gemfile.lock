@@ -15,6 +15,7 @@ GEM
       git (>= 1.2.5)
       rubyforge (>= 2.0.0)
     json_pure (1.4.6)
+    rake (0.8.7)
     rubyforge (2.0.4)
       json_pure (>= 1.1.7)
 
@@ -24,4 +25,5 @@ PLATFORMS
 DEPENDENCIES
   escape_utils
   jeweler
+  rake
   slim!
