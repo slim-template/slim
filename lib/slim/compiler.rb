@@ -157,9 +157,8 @@ module Slim
           string.sub!(REGEX_CODE_CONTROL_WORD_DETECTED, '\2) \3 \4') || string << ')'
       end
 
-
       unless string =~ REGEX_CODE_BLOCK_DETECTED || noescape
-        string.sub!(/^(\w+\(.*\))(.*)/,'Slim.escape_html(\1) \2')
+        string.sub!(/^(\w+\(.*\)).*/, 'Slim.escape_html(\1) \2')
       end
 
       return string.strip
