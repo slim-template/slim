@@ -283,4 +283,24 @@ HTML
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
+
+  def test_hash_call
+    string = <<HTML
+p = hash[:a] 
+HTML
+
+    expected = "<p>The letter a</p>"
+
+    assert_equal expected, Slim::Engine.new(string).render(@env)
+  end
+
+  def test_escaping_evil_method
+    string = <<HTML
+p = evil_method
+HTML
+
+    expected = "<p>&lt;script&gt;do_something_evil();&lt;&#47;script&gt;</p>"
+
+    assert_equal expected, Slim::Engine.new(string).render(@env)
+  end
 end

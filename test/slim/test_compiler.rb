@@ -188,7 +188,7 @@ p
   = hello_world
 HTML
 
-    expected = %q|_buf = [];_buf << "<p>";_buf << hello_world;_buf << "</p>";_buf.join;|
+    expected = %q|_buf = [];_buf << "<p>";_buf << Slim.escape_html(hello_world());_buf << "</p>";_buf.join;|
 
     assert_equal expected, TestEngine.new(string).compiled
   end
@@ -199,7 +199,7 @@ p
   = hello_world(params[:key])
 HTML
 
-    expected = %q|_buf = [];_buf << "<p>";_buf << hello_world(params[:key]);_buf << "</p>";_buf.join;|
+    expected = %q|_buf = [];_buf << "<p>";_buf << Slim.escape_html(hello_world(params[:key]));_buf << "</p>";_buf.join;|
 
     assert_equal expected, TestEngine.new(string).compiled
   end
@@ -221,7 +221,7 @@ body
   p id="first" = hello_world
 TEMPLATE
 
-    expected = %q|_buf = [];_buf << "<body>";_buf << "<p id=\"first\">";_buf << hello_world;_buf << "</p>";_buf << "</body>";_buf.join;|
+    expected = %q|_buf = [];_buf << "<body>";_buf << "<p id=\"first\">";_buf << Slim.escape_html(hello_world());_buf << "</p>";_buf << "</body>";_buf.join;|
 
     assert_equal expected, TestEngine.new(string).compiled
   end
@@ -232,7 +232,7 @@ body
   p id="first" = hello_world("Hello Ruby!")
 TEMPLATE
 
-    expected = %q|_buf = [];_buf << "<body>";_buf << "<p id=\"first\">";_buf << hello_world("Hello Ruby!");_buf << "</p>";_buf << "</body>";_buf.join;|
+    expected = %q|_buf = [];_buf << "<body>";_buf << "<p id=\"first\">";_buf << Slim.escape_html(hello_world("Hello Ruby!"));_buf << "</p>";_buf << "</body>";_buf.join;|
 
     assert_equal expected, TestEngine.new(string).compiled
   end
@@ -243,7 +243,7 @@ body
   p id="first" = hello_world "Hello Ruby!"
 TEMPLATE
 
-    expected = %q|_buf = [];_buf << "<body>";_buf << "<p id=\"first\">";_buf << hello_world("Hello Ruby!");_buf << "</p>";_buf << "</body>";_buf.join;|
+    expected = %q|_buf = [];_buf << "<body>";_buf << "<p id=\"first\">";_buf << Slim.escape_html(hello_world("Hello Ruby!"));_buf << "</p>";_buf << "</body>";_buf.join;|
 
     assert_equal expected, TestEngine.new(string).compiled
   end
@@ -254,7 +254,7 @@ body
   p id="first" = hello_world "Hello Ruby!", :dummy => "value"
 TEMPLATE
 
-    expected = %q|_buf = [];_buf << "<body>";_buf << "<p id=\"first\">";_buf << hello_world("Hello Ruby!", :dummy => "value");_buf << "</p>";_buf << "</body>";_buf.join;|
+    expected = %q|_buf = [];_buf << "<body>";_buf << "<p id=\"first\">";_buf << Slim.escape_html(hello_world("Hello Ruby!", :dummy => "value"));_buf << "</p>";_buf << "</body>";_buf.join;|
 
     assert_equal expected, TestEngine.new(string).compiled
   end
@@ -303,6 +303,26 @@ p
 TEMPLATE
 
     expected = %q|_buf = [];_buf << "<p>";3.times do;_buf << "Hey!";end;_buf << "</p>";_buf.join;|
+
+    assert_equal expected, TestEngine.new(string).compiled
+  end
+
+  def test_call_to_hash
+    string = <<TEMPLATE
+p = session[:id]
+TEMPLATE
+
+    expected = %q|_buf = [];_buf << "<p>";_buf << session[:id];_buf << "</p>";_buf.join;|
+
+    assert_equal expected, TestEngine.new(string).compiled
+  end
+
+  def test_escape_escaping
+    string = <<TEMPLATE
+p == safe_method_call
+TEMPLATE
+
+    expected = %q|_buf = [];_buf << "<p>";_buf << safe_method_call();_buf << "</p>";_buf.join;|
 
     assert_equal expected, TestEngine.new(string).compiled
   end

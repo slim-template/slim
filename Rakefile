@@ -14,6 +14,7 @@ begin
     gem.email = "andy@stonean.com"
     gem.homepage = "http://github.com/stonean/slim"
     gem.authors = ["Andrew Stone"]
+    gem.add_dependency 'escape_utils'
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError

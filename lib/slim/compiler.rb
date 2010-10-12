@@ -145,10 +145,24 @@ module Slim
 
     # adds a pair of parentheses to the method
     def parenthesesify_method(string)
-      if string =~ REGEX_METHOD_HAS_NO_PARENTHESES
-        string.sub!(' ', '(') && string.sub!(REGEX_CODE_CONTROL_WORD_DETECTED, '\2) \3 \4') || string << ')'
+      if string =~ /^=(.*)/ # used ==
+        string = $1.strip
+        noescape = true
       end
-      string
+
+      string << ' ' if string =~ /^\s*\w+\S?$/
+
+      if string =~ REGEX_METHOD_HAS_NO_PARENTHESES
+        string.sub!(' ', '(') && 
+          string.sub!(REGEX_CODE_CONTROL_WORD_DETECTED, '\2) \3 \4') || string << ')'
+      end
+
+
+      unless string =~ REGEX_CODE_BLOCK_DETECTED || noescape
+        string.sub!(/^(\w+\(.*\))(.*)/,'Slim.escape_html(\1) \2')
+      end
+
+      return string.strip
     end
 
     # converts 'p#hello.world' to 'p id="hello" class="world"'

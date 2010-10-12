@@ -13,6 +13,10 @@ class Env
     "notice"
   end
 
+  def hash
+    {:a => 'The letter a', :b => 'The letter b'}
+  end
+
   def show_first?(show = false)
     show
   end
@@ -25,5 +29,9 @@ class Env
 
   def in_keyword
     "starts with keyword"
+  end
+
+  def evil_method
+    "<script>do_something_evil();</script>"
   end
 end

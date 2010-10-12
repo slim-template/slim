@@ -122,6 +122,13 @@ So here's what I came up with:
           - for user in users do
             tr id="user_#{user.id}"
 
+#### Escape the escaping?
+
+      # Just use a double equal sign
+
+      body
+        h1 id="headline"
+          == page_headline
 
 #### Treat multiple lines of code as text that should bypass parsing.
 
@@ -169,6 +176,8 @@ So here's what I came up with:
   * The dash denotes control code (similar to Haml).  Examples of control code are loops and conditionals.
 * =
   * The equal sign tells Slim it's a Ruby call that produces output to add to the buffer (similar to Erb and Haml).
+* ==
+  * Same as the single equal sign, but does not go through the escape_html method.
 * !
   * This is a directive.  Most common example:
         ` ! doctype html renders  <!doctype html> `
