@@ -13,5 +13,3 @@ module ActionView
 
   Template.register_default_template_handler :slim, TemplateHandlers::SlimHandler
 end
-
-puts ">> Slim (v#{Slim.version})"
