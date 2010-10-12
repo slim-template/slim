@@ -153,7 +153,7 @@ module Slim
       string << ' ' if string =~ /^\s*\w+\S?$/
 
       if string =~ REGEX_METHOD_HAS_NO_PARENTHESES
-        string.sub!(' ', '(') && 
+        string.sub!(' ', '(') &&
           string.sub!(REGEX_CODE_CONTROL_WORD_DETECTED, '\2) \3 \4') || string << ')'
       end
 
