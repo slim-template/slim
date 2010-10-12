@@ -1,0 +1,17 @@
+PATH
+  remote: .
+  specs:
+    slim (0.5.1)
+      escape_utils
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+    escape_utils (0.1.8)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  escape_utils
+  slim!

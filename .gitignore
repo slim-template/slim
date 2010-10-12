@@ -3,3 +3,4 @@ pkg
 readme.html
 .yardoc/
 doc/
+.bundle/

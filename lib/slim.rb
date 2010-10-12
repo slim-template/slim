@@ -2,6 +2,7 @@
 
 $:.unshift File.dirname(__FILE__)
 
+require 'bundler/setup'
 require 'escape_utils'
 require 'slim/compiler'
 require 'slim/engine'
