@@ -14,7 +14,7 @@ module Slim
     REGEX_LINE_CONTAINS_OUTPUT_CODE       = /^=(.*)/
     REGEX_METHOD_HAS_NO_PARENTHESES       = /^\w+\s/
     REGEX_CODE_BLOCK_DETECTED             = / do ?.*$/
-    REGEX_CODE_CONTROL_WORD_DETECTED      = /(?:( )|(\())(#{CONTROL_WORDS * '|'})\b ?(.*)$/
+    REGEX_CODE_CONTROL_WORD_DETECTED      = /(?:\s|(\())(#{CONTROL_WORDS * '|'})\b\s?(.*)$/
     REGEX_CODE_ELSE_CONTROL_WORD_DETECTED = /^#{ELSE_CONTROL_WORDS * '\b|'}\b/
     REGEX_FIND_HTML_ATTR_ID               = /#([^.\s]+)/
     REGEX_FIND_HTML_ATTR_CLASSES          = /\.([^#\s]+)/
@@ -154,7 +154,7 @@ module Slim
 
       if string =~ REGEX_METHOD_HAS_NO_PARENTHESES
         string.sub!(' ', '(') &&
-          string.sub!(REGEX_CODE_CONTROL_WORD_DETECTED, '\2) \3 \4') || string << ')'
+          string.sub!(REGEX_CODE_CONTROL_WORD_DETECTED, '\1) \2 \3') || string << ')'
       end
 
       unless string =~ REGEX_CODE_BLOCK_DETECTED || noescape
