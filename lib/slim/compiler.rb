@@ -12,7 +12,7 @@ module Slim
 
     REGEX_LINE_PARSER                     = /^(\s*)(!?`?\|?-?=?\w*)((?:\s*(?:\w|-)*="[^=]+")+|(\s*[#.]\S+))?(.*)/
     REGEX_LINE_CONTAINS_OUTPUT_CODE       = /^=(.*)/
-    REGEX_METHOD_HAS_NO_PARENTHESES       = /^\w+( )/
+    REGEX_METHOD_HAS_NO_PARENTHESES       = /^\w+\s/
     REGEX_CODE_BLOCK_DETECTED             = / do ?(.*)$/
     REGEX_CODE_CONTROL_WORD_DETECTED      = /(?:( )|(\())(#{CONTROL_WORDS * '|'})\b ?(.*)$/
     REGEX_CODE_ELSE_CONTROL_WORD_DETECTED = /^(#{ELSE_CONTROL_WORDS * '|'})\b/
