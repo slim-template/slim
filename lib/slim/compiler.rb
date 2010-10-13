@@ -124,7 +124,7 @@ module Slim
       end # template iterator
 
       enders.reverse_each do |t|
-        @_buffer << t[0].to_s
+        @_buffer << t[0]
       end
 
       @_buffer << "_buf.join;"
