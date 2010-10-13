@@ -49,21 +49,22 @@ module Slim
   #     _buf << "</body></html>";
   #     _buf.join;
   module Optimizer
-    def optimize
-      @optimized = ""
-      string     = nil
+    def optimize!
+      optimized = ""
+      string    = nil
 
       @_buffer.each do |line|
         if line =~ /^_buf << "(.+)"/
           string ||= ""
           string << $1
         else
-          @optimized << "_buf << \"#{string}\";" if string
-          @optimized << line
+          optimized << "_buf << \"#{string}\";" if string
+          optimized << line
           string = nil
         end
       end
-      return nil
+
+      optimized
     end
   end # Optimizer
 end # Slim

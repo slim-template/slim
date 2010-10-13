@@ -129,11 +129,8 @@ module Slim
 
       @_buffer << "_buf.join;"
 
-      @compiled = @_buffer.join
-
-      optimize
-
-      return nil
+      @compiled  = @_buffer.join
+      @optimized = optimize!
     end
 
     private
