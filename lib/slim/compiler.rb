@@ -11,7 +11,7 @@ module Slim
     ELSE_CONTROL_WORDS = %w{else elsif}
 
     REGEX_LINE_PARSER                     = /^(\s*)(!?`?\|?-?=?\/?\w*)((?:\s*(?:\w|-)*="[^=]+")+|(\s*[#.]\S+))?(.*)/
-    REGEX_LINE_CONTAINS_OUTPUT_CODE       = /^=(.*)/
+    REGEX_LINE_CONTAINS_OUTPUT_CODE       = /^\s*=(.*)/
     REGEX_LINE_CONTAINS_ONLY_HTML_TAG     = /^\s*\w+\S?$/
     REGEX_LINE_CONTAINS_METHOD_DETECTED   = /^(\w+\(.*\))(.*)/
     REGEX_METHOD_HAS_NO_PARENTHESES       = /^\w+\s/
@@ -49,7 +49,10 @@ module Slim
         marker         = $2
         attrs          = $3
         shortcut_attrs = $4
-        string         = $5.strip
+        string         = $5
+
+        # Remove the first space, but allow people to pad if they want.
+        string.slice!(0) if string =~ /^\s/
 
         # prepends "div" to the shortcut form of attrs if no marker is given
         marker = 'div' if shortcut_attrs && marker.empty?
@@ -96,7 +99,6 @@ module Slim
           end
 
           unless string.empty?
-            string.lstrip!
             if string =~ REGEX_LINE_CONTAINS_OUTPUT_CODE
               @_buffer << "_buf << #{parse_string($1.strip)};"
             else
