@@ -49,7 +49,7 @@ module Slim
         marker         = $2
         attrs          = $3
         shortcut_attrs = $4
-        string         = $5
+        string         = $5.strip
 
         # prepends "div" to the shortcut form of attrs if no marker is given
         if shortcut_attrs && marker.empty?
@@ -72,11 +72,6 @@ module Slim
         if attrs
           attrs = normalize_attributes(attrs) if shortcut_attrs
           attrs.gsub!('"', '\"')
-        end
-
-        if string
-          string.strip!
-          string = nil if string.empty?
         end
 
         unless indent > last_indent
@@ -106,7 +101,7 @@ module Slim
             @_buffer << "_buf << \"<#{marker}#{attrs || ''}>\";"
           end
 
-          if string
+          unless string.empty?
             string.lstrip!
             if string =~ REGEX_LINE_CONTAINS_OUTPUT_CODE
               @_buffer << "_buf << #{parse_string($1.strip)};"
