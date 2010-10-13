@@ -340,6 +340,19 @@ TEMPLATE
     assert_equal expected, TestEngine.new(string).compiled
   end
 
+  def test_irregular_spaces
+    string = <<TEMPLATE
+  body
+      p
+         | hey
+       == hello
+TEMPLATE
+
+    expected = %q|_buf = [];_buf << "<body>";_buf << "<p>";_buf << "hey";_buf << hello();_buf << "</p>";_buf << "</body>";_buf.join;|
+
+    assert_equal expected, TestEngine.new(string).compiled
+  end
+
   # Use this to do a line by line check. Much easier to see where the problem is.
   def iterate_it(expected, output)
     es = expected.split(';')

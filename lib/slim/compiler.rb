@@ -58,17 +58,10 @@ module Slim
                     when '`', '|' then :text
                     when '-'      then :control_code
                     when '='      then :output_code
-                    when '/'      then :comment_code
                     when '!'      then :declaration
+                    when '/'      then next # simply ignore any ruby code comments
                     else :markup
                     end
-
-        if line_type == :comment_code
-          next
-        elsif line_type != :text
-          in_text     = false
-          text_indent = -1
-        end
 
         if attrs
           normalize_attributes!(attrs) if shortcut_attrs
