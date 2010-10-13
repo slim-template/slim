@@ -23,7 +23,7 @@ module Slim
 
     def compile
       @_buffer = ["_buf = [];"]
-      @in_text = false
+      in_text  = false
 
       text_indent = last_indent = -1; enders = []
 
@@ -32,7 +32,7 @@ module Slim
         noescape = false
 
         if line.length == 0
-          @_buffer << "_buf << \"<br/>\";" if @in_text
+          @_buffer << "_buf << \"<br/>\";" if in_text
           next
         end
 
@@ -40,7 +40,7 @@ module Slim
 
         indent = $1.to_s.length
 
-        if @in_text && indent > text_indent
+        if in_text && indent > text_indent
           spaces = indent - text_indent
           @_buffer << "_buf << \"#{(' '*(spaces - 1)) + line.lstrip}\";"
           next
@@ -62,8 +62,8 @@ module Slim
                     else :markup
                     end
 
-          @in_text    = false
         unless line_type == :text
+          in_text     = false
           text_indent = -1
         end
 
@@ -108,7 +108,7 @@ module Slim
             end
           end
         when :text
-          @in_text    = true
+          in_text     = true
           text_indent = indent
           @_buffer << "_buf << \"#{string}\";" if string.to_s.length > 0
         when :control_code
