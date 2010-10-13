@@ -22,13 +22,14 @@ module Slim
     REGEX_FIND_HTML_ATTR_CLASSES          = /\.([^#\s]+)/
 
     def compile
-      @_buffer = ['_buf = [];']
-      in_text  = false
-
-      text_indent = last_indent = -1; enders = []
+      @_buffer    = ['_buf = [];']
+      in_text     = false
+      enders      = []
+      text_indent = last_indent = -1
 
       @template.each_line do |line|
-        line.chomp!; line.rstrip!
+        line.chomp!
+        line.rstrip!
 
         if line.length == 0
           @_buffer << '_buf << "<br/>";' if in_text
