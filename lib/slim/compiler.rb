@@ -22,7 +22,7 @@ module Slim
     REGEX_FIND_HTML_ATTR_CLASSES          = /\.([^#\s]+)/
 
     def compile
-      @_buffer = ["_buf = [];"]
+      @_buffer = ['_buf = [];']
       in_text  = false
 
       text_indent = last_indent = -1; enders = []
@@ -31,7 +31,7 @@ module Slim
         line.chomp!; line.rstrip!
 
         if line.length == 0
-          @_buffer << "_buf << \"<br/>\";" if in_text
+          @_buffer << '_buf << "<br/>";' if in_text
           next
         end
 
@@ -51,7 +51,7 @@ module Slim
         string         = $5.strip
 
         # prepends "div" to the shortcut form of attrs if no marker is given
-        marker = "div" if shortcut_attrs && marker.empty?
+        marker = 'div' if shortcut_attrs && marker.empty?
 
         line_type = case marker
                     when '`', '|' then :text
