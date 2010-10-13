@@ -148,9 +148,9 @@ module Slim
 
     def parse_string(string)
       string = string_skip_escape = $1.strip if string =~ REGEX_LINE_CONTAINS_OUTPUT_CODE
-      string << ' ' if string =~ REGEX_LINE_CONTAINS_ONLY_HTML_TAG
-      parenthesesify_method!(string) if string =~ REGEX_METHOD_HAS_NO_PARENTHESES
-      wraps_with_slim_escape!(string) unless string =~ REGEX_CODE_BLOCK_DETECTED || string_skip_escape
+      string << ' '                          if string =~ REGEX_LINE_CONTAINS_ONLY_HTML_TAG
+      parenthesesify_method!(string)         if string =~ REGEX_METHOD_HAS_NO_PARENTHESES
+      wraps_with_slim_escape!(string)        unless string =~ REGEX_CODE_BLOCK_DETECTED || string_skip_escape
 
       string.strip
     end
