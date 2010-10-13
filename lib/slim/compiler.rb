@@ -10,7 +10,7 @@ module Slim
     CONTROL_WORDS      = %w{if unless do}
     ELSE_CONTROL_WORDS = %w{else elsif}
 
-    REGEX_LINE_PARSER                     = /^(\s*)(!?`?\|?-?=?\w*)((?:\s*(?:\w|-)*="[^=]+")+|(\s*[#.]\S+))?(.*)/
+    REGEX_LINE_PARSER                     = /^(\s*)(!?`?\|?-?=?\/?\w*)((?:\s*(?:\w|-)*="[^=]+")+|(\s*[#.]\S+))?(.*)/
     REGEX_LINE_CONTAINS_OUTPUT_CODE       = /^=(.*)/
     REGEX_LINE_CONTAINS_ONLY_HTML_TAG     = /^\s*\w+\S?$/
     REGEX_LINE_CONTAINS_METHOD_DETECTED   = /^(\w+\(.*\))(.*)/
@@ -58,11 +58,14 @@ module Slim
                     when '`', '|' then :text
                     when '-'      then :control_code
                     when '='      then :output_code
+                    when '/'      then :comment_code
                     when '!'      then :declaration
                     else :markup
                     end
 
-        unless line_type == :text
+        if line_type == :comment_code
+          next
+        elsif line_type != :text
           in_text     = false
           text_indent = -1
         end

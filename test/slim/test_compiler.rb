@@ -327,6 +327,19 @@ TEMPLATE
     assert_equal expected, TestEngine.new(string).compiled
   end
 
+  def test_ruby_comments
+    string = <<TEMPLATE
+p
+  / This is a ruby comment, it won't be displayed in the final render.
+  / Neither does this line.
+  | But this line should be there.
+TEMPLATE
+
+    expected = %q|_buf = [];_buf << "<p>";_buf << "But this line should be there.";_buf << "</p>";_buf.join;|
+
+    assert_equal expected, TestEngine.new(string).compiled
+  end
+
   # Use this to do a line by line check. Much easier to see where the problem is.
   def iterate_it(expected, output)
     es = expected.split(';')

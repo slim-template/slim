@@ -65,95 +65,108 @@ So here's what I came up with:
 
 #### Add content to a tag
 
-      # Either start on the same line as the tag
+    # Either start on the same line as the tag
 
-      body
-        h1 id="headline" Welcome to my site.
+    body
+      h1 id="headline" Welcome to my site.
 
-      # Or nest it.  __Note:__ Must use a pipe or a backtick (followed by a space) to escape processing
+    # Or nest it.  __Note:__ Must use a pipe or a backtick (followed by a space) to escape processing
 
-      body
-        h1 id="headline"
-          | Welcome to my site.
+    body
+      h1 id="headline"
+        | Welcome to my site.
 
 #### Add content to a tag with code
 
-      # Can make the call on the same line
+    # Can make the call on the same line
 
-      body
-        h1 id="headline" = page_headline
+    body
+      h1 id="headline" = page_headline
 
-      # Or nest it.
+    # Or nest it.
 
-      body
-        h1 id="headline"
-          = page_headline
+    body
+      h1 id="headline"
+        = page_headline
 
 #### Shortcut form for `id` and `class` attributes
 
-      # Similarly to Haml, you can specify the `id` and `class`
-      # attributes in the following shortcut form
-      # Note: the shortcut form does not evaluate ruby code
+    # Similarly to Haml, you can specify the `id` and `class`
+    # attributes in the following shortcut form
+    # Note: the shortcut form does not evaluate ruby code
 
-      body
-        h1#headline
-          = page_headline
-        h2#tagline.small.tagline
-          = page_tagline
-        .content
-          = show_content
+    body
+      h1#headline
+        = page_headline
+      h2#tagline.small.tagline
+        = page_tagline
+      .content
+        = show_content
 
-      # this is the same as
+    # this is the same as
 
-      body
-        h1 id="headline"
-          = page_headline
-        h2 id="tagline" class="small tagline"
-          = page_tagline
-        div class="content"
-          = show_content
+    body
+      h1 id="headline"
+        = page_headline
+      h2 id="tagline" class="small tagline"
+        = page_tagline
+      div class="content"
+        = show_content
 
 #### Set an attribute's value with a method?
 
-      # Just use standard Ruby interpolation.
+    # Just use standard Ruby interpolation.
 
-      body
-        table
-          - for user in users do
-            tr id="user_#{user.id}"
+    body
+      table
+        - for user in users do
+          tr id="user_#{user.id}"
 
 #### Escape the escaping?
 
-      # Just use a double equal sign
+    # Just use a double equal sign
 
-      body
-        h1 id="headline"
-          == page_headline
+    body
+      h1 id="headline"
+        == page_headline
 
 #### Treat multiple lines of code as text that should bypass parsing.
 
-      # Use a backtick to start the escape.  Each following line that is
-      # indented greater than the backtick is copied over.
+    # Use a backtick to start the escape.  Each following line that is
+    # indented greater than the backtick is copied over.
 
-      body
-        p
-          |
-           This is a test of the text block.
+    body
+      p
+        |
+          This is a test of the text block.
 
-      # The parsed result of the above:
+    # The parsed result of the above:
 
-      <body><p>This is a test of the text block.</p></body>
+    <body><p>This is a test of the text block.</p></body>
 
-      # The left margin is set at the indent of the backtick + one space.
-      # Any additional spaces will be copied over.
+    # The left margin is set at the indent of the backtick + one space.
+    # Any additional spaces will be copied over.
 
-      body
-        p
-          |
-           This line is on the left margin.
-            This line will have one space in front of it.
-             This line will have two spaces in front of it.
-              And so on...
+    body
+      p
+        |
+          This line is on the left margin.
+          This line will have one space in front of it.
+          This line will have two spaces in front of it.
+          And so on...
+
+#### Ruby code comments?
+
+    # Use a forward slash for ruby code comments
+    
+    body
+      p
+        / This line won't get displayed.
+        / Neither does this line.
+    
+    # The parsed result of the above:
+    
+    <body><p></p></body>
 
 ### Things to know:
 
@@ -181,6 +194,8 @@ So here's what I came up with:
 * !
   * This is a directive.  Most common example:
         ` ! doctype html renders  <!doctype html> `
+* /
+  * Use the forward slash for ruby code comments - anything after it won't get displayed in the final render.
 
 
 ### Please add feature requests and bugs to the Github issue tracker.
