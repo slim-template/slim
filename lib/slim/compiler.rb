@@ -12,6 +12,8 @@ module Slim
 
     REGEX_LINE_PARSER                     = /^(\s*)(!?`?\|?-?=?\w*)((?:\s*(?:\w|-)*="[^=]+")+|(\s*[#.]\S+))?(.*)/
     REGEX_LINE_CONTAINS_OUTPUT_CODE       = /^=(.*)/
+    REGEX_LINE_CONTAINS_ONLY_HTML_TAG     = /^\s*\w+\S?$/
+    REGEX_LINE_CONTAINS_METHOD_DETECTED   = /^(\w+\(.*\))(.*)/
     REGEX_METHOD_HAS_NO_PARENTHESES       = /^\w+\s/
     REGEX_CODE_BLOCK_DETECTED             = / do ?.*$/
     REGEX_CODE_CONTROL_WORD_DETECTED      = /(?:\s|(\())(#{CONTROL_WORDS * '|'})\b\s?(.*)$/
@@ -27,6 +29,7 @@ module Slim
 
       @template.each_line do |line|
         line.chomp!; line.rstrip!
+        noescape = false
 
         if line.length == 0
           @_buffer << "_buf << \"<br/>\";" if @in_text
@@ -106,7 +109,7 @@ module Slim
           if string
             string.lstrip!
             if string =~ REGEX_LINE_CONTAINS_OUTPUT_CODE
-              @_buffer << "_buf << #{parenthesesify_method($1.strip)};"
+              @_buffer << "_buf << #{parse_string($1.strip)};"
             else
               @_buffer << "_buf << \"#{string}\";"
             end
@@ -120,7 +123,7 @@ module Slim
           @_buffer << "#{string};"
         when :output_code
           enders   << ['end;', indent] if string =~ REGEX_CODE_BLOCK_DETECTED
-          @_buffer << "_buf << #{parenthesesify_method(string)};"
+          @_buffer << "_buf << #{parse_string(string)};"
         when :declaration
           @_buffer << "_buf << \"<!#{string}>\";"
         else
@@ -143,25 +146,23 @@ module Slim
 
     private
 
+    def parse_string(string)
+      string = string_skip_escape = $1.strip if string =~ REGEX_LINE_CONTAINS_OUTPUT_CODE
+      string << ' ' if string =~ REGEX_LINE_CONTAINS_ONLY_HTML_TAG
+      parenthesesify_method!(string) if string =~ REGEX_METHOD_HAS_NO_PARENTHESES
+      wraps_with_slim_escape!(string) unless string =~ REGEX_CODE_BLOCK_DETECTED || string_skip_escape
+
+      string.strip
+    end
+
     # adds a pair of parentheses to the method
-    def parenthesesify_method(string)
-      if string =~ /^=(.*)/ # used ==
-        string = $1.strip
-        noescape = true
-      end
+    def parenthesesify_method!(string)
+      string.sub!(' ', '(') && string.sub!(REGEX_CODE_CONTROL_WORD_DETECTED, '\1) \2 \3') || string << ')'
+    end
 
-      string << ' ' if string =~ /^\s*\w+\S?$/
-
-      if string =~ REGEX_METHOD_HAS_NO_PARENTHESES
-        string.sub!(' ', '(') &&
-          string.sub!(REGEX_CODE_CONTROL_WORD_DETECTED, '\1) \2 \3') || string << ')'
-      end
-
-      unless string =~ REGEX_CODE_BLOCK_DETECTED || noescape
-        string.sub!(/^(\w+\(.*\)).*/, 'Slim.escape_html(\1) \2')
-      end
-
-      return string.strip
+    # escapes the string
+    def wraps_with_slim_escape!(string)
+      string.sub!(REGEX_LINE_CONTAINS_METHOD_DETECTED, 'Slim.escape_html(\1) \2')
     end
 
     # converts 'p#hello.world' to 'p id="hello" class="world"'
