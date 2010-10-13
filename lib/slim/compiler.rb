@@ -154,7 +154,7 @@ module Slim
       string.sub!(REGEX_LINE_CONTAINS_METHOD_DETECTED, 'Slim.escape_html(\1) \2')
     end
 
-    # converts 'p#hello.world' to 'p id="hello" class="world"'
+    # converts 'p#hello.world.mate' to 'p id="hello" class="world mate"'
     def normalize_attributes!(string)
       string.sub!(REGEX_FIND_HTML_ATTR_ID, ' id="\1"')
       string.sub!(REGEX_FIND_HTML_ATTR_CLASSES, ' class="\1"')
