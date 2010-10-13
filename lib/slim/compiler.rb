@@ -67,7 +67,7 @@ module Slim
         end
 
         if attrs
-          attrs = normalize_attributes(attrs) if shortcut_attrs
+          normalize_attributes!(attrs) if shortcut_attrs
           attrs.gsub!('"', '\"')
         end
 
@@ -155,11 +155,10 @@ module Slim
     end
 
     # converts 'p#hello.world' to 'p id="hello" class="world"'
-    def normalize_attributes(string)
+    def normalize_attributes!(string)
       string.sub!(REGEX_FIND_HTML_ATTR_ID, ' id="\1"')
       string.sub!(REGEX_FIND_HTML_ATTR_CLASSES, ' class="\1"')
       string.gsub!('.', ' ')
-      string
     end
   end
 end
