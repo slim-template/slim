@@ -303,4 +303,21 @@ HTML
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
+
+
+  def test_nested_text
+    string = <<HTML
+p 
+ |
+  This is line one.
+   This is line two.
+    This is line three.
+     This is line four.
+p This is a new paragraph.
+HTML
+
+    expected = "<p>This is line one. This is line two.  This is line three.   This is line four.</p><p>This is a new paragraph.</p>"
+
+    assert_equal expected, Slim::Engine.new(string).render(@env)
+  end
 end
