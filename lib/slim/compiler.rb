@@ -52,9 +52,7 @@ module Slim
         string         = $5.strip
 
         # prepends "div" to the shortcut form of attrs if no marker is given
-        if shortcut_attrs && marker.empty?
-          marker = "div"
-        end
+        marker = "div" if shortcut_attrs && marker.empty?
 
         line_type = case marker
                     when '`', '|' then :text
@@ -64,8 +62,8 @@ module Slim
                     else :markup
                     end
 
-        if line_type != :text
           @in_text    = false
+        unless line_type == :text
           text_indent = -1
         end
 
