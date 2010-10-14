@@ -122,6 +122,13 @@ So here's what I came up with:
         - for user in users do
           tr id="user_#{user.id}"
 
+#### Call a method in content
+
+    # Just use standard Ruby interpolation.
+
+    body
+      h1 Welcome #{current_user.name} to the show.
+
 #### Escape the escaping?
 
     # Just use a double equal sign
