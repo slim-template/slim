@@ -115,7 +115,7 @@ So here's what I came up with:
 
 #### Set an attribute's value with a method?
 
-    # Just use standard Ruby interpolation.
+    # Use standard Ruby interpolation.
 
     body
       table
@@ -124,14 +124,14 @@ So here's what I came up with:
 
 #### Call a method in content
 
-    # Just use standard Ruby interpolation.
+    # Use standard Ruby interpolation.
 
     body
       h1 Welcome #{current_user.name} to the show.
 
 #### Escape the escaping?
 
-    # Just use a double equal sign
+    # Use a double equal sign
 
     body
       h1 id="headline"
@@ -139,8 +139,9 @@ So here's what I came up with:
 
 #### Treat multiple lines of code as text that should bypass parsing.
 
-    # Use a backtick to start the escape.  Each following line that is
-    # indented greater than the backtick is copied over.
+    # Use a pipe ('|') or backtick ('`') to start the escape.  
+    # Each following line that is indented greater than 
+    # the backtick is copied over.
 
     body
       p
@@ -158,9 +159,9 @@ So here's what I came up with:
       p
         |
           This line is on the left margin.
-          This line will have one space in front of it.
-          This line will have two spaces in front of it.
-          And so on...
+           This line will have one space in front of it.
+             This line will have two spaces in front of it.
+               And so on...
 
 #### Add ruby code comments?
 
@@ -180,7 +181,7 @@ So here's what I came up with:
 * Standard Ruby syntax after '-' and '='
   * __end__ is not required
 * Can put content on same line or nest it.
-  * If you nest content (e.g. put it on the next line), start the line with a pipe ('|') a backtick ('`').
+  * If you nest content (e.g. put it on the next line), start the line with a pipe ('|') or a backtick ('`').
 * Indentation matters, but it's not as strict as Haml.
   * If you want to indent 2 spaces, then 5.  It's your choice. To nest markup you only need to indent by one space, the rest is gravy.
 
