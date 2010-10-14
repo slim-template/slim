@@ -361,4 +361,28 @@ HTML
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
+
+  def test_interpolation_in_text
+    string = <<HTML
+p 
+ | \#{hello_world}
+p 
+ | 
+  A message from the compiler: \#{hello_world}
+HTML
+
+    expected = "<p>Hello World from @env</p><p>A message from the compiler: Hello World from @env</p>"
+
+    assert_equal expected, Slim::Engine.new(string).render(@env)
+  end
+
+  def test_interpolation_in_tag
+    string = <<HTML
+p \#{hello_world}
+HTML
+
+    expected = "<p>Hello World from @env</p>"
+
+    assert_equal expected, Slim::Engine.new(string).render(@env)
+  end
 end
