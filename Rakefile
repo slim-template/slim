@@ -14,7 +14,7 @@ begin
     gem.homepage = "http://github.com/stonean/slim"
     gem.authors = ["Andrew Stone", "Fred Wu"]
     gem.email = ["andy@stonean.com", "ifredwu@gmail.com"]
-    gem.files = ['*', 'lib/**/*']
+    gem.files = ['*', 'lib/**/*', 'test/**/*']
     gem.add_dependency 'escape_utils'
     gem.add_development_dependency 'rake'
     gem.add_development_dependency 'jeweler'
