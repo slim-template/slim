@@ -92,10 +92,10 @@ module Slim
         case line_type
         when :markup
           if AUTOCLOSED.include?(marker)
-            @_buffer << "_buf << \"<#{marker}#{attrs || ''}/>\";"
+            @_buffer << "_buf << \"<#{marker}#{attrs}/>\";"
           else
             enders   << ["_buf << \"</#{marker}>\";", indent]
-            @_buffer << "_buf << \"<#{marker}#{attrs || ''}>\";"
+            @_buffer << "_buf << \"<#{marker}#{attrs}>\";"
           end
 
           unless string.empty?
