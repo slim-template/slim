@@ -340,7 +340,7 @@ TEMPLATE
     assert_equal expected, TestEngine.new(string).compiled
   end
 
-  def test_irregular_spaces
+  def test_irregular_indentions
     string = <<TEMPLATE
   body
       p
