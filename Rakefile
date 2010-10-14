@@ -8,12 +8,13 @@ begin
   Jeweler::Tasks.new do |gem|
     gem.name = "slim"
     gem.version = Slim.version
-    gem.rubyforge_project = "slim"
+    gem.rubyforge_project = gem.name
     gem.summary = "Slim is a template language."
     gem.description = "Slim is a template language whose goal is reduce the syntax to the essential parts without becoming cryptic."
-    gem.email = "andy@stonean.com"
     gem.homepage = "http://github.com/stonean/slim"
-    gem.authors = ["Andrew Stone"]
+    gem.authors = ["Andrew Stone", "Fred Wu"]
+    gem.email = ["andy@stonean.com", "ifredwu@gmail.com"]
+    gem.files = ['*', 'lib/**/*']
     gem.add_dependency 'escape_utils'
     gem.add_development_dependency 'rake'
     gem.add_development_dependency 'jeweler'
