@@ -13,7 +13,7 @@ module Slim
     REGEX_LINE_PARSER                     = /^(\s*)(!?`?\|?-?=?\/?\w*)((?:\s*(?:\w|-)*="[^=]+")+|(\s*[#.]\S+))?(.*)/
     REGEX_LINE_CONTAINS_OUTPUT_CODE       = /^\s*=(.*)/
     REGEX_LINE_CONTAINS_ONLY_HTML_TAG     = /^\s*\w+\S?$/
-    REGEX_LINE_CONTAINS_METHOD_DETECTED   = /^(\w+\(.*\))(.*)/
+    REGEX_LINE_CONTAINS_METHOD_DETECTED   = /^(\w+\(.*\))/
     REGEX_METHOD_HAS_NO_PARENTHESES       = /^\w+\s/
     REGEX_CODE_BLOCK_DETECTED             = / do ?.*$/
     REGEX_CODE_CONTROL_WORD_DETECTED      = /(?:\s|(\())(#{CONTROL_WORDS * '|'})\b\s?(.*)$/
@@ -150,7 +150,7 @@ module Slim
 
     # escapes the string
     def wraps_with_slim_escape!(string)
-      string.sub!(REGEX_LINE_CONTAINS_METHOD_DETECTED, 'Slim.escape_html(\1) \2')
+      string.sub!(REGEX_LINE_CONTAINS_METHOD_DETECTED, 'Slim.escape_html(\1)')
     end
 
     # converts 'p#hello.world.mate' to 'p id="hello" class="world mate"'
