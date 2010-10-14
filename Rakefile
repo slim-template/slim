@@ -18,6 +18,8 @@ begin
     gem.add_dependency 'escape_utils'
     gem.add_development_dependency 'rake'
     gem.add_development_dependency 'jeweler'
+    gem.add_development_dependency 'haml'
+    gem.add_development_dependency 'mustache'
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError

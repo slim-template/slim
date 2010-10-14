@@ -10,11 +10,13 @@ GEM
     escape_utils (0.1.8)
     gemcutter (0.6.1)
     git (1.2.5)
+    haml (3.0.21)
     jeweler (1.4.0)
       gemcutter (>= 0.1.0)
       git (>= 1.2.5)
       rubyforge (>= 2.0.0)
     json_pure (1.4.6)
+    mustache (0.11.2)
     rake (0.8.7)
     rubyforge (2.0.4)
       json_pure (>= 1.1.7)
@@ -24,6 +26,8 @@ PLATFORMS
 
 DEPENDENCIES
   escape_utils
+  haml
   jeweler
+  mustache
   rake
   slim!
