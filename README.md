@@ -129,6 +129,11 @@ So here's what I came up with:
     body
       h1 Welcome #{current_user.name} to the show.
 
+    # To escape the interpolation (i.e. render as is)
+
+    body
+      h1 Welcome \#{current_user.name} to the show.
+
 #### Escape the escaping?
 
     # Use a double equal sign
