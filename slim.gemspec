@@ -25,7 +25,11 @@ Gem::Specification.new do |s|
      "lib/slim/engine.rb",
      "lib/slim/optimizer.rb",
      "lib/slim/rails.rb",
-     "slim.gemspec"
+     "slim.gemspec",
+     "test/helper.rb",
+     "test/slim/test_compiler.rb",
+     "test/slim/test_engine.rb",
+     "test/test_slim.rb"
   ]
   s.homepage = %q{http://github.com/stonean/slim}
   s.rdoc_options = ["--charset=UTF-8"]

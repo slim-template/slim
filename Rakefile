@@ -21,7 +21,7 @@ begin
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
-  puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
+  puts "Jeweler, or one of its dependencies, is not available. Install it with: gem install jeweler"
 end
 
 begin
@@ -32,7 +32,7 @@ begin
   end
 rescue LoadError
   task :yard do
-    abort "YARD is not available. In order to run yard, you must: sudo gem install yard"
+    abort "YARD is not available. In order to run yard, you must: gem install yard"
   end
 end
 
@@ -52,7 +52,7 @@ begin
   end
 rescue LoadError
   task :rcov do
-    abort "RCov is not available. In order to run rcov, you must: sudo gem install rcov"
+    abort "RCov is not available. In order to run rcov, you must: gem install rcov"
   end
 end
 
