@@ -108,7 +108,7 @@ module Slim
         when :text
           in_text     = true
           text_indent = indent
-          @_buffer << "_buf << \"#{string}\";" if string.to_s.length > 0
+          @_buffer << "_buf << \"#{string}\";" unless string.empty?
         when :control_code
           enders   << ['end;', indent] unless enders.detect{|e| e[0] == 'end;' && e[1] == indent}
           @_buffer << "#{string};"
