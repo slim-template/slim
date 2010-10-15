@@ -41,6 +41,7 @@ Here's a quick example to demonstrate what a Slim template looks like:
       head
         title Slim Examples
         meta name="keywords" content="template language"
+
       body
         h1 Markup examples
         #content.example1
