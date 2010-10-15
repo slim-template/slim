@@ -144,7 +144,7 @@ Here's a quick example to demonstrate what a Slim template looks like:
     body
       h1 Welcome \#{current_user.name} to the show.
 
-### Escape the escaping
+### Skip the escaping
 
     # Use a double equal sign
 
