@@ -157,8 +157,7 @@ module Slim
     # converts 'p#hello.world.mate' to 'p id="hello" class="world mate"'
     def normalize_attributes!(string)
       string.sub!(REGEX_FIND_HTML_ATTR_ID, ' id="\1"')
-      string.sub!(REGEX_FIND_HTML_ATTR_CLASSES, ' class="\1"')
-      string.gsub!('.', ' ')
+      string.sub!(REGEX_FIND_HTML_ATTR_CLASSES, ' class="\1"') && string.gsub!('.', ' ')
     end
   end
 end
