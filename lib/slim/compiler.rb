@@ -54,8 +54,6 @@ module Slim
         # Remove the first space, but allow people to pad if they want.
         string.slice!(0) if string =~ /^\s/
 
-        # prepends "div" to the shortcut form of attrs if no marker is given
-        marker = 'div' if shortcut_attrs && marker.empty?
 
         line_type = case marker
                     when '`', '|' then :text
@@ -94,6 +92,8 @@ module Slim
           if AUTOCLOSED.include?(marker)
             @_buffer << "_buf << \"<#{marker}#{attrs}/>\";"
           else
+            # prepends "div" to the shortcut form of attrs if no marker is given
+            marker = 'div' if shortcut_attrs && marker.empty?
             enders   << ["_buf << \"</#{marker}>\";", indent]
             @_buffer << "_buf << \"<#{marker}#{attrs}>\";"
           end
