@@ -54,7 +54,6 @@ module Slim
         # Remove the first space, but allow people to pad if they want.
         string.slice!(0) if string =~ /^\s/
 
-
         line_type = case marker
                     when '`', '|' then :text
                     when '-'      then :control_code
@@ -93,6 +92,7 @@ module Slim
           else
             # prepends "div" to the shortcut form of attrs if no marker is given
             marker = 'div' if shortcut_attrs && marker.empty?
+
             enders   << ["_buf << \"</#{marker}>\";", indent]
             @_buffer << "_buf << \"<#{marker}#{attrs}>\";"
           end
