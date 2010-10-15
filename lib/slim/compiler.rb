@@ -14,8 +14,8 @@ module Slim
 
     REGEX_LINE_CONTAINS_OUTPUT_CODE       = /^\s*=(.*)/
     REGEX_LINE_CONTAINS_ONLY_HTML_TAG     = /^\s*\w+\S?$/
-    REGEX_LINE_CONTAINS_METHOD_DETECTED   = /^(\w+\(.*\))/
-    REGEX_METHOD_HAS_NO_PARENTHESES       = /^\w+\s/
+    REGEX_LINE_CONTAINS_METHOD_DETECTED   = /^((?:(?!#{CONTROL_WORDS * '\b|'}\b).)*)/
+    REGEX_METHOD_HAS_NO_PARENTHESES       = /^\w+\s+\S+/
     REGEX_CODE_BLOCK_DETECTED             = / do ?.*$/
     REGEX_CODE_CONTROL_WORD_DETECTED      = /(?:\s|(\())(#{CONTROL_WORDS * '|'})\b\s?(.*)$/
     REGEX_CODE_ELSE_CONTROL_WORD_DETECTED = /^#{ELSE_CONTROL_WORDS * '\b|'}\b/
@@ -151,6 +151,7 @@ module Slim
 
     # escapes the string
     def wraps_with_slim_escape!(string)
+      string.strip!
       string.sub!(REGEX_LINE_CONTAINS_METHOD_DETECTED, 'Slim.escape_html(\1)')
     end
 

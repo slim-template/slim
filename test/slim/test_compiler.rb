@@ -188,7 +188,7 @@ p
   = hello_world
 HTML
 
-    expected = %q|_buf = [];_buf << "<p>";_buf << Slim.escape_html(hello_world());_buf << "</p>";_buf.join;|
+    expected = %q|_buf = [];_buf << "<p>";_buf << Slim.escape_html(hello_world);_buf << "</p>";_buf.join;|
 
     assert_equal expected, TestEngine.new(string).compiled
   end
@@ -221,7 +221,7 @@ body
   p id="first" = hello_world
 TEMPLATE
 
-    expected = %q|_buf = [];_buf << "<body>";_buf << "<p id=\"first\">";_buf << Slim.escape_html(hello_world());_buf << "</p>";_buf << "</body>";_buf.join;|
+    expected = %q|_buf = [];_buf << "<body>";_buf << "<p id=\"first\">";_buf << Slim.escape_html(hello_world);_buf << "</p>";_buf << "</body>";_buf.join;|
 
     assert_equal expected, TestEngine.new(string).compiled
   end
@@ -312,17 +312,27 @@ TEMPLATE
 p = session[:id]
 TEMPLATE
 
-    expected = %q|_buf = [];_buf << "<p>";_buf << session[:id];_buf << "</p>";_buf.join;|
+    expected = %q|_buf = [];_buf << "<p>";_buf << Slim.escape_html(session[:id]);_buf << "</p>";_buf.join;|
 
     assert_equal expected, TestEngine.new(string).compiled
   end
 
   def test_escape_escaping
     string = <<TEMPLATE
+p == session[:id]
+TEMPLATE
+
+    expected = %q|_buf = [];_buf << "<p>";_buf << session[:id];_buf << "</p>";_buf.join;|
+
+    assert_equal expected, TestEngine.new(string).compiled
+  end
+
+  def test_escape_escaping2
+    string = <<TEMPLATE
 p == safe_method_call
 TEMPLATE
 
-    expected = %q|_buf = [];_buf << "<p>";_buf << safe_method_call();_buf << "</p>";_buf.join;|
+    expected = %q|_buf = [];_buf << "<p>";_buf << safe_method_call;_buf << "</p>";_buf.join;|
 
     assert_equal expected, TestEngine.new(string).compiled
   end
@@ -348,7 +358,22 @@ TEMPLATE
        == hello
 TEMPLATE
 
-    expected = %q|_buf = [];_buf << "<body>";_buf << "<p>";_buf << "hey";_buf << hello();_buf << "</p>";_buf << "</body>";_buf.join;|
+    expected = %q|_buf = [];_buf << "<body>";_buf << "<p>";_buf << "hey";_buf << hello;_buf << "</p>";_buf << "</body>";_buf.join;|
+
+    assert_equal expected, TestEngine.new(string).compiled
+  end
+
+  def test_code_block
+    string = <<TEMPLATE
+- unless items.empty?
+  ul
+    - items.each do |item|
+      li = item
+- else
+  p No items
+TEMPLATE
+
+    expected = %q|_buf = [];unless items.empty?;_buf << "<ul>";items.each do \|item\|;_buf << "<li>";_buf << Slim.escape_html(item);_buf << "</li>";end;_buf << "</ul>";else;_buf << "<p>";_buf << "No items";_buf << "</p>";end;_buf.join;|
 
     assert_equal expected, TestEngine.new(string).compiled
   end
