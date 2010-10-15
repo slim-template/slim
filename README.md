@@ -118,7 +118,7 @@ Here's a quick example to demonstrate what a Slim template looks like:
       div class="content"
         = show_content
 
-### Set an attribute's value with a method?
+### Set an attribute's value with a method
 
     # Use standard Ruby interpolation.
 
@@ -139,7 +139,7 @@ Here's a quick example to demonstrate what a Slim template looks like:
     body
       h1 Welcome \#{current_user.name} to the show.
 
-### Escape the escaping?
+### Escape the escaping
 
     # Use a double equal sign
 
@@ -147,7 +147,7 @@ Here's a quick example to demonstrate what a Slim template looks like:
       h1 id="headline"
         == page_headline
 
-### Treat multiple lines of code as text that should bypass parsing.
+### Treat multiple lines of code as text that should bypass parsing
 
     # Use a pipe ('|') or backtick ('`') to start the escape.  
     # Each following line that is indented greater than 
@@ -173,7 +173,7 @@ Here's a quick example to demonstrate what a Slim template looks like:
              This line will have two spaces in front of it.
                And so on...
 
-### Add ruby code comments?
+### Add code comments
 
     # Use a forward slash for ruby code comments
     
