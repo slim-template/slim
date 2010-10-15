@@ -10,7 +10,7 @@ require 'slim/engine'
 module Slim
   class << self
     def version
-      '0.6.0.beta.2'
+      '0.6.0.beta.3'
     end
 
     def escape_html(html)

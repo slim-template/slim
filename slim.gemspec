@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{slim}
-  s.version = "0.6.0.beta.2"
+  s.version = "0.6.0.beta.3"
 
   s.required_rubygems_version = Gem::Requirement.new("> 1.3.1") if s.respond_to? :required_rubygems_version=
   s.authors = ["Andrew Stone", "Fred Wu"]
-  s.date = %q{2010-10-14}
+  s.date = %q{2010-10-16}
   s.description = %q{Slim is a template language whose goal is reduce the syntax to the essential parts without becoming cryptic.}
   s.email = ["andy@stonean.com", "ifredwu@gmail.com"]
   s.extra_rdoc_files = [
