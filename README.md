@@ -1,14 +1,17 @@
 # Slim
 
-Slim is a template language whose goal is reduce the syntax to the essential parts without becoming cryptic.
+Slim is a template language whose goal is to reduce the view syntax to the essential parts without becoming cryptic.
+
 
 ## What?
 
-Slim is a Rails 3, Ruby 1.9.2 templating option.  I do not intend on making a Rails 2.x compatible version.  I don't think it would be difficult, so if you want it, I will happily accept contributions with tests.
+Slim is a fast, lightweight templating engine for __Rails 3__. It has been tested on Ruby 1.9.2 and Ruby/REE 1.8.7. Slim is heavily influenced by [Haml](http://github.com/nex3/haml) and [Jade](http://github.com/visionmedia/jade).
+
 
 ## Why?
 
-Simply put, I wanted to see if I could pull of a template language that required minimum use of special characters and at least matched Erb's speed.  Yes, Slim is speedy.
+Within the Rails community, _Erb_ and _Haml_ are without doubt the two most popular templating engines. However, _Erb_'s syntax is cumbersome and Haml's performance isn't exactly the best. Slim was born to bring the minimalist syntax approach of _Haml_ and the higher performance of Erb into once solution. _Yes, Slim is speedy!_
+
 
 ## How?
 
@@ -16,18 +19,20 @@ Include Slim in your Gemfile:
 
     gem 'slim'
 
-In `config/application.rb`, add the following line near the top:
+In `config/application.rb`, add the following line near the top (i.e. just below `require 'rails/all'`):
 
     require 'slim/rails'
 
 That's it!
 
-### The syntax
 
-I actually like the indentation and tag closing nature of Haml.  I don't like the overall result of the markup though, it's a little cryptic.  I'm sure, with practice, people read it like the Matrix, but it's never suited me.  So why not try to improve it for me?  There may be one or two other people with the same thoughts.
+## The syntax
 
+As a Rails developer, you might already be very familiar with _Haml_'s syntax and you think it is fantastic - until you entered the magic kingdom of _node.js_ and got introduced to _Jade_.
 
-So here's what I came up with:
+Slim's syntax is inspired by both _Haml_ and _Jade_.
+
+Here's a quick example to demonstrate what a Slim template looks like:
 
     ! doctype html
     html
@@ -45,10 +50,8 @@ So here's what I came up with:
           table
             - for item in items do
               tr
-                td
-                  = item.name
-                td
-                  = item.price
+                td = item.name
+                td = item.price
         - else
           p No items found
 
@@ -61,9 +64,9 @@ So here's what I came up with:
           | $(content).do_something();
 
 
-### How do I?
+## Language features
 
-#### Add content to a tag
+### Add content to a tag
 
     # Either start on the same line as the tag
 
@@ -76,7 +79,7 @@ So here's what I came up with:
       h1 id="headline"
         | Welcome to my site.
 
-#### Add content to a tag with code
+### Add content to a tag with code
 
     # Can make the call on the same line
 
@@ -89,7 +92,7 @@ So here's what I came up with:
       h1 id="headline"
         = page_headline
 
-#### Shortcut form for `id` and `class` attributes
+### Shortcut form for `id` and `class` attributes
 
     # Similarly to Haml, you can specify the `id` and `class`
     # attributes in the following shortcut form
@@ -113,7 +116,7 @@ So here's what I came up with:
       div class="content"
         = show_content
 
-#### Set an attribute's value with a method?
+### Set an attribute's value with a method?
 
     # Use standard Ruby interpolation.
 
@@ -122,7 +125,7 @@ So here's what I came up with:
         - for user in users do
           tr id="user_#{user.id}"
 
-#### Call a method in content
+### Call a method in content
 
     # Use standard Ruby interpolation.
 
@@ -134,7 +137,7 @@ So here's what I came up with:
     body
       h1 Welcome \#{current_user.name} to the show.
 
-#### Escape the escaping?
+### Escape the escaping?
 
     # Use a double equal sign
 
@@ -142,7 +145,7 @@ So here's what I came up with:
       h1 id="headline"
         == page_headline
 
-#### Treat multiple lines of code as text that should bypass parsing.
+### Treat multiple lines of code as text that should bypass parsing.
 
     # Use a pipe ('|') or backtick ('`') to start the escape.  
     # Each following line that is indented greater than 
@@ -168,7 +171,7 @@ So here's what I came up with:
              This line will have two spaces in front of it.
                And so on...
 
-#### Add ruby code comments?
+### Add ruby code comments?
 
     # Use a forward slash for ruby code comments
     
@@ -181,7 +184,8 @@ So here's what I came up with:
     
     <body><p></p></body>
 
-### Things to know:
+
+## Things to know
 
 * Standard Ruby syntax after '-' and '='
   * __end__ is not required
@@ -191,8 +195,9 @@ So here's what I came up with:
   * If you want to indent 2 spaces, then 5.  It's your choice. To nest markup you only need to indent by one space, the rest is gravy.
 
 
-### Line indicators:
-  __Please note that all line indicators must be followed by a space__
+## Line indicators
+
+__Please note that all line indicators must be followed by a space__
 
 * |
   * The pipe tells Slim to just copy the line. It essentially escapes any processing.
@@ -205,8 +210,7 @@ So here's what I came up with:
 * ==
   * Same as the single equal sign, but does not go through the escape_html method.
 * !
-  * This is a directive.  Most common example:
-        ` ! doctype html renders  <!doctype html> `
+  * This is a directive.  Most common example: `! doctype html # renders <!doctype html>`
 * /
   * Use the forward slash for ruby code comments - anything after it won't get displayed in the final render.
 
