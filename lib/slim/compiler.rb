@@ -13,7 +13,6 @@ module Slim
     REGEX_LINE_PARSER  = /^(\s*)(!?`?\|?-?=?\/?\w*)((?:\s*(?:\w|-)*="[^=]+")+|(\S*[#.]\S+))?(.*)/
 
     REGEX_LINE_CONTAINS_OUTPUT_CODE       = /^\s*=(.*)/
-    REGEX_LINE_CONTAINS_ONLY_HTML_TAG     = /^\s*\w+\S?$/
     REGEX_LINE_CONTAINS_METHOD_DETECTED   = /^((?:(?!#{CONTROL_WORDS * '\b|'}\b).)*)/
     REGEX_METHOD_HAS_NO_PARENTHESES       = /^\w+\s+\S+/
     REGEX_CODE_BLOCK_DETECTED             = / do ?.*$/
@@ -137,7 +136,6 @@ module Slim
 
     def parse_string(string)
       string = string_skip_escape = $1.strip if string =~ REGEX_LINE_CONTAINS_OUTPUT_CODE
-      string << ' '                          if string =~ REGEX_LINE_CONTAINS_ONLY_HTML_TAG
       parenthesesify_method!(string)         if string =~ REGEX_METHOD_HAS_NO_PARENTHESES
       wraps_with_slim_escape!(string)        unless string =~ REGEX_CODE_BLOCK_DETECTED || string_skip_escape
 
