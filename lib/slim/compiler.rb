@@ -135,11 +135,13 @@ module Slim
     private
 
     def parse_string(string)
-      string = string_skip_escape = $1.strip if string =~ REGEX_LINE_CONTAINS_OUTPUT_CODE
-      parenthesesify_method!(string)         if string =~ REGEX_METHOD_HAS_NO_PARENTHESES
-      wraps_with_slim_escape!(string)        unless string =~ REGEX_CODE_BLOCK_DETECTED || string_skip_escape
-
-      string.strip
+      if string =~ REGEX_LINE_CONTAINS_OUTPUT_CODE
+        $1.strip
+      else
+        parenthesesify_method!(string)  if string =~ REGEX_METHOD_HAS_NO_PARENTHESES
+        wraps_with_slim_escape!(string) unless string =~ REGEX_CODE_BLOCK_DETECTED
+        string.strip
+      end
     end
 
     # adds a pair of parentheses to the method
