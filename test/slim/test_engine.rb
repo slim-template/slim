@@ -395,4 +395,14 @@ HTML
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
+
+  def test_number_type_interpolation
+    string = <<HTML
+p = output_number
+HTML
+
+    expected = "<p>1337</p>"
+
+    assert_equal expected, Slim::Engine.new(string).render(@env)
+  end
 end

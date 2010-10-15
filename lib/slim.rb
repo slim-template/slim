@@ -14,7 +14,7 @@ module Slim
     end
 
     def escape_html(html)
-      EscapeUtils.escape_html(html)
+      EscapeUtils.escape_html(html.to_s)
     end
   end
 end

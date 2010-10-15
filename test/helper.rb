@@ -34,4 +34,8 @@ class Env
   def evil_method
     "<script>do_something_evil();</script>"
   end
+
+  def output_number
+    1337
+  end
 end
