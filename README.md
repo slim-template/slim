@@ -17,6 +17,10 @@ ___Yes, Slim is speedy!___ Benchmarks are provided at the end of this README fil
 
 ## How?
 
+Install Slim as a gem:
+
+    gem install slim
+
 Include Slim in your Gemfile:
 
     gem 'slim'
