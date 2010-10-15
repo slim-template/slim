@@ -10,7 +10,9 @@ Slim is a fast, lightweight templating engine for __Rails 3__. It has been teste
 
 ## Why?
 
-Within the Rails community, _Erb_ and _Haml_ are without doubt the two most popular templating engines. However, _Erb_'s syntax is cumbersome and Haml's performance isn't exactly the best. Slim was born to bring the minimalist syntax approach of _Haml_ and the higher performance of Erb into once solution. _Yes, Slim is speedy!_
+Within the Rails community, _Erb_ and _Haml_ are without doubt the two most popular templating engines. However, _Erb_'s syntax is cumbersome and Haml's performance isn't exactly the best. Slim was born to bring the minimalist syntax approach of _Haml_ and the higher performance of Erb into once solution.
+
+___Yes, Slim is speedy!___ Benchmarks are provided at the end of this README file. Alternatively, a benchmark script is provided so you could test it yourself (`./benchmarks/run.rb`).
 
 
 ## How?
@@ -215,4 +217,28 @@ __Please note that all line indicators must be followed by a space__
   * Use the forward slash for ruby code comments - anything after it won't get displayed in the final render.
 
 
-### Please add feature requests and bugs to the Github issue tracker.
+## Benchmarks
+
+    # OS X 10.6 + REE 1.8.7
+
+                            user     system      total        real
+    erb                 0.500000   0.000000   0.500000 (  0.516644)
+    slim                0.550000   0.000000   0.550000 (  0.579362)
+    haml                3.390000   0.050000   3.440000 (  3.669325)
+    mustache            1.130000   0.040000   1.170000 (  1.213134)
+    erb (cached)        0.090000   0.000000   0.090000 (  0.099274)
+    slim (cached)       0.080000   0.000000   0.080000 (  0.079823)
+    haml (cached)       0.290000   0.000000   0.290000 (  0.312542)
+    mustache (cached)   0.080000   0.000000   0.080000 (  0.079184)
+
+    # OS X 10.6 + Ruby 1.9.2
+
+                            user     system      total        real
+    erb                 0.400000   0.000000   0.400000 (  0.431967)
+    slim                0.410000   0.010000   0.420000 (  0.425059)
+    haml                3.030000   0.030000   3.060000 (  3.199970)
+    mustache            1.360000   0.030000   1.390000 (  1.435129)
+    erb (cached)        0.150000   0.000000   0.150000 (  0.157284)
+    slim (cached)       0.130000   0.010000   0.140000 (  0.129576)
+    haml (cached)       0.320000   0.000000   0.320000 (  0.344316)
+    mustache (cached)   0.040000   0.000000   0.040000 (  0.049058)
