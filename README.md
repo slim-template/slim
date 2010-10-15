@@ -73,6 +73,34 @@ Here's a quick example to demonstrate what a Slim template looks like:
 
 ## Language features
 
+### Line indicators
+
+__Please note that all line indicators must be followed by a space__
+
+* |
+  * The pipe tells Slim to just copy the line. It essentially escapes any processing.
+* `
+  * _Same as the pipe ('|')._
+* -
+  * The dash denotes control code (similar to Haml).  Examples of control code are loops and conditionals.
+* =
+  * The equal sign tells Slim it's a Ruby call that produces output to add to the buffer (similar to Erb and Haml).
+* ==
+  * Same as the single equal sign, but does not go through the escape_html method.
+* !
+  * This is a directive.  Most common example: `! doctype html # renders <!doctype html>`
+* /
+  * Use the forward slash for ruby code comments - anything after it won't get displayed in the final render.
+
+### Things to know
+
+* Standard Ruby syntax after '-' and '='
+  * __end__ is not required
+* Can put content on same line or nest it.
+  * If you nest content (e.g. put it on the next line), start the line with a pipe ('|') or a backtick ('`').
+* Indentation matters, but it's not as strict as Haml.
+  * If you want to first indent 2 spaces, then 5 spaces, it's your choice. To nest markup you only need to indent by one space, the rest is gravy.
+
 ### Add content to a tag
 
     # Either start on the same line as the tag
@@ -190,36 +218,6 @@ Here's a quick example to demonstrate what a Slim template looks like:
     # The parsed result of the above:
     
     <body><p></p></body>
-
-
-## Things to know
-
-* Standard Ruby syntax after '-' and '='
-  * __end__ is not required
-* Can put content on same line or nest it.
-  * If you nest content (e.g. put it on the next line), start the line with a pipe ('|') or a backtick ('`').
-* Indentation matters, but it's not as strict as Haml.
-  * If you want to indent 2 spaces, then 5.  It's your choice. To nest markup you only need to indent by one space, the rest is gravy.
-
-
-## Line indicators
-
-__Please note that all line indicators must be followed by a space__
-
-* |
-  * The pipe tells Slim to just copy the line. It essentially escapes any processing.
-* `
-  * _Same as the pipe ('|')._
-* -
-  * The dash denotes control code (similar to Haml).  Examples of control code are loops and conditionals.
-* =
-  * The equal sign tells Slim it's a Ruby call that produces output to add to the buffer (similar to Erb and Haml).
-* ==
-  * Same as the single equal sign, but does not go through the escape_html method.
-* !
-  * This is a directive.  Most common example: `! doctype html # renders <!doctype html>`
-* /
-  * Use the forward slash for ruby code comments - anything after it won't get displayed in the final render.
 
 
 ## Benchmarks
