@@ -247,3 +247,8 @@ __Please note that all line indicators must be followed by a space__
     slim (cached)       0.130000   0.010000   0.140000 (  0.129576)
     haml (cached)       0.320000   0.000000   0.320000 (  0.344316)
     mustache (cached)   0.040000   0.000000   0.040000 (  0.049058)
+
+## Authors
+
+* [Andrew Stone](http://github.com/stonean)
+* [Fred Wu](http://github.com/fredwu)
