@@ -43,7 +43,7 @@ Here's a quick example to demonstrate what a Slim template looks like:
         meta name="keywords" content="template language"
       body
         h1 Markup examples
-        div id="content" class="example1"
+        #content.example1
           p Nest by indentation
 
         = yield
@@ -57,7 +57,7 @@ Here's a quick example to demonstrate what a Slim template looks like:
         - else
           p No items found
 
-        div id="footer"
+        #footer
           | Copyright &copy; 2010 Andrew Stone
 
         = render partial: 'tracking_code'
