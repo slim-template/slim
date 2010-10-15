@@ -151,7 +151,6 @@ module Slim
 
     # escapes the string
     def wraps_with_slim_escape!(string)
-      string.strip!
       string.sub!(REGEX_LINE_CONTAINS_METHOD_DETECTED, 'Slim.escape_html(\1)')
     end
 
