@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{slim}
-  s.version = "0.6.0.beta.3"
+  s.version = "0.6.0"
 
-  s.required_rubygems_version = Gem::Requirement.new("> 1.3.1") if s.respond_to? :required_rubygems_version=
+  s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Andrew Stone", "Fred Wu"]
-  s.date = %q{2010-10-16}
+  s.date = %q{2010-10-17}
   s.description = %q{Slim is a template language whose goal is reduce the syntax to the essential parts without becoming cryptic.}
   s.email = ["andy@stonean.com", "ifredwu@gmail.com"]
   s.extra_rdoc_files = [
@@ -25,6 +25,7 @@ Gem::Specification.new do |s|
      "lib/slim/engine.rb",
      "lib/slim/optimizer.rb",
      "lib/slim/rails.rb",
+     "readme.html",
      "slim.gemspec",
      "test/helper.rb",
      "test/slim/test_compiler.rb",
@@ -39,9 +40,9 @@ Gem::Specification.new do |s|
   s.summary = %q{Slim is a template language.}
   s.test_files = [
     "test/helper.rb",
-     "test/slim/test_compiler.rb",
+     "test/test_slim.rb",
      "test/slim/test_engine.rb",
-     "test/test_slim.rb"
+     "test/slim/test_compiler.rb"
   ]
 
   if s.respond_to? :specification_version then
