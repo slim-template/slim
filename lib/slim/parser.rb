@@ -5,10 +5,11 @@ module Slim
     attr_reader :options
 
     class SyntaxError < StandardError
-      def initialize(message, line, lineno)
+      def initialize(message, line, lineno, column = 0)
         @message = message
         @line = line.strip
         @lineno = lineno
+        @column = column
       end
 
       def to_s
@@ -16,6 +17,7 @@ module Slim
 #{@message}
   Line #{@lineno}
     #{@line}
+    #{' ' * @column}^
         EOF
       end
     end
@@ -254,14 +256,31 @@ module Slim
         attributes << [key, value]
         line = $'
       end
-
       
+      if line[0] == ?(
+        # If there is a parenthesis right after the tag name, it means that
+        # the attributes are enclosed in parentheses.
+        parens = true
+        # Replace the paren with a space so we can continue parsing as normal.
+        line[0] = ?\s
+      end
+
       # Find any other attributes
       while line =~ /^ ([\w-]+)=("[^"]+")/
         key = $1
         value = $2
         attributes << [key, value]
         line = $'
+      end
+
+      if parens
+        if line[0] == ?)
+          # Everything is ok!
+          line = line[1..-1]
+        else
+          # Ops, we can't find a closing parenthesis; report an error!
+          e "Expected closing of attributes", orig_line, lineno, orig_line.size - line.size
+        end
       end
 
       # The rest of the line.
