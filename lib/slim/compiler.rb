@@ -31,7 +31,7 @@ module Slim
         line.chomp!
         line.rstrip!
 
-        if line.length == 0
+        if line.empty?
           @_buffer << '_buf << "<br/>";' if in_text
           next
         end
