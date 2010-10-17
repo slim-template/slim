@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    slim (0.6.0)
+    slim (0.6.1)
       escape_utils
 
 GEM
