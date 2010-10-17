@@ -24,7 +24,11 @@ module Slim
     end
 
     def on_text(string)
-      [:dynamic, '"%s"' % string]
+      if string.include?("\#{")
+        [:dynamic, '"%s"' % string]
+      else
+        [:static, string]
+      end
     end
 
     def on_control(code, content)
@@ -51,7 +55,7 @@ module Slim
 
     def on_tag(name, attrs, content)
       attrs = attrs.inject([:html, :attrs]) do |m, (key, value)|
-        if value =~ /\#\{/
+        if value.include?("\#{")
           value = [:dynamic, value]
         else
           value = [:static, value[1..-2]]
