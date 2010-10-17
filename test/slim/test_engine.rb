@@ -292,7 +292,7 @@ HTML
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
-  
+
   def test_hash_call_in_attribute
     string = <<HTML
 p id="#\{hash[:a]}" Test it

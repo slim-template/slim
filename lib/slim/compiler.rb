@@ -10,7 +10,7 @@ module Slim
     CONTROL_WORDS      = %w{if unless do}
     ELSE_CONTROL_WORDS = %w{else elsif}
 
-    REGEX_LINE_PARSER = /^(\s*)([!`\|\-=\/#\.]?[\w#\.]*)((?:\s+[\w-]+="[^"\r\n]*")*)?(.*)/
+    REGEX_LINE_PARSER = /^(\s*)(!?`?\|?-?=?\/?\w*)((\S*[#.]\S+)?(?:\s*(?:\w|-)*="[^=]+")*)?(.*)/
 
     REGEX_LINE_CONTAINS_OUTPUT_CODE       = /^\s*=(.*)/
     REGEX_LINE_CONTAINS_METHOD_DETECTED   = /^((?:(?!#{CONTROL_WORDS * '\b|'}\b).)*)/
@@ -48,7 +48,8 @@ module Slim
 
         marker         = $2
         attrs          = $3
-        string         = $4
+        shortcut_attrs = $4
+        string         = $5
 
         # Remove the first space, but allow people to pad if they want.
         string.slice!(0) if string =~ /^\s/
@@ -62,11 +63,10 @@ module Slim
                     else :markup
                     end
 
-        normalize_attributes!(marker, attrs)
-
-        attrs.gsub!('"', '\"') if attrs
-
-        marker.rstrip!; attrs.rstrip!
+        if attrs
+          normalize_attributes!(attrs) if shortcut_attrs
+          attrs.gsub!('"', '\"')
+        end
 
         unless indent > last_indent
           begin
@@ -90,6 +90,9 @@ module Slim
           if AUTOCLOSED.include?(marker)
             @_buffer << "_buf << \"<#{marker}#{attrs}/>\";"
           else
+            # prepends "div" to the shortcut form of attrs if no marker is given
+            marker = 'div' if shortcut_attrs && marker.empty?
+
             enders   << ["_buf << \"</#{marker}>\";", indent]
             @_buffer << "_buf << \"<#{marker}#{attrs}>\";"
           end
@@ -97,7 +100,7 @@ module Slim
           if string =~ REGEX_LINE_CONTAINS_OUTPUT_CODE
             @_buffer << "_buf << #{parse_string($1.strip)};"
           else
-            @_buffer << "_buf << \"#{string}\";"  unless string.empty?
+            @_buffer << "_buf << \"#{string}\";" unless string.empty?
           end
         when :text
           in_text     = true
@@ -149,24 +152,9 @@ module Slim
     end
 
     # converts 'p#hello.world.mate' to 'p id="hello" class="world mate"'
-    def normalize_attributes!(marker, attrs)
-      return unless marker =~ /[#.]+/
-
-      if marker =~ REGEX_FIND_HTML_ATTR_CLASSES
-        attrs.replace(%|class="#{$1.split('.').join(' ')}"#{attrs}|)
-      end
-
-      if marker =~ REGEX_FIND_HTML_ATTR_ID
-        attrs.replace(%|id="#{$1}" #{attrs}|)
-      end
-
-      attrs.replace(" #{attrs}") unless attrs =~ /^\s/
-
-      if marker =~ /^(\w+)/
-        marker.replace($1)
-      else
-        marker.replace('div')
-      end
+    def normalize_attributes!(string)
+      string.sub!(REGEX_FIND_HTML_ATTR_ID, ' id="\1"')
+      string.sub!(REGEX_FIND_HTML_ATTR_CLASSES, ' class="\1"') && string.gsub!('.', ' ')
     end
   end
 end
