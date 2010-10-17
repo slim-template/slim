@@ -3,7 +3,7 @@ module Slim
     use Slim::Parser
     use Slim::EndInserter
     use Slim::Compiler
-    use Temple::HTML::Fast, :format, :attr_wrapper => '"'
+    use Temple::HTML::Fast, :format, :attr_wrapper => '"', :format => :html5
     filter :MultiFlattener
     filter :StaticMerger
     filter :DynamicInliner
