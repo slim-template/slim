@@ -1,4 +1,8 @@
+require 'tilt'
+
 class ComplexView
+  include Tilt::CompileSite
+  
   def header
     "Colors"
   end
