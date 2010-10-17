@@ -151,12 +151,15 @@ __Please note that all line indicators must be followed by a space__
       div class="content"
         = show_content
 
-### Wrap attributes with parens
+### Wrap attributes with delimiters
 
-    # If parens make the syntax more readable for you
+    # If a delimiter makes the syntax more readable for you,
+    # you can use any non-word and non-space characters except:
+    # equal sign (=), hash (#) and dot (.)
 
     body
-      h1(id="tagline" class="small tagline") = page_tagline
+      h1(id="logo") = page_logo
+      h2[id="tagline" class="small tagline"] = page_tagline
 
 ### Set an attribute's value with a method
 

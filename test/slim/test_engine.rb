@@ -446,6 +446,16 @@ HTML
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
 
+  def test_square_brackets_around_attributes
+    string = <<HTML
+p[id="marvin" class="martian" data-info="Illudium Q-36"] = output_number
+HTML
+
+    expected = %(<p id="marvin" class="martian" data-info="Illudium Q-36">1337</p>)
+
+    assert_equal expected, Slim::Engine.new(string).render(@env)
+  end
+
   def test_parens_around_attributes_with_equal_sign_snug_to_right_paren
     string = <<HTML
 p(id="marvin" class="martian" data-info="Illudium Q-36")= output_number

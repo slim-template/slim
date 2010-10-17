@@ -10,7 +10,8 @@ module Slim
     CONTROL_WORDS      = %w{if unless do}
     ELSE_CONTROL_WORDS = %w{else elsif}
 
-    REGEX_LINE_PARSER = /^(\s*)(!?`?\|?-?=?\/?\w*)\(?((\S*[#.]\S+)?(?:\s*(?:\w|-)*="[^=]+")*)?\)?(.*)/
+    REGEX_DELIMITERS  = '[^\w\s=#.]?'
+    REGEX_LINE_PARSER = /^(\s*)(!?`?\|?-?=?\/?\w*)#{REGEX_DELIMITERS}((\S*[#.]\S+)?(?:\s*(?:\w|-)*="[^=]+")*)?#{REGEX_DELIMITERS}(.*)/
 
     REGEX_LINE_CONTAINS_OUTPUT_CODE       = /^\s*=(.*)/
     REGEX_LINE_CONTAINS_METHOD_DETECTED   = /^((?:(?!#{CONTROL_WORDS * '\b|'}\b).)*)/
