@@ -9,19 +9,19 @@ require 'erubis'
 require 'erb'
 require 'haml'
 
-tpl_erb      = File.read(File.dirname(__FILE__) + '/src/complex.erb')
-tpl_haml     = File.read(File.dirname(__FILE__) + '/src/complex.haml')
-tpl_slim     = File.read(File.dirname(__FILE__) + '/src/complex.slim')
+tpl_erb  = File.read(File.dirname(__FILE__) + '/src/complex.erb')
+tpl_haml = File.read(File.dirname(__FILE__) + '/src/complex.haml')
+tpl_slim = File.read(File.dirname(__FILE__) + '/src/complex.slim')
 
 view  = ComplexView.new
 eview = OpenStruct.new(:header => view.header, :item => view.item).instance_eval{ binding }
 
-erb               = ERB.new(tpl_erb)
-erubis            = Erubis::Eruby.new(tpl_erb)
-fast_erubis       = Erubis::FastEruby.new(tpl_erb)
-haml              = Haml::Engine.new(tpl_haml)
-haml_ugly         = Haml::Engine.new(tpl_haml, :ugly => true)
-slim              = Slim::Engine.new(tpl_slim)
+erb         = ERB.new(tpl_erb)
+erubis      = Erubis::Eruby.new(tpl_erb)
+fast_erubis = Erubis::FastEruby.new(tpl_erb)
+haml        = Haml::Engine.new(tpl_haml)
+haml_ugly   = Haml::Engine.new(tpl_haml, :ugly => true)
+slim        = Slim::Engine.new(tpl_slim)
 
 bench('erb')                  { ERB.new(tpl_erb).result(eview) }
 bench('erubis')               { Erubis::Eruby.new(tpl_erb).result(eview) }
