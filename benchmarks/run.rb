@@ -5,6 +5,7 @@ require File.dirname(__FILE__) + '/src/complex_view'
 require File.dirname(__FILE__) + '/../lib/slim'
 
 require 'ostruct'
+require 'erubis'
 require 'erb'
 require 'haml'
 require 'mustache'
@@ -18,6 +19,7 @@ view  = ComplexView.new
 eview = OpenStruct.new(:header => view.header, :item => view.item).instance_eval{ binding }
 
 erb               = ERB.new(tpl_erb)
+erubis            = Erubis::Eruby.new(tpl_erb)
 haml              = Haml::Engine.new(tpl_haml)
 slim              = Slim::Engine.new(tpl_slim)
 mustache          = Mustache.new
@@ -32,10 +34,12 @@ items << { :name => 'blue', :current => false, :url => '#Blue' }
 mustache[:item] = items
 
 bench('erb')               { ERB.new(tpl_erb).result(eview) }
+bench('erubis')            { Erubis::Eruby.new(tpl_erb).result(eview) }
 bench('slim')              { Slim::Engine.new(tpl_slim).render(view) }
 bench('haml')              { Haml::Engine.new(tpl_haml).render(view) }
 bench('mustache')          { Mustache.render(tpl_mustache, view) }
 bench('erb (cached)')      { erb.result(eview) }
+bench('erubis (cached)')   { erubis.result(eview) }
 bench('slim (cached)')     { slim.render(view) }
 bench('haml (cached)')     { haml.render(view) }
 bench('mustache (cached)') { mustache.render }

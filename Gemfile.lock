@@ -7,6 +7,9 @@ PATH
 GEM
   remote: http://rubygems.org/
   specs:
+    abstract (1.0.0)
+    erubis (2.6.6)
+      abstract (>= 1.0.0)
     escape_utils (0.1.8)
     gemcutter (0.6.1)
     git (1.2.5)
@@ -25,6 +28,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  erubis
   escape_utils
   haml
   jeweler
