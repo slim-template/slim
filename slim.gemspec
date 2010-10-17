@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new("> 1.3.1") if s.respond_to? :required_rubygems_version=
   s.authors = ["Andrew Stone", "Fred Wu"]
-  s.date = %q{2010-10-16}
+  s.date = %q{2010-10-17}
   s.description = %q{Slim is a template language whose goal is reduce the syntax to the essential parts without becoming cryptic.}
   s.email = ["andy@stonean.com", "ifredwu@gmail.com"]
   s.extra_rdoc_files = [
@@ -22,9 +22,13 @@ Gem::Specification.new do |s|
      "Rakefile",
      "lib/slim.rb",
      "lib/slim/compiler.rb",
+     "lib/slim/end_inserter.rb",
      "lib/slim/engine.rb",
-     "lib/slim/optimizer.rb",
+     "lib/slim/example.slim",
+     "lib/slim/parser.rb",
      "lib/slim/rails.rb",
+     "lib/slim/run.rb",
+     "lib/slim/template.rb",
      "slim.gemspec",
      "test/helper.rb",
      "test/slim/test_compiler.rb",
@@ -35,7 +39,7 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubyforge_project = %q{slim}
-  s.rubygems_version = %q{1.3.7}
+  s.rubygems_version = %q{1.3.6}
   s.summary = %q{Slim is a template language.}
   s.test_files = [
     "test/helper.rb",
@@ -48,14 +52,18 @@ Gem::Specification.new do |s|
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
-    if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
+    if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<escape_utils>, [">= 0"])
+      s.add_runtime_dependency(%q<temple>, [">= 0"])
+      s.add_runtime_dependency(%q<tilt>, [">= 0"])
       s.add_development_dependency(%q<rake>, [">= 0"])
       s.add_development_dependency(%q<jeweler>, [">= 0"])
       s.add_development_dependency(%q<haml>, [">= 0"])
       s.add_development_dependency(%q<mustache>, [">= 0"])
     else
       s.add_dependency(%q<escape_utils>, [">= 0"])
+      s.add_dependency(%q<temple>, [">= 0"])
+      s.add_dependency(%q<tilt>, [">= 0"])
       s.add_dependency(%q<rake>, [">= 0"])
       s.add_dependency(%q<jeweler>, [">= 0"])
       s.add_dependency(%q<haml>, [">= 0"])
@@ -63,6 +71,8 @@ Gem::Specification.new do |s|
     end
   else
     s.add_dependency(%q<escape_utils>, [">= 0"])
+    s.add_dependency(%q<temple>, [">= 0"])
+    s.add_dependency(%q<tilt>, [">= 0"])
     s.add_dependency(%q<rake>, [">= 0"])
     s.add_dependency(%q<jeweler>, [">= 0"])
     s.add_dependency(%q<haml>, [">= 0"])

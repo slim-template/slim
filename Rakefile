@@ -16,6 +16,8 @@ begin
     gem.email = ["andy@stonean.com", "ifredwu@gmail.com"]
     gem.files = ['*', 'lib/**/*', 'test/**/*']
     gem.add_dependency 'escape_utils'
+    gem.add_dependency 'temple'
+    gem.add_dependency 'tilt'
     gem.add_development_dependency 'rake'
     gem.add_development_dependency 'jeweler'
     gem.add_development_dependency 'haml'
