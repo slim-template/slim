@@ -15,6 +15,7 @@ module Slim
     REGEX_LINE_CONTAINS_OUTPUT_CODE       = /^\s*=(.*)/
     REGEX_LINE_CONTAINS_METHOD_DETECTED   = /^((?:(?!#{CONTROL_WORDS * '\b|'}\b).)*)/
     REGEX_METHOD_HAS_NO_PARENTHESES       = /^\w+\s+\S+/
+    REGEX_CODE_BLOCK_DETECTED             = / do ?.*$/
     REGEX_CODE_CONTROL_WORD_DETECTED      = /(?:\s|(\())(#{CONTROL_WORDS * '|'})\b\s?(.*)$/
     REGEX_CODE_ELSE_CONTROL_WORD_DETECTED = /^#{ELSE_CONTROL_WORDS * '\b|'}\b/
     REGEX_FIND_HTML_ATTR_ID               = /#([^.\s]+)/
@@ -106,6 +107,7 @@ module Slim
           enders   << ['end;', indent] unless enders.detect{|e| e[0] == 'end;' && e[1] == indent}
           @_buffer << "#{string};"
         when :output_code
+          enders   << ['end;', indent] if string =~ REGEX_CODE_BLOCK_DETECTED
           @_buffer << "_buf << #{parse_string(string)};"
         when :declaration
           @_buffer << "_buf << \"<!#{string}>\";"
@@ -131,7 +133,7 @@ module Slim
         $1.strip
       else
         parenthesesify_method!(string)  if string =~ REGEX_METHOD_HAS_NO_PARENTHESES
-        wraps_with_slim_escape!(string) 
+        wraps_with_slim_escape!(string) unless string =~ REGEX_CODE_BLOCK_DETECTED
         string.strip
       end
     end
