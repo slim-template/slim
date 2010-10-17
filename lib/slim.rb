@@ -3,9 +3,14 @@
 $:.unshift File.dirname(__FILE__)
 
 require 'bundler/setup'
+require 'temple'
+require 'tilt'
 require 'escape_utils'
+require 'slim/parser'
+require 'slim/end_inserter'
 require 'slim/compiler'
 require 'slim/engine'
+require 'slim/template'
 
 module Slim
   class << self
