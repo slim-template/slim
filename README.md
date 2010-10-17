@@ -151,6 +151,13 @@ __Please note that all line indicators must be followed by a space__
       div class="content"
         = show_content
 
+### Wrap attributes with parens
+
+    # If parens make the syntax more readable for you
+
+    body
+      h1(id="tagline" class="small tagline") = page_tagline
+
 ### Set an attribute's value with a method
 
     # Use standard Ruby interpolation.
