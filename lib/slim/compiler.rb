@@ -10,7 +10,7 @@ module Slim
     CONTROL_WORDS      = %w{if unless do}
     ELSE_CONTROL_WORDS = %w{else elsif}
 
-    REGEX_LINE_PARSER = /^(\s*)(!?`?\|?-?=?\/?\w*)((\S*[#.]\S+)?(?:\s*(?:\w|-)*="[^=]+")*)?(.*)/
+    REGEX_LINE_PARSER = /^(\s*)(!?`?\|?-?=?\/?\w*)\(?((\S*[#.]\S+)?(?:\s*(?:\w|-)*="[^=]+")*)?\)?(.*)/
 
     REGEX_LINE_CONTAINS_OUTPUT_CODE       = /^\s*=(.*)/
     REGEX_LINE_CONTAINS_METHOD_DETECTED   = /^((?:(?!#{CONTROL_WORDS * '\b|'}\b).)*)/
@@ -63,9 +63,10 @@ module Slim
                     else :markup
                     end
 
-        if attrs
+        unless attrs.empty?
           normalize_attributes!(attrs) if shortcut_attrs
           attrs.gsub!('"', '\"')
+          attrs = " #{attrs}" unless attrs =~ /^\s/
         end
 
         unless indent > last_indent
