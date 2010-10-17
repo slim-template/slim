@@ -21,7 +21,7 @@ begin
     gem.add_development_dependency 'rake'
     gem.add_development_dependency 'jeweler'
     gem.add_development_dependency 'haml'
-    gem.add_development_dependency 'mustache'
+    gem.add_development_dependency 'erubis'
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError

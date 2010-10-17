@@ -5,9 +5,9 @@
 
 Gem::Specification.new do |s|
   s.name = %q{slim}
-  s.version = "0.6.0.beta.3"
+  s.version = "0.6.1"
 
-  s.required_rubygems_version = Gem::Requirement.new("> 1.3.1") if s.respond_to? :required_rubygems_version=
+  s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Andrew Stone", "Fred Wu"]
   s.date = %q{2010-10-17}
   s.description = %q{Slim is a template language whose goal is reduce the syntax to the essential parts without becoming cryptic.}
@@ -43,9 +43,9 @@ Gem::Specification.new do |s|
   s.summary = %q{Slim is a template language.}
   s.test_files = [
     "test/helper.rb",
-     "test/slim/test_compiler.rb",
+     "test/test_slim.rb",
      "test/slim/test_engine.rb",
-     "test/test_slim.rb"
+     "test/slim/test_compiler.rb"
   ]
 
   if s.respond_to? :specification_version then
@@ -59,7 +59,7 @@ Gem::Specification.new do |s|
       s.add_development_dependency(%q<rake>, [">= 0"])
       s.add_development_dependency(%q<jeweler>, [">= 0"])
       s.add_development_dependency(%q<haml>, [">= 0"])
-      s.add_development_dependency(%q<mustache>, [">= 0"])
+      s.add_development_dependency(%q<erubis>, [">= 0"])
     else
       s.add_dependency(%q<escape_utils>, [">= 0"])
       s.add_dependency(%q<temple>, [">= 0"])
@@ -67,7 +67,7 @@ Gem::Specification.new do |s|
       s.add_dependency(%q<rake>, [">= 0"])
       s.add_dependency(%q<jeweler>, [">= 0"])
       s.add_dependency(%q<haml>, [">= 0"])
-      s.add_dependency(%q<mustache>, [">= 0"])
+      s.add_dependency(%q<erubis>, [">= 0"])
     end
   else
     s.add_dependency(%q<escape_utils>, [">= 0"])
@@ -76,7 +76,7 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<rake>, [">= 0"])
     s.add_dependency(%q<jeweler>, [">= 0"])
     s.add_dependency(%q<haml>, [">= 0"])
-    s.add_dependency(%q<mustache>, [">= 0"])
+    s.add_dependency(%q<erubis>, [">= 0"])
   end
 end
 

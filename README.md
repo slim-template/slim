@@ -151,6 +151,13 @@ __Please note that all line indicators must be followed by a space__
       div class="content"
         = show_content
 
+### Wrap attributes with parens
+
+    # If parens make the syntax more readable for you
+
+    body
+      h1(id="tagline" class="small tagline") = page_tagline
+
 ### Set an attribute's value with a method
 
     # Use standard Ruby interpolation.
@@ -222,29 +229,37 @@ __Please note that all line indicators must be followed by a space__
 
 ## Benchmarks
 
-    # OS X 10.6 + REE 1.8.7
+    # Ubuntu 10.4 + Ruby 1.9.2
 
-                            user     system      total        real
-    erb                 0.500000   0.000000   0.500000 (  0.516644)
-    slim                0.550000   0.000000   0.550000 (  0.579362)
-    haml                3.390000   0.050000   3.440000 (  3.669325)
-    mustache            1.130000   0.040000   1.170000 (  1.213134)
-    erb (cached)        0.090000   0.000000   0.090000 (  0.099274)
-    slim (cached)       0.080000   0.000000   0.080000 (  0.079823)
-    haml (cached)       0.290000   0.000000   0.290000 (  0.312542)
-    mustache (cached)   0.080000   0.000000   0.080000 (  0.079184)
+    Rehearsal --------------------------------------------------------
+    erb                    0.580000   0.010000   0.590000 (  0.611149)
+    erubis                 0.480000   0.000000   0.480000 (  0.506241)
+    fast erubis            0.480000   0.010000   0.490000 (  0.499427)
+    slim                   0.640000   0.000000   0.640000 (  0.667160)
+    haml                   4.140000   0.000000   4.140000 (  4.221195)
+    haml ugly              3.960000   0.000000   3.960000 (  4.018103)
+    erb (cached)           0.200000   0.000000   0.200000 (  0.208529)
+    erubis (cached)        0.160000   0.000000   0.160000 (  0.167134)
+    fast erubis (cached)   0.140000   0.000000   0.140000 (  0.152149)
+    slim (cached)          0.150000   0.000000   0.150000 (  0.159058)
+    haml (cached)          0.450000   0.010000   0.460000 (  0.462814)
+    haml ugly (cached)     0.370000   0.000000   0.370000 (  0.387312)
+    ---------------------------------------------- total: 11.780000sec
 
-    # OS X 10.6 + Ruby 1.9.2
+    user     system      total        real
+    erb                    0.560000   0.010000   0.570000 (  0.574373)
+    erubis                 0.480000   0.000000   0.480000 (  0.501512)
+    fast erubis            0.470000   0.000000   0.470000 (  0.481918)
+    slim                   0.610000   0.000000   0.610000 (  0.612794)
+    haml                   3.930000   0.010000   3.940000 (  3.939419)
+    haml ugly              3.790000   0.010000   3.800000 (  3.798528)
+    erb (cached)           0.190000   0.000000   0.190000 (  0.188593)
+    erubis (cached)        0.160000   0.000000   0.160000 (  0.159869)
+    fast erubis (cached)   0.140000   0.000000   0.140000 (  0.135476)
+    slim (cached)          0.150000   0.000000   0.150000 (  0.153698)
+    haml (cached)          0.430000   0.000000   0.430000 (  0.436980)
+    haml ugly (cached)     0.370000   0.000000   0.370000 (  0.372770)
 
-                            user     system      total        real
-    erb                 0.400000   0.000000   0.400000 (  0.431967)
-    slim                0.410000   0.010000   0.420000 (  0.425059)
-    haml                3.030000   0.030000   3.060000 (  3.199970)
-    mustache            1.360000   0.030000   1.390000 (  1.435129)
-    erb (cached)        0.150000   0.000000   0.150000 (  0.157284)
-    slim (cached)       0.130000   0.010000   0.140000 (  0.129576)
-    haml (cached)       0.320000   0.000000   0.320000 (  0.344316)
-    mustache (cached)   0.040000   0.000000   0.040000 (  0.049058)
 
 ## Authors
 

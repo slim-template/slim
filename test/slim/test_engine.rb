@@ -131,8 +131,7 @@ HTML
 
   def test_render_with_call_to_set_attributes
     string = <<HTML
-p id="#\{id_helper}" class="hello world"
-  = hello_world
+p id="#\{id_helper}" class="hello world" = hello_world
 HTML
 
     expected = "<p id=\"notice\" class=\"hello world\">Hello World from @env</p>"
@@ -294,6 +293,17 @@ HTML
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
 
+  def test_hash_call_in_attribute
+    string = <<HTML
+p id="#\{hash[:a]}" Test it
+HTML
+
+    expected = "<p id=\"The letter a\">Test it</p>"
+
+    assert_equal expected, Slim::Engine.new(string).render(@env)
+  end
+
+
   def test_escaping_evil_method
     string = <<HTML
 p = evil_method
@@ -402,6 +412,46 @@ p = output_number
 HTML
 
     expected = "<p>1337</p>"
+
+    assert_equal expected, Slim::Engine.new(string).render(@env)
+  end
+
+  def test_dashed_attributes
+    string = <<HTML
+p data-info="Illudium Q-36" = output_number
+HTML
+
+    expected = %(<p data-info="Illudium Q-36">1337</p>)
+
+    assert_equal expected, Slim::Engine.new(string).render(@env)
+  end
+
+  def test_dashed_attributes_with_shortcuts
+    string = <<HTML
+p#marvin.martian data-info="Illudium Q-36" = output_number
+HTML
+
+    expected = %(<p id="marvin" class="martian" data-info="Illudium Q-36">1337</p>)
+
+    assert_equal expected, Slim::Engine.new(string).render(@env)
+  end
+
+  def test_parens_around_attributes
+    string = <<HTML
+p(id="marvin" class="martian" data-info="Illudium Q-36") = output_number
+HTML
+
+    expected = %(<p id="marvin" class="martian" data-info="Illudium Q-36">1337</p>)
+
+    assert_equal expected, Slim::Engine.new(string).render(@env)
+  end
+
+  def test_parens_around_attributes_with_equal_sign_snug_to_right_paren
+    string = <<HTML
+p(id="marvin" class="martian" data-info="Illudium Q-36")= output_number
+HTML
+
+    expected = %(<p id="marvin" class="martian" data-info="Illudium Q-36">1337</p>)
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end

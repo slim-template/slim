@@ -1,12 +1,15 @@
 PATH
   remote: .
   specs:
-    slim (0.6.0.beta.3)
+    slim (0.6.0)
       escape_utils
 
 GEM
   remote: http://rubygems.org/
   specs:
+    abstract (1.0.0)
+    erubis (2.6.6)
+      abstract (>= 1.0.0)
     escape_utils (0.1.8)
     gemcutter (0.6.1)
     git (1.2.5)
@@ -16,7 +19,6 @@ GEM
       git (>= 1.2.5)
       rubyforge (>= 2.0.0)
     json_pure (1.4.6)
-    mustache (0.11.2)
     rake (0.8.7)
     rubyforge (2.0.4)
       json_pure (>= 1.1.7)
@@ -25,9 +27,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  erubis
   escape_utils
   haml
   jeweler
-  mustache
   rake
   slim!
