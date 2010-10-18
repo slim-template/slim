@@ -5,6 +5,7 @@ require "version"
 Gem::Specification.new do |s|
   s.name              = "slim"
   s.version           = Slim::VERSION
+  s.date              = Date.today.to_s
   s.authors           = ["Andrew Stone", "Fred Wu"]
   s.email             = ["andy@stonean.com", "ifredwu@gmail.com"]
   s.summary           = %q{Slim is a template language.}
