@@ -227,7 +227,12 @@ module Slim
 
     ATTR_SHORTHAND = {
       ?# => "id",
-      ?. => "class"
+      ?. => "class",
+    }
+    DELIMITERS = {
+      ?( => ?),
+      ?[ => ?],
+      ?{ => ?},
     }
     
     def parse_tag(line, lineno)
@@ -257,9 +262,9 @@ module Slim
         line = $'
       end
       
-      if line[0] =~ /[^\w\s=#.]/
-        # Check to see if there is a delimiter right after the tag name
-        delimited = true
+      # Check to see if there is a delimiter right after the tag name
+      if line[0] =~ /([()\[\]{}])/
+        delimiter = $1
         # Replace the delimiter with a space so we can continue parsing as normal.
         line[0] = ?\s
       end
@@ -272,14 +277,12 @@ module Slim
         line = $'
       end
 
-      if delimited
-        if line[0] =~ /[^\w\s=#.]/
-          # Everything is ok!
-          line = line[1..-1]
-        else
-          # Ops, we can't find a closing parenthesis; report an error!
-          e "Expected closing of attributes", orig_line, lineno, orig_line.size - line.size
-        end
+      if delimiter && line[0] == DELIMITERS[delimiter]
+        # Everything is ok!
+        line = line[1..-1]
+      elsif delimiter
+        # Ops, we can't find a closing parenthesis; report an error!
+        e "Expected closing of attributes", orig_line, lineno, orig_line.size - line.size
       end
 
       # The rest of the line.
