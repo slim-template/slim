@@ -73,16 +73,6 @@ Here's a quick example to demonstrate what a Slim template looks like:
 
 ## Language features
 
-### Wrap attributes with delimiters
-
-    # If a delimiter makes the syntax more readable for you,
-    # you can use any non-word and non-space characters except:
-    # equal sign (=), hash (#) and dot (.)
-
-    body
-      h1(id="logo") = page_logo
-      h2[id="tagline" class="small tagline"] = page_tagline
-
 ### Line indicators
 
 __Please note that all line indicators must be followed by a space__
@@ -110,6 +100,16 @@ __Please note that all line indicators must be followed by a space__
   * If you nest content (e.g. put it on the next line), start the line with a pipe ('|') or a backtick ('`').
 * Indentation matters, but it's not as strict as Haml.
   * If you want to first indent 2 spaces, then 5 spaces, it's your choice. To nest markup you only need to indent by one space, the rest is gravy.
+
+### Wrap attributes with delimiters
+
+    # If a delimiter makes the syntax more readable for you,
+    # you can use any non-word and non-space characters except:
+    # equal sign (=), hash (#) and dot (.)
+
+    body
+      h1(id="logo") = page_logo
+      h2[id="tagline" class="small tagline"] = page_tagline
 
 ### Add content to a tag
 
