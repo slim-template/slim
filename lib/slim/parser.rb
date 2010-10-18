@@ -281,7 +281,7 @@ module Slim
         # Everything is ok!
         line = line[1..-1]
       elsif delimiter
-        # Ops, we can't find a closing parenthesis; report an error!
+        # Oops, we can't find a closing delimiter; report an error!
         e "Expected closing of attributes", orig_line, lineno, orig_line.size - line.size
       end
 
