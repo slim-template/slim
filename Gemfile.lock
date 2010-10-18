@@ -3,6 +3,8 @@ PATH
   specs:
     slim (0.6.1)
       escape_utils
+      temple
+      tilt
 
 GEM
   remote: http://rubygems.org/
@@ -22,6 +24,8 @@ GEM
     rake (0.8.7)
     rubyforge (2.0.4)
       json_pure (>= 1.1.7)
+    temple (0.1.2)
+    tilt (1.1)
 
 PLATFORMS
   ruby
@@ -33,3 +37,5 @@ DEPENDENCIES
   jeweler
   rake
   slim!
+  temple
+  tilt
