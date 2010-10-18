@@ -465,4 +465,14 @@ HTML
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
+
+  def test_ternary_operation_in_attribute
+    string = <<HTML
+p id="\#{(false ? 'notshown' : 'shown')}" = output_number
+HTML
+
+    expected = %(<p id="shown">1337</p>)
+
+    assert_equal expected, Slim::Engine.new(string).render(@env)
+  end
 end
