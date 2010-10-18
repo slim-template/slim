@@ -1,10 +1,10 @@
 PATH
   remote: .
   specs:
-    slim (0.6.1)
-      escape_utils
-      temple
-      tilt
+    slim (0.7.0.beta.1)
+      escape_utils (>= 0.1.8)
+      temple (>= 0.1.2)
+      tilt (~> 1.1)
 
 GEM
   remote: http://rubygems.org/
@@ -13,17 +13,8 @@ GEM
     erubis (2.6.6)
       abstract (>= 1.0.0)
     escape_utils (0.1.8)
-    gemcutter (0.6.1)
-    git (1.2.5)
     haml (3.0.21)
-    jeweler (1.4.0)
-      gemcutter (>= 0.1.0)
-      git (>= 1.2.5)
-      rubyforge (>= 2.0.0)
-    json_pure (1.4.6)
     rake (0.8.7)
-    rubyforge (2.0.4)
-      json_pure (>= 1.1.7)
     temple (0.1.2)
     tilt (1.1)
 
@@ -32,10 +23,9 @@ PLATFORMS
 
 DEPENDENCIES
   erubis
-  escape_utils
+  escape_utils (>= 0.1.8)
   haml
-  jeweler
-  rake
+  rake (>= 0.8.7)
   slim!
-  temple
-  tilt
+  temple (>= 0.1.2)
+  tilt (~> 1.1)

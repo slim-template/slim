@@ -1,6 +1,7 @@
 *.swp
-pkg
+pkg/*
+*.gem
+.bundle
 readme.html
 .yardoc/
 doc/
-.bundle/

@@ -15,7 +15,7 @@ require 'slim/template'
 module Slim
   class << self
     def version
-      '0.6.1'
+      Slim::VERSION
     end
 
     def escape_html(html)
