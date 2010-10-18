@@ -257,11 +257,10 @@ module Slim
         line = $'
       end
       
-      if line[0] == ?(
-        # If there is a parenthesis right after the tag name, it means that
-        # the attributes are enclosed in parentheses.
-        parens = true
-        # Replace the paren with a space so we can continue parsing as normal.
+      if line[0] =~ /[^\w\s=#.]/
+        # Check to see if there is a delimiter right after the tag name
+        delimited = true
+        # Replace the delimiter with a space so we can continue parsing as normal.
         line[0] = ?\s
       end
 
@@ -273,8 +272,8 @@ module Slim
         line = $'
       end
 
-      if parens
-        if line[0] == ?)
+      if delimited
+        if line[0] =~ /[^\w\s=#.]/
           # Everything is ok!
           line = line[1..-1]
         else
