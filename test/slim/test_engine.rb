@@ -222,7 +222,7 @@ p
 p Some more markup
 HTML
 
-    expected = "<p> Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p><p>Some more markup</p>"
+    expected = "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p><p>Some more markup</p>"
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
