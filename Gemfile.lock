@@ -16,6 +16,7 @@ GEM
     haml (3.0.21)
     minitest (1.7.2)
     rake (0.8.7)
+    rcov (0.9.9)
     temple (0.1.2)
     tilt (1.1)
 
@@ -28,6 +29,7 @@ DEPENDENCIES
   haml
   minitest
   rake (>= 0.8.7)
+  rcov
   slim!
   temple (>= 0.1.2)
   tilt (~> 1.1)

@@ -5,3 +5,4 @@ pkg/*
 readme.html
 .yardoc/
 doc/
+coverage/
