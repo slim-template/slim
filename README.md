@@ -175,7 +175,7 @@ __Please note that all line indicators must be followed by a space__
     body
       table
         - for user in users do
-          tr id="user_#{user.id}"
+          tr id="user_#{user.id}" class=user.role
 
 ### Call a method in content
 

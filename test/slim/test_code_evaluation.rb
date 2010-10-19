@@ -72,6 +72,76 @@ HTML
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
 
+  def test_hash_call_in_attribute_without_quotes
+    string = <<HTML
+p id=hash[:a] Test it
+HTML
+
+    expected = "<p id=\"The letter a\">Test it</p>"
+
+    assert_equal expected, Slim::Engine.new(string).render(@env)
+  end
+
+  def test_hash_call_in_delimited_attribute
+    string = <<HTML
+p(id=hash[:a]) Test it
+HTML
+
+    expected = "<p id=\"The letter a\">Test it</p>"
+
+    assert_equal expected, Slim::Engine.new(string).render(@env)
+  end
+
+  def test_hash_call_in_attribute_with_ruby_evaluation
+    string = <<HTML
+p id=(hash[:a]+hash[:a]) Test it
+HTML
+
+    expected = "<p id=\"The letter aThe letter a\">Test it</p>"
+
+    assert_equal expected, Slim::Engine.new(string).render(@env)
+  end
+
+  def test_hash_call_in_delimited_attribute_with_ruby_evaluation
+    string = <<HTML
+p(id=(hash[:a]+hash[:a])) Test it
+HTML
+
+    expected = "<p id=\"The letter aThe letter a\">Test it</p>"
+
+    assert_equal expected, Slim::Engine.new(string).render(@env)
+  end
+
+  def test_hash_call_in_delimited_attribute_with_ruby_evaluation_2
+    string = <<HTML
+p[id=(hash[:a]+hash[:a])] Test it
+HTML
+
+    expected = "<p id=\"The letter aThe letter a\">Test it</p>"
+
+    assert_equal expected, Slim::Engine.new(string).render(@env)
+  end
+
+  def test_hash_call_in_delimited_attribute_with_ruby_evaluation_3
+    string = <<HTML
+p(id=[hash[:a]+hash[:a]]) Test it
+HTML
+
+    expected = "<p id=\"The letter aThe letter a\">Test it</p>"
+
+    assert_equal expected, Slim::Engine.new(string).render(@env)
+  end
+
+  def test_hash_call_in_delimited_attribute_with_ruby_evaluation_4
+    string = <<HTML
+p(id=[hash[:a]+hash[:a]] class=[hash[:a]]) Test it
+HTML
+
+    expected = "<p id=\"The letter aThe letter a\" class=\"The letter a\">Test it</p>"
+
+    assert_equal expected, Slim::Engine.new(string).render(@env)
+  end
+
   def test_interpolation_in_text
     string = <<HTML
 p 

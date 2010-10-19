@@ -234,9 +234,9 @@ module Slim
       "." => "class",
     }
     DELIMITERS = {
-      "(" => ?),
-      "[" => ?],
-      "{" => ?},
+      "(" => ")",
+      "[" => "]",
+      "{" => "}",
     }
     
     def parse_tag(line, lineno)
@@ -258,9 +258,7 @@ module Slim
       
       # Find any literal class/id attributes
       while line =~ /^(#|\.)([\w\u00c0-\uFFFF-]+)/
-        key = ATTR_SHORTHAND[$1]
-        value = '"%s"' % $2
-        attributes << [key, value]
+        attributes << [ATTR_SHORTHAND[$1], '"%s"' % $2]
         line = $'
       end
       
@@ -271,18 +269,36 @@ module Slim
         line[0] = ?\s
       end
 
+      # Any ruby variable/method to evaluate?
+      while line =~ /^ ([\w-]+)=([(\[{]?)([^\s"']+)/
+        key     = $1
+        wrapper = $2
+        value   = $3
+        line    = $'
+
+        # We need to strip out the wrapper if they exist
+        unless wrapper.empty?
+          value.slice!(-1) unless line =~ /^ ([\w-]+)=/
+          value.slice!(-1) if value =~ /[)\]}]$/ && delimiter
+        end
+
+        if delimiter && wrapper.empty?
+          value.slice!(-1)
+        end
+
+        attributes << [key, '"#{%s}"' % value]
+      end
+
       # Find any other attributes
       while line =~ /^ ([\w-]+)=("[^"]+")/
-        key = $1
-        value = $2
-        attributes << [key, value]
+        attributes << [$1, $2]
         line = $'
       end
 
-      if delimiter && line[0] == DELIMITERS[delimiter]
+      if delimiter && line[0, 1] == DELIMITERS[delimiter]
         # Everything is ok!
         line = line[1..-1]
-      elsif delimiter
+      elsif delimiter && wrapper.nil?
         # Oops, we can't find a closing delimiter; report an error!
         e "Expected closing of attributes", orig_line, lineno, orig_line.size - line.size
       end
