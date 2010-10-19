@@ -269,19 +269,23 @@ module Slim
         line[0] = ?\s
       end
 
-      # Any ruby variable/method to evaluate?
+      # Any ruby code (as attribute values) to interpolate?
       while line =~ /^ ([\w-]+)=([(\[{]?)([^\s"']+)/
         key     = $1
         wrapper = $2
         value   = $3
         line    = $'
 
-        # We need to strip out the wrapper if they exist
+        # Strip out the wrapper if they exist
         unless wrapper.empty?
+          # If there's more ruby attribute values to come, don't chop off the ending
+          # because there is no ending delimiter for the current attribute
           value.slice!(-1) unless line =~ /^ ([\w-]+)=/
+          # Chop off the ending if both an opening delimiter and an ending wrapper are found
           value.slice!(-1) if value =~ /[)\]}]$/ && delimiter
         end
 
+        # Chop off the ending if an opening delimiter is found but an opening wrapper is not
         if delimiter && wrapper.empty?
           value.slice!(-1)
         end
