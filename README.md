@@ -105,7 +105,7 @@ __Please note that all line indicators must be followed by a space__
 
 #### If your ruby code needs to use multiple lines, append a `\` at the end of the lines, for example:
     `javascript_include_tag \
-      "jquery" \
+      "jquery", \
       "application"`
 
 ### Wrap attributes with delimiters
