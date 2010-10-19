@@ -229,6 +229,7 @@ module Slim
       result
     end
 
+    REGEX_HTML_TAG = /^ ([\w-]+)=/
     ATTR_SHORTHAND = {
       "#" => "id",
       "." => "class",
@@ -270,38 +271,32 @@ module Slim
       end
 
       # Any ruby code (as attribute values) to interpolate?
-      while line =~ /^ ([\w-]+)=([(\[{]?)([^\s"']+)/
+      while line =~ /#{REGEX_HTML_TAG}([(\[{]?)([^\s"']+)/
         key     = $1
-        wrapper = $2
-        value   = $3
+        wrapper = $2 # opening wrapper
+        value   = $3 # attribute value + ending wrapper and delimiter (if any)
         line    = $'
 
-        # Strip out the wrapper if they exist
-        unless wrapper.empty?
-          # If there's more ruby attribute values to come, don't chop off the ending
-          # because there is no ending delimiter for the current attribute
-          value.slice!(-1) unless line =~ /^ ([\w-]+)=/
-          # Chop off the ending if both an opening delimiter and an ending wrapper are found
-          value.slice!(-1) if value =~ /[)\]}]$/ && delimiter
-        end
-
-        # Chop off the ending if an opening delimiter is found but an opening wrapper is not
-        if delimiter && wrapper.empty?
-          value.slice!(-1)
-        end
+        # Remove the end delimiter/wrapper when:
+        # 1. delimiter present & wrapper present
+        value.slice!(-1) if !wrapper.empty? && delimiter
+        # 2. delimiter present & wrapper missing & is the last attribute
+        value.slice!(-1) if wrapper.empty? && delimiter && line !~ REGEX_HTML_TAG
+        # 3. wrapper present & is the last attribute
+        value.slice!(-1) if !wrapper.empty? && line !~ REGEX_HTML_TAG
 
         attributes << [key, '"#{%s}"' % value]
       end
 
       # Find any other attributes
-      while line =~ /^ ([\w-]+)=("[^"]+")/
+      while line =~ /#{REGEX_HTML_TAG}("[^"]+")/
         attributes << [$1, $2]
         line = $'
       end
 
       if delimiter && line[0, 1] == DELIMITERS[delimiter]
         # Everything is ok!
-        line = line[1..-1]
+        line.slice!(0)
       elsif delimiter && wrapper.nil?
         # Oops, we can't find a closing delimiter; report an error!
         e "Expected closing of attributes", orig_line, lineno, orig_line.size - line.size

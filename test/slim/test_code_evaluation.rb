@@ -142,6 +142,16 @@ HTML
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
 
+  def test_hash_call_in_delimited_attribute_with_ruby_evaluation_5
+    string = <<HTML
+p(id=hash[:a] class=[hash[:a]]) Test it
+HTML
+
+    expected = "<p id=\"The letter a\" class=\"The letter a\">Test it</p>"
+
+    assert_equal expected, Slim::Engine.new(string).render(@env)
+  end
+
   def test_interpolation_in_text
     string = <<HTML
 p
