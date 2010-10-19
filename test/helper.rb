@@ -8,6 +8,12 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 
 require 'slim'
 
+class TestSlim < MiniTest::Unit::TestCase
+  def setup
+    @env = Env.new
+  end
+end
+
 class Env
   def id_helper
     "notice"
