@@ -207,8 +207,9 @@ module Slim
         when ?!
           # Found a directive (currently only used for doctypes)
           current << [:slim, :directive, line[1..-1].strip]
-        when ?/
+        when ?/, ?{, ?[
           # Found a comment. Do nothing
+          # '{' '[' for Hash and Array
         else
           # Found a HTML tag.
           insert_newline = false
@@ -219,7 +220,10 @@ module Slim
 
         # Add a newline (to the generated code). We use stacks.last instead of
         # current because something might have been pushed to stacks.
-        stacks.last << [:newline]
+        # If '\' at the end of a line, it indicate the continuation of a statement.
+        unless line[-1] == ?\\
+          stacks.last << [:newline]
+        end
       end
       
       result
