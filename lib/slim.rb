@@ -1,18 +1,16 @@
 # encoding: utf-8
 
+require 'bundler/setup' if defined?(Bundler)
+require 'escape_utils'
 require 'temple'
 require 'tilt'
 
-begin
-  require 'escape_utils'
-rescue LoadError
-end
-
 require 'slim/parser'
-require 'slim/end_inserter'
 require 'slim/compiler'
+require 'slim/end_inserter'
 require 'slim/engine'
 require 'slim/template'
+require 'slim/version'
 
 module Slim
   class << self
@@ -20,22 +18,8 @@ module Slim
       Slim::VERSION
     end
 
-    if defined?(EscapeUtils)
-      def escape_html(html)
-        EscapeUtils.escape_html(html.to_s)
-      end
-    else
-      ESCAPE_HTML = {
-        '&' => '&amp;',
-        '"' => '&quot;',
-        '<' => '&lt;',
-        '>' => '&gt;',
-        '/' => '&#47;',
-      }
-
-      def escape_html(html)
-        html.to_s.gsub(/[&\"<>\/]/, ESCAPE_HTML)
-      end
+    def escape_html(html)
+      EscapeUtils.escape_html(html.to_s)
     end
   end
 end
