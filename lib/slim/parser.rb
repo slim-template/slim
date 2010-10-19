@@ -261,7 +261,7 @@ module Slim
       end
       
       # Check to see if there is a delimiter right after the tag name
-      if line[0, 1] =~ /([()\[\]{}])/
+      if line[0, 1] =~ /([(\[{])/
         delimiter = $1
         # Replace the delimiter with a space so we can continue parsing as normal.
         line[0] = ?\s
