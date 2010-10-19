@@ -1,16 +1,14 @@
 # encoding: utf-8
 
-$:.unshift File.dirname(__FILE__)
-
 require 'bundler/setup' if defined?(Bundler)
 require 'temple'
 require 'tilt'
 require 'escape_utils'
-require 'slim/parser'
-require 'slim/end_inserter'
-require 'slim/compiler'
-require 'slim/engine'
-require 'slim/template'
+require File.dirname(__FILE__) + '/slim/parser'
+require File.dirname(__FILE__) + '/slim/end_inserter'
+require File.dirname(__FILE__) + '/slim/compiler'
+require File.dirname(__FILE__) + '/slim/engine'
+require File.dirname(__FILE__) + '/slim/template'
 
 module Slim
   class << self

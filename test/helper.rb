@@ -5,9 +5,7 @@ require 'minitest/unit'
 
 MiniTest::Unit.autorun
 
-$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
-
-require 'slim'
+require File.dirname(__FILE__) + '/../lib/slim'
 
 class TestSlim < MiniTest::Unit::TestCase
   def setup
