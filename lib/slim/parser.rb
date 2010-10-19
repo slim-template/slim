@@ -255,7 +255,7 @@ module Slim
       attributes = []
       
       # Find any literal class/id attributes
-      while line =~ /^(#|\.)(\w+)/
+      while line =~ /^(#|\.)([\w\u00c0-\uFFFF-]+)/
         key = ATTR_SHORTHAND[$1]
         value = '"%s"' % $2
         attributes << [key, value]
