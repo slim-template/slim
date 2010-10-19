@@ -226,13 +226,13 @@ module Slim
     end
 
     ATTR_SHORTHAND = {
-      ?# => "id",
-      ?. => "class",
+      "#" => "id",
+      "." => "class",
     }
     DELIMITERS = {
-      ?( => ?),
-      ?[ => ?],
-      ?{ => ?},
+      "(" => ?),
+      "[" => ?],
+      "{" => ?},
     }
     
     def parse_tag(line, lineno)
@@ -261,7 +261,7 @@ module Slim
       end
       
       # Check to see if there is a delimiter right after the tag name
-      if line[0] =~ /([()\[\]{}])/
+      if line[0, 1] =~ /([()\[\]{}])/
         delimiter = $1
         # Replace the delimiter with a space so we can continue parsing as normal.
         line[0] = ?\s
