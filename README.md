@@ -95,10 +95,10 @@ __Please note that all line indicators must be followed by a space__
 ### Things to know
 
 #### Standard Ruby syntax after `-` and `=`
-  __end__ is not required
+  `end` is not required
 
 #### Can put content on same line or nest it.
-  If you nest content (e.g. put it on the next line), start the line with a pipe (`|`) or a backtick (`\``).
+  If you nest content (e.g. put it on the next line), start the line with a pipe (`|`) or a backtick (`````).
 
 #### Indentation matters, but it's not as strict as Haml.
   If you want to first indent 2 spaces, then 5 spaces, it's your choice. To nest markup you only need to indent by one space, the rest is gravy.
@@ -199,7 +199,7 @@ __Please note that all line indicators must be followed by a space__
 
 ### Treat multiple lines of code as text that should bypass parsing
 
-    # Use a pipe (`|`) or backtick (`\``) to start the escape.  
+    # Use a pipe (`|`) or backtick (`````) to start the escape.  
     # Each following line that is indented greater than 
     # the backtick is copied over.
 
