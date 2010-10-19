@@ -240,13 +240,11 @@ module Slim
       
       if line =~ /^(#|\.)/
         tag = "div"
+      elsif line =~ /^[\w:]+/
+        tag = $&
+        line = $'
       else
-        if line =~ /^[\w:]+/
-          tag = $&
-          line = $'
-        else
-          e "Unknown line indicator", orig_line, lineno
-        end
+        e "Unknown line indicator", orig_line, lineno
       end
 
       # Now we'll have to find all the attributes. We'll store these in an
