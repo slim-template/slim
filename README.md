@@ -12,7 +12,7 @@ Slim is a fast, lightweight templating engine for __Rails 3__. It has been teste
 
 Within the Rails community, _Erb_ and _Haml_ are without doubt the two most popular templating engines. However, _Erb_'s syntax is cumbersome and Haml's performance isn't exactly the best. Slim was born to bring the minimalist syntax approach of _Haml_ and the higher performance of Erb into once solution.
 
-___Yes, Slim is speedy!___ Benchmarks are provided at the end of this README file. Alternatively, a benchmark script is provided so you could test it yourself (`./benchmarks/run.rb`).
+___Yes, Slim is speedy!___ Benchmarks are provided at the end of this README file. Alternatively, a benchmark rake task is provided so you could test it yourself (`rake bench`).
 
 
 ## How?
