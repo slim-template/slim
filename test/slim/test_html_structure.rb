@@ -108,6 +108,26 @@ HTML
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
 
+  def test_nonstandard_attributes
+    string = <<HTML
+p id="dashed-id" class="underscored_class_name" = output_number
+HTML
+
+    expected = %(<p id="dashed-id" class="underscored_class_name">1337</p>)
+
+    assert_equal expected, Slim::Engine.new(string).render(@env)
+  end
+
+  def test_nonstandard_shortcut_attributes
+    string = <<HTML
+p#dashed-id.underscored_class_name = output_number
+HTML
+
+    expected = %(<p id="dashed-id" class="underscored_class_name">1337</p>)
+
+    assert_equal expected, Slim::Engine.new(string).render(@env)
+  end
+
   def test_dashed_attributes
     string = <<HTML
 p data-info="Illudium Q-36" = output_number
