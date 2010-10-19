@@ -10,7 +10,7 @@ module Slim
   class EndInserter
     include Temple::Utils
     ELSE_CONTROL_WORDS = /^(else|elsif|when)\b/
-    
+
     def initialize(options = {})
       @options = options
     end
@@ -36,13 +36,13 @@ module Slim
     def on_control(str, content)
       [:slim, :control, str, compile(content)]
     end
-    
+
     def on_multi(*exps)
       result = [:multi]
       # This variable is true if the previous line was
       # (1) a control code and (2) contained indented content.
       prev_indent = false
-      
+
       exps.each do |exp|
         if control?(exp)
           if prev_indent
@@ -65,16 +65,16 @@ module Slim
             prev_indent = false
           end
         end
-        
+
         result << compile(exp)
       end
-      
+
       # The last line can be a control code too.
       if prev_indent
         append_end(result)
         prev_indent = false
       end
-      
+
       result
     end
 

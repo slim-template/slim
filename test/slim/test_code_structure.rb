@@ -52,7 +52,7 @@ HTML
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
-  
+
   def test_render_with_backslash_end
     string = <<HTML
 p = \
@@ -63,7 +63,7 @@ HTML
     expected = "<p>Hello Ruby!</p>"
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
-    
+
   end
-  
+
 end

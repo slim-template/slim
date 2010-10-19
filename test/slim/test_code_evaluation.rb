@@ -144,10 +144,10 @@ HTML
 
   def test_interpolation_in_text
     string = <<HTML
-p 
+p
  | \#{hello_world}
-p 
- | 
+p
+ |
   A message from the compiler: \#{hello_world}
 HTML
 

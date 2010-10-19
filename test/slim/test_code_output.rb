@@ -80,7 +80,7 @@ HTML
 
   def test_hash_call
     string = <<HTML
-p = hash[:a] 
+p = hash[:a]
 HTML
 
     expected = "<p>The letter a</p>"

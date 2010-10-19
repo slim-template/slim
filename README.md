@@ -199,8 +199,8 @@ __Please note that all line indicators must be followed by a space__
 
 ### Treat multiple lines of code as text that should bypass parsing
 
-    # Use a pipe (`|`) or backtick (`` ` ``) to start the escape.  
-    # Each following line that is indented greater than 
+    # Use a pipe (`|`) or backtick (`` ` ``) to start the escape.
+    # Each following line that is indented greater than
     # the backtick is copied over.
 
     body
@@ -226,14 +226,14 @@ __Please note that all line indicators must be followed by a space__
 ### Add code comments
 
     # Use a forward slash for ruby code comments
-    
+
     body
       p
         / This line won't get displayed.
         / Neither does this line.
-    
+
     # The parsed result of the above:
-    
+
     <body><p></p></body>
 
 

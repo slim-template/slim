@@ -54,7 +54,7 @@ HTML
 
   def test_nested_text
     string = <<HTML
-p 
+p
  |
   This is line one.
    This is line two.

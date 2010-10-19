@@ -26,12 +26,12 @@ module Slim
     def e(*args)
       raise SyntaxError.new(*args)
     end
-    
+
     def initialize(options = {})
       @options = options
       @tabsize = options[:tabsize] || 4
     end
-    
+
     def compile(str)
       lineno = 0
       result = [:multi]
@@ -58,16 +58,16 @@ module Slim
       stacks = [result]
 
       # We have special treatment for text blocks:
-      # 
+      #
       #   |
       #     Hello
       #     World!
       in_text = false
       text_indent = nil
-      
+
       str.each_line do |line|
         lineno += 1
-        
+
         # Figure out the indentation. Kinda ugly/slow way to support tabs,
         # but remember that this is only done at parsing time.
         indent = line[/^[ \t]*/].gsub("\t", " " * @tabsize).size
@@ -86,19 +86,19 @@ module Slim
 
         if in_text
           # Now we're inside a text block:
-          # 
+          #
           #   |
           #     Hello    <- this line
           #     World    <- or this line
-          
+
           # The indentation of first line of the text block (also called the
           # base line below) determines the base indentation.
           text_indent ||= indent
-          
+
           if indent >= text_indent
             # This line happens to be indented deeper (or equal) to the base
             # line. This means that it's a part of the text block.
-             
+
             # Generate the additional spaces in front.
             i = " " * (indent - text_indent)
             stacks.last << [:slim, :text, i + line]
@@ -108,9 +108,9 @@ module Slim
             indent = text_indent
           end
         end
-        
+
         # If there's more stacks than indents, it means that the previous
-        # line is expecting this line to be indented. 
+        # line is expecting this line to be indented.
         expecting_indentation = stacks.size > indents.size
         prev_indent = indents.last
 
@@ -151,7 +151,7 @@ module Slim
             elsif i < indent
               # This line's indentaion happens lie "between" two other line's
               # indentation:
-              # 
+              #
               #   hello
               #       world
               #     this      # <- This should not be possible!
@@ -167,11 +167,11 @@ module Slim
 
         # As mentioned above, this is were we will output exp
         current = stacks.last
-        
+
         case line[0]
         when ?|, ?', ?`
           # Found a piece of text.
-          
+
           # Remove an optional space.
           text = line[1..-1].sub(/^ /, '')
 
@@ -189,7 +189,7 @@ module Slim
           end
         when ?-
           # Found a piece of control code.
-          
+
           # First of all we need to push a exp into the stack. Anything
           # indented deeper will be pushed into this exp. We'll include the
           # same exp in the current-stack, which makes sure that it'll be
@@ -225,7 +225,7 @@ module Slim
           stacks.last << [:newline]
         end
       end
-      
+
       result
     end
 
@@ -238,10 +238,10 @@ module Slim
       "[" => "]",
       "{" => "}",
     }
-    
+
     def parse_tag(line, lineno)
       orig_line = line
-      
+
       if line =~ /^(#|\.)/
         tag = "div"
       elsif line =~ /^[\w:]+/
@@ -255,13 +255,13 @@ module Slim
       # nested array: [[name, value], [name2, value2]]. The value is a piece
       # of Ruby code.
       attributes = []
-      
+
       # Find any literal class/id attributes
       while line =~ /^(#|\.)([\w\u00c0-\uFFFF-]+)/
         attributes << [ATTR_SHORTHAND[$1], '"%s"' % $2]
         line = $'
       end
-      
+
       # Check to see if there is a delimiter right after the tag name
       if line[0, 1] =~ /([(\[{])/
         delimiter = $1
