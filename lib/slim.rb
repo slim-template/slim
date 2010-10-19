@@ -2,7 +2,7 @@
 
 $:.unshift File.dirname(__FILE__)
 
-require 'bundler/setup'
+require 'bundler/setup' if defined?(Bundler)
 require 'temple'
 require 'tilt'
 require 'escape_utils'

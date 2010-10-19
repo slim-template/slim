@@ -14,6 +14,7 @@ GEM
       abstract (>= 1.0.0)
     escape_utils (0.1.8)
     haml (3.0.21)
+    minitest (1.7.2)
     rake (0.8.7)
     temple (0.1.2)
     tilt (1.1)
@@ -25,6 +26,7 @@ DEPENDENCIES
   erubis
   escape_utils (>= 0.1.8)
   haml
+  minitest
   rake (>= 0.8.7)
   slim!
   temple (>= 0.1.2)
