@@ -24,7 +24,6 @@ module Slim
       end
     else
       def escape_html(html)
-        # Ruby, you suck!
         html.to_s.gsub(/&/n, '&amp;').gsub(/\"/n, '&quot;').gsub(/>/n, '&gt;').gsub(/</n, '&lt;').gsub(/\//, '&#47;')
       end
     end

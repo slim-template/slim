@@ -1,5 +1,4 @@
 module Slim
-  # Abstract filter which does nothing
   class Filter
     include Temple::Utils
 
