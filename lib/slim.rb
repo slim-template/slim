@@ -18,6 +18,9 @@ module Slim
   end
 end
 
+require Slim.lib('temple/hack')
+Temple::Hack.fix_on_capture!
+
 require Slim.lib('parser')
 require Slim.lib('filter')
 require Slim.lib('end_inserter')
