@@ -5,7 +5,7 @@ module Slim
         def on_capture(name, content)
           [:capture, name, compile(content)]
         end
-      end
+      end unless ::Temple::HTML::Fast.method_defined?(:on_capture)
     end
   end
 end
