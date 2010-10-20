@@ -1,6 +1,5 @@
 # encoding: utf-8
 
-require 'escape_utils'
 require 'temple'
 require 'tilt'
 
