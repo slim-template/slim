@@ -25,6 +25,4 @@ Slim.load 'compiler'
 Slim.load 'engine'
 Slim.load 'template'
 Slim.load 'helpers'
-Slim.load 'temple/hack'
 
-Temple::Hack.fix_on_capture!
