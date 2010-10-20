@@ -91,6 +91,14 @@ p    = hello_world
     assert_html '<p>Hello World from @env</p><p>Hello World from @env</p><p>Hello World from @env</p>', source
   end
 
+  def test_single_quoted_attributes
+    source = %q{
+p class='underscored_class_name' = output_number
+}
+
+    assert_html '<p class="underscored_class_name">1337</p>', source
+ end
+
   def test_nonstandard_attributes
     source = %q{
 p id="dashed-id" class="underscored_class_name" = output_number

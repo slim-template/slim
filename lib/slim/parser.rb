@@ -282,8 +282,8 @@ module Slim
       end
 
       # Find any other attributes
-      while line =~ /#{REGEX_HTML_TAG}"([^"]+)"/
-        attributes << [$1, $2]
+      while line =~ /#{REGEX_HTML_TAG}("[^"]+"|'[^']+')/
+        attributes << [$1, $2[1..-2]]
         line = $'
       end
 
