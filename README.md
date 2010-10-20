@@ -284,6 +284,22 @@ __Please note that all line indicators must be followed by a space__
     haml (cached)          0.270000   0.010000   0.280000 (  0.279409)
     haml ugly (cached)     0.210000   0.000000   0.210000 (  0.221059)
 
+    # OSX 10.6 + JRuby 1.5.3
+
+                               user     system      total        real
+    erb                    0.970000   0.000000   0.970000 (  0.970000)
+    erubis                 0.672000   0.000000   0.672000 (  0.672000)
+    fast erubis            0.624000   0.000000   0.624000 (  0.624000)
+    slim                   2.694000   0.000000   2.694000 (  2.694000)
+    haml                   3.368000   0.000000   3.368000 (  3.368000)
+    haml ugly              3.462000   0.000000   3.462000 (  3.462000)
+    erb (cached)           0.736000   0.000000   0.736000 (  0.736000)
+    erubis (cached)        0.413000   0.000000   0.413000 (  0.413000)
+    fast erubis (cached)   0.340000   0.000000   0.340000 (  0.340000)
+    slim (cached)          0.069000   0.000000   0.069000 (  0.069000)
+    haml (cached)          1.001000   0.000000   1.001000 (  1.001000)
+    haml ugly (cached)     0.763000   0.000000   0.763000 (  0.763000)
+
 ## Authors
 
 * [Andrew Stone](http://github.com/stonean)
