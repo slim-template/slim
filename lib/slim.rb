@@ -13,19 +13,18 @@ module Slim
     Slim::VERSION
   end
 
-  def self.lib(f)
-    File.join(File.dirname(__FILE__), 'slim', f)
+  def self.load(file)
+    require File.join(File.dirname(__FILE__), 'slim', file)
   end
 end
 
-require Slim.lib('temple/hack')
+Slim.load 'parser'
+Slim.load 'filter'
+Slim.load 'end_inserter'
+Slim.load 'compiler'
+Slim.load 'engine'
+Slim.load 'template'
+Slim.load 'helpers'
+Slim.load 'temple/hack'
+
 Temple::Hack.fix_on_capture!
-
-require Slim.lib('parser')
-require Slim.lib('filter')
-require Slim.lib('end_inserter')
-require Slim.lib('compiler')
-require Slim.lib('engine')
-require Slim.lib('template')
-require Slim.lib('helpers')
-
