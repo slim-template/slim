@@ -11,6 +11,11 @@ class TestSlim < MiniTest::Unit::TestCase
   def setup
     @env = Env.new
   end
+
+  def teardown
+    Slim::Compiler.reset_options!
+    String.send(:remove_method, :html_safe?) if String.method_defined?(:html_safe?)
+  end
 end
 
 class Env

@@ -6,6 +6,12 @@ module Slim
       end.join("\n")
     end
 
+    def escape_html_with_html_safe(html)
+      Compiler.options[:use_html_safe] && html.to_s.html_safe? ? html : escape_html(html)
+    rescue
+      escape_html(html)
+    end
+
     if defined?(EscapeUtils)
       def escape_html(html)
         EscapeUtils.escape_html(html.to_s)
@@ -29,5 +35,6 @@ module Slim
     end
 
     module_function :escape_html
+    module_function :escape_html_with_html_safe
   end
 end

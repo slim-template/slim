@@ -1,6 +1,29 @@
 module Slim
   # Compiles Slim expressions into Temple::HTML expressions.
   class Compiler < Filter
+    def self.default_options
+      @@default_options
+    end
+
+    def self.options
+      @@options
+    end
+
+    def self.options=(options)
+      @@options.merge!(options)
+    end
+
+    def self.reset_options!
+      @@options = @@default_options
+    end
+
+    def initialize(options = {})
+      @@default_options = {
+        :use_html_safe => true
+      }
+      @@options ||= @@default_options.merge!(options)
+    end
+
     def on_text(string)
       if string.include?("\#{")
         [:dynamic, '"%s"' % string]
@@ -18,7 +41,7 @@ module Slim
     # why is escaping not handled by temple?
     def on_output(escape, code, content)
       if empty_exp?(content)
-        [:dynamic, escape ? "Slim::Helpers.escape_html((#{code}))" : code]
+        [:dynamic, escape ? "Slim::Helpers.escape_html_with_html_safe((#{code}))" : code]
       else
         on_output_block(escape, code, content)
       end
@@ -46,7 +69,7 @@ module Slim
        [:block, "end"],
 
        # Output the content.
-       [:dynamic, escape ? "Slim::Helpers.escape_html(#{tmp1})" : tmp1]]
+       [:dynamic, escape ? "Slim::Helpers.escape_html_with_html_safe(#{tmp1})" : tmp1]]
     end
 
     def on_directive(type)

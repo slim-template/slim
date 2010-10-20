@@ -2,10 +2,6 @@ module Slim
   class Filter
     include Temple::Utils
 
-    def initialize(options = {})
-      @options = options
-    end
-
     def compile(exp)
       if exp[0] == :slim
         _, type, *args = exp
