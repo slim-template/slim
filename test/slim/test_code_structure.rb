@@ -53,6 +53,19 @@ HTML
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
 
+  def test_render_with_comments
+    string = <<HTML
+p Hello
+/ This is a comment
+  / Another comment
+HTML
+
+    expected = "<p>Hello</p>"
+
+    assert_equal expected, Slim::Engine.new(string).render(@env)
+
+  end
+
   def test_render_with_backslash_end
     string = <<HTML
 p = \
@@ -65,5 +78,4 @@ HTML
     assert_equal expected, Slim::Engine.new(string).render(@env)
 
   end
-
 end

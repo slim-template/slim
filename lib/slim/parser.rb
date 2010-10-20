@@ -82,6 +82,12 @@ module Slim
           next
         end
 
+        # Found a comment. Do nothing
+        # '{' '[' for Hash and Array
+        if [?/, ?{, ?[].include?(line[0])
+          next
+        end
+
         if in_text
           # Now we're inside a text block:
           #
@@ -115,7 +121,7 @@ module Slim
         if indent > prev_indent
           # This line was actually indented, so we'll have to check if it was
           # supposed to be indented or not.
-          if not expecting_indentation
+          unless expecting_indentation
             e "Unexpected indentation", line, lineno
           end
 
@@ -204,9 +210,6 @@ module Slim
         when ?!
           # Found a directive (currently only used for doctypes)
           current << [:slim, :directive, line[1..-1].strip]
-        when ?/, ?{, ?[
-          # Found a comment. Do nothing
-          # '{' '[' for Hash and Array
         else
           # Found a HTML tag.
           insert_newline = false
