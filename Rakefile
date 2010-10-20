@@ -8,8 +8,7 @@ require 'rake/testtask'
 
 desc 'Run Slim benchmarks! (Default :iterations is 1000)'
 task :bench, :iterations do |t, args|
-  ENV["SLIM_BENCH_ITERATIONS"] = args[:iterations]
-  require File.join(File.dirname(__FILE__), 'benchmarks', 'run')
+  ruby("benchmarks/run.rb #{args[:iterations]}")
 end
 
 Rake::TestTask.new(:test) do |test|
@@ -21,7 +20,7 @@ end
 begin
   require 'rcov/rcovtask'
   Rcov::RcovTask.new do |test|
-    test.libs << 'test'
+    test.libs << 'lib' << 'test'
     test.pattern = 'test/**/test_*.rb'
     test.verbose = true
   end
