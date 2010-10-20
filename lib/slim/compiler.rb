@@ -1,28 +1,6 @@
 module Slim
   # Compiles Slim expressions into Temple::HTML expressions.
-  class Compiler
-    def initialize(options = {})
-      @options = options
-    end
-
-    def compile(exp)
-      if exp[0] == :slim
-        _, type, *args = exp
-      else
-        type, *args = exp
-      end
-
-      if respond_to?("on_#{type}")
-        send("on_#{type}", *args)
-      else
-        exp
-      end
-    end
-
-    def on_multi(*exps)
-      [:multi, *exps.map { |exp| compile(exp) }]
-    end
-
+  class Compiler < Filter
     def on_text(string)
       if string.include?("\#{")
         [:dynamic, '"%s"' % string]
@@ -33,16 +11,42 @@ module Slim
 
     def on_control(code, content)
       [:multi,
-        [:block, code],
-        compile(content)]
+       [:block, code],
+       compile(content)]
     end
 
-    def on_output(code)
-      [:dynamic, code]
+    # why is escaping not handled by temple?
+    def on_output(escape, code, content)
+      if empty_exp?(content)
+        [:dynamic, escape ? "Slim::Helpers.escape_html((#{code}))" : code]
+      else
+        on_output_block(escape, code, content)
+      end
     end
 
-    def on_escaped_output(code)
-      [:dynamic, "Slim.escape_html((#{code}))"]
+    def on_output_block(escape, code, content)
+      tmp1, tmp2 = tmp_var, tmp_var
+
+      [:multi,
+       # Capture the result of the code in a variable. We can't do
+       # `[:dynamic, code]` because it's probably not a complete
+       # expression (which is a requirement for Temple).
+       [:block, "#{tmp1} = #{code}"],
+
+       # Capture the content of a block in a separate buffer. This means
+       # that `yield` will not output the content to the current buffer,
+       # but rather return the output.
+       [:capture, tmp2,
+        compile(content)],
+
+       # Make sure that `yield` returns the output.
+       [:block, tmp2],
+
+       # Close the block.
+       [:block, "end"],
+
+       # Output the content.
+       [:dynamic, escape ? "Slim::Helpers.escape_html(#{tmp1})" : tmp1]]
     end
 
     def on_directive(type)
@@ -65,6 +69,12 @@ module Slim
 
       [:html, :tag, name, attrs, compile(content)]
     end
+
+    private
+
+    def tmp_var
+      @tmp_var ||= 0
+      "_slimtmp#{@tmp_var += 1}"
+    end
   end
 end
-

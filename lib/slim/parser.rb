@@ -1,5 +1,3 @@
-require 'strscan'
-
 module Slim
   class Parser
     attr_reader :options
@@ -187,8 +185,8 @@ module Slim
           else
             current << [:slim, :text, text]
           end
-        when ?-
-          # Found a piece of control code.
+        when ?-, ?=
+          # Found a potential code block.
 
           # First of all we need to push a exp into the stack. Anything
           # indented deeper will be pushed into this exp. We'll include the
@@ -196,14 +194,13 @@ module Slim
           # included in the generated code.
           block = [:multi]
           stacks << block
-          current << [:slim, :control, line[1..-1].strip, block]
-        when ?=
-          # Found a piece of (potentionally escaped) code.
-          if line[1] == ?=
-            current << [:slim, :output, line[2..-1].strip]
-          else
-            current << [:slim, :escaped_output, line[1..-1].strip]
-          end
+          current << if line[1] == ?=
+                       [:slim, :output, false, line[2..-1].strip, block]
+                     elsif line[0] == ?=
+                       [:slim, :output, true, line[1..-1].strip, block]
+                     else
+                       [:slim, :control, line[1..-1].strip, block]
+                     end
         when ?!
           # Found a directive (currently only used for doctypes)
           current << [:slim, :directive, line[1..-1].strip]
@@ -314,10 +311,9 @@ module Slim
         block = content
       else
         case rest
-        when /^\s*==/
-          content << [:slim, :output, $'.strip]
-        when /^\s*=/
-          content << [:slim, :escaped_output, $'.strip]
+        when /^\s*=(=?)/
+          block = [:multi]
+          content << [:slim, :output, $1 != '=', $'.strip, block]
         else
           content << [:slim, :text, rest]
         end
@@ -327,4 +323,3 @@ module Slim
     end
   end
 end
-

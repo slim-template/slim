@@ -8,7 +8,7 @@ p
     | Hello from within a block!
 HTML
 
-    expected = "<p>Hello from within a block!Hello Ruby!</p>"
+    expected = "<p>Hello Ruby! Hello from within a block! Hello Ruby!</p>"
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
@@ -20,7 +20,7 @@ p
     = hello_world "Hello from within a block! "
 HTML
 
-    expected = "<p>Hello from within a block! Hello Ruby!</p>"
+    expected = "<p>Hello Ruby! Hello from within a block!  Hello Ruby!</p>"
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end

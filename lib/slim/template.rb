@@ -4,6 +4,11 @@ module Slim
       @src = Engine.new(options).compile(data)
     end
 
+    def evaluate(scope, locals, &block)
+      scope.instance_eval { extend Slim::Helpers } if options[:helpers]
+      super
+    end
+
     def precompiled_template(locals)
       @src
     end
@@ -11,4 +16,3 @@ module Slim
 
   Tilt.register 'slim', Template
 end
-

@@ -28,8 +28,11 @@ class Env
 
   def hello_world(text = "Hello World from @env", opts = {})
     text << opts.to_a * " " if opts.any?
-    yield if block_given?
-    text
+    if block_given?
+      "#{text} #{yield} #{text}"
+    else
+      text
+    end
   end
 
   def in_keyword
