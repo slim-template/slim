@@ -11,8 +11,8 @@ module Slim
 
     def on_control(code, content)
       [:multi,
-       [:block, code],
-       compile(content)]
+        [:block, code],
+        compile(content)]
     end
 
     # why is escaping not handled by temple?
@@ -28,25 +28,25 @@ module Slim
       tmp1, tmp2 = tmp_var, tmp_var
 
       [:multi,
-       # Capture the result of the code in a variable. We can't do
-       # `[:dynamic, code]` because it's probably not a complete
-       # expression (which is a requirement for Temple).
-       [:block, "#{tmp1} = #{code}"],
+        # Capture the result of the code in a variable. We can't do
+        # `[:dynamic, code]` because it's probably not a complete
+        # expression (which is a requirement for Temple).
+        [:block, "#{tmp1} = #{code}"],
 
-       # Capture the content of a block in a separate buffer. This means
-       # that `yield` will not output the content to the current buffer,
-       # but rather return the output.
-       [:capture, tmp2,
-        compile(content)],
+        # Capture the content of a block in a separate buffer. This means
+        # that `yield` will not output the content to the current buffer,
+        # but rather return the output.
+        [:capture, tmp2,
+         compile(content)],
 
-       # Make sure that `yield` returns the output.
-       [:block, tmp2],
+        # Make sure that `yield` returns the output.
+        [:block, tmp2],
 
-       # Close the block.
-       [:block, "end"],
+        # Close the block.
+        [:block, "end"],
 
-       # Output the content.
-       [:dynamic, escape ? "Slim::Helpers.escape_html_with_html_safe(#{tmp1})" : tmp1]]
+        # Output the content.
+        [:dynamic, escape ? "Slim::Helpers.escape_html_with_html_safe(#{tmp1})" : tmp1]]
     end
 
     def on_directive(type)
