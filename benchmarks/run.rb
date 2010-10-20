@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
-require File.dirname(__FILE__) + '/src/complex_view'
-require File.dirname(__FILE__) + '/../lib/slim'
+require File.join(File.dirname(__FILE__), 'src', 'complex_view')
+require File.join(File.dirname(__FILE__), '..', 'lib', 'slim')
 
 require 'benchmark'
 require 'ostruct'

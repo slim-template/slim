@@ -9,7 +9,7 @@ require 'rake/testtask'
 desc 'Run Slim benchmarks! (Default :iterations is 1000)'
 task :bench, :iterations do |t, args|
   ENV["SLIM_BENCH_ITERATIONS"] = args[:iterations]
-  require 'benchmarks/run'
+  require File.join(File.dirname(__FILE__), 'benchmarks', 'run')
 end
 
 Rake::TestTask.new(:test) do |test|
