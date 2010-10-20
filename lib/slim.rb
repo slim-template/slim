@@ -3,13 +3,13 @@
 require 'temple'
 require 'tilt'
 
+require 'slim/helpers'
 require 'slim/parser'
 require 'slim/filter'
 require 'slim/end_inserter'
 require 'slim/compiler'
 require 'slim/engine'
 require 'slim/template'
-require 'slim/helpers'
 
 begin
   require 'escape_utils'

@@ -3,7 +3,7 @@ module Slim
   class Compiler < Filter
     def on_text(string)
       if string.include?("\#{")
-        [:dynamic, '"%s"' % string]
+        [:dynamic, escape_interpolation(string)]
       else
         [:static, string]
       end
@@ -60,10 +60,10 @@ module Slim
 
     def on_tag(name, attrs, content)
       attrs = attrs.inject([:html, :attrs]) do |m, (key, value)|
-        if value.include?("\#{")
-          value = [:dynamic, value]
+        if value.include?('#{')
+          value = [:dynamic, escape_interpolation(value)]
         else
-          value = [:static, value[1..-2]]
+          value = [:static, value]
         end
         m << [:html, :basicattr, [:static, key], value]
       end
@@ -72,6 +72,13 @@ module Slim
     end
 
     private
+
+    def escape_interpolation(string)
+      string.gsub!(/(.?)\#\{(.*?)\}/) do
+        $1 == '\\' ? $& : "#{$1}\#{Slim::Helpers.escape_html(#{$2})}"
+      end if !@options[:use_html_safe] || !code.html_safe?
+      '"%s"' % string
+    end
 
     def tmp_var
       @tmp_var ||= 0

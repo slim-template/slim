@@ -259,7 +259,7 @@ module Slim
 
       # Find any literal class/id attributes
       while line =~ /^(#|\.)([\w\u00c0-\uFFFF-]+)/
-        attributes << [ATTR_SHORTHAND[$1], '"%s"' % $2]
+        attributes << [ATTR_SHORTHAND[$1], $2]
         line = $'
       end
 
@@ -285,11 +285,11 @@ module Slim
         # 3. wrapper present & is the last attribute
         value.slice!(-1) if !wrapper.empty? && line !~ REGEX_HTML_TAG
 
-        attributes << [key, '"#{%s}"' % value]
+        attributes << [key, '#{%s}' % value]
       end
 
       # Find any other attributes
-      while line =~ /#{REGEX_HTML_TAG}("[^"]+")/
+      while line =~ /#{REGEX_HTML_TAG}"([^"]+)"/
         attributes << [$1, $2]
         line = $'
       end
