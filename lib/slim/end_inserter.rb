@@ -10,20 +10,6 @@ module Slim
   class EndInserter < Filter
     ELSE_CONTROL_WORDS = /^(else|elsif|when)\b/
 
-    def compile(exp)
-      if exp[0] == :slim
-        _, type, *args = exp
-      else
-        type, *args = exp
-      end
-
-      if respond_to?("on_#{type}")
-        send("on_#{type}", *args)
-      else
-        exp
-      end
-    end
-
     def on_multi(*exps)
       result = [:multi]
       # This variable is true if the previous line was
