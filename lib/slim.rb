@@ -1,17 +1,20 @@
 # encoding: utf-8
 
-require 'bundler/setup' if defined?(Bundler)
 require 'escape_utils'
 require 'temple'
 require 'tilt'
 
-require 'slim/parser'
-require 'slim/filter'
-require 'slim/end_inserter'
-require 'slim/compiler'
-require 'slim/engine'
-require 'slim/template'
-require 'slim/helpers'
+def slim_file(f)
+  File.join(File.dirname(__FILE__), 'slim', f)
+end
+
+require slim_file('parser')
+require slim_file('filter')
+require slim_file('end_inserter')
+require slim_file('compiler')
+require slim_file('engine')
+require slim_file('template')
+require slim_file('helpers')
 
 begin
   require 'escape_utils'
