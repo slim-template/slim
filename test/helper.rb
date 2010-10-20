@@ -16,6 +16,10 @@ class TestSlim < MiniTest::Unit::TestCase
     String.send(:remove_method, :html_safe?) if String.method_defined?(:html_safe?)
     Slim::Filter::DEFAULT_OPTIONS.delete(:use_html_safe)
   end
+
+  def assert_html(expected, source, options = {})
+    assert_equal expected, Slim::Engine.new(source, options).render(@env)
+  end
 end
 
 class Env

@@ -217,13 +217,6 @@ module Slim
           stacks << content if content
           current << exp
         end
-
-        # Add a newline (to the generated code). We use stacks.last instead of
-        # current because something might have been pushed to stacks.
-        # If '\' at the end of a line, it indicate the continuation of a statement.
-        unless line[-1] == ?\\
-          stacks.last << [:newline]
-        end
       end
 
       result

@@ -2,80 +2,56 @@ require 'helper'
 
 class TestSlimCodeStructure < TestSlim
   def test_render_with_conditional
-    string = <<HTML
+    source = %q{
 div
   - if show_first?
       p The first paragraph
   - else
       p The second paragraph
-HTML
+}
 
-    expected = '<div><p>The second paragraph</p></div>'
-
-    assert_equal expected, Slim::Engine.new(string).render(@env)
+    assert_html '<div><p>The second paragraph</p></div>', source
   end
 
   def test_render_with_consecutive_conditionals
-    string = <<HTML
+    source = %q{
 div
   - if show_first? true
       p The first paragraph
   - if show_first? true
       p The second paragraph
-HTML
+}
 
-    expected = '<div><p>The first paragraph</p><p>The second paragraph</p></div>'
-
-    assert_equal expected, Slim::Engine.new(string).render(@env)
+    assert_html '<div><p>The first paragraph</p><p>The second paragraph</p></div>', source
   end
 
   def test_render_with_parameterized_conditional
-    string = <<HTML
+    source = %q{
 div
   - if show_first? false
       p The first paragraph
   - else
       p The second paragraph
-HTML
+}
 
-    expected = '<div><p>The second paragraph</p></div>'
-
-    assert_equal expected, Slim::Engine.new(string).render(@env)
+    assert_html '<div><p>The second paragraph</p></div>', source
   end
 
   def test_render_with_inline_condition
-    string = <<HTML
+    source = %q{
 p = hello_world if true
-HTML
+}
 
-    expected = '<p>Hello World from @env</p>'
-
-    assert_equal expected, Slim::Engine.new(string).render(@env)
+    assert_html '<p>Hello World from @env</p>', source
   end
 
   def test_render_with_comments
-    string = <<HTML
+    source = %q{
 p Hello
 / This is a comment
   / Another comment
-HTML
+}
 
-    expected = '<p>Hello</p>'
-
-    assert_equal expected, Slim::Engine.new(string).render(@env)
-
-  end
-
-  def test_render_with_backslash_end
-    string = <<HTML
-p = \
-"Hello" + \
-" Ruby!"
-HTML
-
-    expected = '<p>Hello Ruby!</p>'
-
-    assert_equal expected, Slim::Engine.new(string).render(@env)
-
+    assert_html '<p>Hello</p>', source
   end
 end
