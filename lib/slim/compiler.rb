@@ -18,7 +18,8 @@ module Slim
     # why is escaping not handled by temple?
     def on_output(escape, code, content)
       if empty_exp?(content)
-        [:dynamic, escape ? "Slim::Helpers.escape_html_with_html_safe((#{code}))" : code]
+        escape = false if @options[:use_html_safe] && code.html_safe?
+        [:dynamic, escape ? "Slim::Helpers.escape_html((#{code}))" : code]
       else
         on_output_block(escape, code, content)
       end
@@ -46,7 +47,7 @@ module Slim
         [:block, "end"],
 
         # Output the content.
-        [:dynamic, escape ? "Slim::Helpers.escape_html_with_html_safe(#{tmp1})" : tmp1]]
+        on_output(escape, tmp1, [:multi])]
     end
 
     def on_directive(type)
