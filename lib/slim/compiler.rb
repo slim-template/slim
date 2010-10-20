@@ -1,29 +1,6 @@
 module Slim
   # Compiles Slim expressions into Temple::HTML expressions.
   class Compiler < Filter
-    def self.default_options
-      @@default_options
-    end
-
-    def self.options
-      @@options
-    end
-
-    def self.options=(options)
-      @@options.merge!(options)
-    end
-
-    def self.reset_options!
-      @@options = @@default_options
-    end
-
-    def initialize(options = {})
-      @@default_options = {
-        :use_html_safe => true
-      }
-      @@options ||= @@default_options.merge!(options)
-    end
-
     def on_text(string)
       if string.include?("\#{")
         [:dynamic, '"%s"' % string]
