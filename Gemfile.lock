@@ -2,8 +2,8 @@ PATH
   remote: .
   specs:
     slim (0.7.0.beta.1)
-      escape_utils (>= 0.1.8)
-      temple (>= 0.1.2)
+      escape_utils (>= 0.1.9)
+      temple (~> 0.1.2)
       tilt (~> 1.1)
 
 GEM
@@ -25,11 +25,11 @@ PLATFORMS
 
 DEPENDENCIES
   erubis
-  escape_utils (>= 0.1.8)
+  escape_utils (>= 0.1.9)
   haml
   minitest
   rake (>= 0.8.7)
   rcov
   slim!
-  temple (>= 0.1.2)
+  temple (~> 0.1.2)
   tilt (~> 1.1)
