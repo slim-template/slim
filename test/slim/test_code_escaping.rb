@@ -6,7 +6,7 @@ class TestSlimCodeEscaping < TestSlim
 p = evil_method
 HTML
 
-    expected = "<p>&lt;script&gt;do_something_evil();&lt;&#47;script&gt;</p>"
+    expected = '<p>&lt;script&gt;do_something_evil();&lt;&#47;script&gt;</p>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
@@ -16,7 +16,7 @@ HTML
 p \\\#{hello_world}
 HTML
 
-    expected = "<p>\#{hello_world}</p>"
+    expected = '<p>#{hello_world}</p>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end

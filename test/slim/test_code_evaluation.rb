@@ -6,7 +6,7 @@ class TestSlimCodeEvaluation < TestSlim
 p id="#\{id_helper}" class="hello world" = hello_world
 HTML
 
-    expected = "<p id=\"notice\" class=\"hello world\">Hello World from @env</p>"
+    expected = '<p id="notice" class="hello world">Hello World from @env</p>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
@@ -17,7 +17,7 @@ p data-id="#\{id_helper}" data-class="hello world"
   = hello_world
 HTML
 
-    expected = "<p data-id=\"notice\" data-class=\"hello world\">Hello World from @env</p>"
+    expected = '<p data-id="notice" data-class="hello world">Hello World from @env</p>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
@@ -27,7 +27,7 @@ HTML
 p id="#\{id_helper}" class="hello world" = hello_world
 HTML
 
-    expected = "<p id=\"notice\" class=\"hello world\">Hello World from @env</p>"
+    expected = '<p id="notice" class="hello world">Hello World from @env</p>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
@@ -37,7 +37,7 @@ HTML
 p id="#\{id_helper}" class="hello world" = hello_world("Hello Ruby!")
 HTML
 
-    expected = "<p id=\"notice\" class=\"hello world\">Hello Ruby!</p>"
+    expected = '<p id="notice" class="hello world">Hello Ruby!</p>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
@@ -47,7 +47,7 @@ HTML
 p id="#\{id_helper}" class="hello world" = hello_world "Hello Ruby!"
 HTML
 
-    expected = "<p id=\"notice\" class=\"hello world\">Hello Ruby!</p>"
+    expected = '<p id="notice" class="hello world">Hello Ruby!</p>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
@@ -57,7 +57,7 @@ HTML
 p id="#\{id_helper}" class="hello world" = hello_world "Hello Ruby!", :dummy => "value"
 HTML
 
-    expected = "<p id=\"notice\" class=\"hello world\">Hello Ruby!dummy value</p>"
+    expected = '<p id="notice" class="hello world">Hello Ruby!dummy value</p>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
@@ -67,7 +67,7 @@ HTML
 p id="#\{hash[:a]}" Test it
 HTML
 
-    expected = "<p id=\"The letter a\">Test it</p>"
+    expected = '<p id="The letter a">Test it</p>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
@@ -77,7 +77,7 @@ HTML
 p id=hash[:a] Test it
 HTML
 
-    expected = "<p id=\"The letter a\">Test it</p>"
+    expected = '<p id="The letter a">Test it</p>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
@@ -87,7 +87,7 @@ HTML
 p(id=hash[:a]) Test it
 HTML
 
-    expected = "<p id=\"The letter a\">Test it</p>"
+    expected = '<p id="The letter a">Test it</p>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
@@ -97,7 +97,7 @@ HTML
 p id=(hash[:a]+hash[:a]) Test it
 HTML
 
-    expected = "<p id=\"The letter aThe letter a\">Test it</p>"
+    expected = '<p id="The letter aThe letter a">Test it</p>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
@@ -107,7 +107,7 @@ HTML
 p(id=(hash[:a]+hash[:a])) Test it
 HTML
 
-    expected = "<p id=\"The letter aThe letter a\">Test it</p>"
+    expected = '<p id="The letter aThe letter a">Test it</p>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
@@ -117,7 +117,7 @@ HTML
 p[id=(hash[:a]+hash[:a])] Test it
 HTML
 
-    expected = "<p id=\"The letter aThe letter a\">Test it</p>"
+    expected = '<p id="The letter aThe letter a">Test it</p>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
@@ -127,7 +127,7 @@ HTML
 p(id=[hash[:a]+hash[:a]]) Test it
 HTML
 
-    expected = "<p id=\"The letter aThe letter a\">Test it</p>"
+    expected = '<p id="The letter aThe letter a">Test it</p>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
@@ -137,7 +137,7 @@ HTML
 p(id=[hash[:a]+hash[:a]] class=[hash[:a]]) Test it
 HTML
 
-    expected = "<p id=\"The letter aThe letter a\" class=\"The letter a\">Test it</p>"
+    expected = '<p id="The letter aThe letter a" class="The letter a">Test it</p>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
@@ -147,7 +147,7 @@ HTML
 p(id=hash[:a] class=[hash[:a]]) Test it
 HTML
 
-    expected = "<p id=\"The letter a\" class=\"The letter a\">Test it</p>"
+    expected = '<p id="The letter a" class="The letter a">Test it</p>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
@@ -161,7 +161,7 @@ p
   A message from the compiler: \#{hello_world}
 HTML
 
-    expected = "<p>Hello World from @env</p><p>A message from the compiler: Hello World from @env</p>"
+    expected = '<p>Hello World from @env</p><p>A message from the compiler: Hello World from @env</p>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
@@ -171,7 +171,7 @@ HTML
 p \#{hello_world}
 HTML
 
-    expected = "<p>Hello World from @env</p>"
+    expected = '<p>Hello World from @env</p>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
@@ -181,7 +181,7 @@ HTML
 p = output_number
 HTML
 
-    expected = "<p>1337</p>"
+    expected = '<p>1337</p>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
@@ -191,7 +191,7 @@ HTML
 p id="\#{(false ? 'notshown' : 'shown')}" = output_number
 HTML
 
-    expected = %(<p id="shown">1337</p>)
+    expected = '<p id="shown">1337</p>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end

@@ -6,7 +6,7 @@ class TestSlimHtmlEscaping < TestSlim
 p <Hello> World, meet "Slim".
 HTML
 
-    expected = "<p><Hello> World, meet \"Slim\".</p>"
+    expected = '<p><Hello> World, meet "Slim".</p>'
 
     assert_equal expected, Slim::Engine.new(string).render
   end
@@ -19,7 +19,7 @@ p
      meet "Slim".
 HTML
 
-    expected = "<p><Hello> World, meet \"Slim\".</p>"
+    expected = '<p><Hello> World, meet "Slim".</p>'
 
     assert_equal expected, Slim::Engine.new(string).render
   end
@@ -31,7 +31,7 @@ HTML
 p class="\#{x}" test \#{content}
 HTML
 
-    expected = "<p class=\"&quot;\">test &lt;x&gt;</p>"
+    expected = '<p class="&quot;">test &lt;x&gt;</p>'
 
     assert_equal expected, Slim::Engine.new(string).render
   end

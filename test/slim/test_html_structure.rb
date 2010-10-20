@@ -10,7 +10,7 @@ html
     p Hello World, meet Slim.
 HTML
 
-    expected = "<html><head><title>Simple Test Title</title></head><body><p>Hello World, meet Slim.</p></body></html>"
+    expected = '<html><head><title>Simple Test Title</title></head><body><p>Hello World, meet Slim.</p></body></html>'
 
     assert_equal expected, Slim::Engine.new(string).render
   end
@@ -22,7 +22,7 @@ h1#title This is my title
   = hello_world
 HTML
 
-    expected = "<h1 id=\"title\">This is my title</h1><div id=\"notice\" class=\"hello world\">Hello World from @env</div>"
+    expected = '<h1 id="title">This is my title</h1><div id="notice" class="hello world">Hello World from @env</div>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
@@ -34,7 +34,7 @@ p
    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 HTML
 
-    expected = "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>"
+    expected = '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
@@ -47,7 +47,7 @@ p
 p Some more markup
 HTML
 
-    expected = "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p><p>Some more markup</p>"
+    expected = '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p><p>Some more markup</p>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
@@ -63,7 +63,7 @@ p
 p This is a new paragraph.
 HTML
 
-    expected = "<p>This is line one. This is line two.  This is line three.   This is line four.</p><p>This is a new paragraph.</p>"
+    expected = '<p>This is line one. This is line two.  This is line three.   This is line four.</p><p>This is a new paragraph.</p>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
@@ -80,7 +80,7 @@ p
  |  This is more content.
 HTML
 
-    expected = "<p>This is line one. This is line two.  This is line three.   This is line four.<span class=\"bold\">This is a bold line in the paragraph.</span> This is more content.</p>"
+    expected = '<p>This is line one. This is line two.  This is line three.   This is line four.<span class="bold">This is a bold line in the paragraph.</span> This is more content.</p>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
 
@@ -91,7 +91,7 @@ HTML
 p    There will be 3 spaces in front of this line.
 HTML
 
-    expected = "<p>   There will be 3 spaces in front of this line.</p>"
+    expected = '<p>   There will be 3 spaces in front of this line.</p>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
@@ -103,7 +103,7 @@ p = hello_world
 p    = hello_world
 HTML
 
-    expected = "<p>Hello World from @env</p><p>Hello World from @env</p><p>Hello World from @env</p>"
+    expected = '<p>Hello World from @env</p><p>Hello World from @env</p><p>Hello World from @env</p>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
@@ -113,7 +113,7 @@ HTML
 p id="dashed-id" class="underscored_class_name" = output_number
 HTML
 
-    expected = %(<p id="dashed-id" class="underscored_class_name">1337</p>)
+    expected = '<p id="dashed-id" class="underscored_class_name">1337</p>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
@@ -123,7 +123,7 @@ HTML
 p#dashed-id.underscored_class_name = output_number
 HTML
 
-    expected = %(<p id="dashed-id" class="underscored_class_name">1337</p>)
+    expected = '<p id="dashed-id" class="underscored_class_name">1337</p>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
@@ -133,7 +133,7 @@ HTML
 p data-info="Illudium Q-36" = output_number
 HTML
 
-    expected = %(<p data-info="Illudium Q-36">1337</p>)
+    expected = '<p data-info="Illudium Q-36">1337</p>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
@@ -143,7 +143,7 @@ HTML
 p#marvin.martian data-info="Illudium Q-36" = output_number
 HTML
 
-    expected = %(<p id="marvin" class="martian" data-info="Illudium Q-36">1337</p>)
+    expected = '<p id="marvin" class="martian" data-info="Illudium Q-36">1337</p>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
@@ -153,7 +153,7 @@ HTML
 p(id="marvin" class="martian" data-info="Illudium Q-36") = output_number
 HTML
 
-    expected = %(<p id="marvin" class="martian" data-info="Illudium Q-36">1337</p>)
+    expected = '<p id="marvin" class="martian" data-info="Illudium Q-36">1337</p>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
@@ -163,7 +163,7 @@ HTML
 p[id="marvin" class="martian" data-info="Illudium Q-36"] = output_number
 HTML
 
-    expected = %(<p id="marvin" class="martian" data-info="Illudium Q-36">1337</p>)
+    expected = '<p id="marvin" class="martian" data-info="Illudium Q-36">1337</p>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
@@ -173,7 +173,7 @@ HTML
 p(id="marvin" class="martian" data-info="Illudium Q-36")= output_number
 HTML
 
-    expected = %(<p id="marvin" class="martian" data-info="Illudium Q-36">1337</p>)
+    expected = '<p id="marvin" class="martian" data-info="Illudium Q-36">1337</p>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end

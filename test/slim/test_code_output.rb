@@ -7,7 +7,7 @@ p
   = hello_world
 HTML
 
-    expected = "<p>Hello World from @env</p>"
+    expected = '<p>Hello World from @env</p>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
@@ -18,7 +18,7 @@ p
   = hello_world if true
 HTML
 
-    expected = "<p>Hello World from @env</p>"
+    expected = '<p>Hello World from @env</p>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
@@ -29,7 +29,7 @@ p
   = hello_world("Hello Ruby!")
 HTML
 
-    expected = "<p>Hello Ruby!</p>"
+    expected = '<p>Hello Ruby!</p>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
@@ -40,7 +40,7 @@ p
   = hello_world "Hello Ruby!"
 HTML
 
-    expected = "<p>Hello Ruby!</p>"
+    expected = '<p>Hello Ruby!</p>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
@@ -51,7 +51,7 @@ p
   = hello_world "Hello Ruby!", :dummy => "value"
 HTML
 
-    expected = "<p>Hello Ruby!dummy value</p>"
+    expected = '<p>Hello Ruby!dummy value</p>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
@@ -63,7 +63,7 @@ p
   = hello_world
 HTML
 
-    expected = "<h1>This is my title</h1><p>Hello World from @env</p>"
+    expected = '<h1>This is my title</h1><p>Hello World from @env</p>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
@@ -73,7 +73,7 @@ HTML
 p = hello_world in_keyword
 HTML
 
-    expected = "<p>starts with keyword</p>"
+    expected = '<p>starts with keyword</p>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
@@ -83,7 +83,7 @@ HTML
 p = hash[:a]
 HTML
 
-    expected = "<p>The letter a</p>"
+    expected = '<p>The letter a</p>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end

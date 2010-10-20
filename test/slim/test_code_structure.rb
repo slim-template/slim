@@ -10,7 +10,7 @@ div
       p The second paragraph
 HTML
 
-    expected = "<div><p>The second paragraph</p></div>"
+    expected = '<div><p>The second paragraph</p></div>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
@@ -24,7 +24,7 @@ div
       p The second paragraph
 HTML
 
-    expected = "<div><p>The first paragraph</p><p>The second paragraph</p></div>"
+    expected = '<div><p>The first paragraph</p><p>The second paragraph</p></div>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
@@ -38,7 +38,7 @@ div
       p The second paragraph
 HTML
 
-    expected = "<div><p>The second paragraph</p></div>"
+    expected = '<div><p>The second paragraph</p></div>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
@@ -48,7 +48,7 @@ HTML
 p = hello_world if true
 HTML
 
-    expected = "<p>Hello World from @env</p>"
+    expected = '<p>Hello World from @env</p>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
   end
@@ -60,7 +60,7 @@ p Hello
   / Another comment
 HTML
 
-    expected = "<p>Hello</p>"
+    expected = '<p>Hello</p>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
 
@@ -73,7 +73,7 @@ p = \
 " Ruby!"
 HTML
 
-    expected = "<p>Hello Ruby!</p>"
+    expected = '<p>Hello Ruby!</p>'
 
     assert_equal expected, Slim::Engine.new(string).render(@env)
 
