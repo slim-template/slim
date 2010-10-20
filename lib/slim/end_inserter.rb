@@ -7,13 +7,8 @@ module Slim
   # However, the parser is not smart enough (and that's a good thing) to
   # automatically insert end's where they are needed. Luckily, this filter
   # does *exactly* that (and it does it well!)
-  class EndInserter
-    include Temple::Utils
+  class EndInserter < Filter
     ELSE_CONTROL_WORDS = /^(else|elsif|when)\b/
-
-    def initialize(options = {})
-      @options = options
-    end
 
     def compile(exp)
       if exp[0] == :slim
@@ -27,14 +22,6 @@ module Slim
       else
         exp
       end
-    end
-
-    def on_tag(name, attrs, content)
-      [:slim, :tag, name, attrs, compile(content)]
-    end
-
-    def on_control(str, content)
-      [:slim, :control, str, compile(content)]
     end
 
     def on_multi(*exps)

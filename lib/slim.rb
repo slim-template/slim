@@ -6,20 +6,20 @@ require 'temple'
 require 'tilt'
 
 require 'slim/parser'
-require 'slim/compiler'
+require 'slim/filter'
 require 'slim/end_inserter'
+require 'slim/compiler'
 require 'slim/engine'
 require 'slim/template'
-require 'slim/version'
+require 'slim/helpers'
+
+begin
+  require 'escape_utils'
+rescue LoadError
+end
 
 module Slim
-  class << self
-    def version
-      Slim::VERSION
-    end
-
-    def escape_html(html)
-      EscapeUtils.escape_html(html.to_s)
-    end
+  def self.version
+    Slim::VERSION
   end
 end
