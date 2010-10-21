@@ -28,6 +28,11 @@ module Slim
       end
     end
 
+    def escape_html_safe(html)
+      html.html_safe? ? html : escape_html(html)
+    end
+
     module_function :escape_html
+    module_function :escape_html_safe
   end
 end
