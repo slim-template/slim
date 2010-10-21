@@ -27,7 +27,7 @@ module Slim
 
     def initialize(options = {})
       @options = options
-      @tabsize = options[:tabsize] || 4
+      @tab     = ' ' * (options[:tabsize] || 4)
     end
 
     def compile(str)
@@ -60,57 +60,56 @@ module Slim
       #   |
       #     Hello
       #     World!
-      in_text = false
-      text_indent = nil
+      #
+      text_indent, text_base_indent = nil, nil
 
       str.each_line do |line|
         lineno += 1
 
         # Figure out the indentation. Kinda ugly/slow way to support tabs,
         # but remember that this is only done at parsing time.
-        indent = line[/^[ \t]*/].gsub("\t", " " * @tabsize).size
+        indent = line[/^[ \t]*/].gsub("\t", @tab).size
+
         # Remove the indentation
         line.lstrip!
         # Remove the newline at the ned
         line.chop!
 
-        if line.strip.empty?
-          # This happens to be an empty line, so we'll just have to make sure
+        if line.strip.empty? || line[0] == ?/
+          # This happens to be an empty line or a comment, so we'll just have to make sure
           # the generated code includes a newline (so the line numbers in the
           # stack trace for an exception matches the ones in the template).
           stacks.last << [:newline]
           next
         end
 
-        # Found a comment. Do nothing
-        # '{' '[' for Hash and Array
-        if [?/, ?{, ?[].include?(line[0])
-          next
-        end
+        # Handle text blocks with multiple lines
+        if text_indent
+          if indent > text_indent
+            # This line happens to be indented deeper (or equal) than the block start character (|, ', `).
+            # This means that it's a part of the text block.
 
-        if in_text
-          # Now we're inside a text block:
-          #
-          #   |
-          #     Hello    <- this line
-          #     World    <- or this line
+            # The indentation of first line of the text block determines the text base indentation.
+            text_base_indent ||= indent
 
-          # The indentation of first line of the text block (also called the
-          # base line below) determines the base indentation.
-          text_indent ||= indent
-
-          if indent >= text_indent
-            # This line happens to be indented deeper (or equal) to the base
-            # line. This means that it's a part of the text block.
+            # The text block lines must be at least indented as deep as the first line.
+            offset = indent - text_base_indent
+            e "Unexpected text indentation", line, lineno if offset < 0
 
             # Generate the additional spaces in front.
-            i = " " * (indent - text_indent)
+            i = ' ' * offset
             stacks.last << [:slim, :text, i + line]
             stacks.last << [:newline]
 
-            # Mark this line as it's been indented as the base line.
+            # Mark this line as it's been indented as the text block start character.
             indent = text_indent
+
+            next
           end
+
+          # It's guaranteed that we're now *not* in a text block, because
+          # the indent will always be set to the text block start indent.
+          text_indent = text_base_indent = nil
         end
 
         # If there's more stacks than indents, it means that the previous
@@ -134,12 +133,6 @@ module Slim
 
         if indent < prev_indent
           # This line was deindented.
-
-          # It's guaranteed that we're now *not* in a text block, because
-          # the indent will always be set to the base indent.
-          in_text = false
-          text_indent = nil
-
           # Now we're have to go through the all the indents and figure out
           # how many levels we've deindented.
           while true
@@ -164,32 +157,21 @@ module Slim
           end
         end
 
-        # If we're still in a text block we don't need to do anything more;
-        # we've already generated the needed code and made sure the stacks
-        # are setup correctly.
-        next if in_text
-
-        # As mentioned above, this is were we will output exp
-        current = stacks.last
-
         case line[0]
         when ?|, ?', ?`
           # Found a piece of text.
 
-          # Remove an optional space.
-          text = line[1..-1].sub(/^ /, '')
+          # We're now expecting the next line to be indented, so we'll need
+          # to push a block to the stack.
+          block = [:multi]
+          stacks.last << block
+          stacks << block
+          text_indent = indent
 
-          if text.strip.empty?
-            # We're now expecting the next line to be indented, so we'll need
-            # to push a block to the stack. Text blocks are a special case, so
-            # this code may not made very much sense. It's clearer in the other
-            # examples below.
-            block = [:multi]
-            stacks << block
-            current << block
-            in_text = true
-          else
-            current << [:slim, :text, text]
+          line.slice!(0)
+          if !line.strip.empty?
+            block << [:slim, :text, line.sub(/^( )/, '')]
+            text_base_indent = text_indent + ($1 ? 2 : 1)
           end
         when ?-, ?=
           # Found a potential code block.
@@ -199,23 +181,22 @@ module Slim
           # same exp in the current-stack, which makes sure that it'll be
           # included in the generated code.
           block = [:multi]
-          stacks << block
-          current << if line[1] == ?=
+          stacks.last << if line[1] == ?=
                        [:slim, :output, false, line[2..-1].strip, block]
                      elsif line[0] == ?=
                        [:slim, :output, true, line[1..-1].strip, block]
                      else
                        [:slim, :control, line[1..-1].strip, block]
                      end
+          stacks << block
         when ?!
           # Found a directive (currently only used for doctypes)
-          current << [:slim, :directive, line[1..-1].strip]
+          stacks.last << [:slim, :directive, line[1..-1].strip]
         else
           # Found a HTML tag.
-          insert_newline = false
           exp, content = parse_tag(line, lineno)
+          stacks.last << exp
           stacks << content if content
-          current << exp
         end
       end
 

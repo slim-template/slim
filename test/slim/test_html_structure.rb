@@ -58,6 +58,30 @@ p This is a new paragraph.
     assert_html '<p>This is line one. This is line two.  This is line three.   This is line four.</p><p>This is a new paragraph.</p>', source
   end
 
+  def test_nested_text_with_nested_html_one_same_line
+    source = %q{
+p
+ | This is line one.
+    This is line two.
+ span.bold This is a bold line in the paragraph.
+ |  This is more content.
+}
+
+    assert_html '<p>This is line one. This is line two.<span class="bold">This is a bold line in the paragraph.</span> This is more content.</p>', source
+  end
+
+  def test_nested_text_with_nested_html_one_same_line2
+    source = %q{
+p
+ |This is line one.
+   This is line two.
+ span.bold This is a bold line in the paragraph.
+ |  This is more content.
+}
+
+    assert_html '<p>This is line one. This is line two.<span class="bold">This is a bold line in the paragraph.</span> This is more content.</p>', source
+  end
+
   def test_nested_text_with_nested_html
     source = %q{
 p
