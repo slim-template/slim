@@ -2,82 +2,68 @@ require 'helper'
 
 class TestSlimCodeEscaping < TestSlim
   def test_escaping_evil_method
-    string = <<HTML
+    source = %q{
 p = evil_method
-HTML
+}
 
-    expected = '<p>&lt;script&gt;do_something_evil();&lt;&#47;script&gt;</p>'
-
-    assert_equal expected, Slim::Engine.new(string).render(@env)
+    assert_html '<p>&lt;script&gt;do_something_evil();&lt;&#47;script&gt;</p>', source
   end
 
   def test_escape_interpolation
-    string = <<HTML
-p \\\#{hello_world}
-HTML
+    source = %q{
+p \\#{hello_world}
+}
 
-    expected = '<p>#{hello_world}</p>'
-
-    assert_equal expected, Slim::Engine.new(string).render(@env)
+    assert_html '<p>#{hello_world}</p>', source
   end
 
   def test_render_without_html_safe
-    string = <<HTML
+    source = %q{
 p = "<strong>Hello World\\n, meet \\"Slim\\"</strong>."
-HTML
+}
 
-    expected = "<p>&lt;strong&gt;Hello World\n, meet \&quot;Slim\&quot;&lt;&#47;strong&gt;.</p>"
-
-    assert_equal expected, Slim::Engine.new(string).render
+    assert_html "<p>&lt;strong&gt;Hello World\n, meet \&quot;Slim\&quot;&lt;&#47;strong&gt;.</p>", source
   end
 
   def test_render_with_html_safe_false
     String.send(:define_method, :html_safe?) { false }
 
-    string = <<HTML
+    source = %q{
 p = "<strong>Hello World\\n, meet \\"Slim\\"</strong>."
-HTML
+}
 
-    expected = "<p>&lt;strong&gt;Hello World\n, meet \&quot;Slim\&quot;&lt;&#47;strong&gt;.</p>"
-
-    assert_equal expected, Slim::Engine.new(string, :use_html_safe => true).render
+    assert_html "<p>&lt;strong&gt;Hello World\n, meet \&quot;Slim\&quot;&lt;&#47;strong&gt;.</p>", source, :use_html_safe => true
   end
 
   def test_render_with_html_safe_true
     String.send(:define_method, :html_safe?) { true }
 
-    string = <<HTML
+    source = %q{
 p = "<strong>Hello World\\n, meet \\"Slim\\"</strong>."
-HTML
+}
 
-    expected = "<p><strong>Hello World\n, meet \"Slim\"</strong>.</p>"
-
-    assert_equal expected, Slim::Engine.new(string, :use_html_safe => true).render
+    assert_html "<p><strong>Hello World\n, meet \"Slim\"</strong>.</p>", source, :use_html_safe => true
   end
 
   def test_render_with_global_html_safe_false
     String.send(:define_method, :html_safe?) { false }
     Slim::Filter::DEFAULT_OPTIONS[:use_html_safe] = false
 
-    string = <<HTML
+    source = %q{
 p = "<strong>Hello World\\n, meet \\"Slim\\"</strong>."
-HTML
+}
 
-    expected = "<p>&lt;strong&gt;Hello World\n, meet \&quot;Slim\&quot;&lt;&#47;strong&gt;.</p>"
-
-    assert_equal expected, Slim::Engine.new(string).render
+    assert_html "<p>&lt;strong&gt;Hello World\n, meet \&quot;Slim\&quot;&lt;&#47;strong&gt;.</p>", source
   end
 
   def test_render_with_global_html_safe_true
     String.send(:define_method, :html_safe?) { true }
     Slim::Filter::DEFAULT_OPTIONS[:use_html_safe] = true
 
-    string = <<HTML
+    source = %q{
 p = "<strong>Hello World\\n, meet \\"Slim\\"</strong>."
-HTML
+}
 
-    expected = "<p><strong>Hello World\n, meet \"Slim\"</strong>.</p>"
-
-    assert_equal expected, Slim::Engine.new(string).render
+    assert_html "<p><strong>Hello World\n, meet \"Slim\"</strong>.</p>", source
   end
 end

@@ -2,7 +2,7 @@ module Slim
   # Compiles Slim expressions into Temple::HTML expressions.
   class Compiler < Filter
     def on_text(string)
-      if string.include?("\#{")
+      if string.include?('#{')
         [:dynamic, escape_interpolation(string)]
       else
         [:static, string]
@@ -18,8 +18,7 @@ module Slim
     # why is escaping not handled by temple?
     def on_output(escape, code, content)
       if empty_exp?(content)
-        escape = false if @options[:use_html_safe] && code.html_safe?
-        [:dynamic, escape ? "Slim::Helpers.escape_html((#{code}))" : code]
+        [:dynamic, escape ? escape_code(code) : code]
       else
         on_output_block(escape, code, content)
       end
@@ -75,9 +74,13 @@ module Slim
 
     def escape_interpolation(string)
       string.gsub!(/(.?)\#\{(.*?)\}/) do
-        $1 == '\\' ? $& : "#{$1}\#{Slim::Helpers.escape_html(#{$2})}"
-      end if !@options[:use_html_safe] || !code.html_safe?
+        $1 == '\\' ? $& : "#{$1}#\{#{escape_code($2)}}"
+      end
       '"%s"' % string
+    end
+
+    def escape_code(param)
+      "Slim::Helpers.escape_html#{@options[:use_html_safe] ? '_safe' : ''}((#{param}))"
     end
 
     def tmp_var
