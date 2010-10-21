@@ -234,6 +234,11 @@ module Slim
       '{' => '}',
     }
     DELIMITER_REGEX = /^([\(\[\{])/
+    if RUBY_VERSION > '1.9'
+      CLASS_ID_REGEX = /^(#|\.)([\w\u00c0-\uFFFF][\w:\u00c0-\uFFFF-]*)/
+    else
+      CLASS_ID_REGEX = /^(#|\.)([\w][\w:-]*)/
+    end
 
     def parse_tag(line, lineno)
       orig_line = line
@@ -253,7 +258,7 @@ module Slim
       attributes = []
 
       # Find any literal class/id attributes
-      while line =~ /^(#|\.)([\w\u00c0-\uFFFF-]+)/
+      while line =~ CLASS_ID_REGEX
         attributes << [ATTR_SHORTHAND[$1], $2]
         line = $'
       end
@@ -312,23 +317,22 @@ module Slim
         end
       end
 
-      # The rest of the line.
-      rest = line.sub(/^ /, '')
+      line.sub!(/^ /, '')
       content = [:multi]
 
-      if rest.strip.empty?
+      if line.strip.empty?
         # If the line was empty there might be some indented content in the
         # lines beneath it. We'll handle this by making this method return
         # the block-variable. #compile will then push this onto the
         # stacks-array.
         block = content
       else
-        case rest
+        case line
         when /^\s*=(=?)/
           block = [:multi]
           content << [:slim, :output, $1 != '=', $'.strip, block]
         else
-          content << [:slim, :text, rest]
+          content << [:slim, :text, line]
         end
       end
 
