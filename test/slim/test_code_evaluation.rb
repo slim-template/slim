@@ -76,7 +76,7 @@ p(id=hash[:a]) Test it
 
   def test_hash_call_in_attribute_with_ruby_evaluation
     source = %q{
-p id=(hash[:a]+hash[:a]) Test it
+p id=(hash[:a] + hash[:a]) Test it
 }
 
     assert_html '<p id="The letter aThe letter a">Test it</p>', source
@@ -84,7 +84,7 @@ p id=(hash[:a]+hash[:a]) Test it
 
   def test_hash_call_in_delimited_attribute_with_ruby_evaluation
     source = %q{
-p(id=(hash[:a]+hash[:a])) Test it
+p(id=(hash[:a] + hash[:a])) Test it
 }
 
     assert_html '<p id="The letter aThe letter a">Test it</p>', source
@@ -92,7 +92,7 @@ p(id=(hash[:a]+hash[:a])) Test it
 
   def test_hash_call_in_delimited_attribute_with_ruby_evaluation_2
     source = %q{
-p[id=(hash[:a]+hash[:a])] Test it
+p[id=(hash[:a] + hash[:a])] Test it
 }
 
     assert_html '<p id="The letter aThe letter a">Test it</p>', source
@@ -100,7 +100,7 @@ p[id=(hash[:a]+hash[:a])] Test it
 
   def test_hash_call_in_delimited_attribute_with_ruby_evaluation_3
     source = %q{
-p(id=[hash[:a]+hash[:a]]) Test it
+p(id=[hash[:a] + hash[:a]]) Test it
 }
 
     assert_html '<p id="The letter aThe letter a">Test it</p>', source
@@ -108,7 +108,7 @@ p(id=[hash[:a]+hash[:a]]) Test it
 
   def test_hash_call_in_delimited_attribute_with_ruby_evaluation_4
     source = %q{
-p(id=[hash[:a]+hash[:a]] class=[hash[:a]]) Test it
+p(id=[hash[:a] + hash[:a]] class=[hash[:a]]) Test it
 }
 
     assert_html '<p id="The letter aThe letter a" class="The letter a">Test it</p>', source

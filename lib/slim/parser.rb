@@ -11,12 +11,12 @@ module Slim
       end
 
       def to_s
-        <<-EOF
+        %{
 #{@message}
   Line #{@lineno}
     #{@line}
     #{' ' * @column}^
-        EOF
+        }
       end
     end
 
@@ -222,27 +222,29 @@ module Slim
       result
     end
 
-    REGEX_HTML_TAG = /^ ([\w-]+)=/
+    ATTR_REGEX = /^ ([\w-]+)=/
+    QUOTED_VALUE_REGEX = /("[^"]+"|'[^']+')/
     ATTR_SHORTHAND = {
-      "#" => "id",
-      "." => "class",
+      '#' => 'id',
+      '.' => 'class',
     }
     DELIMITERS = {
-      "(" => ")",
-      "[" => "]",
-      "{" => "}",
+      '(' => ')',
+      '[' => ']',
+      '{' => '}',
     }
+    DELIMITER_REGEX = /^([\(\[\{])/
 
     def parse_tag(line, lineno)
       orig_line = line
 
       if line =~ /^(#|\.)/
-        tag = "div"
+        tag = 'div'
       elsif line =~ /^[\w:]+/
         tag = $&
         line = $'
       else
-        e "Unknown line indicator", orig_line, lineno
+        e 'Unknown line indicator', orig_line, lineno
       end
 
       # Now we'll have to find all the attributes. We'll store these in an
@@ -257,42 +259,57 @@ module Slim
       end
 
       # Check to see if there is a delimiter right after the tag name
-      if line[0, 1] =~ /([(\[{])/
-        delimiter = $1
+      delimiter = ''
+      if line =~ DELIMITER_REGEX
+        delimiter = DELIMITERS[$1]
         # Replace the delimiter with a space so we can continue parsing as normal.
         line[0] = ?\s
       end
 
-      # Any ruby code (as attribute values) to interpolate?
-      while line =~ /#{REGEX_HTML_TAG}([(\[{]?)([^\s"']+)/
-        key     = $1
-        wrapper = $2 # opening wrapper
-        value   = $3 # attribute value + ending wrapper and delimiter (if any)
-        line    = $'
-
-        # Remove the end delimiter/wrapper when:
-        # 1. delimiter present & wrapper present
-        value.slice!(-1) if !wrapper.empty? && delimiter
-        # 2. delimiter present & wrapper missing & is the last attribute
-        value.slice!(-1) if wrapper.empty? && delimiter && line !~ REGEX_HTML_TAG
-        # 3. wrapper present & is the last attribute
-        value.slice!(-1) if !wrapper.empty? && line !~ REGEX_HTML_TAG
-
-        attributes << [key, '#{%s}' % value]
-      end
-
-      # Find any other attributes
-      while line =~ /#{REGEX_HTML_TAG}("[^"]+"|'[^']+')/
-        attributes << [$1, $2[1..-2]]
+      # Parse attributes
+      while line =~ ATTR_REGEX
+        key = $1
         line = $'
+        case line
+        when DELIMITER_REGEX
+          # Value is a delimited ruby expression
+          line = $'
+          alpha, omega = $1, DELIMITERS[$1]
+          # Count opening and closing brackets
+          count, i = 1, -1
+          while count > 0 && i < line.length
+            i += 1
+            case line[i, 1]
+            when alpha
+              count += 1
+            when omega
+              count -= 1
+            end
+          end
+          e "Missing attribute end delimiter #{omega}", orig_line, lineno if count != 0
+          value = '#{%s}' % line[0, i]
+          line.slice!(0..i)
+        when QUOTED_VALUE_REGEX
+          # Value is quoted
+          line = $'
+          value = $1[1..-2]
+        when /^([^\s#{delimiter}]+)/
+          # Value is unquoted (ruby variable for example)
+          line = $'
+          value = '#{%s}' % $1
+        else
+          e 'Invalid attribute value', orig_line, lineno
+        end
+        attributes << [key, value]
       end
 
-      if delimiter && line[0, 1] == DELIMITERS[delimiter]
-        # Everything is ok!
-        line.slice!(0)
-      elsif delimiter && wrapper.nil?
-        # Oops, we can't find a closing delimiter; report an error!
-        e "Expected closing of attributes", orig_line, lineno, orig_line.size - line.size
+      # Find ending delimiter
+      if !delimiter.empty?
+        if line[0, 1] == delimiter
+          line.slice!(0)
+        else
+          e "Expected closing attribute delimiter #{delimiter}", orig_line, lineno, orig_line.size - line.size
+        end
       end
 
       # The rest of the line.
