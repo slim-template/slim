@@ -1,3 +1,5 @@
+require 'helper'
+
 class TestSlimHelpers < TestSlim
   def test_list_of
     source = %q{
