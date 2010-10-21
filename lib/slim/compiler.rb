@@ -70,6 +70,14 @@ module Slim
       [:html, :tag, name, attrs, compile(content)]
     end
 
+    def on_embedded(engine, *body)
+      _, (type, body) = Temple::Filters::DynamicInliner.new.compile compile([:multi, *body])
+      body = type == :static ?
+        Tilt[engine].new { body }.render :
+        "Tilt[#{engine.inspect}].new { #{body} }.render(self)"
+      [type, body]
+    end
+
     private
 
     def escape_interpolation(string)

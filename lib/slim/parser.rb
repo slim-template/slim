@@ -211,11 +211,19 @@ module Slim
           # Found a directive (currently only used for doctypes)
           current << [:slim, :directive, line[1..-1].strip]
         else
-          # Found a HTML tag.
-          insert_newline = false
-          exp, content = parse_tag(line, lineno)
-          stacks << content if content
-          current << exp
+          if line[-1] == ?:
+            # Embedded template detected. Let's treat that like a text block for now.
+            block = [:slim, :embedded, line[0..-2]]
+            stacks << block
+            current << block
+            in_text = true
+          else
+            # Found a HTML tag.
+            insert_newline = false
+            exp, content = parse_tag(line, lineno)
+            stacks << content if content
+            current << exp
+          end
         end
       end
 
