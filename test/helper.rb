@@ -13,7 +13,7 @@ class TestSlim < MiniTest::Unit::TestCase
   end
 
   def teardown
-    String.send(:remove_method, :html_safe?) if String.method_defined?(:html_safe?)
+    String.send(:undef_method, :html_safe?) if String.method_defined?(:html_safe?)
     Slim::Filter::DEFAULT_OPTIONS.delete(:use_html_safe)
   end
 
