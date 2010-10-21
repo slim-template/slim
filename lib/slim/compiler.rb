@@ -2,7 +2,7 @@ module Slim
   # Compiles Slim expressions into Temple::HTML expressions.
   class Compiler < Filter
     def on_text(string)
-      if string.include?("\#{")
+      if string.include?('#{')
         [:dynamic, escape_interpolation(string)]
       else
         [:static, string]
