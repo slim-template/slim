@@ -16,10 +16,11 @@ p
   def test_render_with_interpolated_embedded_template
     source = %q{
 markdown:
+  #Header
   Hello from #{"Markdown!"}
   Second Line!
 }
-    assert_html "<p>Hello from Markdown!\nSecond Line!</p>\n", source
+    assert_html "<h1>Header</h1>\n\n<p>Hello from Markdown!\nSecond Line!</p>\n", source
   end
 
   def test_render_with_javascript
