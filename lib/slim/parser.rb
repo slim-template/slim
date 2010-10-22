@@ -193,10 +193,18 @@ module Slim
           # Found a directive (currently only used for doctypes)
           stacks.last << [:slim, :directive, line[1..-1].strip]
         else
-          # Found a HTML tag.
-          exp, content = parse_tag(line, lineno)
-          stacks.last << exp
-          stacks << content if content
+          if line =~ /^(\w+):\s*$/
+            # Embedded template detected. It is treated like a text block.
+            block = [:slim, :embedded, $1]
+            stacks.last << block
+            stacks << block
+            text_indent = indent
+          else
+            # Found a HTML tag.
+            exp, content = parse_tag(line, lineno)
+            stacks.last << exp
+            stacks << content if content
+          end
         end
       end
 
