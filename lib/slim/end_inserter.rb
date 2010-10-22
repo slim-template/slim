@@ -40,6 +40,8 @@ module Slim
       prev_indent ? append_end(result) : result
     end
 
+    private
+
     # Appends an end.
     def append_end(result)
       result << [:block, 'end']
