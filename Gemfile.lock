@@ -17,6 +17,7 @@ GEM
     minitest (1.7.2)
     rake (0.8.7)
     rcov (0.9.9)
+    rdiscount (1.6.5)
     temple (0.1.2)
     tilt (1.1)
 
@@ -30,6 +31,7 @@ DEPENDENCIES
   minitest
   rake (>= 0.8.7)
   rcov
+  rdiscount
   slim!
   temple (~> 0.1.2)
   tilt (~> 1.1)
