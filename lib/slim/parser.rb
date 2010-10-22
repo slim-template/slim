@@ -1,7 +1,5 @@
 module Slim
   class Parser
-    attr_reader :options
-
     class SyntaxError < StandardError
       def initialize(message, line, lineno, column = 0)
         @message = message
@@ -19,10 +17,7 @@ module Slim
       end
     end
 
-    # A little helper for raising exceptions.
-    def syntax_error!(*args)
-      raise SyntaxError.new(*args)
-    end
+    attr_reader :options
 
     def initialize(options = {})
       @options = options
@@ -54,7 +49,7 @@ module Slim
       # stack.
       stacks = [result]
 
-      # Broken line
+      # String buffer used for broken line (Lines ending with \)
       broken_line = nil
 
       # We have special treatment for text blocks:
@@ -213,6 +208,8 @@ module Slim
       result
     end
 
+    private
+
     ATTR_REGEX = /^ ([\w-]+)=/
     QUOTED_VALUE_REGEX = /("[^"]+"|'[^']+')/
     ATTR_SHORTHAND = {
@@ -308,9 +305,7 @@ module Slim
         end
       end
 
-      line.sub!(/^ /, '')
       content = [:multi]
-
       broken_line = nil
 
       if line.strip.empty?
@@ -320,14 +315,22 @@ module Slim
         # stacks-array.
         block = content
       elsif line =~ /^\s*=(=?)/
+        # Output
         block = [:multi]
         broken_line = $'.strip
         content << [:slim, :output, $1 != '=', broken_line, block]
       else
+        # Text content
+        line.sub!(/^ /, '')
         content << [:slim, :text, line]
       end
 
       return [:slim, :tag, tag, attributes, content], block, broken_line
+    end
+
+    # A little helper for raising exceptions.
+    def syntax_error!(*args)
+      raise SyntaxError.new(*args)
     end
   end
 end
