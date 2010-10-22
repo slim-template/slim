@@ -81,7 +81,7 @@ __Please note that all line indicators must be followed by a space__
 
 > The pipe tells Slim to just copy the line. It essentially escapes any processing.
 
-#### `` ` ``
+#### `` ` `` or `'`
 
 > _Same as the pipe (`|`)._
 
@@ -108,7 +108,7 @@ __Please note that all line indicators must be followed by a space__
 ### Things to know
 
 #### Standard Ruby syntax after `-` and `=`
-  `end` is not required
+  `end` is not required but can be used if you don't want to omit it
 
 #### Can put content on same line or nest it.
   If you nest content (e.g. put it on the next line), start the line with a pipe (`|`) or a backtick (`` ` ``).
@@ -123,9 +123,8 @@ __Please note that all line indicators must be followed by a space__
 
 ### Wrap attributes with delimiters
 
-    # If a delimiter makes the syntax more readable for you,
-    # you can use any non-word and non-space characters except:
-    # equal sign (=), hash (#) and dot (.)
+  If a delimiter makes the syntax more readable for you,
+  you can use the characters {...}, (...), [...] to wrap the attributes.
 
     body
       h1(id="logo") = page_logo
@@ -133,12 +132,12 @@ __Please note that all line indicators must be followed by a space__
 
 ### Add content to a tag
 
-    # Either start on the same line as the tag
+  Either start on the same line as the tag
 
     body
       h1 id="headline" Welcome to my site.
 
-    # Or nest it.  __Note:__ Must use a pipe or a backtick (followed by a space) to escape processing
+  Or nest it.  __Note:__ Must use a pipe or a backtick (followed by a space) to escape processing
 
     body
       h1 id="headline"
@@ -146,12 +145,12 @@ __Please note that all line indicators must be followed by a space__
 
 ### Add content to a tag with code
 
-    # Can make the call on the same line
+  Can make the call on the same line
 
     body
       h1 id="headline" = page_headline
 
-    # Or nest it.
+  Or nest it.
 
     body
       h1 id="headline"
@@ -159,9 +158,9 @@ __Please note that all line indicators must be followed by a space__
 
 ### Shortcut form for `id` and `class` attributes
 
-    # Similarly to Haml, you can specify the `id` and `class`
-    # attributes in the following shortcut form
-    # Note: the shortcut form does not evaluate ruby code
+  Similarly to Haml, you can specify the `id` and `class`
+  attributes in the following shortcut form
+  Note: the shortcut form does not evaluate ruby code
 
     body
       h1#headline
@@ -171,7 +170,7 @@ __Please note that all line indicators must be followed by a space__
       .content
         = show_content
 
-    # this is the same as
+  this is the same as
 
     body
       h1 id="headline"
@@ -183,28 +182,33 @@ __Please note that all line indicators must be followed by a space__
 
 ### Set an attribute's value with a method
 
-    # Use standard Ruby interpolation.
+  * Alternative 1: Use parentheses (), {}, []. The code in the parentheses will be evaluated.
+  * Alternative 2: If the code doesn't contain any spaces you can omit the parentheses.
+  * Alternative 3: Use standard ruby interpolation #{}
+
+  Attributes will always be html escaped.
 
     body
       table
         - for user in users do
-          tr id="user_#{user.id}" class=user.role
+          td id="user_#{user.id}" class=user.role
+            a href={path_to_user user} = user.name
 
-### Call a method in content
+### Evaluate ruby code in text
 
-    # Use standard Ruby interpolation.
+  Use standard Ruby interpolation. The text will always be html escaped.
 
     body
       h1 Welcome #{current_user.name} to the show.
 
-    # To escape the interpolation (i.e. render as is)
+  To escape the interpolation (i.e. render as is)
 
     body
       h1 Welcome \#{current_user.name} to the show.
 
-### Skip the escaping
+### Skip the html escaping
 
-    # Use a double equal sign
+  Use a double equal sign
 
     body
       h1 id="headline"
@@ -212,40 +216,39 @@ __Please note that all line indicators must be followed by a space__
 
 ### Treat multiple lines of code as text that should bypass parsing
 
-    # Use a pipe (`|`) or backtick (`` ` ``) to start the escape.
-    # Each following line that is indented greater than
-    # the backtick is copied over.
+  Use a pipe (`|`) or backtick (`` ` ``) to start the escape.
+  Each following line that is indented greater than
+  the backtick is copied over.
 
     body
       p
         |
           This is a test of the text block.
 
-    # The parsed result of the above:
+  The parsed result of the above:
 
     <body><p>This is a test of the text block.</p></body>
 
-    # The left margin is set at the indent of the backtick + one space.
-    # Any additional spaces will be copied over.
+  The left margin is set at the indent of the backtick + one space.
+  Any additional spaces will be copied over.
 
     body
       p
-        |
-          This line is on the left margin.
-           This line will have one space in front of it.
-             This line will have two spaces in front of it.
-               And so on...
+        |  This line is on the left margin.
+            This line will have one space in front of it.
+              This line will have two spaces in front of it.
+                And so on...
 
 ### Add code comments
 
-    # Use a forward slash for ruby code comments
+  Use a forward slash for ruby code comments
 
     body
       p
         / This line won't get displayed.
         / Neither does this line.
 
-    # The parsed result of the above:
+  The parsed result of the above:
 
     <body><p></p></body>
 
