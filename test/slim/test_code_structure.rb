@@ -45,6 +45,20 @@ p = hello_world if true
     assert_html '<p>Hello World from @env</p>', source
   end
 
+  def test_render_with_case
+    source = %q{
+p
+  - case 42
+  - when 41
+    | 1
+  - when 42
+    | 42
+  |  is the answer
+}
+
+    assert_html '<p>42 is the answer</p>', source
+  end
+
   def test_render_with_comments
     source = %q{
 p Hello

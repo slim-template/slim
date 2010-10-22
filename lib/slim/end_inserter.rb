@@ -21,39 +21,28 @@ module Slim
           if prev_indent
             # Two control code in a row. If this one is *not*
             # an else block, we should close the previous one.
-            if exp[2] !~ ELSE_CONTROL_WORDS
-              append_end(result)
-            end
+            append_end(result) if exp[2] !~ ELSE_CONTROL_WORDS
           else
-            # Checks if the control code contains something.
-            if !empty_exp?(exp[3])
-              prev_indent = true
-            end
+            # Indent if the control code contains something.
+            prev_indent = !empty_exp?(exp[3])
           end
-        elsif exp[0] != :newline
+        elsif exp[0] != :newline && prev_indent
           # This is *not* a control code, so we should close the previous one.
           # Ignores newlines because they will be inserted after each line.
-          if prev_indent
-            append_end(result)
-            prev_indent = false
-          end
+          append_end(result)
+          prev_indent = false
         end
 
         result << compile(exp)
       end
 
       # The last line can be a control code too.
-      if prev_indent
-        append_end(result)
-        prev_indent = false
-      end
-
-      result
+      prev_indent ? append_end(result) : result
     end
 
     # Appends an end.
     def append_end(result)
-      result << [:block, "end"]
+      result << [:block, 'end']
     end
 
     # Checks if an expression is a Slim control code.
@@ -62,4 +51,3 @@ module Slim
     end
   end
 end
-
