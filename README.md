@@ -192,6 +192,7 @@ __Please note that all line indicators must be followed by a space__
       table
         - for user in users do
           td id="user_#{user.id}" class=user.role
+            a href=user_action(user, :edit) Edit #{user.name}
             a href={path_to_user user} = user.name
 
 ### Evaluate ruby code in text

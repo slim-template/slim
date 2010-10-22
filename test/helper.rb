@@ -51,8 +51,8 @@ class Env
     end
   end
 
-  def action_path(path)
-    "/action-#{path}"
+  def action_path(*args)
+    "/action-#{args.join('-')}"
   end
 
   def in_keyword

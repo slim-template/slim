@@ -222,6 +222,7 @@ module Slim
       '{' => '}',
     }
     DELIMITER_REGEX = /^([\(\[\{])/
+    CLOSE_DELIMITER_REGEX = /^([\)\]\}])/
     if RUBY_VERSION > '1.9'
       CLASS_ID_REGEX = /^(#|\.)([\w\u00c0-\uFFFF][\w:\u00c0-\uFFFF-]*)/
     else
@@ -263,35 +264,13 @@ module Slim
       while line =~ ATTR_REGEX
         key = $1
         line = $'
-        case line
-        when DELIMITER_REGEX
-          # Value is a delimited ruby expression
-          line = $'
-          alpha, omega = $1, DELIMITERS[$1]
-          # Count opening and closing brackets
-          count, i = 1, -1
-          while count > 0 && i < line.length
-            i += 1
-            case line[i, 1]
-            when alpha
-              count += 1
-            when omega
-              count -= 1
-            end
-          end
-          syntax_error! "Expected closing attribute delimiter #{omega}", orig_line, lineno if count != 0
-          value = '#{%s}' % line[0, i]
-          line.slice!(0..i)
-        when QUOTED_VALUE_REGEX
-          # Value is quoted
+        if line =~ QUOTED_VALUE_REGEX
+          # Value is quote (static)
           line = $'
           value = $1[1..-2]
-        when /^([^\s#{delimiter}]+)/
-          # Value is unquoted (ruby variable for example)
-          line = $'
-          value = '#{%s}' % $1
         else
-          syntax_error! 'Invalid attribute value', orig_line, lineno
+          # Value is ruby code
+          line, value = parse_ruby_attribute(orig_line, line, lineno, delimiter)
         end
         attributes << [key, value]
       end
@@ -326,6 +305,46 @@ module Slim
       end
 
       return [:slim, :tag, tag, attributes, content], block, broken_line
+    end
+
+    def parse_ruby_attribute(orig_line, line, lineno, delimiter)
+      # Delimiter stack
+      stack = []
+
+      # Attribute value buffer
+      value = ''
+
+      # Attribute ends with space or attribute delimiter
+      end_regex = /^[\s#{Regexp.escape delimiter}]/
+
+      until line.empty?
+        if stack.empty? && line =~ end_regex
+          # Stack is empty, this means we left the attribute value
+          # if next character is space or attribute delimiter
+          break
+        elsif line =~ DELIMITER_REGEX
+          # Delimiter found, push it on the stack
+          stack << DELIMITERS[$1]
+          value << line.slice!(0)
+        elsif line =~ CLOSE_DELIMITER_REGEX
+          # Closing delimiter found, pop it from the stack if everything is ok
+          syntax_error! "Unexpected closing #{$1}", orig_line, lineno if stack.empty?
+          syntax_error! "Expected closing #{stack.last}", orig_line, lineno if stack.last != $1
+          value << line.slice!(0)
+          stack.pop
+        else
+          value << line.slice!(0)
+        end
+      end
+
+      syntax_error! "Expected closing attribute delimiter #{stack.last}", orig_line, lineno if !stack.empty?
+      syntax_error! 'Invalid empty attribute', orig_line, lineno if value.empty?
+
+      # Remove attribute wrapper which doesn't belong to the ruby code
+      # e.g id=[hash[:a] + hash[:b]]
+      value = value[1..-2] if value =~ DELIMITER_REGEX && DELIMITERS[value[0, 1]] == value[-1, 1]
+
+      [line, '#{%s}' % value]
     end
 
     # A little helper for raising exceptions.

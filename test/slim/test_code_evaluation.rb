@@ -60,10 +60,26 @@ p id="#{hash[:a]}" Test it
 
   def test_method_call_in_attribute_without_quotes
     source = %q{
-form action=action_path(:login) method='post'
+form action=action_path(:page, :save) method='post'
 }
 
-    assert_html '<form action="&#47;action-login" method="post"></form>', source
+    assert_html '<form action="&#47;action-page-save" method="post"></form>', source
+  end
+
+  def test_method_call_in_delimited_attribute_without_quotes
+    source = %q{
+form(action=action_path(:page, :save) method='post')
+}
+
+    assert_html '<form action="&#47;action-page-save" method="post"></form>', source
+  end
+
+  def test_method_call_in_delimited_attribute_without_quotes2
+    source = %q{
+form(method='post' action=action_path(:page, :save))
+}
+
+    assert_html '<form method="post" action="&#47;action-page-save"></form>', source
   end
 
   def test_hash_call_in_attribute_without_quotes
@@ -84,7 +100,7 @@ p(id=hash[:a]) Test it
 
   def test_hash_call_in_attribute_with_ruby_evaluation
     source = %q{
-p id=(hash[:a] + hash[:a]) Test it
+p id={hash[:a] + hash[:a]} Test it
 }
 
     assert_html '<p id="The letter aThe letter a">Test it</p>', source
@@ -128,6 +144,14 @@ p(id=hash[:a] class=[hash[:a]]) Test it
 }
 
     assert_html '<p id="The letter a" class="The letter a">Test it</p>', source
+  end
+
+  def test_computation_in_attribute
+    source = %q{
+p id=(1 + 1)*5 Test it
+}
+
+    assert_html '<p id="10">Test it</p>', source
   end
 
   def test_interpolation_in_text

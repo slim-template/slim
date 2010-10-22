@@ -39,7 +39,8 @@ module Slim
         engine = Tilt[options[:name]]
         if options[:precompiled]
           # Wrap precompiled code in proc, local variables from out the proc are accessible
-          precompiled = engine.new { text }.precompiled({}).first
+          # WARNING: This is a bit of a hack. Tilt::Engine#precompiled is protected
+          precompiled = engine.new { text }.send(:precompiled, {}).first
           [:dynamic, "proc { #{precompiled} }.call"]
         elsif options[:dynamic]
           # Fully dynamic evaluation of the template during runtime (Slow and uncached)

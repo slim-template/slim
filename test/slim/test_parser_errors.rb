@@ -60,12 +60,39 @@ p
     assert_syntax_error "Expected closing attribute delimiter ]\n  Line 3\n    img src=[hash[1] + hash[2]\n    ^\n        ", source
   end
 
-  def test_invalid_attribute
+  def test_unexpected_closing
+    source = %q{
+p
+  img src=(1+1)]
+}
+
+    assert_syntax_error "Unexpected closing ]\n  Line 3\n    img src=(1+1)]\n    ^\n        ", source
+  end
+
+  def test_invalid_empty_attribute
+    source = %q{
+p
+  img{src= }
+}
+
+    assert_syntax_error "Invalid empty attribute\n  Line 3\n    img{src= }\n    ^\n        ", source
+  end
+
+  def test_invalid_empty_attribute2
     source = %q{
 p
   img{src=}
 }
 
-    assert_syntax_error "Invalid attribute value\n  Line 3\n    img{src=}\n    ^\n        ", source
+    assert_syntax_error "Invalid empty attribute\n  Line 3\n    img{src=}\n    ^\n        ", source
+  end
+
+  def test_invalid_empty_attribute3
+    source = %q{
+p
+  img src=
+}
+
+    assert_syntax_error "Invalid empty attribute\n  Line 3\n    img src=\n    ^\n        ", source
   end
 end
