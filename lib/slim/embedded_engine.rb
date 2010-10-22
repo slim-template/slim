@@ -31,14 +31,24 @@ module Slim
     end
 
     class TiltEngine < EmbeddedEngine
+      # Code to collect local variables
+      COLLECT_LOCALS = %q{eval('{' + local_variables.select {|v| v[0] != ?_ }.map {|v| ":#{v}=>#{v}" }.join(',') + '}')}
+
       def compile(body)
         text = collect_text(body)
         engine = Tilt[options[:name]]
-        if options[:dynamic]
-          [:dynamic, "#{engine.name}.new { #{text.inspect} }.render(self)"]
+        if options[:precompiled]
+          # Wrap precompiled code in proc, local variables from out the proc are accessible
+          precompiled = engine.new { text }.precompiled({}).first
+          [:dynamic, "proc { #{precompiled} }.call"]
+        elsif options[:dynamic]
+          # Fully dynamic evaluation of the template during runtime (Slow and uncached)
+          [:dynamic, "#{engine.name}.new { #{text.inspect} }.render(self, #{COLLECT_LOCALS})"]
         elsif options[:interpolate]
+          # Static template with interpolated ruby code
           [:dynamic, '"%s"' % engine.new { text }.render]
         else
+          # Static template
           [:static, engine.new { text }.render]
         end
       end
@@ -66,7 +76,7 @@ module Slim
       end
     end
 
-    # These engines are executed at compile time, text is evaluated
+    # These engines are executed at compile time, embedded ruby is interpolated
     register :markdown, TiltEngine, :interpolate => true
     register :textile, TiltEngine, :interpolate => true
     register :rdoc, TiltEngine, :interpolate => true
@@ -76,14 +86,16 @@ module Slim
     register :less, TiltEngine
     register :coffee, TiltEngine
 
-    # These engines are executed at runtime
-    register :erb, TiltEngine, :dynamic => true
-    register :haml, TiltEngine, :dynamic => true
-    register :builder, TiltEngine, :dynamic => true
+    # These engines are precompiled, code is embedded
+    register :erb, TiltEngine, :precompiled => true
+    register :haml, TiltEngine, :precompiled => true
+    register :nokogiri, TiltEngine, :precompiled => true
+    register :builder, TiltEngine, :precompiled => true
+
+    # These engines are completely executed at runtime (Usage not recommended, no caching!)
     register :liquid, TiltEngine, :dynamic => true
     register :radius, TiltEngine, :dynamic => true
     register :markaby, TiltEngine, :dynamic => true
-    register :nokogiri, TiltEngine, :dynamic => true
 
     # Embedded javascript/css
     register :javascript, TagEngine, :tag => 'script', :attributes => { :type => 'text/javascript' }
