@@ -19,20 +19,20 @@ module Slim
       @engines[name.to_s] = klass.new(options)
     end
 
-    class TiltEngine < EmbeddedEngine
-      def aggregate_text(body)
-        body.inject('') do |text, exp|
-          if exp[0] == :slim && exp[1] == :text
-            text << exp[2]
-          elsif exp[0] == :newline
-            text << "\n"
-          end
-          text
+    def collect_text(body)
+      body.inject('') do |text, exp|
+        if exp[0] == :slim && exp[1] == :text
+          text << exp[2]
+        elsif exp[0] == :newline
+          text << "\n"
         end
+        text
       end
+    end
 
+    class TiltEngine < EmbeddedEngine
       def compile(body)
-        text = aggregate_text(body)
+        text = collect_text(body)
         engine = Tilt[options[:name]]
         if options[:dynamic]
           [:dynamic, "#{engine.name}.new { #{text.inspect} }.render(self)"]
@@ -60,6 +60,12 @@ module Slim
       end
     end
 
+    class RubyEngine < EmbeddedEngine
+      def compile(body)
+        [:block, collect_text(body)]
+      end
+    end
+
     # These engines are executed at compile time, text is evaluated
     register :markdown, TiltEngine, :interpolate => true
     register :textile, TiltEngine, :interpolate => true
@@ -79,8 +85,11 @@ module Slim
     register :markaby, TiltEngine, :dynamic => true
     register :nokogiri, TiltEngine, :dynamic => true
 
-    # Embedded javascript
+    # Embedded javascript/css
     register :javascript, TagEngine, :tag => 'script', :attributes => { :type => 'text/javascript' }
     register :css, TagEngine, :tag => 'style', :attributes => { :type => 'text/css' }
+
+    # Embedded ruby code
+    register :ruby, RubyEngine
   end
 end
