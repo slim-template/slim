@@ -11,8 +11,7 @@ module Slim
       end
 
       def to_s
-        %{
-#{@message}
+        %{#{@message}
   Line #{@lineno}
     #{@line}
     #{' ' * @column}^
@@ -21,7 +20,7 @@ module Slim
     end
 
     # A little helper for raising exceptions.
-    def e(*args)
+    def syntax_error!(*args)
       raise SyntaxError.new(*args)
     end
 
@@ -107,7 +106,7 @@ module Slim
 
             # The text block lines must be at least indented as deep as the first line.
             offset = indent - text_base_indent
-            e "Unexpected text indentation", line, lineno if offset < 0
+            syntax_error! 'Unexpected text indentation', line, lineno if offset < 0
 
             # Generate the additional spaces in front.
             i = ' ' * offset
@@ -132,7 +131,7 @@ module Slim
         if indent > indents.last
           # This line was actually indented, so we'll have to check if it was
           # supposed to be indented or not.
-          e "Unexpected indentation", line, lineno unless expecting_indentation
+          syntax_error! 'Unexpected indentation', line, lineno unless expecting_indentation
 
           indents << indent
         else
@@ -154,7 +153,7 @@ module Slim
           #   hello
           #       world
           #     this      # <- This should not be possible!
-          e 'Malformed indentation', line, lineno if indents.last < indent
+          syntax_error! 'Malformed indentation', line, lineno if indents.last < indent
         end
 
         case line[0]
@@ -241,7 +240,7 @@ module Slim
         tag = $&
         line = $'
       else
-        e 'Unknown line indicator', orig_line, lineno
+        syntax_error! 'Unknown line indicator', orig_line, lineno
       end
 
       # Now we'll have to find all the attributes. We'll store these in an
@@ -283,7 +282,7 @@ module Slim
               count -= 1
             end
           end
-          e "Missing attribute end delimiter #{omega}", orig_line, lineno if count != 0
+          syntax_error! "Expected closing attribute delimiter #{omega}", orig_line, lineno if count != 0
           value = '#{%s}' % line[0, i]
           line.slice!(0..i)
         when QUOTED_VALUE_REGEX
@@ -295,7 +294,7 @@ module Slim
           line = $'
           value = '#{%s}' % $1
         else
-          e 'Invalid attribute value', orig_line, lineno
+          syntax_error! 'Invalid attribute value', orig_line, lineno
         end
         attributes << [key, value]
       end
@@ -305,7 +304,7 @@ module Slim
         if line[0, 1] == delimiter
           line.slice!(0)
         else
-          e "Expected closing attribute delimiter #{delimiter}", orig_line, lineno, orig_line.size - line.size
+          syntax_error! "Expected closing attribute delimiter #{delimiter}", orig_line, lineno, orig_line.size - line.size
         end
       end
 
