@@ -128,46 +128,33 @@ module Slim
         # If there's more stacks than indents, it means that the previous
         # line is expecting this line to be indented.
         expecting_indentation = stacks.size > indents.size
-        prev_indent = indents.last
 
-        if indent > prev_indent
+        if indent > indents.last
           # This line was actually indented, so we'll have to check if it was
           # supposed to be indented or not.
-          unless expecting_indentation
-            e "Unexpected indentation", line, lineno
-          end
+          e "Unexpected indentation", line, lineno unless expecting_indentation
 
           indents << indent
         else
-          # This line was *not* indented, so we'll just forget about the stack
-          # that the previous line pushed.
+          # This line was *not* indented more than the line before,
+          # so we'll just forget about the stack that the previous line pushed.
           stacks.pop if expecting_indentation
-        end
 
-        if indent < prev_indent
           # This line was deindented.
           # Now we're have to go through the all the indents and figure out
           # how many levels we've deindented.
-          while true
-            i = indents.last
-            if i > indent
-              # This line is indented deeper than the previous indented line
-              # so let's just pop off the stacks.
-              indents.pop
-              stacks.pop
-            elsif i == indent
-              # Yay! We're back at the correct level!
-              break
-            elsif i < indent
-              # This line's indentaion happens lie "between" two other line's
-              # indentation:
-              #
-              #   hello
-              #       world
-              #     this      # <- This should not be possible!
-              e "Malformed indentation", line, lineno
-            end
+          while indent < indents.last
+            indents.pop
+            stacks.pop
           end
+
+          # This line's indentation happens lie "between" two other line's
+          # indentation:
+          #
+          #   hello
+          #       world
+          #     this      # <- This should not be possible!
+          e 'Malformed indentation', line, lineno if indents.last < indent
         end
 
         case line[0]
