@@ -104,10 +104,13 @@ p(id="test")==hello_world
 p = \
 "Hello" + \
 " Ruby!"
+- variable = 1 + \
+      2 + \
+ 3
+= variable + \
+  1
 }
 
-    # This test case is currently broken
-    # the backslash endings are not implemented
-    #assert_html '<p>Hello Ruby!</p>', source
+    assert_html '<p>Hello Ruby!</p>7', source
   end
 end

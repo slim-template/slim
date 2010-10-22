@@ -55,6 +55,9 @@ module Slim
       # stack.
       stacks = [result]
 
+      # Broken line
+      broken_line = nil
+
       # We have special treatment for text blocks:
       #
       #   |
@@ -66,14 +69,24 @@ module Slim
       str.each_line do |line|
         lineno += 1
 
+        # Remove the newline at the ned
+        line.chop!
+
+        # Handle broken lines
+        if broken_line
+          if broken_line[-1] == ?\\
+            broken_line << "\n#{line}"
+            next
+          end
+          broken_line = nil
+        end
+
         # Figure out the indentation. Kinda ugly/slow way to support tabs,
         # but remember that this is only done at parsing time.
         indent = line[/^[ \t]*/].gsub("\t", @tab).size
 
         # Remove the indentation
         line.lstrip!
-        # Remove the newline at the ned
-        line.chop!
 
         if line.strip.empty? || line[0] == ?/
           # This happens to be an empty line or a comment, so we'll just have to make sure
@@ -181,13 +194,16 @@ module Slim
           # same exp in the current-stack, which makes sure that it'll be
           # included in the generated code.
           block = [:multi]
-          stacks.last << if line[1] == ?=
-                       [:slim, :output, false, line[2..-1].strip, block]
-                     elsif line[0] == ?=
-                       [:slim, :output, true, line[1..-1].strip, block]
-                     else
-                       [:slim, :control, line[1..-1].strip, block]
-                     end
+          if line[1] == ?=
+            broken_line = line[2..-1].strip
+            stacks.last << [:slim, :output, false, broken_line, block]
+          elsif line[0] == ?=
+            broken_line = line[1..-1].strip
+            stacks.last << [:slim, :output, true, broken_line, block]
+          else
+            broken_line = line[1..-1].strip
+            stacks.last << [:slim, :control, broken_line, block]
+          end
           stacks << block
         when ?!
           # Found a directive (currently only used for doctypes)
@@ -201,7 +217,7 @@ module Slim
             text_indent = indent
           else
             # Found a HTML tag.
-            exp, content = parse_tag(line, lineno)
+            exp, content, broken_line = parse_tag(line, lineno)
             stacks.last << exp
             stacks << content if content
           end
@@ -309,23 +325,23 @@ module Slim
       line.sub!(/^ /, '')
       content = [:multi]
 
+      broken_line = nil
+
       if line.strip.empty?
         # If the line was empty there might be some indented content in the
         # lines beneath it. We'll handle this by making this method return
         # the block-variable. #compile will then push this onto the
         # stacks-array.
         block = content
+      elsif line =~ /^\s*=(=?)/
+        block = [:multi]
+        broken_line = $'.strip
+        content << [:slim, :output, $1 != '=', broken_line, block]
       else
-        case line
-        when /^\s*=(=?)/
-          block = [:multi]
-          content << [:slim, :output, $1 != '=', $'.strip, block]
-        else
-          content << [:slim, :text, line]
-        end
+        content << [:slim, :text, line]
       end
 
-      return [:slim, :tag, tag, attributes, content], block
+      return [:slim, :tag, tag, attributes, content], block, broken_line
     end
   end
 end
