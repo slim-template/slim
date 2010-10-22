@@ -15,6 +15,10 @@ module Slim
         compile(content)]
     end
 
+    def on_embedded(engine, *body)
+      EmbeddedEngine[engine].compile(body)
+    end
+
     # why is escaping not handled by temple?
     def on_output(escape, code, content)
       if empty_exp?(content)
