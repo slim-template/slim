@@ -51,6 +51,10 @@ class Env
     end
   end
 
+  def action_path(path)
+    "/action-#{path}"
+  end
+
   def in_keyword
     "starts with keyword"
   end

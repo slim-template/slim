@@ -58,6 +58,14 @@ p id="#{hash[:a]}" Test it
     assert_html '<p id="The letter a">Test it</p>', source
   end
 
+  def test_method_call_in_attribute_without_quotes
+    source = %q{
+form action=action_path(:login) method='post'
+}
+
+    assert_html '<form action="&#47;action-login" method="post"></form>', source
+  end
+
   def test_hash_call_in_attribute_without_quotes
     source = %q{
 p id=hash[:a] Test it

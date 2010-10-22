@@ -211,7 +211,7 @@ module Slim
     private
 
     ATTR_REGEX = /^ ([\w-]+)=/
-    QUOTED_VALUE_REGEX = /("[^"]+"|'[^']+')/
+    QUOTED_VALUE_REGEX = /^("[^"]+"|'[^']+')/
     ATTR_SHORTHAND = {
       '#' => 'id',
       '.' => 'class',
