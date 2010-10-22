@@ -1,7 +1,7 @@
 require 'helper'
 require 'erb'
 
-class TestSlimEmbeddedTemplats < TestSlim
+class TestSlimEmbeddedEngines < TestSlim
   def test_render_with_embedded_template
     source = %q{
 p
@@ -31,4 +31,13 @@ javascript:
     assert_html '<script type="text/javascript">$(function() {});</script>', source
   end
 
+  def test_render_with_ruby
+    source = %q{
+ruby:
+  variable = 1 +
+  2
+= variable
+}
+    assert_html '3', source
+  end
 end
