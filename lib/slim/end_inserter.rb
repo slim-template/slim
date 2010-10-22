@@ -8,7 +8,8 @@ module Slim
   # automatically insert end's where they are needed. Luckily, this filter
   # does *exactly* that (and it does it well!)
   class EndInserter < Filter
-    ELSE_CONTROL_WORDS = /^(else|elsif|when)\b/
+    ELSE_REGEX = /^(else|elsif|when|end)\b/
+    END_REGEX = /^end\b/
 
     def on_multi(*exps)
       result = [:multi]
@@ -21,7 +22,8 @@ module Slim
           if prev_indent
             # Two control code in a row. If this one is *not*
             # an else block, we should close the previous one.
-            append_end(result) if exp[2] !~ ELSE_CONTROL_WORDS
+            append_end(result) if exp[2] !~ ELSE_REGEX
+            prev_indent = exp[2].match(END_REGEX).nil?
           else
             # Indent if the control code contains something.
             prev_indent = !empty_exp?(exp[3])
