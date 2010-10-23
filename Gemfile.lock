@@ -14,6 +14,7 @@ GEM
       abstract (>= 1.0.0)
     escape_utils (0.1.9)
     haml (3.0.22)
+    liquid (2.2.2)
     minitest (1.7.2)
     rake (0.8.7)
     rcov (0.9.9)
@@ -28,6 +29,7 @@ DEPENDENCIES
   erubis
   escape_utils (>= 0.1.9)
   haml
+  liquid
   minitest
   rake (>= 0.8.7)
   rcov
