@@ -3,7 +3,7 @@ require 'helper'
 class TestParserErrors < TestSlim
   def test_correct_filename
     source = %q{
-p Indent 0
+! doctype 5
   div Invalid
 }
 
@@ -12,7 +12,7 @@ p Indent 0
 
   def test_unexpected_indentation
     source = %q{
-p Indent 0
+! doctype 5
   div Invalid
 }
 

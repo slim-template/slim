@@ -105,6 +105,33 @@ p    There will be 3 spaces in front of this line.
     assert_html '<p>   There will be 3 spaces in front of this line.</p>', source
   end
 
+  def test_paragraph_with_nested_text
+    source = %q{
+p This is line one.
+   This is line two.
+}
+
+    assert_html '<p>This is line one. This is line two.</p>', source
+  end
+
+  def test_paragraph_with_padded_nested_text
+    source = %q{
+p  This is line one.
+   This is line two.
+}
+
+    assert_html '<p> This is line one. This is line two.</p>', source
+  end
+
+  def test_paragraph_with_attributes_and_nested_text
+    source = %q{
+p#test class="paragraph" This is line one.
+                         This is line two.
+}
+
+    assert_html '<p id="test" class="paragraph">This is line one.This is line two.</p>', source
+  end
+
   def test_output_code_with_leading_spaces
     source = %q{
 p= hello_world

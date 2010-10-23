@@ -203,9 +203,13 @@ module Slim
             block_indent = indent
           else
             # Found a HTML tag.
-            exp, content, broken_line = parse_tag(line, lineno)
-            stacks.last << exp
-            stacks << content if content
+            tag, block, broken_line, text_indent = parse_tag(line, lineno)
+            stacks.last << tag
+            stacks << block if block
+            if text_indent
+              block_indent = indent
+              text_indent += indent
+            end
           end
         end
       end
@@ -290,26 +294,22 @@ module Slim
       end
 
       content = [:multi]
-      broken_line = nil
+      tag = [:slim, :tag, tag, attributes, content]
 
-      if line.strip.empty?
-        # If the line was empty there might be some indented content in the
-        # lines beneath it. We'll handle this by making this method return
-        # the block-variable. #compile will then push this onto the
-        # stacks-array.
-        block = content
-      elsif line =~ /^\s*=(=?)/
-        # Output
+      if line =~ /^\s*=(=?)/
+        # Handle output code
         block = [:multi]
         broken_line = $'.strip
         content << [:slim, :output, $1 != '=', broken_line, block]
+        [tag, block, broken_line, nil]
+      elsif !line.empty?
+        # Handle text content
+        content << [:slim, :text, line.sub(/^( )/, '')]
+        [tag, content, nil, orig_line.size - line.size + ($1 ? 1 : 0)]
       else
-        # Text content
-        line.sub!(/^ /, '')
-        content << [:slim, :text, line]
+        # Empty line
+        [tag, content, nil, nil]
       end
-
-      return [:slim, :tag, tag, attributes, content], block, broken_line
     end
 
     def parse_ruby_attribute(orig_line, line, lineno, delimiter)
