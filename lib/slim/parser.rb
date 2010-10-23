@@ -1,18 +1,21 @@
 module Slim
   class Parser
     class SyntaxError < StandardError
-      def initialize(message, line, lineno, column = 0)
-        @message = message
+      attr_reader :error, :file, :line, :lineno, :column
+
+      def initialize(error, file, line, lineno, column = 0)
+        @error = error
+        @file = file || '(__TEMPLATE__)'
         @line = line.strip
         @lineno = lineno
         @column = column
       end
 
       def to_s
-        %{#{@message}
-  Line #{@lineno}
-    #{@line}
-    #{' ' * @column}^
+        %{#{error}
+  #{file}, Line #{lineno}
+    #{line}
+    #{' ' * column}^
         }
       end
     end
@@ -350,8 +353,8 @@ module Slim
     end
 
     # A little helper for raising exceptions.
-    def syntax_error!(*args)
-      raise SyntaxError.new(*args)
+    def syntax_error!(message, *args)
+      raise SyntaxError.new(message, @options[:file], *args)
     end
   end
 end

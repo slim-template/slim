@@ -1,7 +1,7 @@
 module Slim
   class Template < Tilt::Template
     def prepare
-      @src = Engine.new(options).compile(data)
+      @src = Engine.new(options.merge(:file => eval_file)).compile(data)
     end
 
     def evaluate(scope, locals, &block)

@@ -25,7 +25,7 @@ class TestSlim < MiniTest::Unit::TestCase
     Slim::Engine.new(source, options).render(@env)
     raise 'Syntax error expected'
   rescue Slim::Parser::SyntaxError => ex
-    assert_equal ex.message, message
+    assert_equal message, ex.message
   end
 end
 
