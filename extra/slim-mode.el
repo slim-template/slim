@@ -71,54 +71,54 @@ if the next line could be nested within this line.")
              "\\)")
     "^ *|"
     "^ */"
-    "^ *\\w+:")
+    "^ *[a-z0-9_]:")
   "A list of regexps that match lines of Slim that could have
 text nested beneath them.")
 
 ;; Font lock
 
-(defun slim-nested-regexp (re)
+(defun slim-nested-re (re)
   (concat "^\\( *\\)" re "\n\\(?:\\(?:\\1 .*\\| *\\)\n\\)*"))
 
 (defconst slim-font-lock-keywords
-  `((,(slim-nested-regexp "/.*")  0 font-lock-comment-face)
-    (,(slim-nested-regexp "\\w+:") 0 font-lock-string-face)
-    ("^ *\\(\t\\)"               1 'slim-tab-face)
-    ("^!.*"                    0 font-lock-constant-face)
-    ("\\('[^']*'\\)"             1 font-lock-string-face append)
-    ("\\(\"[^\"]*\"\\)"          1 font-lock-string-face append)
-    ("@[a-z0-9_]+"               0 font-lock-variable-name-face append)
-    ("| *$"                      0 font-lock-string-face)
-    ("^[ \t]*\\(/.*\\)$"         1 font-lock-comment-face append)
-    ("^ *\\(#[a-z0-9_]+\/?\\)"   1 font-lock-keyword-face)
-    ("^ *\\(\\.[a-z0-9_]+\/?\\)" 1 font-lock-type-face)
-    ("^ *\\([a-z0-9_]+\/?\\)"   1 font-lock-function-name-face)
-    ("^ *\\(#[a-z0-9_]+\/?\\)"   (1 font-lock-keyword-face)
-     ("\\.[a-z0-9_]+" nil nil    (0 font-lock-type-face)))
-    ("^ *\\(\\.[a-z0-9_]+\/?\\)" (1 font-lock-type-face)
-     ("\\.[a-z0-9_]+" nil nil    (0 font-lock-type-face)))
-    ("^ *\\(\\.[a-z0-9_]+\/?\\)" (1 font-lock-type-face)
-     ("\\#[a-z0-9_]+" nil nil    (0 font-lock-keyword-face)))
-    ("^ *\\([a-z0-9_]+\/?\\)"   (1 font-lock-function-name-face)
-     ("\\.[a-z0-9_]+" nil nil    (0 font-lock-type-face)))
-    ("^ *\\([a-z0-9_]+\/?\\)"   (1 font-lock-function-name-face)
-     ("\\#[a-z0-9_]+" nil nil    (0 font-lock-keyword-face)))
-    ("^ *\\([~=-] .*\\)"         1 font-lock-preprocessor-face prepend)
-    ("^ *[\\.#a-z0-9_]+\\([~=-] .*\\)"     1 font-lock-preprocessor-face prepend)
-    ("^ *[\\.#a-z0-9_]+\\({[^}]+}\\)"      1 font-lock-preprocessor-face prepend)
-    ("^ *[\\.#a-z0-9_]+\\(\\[[^]]+\\]\\)"  1 font-lock-preprocessor-face prepend)))
+  `((,(slim-nested-re "/.*")              0 font-lock-comment-face)
+    (,(slim-nested-re "[a-z0-9_]:")       0 font-lock-string-face)
+    ("^ *\\(\t\\)"                        1 'slim-tab-face)
+    ("^!.*"                               0 font-lock-constant-face)
+    ("\\('[^']*'\\)"                      1 font-lock-string-face append)
+    ("\\(\"[^\"]*\"\\)"                   1 font-lock-string-face append)
+    ("@[a-z0-9_]+"                        0 font-lock-variable-name-face append)
+    ("| *$"                               0 font-lock-string-face)
+    ("^[ \t]*\\(/.*\\)$"                  1 font-lock-comment-face append)
+    ("^ *\\(#[a-z0-9_]+\/?\\)"            1 font-lock-keyword-face)
+    ("^ *\\(\\.[a-z0-9_]+\/?\\)"          1 font-lock-type-face)
+    ("^ *\\([a-z0-9_]+\/?\\)"             1 font-lock-function-name-face)
+    ("^ *\\(#[a-z0-9_]+\/?\\)"            (1 font-lock-keyword-face)
+     ("\\.[a-z0-9_]+" nil nil             (0 font-lock-type-face)))
+    ("^ *\\(\\.[a-z0-9_]+\/?\\)"          (1 font-lock-type-face)
+     ("\\.[a-z0-9_]+" nil nil             (0 font-lock-type-face)))
+    ("^ *\\(\\.[a-z0-9_]+\/?\\)"          (1 font-lock-type-face)
+     ("\\#[a-z0-9_]+" nil nil             (0 font-lock-keyword-face)))
+    ("^ *\\([a-z0-9_]+\/?\\)"             (1 font-lock-function-name-face)
+     ("\\.[a-z0-9_]+" nil nil             (0 font-lock-type-face)))
+    ("^ *\\([a-z0-9_]+\/?\\)"             (1 font-lock-function-name-face)
+     ("\\#[a-z0-9_]+" nil nil             (0 font-lock-keyword-face)))
+    ("^ *\\([~=-] .*\\)"                  1 font-lock-preprocessor-face prepend)
+    ("^ *[\\.#a-z0-9_]+\\([~=-] .*\\)"    1 font-lock-preprocessor-face prepend)
+    ("^ *[\\.#a-z0-9_]+\\({[^}]+}\\)"     1 font-lock-preprocessor-face prepend)
+    ("^ *[\\.#a-z0-9_]+\\(\\[[^]]+\\]\\)" 1 font-lock-preprocessor-face prepend)))
 
-(defconst slim-filter-re "^ *\\w+:")
-(defconst slim-comment-re "^ */")
+(defconst slim-embedded-re "^ *[a-z0-9_]+:")
+(defconst slim-comment-re  "^ */")
 
 (defun* slim-extend-region ()
-  "Extend the font-lock region to encompass filters and comments."
+  "Extend the font-lock region to encompass embedded engines and comments."
   (let ((old-beg font-lock-beg)
         (old-end font-lock-end))
     (save-excursion
       (goto-char font-lock-beg)
       (beginning-of-line)
-      (unless (or (looking-at slim-filter-re)
+      (unless (or (looking-at slim-embedded-re)
                   (looking-at slim-comment-re))
         (return-from slim-extend-region))
       (setq font-lock-beg (point))
@@ -147,8 +147,6 @@ text nested beneath them.")
     (define-key map "\C-c\C-u" 'slim-up-list)
     (define-key map "\C-c\C-d" 'slim-down-list)
     (define-key map "\C-c\C-k" 'slim-kill-line-and-indent)
-    (define-key map "\C-c\C-r" 'slim-output-region)
-    (define-key map "\C-c\C-l" 'slim-output-buffer)
     map))
 
 ;;;###autoload
@@ -192,32 +190,6 @@ text nested beneath them.")
     (slim-mark-sexp)
     (kill-line 1)
     (slim-reindent-region-by (- slim-indent-offset))))
-
-(defun slim-replace-region (start end)
-  "Replaces the current block of Slim code with the HTML equivalent."
-  (interactive "r")
-  (save-excursion
-    (goto-char end)
-    (setq end (point-marker))
-    (goto-char start)
-    (let ((ci (current-indentation)))
-      (while (re-search-forward "^ +" end t)
-        (replace-match (make-string (- (current-indentation) ci) ? ))))
-    (shell-command-on-region start end "slim" "slim-output" t)))
-
-(defun slim-output-region (start end)
-  "Displays the HTML output for the current block of Slim code."
-  (interactive "r")
-  (kill-new (buffer-substring start end))
-  (with-temp-buffer
-    (yank)
-    (slim-indent-region (point-min) (point-max))
-    (shell-command-on-region (point-min) (point-max) "slim" "slim-output")))
-
-(defun slim-output-buffer ()
-  "Displays the HTML output for entire buffer."
-  (interactive)
-  (slim-output-region (point-min) (point-max)))
 
 ;; Navigation
 
