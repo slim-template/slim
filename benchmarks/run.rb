@@ -28,12 +28,12 @@ class SlimBenchmarks
     fast_erubis = Erubis::FastEruby.new(tpl_erb)
     haml        = Haml::Engine.new(tpl_haml)
     haml_ugly   = Haml::Engine.new(tpl_haml, :ugly => true)
-    slim        = Slim::Engine.new(tpl_slim)
+    slim        = Slim::Template.new { tpl_slim }
 
     bench('erb')                  { ERB.new(tpl_erb).result(eview) }
     bench('erubis')               { Erubis::Eruby.new(tpl_erb).result(eview) }
     bench('fast erubis')          { Erubis::Eruby.new(tpl_erb).result(eview) }
-    bench('slim')                 { Slim::Engine.new(tpl_slim).render(view) }
+    bench('slim')                 { Slim::Template.new { tpl_slim }.render(view) }
     bench('haml')                 { Haml::Engine.new(tpl_haml).render(view) }
     bench('haml ugly')            { Haml::Engine.new(tpl_haml, :ugly => true).render(view) }
     bench('erb (cached)')         { erb.result(eview) }
