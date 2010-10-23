@@ -19,10 +19,9 @@ module Slim
       EmbeddedEngine[engine].compile(body)
     end
 
-    # why is escaping not handled by temple?
     def on_output(escape, code, content)
       if empty_exp?(content)
-        [:dynamic, escape ? escape_code(code) : code]
+        [:multi, [:dynamic, escape ? escape_code(code) : code], content]
       else
         on_output_block(escape, code, content)
       end

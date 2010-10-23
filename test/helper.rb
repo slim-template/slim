@@ -27,6 +27,22 @@ class TestSlim < MiniTest::Unit::TestCase
   rescue Slim::Parser::SyntaxError => ex
     assert_equal message, ex.message
   end
+
+  def assert_ruby_error(error, from, source, options = {})
+    Slim::Template.new(options[:file], options) { source }.render(@env)
+    raise 'Ruby error expected'
+  rescue error => ex
+    ex.backtrace[0] =~ /^(.*?:\d+):/
+    assert_equal from, $1
+  end
+
+  def assert_ruby_syntax_error(from, source, options = {})
+    Slim::Template.new(options[:file], options) { source }.render(@env)
+    raise 'Ruby syntax error expected'
+  rescue SyntaxError => ex
+    ex.message =~ /^(.*?:\d+):/
+    assert_equal from, $1
+  end
 end
 
 class Env

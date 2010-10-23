@@ -72,7 +72,7 @@ module Slim
         # Handle broken lines
         if broken_line
           if broken_line[-1] == ?\\
-            broken_line << "\n#{line}"
+            broken_line << "\n" << line
             next
           end
           broken_line = nil
@@ -171,7 +171,6 @@ module Slim
             block << [:slim, :text, line.sub(/^( )/, '')]
             text_indent = block_indent + ($1 ? 2 : 1)
           end
-          block << [:newline]
         when ?-, ?=
           # Found a potential code block.
 
@@ -198,9 +197,10 @@ module Slim
           if line =~ /^(\w+):\s*$/
             # Embedded template detected. It is treated as block.
             block = [:slim, :embedded, $1]
-            stacks.last << block
+            stacks.last << [:newline] << block
             stacks << block
             block_indent = indent
+            next
           else
             # Found a HTML tag.
             tag, block, broken_line, text_indent = parse_tag(line, lineno)
@@ -212,6 +212,7 @@ module Slim
             end
           end
         end
+        stacks.last << [:newline]
       end
 
       result
