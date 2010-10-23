@@ -1,27 +1,27 @@
 ! doctype html
+html
   head
-    title Slim Vim Test
-    meta name="keywords" content="slim, vim, syntax"
+    title Slim Test
+    meta name="keywords" content="slim, syntax"
   body
     h1 = @page_title
-    p id="notice"
-      '
-        Welcome to the the syntax test.  This file is to excercise the various markup.
+    p#notice
+      | Welcome to the the syntax test.  This file is to excercise the various markup.
 
     - unless @users.empty?
       table
-        - for user in users do 
+        - for user in users do
           tr
-            td = user.name
+            td.user id=user.name = user.name
     - else
       p There are no users.
 
-    script type="text/javascript"
-     '
+    #content
+      | Page content
+        with multiple lines
+
+    javascript:
       var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
         document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-
-    script type="text/javascript"
-     '
       var pageTracker = _gat._getTracker("UA-12345678-9");
       pageTracker._trackPageview();
