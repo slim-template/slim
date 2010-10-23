@@ -5,8 +5,9 @@ Slim is a template language whose goal is to reduce the view syntax to the essen
 
 ## What?
 
-Slim is a fast, lightweight templating engine for __Rails 3__. It has been tested on Ruby 1.9.2 and Ruby/REE 1.8.7. Slim is heavily influenced by [Haml](http://github.com/nex3/haml) and [Jade](http://github.com/visionmedia/jade).
+Slim is a fast, lightweight templating engine with support for __Rails 3__. It has been tested on Ruby 1.9.2 and Ruby/REE 1.8.7. Slim is heavily influenced by [Haml](http://github.com/nex3/haml) and [Jade](http://github.com/visionmedia/jade).
 
+Slim is also integrated into [Tilt](http://github.com/rtomayko/tilt), so it can be used together with [Sinatra](http://github.com/sinatra/sinatra) or plain [Rack](http://github.com/rack/rack).
 
 ## Why?
 
@@ -31,6 +32,11 @@ In `config/application.rb`, add the following line near the top (i.e. just below
 
 That's it!
 
+If you want to use the Slim template directly, you can use the Tilt interface:
+
+    Tilt.new['template.slim'].render(scope)
+    Slim::Template.new(filename, optional_option_hash).render(scope)
+    Slim::Template.new(optional_option_hash) { source }.render(scope)
 
 ## The syntax
 
