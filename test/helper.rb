@@ -18,11 +18,11 @@ class TestSlim < MiniTest::Unit::TestCase
   end
 
   def assert_html(expected, source, options = {})
-    assert_equal expected, Slim::Engine.new(source, options).render(@env)
+    assert_equal expected, Slim::Template.new(options[:file], options) { source }.render(@env)
   end
 
   def assert_syntax_error(message, source, options = {})
-    Slim::Engine.new(source, options).render(@env)
+    Slim::Template.new(options[:file], options) { source }.render(@env)
     raise 'Syntax error expected'
   rescue Slim::Parser::SyntaxError => ex
     assert_equal message, ex.message

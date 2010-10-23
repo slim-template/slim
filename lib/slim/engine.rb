@@ -9,13 +9,5 @@ module Slim
     filter :StaticMerger
     filter :DynamicInliner
     generator :ArrayBuffer
-
-    def self.new(*args)
-      if args.first.respond_to?(:each_line)
-        Template.new(Hash === args.last ? args.last : {}) { args.first }
-      else
-        super
-      end
-    end
   end
 end

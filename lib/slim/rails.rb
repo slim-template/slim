@@ -6,7 +6,7 @@ module ActionView
       include Compilable
 
       def compile(template)
-        return Slim::Engine.new(template.source, use_html_safe: true).prepare
+        Slim::Engine.new(:use_html_safe => true).compile(template.source)
       end
     end
   end
