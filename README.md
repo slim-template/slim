@@ -247,7 +247,7 @@ __Please note that all line indicators must be followed by a space__
     body
       p
         / This line won't get displayed.
-        / Neither does this line.
+          Neither does this line.
 
   The parsed result of the above:
 

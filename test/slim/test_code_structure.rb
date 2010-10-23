@@ -76,9 +76,10 @@ p
     source = %q{
 p Hello
 / This is a comment
-  / Another comment
+  Another comment
+p World
 }
 
-    assert_html '<p>Hello</p>', source
+    assert_html '<p>Hello</p><p>World</p>', source
   end
 end

@@ -58,7 +58,7 @@ module Slim
       #     Hello
       #     World!
       #
-      text_indent, text_base_indent = nil, nil
+      block_indent, in_comment, text_indent = nil, false, nil
 
       str.each_line do |line|
         lineno += 1
@@ -75,6 +75,14 @@ module Slim
           broken_line = nil
         end
 
+        if line.strip.empty?
+          # This happens to be an empty line, so we'll just have to make sure
+          # the generated code includes a newline (so the line numbers in the
+          # stack trace for an exception matches the ones in the template).
+          stacks.last << [:newline]
+          next
+        end
+
         # Figure out the indentation. Kinda ugly/slow way to support tabs,
         # but remember that this is only done at parsing time.
         indent = line[/^[ \t]*/].gsub("\t", @tab).size
@@ -82,41 +90,33 @@ module Slim
         # Remove the indentation
         line.lstrip!
 
-        if line.strip.empty? || line[0] == ?/
-          # This happens to be an empty line or a comment, so we'll just have to make sure
-          # the generated code includes a newline (so the line numbers in the
-          # stack trace for an exception matches the ones in the template).
-          stacks.last << [:newline]
-          next
-        end
+        # Handle blocks with multiple lines
+        if block_indent
+          if indent > block_indent
+            # This line happens to be indented deeper (or equal) than the block start character (|, ', `, /).
+            # This means that it's a part of the block.
 
-        # Handle text blocks with multiple lines
-        if text_indent
-          if indent > text_indent
-            # This line happens to be indented deeper (or equal) than the block start character (|, ', `).
-            # This means that it's a part of the text block.
+            if !in_comment
+              # The indentation of first line of the text block determines the text base indentation.
+              text_indent ||= indent
 
-            # The indentation of first line of the text block determines the text base indentation.
-            text_base_indent ||= indent
+              # The text block lines must be at least indented as deep as the first line.
+              offset = indent - text_indent
+              syntax_error! 'Unexpected text indentation', line, lineno if offset < 0
 
-            # The text block lines must be at least indented as deep as the first line.
-            offset = indent - text_base_indent
-            syntax_error! 'Unexpected text indentation', line, lineno if offset < 0
+              # Generate the additional spaces in front.
+              i = ' ' * offset
+              stacks.last << [:slim, :text, i + line]
+            end
 
-            # Generate the additional spaces in front.
-            i = ' ' * offset
-            stacks.last << [:slim, :text, i + line]
             stacks.last << [:newline]
-
-            # Mark this line as it's been indented as the text block start character.
-            indent = text_indent
-
             next
           end
 
-          # It's guaranteed that we're now *not* in a text block, because
-          # the indent will always be set to the text block start indent.
-          text_indent = text_base_indent = nil
+          # It's guaranteed that we're now *not* in a block, because
+          # the indent was less than the block start indent.
+          block_indent = text_indent = nil
+          in_comment = false
         end
 
         # If there's more stacks than indents, it means that the previous
@@ -152,21 +152,23 @@ module Slim
         end
 
         case line[0]
-        when ?|, ?', ?`
-          # Found a piece of text.
+        when ?|, ?', ?`, ?/
+          # Found a block.
 
           # We're now expecting the next line to be indented, so we'll need
           # to push a block to the stack.
           block = [:multi]
           stacks.last << block
           stacks << block
-          text_indent = indent
+          block_indent = indent
 
+          in_comment = line[0] == ?/
           line.slice!(0)
-          if !line.strip.empty?
+          if !in_comment && !line.strip.empty?
             block << [:slim, :text, line.sub(/^( )/, '')]
-            text_base_indent = text_indent + ($1 ? 2 : 1)
+            text_indent = block_indent + ($1 ? 2 : 1)
           end
+          block << [:newline]
         when ?-, ?=
           # Found a potential code block.
 
@@ -191,11 +193,11 @@ module Slim
           stacks.last << [:slim, :directive, line[1..-1].strip]
         else
           if line =~ /^(\w+):\s*$/
-            # Embedded template detected. It is treated like a text block.
+            # Embedded template detected. It is treated as block.
             block = [:slim, :embedded, $1]
             stacks.last << block
             stacks << block
-            text_indent = indent
+            block_indent = indent
           else
             # Found a HTML tag.
             exp, content, broken_line = parse_tag(line, lineno)
