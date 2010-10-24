@@ -2,11 +2,24 @@ module Slim
   # Compiles Slim expressions into Temple::HTML expressions.
   class Compiler < Filter
     def on_text(string)
-      if string.include?('#{')
-        [:dynamic, escape_interpolation(string)]
-      else
-        [:static, string]
+      # Interpolate variables in text (#{variable}).
+      # Split the text into multiple dynamic and static parts.
+      block = [:multi]
+      until string.empty?
+        case string
+        when /^\\(\#\{[^\}]*\})/
+          # Escaped interpolation
+          block << [:static, $1]
+        when /^\#\{([^\}]*)\}/
+          # Interpolation
+          block << [:dynamic, escape_code($1)]
+        when /^([^\#]+|\#)/
+          # Static text
+          block << [:static, $&]
+        end
+        string = $'
       end
+      block
     end
 
     def on_control(code, content)
@@ -42,7 +55,7 @@ module Slim
         [:block, tmp2],
 
         # Close the block.
-        [:block, "end"],
+        [:block, 'end'],
 
         # Output the content.
         on_output(escape, tmp1, [:multi])]
@@ -70,13 +83,6 @@ module Slim
     end
 
     private
-
-    def escape_interpolation(string)
-      string.gsub!(/(.?)\#\{(.*?)\}/) do
-        $1 == '\\' ? $& : "#{$1}#\{#{escape_code($2)}}"
-      end
-      '"%s"' % string
-    end
 
     def escape_code(param)
       "Slim::Helpers.escape_html#{@options[:use_html_safe] ? '_safe' : ''}((#{param}))"
