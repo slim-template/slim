@@ -42,6 +42,10 @@ If you want to use the Slim template directly, you can use the Tilt interface:
     Slim::Template.new(filename, optional_option_hash).render(scope)
     Slim::Template.new(optional_option_hash) { source }.render(scope)
 
+## Syntax Highlighters
+
+Syntax highlight support for __Vim__ and __Emacs__ are included in the `extra` folder. There is also a [Textmate bundle](http://github.com/fredwu/ruby-slim-textmate-bundle).
+
 ## The syntax
 
 As a Rails developer, you might already be very familiar with _Haml_'s syntax and you think it is fantastic - until you entered the magic kingdom of _node.js_ and got introduced to _Jade_.
