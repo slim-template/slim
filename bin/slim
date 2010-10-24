@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+
+$:.unshift File.dirname(__FILE__) + '/../lib'
+require 'slim/command'
+
+cmd = Slim::Command.new(ARGV)
+cmd.run

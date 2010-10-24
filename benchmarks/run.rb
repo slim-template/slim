@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-$: << File.join(File.dirname(__FILE__), '..', 'lib') << File.join(File.dirname(__FILE__), 'src')
+$:.unshift(File.join(File.dirname(__FILE__), '..', 'lib'), File.join(File.dirname(__FILE__), 'src'))
 
 require 'slim'
 require 'complex_view'
