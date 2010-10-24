@@ -50,7 +50,7 @@ Syntax highlight support for __Vim__ (very beta) and __Emacs__ are included in t
 
 As a Rails developer, you might already be very familiar with _Haml_'s syntax and you think it is fantastic - until you entered the magic kingdom of _node.js_ and got introduced to _Jade_.
 
-Slim's syntax is inspired by both _Haml_ and _Jade_.
+Slim's syntax has been influenced by both _Haml_ and _Jade_.
 
 Here's a quick example to demonstrate what a Slim template looks like:
 
