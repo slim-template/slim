@@ -15,10 +15,6 @@ module Slim
         compile(content)]
     end
 
-    def on_embedded(engine, *body)
-      EmbeddedEngine[engine].compile(body)
-    end
-
     def on_output(escape, code, content)
       if empty_exp?(content)
         [:multi, [:dynamic, escape ? escape_code(code) : code], content]
@@ -67,7 +63,7 @@ module Slim
                 else
                   on_text(value)
                 end
-        m << [:html, :basicattr, [:static, key], value]
+        m << [:html, :basicattr, [:static, key.to_s], value]
       end
 
       [:html, :tag, name, attrs, compile(content)]

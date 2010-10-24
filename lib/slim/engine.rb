@@ -2,6 +2,7 @@ module Slim
   class Engine < Temple::Engine
     use Slim::Parser, :file
     use Slim::EndInserter
+    use Slim::EmbeddedEngine
     use Slim::Compiler, :use_html_safe
     #use Slim::Debugger
     use Temple::HTML::Fast, :format, :attr_wrapper => '"', :format => :html5
