@@ -5,15 +5,19 @@ Slim is a template language whose goal is to reduce the view syntax to the essen
 
 ## What?
 
-Slim is a fast, lightweight templating engine with support for __Rails 3__. It has been tested on Ruby 1.9.2 and Ruby/REE 1.8.7. Slim is heavily influenced by [Haml](http://github.com/nex3/haml) and [Jade](http://github.com/visionmedia/jade).
+Slim is a fast, lightweight templating engine with support for __Rails 3__. It has been tested on Ruby 1.9.2 and Ruby/REE 1.8.7. 
 
-Slim is also integrated into [Tilt](http://github.com/rtomayko/tilt), so it can be used together with [Sinatra](http://github.com/sinatra/sinatra) or plain [Rack](http://github.com/rack/rack).
+Slim's core syntax is guided by one thought: "What's the minimum required to make this work".
+
+As more people have contributed to Slim, there have been ___optional___ syntax additions influenced from their use of [Haml](http://github.com/nex3/haml) and [Jade](http://github.com/visionmedia/jade).  The Slim team is open to these optional additions because we know beauty is in the eye of the beholder.
+
+Slim uses [Temple](http://github.com/judofyr/temple) for parsing/compilation and is also integrated into [Tilt](http://github.com/rtomayko/tilt), so it can be used together with [Sinatra](http://github.com/sinatra/sinatra) or plain [Rack](http://github.com/rack/rack).
 
 ## Why?
 
-Within the Rails community, _Erb_ and _Haml_ are without doubt the two most popular templating engines. However, _Erb_'s syntax is cumbersome and Haml's performance isn't exactly the best. Slim was born to bring the minimalist syntax approach of _Haml_ and the higher performance of Erb into once solution.
+Within the Rails community, _Erb_ and _Haml_ are without doubt the two most popular templating engines. However, _Erb_'s syntax is cumbersome and Haml's performance isn't exactly the best. 
 
-___Yes, Slim is speedy!___ Benchmarks are provided at the end of this README file. Alternatively, a benchmark rake task is provided so you could test it yourself (`rake bench`).
+Slim was born to bring a minimalist syntax approach with speed.  If people chose not to use Slim, it would not be because of speed.  ___Yes, Slim is speedy!___ Benchmarks are provided at the end of this README file. Alternatively, a benchmark rake task is provided so you could test it yourself (`rake bench`).
 
 
 ## How?
