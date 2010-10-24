@@ -30,6 +30,28 @@
     <hr/>
     <p>Now on to the syntax...</p>
     <hr/>
+    <p>Static content on same line:
+      <pre>h1 This is my header</pre>
+    </p>
+    <hr/>
+    <p>Nest static content:
+      <pre>h1 
+ | This is my header</pre>
+    <p class='note'> Backtick can be used in place of pipe for all functionality</p>
+      <pre>h1 
+ ` This is my header</pre>
+    </p>
+    <hr/>
+    <p>Nest static content over multiple lines:
+      <pre>p
+ | 
+   I have a lot to say ..
+    Too much for one line
+    And so on...
+      </pre>
+      <p class='note'>The space after the pipe becomes your left margin. Any additional leading spaces will be carried over.</p>
+    </p>
+    <hr/>
     <p>Slim escapses html when calling a method:
       <pre>= some_method </pre>
     Rails provides an html_safe? method that Slim takes advantage of, but when rendering partials, you'll need to use the double equal to bypass the escape html method:
@@ -49,10 +71,17 @@ p This is my content
     </p>
     <hr/>
     <p>Span multiple lines (use a back slash):
-      <pre>= javascript_include_tag 'jquery', \
-  'application'
-p This is my content
+      <pre>= javascript_include_tag 'jquery',      \
+                         'jquery-ui',   \
+                         'application'
       </pre>
+    </p>
+    <hr/>
+    <p>Optional attribute wrappers: {...}, [...], (...)
+      <pre>p{id="myid" class="myclass"}</pre>
+      <pre>p[id="myid" class="myclass"]</pre>
+      <pre>p(id="myid" class="myclass")</pre>
+    </p>
   </div>
 
   <hr/>
