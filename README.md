@@ -322,6 +322,7 @@ __Please note that all line indicators must be followed by a space__
 
 * [Andrew Stone](http://github.com/stonean)
 * [Fred Wu](http://github.com/fredwu)
+* [Daniel Mendler](http://github.com/minad)
 
 ## Discuss
 
