@@ -23,16 +23,20 @@
     <p>Install:
       <pre>$ gem install slim</pre>
     </p>
+
     <hr/>
     <p>In your Gemfile (Rails)
       <pre>gem 'slim', require: 'slim/rails'</pre>
     </p>
+
     <hr/>
     <p>Now on to the syntax...</p>
+
     <hr/>
     <p>Static content on same line:
       <pre>h1 This is my header</pre>
     </p>
+
     <hr/>
     <p>Nest static content:
       <pre>h1 
@@ -41,6 +45,7 @@
       <pre>h1 
  ` This is my header</pre>
     </p>
+
     <hr/>
     <p>Nest static content over multiple lines:
       <pre>p
@@ -51,10 +56,40 @@
       </pre>
       <p class='note'>The space after the pipe becomes your left margin. Any additional leading spaces will be carried over.</p>
     </p>
+
     <hr/>
-    <p>Slim escapses html when calling a method:
-      <pre>= some_method </pre>
-    Rails provides an html_safe? method that Slim takes advantage of, but when rendering partials, you'll need to use the double equal to bypass the escape html method:
+    <p>Dynamic Content
+      <pre>h1 = page_header</pre>
+      <p class='note'> Can also nest the call.</p>
+      <pre>h1 
+  = page_header</pre>
+    </p>
+
+    <hr/>
+    <p>Dynamic content in attribute
+      <pre>h1 class="#{page_header_class}" = page_header</pre>
+      <p class='note'> An attribute without quotes is deemed dynamic!</p>
+      <pre>h1 class=page_header_class = page_header</pre>
+    </p>
+
+    <hr/>
+    <p>Optional attribute wrappers: {...}, [...], (...)
+      <pre>h1{class=page_header_class} = page_header</pre>
+      <pre>h1[class=page_header_class] = page_header</pre>
+      <pre>h1(class=page_header_class) = page_header</pre>
+    </p>
+
+    <hr/>
+    <p>Evaluate Ruby code in text
+      <pre>h1 Welcome #{current_user.name} to Slim!</pre>
+      <p class='note'>To bypass the interpolation (i.e. render as is)</p>
+      <pre>h1 Welcome \#{current_user.name} to Slim!</pre>
+    </p>
+
+    <hr/>
+    <p class='big_note'>Slim escapses html by default!</p>
+    <p>
+    Rails provides an html_safe? method that Slim takes advantage of, but when rendering partials, you'll need to use the double equal to bypass the escape html functionality:
       <pre>== render :partial, 'user'</pre>
     </p>
     <hr/>
@@ -63,6 +98,7 @@
        renders:
       <pre><code>&lt;div id="myid" class="myclass myclass2"&gt;My example&lt;/div&gt;</code></pre>
     </p>
+
     <hr/>
     <p>Code comments (use a forward slash):
       <pre>/ This is my comment, it will not be included on output
@@ -75,12 +111,6 @@ p This is my content
                          'jquery-ui',   \
                          'application'
       </pre>
-    </p>
-    <hr/>
-    <p>Optional attribute wrappers: {...}, [...], (...)
-      <pre>p{id="myid" class="myclass"}</pre>
-      <pre>p[id="myid" class="myclass"]</pre>
-      <pre>p(id="myid" class="myclass")</pre>
     </p>
   </div>
 
