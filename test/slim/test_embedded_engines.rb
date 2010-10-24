@@ -20,9 +20,9 @@ p
 markdown:
   #Header
   Hello from #{"Markdown!"}
-  Second Line!
+  "Second Line!"
 }
-    assert_html "<h1>Header</h1>\n\n<p>Hello from Markdown!\nSecond Line!</p>\n", source
+    assert_html "<h1>Header</h1>\n\n<p>Hello from Markdown!\n\"Second Line!\"</p>\n", source
   end
 
   def test_render_with_javascript

@@ -13,6 +13,15 @@ html
     assert_html '<html><head><title>Simple Test Title</title></head><body><p>Hello World, meet Slim.</p></body></html>', source
   end
 
+  def test_html_namespaces
+    source = %q{
+html:body
+  html:p html:id="test" Text
+}
+
+    assert_html '<html:body><html:p html:id="test">Text</html:p></html:body>', source
+  end
+
   def test_render_with_shortcut_attributes
     source = %q{
 h1#title This is my title

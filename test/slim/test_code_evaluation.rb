@@ -157,13 +157,13 @@ p id=(1 + 1)*5 Test it
   def test_interpolation_in_text
     source = %q{
 p
- | #{hello_world}
+ | #{hello_world} with "quotes"
 p
  |
   A message from the compiler: #{hello_world}
 }
 
-    assert_html '<p>Hello World from @env</p><p>A message from the compiler: Hello World from @env</p>', source
+    assert_html '<p>Hello World from @env with "quotes"</p><p>A message from the compiler: Hello World from @env</p>', source
   end
 
   def test_interpolation_in_tag
