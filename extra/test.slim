@@ -3,10 +3,20 @@ html
   head
     title Slim Test
     meta name="keywords" content="slim, syntax"
+
+    javascript:
+      $(function() {
+        alert('Hello World');
+      });
+
   body
+    / comment block
+      with multiple lines
+
     h1 = @page_title
-    p#notice
-      | Welcome to the the syntax test.  This file is to excercise the various markup.
+    p#notice.message
+      | Welcome to the the syntax test.
+        This file is to excercise the various markup.
 
     - unless @users.empty?
       table
@@ -16,12 +26,16 @@ html
     - else
       p There are no users.
 
-    #content
-      | Page content
+    #content Hello #{@user.name}! Welcome to the test page!
+             Try out Slim!
+
+    = function_with_many_parameters(:a, \
+      variable, :option => 1)
+
+    p.text
+      ' Another text block
         with multiple lines
 
-    javascript:
-      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-      var pageTracker = _gat._getTracker("UA-12345678-9");
-      pageTracker._trackPageview();
+    .text#footer
+      ` Footer text block
+        with multiple lines

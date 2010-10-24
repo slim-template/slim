@@ -77,36 +77,34 @@ text nested beneath them.")
 
 ;; Font lock
 
+;; Helper for nested block (comment, embedded, text)
 (defun slim-nested-re (re)
-  (concat "^\\( *\\)" re "\n\\(?:\\(?:\\1 .*\\| *\\)\n\\)*"))
+  (concat "^\\( *\\)" re "\n\\(?:\\(?:\\1 .*\\)\n\\)*"))
 
 (defconst slim-font-lock-keywords
-  `((,(slim-nested-re "/.*")              0 font-lock-comment-face)
-    (,(slim-nested-re "[a-z0-9_]:")       0 font-lock-string-face)
+  `((,(slim-nested-re "/.*")              0 font-lock-comment-face)                 ;; Comment block
+    (,(slim-nested-re "[a-z0-9_]+:")      0 font-lock-string-face)                  ;; Embedded block
+    (,(slim-nested-re "[\|'`].*")         0 font-lock-string-face)                  ;; Text block
+    ("^!.*"                               0 font-lock-constant-face)                ;; Directive
     ("^ *\\(\t\\)"                        1 'slim-tab-face)
-    ("^!.*"                               0 font-lock-constant-face)
-    ("\\('[^']*'\\)"                      1 font-lock-string-face append)
-    ("\\(\"[^\"]*\"\\)"                   1 font-lock-string-face append)
-    ("@[a-z0-9_]+"                        0 font-lock-variable-name-face append)
-    ("| *$"                               0 font-lock-string-face)
-    ("^[ \t]*\\(/.*\\)$"                  1 font-lock-comment-face append)
-    ("^ *\\(#[a-z0-9_]+\/?\\)"            1 font-lock-keyword-face)
-    ("^ *\\(\\.[a-z0-9_]+\/?\\)"          1 font-lock-type-face)
-    ("^ *\\([a-z0-9_]+\/?\\)"             1 font-lock-function-name-face)
-    ("^ *\\(#[a-z0-9_]+\/?\\)"            (1 font-lock-keyword-face)
+    ("\\('[^']*'\\)"                      1 font-lock-string-face append)           ;; Single quote string TODO
+    ("\\(\"[^\"]*\"\\)"                   1 font-lock-string-face append)           ;; Double quoted string TODO
+    ("@[a-z0-9_]+"                        0 font-lock-variable-name-face append)    ;; Class variable TODO
+    ("^ *\\(#[a-z0-9_]+\/?\\)"            1 font-lock-keyword-face)                 ;; #id
+    ("^ *\\(\\.[a-z0-9_]+\/?\\)"          1 font-lock-type-face)                    ;; .class
+    ("^ *\\([a-z0-9_]+\/?\\)"             1 font-lock-function-name-face)           ;; div
+    ("^ *\\(#[a-z0-9_]+\/?\\)"            (1 font-lock-keyword-face)                ;; #id.class
      ("\\.[a-z0-9_]+" nil nil             (0 font-lock-type-face)))
-    ("^ *\\(\\.[a-z0-9_]+\/?\\)"          (1 font-lock-type-face)
+    ("^ *\\(\\.[a-z0-9_]+\/?\\)"          (1 font-lock-type-face)                   ;; .class.class
      ("\\.[a-z0-9_]+" nil nil             (0 font-lock-type-face)))
-    ("^ *\\(\\.[a-z0-9_]+\/?\\)"          (1 font-lock-type-face)
+    ("^ *\\(\\.[a-z0-9_]+\/?\\)"          (1 font-lock-type-face)                   ;; .class#id
      ("\\#[a-z0-9_]+" nil nil             (0 font-lock-keyword-face)))
-    ("^ *\\([a-z0-9_]+\/?\\)"             (1 font-lock-function-name-face)
+    ("^ *\\([a-z0-9_]+\/?\\)"             (1 font-lock-function-name-face)          ;; div.class
      ("\\.[a-z0-9_]+" nil nil             (0 font-lock-type-face)))
-    ("^ *\\([a-z0-9_]+\/?\\)"             (1 font-lock-function-name-face)
+    ("^ *\\([a-z0-9_]+\/?\\)"             (1 font-lock-function-name-face)          ;; div#id
      ("\\#[a-z0-9_]+" nil nil             (0 font-lock-keyword-face)))
-    ("^ *\\([~=-] .*\\)"                  1 font-lock-preprocessor-face prepend)
-    ("^ *[\\.#a-z0-9_]+\\([~=-] .*\\)"    1 font-lock-preprocessor-face prepend)
-    ("^ *[\\.#a-z0-9_]+\\({[^}]+}\\)"     1 font-lock-preprocessor-face prepend)
-    ("^ *[\\.#a-z0-9_]+\\(\\[[^]]+\\]\\)" 1 font-lock-preprocessor-face prepend)))
+    ("^ *\\(\\(==?|-\\) .*\\)"            1 font-lock-preprocessor-face prepend)    ;; ==, =, -
+    ("^ *[\\.#a-z0-9_]+\\(==? .*\\)"      1 font-lock-preprocessor-face prepend)))  ;; tag ==, tag =
 
 (defconst slim-embedded-re "^ *[a-z0-9_]+:")
 (defconst slim-comment-re  "^ */")
