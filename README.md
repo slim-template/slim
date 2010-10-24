@@ -44,7 +44,7 @@ If you want to use the Slim template directly, you can use the Tilt interface:
 
 ## Syntax Highlighters
 
-Syntax highlight support for __Vim__ and __Emacs__ are included in the `extra` folder. There is also a [Textmate bundle](http://github.com/fredwu/ruby-slim-textmate-bundle).
+Syntax highlight support for __Vim__ (very beta) and __Emacs__ are included in the `extra` folder. There is also a [Textmate bundle](http://github.com/fredwu/ruby-slim-textmate-bundle).
 
 ## The syntax
 
