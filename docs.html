@@ -20,10 +20,39 @@
   <a href="http://github.com/stonean/slim"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
 
   <div id="container">
-    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
-      by running:
-      <pre>$ git clone git://github.com/stonean/slim</pre>
+    <p>Install:
+      <pre>$ gem install slim</pre>
     </p>
+    <hr/>
+    <p>In your Gemfile (Rails)
+      <pre>gem 'slim', require: 'slim/rails'</pre>
+    </p>
+    <hr/>
+    <p>Now on to the syntax...</p>
+    <hr/>
+    <p>Slim escapses html when calling a method:
+      <pre>= some_method </pre>
+    Rails provides an html_safe? method that Slim takes advantage of, but when rendering partials, you'll need to use the double equal to bypass the escape html method:
+      <pre>== render :partial, 'user'</pre>
+    </p>
+    <hr/>
+    <p>Haml like shortcuts:
+      <pre>#myid.myclass.myclass2 My example</pre>
+       renders:
+      <pre><code>&lt;div id="myid" class="myclass myclass2"&gt;My example&lt;/div&gt;</code></pre>
+    </p>
+    <hr/>
+    <p>Code comments (use a forward slash):
+      <pre>/ This is my comment, it will not be included on output
+p This is my content
+      </pre>
+    </p>
+    <hr/>
+    <p>Span multiple lines (use a back slash):
+      <pre>= javascript_include_tag 'jquery', \
+  'application'
+p This is my content
+      </pre>
   </div>
 
   <hr/>
