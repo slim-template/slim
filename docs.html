@@ -41,7 +41,7 @@
     <p>Nest static content:
       <pre>h1 
  | This is my header</pre>
-    <p class='note'> Backtick can be used in place of pipe for all functionality</p>
+    <p class='note'>Backtick can be used in place of pipe for all functionality</p>
       <pre>h1 
  ` This is my header</pre>
     </p>
@@ -60,7 +60,7 @@
     <hr/>
     <p>Dynamic Content
       <pre>h1 = page_header</pre>
-      <p class='note'> Can also nest the call.</p>
+      <p class='note'>Can also nest the call.</p>
       <pre>h1 
   = page_header</pre>
     </p>
@@ -76,7 +76,7 @@
     <hr/>
     <p>Dynamic content in attribute
       <pre>h1 class="#{page_header_class}" = page_header</pre>
-      <p class='note'> An attribute without quotes is deemed dynamic!</p>
+      <p class='note'>An attribute without quotes is deemed dynamic!</p>
       <pre>h1 class=page_header_class = page_header</pre>
     </p>
 
@@ -85,6 +85,18 @@
       <pre>h1{class=page_header_class} = page_header</pre>
       <pre>h1[class=page_header_class] = page_header</pre>
       <pre>h1(class=page_header_class) = page_header</pre>
+    </p>
+
+    <hr/>
+    <p>Optional attribute value wrappers: {...}, [...], (...)
+      <pre>h1{class=(page_header_class)} = page_header</pre>
+      <pre>h1[class={page_header_class}] = page_header</pre>
+      <pre>h1(class=[page_header_class]) = page_header</pre>
+      <p class='note'>The outer wrapper is not required.</p>
+      <pre>h1 class=(page_header_class) = page_header</pre>
+      <pre>h1 class={page_header_class} = page_header</pre>
+      <pre>h1 class=[page_header_class] = page_header</pre>
+      <p class='note'>Use whatever reads best for you!</p>
     </p>
 
     <hr/>
