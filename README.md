@@ -123,9 +123,9 @@ __Please note that all line indicators must be followed by a space__
   If you want to first indent 2 spaces, then 5 spaces, it's your choice. To nest markup you only need to indent by one space, the rest is gravy.
 
 #### If your ruby code needs to use multiple lines, append a `\` at the end of the lines, for example:
-    `javascript_include_tag \
-      "jquery", \
-      "application"`
+    = javascript_include_tag \
+       "jquery", \
+       "application"`
 
 ### Wrap attributes with delimiters
 
