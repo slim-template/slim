@@ -58,19 +58,19 @@
     </p>
 
     <hr/>
-    <p>Control logic (as you would expect):
-      <pre>- if logged_in?
-  li = link_to("Logout", logout_path)
-- else
-  li = link_to("Login", login_path) </pre>
-    </p>
-
-    <hr/>
     <p>Dynamic Content
       <pre>h1 = page_header</pre>
       <p class='note'> Can also nest the call.</p>
       <pre>h1 
   = page_header</pre>
+    </p>
+
+    <hr/>
+    <p>Control logic (as you would expect):
+      <pre>- if logged_in?
+  li = link_to("Logout", logout_path)
+- else
+  li = link_to("Login", login_path) </pre>
     </p>
 
     <hr/>
