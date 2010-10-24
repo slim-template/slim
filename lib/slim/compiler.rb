@@ -61,12 +61,12 @@ module Slim
     end
 
     def on_tag(name, attrs, content)
-      attrs = attrs.inject([:html, :attrs]) do |m, (key, value)|
-        if value.include?('#{')
-          value = [:dynamic, escape_interpolation(value)]
-        else
-          value = [:static, value]
-        end
+      attrs = attrs.inject([:html, :attrs]) do |m, (key, dynamic, value)|
+        value = if dynamic
+                  [:dynamic, escape_code(value)]
+                else
+                  on_text(value)
+                end
         m << [:html, :basicattr, [:static, key], value]
       end
 

@@ -242,9 +242,10 @@ module Slim
     def parse_tag(line, lineno)
       orig_line = line
 
-      if line =~ /^(#|\.)/
+      case line
+      when /^(#|\.)/
         tag = 'div'
-      elsif line =~ /^[\w:]+/
+      when /^[\w:]+/
         tag = $&
         line = $'
       else
@@ -258,7 +259,7 @@ module Slim
 
       # Find any literal class/id attributes
       while line =~ CLASS_ID_REGEX
-        attributes << [ATTR_SHORTHAND[$1], $2]
+        attributes << [ATTR_SHORTHAND[$1], false, $2]
         line = $'
       end
 
@@ -275,14 +276,14 @@ module Slim
         key = $1
         line = $'
         if line =~ QUOTED_VALUE_REGEX
-          # Value is quote (static)
+          # Value is quoted (static)
           line = $'
-          value = $1[1..-2]
+          attributes << [key, false, $1[1..-2]]
         else
           # Value is ruby code
           line, value = parse_ruby_attribute(orig_line, line, lineno, delimiter)
+          attributes << [key, true, value]
         end
-        attributes << [key, value]
       end
 
       # Find ending delimiter
@@ -350,7 +351,7 @@ module Slim
       # e.g id=[hash[:a] + hash[:b]]
       value = value[1..-2] if value =~ DELIMITER_REGEX && DELIMITERS[value[0, 1]] == value[-1, 1]
 
-      [line, '#{%s}' % value]
+      return line, value
     end
 
     # A little helper for raising exceptions.
