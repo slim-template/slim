@@ -8,7 +8,7 @@ p = hello_world + \
   unknown_ruby_method
 }
 
-    assert_ruby_error NameError, "(__TEMPLATE__):4", source
+    assert_ruby_error NameError, "test.slim:4", source, :file => 'test.slim'
   end
 
   def test_broken_output_line2
@@ -50,6 +50,50 @@ p Text line 1
 }
 
     assert_ruby_error NameError,"(__TEMPLATE__):4", source
+  end
+
+  def test_text_block2
+    source = %q{
+|
+  Text line 1
+  Text line 2
+= unknown_ruby_method
+}
+
+    assert_ruby_error NameError,"(__TEMPLATE__):5", source
+  end
+
+  def test_comment
+    source = %q{
+/ Comment line 1
+  Comment line 2
+= unknown_ruby_method
+}
+
+    assert_ruby_error NameError,"(__TEMPLATE__):4", source
+  end
+
+  def test_embedded_ruby
+    source = %q{
+ruby:
+  a = 1
+  b = 2
+= a + b
+= unknown_ruby_method
+}
+
+    assert_ruby_error NameError,"(__TEMPLATE__):6", source
+  end
+
+  def test_embedded_javascript
+    source = %q{
+javascript:
+  alert();
+  alert();
+= unknown_ruby_method
+}
+
+    assert_ruby_error NameError,"(__TEMPLATE__):5", source
   end
 
   def test_invalid_nested_code
