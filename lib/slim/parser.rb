@@ -220,7 +220,7 @@ module Slim
 
     private
 
-    ATTR_REGEX = /^ ([\w-]+)=/
+    ATTR_REGEX = /^ (\w[:\w-]*)=/
     QUOTED_VALUE_REGEX = /^("[^"]+"|'[^']+')/
     ATTR_SHORTHAND = {
       '#' => 'id',
@@ -236,7 +236,7 @@ module Slim
     if RUBY_VERSION > '1.9'
       CLASS_ID_REGEX = /^(#|\.)([\w\u00c0-\uFFFF][\w:\u00c0-\uFFFF-]*)/
     else
-      CLASS_ID_REGEX = /^(#|\.)([\w][\w:-]*)/
+      CLASS_ID_REGEX = /^(#|\.)(\w[\w:-]*)/
     end
 
     def parse_tag(line, lineno)
@@ -245,7 +245,7 @@ module Slim
       case line
       when /^(#|\.)/
         tag = 'div'
-      when /^[\w:]+/
+      when /^\w[:\w-]*/
         tag = $&
         line = $'
       else
