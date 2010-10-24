@@ -58,6 +58,14 @@
     </p>
 
     <hr/>
+    <p>Control logic (as you would expect):
+      <pre>- if logged_in?
+  li = link_to("Logout", logout_path)
+- else
+  li = link_to("Login", login_path) </pre>
+    </p>
+
+    <hr/>
     <p>Dynamic Content
       <pre>h1 = page_header</pre>
       <p class='note'> Can also nest the call.</p>
@@ -102,6 +110,10 @@
     <hr/>
     <p>Code comments (use a forward slash):
       <pre>/ This is my comment, it will not be included on output
+p This is my content</pre>
+      <p class='note'>Can also nest comments.</p>
+      <pre>/ This is my comment, it will not be included on output
+  This is another comment line because I'm nested!
 p This is my content</pre>
     </p>
 
