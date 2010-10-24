@@ -11,6 +11,7 @@ require 'slim/embedded_engine'
 require 'slim/compiler'
 require 'slim/engine'
 require 'slim/template'
+require 'slim/version'
 
 begin
   require 'escape_utils'
@@ -19,6 +20,6 @@ end
 
 module Slim
   def self.version
-    Slim::VERSION
+    VERSION
   end
 end
