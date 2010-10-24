@@ -2,69 +2,70 @@
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link href="slim.css" media="screen" rel="stylesheet" type="text/css"/>
+    <title>Slim</title>
+  </head>
+  <body>
+    <div id="header">
+      <img src="slim.png"/>
+    </div>
+    <div class="clear">&nbsp;</div>
 
-	<title>Slim</title>
-	
-	<style type="text/css">
-		body {
-  		margin-top: 1.0em;
-		  font-family: "Helvetica,Arial,FreeSans";
-  		color: #323232;
-    }
-    #container {
-      margin: 0 auto;
-      width: 650px;
-    }
-		h1 { font-size: 3.8em; color: #dacdd2; margin-bottom: 3px; }
-		h1 .small { font-size: 0.4em; }
-		h1 a { text-decoration: none }
-		h2 { font-size: 1.5em; color: #dacdd2; }
-    h3 { text-align: center; color: #dacdd2; }
-    a { color: #dacdd2; }
-    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
-		pre { background: #000; color: #fff; padding: 15px;}
-    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
-    .footer { text-align:center; padding-top:30px; font-style: italic; }
+    <ol id="links">
+      <li><a href="about.html">About</a></li>
+      <li class="last"><a href="docs.html">Docs</a></li>
+    </ol>
 
-    .centered{
-      margin-left: auto;
-      margin-right: auto;
-      display: block;
-    }
-	</style>
-	
-</head>
+    <div id="container">
+      <p>
+        <pre>
+! doctype html
+html
+  head
+    title Slim Core Example
+    meta name="keywords" content="template language"
 
-<body>
-  <img src="slim.png" class="centered"/>
+  body
+    h1 Markup examples
 
-  <a href="http://github.com/stonean/slim"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+    div id="content" class="example1"
+      p Nest by indentation
 
-  <div id="container">
-    <div class="description">
-      Slim is a template language whose goal is reduce the syntax to the essential parts without becoming cryptic.
+      = yield
+
+      - unless items.empty?
+        table
+          - for item in items do
+            tr
+              td = item.name
+              td = item.price
+      - else
+        p 
+         |
+           No items found.  Please add some inventory.
+            Thank you!
+
+    div id="footer"
+      | Copyright &copy; 2010 Andrew Stone
+
+    = render partial: 'tracking_code'
+
+    script
+      | $(content).do_something();
+        </pre>
+      </p>
     </div>
 
-    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
-      by running:
-      <pre>$ git clone git://github.com/stonean/slim</pre>
-    </p>
-  </div>
-
-  <div class="footer">
-    Source: <a href="http://github.com/stonean/slim">stonean/slim</a>&nbsp;|&nbsp;Slim logo by <a href="http://github.com/activestylus">activestylus</a><br/>
-  </div>
-
-  <script type="text/javascript">
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
-try {
-var pageTracker = _gat._getTracker("UA-19270476-1");
-pageTracker._trackPageview();
-} catch(err) {}</script>
-</body>
+    <script type="text/javascript">
+      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+      document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+      try {
+        var pageTracker = _gat._getTracker("UA-19270476-1");
+        pageTracker._trackPageview();
+      } catch(err) {}</script>
+  </body>
 </html>
