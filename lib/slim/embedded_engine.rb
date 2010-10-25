@@ -54,7 +54,8 @@ module Slim
 
     class TagEngine < EmbeddedEngine
       def on_embedded(engine, *body)
-        [:slim, :tag, @options[:tag], @options[:attributes].map {|k, v| [k, false, v ] }, [:multi, *body]]
+        content = @options[:engine] ? @options[:engine].new.on_embedded(engine, *body) : [:multi, *body]
+        [:slim, :tag, @options[:tag], @options[:attributes].map {|k, v| [k, false, v ] }, content]
       end
     end
 
@@ -70,9 +71,10 @@ module Slim
     register :rdoc, TiltEngine, :interpolate => true
 
     # These engines are executed at compile time
-    register :sass, TiltEngine
-    register :less, TiltEngine
-    register :coffee, TiltEngine
+    register :coffee, TagEngine, :tag => 'script', :attributes => { :type => 'text/javascript' }, :engine => TiltEngine
+    register :sass, TagEngine, :tag => 'style', :attributes => { :type => 'text/css' }, :engine => TiltEngine
+    register :scss, TagEngine, :tag => 'style', :attributes => { :type => 'text/css' }, :engine => TiltEngine
+    register :less, TagEngine, :tag => 'style', :attributes => { :type => 'text/css' }, :engine => TiltEngine
 
     # These engines are precompiled, code is embedded
     register :erb, TiltEngine, :precompiled => true

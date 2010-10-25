@@ -62,10 +62,8 @@ module Slim
     end
 
     def on_directive(type)
-      case type
-      when /^doctype/
+      if type =~ /^doctype/
         [:html, :doctype, $'.strip]
-      else
       end
     end
 

@@ -52,4 +52,13 @@ p
 }
     assert_html "<p><span>before liquid block</span>\n</p>", source
   end
+
+  def test_render_with_scss
+    source = %q{
+scss:
+  $color: #f00;
+  body { color: $color; }
+}
+    assert_html "<style type=\"text/css\">body {\n  color: red; }\n</style>", source
+  end
 end

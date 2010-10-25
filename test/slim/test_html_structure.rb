@@ -22,6 +22,15 @@ html:body
     assert_html '<html:body><html:p html:id="test">Text</html:p></html:body>', source
   end
 
+  def test_doctype
+    source = %q{
+! doctype 5
+html
+}
+
+    assert_html '<!DOCTYPE html><html></html>', source
+  end
+
   def test_render_with_shortcut_attributes
     source = %q{
 h1#title This is my title
