@@ -11,23 +11,37 @@ task :bench, :iterations do |t, args|
   ruby("benchmarks/run.rb #{args[:iterations]}")
 end
 
-Rake::TestTask.new(:test) do |test|
-  test.libs << 'lib' << 'test'
-  test.pattern = 'test/**/test_*.rb'
-  test.verbose = true
+Rake::TestTask.new(:test) do |t|
+  t.libs << 'lib' << 'test'
+  t.pattern = 'test/**/test_*.rb'
+  t.verbose = true
 end
 
 begin
   require 'rcov/rcovtask'
-  Rcov::RcovTask.new do |test|
-    test.libs << 'lib' << 'test'
-    test.pattern = 'test/**/test_*.rb'
-    test.verbose = true
+  Rcov::RcovTask.new do |t|
+    t.libs << 'lib' << 'test'
+    t.pattern = 'test/**/test_*.rb'
+    t.verbose = true
   end
 rescue LoadError
   task :rcov do
     abort "RCov is not available. In order to run rcov, you must: gem install rcov"
   end
 end
+
+begin
+  require 'yard'
+  YARD::Rake::YardocTask.new do |t|
+    t.files = %w(lib/**/*.rb)
+  end
+rescue LoadError
+  task :yard do
+    abort "YARD is not available. In order to run yard, you must: gem install yard"
+  end
+end
+
+desc "Generate Documentation"
+task :doc => :yard
 
 task :default => 'test'
