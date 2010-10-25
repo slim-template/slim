@@ -231,12 +231,12 @@ module Slim
     ATTR_SHORTHAND = {
       '#' => 'id',
       '.' => 'class',
-    }
+    }.freeze
     DELIMITERS = {
       '(' => ')',
       '[' => ']',
       '{' => '}',
-    }
+    }.freeze
     DELIMITER_REGEX = /^([\(\[\{])/
     CLOSE_DELIMITER_REGEX = /^([\)\]\}])/
     if RUBY_VERSION > '1.9'
