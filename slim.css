@@ -6,7 +6,7 @@ body {
 
 #header{
   margin: 0 auto;
-  width: 450px;
+  width: 700px;
   display: block;
   text-align: center;
 }
@@ -16,7 +16,7 @@ body {
 }
 
 ol#links{
-  width: 500px;
+  width: 700px;
   text-align: center;
   margin: 0 auto;
   padding: 0;
