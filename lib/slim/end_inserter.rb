@@ -11,6 +11,7 @@ module Slim
     ELSE_REGEX = /^(else|elsif|when|end)\b/
     END_REGEX = /^end\b/
 
+    # Handle multi expression `[:multi, *exps]`
     def on_multi(*exps)
       result = [:multi]
       # This variable is true if the previous line was

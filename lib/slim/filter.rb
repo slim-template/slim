@@ -1,4 +1,5 @@
 module Slim
+  # Base class for Temple filters used in Slim
   class Filter
     include Temple::Utils
 

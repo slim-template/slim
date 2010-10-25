@@ -27,6 +27,10 @@ module Slim
       @tab     = ' ' * (options[:tabsize] || 4)
     end
 
+    # Compile string to Temple expression
+    #
+    # @param [String] str Slim code
+    # @return [Array] Temple expression representing the code
     def compile(str)
       lineno = 0
       result = [:multi]

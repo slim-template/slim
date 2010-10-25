@@ -1,6 +1,10 @@
 module Slim
   # Compiles Slim expressions into Temple::HTML expressions.
   class Compiler < Filter
+    # Handle text expression `[:slim, :text, string]`
+    #
+    # @param [String] string Static text
+    # @return [Array] Compiled temple expression
     def on_text(string)
       # Interpolate variables in text (#{variable}).
       # Split the text into multiple dynamic and static parts.
@@ -22,12 +26,23 @@ module Slim
       block
     end
 
+    # Handle control expression `[:slim, :control, code, content]`
+    #
+    # @param [String] ruby code
+    # @param [Array] content Temple expression
+    # @return [Array] Compiled temple expression
     def on_control(code, content)
       [:multi,
         [:block, code],
         compile(content)]
     end
 
+    # Handle output expression `[:slim, :output, escape, code, content]`
+    #
+    # @param [Boolean] escape Escape html
+    # @param [String] code Ruby code
+    # @param [Array] content Temple expression
+    # @return [Array] Compiled temple expression
     def on_output(escape, code, content)
       if empty_exp?(content)
         [:multi, [:dynamic, escape ? escape_code(code) : code], content]
@@ -36,6 +51,13 @@ module Slim
       end
     end
 
+    # Handle output expression `[:slim, :output, escape, code, content]`
+    # if content is not empty.
+    #
+    # @param [Boolean] escape Escape html
+    # @param [String] code Ruby code
+    # @param [Array] content Temple expression
+    # @return [Array] Compiled temple expression
     def on_output_block(escape, code, content)
       tmp1, tmp2 = tmp_var, tmp_var
 
@@ -61,12 +83,22 @@ module Slim
         on_output(escape, tmp1, [:multi])]
     end
 
+    # Handle directive expression `[:slim, :directive, type]`
+    #
+    # @param [String] type Directive type
+    # @return [Array] Compiled temple expression
     def on_directive(type)
       if type =~ /^doctype/
         [:html, :doctype, $'.strip]
       end
     end
 
+    # Handle tag expression `[:slim, :tag, name, attrs, content]`
+    #
+    # @param [String] name Tag name
+    # @param [Array] attrs Attributes
+    # @param [Array] content Temple expression
+    # @return [Array] Compiled temple expression
     def on_tag(name, attrs, content)
       attrs = attrs.inject([:html, :attrs]) do |m, (key, dynamic, value)|
         value = if dynamic
@@ -82,10 +114,17 @@ module Slim
 
     private
 
+    # Generate code to escape html
+    #
+    # @param [String] param Ruby code
+    # @return [String] Ruby code
     def escape_code(param)
       "Slim::Helpers.escape_html#{@options[:use_html_safe] ? '_safe' : ''}((#{param}))"
     end
 
+    # Generate unique temporary variable name
+    #
+    # @return [String] Variable name
     def tmp_var
       @tmp_var ||= 0
       "_slimtmp#{@tmp_var += 1}"
