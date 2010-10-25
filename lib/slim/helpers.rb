@@ -55,7 +55,7 @@ module Slim
         '<' => '&lt;',
         '>' => '&gt;',
         '/' => '&#47;',
-      }
+      }.freeze
 
       # Returns an escaped copy of `html`.
       #
