@@ -1,9 +1,10 @@
 module Slim
   module Helpers
     def list_of(enum, &block)
-      enum.map do |i|
+      list = enum.map do |i|
         "<li>#{yield(i)}</li>"
       end.join("\n")
+      list.respond_to?(:html_safe) ? list.html_safe : list
     end
 
     def escape_html_safe(html)
