@@ -1,4 +1,6 @@
 module Slim
+  # Parses Slim code and transforms it to a Temple expression
+  # @api private
   class Parser
     class SyntaxError < StandardError
       attr_reader :error, :file, :line, :lineno, :column

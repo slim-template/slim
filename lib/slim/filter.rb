@@ -1,5 +1,6 @@
 module Slim
   # Base class for Temple filters used in Slim
+  # @api private
   class Filter
     include Temple::Utils
 
@@ -36,6 +37,8 @@ module Slim
     end
   end
 
+  # Simple filter which prints Temple expression
+  # @api private
   class Debugger < Filter
     def compile(exp)
       puts exp.inspect

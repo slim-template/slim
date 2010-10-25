@@ -1,5 +1,6 @@
 module Slim
   # Tilt template implementation for Slim
+  # @api public
   class Template < Tilt::Template
     # Prepare Slim template
     #

@@ -2,6 +2,7 @@ require 'slim'
 
 module ActionView
   module TemplateHandlers
+    # Slim handler for Rails 3
     class SlimHandler < TemplateHandler
       include Compilable
 

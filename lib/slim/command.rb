@@ -2,12 +2,15 @@ require 'slim'
 require 'optparse'
 
 module Slim
+  # Slim commandline interface
+  # @api private
   class Command
     def initialize(args)
       @args = args
       @options = {}
     end
 
+    # Run command
     def run
       @opts = OptionParser.new(&method(:set_opts))
       @opts.parse!(@args)
@@ -21,6 +24,9 @@ module Slim
       exit 1
     end
 
+    private
+
+    # Configure OptionParser
     def set_opts(opts)
       opts.on('-s', '--stdin', :NONE, 'Read input from standard input instead of an input file') do
         @options[:input] = $stdin
@@ -45,6 +51,7 @@ module Slim
       end
     end
 
+    # Process command
     def process
       args = @args.dup
       unless @options[:input]

@@ -1,5 +1,6 @@
 module Slim
   # Compiles Slim expressions into Temple::HTML expressions.
+  # @api private
   class Compiler < Filter
     # Handle text expression `[:slim, :text, string]`
     #

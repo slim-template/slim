@@ -7,6 +7,8 @@ module Slim
   # However, the parser is not smart enough (and that's a good thing) to
   # automatically insert end's where they are needed. Luckily, this filter
   # does *exactly* that (and it does it well!)
+  #
+  # @api private
   class EndInserter < Filter
     ELSE_REGEX = /^(else|elsif|when|end)\b/
     END_REGEX = /^end\b/

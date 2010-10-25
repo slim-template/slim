@@ -1,4 +1,6 @@
 module Slim
+  # Slim engine which transforms slim code to executable ruby code
+  # @api public
   class Engine < Temple::Engine
     use Slim::Parser, :file
     use Slim::EndInserter
