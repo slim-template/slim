@@ -49,8 +49,7 @@
     <hr/>
     <p>Nest static content over multiple lines:
       <pre>p
- | 
-   I have a lot to say ..
+ | I have a lot to say ..
     Too much for one line
     And so on...
       </pre>
@@ -75,9 +74,9 @@
 
     <hr/>
     <p>Dynamic content in attribute
-      <pre>h1 class="#{page_header_class}" = page_header</pre>
+      <pre>a href="#{url_for @user}" = @user.name</pre>
       <p class='note'>An attribute without quotes is deemed dynamic!</p>
-      <pre>h1 class=page_header_class = page_header</pre>
+      <pre>a href=url_for(@user) = @user.name</pre>
     </p>
 
     <hr/>
@@ -159,7 +158,7 @@ CoffeeScript               .coffee           coffee-script (+node coffee)</pre>
       <pre>markdown:
   #Header
     Hello from #{"Markdown!"}
-      "Second Line!"</pre>
+    Second Line!</pre>
     </p>
   </div>
 
