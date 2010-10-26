@@ -19,19 +19,23 @@ class TestSlim < MiniTest::Unit::TestCase
     Slim::Filter::DEFAULT_OPTIONS.delete(:use_html_safe)
   end
 
+  def render(source, options = {})
+    Slim::Template.new(options[:file], options) { source }.render(@env)
+  end
+
   def assert_html(expected, source, options = {})
-    assert_equal expected, Slim::Template.new(options[:file], options) { source }.render(@env)
+    assert_equal expected, render(source, options)
   end
 
   def assert_syntax_error(message, source, options = {})
-    Slim::Template.new(options[:file], options) { source }.render(@env)
+    render(source, options)
     raise 'Syntax error expected'
   rescue Slim::Parser::SyntaxError => ex
     assert_equal message, ex.message
   end
 
   def assert_ruby_error(error, from, source, options = {})
-    Slim::Template.new(options[:file], options) { source }.render(@env)
+    render(source, options)
     raise 'Ruby error expected'
   rescue error => ex
     ex.backtrace[0] =~ /^(.*?:\d+):/
@@ -39,11 +43,18 @@ class TestSlim < MiniTest::Unit::TestCase
   end
 
   def assert_ruby_syntax_error(from, source, options = {})
-    Slim::Template.new(options[:file], options) { source }.render(@env)
+    render(source, options)
     raise 'Ruby syntax error expected'
   rescue SyntaxError => ex
     ex.message =~ /^(.*?:\d+):/
     assert_equal from, $1
+  end
+
+  def assert_runtime_error(message, source, options = {})
+    render(source, options)
+    raise Exception, 'Runtime error expected'
+  rescue RuntimeError => ex
+    assert_equal message, ex.message
   end
 end
 

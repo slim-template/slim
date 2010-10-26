@@ -113,4 +113,25 @@ p
 }
     assert_ruby_syntax_error "(__TEMPLATE__):5", source
   end
+
+  def test_invalid_embedded_engine
+    source = %q{
+p
+  embed_unknown:
+    1+1
+}
+
+    assert_runtime_error 'Invalid embedded engine embed_unknown', source
+  end
+
+  def test_explicit_end
+    source = %q{
+div
+  - if show_first?
+      p The first paragraph
+  - end
+}
+
+    assert_runtime_error 'Explicit end statements are forbidden', source
+  end
 end

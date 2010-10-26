@@ -10,7 +10,8 @@ module Slim
   #
   # @api private
   class EndInserter < Filter
-    ELSE_REGEX = /^(else|elsif|when|end)\b/
+    ELSE_REGEX = /^else|elsif|when\b/
+    END_REGEX = /^end\b/
 
     # Handle multi expression `[:multi, *exps]`
     def on_multi(*exps)
@@ -21,6 +22,8 @@ module Slim
 
       exps.each do |exp|
         if control?(exp)
+          raise 'Explicit end statements are forbidden' if exp[2] =~ END_REGEX
+
           # Two control code in a row. If this one is *not*
           # an else block, we should close the previous one.
           append_end(result) if prev_indent && exp[2] !~ ELSE_REGEX

@@ -126,7 +126,7 @@ __Please note that all line indicators must be followed by a space__
 ### Things to know
 
 #### Standard Ruby syntax after `-` and `=`
-  `end` is not required but can be used if you don't want to omit it
+  `end` is forbidden behind `-`. Blocks are defined only by indentation.
 
 #### Can put content on same line or nest it.
   If you nest content (e.g. put it on the next line), start the line with a pipe (`|`) or a backtick (`` ` ``).

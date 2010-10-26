@@ -13,19 +13,6 @@ div
     assert_html '<div><p>The second paragraph</p></div>', source
   end
 
-  def test_render_with_conditional_and_end
-    source = %q{
-div
-  - if show_first?
-      p The first paragraph
-  - else
-      p The second paragraph
-  - end
-}
-
-    assert_html '<div><p>The second paragraph</p></div>', source
-  end
-
   def test_render_with_consecutive_conditionals
     source = %q{
 div

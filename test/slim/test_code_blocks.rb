@@ -36,17 +36,6 @@ p
 = hello_world "Hello Ruby!" do
   - if true
     | Hello from within a block!
-  - end
-}
-
-    assert_html 'Hello Ruby! Hello from within a block! Hello Ruby!', source
-  end
-
-  def test_captured_code_block_with_conditional2
-    source = %q{
-= hello_world "Hello Ruby!" do
-  - if true
-    | Hello from within a block!
 }
 
     assert_html 'Hello Ruby! Hello from within a block! Hello Ruby!', source
