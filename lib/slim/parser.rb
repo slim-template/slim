@@ -72,7 +72,7 @@ module Slim
       str.each_line do |line|
         lineno += 1
 
-        # Remove the newline at the ned
+        # Remove the newline at the end
         line.chomp!
 
         # Handle broken lines
