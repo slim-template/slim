@@ -50,6 +50,18 @@ div
     assert_html '<div><p>The second paragraph</p></div>', source
   end
 
+  def test_render_with_conditional_and_following_nonconditonal
+    source = %q{
+div
+  - if true
+      p The first paragraph
+  - var = 42
+  = var
+}
+
+    assert_html '<div><p>The first paragraph</p>42</div>', source
+  end
+
   def test_render_with_inline_condition
     source = %q{
 p = hello_world if true

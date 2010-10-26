@@ -11,7 +11,6 @@ module Slim
   # @api private
   class EndInserter < Filter
     ELSE_REGEX = /^(else|elsif|when|end)\b/
-    END_REGEX = /^end\b/
 
     # Handle multi expression `[:multi, *exps]`
     def on_multi(*exps)
@@ -22,15 +21,12 @@ module Slim
 
       exps.each do |exp|
         if control?(exp)
-          if prev_indent
-            # Two control code in a row. If this one is *not*
-            # an else block, we should close the previous one.
-            append_end(result) if exp[2] !~ ELSE_REGEX
-            prev_indent = exp[2].match(END_REGEX).nil?
-          else
-            # Indent if the control code contains something.
-            prev_indent = !empty_exp?(exp[3])
-          end
+          # Two control code in a row. If this one is *not*
+          # an else block, we should close the previous one.
+          append_end(result) if prev_indent && exp[2] !~ ELSE_REGEX
+
+          # Indent if the control code contains something.
+          prev_indent = !empty_exp?(exp[3])
         elsif exp[0] != :newline && prev_indent
           # This is *not* a control code, so we should close the previous one.
           # Ignores newlines because they will be inserted after each line.
