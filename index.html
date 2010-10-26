@@ -57,15 +57,30 @@ html
     == render partial: 'tracking_code'
 
     script
-      | $(content).do_something();
-        </pre>
+      | $(content).do_something();</pre>
       </p>
 
       <br />
       <h2>Template Engines Speed Comparison</h2>
-      <p class="note">* Bar size shorter is better.</p>
-      <img src="http://chart.apis.google.com/chart?chxl=0:|Haml|Haml+(Ugly+Mode)|Erb|Erubis|Fast+Erubis|Slim&chxp=0,11,27,43,59,75,91&chxs=0,000000,11,1,_,000000|1,676767,9,0,l,676767&chxt=y,x&chbh=r&chs=650x190&cht=bhg&chco=008000,666666,666666,666666,666666,666666&chds=0,336,0,336,0,336,0,336,0,336,0,336&chd=t:20|106|123|150|287|336&chdlp=l&chma=0,29,0,2" width="650" height="190" alt="" />
-      <br /><br />
+      <img src="http://chart.apis.google.com/chart?chxl=0:|Haml|Haml+(Ugly+Mode)|Erb|Erubis|Fast+Erubis|Slim&chxp=0,11,27,43,59,75,91&chxs=0,000000,11,1,_,000000|1,676767,9,0,l,676767&chxt=y,x&chbh=r&chs=650x190&cht=bhg&chco=008000,666666,666666,666666,666666,666666&chds=0,946,0,946,0,946,0,946,0,946,0,946&chd=t:76|299|353|434|792|946&chdlp=l&chma=0,29,0,2" width="650" height="190" alt="" />
+      <p class="note">Cached results compared. Bar size shorter is better.</p>
+      <pre>
+/usr/bin/ruby19 benchmarks/run.rb 10000
+10000 Iterations
+Rehearsal --------------------------------------------------------
+erb                    9.010000   0.100000   9.110000 ( 10.218232)
+erubis                 6.730000   0.070000   6.800000 (  7.631232)
+fast erubis            6.800000   0.040000   6.840000 (  8.150498)
+slim                  43.960000   0.450000  44.410000 ( 51.762305)
+haml                  63.610000   0.540000  64.150000 ( 78.934403)
+haml ugly             60.580000   0.440000  61.020000 ( 69.045552)
+erb (cached)           3.780000   0.060000   3.840000 (  4.337673)
+erubis (cached)        3.130000   0.010000   3.140000 (  3.526165)
+fast erubis (cached)   2.640000   0.010000   2.650000 (  2.988220)
+slim (cached)          0.670000   0.000000   0.670000 (  0.757069)
+haml (cached)          8.350000   0.090000   8.440000 (  9.461933)
+haml ugly (cached)     7.010000   0.030000   7.040000 (  7.923997)
+--------------------------------------------- total: 218.110000sec</pre>
     </div>
 
     <div class="footer">
