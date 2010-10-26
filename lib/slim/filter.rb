@@ -28,6 +28,10 @@ module Slim
       [:slim, :control, code, compile(content)]
     end
 
+    def on_output(code, escape, content)
+      [:slim, :output, code, escape, compile(content)]
+    end
+
     def on_tag(name, attrs, content)
       [:slim, :tag, name, attrs, compile(content)]
     end
@@ -41,7 +45,9 @@ module Slim
   # @api private
   class Debugger < Filter
     def compile(exp)
+      puts @options[:prefix] if @options[:prefix]
       puts exp.inspect
+      puts
       exp
     end
   end
