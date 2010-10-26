@@ -1,6 +1,6 @@
 body {
   margin-top: 1.0em;
-  font-family: "Helvetica,Arial,FreeSans";
+  font-family: Helvetica, Arial, "FreeSans";
   color: #323232;
 }
 
@@ -48,7 +48,7 @@ h1 .small { font-size: 0.4em; }
 
 h1 a { text-decoration: none }
 
-h2 { font-size: 1.5em; color: #dacdd2; }
+h2 { text-align: center; font-size: 32px; font-weight: normal; }
 
 h3 { text-align: center; color: #dacdd2; }
 

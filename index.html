@@ -4,12 +4,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <link href="slim.css" media="screen" rel="stylesheet" type="text/css"/>
-    <title>Slim</title>
+    <link href="css/slim.css" media="screen" rel="stylesheet" type="text/css"/>
+    <title>Slim - A Fast, Lightweight Template Engine for Ruby</title>
+    <script language="javascript" src="http://www.google.com/jsapi"></script>
   </head>
   <body>
     <div id="header">
-      <img src="slim.png"/>
+      <img src="img/slim-logo.png"/>
     </div>
     <div class="clear">&nbsp;</div>
     <a href="http://github.com/stonean/slim"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
@@ -45,7 +46,7 @@ html
               td = item.name
               td = item.price
       - else
-        p 
+        p
          |
            No items found.  Please add some inventory.
             Thank you!
@@ -59,6 +60,12 @@ html
       | $(content).do_something();
         </pre>
       </p>
+
+      <br />
+      <h2>Template Engines Speed Comparison</h2>
+      <p class="note">* Bar size shorter is better.</p>
+      <img src="http://chart.apis.google.com/chart?chxl=0:|Haml|Haml+(Ugly+Mode)|Erb|Erubis|Fast+Erubis|Slim&chxp=0,11,27,43,59,75,91&chxs=0,000000,11,1,_,000000|1,676767,9,0,l,676767&chxt=y,x&chbh=r&chs=650x190&cht=bhg&chco=008000,666666,666666,666666,666666,666666&chds=0,336,0,336,0,336,0,336,0,336,0,336&chd=t:20|106|123|150|287|336&chdlp=l&chma=0,29,0,2" width="650" height="190" alt="" />
+      <br /><br />
     </div>
 
     <div class="footer">
@@ -68,11 +75,10 @@ html
     <script type="text/javascript">
       var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
       document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-    </script>
-    <script type="text/javascript">
       try {
         var pageTracker = _gat._getTracker("UA-19270476-1");
         pageTracker._trackPageview();
-      } catch(err) {}</script>
+      } catch(err) {}
+    </script>
   </body>
 </html>
