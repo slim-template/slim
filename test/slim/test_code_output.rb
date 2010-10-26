@@ -113,4 +113,12 @@ p = \
 
     assert_html '<p>Hello Ruby!</p>7', source
   end
+
+  def test_render_with_no_trailing_character
+    source = %q{
+p
+  = hello_world}
+
+    assert_html '<p>Hello World from @env</p>', source
+  end
 end

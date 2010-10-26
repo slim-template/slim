@@ -73,7 +73,7 @@ module Slim
         lineno += 1
 
         # Remove the newline at the ned
-        line.chop!
+        line.chomp!
 
         # Handle broken lines
         if broken_line
