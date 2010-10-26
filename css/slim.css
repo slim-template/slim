@@ -1,6 +1,8 @@
+@import url("http://fonts.googleapis.com/css?family=Cantarell&subset=latin");
+
 body {
   margin-top: 1.0em;
-  font-family: Helvetica, Arial, "FreeSans";
+  font-family: 'Cantarell', Helvetica, Arial, "FreeSans";
   color: #323232;
 }
 
