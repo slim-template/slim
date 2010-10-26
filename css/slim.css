@@ -56,7 +56,14 @@ h3 { text-align: center; color: #dacdd2; }
 
 a { color: #333; }
 
-pre { background: #000; color: #fff; padding: 15px;}
+pre {
+  background: #000;
+  color: #fff;
+  padding: 15px;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
 
 hr { border: 0; width: 80%; border-bottom: 1px solid #aaa; padding: 10px 0;}
 
