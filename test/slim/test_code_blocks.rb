@@ -32,6 +32,20 @@ p
     assert_html '<p>Hello Ruby! Hello from within a block! And another one! Hello from within a block! Hello Ruby!</p>', source
   end
 
+  def test_output_block_with_arguments
+    source = %q{
+p
+  = define_macro :person do |first_name, last_name|
+    .first_name = first_name
+    .last_name = last_name
+  == call_macro :person, 'John', 'Doe'
+  == call_macro :person, 'Max', 'Mustermann'
+}
+
+    assert_html '<p><div class="first_name">John</div><div class="last_name">Doe</div><div class="first_name">Max</div><div class="last_name">Mustermann</div></p>', source
+  end
+
+
   def test_render_with_control_code_loop
     source = %q{
 p

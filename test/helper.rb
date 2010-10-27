@@ -77,6 +77,16 @@ class Env
     show
   end
 
+  def define_macro(name, &block)
+    @macro ||= {}
+    @macro[name.to_s] = block
+    ''
+  end
+
+  def call_macro(name, *args)
+    @macro[name.to_s].call(*args)
+  end
+
   def hello_world(text = "Hello World from @env", opts = {})
     text << opts.to_a * " " if opts.any?
     if block_given?
