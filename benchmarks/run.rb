@@ -26,9 +26,17 @@ class SlimBenchmarks
     erb         = ERB.new(tpl_erb)
     erubis      = Erubis::Eruby.new(tpl_erb)
     fast_erubis = Erubis::FastEruby.new(tpl_erb)
-    haml        = Haml::Engine.new(tpl_haml)
-    haml_ugly   = Haml::Engine.new(tpl_haml, :ugly => true)
+    haml        = Haml::Engine.new(tpl_haml, :format => :html5)
+    haml_ugly   = Haml::Engine.new(tpl_haml, :format => :html5, :ugly => true)
     slim        = Slim::Template.new { tpl_slim }
+
+    haml.def_method(view, :run_haml)
+    haml_ugly.def_method(view, :run_haml_ugly)
+    view.instance_eval(<<RUBY)
+def run_erb; #{erb.src}; end
+def run_erubis; #{erubis.src}; end
+def run_fast_erubis; #{fast_erubis.src}; end
+RUBY
 
     bench('erb')                  { ERB.new(tpl_erb).result(eview) }
     bench('erubis')               { Erubis::Eruby.new(tpl_erb).result(eview) }
@@ -36,12 +44,12 @@ class SlimBenchmarks
     bench('slim')                 { Slim::Template.new { tpl_slim }.render(view) }
     bench('haml')                 { Haml::Engine.new(tpl_haml).render(view) }
     bench('haml ugly')            { Haml::Engine.new(tpl_haml, :ugly => true).render(view) }
-    bench('erb (cached)')         { erb.result(eview) }
-    bench('erubis (cached)')      { erubis.result(eview) }
-    bench('fast erubis (cached)') { fast_erubis.result(eview) }
+    bench('erb (cached)')         { view.run_erb }
+    bench('erubis (cached)')      { view.run_erubis }
+    bench('fast erubis (cached)') { view.run_fast_erubis }
     bench('slim (cached)')        { slim.render(view) }
-    bench('haml (cached)')        { haml.render(view) }
-    bench('haml ugly (cached)')   { haml_ugly.render(view) }
+    bench('haml (cached)')        { view.run_haml }
+    bench('haml ugly (cached)')   { view.run_haml_ugly }
   end
 
   def run
