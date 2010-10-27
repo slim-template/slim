@@ -19,11 +19,6 @@ Within the Rails community, _Erb_ and _Haml_ are without doubt the two most popu
 
 Slim was born to bring a minimalist syntax approach with speed. If people chose not to use Slim, it would not be because of speed.
 
-___Yes, Slim is speedy!___ In a nutshell, in a cached environment (which reflects the production environment) Slim is __up to 15x faster__ than _Haml_ and __up to 5x faster__ than _Erb_.
-
-Benchmarks are provided at the end of this README file. Alternatively, a benchmark rake task is provided so you could test it yourself (`rake bench`).
-
-
 ## How?
 
 Install Slim as a gem:
@@ -271,56 +266,6 @@ __Please note that all line indicators must be followed by a space__
 
     <body><p></p></body>
 
-
-## Benchmarks
-
-    # OS X 10.6 + Ruby 1.9.2
-
-                               user     system      total        real
-    erb                    0.410000   0.010000   0.420000 (  0.421608)
-    erubis                 0.350000   0.000000   0.350000 (  0.357187)
-    fast erubis            0.340000   0.000000   0.340000 (  0.351943)
-    slim                   2.360000   0.020000   2.380000 (  2.495331)
-    haml                   2.970000   0.010000   2.980000 (  3.023121)
-    haml ugly              2.870000   0.010000   2.880000 (  2.968662)
-    erb (cached)           0.150000   0.000000   0.150000 (  0.149980)
-    erubis (cached)        0.120000   0.000000   0.120000 (  0.122935)
-    fast erubis (cached)   0.100000   0.000000   0.100000 (  0.105832)
-    slim (cached)          0.020000   0.000000   0.020000 (  0.020290)
-    haml (cached)          0.330000   0.000000   0.330000 (  0.335519)
-    haml ugly (cached)     0.280000   0.000000   0.280000 (  0.286695)
-
-    # OS X 10.6 + REE 1.8.7
-
-                               user     system      total        real
-    erb                    0.440000   0.010000   0.450000 (  0.463941)
-    erubis                 0.310000   0.000000   0.310000 (  0.322083)
-    fast erubis            0.310000   0.000000   0.310000 (  0.309852)
-    slim                   2.420000   0.020000   2.440000 (  2.470208)
-    haml                   2.990000   0.020000   3.010000 (  3.040942)
-    haml ugly              2.900000   0.020000   2.920000 (  3.101786)
-    erb (cached)           0.080000   0.000000   0.080000 (  0.079252)
-    erubis (cached)        0.070000   0.000000   0.070000 (  0.066370)
-    fast erubis (cached)   0.060000   0.000000   0.060000 (  0.062001)
-    slim (cached)          0.030000   0.000000   0.030000 (  0.023835)
-    haml (cached)          0.270000   0.010000   0.280000 (  0.279409)
-    haml ugly (cached)     0.210000   0.000000   0.210000 (  0.221059)
-
-    # OSX 10.6 + JRuby 1.5.3
-
-                               user     system      total        real
-    erb                    0.970000   0.000000   0.970000 (  0.970000)
-    erubis                 0.672000   0.000000   0.672000 (  0.672000)
-    fast erubis            0.624000   0.000000   0.624000 (  0.624000)
-    slim                   2.694000   0.000000   2.694000 (  2.694000)
-    haml                   3.368000   0.000000   3.368000 (  3.368000)
-    haml ugly              3.462000   0.000000   3.462000 (  3.462000)
-    erb (cached)           0.736000   0.000000   0.736000 (  0.736000)
-    erubis (cached)        0.413000   0.000000   0.413000 (  0.413000)
-    fast erubis (cached)   0.340000   0.000000   0.340000 (  0.340000)
-    slim (cached)          0.069000   0.000000   0.069000 (  0.069000)
-    haml (cached)          1.001000   0.000000   1.001000 (  1.001000)
-    haml ugly (cached)     0.763000   0.000000   0.763000 (  0.763000)
 
 ## Authors
 
