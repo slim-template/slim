@@ -11,17 +11,19 @@ module Slim
     end
 
     def compile(exp)
-      if exp[0] == :slim
-        args = exp[2..-1]
-        type = "slim_#{exp[1]}"
-      else
-        type, *args = exp
-      end
-
+      type, *args = exp
       if respond_to?("on_#{type}")
         send("on_#{type}", *args)
       else
         exp
+      end
+    end
+
+    def on_slim(type, *args)
+      if respond_to?("on_slim_#{type}")
+        send("on_slim_#{type}", *args)
+      else
+        [:slim, type, *args]
       end
     end
 
