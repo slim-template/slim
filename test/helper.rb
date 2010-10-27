@@ -59,6 +59,12 @@ class TestSlim < MiniTest::Unit::TestCase
 end
 
 class Env
+  attr_reader :var
+
+  def initialize
+    @var = 'instance'
+  end
+
   def id_helper
     "notice"
   end
@@ -74,7 +80,7 @@ class Env
   def hello_world(text = "Hello World from @env", opts = {})
     text << opts.to_a * " " if opts.any?
     if block_given?
-      "#{text} #{yield} #{text}"
+      "#{text} #{yield}"
     else
       text
     end
