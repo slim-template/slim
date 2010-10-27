@@ -19,9 +19,7 @@ Within the Rails community, _Erb_ and _Haml_ are without doubt the two most popu
 
 Slim was born to bring a minimalist syntax approach with speed. If people chose not to use Slim, it would not be because of speed.
 
-___Yes, Slim is speedy!___ In a nutshell, in a cached environment (which reflects the production environment) Slim is comparable to _Erb_ and is __up to 5x faster__ than _Haml_.
-
-Benchmarks are provided at the end of this README file. Alternatively, a benchmark rake task is provided so you could test it yourself (`rake bench`).
+___Yes, Slim is speedy!___ Benchmarks are provided at the end of this README file. Alternatively, a benchmark rake task is provided so you could test it yourself (`rake bench`).
 
 ## How?
 
