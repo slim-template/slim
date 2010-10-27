@@ -8,7 +8,7 @@ p
     | Hello from within a block!
 }
 
-    assert_html '<p>Hello Ruby! Hello from within a block!</p>', source
+    assert_html '<p>Hello Ruby! Hello from within a block! Hello Ruby!</p>', source
   end
 
   def test_render_with_output_code_within_block
@@ -18,7 +18,7 @@ p
     = hello_world "Hello from within a block!"
 }
 
-    assert_html '<p>Hello Ruby! Hello from within a block!</p>', source
+    assert_html '<p>Hello Ruby! Hello from within a block! Hello Ruby!</p>', source
   end
 
   def test_render_with_output_code_within_block_2
@@ -29,7 +29,7 @@ p
       = hello_world "And another one!"
 }
 
-    assert_html '<p>Hello Ruby! Hello from within a block! And another one!</p>', source
+    assert_html '<p>Hello Ruby! Hello from within a block! And another one! Hello from within a block! Hello Ruby!</p>', source
   end
 
   def test_render_with_control_code_loop
@@ -49,6 +49,6 @@ p
     | Hello from within a block!
 }
 
-    assert_html 'Hello Ruby! Hello from within a block!', source
+    assert_html 'Hello Ruby! Hello from within a block! Hello Ruby!', source
   end
 end
