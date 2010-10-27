@@ -29,7 +29,7 @@ module Slim
     #
     # @param [Hash]   locals Local variables
     # @return [String] Compiled template ruby code
-    def precompiled_template(locals)
+    def precompiled_template(locals = {})
       @src
     end
   end

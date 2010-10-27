@@ -19,6 +19,10 @@ Within the Rails community, _Erb_ and _Haml_ are without doubt the two most popu
 
 Slim was born to bring a minimalist syntax approach with speed. If people chose not to use Slim, it would not be because of speed.
 
+___Yes, Slim is speedy!___ In a nutshell, in a cached environment (which reflects the production environment) Slim is comparable to _Erb_ and is __up to 5x faster__ than _Haml_.
+
+Benchmarks are provided at the end of this README file. Alternatively, a benchmark rake task is provided so you could test it yourself (`rake bench`).
+
 ## How?
 
 Install Slim as a gem:
@@ -266,6 +270,29 @@ __Please note that all line indicators must be followed by a space__
 
     <body><p></p></body>
 
+## Benchmarks
+
+    # OS X 10.6 + Ruby 1.9.2
+
+                                 user     system      total        real
+    erb                      2.200000   0.020000   2.220000 (  2.259262)
+    erubis                   1.870000   0.010000   1.880000 (  1.895547)
+    fast erubis              1.870000   0.010000   1.880000 (  1.887996)
+    slim                    10.380000   0.080000  10.460000 ( 10.543296)
+    haml                    16.250000   0.070000  16.320000 ( 16.376137)
+    haml ugly               15.700000   0.080000  15.780000 ( 15.869233)
+    erb (compiled)           0.820000   0.010000   0.830000 (  0.821538)
+    erubis (compiled)        0.680000   0.000000   0.680000 (  0.680444)
+    fast erubis (compiled)   0.600000   0.010000   0.610000 (  0.605370)
+    slim (compiled)          0.180000   0.000000   0.180000 (  0.182536)
+    haml (compiled)          1.800000   0.020000   1.820000 (  1.863224)
+    haml ugly (compiled)     1.560000   0.020000   1.580000 (  1.602106)
+    erb (cached)             0.120000   0.000000   0.120000 (  0.127988)
+    erubis (cached)          0.110000   0.000000   0.110000 (  0.115064)
+    fast erubis (cached)     0.120000   0.010000   0.130000 (  0.122645)
+    slim (cached)            0.140000   0.000000   0.140000 (  0.134598)
+    haml (cached)            0.660000   0.000000   0.660000 (  0.661025)
+    haml ugly (cached)       0.590000   0.010000   0.600000 (  0.602522)
 
 ## Authors
 

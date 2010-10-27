@@ -32,22 +32,31 @@ class SlimBenchmarks
 
     haml.def_method(view, :run_haml)
     haml_ugly.def_method(view, :run_haml_ugly)
-    view.instance_eval(<<RUBY)
-def run_erb; #{erb.src}; end
-def run_erubis; #{erubis.src}; end
-def run_fast_erubis; #{fast_erubis.src}; end
-RUBY
+    view.instance_eval(<<-RUBY)
+      def run_erb; #{erb.src}; end
+      def run_erubis; #{erubis.src}; end
+      def run_fast_erubis; #{fast_erubis.src}; end
+      def run_slim; #{slim.precompiled_template}; end
+    RUBY
 
-    bench('erb')                  { ERB.new(tpl_erb).result(eview) }
-    bench('erubis')               { Erubis::Eruby.new(tpl_erb).result(eview) }
-    bench('fast erubis')          { Erubis::Eruby.new(tpl_erb).result(eview) }
-    bench('slim')                 { Slim::Template.new { tpl_slim }.render(view) }
-    bench('haml')                 { Haml::Engine.new(tpl_haml).render(view) }
-    bench('haml ugly')            { Haml::Engine.new(tpl_haml, :ugly => true).render(view) }
+    bench('erb')         { ERB.new(tpl_erb).result(eview) }
+    bench('erubis')      { Erubis::Eruby.new(tpl_erb).result(eview) }
+    bench('fast erubis') { Erubis::Eruby.new(tpl_erb).result(eview) }
+    bench('slim')        { Slim::Template.new { tpl_slim }.render(view) }
+    bench('haml')        { Haml::Engine.new(tpl_haml, :format => :html5).render(view) }
+    bench('haml ugly')   { Haml::Engine.new(tpl_haml, :format => :html5, :ugly => true).render(view) }
+
+    bench('erb (compiled)')         { erb.result(eview) }
+    bench('erubis (compiled)')      { erubis.result(eview) }
+    bench('fast erubis (compiled)') { fast_erubis.result(eview) }
+    bench('slim (compiled)')        { slim.render(view) }
+    bench('haml (compiled)')        { haml.render(view) }
+    bench('haml ugly (compiled)')   { haml_ugly.render(view) }
+
     bench('erb (cached)')         { view.run_erb }
     bench('erubis (cached)')      { view.run_erubis }
     bench('fast erubis (cached)') { view.run_fast_erubis }
-    bench('slim (cached)')        { slim.render(view) }
+    bench('slim (cached)')        { view.run_slim }
     bench('haml (cached)')        { view.run_haml }
     bench('haml ugly (cached)')   { view.run_haml_ugly }
   end
