@@ -19,12 +19,12 @@ class TestSlim < MiniTest::Unit::TestCase
     Slim::Filter::DEFAULT_OPTIONS.delete(:use_html_safe)
   end
 
-  def render(source, options = {})
-    Slim::Template.new(options[:file], options) { source }.render(@env)
+  def render(source, options = {}, &block)
+    Slim::Template.new(options[:file], options) { source }.render(@env, &block)
   end
 
-  def assert_html(expected, source, options = {})
-    assert_equal expected, render(source, options)
+  def assert_html(expected, source, options = {}, &block)
+    assert_equal expected, render(source, options, &block)
   end
 
   def assert_syntax_error(message, source, options = {})

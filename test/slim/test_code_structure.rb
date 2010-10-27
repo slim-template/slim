@@ -81,4 +81,15 @@ p World
 
     assert_html '<p>Hello</p><p>World</p>', source
   end
+
+  def test_render_with_yield
+    source = %q{
+div
+  == yield :menu
+}
+
+    assert_html '<div>This is the menu</div>', source do
+      'This is the menu'
+    end
+  end
 end
