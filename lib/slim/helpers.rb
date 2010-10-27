@@ -3,6 +3,8 @@ module Slim
   #
   # @api public
   module Helpers
+    extend self
+
     # Iterate over `Enumerable` object
     # yielding each element to a Slim block
     # and putting the result into `<li>` elements.
@@ -75,7 +77,5 @@ module Slim
         html.to_s.gsub(/&/n, '&amp;').gsub(/\"/n, '&quot;').gsub(/>/n, '&gt;').gsub(/</n, '&lt;').gsub(/\//, '&#47;')
       end
     end
-
-    module_function :escape_html, :escape_html_safe
   end
 end
