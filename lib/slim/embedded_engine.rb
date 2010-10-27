@@ -14,8 +14,8 @@ module Slim
       engine.dup
     end
 
-    def on_embedded(engine, *body)
-      EmbeddedEngine[engine].on_embedded(engine, *body)
+    def on_slim_embedded(engine, *body)
+      EmbeddedEngine[engine].on_slim_embedded(engine, *body)
     end
 
     def collect_text(body)
@@ -33,7 +33,7 @@ module Slim
       # Code to collect local variables
       COLLECT_LOCALS = %q{eval('{' + local_variables.select {|v| v[0] != ?_ }.map {|v| ":#{v}=>#{v}" }.join(',') + '}')}
 
-      def on_embedded(engine, *body)
+      def on_slim_embedded(engine, *body)
         text = collect_text(body)
         engine = Tilt[engine]
         if @options[:precompiled]
@@ -55,14 +55,14 @@ module Slim
     end
 
     class TagEngine < EmbeddedEngine
-      def on_embedded(engine, *body)
-        content = @options[:engine] ? @options[:engine].new.on_embedded(engine, *body) : [:multi, *body]
+      def on_slim_embedded(engine, *body)
+        content = @options[:engine] ? @options[:engine].new.on_slim_embedded(engine, *body) : [:multi, *body]
         [:slim, :tag, @options[:tag], @options[:attributes].map {|k, v| [k, false, v ] }, content]
       end
     end
 
     class RubyEngine < EmbeddedEngine
-      def on_embedded(engine, *body)
+      def on_slim_embedded(engine, *body)
         [:block, collect_text(body)]
       end
     end

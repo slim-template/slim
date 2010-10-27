@@ -6,7 +6,7 @@ module Slim
     #
     # @param [String] string Static text
     # @return [Array] Compiled temple expression
-    def on_text(string)
+    def on_slim_text(string)
       # Interpolate variables in text (#{variable}).
       # Split the text into multiple dynamic and static parts.
       block = [:multi]
@@ -32,7 +32,7 @@ module Slim
     # @param [String] ruby code
     # @param [Array] content Temple expression
     # @return [Array] Compiled temple expression
-    def on_control(code, content)
+    def on_slim_control(code, content)
       [:multi,
         [:block, code],
         compile(content)]
@@ -44,11 +44,11 @@ module Slim
     # @param [String] code Ruby code
     # @param [Array] content Temple expression
     # @return [Array] Compiled temple expression
-    def on_output(escape, code, content)
+    def on_slim_output(escape, code, content)
       if empty_exp?(content)
         [:multi, [:dynamic, escape ? escape_code(code) : code], content]
       else
-        on_output_block(escape, code, content)
+        on_slim_output_block(escape, code, content)
       end
     end
 
@@ -59,7 +59,7 @@ module Slim
     # @param [String] code Ruby code
     # @param [Array] content Temple expression
     # @return [Array] Compiled temple expression
-    def on_output_block(escape, code, content)
+    def on_slim_output_block(escape, code, content)
       tmp1, tmp2 = tmp_var, tmp_var
 
       [:multi,
@@ -81,14 +81,14 @@ module Slim
         [:block, 'end'],
 
         # Output the content.
-        on_output(escape, tmp1, [:multi])]
+        on_slim_output(escape, tmp1, [:multi])]
     end
 
     # Handle directive expression `[:slim, :directive, type]`
     #
     # @param [String] type Directive type
     # @return [Array] Compiled temple expression
-    def on_directive(type)
+    def on_slim_directive(type)
       if type =~ /^doctype/
         [:html, :doctype, $'.strip]
       end
@@ -100,12 +100,12 @@ module Slim
     # @param [Array] attrs Attributes
     # @param [Array] content Temple expression
     # @return [Array] Compiled temple expression
-    def on_tag(name, attrs, content)
+    def on_slim_tag(name, attrs, content)
       attrs = attrs.inject([:html, :attrs]) do |m, (key, dynamic, value)|
         value = if dynamic
                   [:dynamic, escape_code(value)]
                 else
-                  on_text(value)
+                  on_slim_text(value)
                 end
         m << [:html, :basicattr, [:static, key.to_s], value]
       end

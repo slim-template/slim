@@ -12,7 +12,8 @@ module Slim
 
     def compile(exp)
       if exp[0] == :slim
-        _, type, *args = exp
+        args = exp[2..-1]
+        type = "slim_#{exp[1]}"
       else
         type, *args = exp
       end
@@ -24,15 +25,15 @@ module Slim
       end
     end
 
-    def on_control(code, content)
+    def on_slim_control(code, content)
       [:slim, :control, code, compile(content)]
     end
 
-    def on_output(code, escape, content)
+    def on_slim_output(code, escape, content)
       [:slim, :output, code, escape, compile(content)]
     end
 
-    def on_tag(name, attrs, content)
+    def on_slim_tag(name, attrs, content)
       [:slim, :tag, name, attrs, compile(content)]
     end
 
