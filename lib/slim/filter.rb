@@ -48,9 +48,11 @@ module Slim
   # @api private
   class Debugger < Filter
     def compile(exp)
-      puts @options[:prefix] if @options[:prefix]
-      puts exp.inspect
-      puts
+      if @options[:enable_debugger]
+        puts @options[:prefix] if @options[:prefix]
+        puts exp.inspect
+        puts
+      end
       exp
     end
   end

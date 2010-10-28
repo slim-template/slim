@@ -10,6 +10,7 @@ require File.dirname(__FILE__) + '/../lib/slim'
 class TestSlim < MiniTest::Unit::TestCase
   def setup
     @env = Env.new
+    # Slim::Filter::DEFAULT_OPTIONS[:enable_debugger] = true
   end
 
   def teardown
