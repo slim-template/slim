@@ -7,7 +7,7 @@ p
   = hello_world
 }
 
-    assert_html '<p>Hello World from @env</p>', source
+    assert_html '<p>Hello World from @env</p>', source #, :debug => true
   end
 
   def test_render_with_conditional_call
