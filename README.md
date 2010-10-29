@@ -301,3 +301,9 @@ __Please note that all line indicators must be followed by a space__
 ## Discuss
 
 [Google Group](http://groups.google.com/group/slim-template)
+
+## Slim related projects
+  
+* [Textmate bundle](http://github.com/fredwu/ruby-slim-textmate-bundle)
+* [Rails 3 Generators](http://github.com/leogalmeida/slim-rails)
+* [Slim for Clojure](http://github.com/chaslemley/slim.clj)
