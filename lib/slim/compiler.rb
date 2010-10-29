@@ -107,9 +107,9 @@ module Slim
                 else
                   on_slim_text(value)
                 end
-        m << [[:static, key.to_s], value]
+        m << [key.to_s, value]
       end
-      [:html, :tag, name, attrs, compile(content), closed]
+      [:html, :tag, name, [:html, :staticattrs, attrs], closed, compile(content)]
     end
 
     private
