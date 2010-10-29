@@ -57,10 +57,10 @@ p
   img(src="img.jpg" title={title}
 }
 
-    assert_syntax_error "Expected closing attribute delimiter )\n  (__TEMPLATE__), Line 3\n    img(src=\"img.jpg\" title={title}\n                                   ^\n        ", source
+    assert_syntax_error "Expected closing delimiter )\n  (__TEMPLATE__), Line 3\n    img(src=\"img.jpg\" title={title}\n                                   ^\n        ", source
   end
 
-  def test_expected_closing_delimiter
+  def test_expected_closing_attribute_delimiter
     source = %q{
 p
   img src=[hash[1] + hash[2]

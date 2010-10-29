@@ -297,7 +297,7 @@ module Slim
         if line[0, 1] == delimiter
           line.slice!(0)
         else
-          syntax_error! "Expected closing attribute delimiter #{delimiter}", orig_line, lineno, orig_line.size - line.size
+          syntax_error! "Expected closing delimiter #{delimiter}", orig_line, lineno, orig_line.size - line.size
         end
       end
 
