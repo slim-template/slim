@@ -47,7 +47,7 @@ p = "<strong>Hello World\\n, meet \\"Slim\\"</strong>."
 
   def test_render_with_global_html_safe_false
     String.send(:define_method, :html_safe?) { false }
-    Slim::Filter::DEFAULT_OPTIONS[:use_html_safe] = false
+    Temple::Filters::EscapeHTML.default_options[:use_html_safe] = false
 
     source = %q{
 p = "<strong>Hello World\\n, meet \\"Slim\\"</strong>."
@@ -58,7 +58,7 @@ p = "<strong>Hello World\\n, meet \\"Slim\\"</strong>."
 
   def test_render_with_global_html_safe_true
     String.send(:define_method, :html_safe?) { true }
-    Slim::Filter::DEFAULT_OPTIONS[:use_html_safe] = true
+    Temple::Filters::EscapeHTML.default_options[:use_html_safe] = true
 
     source = %q{
 p = "<strong>Hello World\\n, meet \\"Slim\\"</strong>."

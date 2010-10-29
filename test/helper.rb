@@ -17,7 +17,7 @@ class TestSlim < MiniTest::Unit::TestCase
     String.send(:undef_method, :html_safe?) if String.method_defined?(:html_safe?)
     String.send(:undef_method, :html_safe)  if String.method_defined?(:html_safe)
     Object.send(:undef_method, :html_safe?) if Object.method_defined?(:html_safe?)
-    Slim::Filter::DEFAULT_OPTIONS.delete(:use_html_safe)
+    Temple::Filters::EscapeHTML.default_options.delete(:use_html_safe)
   end
 
   def render(source, options = {}, &block)

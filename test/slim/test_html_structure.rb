@@ -38,7 +38,7 @@ h1#title This is my title
   = hello_world
 }
 
-    assert_html '<h1 id="title">This is my title</h1><div id="notice" class="hello world">Hello World from @env</div>', source
+    assert_html '<h1 id="title">This is my title</h1><div class="hello world" id="notice">Hello World from @env</div>', source
   end
 
   def test_render_with_text_block
@@ -147,7 +147,7 @@ p#test class="paragraph" This is line one.
                          This is line two.
 }
 
-    assert_html '<p id="test" class="paragraph">This is line one.This is line two.</p>', source
+    assert_html '<p class="paragraph" id="test">This is line one.This is line two.</p>', source
   end
 
   def test_output_code_with_leading_spaces
@@ -173,7 +173,7 @@ p class='underscored_class_name' = output_number
 p id="dashed-id" class="underscored_class_name" = output_number
 }
 
-    assert_html '<p id="dashed-id" class="underscored_class_name">1337</p>', source
+    assert_html '<p class="underscored_class_name" id="dashed-id">1337</p>', source
   end
 
   def test_nonstandard_shortcut_attributes
@@ -181,7 +181,7 @@ p id="dashed-id" class="underscored_class_name" = output_number
 p#dashed-id.underscored_class_name = output_number
 }
 
-    assert_html '<p id="dashed-id" class="underscored_class_name">1337</p>', source
+    assert_html '<p class="underscored_class_name" id="dashed-id">1337</p>', source
   end
 
   def test_dashed_attributes
@@ -197,7 +197,7 @@ p data-info="Illudium Q-36" = output_number
 p#marvin.martian data-info="Illudium Q-36" = output_number
 }
 
-    assert_html '<p id="marvin" class="martian" data-info="Illudium Q-36">1337</p>', source
+    assert_html '<p class="martian" data-info="Illudium Q-36" id="marvin">1337</p>', source
   end
 
   def test_parens_around_attributes
@@ -205,7 +205,7 @@ p#marvin.martian data-info="Illudium Q-36" = output_number
 p(id="marvin" class="martian" data-info="Illudium Q-36") = output_number
 }
 
-    assert_html '<p id="marvin" class="martian" data-info="Illudium Q-36">1337</p>', source
+    assert_html '<p class="martian" data-info="Illudium Q-36" id="marvin">1337</p>', source
   end
 
   def test_square_brackets_around_attributes
@@ -213,7 +213,7 @@ p(id="marvin" class="martian" data-info="Illudium Q-36") = output_number
 p[id="marvin" class="martian" data-info="Illudium Q-36"] = output_number
 }
 
-    assert_html '<p id="marvin" class="martian" data-info="Illudium Q-36">1337</p>', source
+    assert_html '<p class="martian" data-info="Illudium Q-36" id="marvin">1337</p>', source
   end
 
   def test_parens_around_attributes_with_equal_sign_snug_to_right_paren
@@ -221,6 +221,6 @@ p[id="marvin" class="martian" data-info="Illudium Q-36"] = output_number
 p(id="marvin" class="martian" data-info="Illudium Q-36")= output_number
 }
 
-    assert_html '<p id="marvin" class="martian" data-info="Illudium Q-36">1337</p>', source
+    assert_html '<p class="martian" data-info="Illudium Q-36" id="marvin">1337</p>', source
   end
 end

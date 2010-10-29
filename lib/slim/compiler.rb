@@ -17,7 +17,7 @@ module Slim
           block << [:static, $1]
         when /^\#\{([^\}]*)\}/
           # Interpolation
-          block << [:dynamic, escape_code($1)]
+          block << [:escape, :dynamic, $1]
         when /^([^\#]+|\#)/
           # Static text
           block << [:static, $&]
@@ -46,7 +46,7 @@ module Slim
     # @return [Array] Compiled temple expression
     def on_slim_output(escape, code, content)
       if empty_exp?(content)
-        [:multi, [:dynamic, escape ? escape_code(code) : code], content]
+        [:multi, escape ? [:escape, :dynamic, code] : [:dynamic, code], content]
       else
         on_slim_output_block(escape, code, content)
       end
@@ -101,27 +101,22 @@ module Slim
     # @param [Array] content Temple expression
     # @return [Array] Compiled temple expression
     def on_slim_tag(name, attrs, content)
-      attrs = attrs.inject([:html, :attrs]) do |m, (key, dynamic, value)|
+      attrs = attrs.inject([]) do |m, (key, dynamic, value)|
         value = if dynamic
-                  [:dynamic, escape_code(value)]
+                  [:escape, :dynamic, value]
                 else
                   on_slim_text(value)
                 end
-        m << [:html, :basicattr, [:static, key.to_s], value]
+        m << [[:static, key.to_s], value]
       end
 
-      [:html, :tag, name, attrs, compile(content)]
+      # TODO: last argument false = tag is explicitly closed
+      # TODO: Implement support for explicitly closed tags
+      # Syntax like in haml (tag(attrs)/)?
+      [:html, :tag, name, attrs, compile(content), false]
     end
 
     private
-
-    # Generate code to escape html
-    #
-    # @param [String] param Ruby code
-    # @return [String] Ruby code
-    def escape_code(param)
-      "Slim::Helpers.escape_html#{@options[:use_html_safe] ? '_safe' : ''}((#{param}))"
-    end
 
     # Generate unique temporary variable name
     #

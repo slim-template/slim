@@ -13,11 +13,6 @@ require 'slim/engine'
 require 'slim/template'
 require 'slim/version'
 
-begin
-  require 'escape_utils'
-rescue LoadError
-end
-
 module Slim
   def self.version
     VERSION

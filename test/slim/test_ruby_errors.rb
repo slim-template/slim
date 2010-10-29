@@ -134,4 +134,11 @@ div
 
     assert_runtime_error 'Explicit end statements are forbidden', source
   end
+
+  def test_id_attribute_merging2
+    source = %{
+#alpha id="beta" Test it
+}
+    assert_runtime_error 'Multiple id attributes specified, but id concatenation disabled', source
+  end
 end

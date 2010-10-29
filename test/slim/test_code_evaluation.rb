@@ -6,7 +6,7 @@ class TestSlimCodeEvaluation < TestSlim
 p id="#{id_helper}" class="hello world" = hello_world
 }
 
-    assert_html '<p id="notice" class="hello world">Hello World from @env</p>', source
+    assert_html '<p class="hello world" id="notice">Hello World from @env</p>', source
   end
 
   def test_render_with_call_to_set_custom_attributes
@@ -15,7 +15,7 @@ p data-id="#{id_helper}" data-class="hello world"
   = hello_world
 }
 
-    assert_html '<p data-id="notice" data-class="hello world">Hello World from @env</p>', source
+    assert_html '<p data-class="hello world" data-id="notice">Hello World from @env</p>', source
   end
 
   def test_render_with_call_to_set_attributes_and_call_to_set_content
@@ -23,7 +23,7 @@ p data-id="#{id_helper}" data-class="hello world"
 p id="#{id_helper}" class="hello world" = hello_world
 }
 
-    assert_html '<p id="notice" class="hello world">Hello World from @env</p>', source
+    assert_html '<p class="hello world" id="notice">Hello World from @env</p>', source
   end
 
   def test_render_with_parameterized_call_to_set_attributes_and_call_to_set_content
@@ -31,7 +31,7 @@ p id="#{id_helper}" class="hello world" = hello_world
 p id="#{id_helper}" class="hello world" = hello_world("Hello Ruby!")
 }
 
-    assert_html '<p id="notice" class="hello world">Hello Ruby!</p>', source
+    assert_html '<p class="hello world" id="notice">Hello Ruby!</p>', source
   end
 
   def test_render_with_spaced_parameterized_call_to_set_attributes_and_call_to_set_content
@@ -39,7 +39,7 @@ p id="#{id_helper}" class="hello world" = hello_world("Hello Ruby!")
 p id="#{id_helper}" class="hello world" = hello_world "Hello Ruby!"
 }
 
-    assert_html '<p id="notice" class="hello world">Hello Ruby!</p>', source
+    assert_html '<p class="hello world" id="notice">Hello Ruby!</p>', source
   end
 
   def test_render_with_spaced_parameterized_call_to_set_attributes_and_call_to_set_content_2
@@ -47,7 +47,7 @@ p id="#{id_helper}" class="hello world" = hello_world "Hello Ruby!"
 p id="#{id_helper}" class="hello world" = hello_world "Hello Ruby!", :dummy => "value"
 }
 
-    assert_html '<p id="notice" class="hello world">Hello Ruby!dummy value</p>', source
+    assert_html '<p class="hello world" id="notice">Hello Ruby!dummy value</p>', source
   end
 
   def test_hash_call_in_attribute
@@ -87,7 +87,7 @@ form(action=action_path(:page, :save) method='post')
 form(method='post' action=action_path(:page, :save))
 }
 
-    assert_html '<form method="post" action="&#47;action-page-save"></form>', source
+    assert_html '<form action="&#47;action-page-save" method="post"></form>', source
   end
 
   def test_hash_call_in_attribute_without_quotes
@@ -143,7 +143,7 @@ p(id=[hash[:a] + hash[:a]]) Test it
 p(id=[hash[:a] + hash[:a]] class=[hash[:a]]) Test it
 }
 
-    assert_html '<p id="The letter aThe letter a" class="The letter a">Test it</p>', source
+    assert_html '<p class="The letter a" id="The letter aThe letter a">Test it</p>', source
   end
 
   def test_hash_call_in_delimited_attribute_with_ruby_evaluation_5
@@ -151,7 +151,7 @@ p(id=[hash[:a] + hash[:a]] class=[hash[:a]]) Test it
 p(id=hash[:a] class=[hash[:a]]) Test it
 }
 
-    assert_html '<p id="The letter a" class="The letter a">Test it</p>', source
+    assert_html '<p class="The letter a" id="The letter a">Test it</p>', source
   end
 
   def test_computation_in_attribute
@@ -205,11 +205,17 @@ p id="#{(false ? 'notshown' : 'shown')}" = output_number
     assert_html '<div class="alpha beta">Test it</div>', source
   end
 
-
   def test_id_attribute_merging
     source = %{
 #alpha id="beta" Test it
 }
-    assert_html '<div id="alpha_beta">Test it</div>', source
+    assert_html '<div id="alpha_beta">Test it</div>', source, :id_delimiter => '_'
+  end
+
+  def test_id_attribute_merging2
+    source = %{
+#alpha id="beta" Test it
+}
+    assert_html '<div id="alpha-beta">Test it</div>', source, :id_delimiter => '-'
   end
 end

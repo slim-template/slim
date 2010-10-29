@@ -3,13 +3,16 @@ module Slim
   # @api public
   class Engine < Temple::Engine
     use Slim::Parser, :file
-    use Slim::Debugger, :debug, :prefix => 'before end insertion'
+    filter :Debugger, :debug, :prefix => 'before end insertion'
     use Slim::EndInserter
-    use Slim::Debugger, :debug, :prefix => 'after end insertion'
+    filter :Debugger, :debug, :prefix => 'after end insertion'
     use Slim::EmbeddedEngine
-    use Slim::Compiler, :use_html_safe
-    use Slim::Debugger, :debug, :prefix => 'after compilation'
-    use Temple::HTML::Fast, :format, :attr_wrapper => '"', :format => :html5
+    use Slim::Compiler
+    filter :Debugger, :debug, :prefix => 'after compilation'
+    use Temple::HTML::Fast, :format, :attr_wrapper, :id_delimiter, :id_concat,
+                            :attr_wrapper => '"', :format => :html5, :id_delimiter => nil
+    filter :Debugger, :debug, :prefix => 'after html'
+    filter :EscapeHTML, :use_html_safe
     filter :MultiFlattener
     filter :StaticMerger
     filter :DynamicInliner
