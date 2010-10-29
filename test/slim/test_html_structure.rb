@@ -223,4 +223,28 @@ p(id="marvin" class="martian" data-info="Illudium Q-36")= output_number
 
     assert_html '<p class="martian" data-info="Illudium Q-36" id="marvin">1337</p>', source
   end
+
+  def test_closed_tag
+    source = %q{
+closed/
+}
+
+    assert_html '<closed />', source, :format => :xhtml
+  end
+
+  def test_closed_tag_with_attributes
+    source = %q{
+closed id="test" /
+}
+
+    assert_html '<closed id="test" />', source, :format => :xhtml
+  end
+
+  def test_closed_tag_with_attributes_and_parens
+    source = %q{
+closed(id="test")/
+}
+
+    assert_html '<closed id="test" />', source, :format => :xhtml
+  end
 end

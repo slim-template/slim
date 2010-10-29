@@ -12,8 +12,8 @@ module Slim
       [:slim, :output, code, escape, compile(content)]
     end
 
-    def on_slim_tag(name, attrs, content)
-      [:slim, :tag, name, attrs, compile(content)]
+    def on_slim_tag(name, attrs, closed, content)
+      [:slim, :tag, name, attrs, closed, compile(content)]
     end
   end
 end

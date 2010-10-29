@@ -100,7 +100,7 @@ module Slim
     # @param [Array] attrs Attributes
     # @param [Array] content Temple expression
     # @return [Array] Compiled temple expression
-    def on_slim_tag(name, attrs, content)
+    def on_slim_tag(name, attrs, closed, content)
       attrs = attrs.inject([]) do |m, (key, dynamic, value)|
         value = if dynamic
                   [:escape, :dynamic, value]
@@ -109,11 +109,7 @@ module Slim
                 end
         m << [[:static, key.to_s], value]
       end
-
-      # TODO: last argument false = tag is explicitly closed
-      # TODO: Implement support for explicitly closed tags
-      # Syntax like in haml (tag(attrs)/)?
-      [:html, :tag, name, attrs, compile(content), false]
+      [:html, :tag, name, attrs, compile(content), closed]
     end
 
     private

@@ -302,7 +302,7 @@ module Slim
       end
 
       content = [:multi]
-      tag = [:slim, :tag, tag, attributes, content]
+      tag = [:slim, :tag, tag, attributes, false, content]
 
       if line =~ /^\s*=(=?)/
         # Handle output code
@@ -310,6 +310,10 @@ module Slim
         broken_line = $'.strip
         content << [:slim, :output, $1 != '=', broken_line, block]
         [tag, block, broken_line, nil]
+      elsif line =~ /^\s*\//
+        # Closed tag
+        tag[4] = true
+        [tag, block, nil, nil]
       elsif !line.empty?
         # Handle text content
         content << [:slim, :text, line.sub(/^( )/, '')]
