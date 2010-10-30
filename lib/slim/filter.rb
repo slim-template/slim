@@ -1,7 +1,7 @@
 module Slim
   # Base class for Temple filters used in Slim
   # @api private
-  class Filter < Temple::Filters::BasicFilter
+  class Filter < Temple::Filters::Filter
     temple_dispatch :slim
 
     def on_slim_control(code, content)
