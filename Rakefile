@@ -7,8 +7,8 @@ end
 require 'rake/testtask'
 
 desc 'Run Slim benchmarks! (Default :iterations is 1000)'
-task :bench, :iterations do |t, args|
-  ruby("benchmarks/run.rb #{args[:iterations]}")
+task :bench, :iterations, :slow do |t, args|
+  ruby("benchmarks/run.rb #{args[:slow]} #{args[:iterations]}")
 end
 
 Rake::TestTask.new(:test) do |t|
