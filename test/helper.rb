@@ -2,10 +2,9 @@
 
 require 'rubygems'
 require 'minitest/unit'
+require 'slim'
 
 MiniTest::Unit.autorun
-
-require File.dirname(__FILE__) + '/../lib/slim'
 
 class TestSlim < MiniTest::Unit::TestCase
   def setup
