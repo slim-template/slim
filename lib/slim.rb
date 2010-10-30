@@ -1,8 +1,6 @@
 # encoding: utf-8
 
 require 'temple'
-require 'tilt'
-
 require 'slim/helpers'
 require 'slim/parser'
 require 'slim/filter'
