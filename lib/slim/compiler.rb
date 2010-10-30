@@ -101,7 +101,7 @@ module Slim
     # @param [Array] content Temple expression
     # @return [Array] Compiled temple expression
     def on_slim_tag(name, attrs, closed, content)
-      attrs = attrs.inject([]) do |m, (key, dynamic, value)|
+      attrs = attrs.inject([:html, :staticattrs]) do |m, (key, dynamic, value)|
         value = if dynamic
                   [:escape, :dynamic, value]
                 else
@@ -109,7 +109,7 @@ module Slim
                 end
         m << [key.to_s, value]
       end
-      [:html, :tag, name, [:html, :staticattrs, attrs], closed, compile(content)]
+      [:html, :tag, name, attrs, closed, compile(content)]
     end
 
     private
