@@ -29,13 +29,9 @@ Install Slim as a gem:
 
 Include Slim in your Gemfile:
 
-    gem 'slim'
+    gem 'slim', require: 'slim/rails'
 
-In `config/application.rb`, add the following line near the top (i.e. just below `require 'rails/all'`):
-
-    require 'slim/rails'
-
-That's it!
+That's it! Now, just use the .slim extension and you're good to go.
 
 If you want to use the Slim template directly, you can use the Tilt interface:
 
