@@ -37,7 +37,7 @@ module Slim
           prev_indent = false
         end
 
-        result << compile(exp)
+        result << compile!(exp)
       end
 
       # The last line can be a control code too.

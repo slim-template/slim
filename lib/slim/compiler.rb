@@ -35,7 +35,7 @@ module Slim
     def on_slim_control(code, content)
       [:multi,
         [:block, code],
-        compile(content)]
+        compile!(content)]
     end
 
     # Handle output expression `[:slim, :output, escape, code, content]`
@@ -72,7 +72,7 @@ module Slim
         # that `yield` will not output the content to the current buffer,
         # but rather return the output.
         [:capture, tmp2,
-         compile(content)],
+         compile!(content)],
 
         # Make sure that `yield` returns the output.
         [:block, tmp2],
@@ -109,7 +109,7 @@ module Slim
                 end
         m << [key.to_s, value]
       end
-      [:html, :tag, name, attrs, closed, compile(content)]
+      [:html, :tag, name, attrs, closed, compile!(content)]
     end
 
     private
