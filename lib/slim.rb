@@ -1,7 +1,6 @@
 # encoding: utf-8
 
 require 'temple'
-require 'slim/helpers'
 require 'slim/parser'
 require 'slim/filter'
 require 'slim/end_inserter'
