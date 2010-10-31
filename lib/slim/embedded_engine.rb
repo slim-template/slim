@@ -36,15 +36,15 @@ module Slim
       def on_slim_embedded(engine, *body)
         text = collect_text(body)
         engine = Tilt[engine]
-        if @options[:precompiled]
+        if options[:precompiled]
           # Wrap precompiled code in proc, local variables from out the proc are accessible
           # WARNING: This is a bit of a hack. Tilt::Engine#precompiled is protected
           precompiled = engine.new { text }.send(:precompiled, {}).first
           [:dynamic, "proc { #{precompiled} }.call"]
-        elsif @options[:dynamic]
+        elsif options[:dynamic]
           # Fully dynamic evaluation of the template during runtime (Slow and uncached)
           [:dynamic, "#{engine.name}.new { #{text.inspect} }.render(self, #{COLLECT_LOCALS})"]
-        elsif @options[:interpolate]
+        elsif options[:interpolate]
           # Static template with interpolated ruby code
           [:slim, :text, engine.new { text }.render]
         else
@@ -56,8 +56,8 @@ module Slim
 
     class TagEngine < EmbeddedEngine
       def on_slim_embedded(engine, *body)
-        content = @options[:engine] ? @options[:engine].new.on_slim_embedded(engine, *body) : [:multi, *body]
-        [:slim, :tag, @options[:tag], @options[:attributes].map {|k, v| [k, false, v] }, false, content]
+        content = options[:engine] ? options[:engine].new.on_slim_embedded(engine, *body) : [:multi, *body]
+        [:slim, :tag, options[:tag], options[:attributes].map {|k, v| [k, false, v] }, false, content]
       end
     end
 

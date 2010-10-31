@@ -2,6 +2,8 @@ module Slim
   # Parses Slim code and transforms it to a Temple expression
   # @api private
   class Parser
+    include Temple::Mixins::Options
+
     class SyntaxError < StandardError
       attr_reader :error, :file, :line, :lineno, :column
 
@@ -22,11 +24,11 @@ module Slim
       end
     end
 
-    attr_reader :options
+    default_options[:tabsize] = 4
 
     def initialize(options = {})
-      @options = options
-      @tab     = ' ' * (options[:tabsize] || 4)
+      super
+      @tab = ' ' * @options[:tabsize]
     end
 
     # Compile string to Temple expression
@@ -366,7 +368,7 @@ module Slim
 
     # A little helper for raising exceptions.
     def syntax_error!(message, *args)
-      raise SyntaxError.new(message, @options[:file], *args)
+      raise SyntaxError.new(message, options[:file], *args)
     end
   end
 end
