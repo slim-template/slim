@@ -179,24 +179,20 @@ module Slim
             block << [:slim, :text, line.sub(/^( )/, '')]
             text_indent = block_indent + ($1 ? 2 : 1)
           end
-        when ?-, ?=
-          # Found a potential code block.
-
-          # First of all we need to push a exp into the stack. Anything
-          # indented deeper will be pushed into this exp. We'll include the
-          # same exp in the current-stack, which makes sure that it'll be
-          # included in the generated code.
+        when ?-
+          # Found a code block.
+          # We expect the line to be broken or the next line to be indented.
           block = [:multi]
-          if line[1] == ?=
-            broken_line = line[2..-1].strip
-            stacks.last << [:slim, :output, false, broken_line, block]
-          elsif line[0] == ?=
-            broken_line = line[1..-1].strip
-            stacks.last << [:slim, :output, true, broken_line, block]
-          else
-            broken_line = line[1..-1].strip
-            stacks.last << [:slim, :control, broken_line, block]
-          end
+          broken_line = line[1..-1].strip
+          stacks.last << [:slim, :control, broken_line, block]
+          stacks << block
+        when ?=
+          # Found a output bloc
+          # We expect the line to be broken or the next line to be indented.
+          block = [:multi]
+          escape = line[1] != ?=
+          broken_line = escape ? line[1..-1].strip : line[2..-1].strip
+          stacks.last << [:slim, :output, escape, broken_line, block]
           stacks << block
         when ?!
           # Found a directive (currently only used for doctypes)
