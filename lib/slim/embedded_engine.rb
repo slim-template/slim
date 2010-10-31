@@ -54,6 +54,13 @@ module Slim
       end
     end
 
+    class ERBEngine < EmbeddedEngine
+      def on_slim_embedded(engine, *body)
+        text = collect_text(body)
+        Temple::ERB::Parser.new(:auto_escape => true).compile(text)
+      end
+    end
+
     class TagEngine < EmbeddedEngine
       def on_slim_embedded(engine, *body)
         content = options[:engine] ? options[:engine].new.on_slim_embedded(engine, *body) : [:multi, *body]
@@ -79,7 +86,7 @@ module Slim
     register :less, TagEngine, :tag => 'style', :attributes => { :type => 'text/css' }, :engine => TiltEngine
 
     # These engines are precompiled, code is embedded
-    register :erb, TiltEngine, :precompiled => true
+    register :erb, ERBEngine
     register :haml, TiltEngine, :precompiled => true
     register :nokogiri, TiltEngine, :precompiled => true
     register :builder, TiltEngine, :precompiled => true
