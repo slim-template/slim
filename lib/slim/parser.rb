@@ -259,11 +259,11 @@ module Slim
       # Now we'll have to find all the attributes. We'll store these in an
       # nested array: [[name, value], [name2, value2]]. The value is a piece
       # of Ruby code.
-      attributes = []
+      attributes = [:slim, :attrs]
 
       # Find any literal class/id attributes
       while line =~ CLASS_ID_REGEX
-        attributes << [ATTR_SHORTHAND[$1], false, $2]
+        attributes << [ATTR_SHORTHAND[$1], [:static, $2]]
         line = $'
       end
 
@@ -282,11 +282,11 @@ module Slim
         if line =~ QUOTED_VALUE_REGEX
           # Value is quoted (static)
           line = $'
-          attributes << [key, false, $1[1..-2]]
+          attributes << [key, [:slim, :text, $1[1..-2]]]
         else
           # Value is ruby code
           line, value = parse_ruby_attribute(orig_line, line, lineno, delimiter)
-          attributes << [key, true, value]
+          attributes << [key, [:slim, :output, true, value, [:multi]]]
         end
       end
 

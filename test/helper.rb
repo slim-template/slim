@@ -20,7 +20,7 @@ class TestSlim < MiniTest::Unit::TestCase
   end
 
   def render(source, options = {}, &block)
-    Slim::Template.new(options[:file], options) { source }.render(@env, &block)
+    Slim::Template.new(options[:file], options) { source }.render(options[:scope] || @env, &block)
   end
 
   def assert_html(expected, source, options = {}, &block)

@@ -2,31 +2,6 @@ module Slim
   # Compiles Slim expressions into Temple::HTML expressions.
   # @api private
   class Compiler < Filter
-    # Handle text expression `[:slim, :text, string]`
-    #
-    # @param [String] string Static text
-    # @return [Array] Compiled temple expression
-    def on_slim_text(string)
-      # Interpolate variables in text (#{variable}).
-      # Split the text into multiple dynamic and static parts.
-      block = [:multi]
-      until string.empty?
-        case string
-        when /^\\(\#\{[^\}]*\})/
-          # Escaped interpolation
-          block << [:static, $1]
-        when /^\#\{([^\}]*)\}/
-          # Interpolation
-          block << [:escape, :dynamic, $1]
-        when /^([^\#]+|\#)/
-          # Static text
-          block << [:static, $&]
-        end
-        string = $'
-      end
-      block
-    end
-
     # Handle control expression `[:slim, :control, code, content]`
     #
     # @param [String] ruby code
@@ -60,7 +35,7 @@ module Slim
     # @param [Array] content Temple expression
     # @return [Array] Compiled temple expression
     def on_slim_output_block(escape, code, content)
-      tmp1, tmp2 = tmp_var, tmp_var
+      tmp1, tmp2 = tmp_var('capture'), tmp_var('capture')
 
       [:multi,
         # Capture the result of the code in a variable. We can't do
@@ -94,32 +69,22 @@ module Slim
       end
     end
 
-    # Handle tag expression `[:slim, :tag, name, attrs, content]`
+    # Handle tag expression `[:slim, :tag, name, attrs, closed, content]`
     #
     # @param [String] name Tag name
     # @param [Array] attrs Attributes
     # @param [Array] content Temple expression
     # @return [Array] Compiled temple expression
     def on_slim_tag(name, attrs, closed, content)
-      attrs = attrs.inject([:html, :staticattrs]) do |m, (key, dynamic, value)|
-        value = if dynamic
-                  [:escape, :dynamic, value]
-                else
-                  on_slim_text(value)
-                end
-        m << [key.to_s, value]
-      end
-      [:html, :tag, name, attrs, closed, compile!(content)]
+      [:html, :tag, name, compile!(attrs), closed, compile!(content)]
     end
 
-    private
-
-    # Generate unique temporary variable name
+    # Handle tag attributes expression `[:slim, :attrs, *attrs]`
     #
-    # @return [String] Variable name
-    def tmp_var
-      @tmp_var ||= 0
-      "_slimtmp#{@tmp_var += 1}"
+    # @param [Array] attrs Attributes
+    # @return [Array] Compiled temple expression
+    def on_slim_attrs(*attrs)
+      [:html, :staticattrs, *attrs.map {|k, v| [k.to_s, compile!(v)] }]
     end
   end
 end
