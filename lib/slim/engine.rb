@@ -19,7 +19,7 @@ module Slim
     use Slim::EndInserter
     use Slim::Compiler
     filter :EscapeHTML, :use_html_safe
-    use Temple::HTML::Pretty, :format, :attr_wrapper, :id_delimiter, :id_concat, :pretty
+    use Temple::HTML::Pretty, :format, :attr_wrapper, :id_delimiter, :pretty
     filter :MultiFlattener
     filter :StaticMerger
     filter :DynamicInliner
