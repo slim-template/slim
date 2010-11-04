@@ -5,7 +5,7 @@ module Slim
     # Allow users to set default options, particularly useful in Rails' environment files.
     # For instance, in config/environments/development.rb you probably want:
     #     # Indent html for pretty debugging
-    #     Slim::Engine.options[:pretty] = true
+    #     Slim::Engine.set_default_options :pretty => true
     #
     set_default_options :pretty => false,
                         :attr_wrapper => '"',
