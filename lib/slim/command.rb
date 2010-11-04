@@ -40,6 +40,14 @@ module Slim
         @options[:compile] = true
       end
 
+      opts.on('-S', '--sections', :NONE, 'Logic-less sections mode') do
+        @options[:sections] = true
+      end
+
+      opts.on('-p', '--pretty', :NONE, 'Produce pretty html') do
+        @options[:pretty] = true
+      end
+
       opts.on_tail('-h', '--help', 'Show this message') do
         puts opts
         exit
@@ -71,9 +79,13 @@ module Slim
       end
 
       if @options[:compile]
-        @options[:output].puts(Slim::Engine.new(:file => @options[:file]).compile(@options[:input].read))
+        @options[:output].puts(Slim::Engine.new(:file => @options[:file],
+                                                :pretty => @options[:pretty],
+                                                :sections => @options[:sections]).compile(@options[:input].read))
       else
-        @options[:output].puts(Slim::Template.new(@options[:file]) { @options[:input].read }.render)
+        @options[:output].puts(Slim::Template.new(@options[:file],
+                                                  :pretty => @options[:pretty],
+                                                  :sections => @options[:sections]) { @options[:input].read }.render)
       end
     end
   end
