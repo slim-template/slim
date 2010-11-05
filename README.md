@@ -86,8 +86,6 @@ Here's a quick example to demonstrate what a Slim template looks like:
 
 ### Line indicators
 
-__Please note that all line indicators must be followed by a space__
-
 #### `|`
 
 > The pipe tells Slim to just copy the line. It essentially escapes any processing.
@@ -148,7 +146,7 @@ __Please note that all line indicators must be followed by a space__
     body
       h1 id="headline" Welcome to my site.
 
-  Or nest it.  __Note:__ Must use a pipe or a backtick (followed by a space) to escape processing
+  Or nest it.  __Note:__ Must use a pipe or a backtick to escape processing
 
     body
       h1 id="headline"
