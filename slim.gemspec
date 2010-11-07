@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 require File.dirname(__FILE__) + "/lib/slim/version"
+require "date"
 
 Gem::Specification.new do |s|
   s.name              = "slim"
