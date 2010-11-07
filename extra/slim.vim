@@ -24,10 +24,20 @@ syn include @slimRuby syntax/ruby.vim
 runtime! syntax/html.vim
 unlet! b:current_syntax
 
-syntax region slimHtml start="^\s*[^-=]\w" end="$" contains=htmlTagName, htmlArg, htmlString
+syn match slimCode /^\s*[-=#.!].*/ contained
 
-syntax region slimControl  start="-" end="$"  contains=@slimRuby keepend
-syntax region slimOutput   start=".*=\s" end="$"  contains=@slimRuby keepend
+syn match slimComment /^\(\s\+\)[/].*\(\n\1\s.*\)*/ 
 
+syn match slimText /^\(\s\+\)[`|'].*\(\n\1\s.*\)*/ 
+
+"syn region slimText start=/\(\s*\)[`|'].*\(\n\1\s.*\)*/ end="$"
+
+syn region slimHtml start="^\s*[^-=]\w" end="$" contains=htmlTagName, htmlArg, htmlString
+
+syn region slimControl start="-" end="$" contains=@slimRuby keepend
+
+
+hi def link slimText                   String
+hi def link slimComment                Comment
 
 let b:current_syntax = "slim"
