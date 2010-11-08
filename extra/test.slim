@@ -9,6 +9,12 @@ html
         alert('Hello World');
       });
 
+    haml: 
+      #someid.someclass{:this => 'test'} Content in haml
+
+    erb:
+      <%= some_method(@request) %>
+
   body
     / comment block
       with multiple lines
@@ -26,6 +32,7 @@ html
     - else
       p There are no users.
 
+    / Single comment line
     #content Hello #{@user.name}! Welcome to the test page!
              Try out Slim!
 
