@@ -2,11 +2,12 @@ require 'helper'
 
 class TestSlimHtmlStructure < TestSlim
   def test_simple_render
+    # Keep the trailing space behind "body "!
     source = %q{
 html
   head
     title Simple Test Title
-  body
+  body 
     p Hello World, meet Slim.
 }
 

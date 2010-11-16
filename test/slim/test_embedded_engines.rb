@@ -26,6 +26,7 @@ markdown:
   end
 
   def test_render_with_javascript
+    # Keep the trailing space behind "javascript:   "!
     source = %q{
 javascript:   
   $(function() {});

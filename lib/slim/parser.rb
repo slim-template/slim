@@ -312,13 +312,13 @@ module Slim
         # Closed tag
         tag[4] = true
         [tag, block, nil, nil]
-      elsif !line.empty?
+      elsif line =~ /^\s*$/
+        # Empty line
+        [tag, content, nil, nil]
+      else
         # Handle text content
         content << [:slim, :text, line.sub(/^( )/, '')]
         [tag, content, nil, orig_line.size - line.size + ($1 ? 1 : 0)]
-      else
-        # Empty line
-        [tag, content, nil, nil]
       end
     end
 
