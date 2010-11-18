@@ -13,7 +13,13 @@ end
 
 Rake::TestTask.new(:test) do |t|
   t.libs << 'lib' << 'test'
-  t.pattern = 'test/**/test_*.rb'
+  t.pattern = 'test/slim/**/test_*.rb'
+  t.verbose = true
+end
+
+Rake::TestTask.new(:integration) do |t|
+  t.libs << 'lib' << 'test'
+  t.pattern = 'test/integration/**/test_*.rb'
   t.verbose = true
 end
 

@@ -1,5 +1,26 @@
 require 'slim'
 
+module Slim
+  # Implements a safe string buffer.
+  class SafeBufferGenerator < Temple::Generators::StringBuffer
+    def preamble; "#{buffer} = ActiveSupport::SafeBuffer.new" end
+
+    def concat(str)
+      "#{buffer}.safe_concat((#{str}))"
+    end
+
+    def postamble
+      buffer
+    end
+  end
+
+  # Should be set automatically by Temple (detects html_safe? method)
+  Temple::Filters::EscapeHTML.default_options[:use_html_safe] = true
+
+  # Make return values of captured blocks html safe
+  Temple::Generator.default_options[:capture_generator] = SafeBufferGenerator
+end
+
 module ActionView
   module TemplateHandlers
     raise "Slim supports only Rails 3.x and greater, your Rails version is #{Rails::VERSION::STRING}" if Rails::VERSION::MAJOR < 3

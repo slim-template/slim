@@ -1,12 +1,13 @@
-require 'helper'
-
 require 'rubygems'
 require 'rails'
 require 'action_controller'
 require 'action_view'
 require 'slim/rails'
+require 'minitest/unit'
 
-class TestSlimRails < TestSlim
+MiniTest::Unit.autorun
+
+class TestSlimRails < MiniTest::Unit::TestCase
   def render(source, &block)
     view = ActionView::Base.new
     view.controller = ActionController::Base.new
@@ -74,5 +75,15 @@ p This is the captured content
 }
 
     assert_html '<p>This is the captured content</p><p>a1</p><p>a2</p>', source
+  end
+
+
+  def test_content_tag
+    source = %q{
+= content_tag(:div) do
+  p Do not escape this!
+}
+
+    assert_html '<div><p>Do not escape this!</p></div>', source
   end
 end
