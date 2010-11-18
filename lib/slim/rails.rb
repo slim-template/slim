@@ -8,10 +8,6 @@ module Slim
     def concat(str)
       "#{buffer}.safe_concat((#{str}))"
     end
-
-    def postamble
-      buffer
-    end
   end
 
   # Should be set automatically by Temple (detects html_safe? method)
