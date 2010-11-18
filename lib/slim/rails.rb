@@ -33,7 +33,7 @@ module ActionView
     else
       # Slim handler for Rails 3.1 and greater
       class SlimHandler
-        def call(template)
+        def self.call(template)
           Slim::Engine.new.compile(template.source)
         end
       end
