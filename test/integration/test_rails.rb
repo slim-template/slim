@@ -7,14 +7,18 @@ require 'minitest/unit'
 
 MiniTest::Unit.autorun
 
+class TestApp < Rails::Application
+  config.root = File.join(File.dirname(__FILE__), 'rails_app')
+end
+Rails.application = TestApp
+
 class TestSlimRails < MiniTest::Unit::TestCase
   def render(source, &block)
-    view = ActionView::Base.new
-    view.controller = ActionController::Base.new
-    if defined?(ActionController::Response)
-      # This is needed for >=3.0.0
-      view.controller.response = ActionController::Response.new
-    end
+    view                     = ActionView::Base.new
+    view.view_paths          = Rails.root.join('views')
+    view.controller          = ActionController::Base.new
+    view.controller.response = ActionController::Response.new if defined?(ActionController::Response)
+
     view.render :inline => source, :type => :slim
   end
 
@@ -77,7 +81,6 @@ p This is the captured content
     assert_html '<p>This is the captured content</p><p>a1</p><p>a2</p>', source
   end
 
-
   def test_content_tag
     source = %q{
 = content_tag(:div) do
@@ -85,5 +88,13 @@ p This is the captured content
 }
 
     assert_html '<div><p>Do not escape this!</p></div>', source
+  end
+
+  def test_render_partial
+    source = %q{
+= render "tests/dummy"
+}
+
+    assert_html '<div id="dummy"><p>Dummy data.<p></div>', source
   end
 end
