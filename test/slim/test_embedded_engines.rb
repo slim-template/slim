@@ -1,5 +1,4 @@
 require 'helper'
-require 'erb'
 
 class TestSlimEmbeddedEngines < TestSlim
   def test_render_with_embedded_template
