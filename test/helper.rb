@@ -6,17 +6,6 @@ require 'slim'
 
 MiniTest::Unit.autorun
 
-module SlimStringMixin
-  def self.cleanup
-    undef_method(:html_safe)  if method_defined?(:html_safe)
-    undef_method(:html_safe?) if method_defined?(:html_safe?)
-  end
-end
-
-class String
-  include SlimStringMixin
-end
-
 class TestSlim < MiniTest::Unit::TestCase
   def setup
     @env = Env.new
@@ -24,7 +13,6 @@ class TestSlim < MiniTest::Unit::TestCase
   end
 
   def teardown
-    SlimStringMixin.cleanup
     Temple::Filters::EscapeHTML.default_options.delete(:use_html_safe)
   end
 
@@ -69,6 +57,18 @@ end
 
 class Env
   attr_reader :var
+
+  class HtmlSafeString < String
+    def html_safe?
+      true
+    end
+  end
+
+  class HtmlUnsafeString < String
+    def html_safe?
+      false
+    end
+  end
 
   def initialize
     @var = 'instance'

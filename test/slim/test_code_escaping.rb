@@ -26,42 +26,36 @@ p = "<strong>Hello World\\n, meet \\"Slim\\"</strong>."
   end
 
   def test_render_with_html_safe_false
-    SlimStringMixin.send(:define_method, :html_safe?) { false }
-
     source = %q{
-p = "<strong>Hello World\\n, meet \\"Slim\\"</strong>."
+p = HtmlUnsafeString.new("<strong>Hello World\\n, meet \\"Slim\\"</strong>.")
 }
 
     assert_html "<p>&lt;strong&gt;Hello World\n, meet \&quot;Slim\&quot;&lt;&#47;strong&gt;.</p>", source, :use_html_safe => true
   end
 
   def test_render_with_html_safe_true
-    SlimStringMixin.send(:define_method, :html_safe?) { true }
-
     source = %q{
-p = "<strong>Hello World\\n, meet \\"Slim\\"</strong>."
+p = HtmlSafeString.new("<strong>Hello World\\n, meet \\"Slim\\"</strong>.")
 }
 
     assert_html "<p><strong>Hello World\n, meet \"Slim\"</strong>.</p>", source, :use_html_safe => true
   end
 
   def test_render_with_global_html_safe_false
-    SlimStringMixin.send(:define_method, :html_safe?) { false }
     Temple::Filters::EscapeHTML.default_options[:use_html_safe] = false
 
     source = %q{
-p = "<strong>Hello World\\n, meet \\"Slim\\"</strong>."
+p = HtmlUnsafeString.new("<strong>Hello World\\n, meet \\"Slim\\"</strong>.")
 }
 
     assert_html "<p>&lt;strong&gt;Hello World\n, meet \&quot;Slim\&quot;&lt;&#47;strong&gt;.</p>", source
   end
 
   def test_render_with_global_html_safe_true
-    SlimStringMixin.send(:define_method, :html_safe?) { true }
     Temple::Filters::EscapeHTML.default_options[:use_html_safe] = true
 
     source = %q{
-p = "<strong>Hello World\\n, meet \\"Slim\\"</strong>."
+p = HtmlSafeString.new("<strong>Hello World\\n, meet \\"Slim\\"</strong>.")
 }
 
     assert_html "<p><strong>Hello World\n, meet \"Slim\"</strong>.</p>", source
