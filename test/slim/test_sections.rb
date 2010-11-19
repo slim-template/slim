@@ -71,4 +71,12 @@ p
 
     assert_html '<p>No person No person 2</p>', source, :scope => hash, :sections => true
   end
+
+  def test_output_with_content
+    source = %{
+p = method_with_block do
+  block
+}
+    assert_runtime_error 'Output statements with content are forbidden in sections mode', source, :sections => true
+  end
 end
