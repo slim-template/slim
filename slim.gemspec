@@ -16,13 +16,13 @@ Gem::Specification.new do |s|
   s.require_paths     = ["lib"]
   s.rubyforge_project = s.name
 
-  s.files         = `git ls-files`.split("\n")
-  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
+  s.files         = `git ls-files --  lib/* bin/* README.md`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
   s.add_runtime_dependency(%q<temple>, ["~> 0.1.5"])
   s.add_runtime_dependency(%q<tilt>, ["~> 1.1"])
+
   s.add_development_dependency(%q<rake>, [">= 0.8.7"])
   s.add_development_dependency(%q<haml>, [">= 0"])
   s.add_development_dependency(%q<erubis>, [">= 0"])
