@@ -25,7 +25,6 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency(%q<rake>, [">= 0.8.7"])
   s.add_development_dependency(%q<haml>, [">= 0"])
-  s.add_development_dependency(%q<erubis>, [">= 0"])
   s.add_development_dependency(%q<minitest>, [">= 0"])
   s.add_development_dependency(%q<rcov>, [">= 0"])
   s.add_development_dependency(%q<rdiscount>, [">= 0"])
