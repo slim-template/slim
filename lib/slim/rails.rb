@@ -8,13 +8,13 @@ module Slim
     def concat(str)
       "#{buffer}.safe_concat((#{str}))"
     end
+
+    def capture_generator
+      SafeBufferGenerator
+    end
   end
 
-  # Should be set automatically by Temple (detects html_safe? method)
-  Temple::Filters::EscapeHTML.default_options[:use_html_safe] = true
-
-  # Make return values of captured blocks html safe
-  Temple::Generator.default_options[:capture_generator] = SafeBufferGenerator
+  Slim::Engine.default_options[:generator] = SafeBufferGenerator
 end
 
 module ActionView

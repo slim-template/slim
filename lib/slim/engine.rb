@@ -10,7 +10,8 @@ module Slim
     set_default_options :pretty => false,
                         :attr_wrapper => '"',
                         :format => :html5,
-                        :id_delimiter => nil
+                        :id_delimiter => nil,
+                        :generator => Temple::Generators::ArrayBuffer
 
     use Slim::Parser, :file
     use Slim::EmbeddedEngine
@@ -23,6 +24,6 @@ module Slim
     filter :MultiFlattener
     filter :StaticMerger
     filter :DynamicInliner
-    generator :ArrayBuffer
+    chain << proc {|options| options[:generator].new }
   end
 end

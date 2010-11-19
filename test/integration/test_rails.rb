@@ -95,6 +95,6 @@ p This is the captured content
 = render "tests/partial"
 }
 
-    assert_html '<div id="partial"><p>Partial data.<p></div>', source
+    assert_html '<div id="partial"><p>Partial data.</p></div>', source
   end
 end
