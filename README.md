@@ -76,7 +76,7 @@ Here's a quick example to demonstrate what a Slim template looks like:
         #footer
           | Copyright &copy; 2010 Andrew Stone
 
-        = render partial: 'tracking_code'
+        = render 'tracking_code'
 
         script
           | $(content).do_something();
@@ -297,7 +297,7 @@ Here's a quick example to demonstrate what a Slim template looks like:
 [Google Group](http://groups.google.com/group/slim-template)
 
 ## Slim related projects
-  
+
 * [Textmate bundle](http://github.com/fredwu/ruby-slim-textmate-bundle)
 * [Rails 3 Generators](http://github.com/leogalmeida/slim-rails)
 * [Slim for Clojure](http://github.com/chaslemley/slim.clj)
