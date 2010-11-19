@@ -92,9 +92,9 @@ p This is the captured content
 
   def test_render_partial
     source = %q{
-= render "tests/dummy"
+= render "tests/partial"
 }
 
-    assert_html '<div id="dummy"><p>Dummy data.<p></div>', source
+    assert_html '<div id="partial"><p>Partial data.<p></div>', source
   end
 end
