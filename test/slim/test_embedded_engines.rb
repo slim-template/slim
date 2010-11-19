@@ -61,4 +61,32 @@ scss:
 }
     assert_html "<style type=\"text/css\">body {\n  color: red; }\n</style>", source
   end
+
+  def test_disabled_embedded_engine
+    source = %{
+ruby:
+  Embedded Ruby
+}
+    assert_runtime_error 'Embedded engine ruby is disabled', source, :enable_engines => %w(javascript)
+
+    source = %{
+ruby:
+  Embedded Ruby
+}
+    assert_runtime_error 'Embedded engine ruby is disabled', source, :enable_engines => %w(javascript)
+  end
+
+  def test_enabled_embedded_engine
+    source = %q{
+javascript:
+  $(function() {});
+}
+    assert_html '<script type="text/javascript">$(function() {});</script>', source, :disable_engines => %w(ruby)
+
+    source = %q{
+javascript:
+  $(function() {});
+}
+    assert_html '<script type="text/javascript">$(function() {});</script>', source, :enable_engines => %w(javascript)
+  end
 end

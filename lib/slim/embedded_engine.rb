@@ -14,8 +14,11 @@ module Slim
       engine.dup
     end
 
-    def on_slim_embedded(engine, *body)
-      EmbeddedEngine[engine].on_slim_embedded(engine, *body)
+    def on_slim_embedded(name, *body)
+      engine = EmbeddedEngine[name]
+      raise "Embedded engine #{name} is disabled" if (options[:enable_engines] && !options[:enable_engines].include?(name)) ||
+                                                     (options[:disable_engines] && options[:disable_engines].include?(name))
+      engine.on_slim_embedded(name, *body)
     end
 
     def collect_text(body)

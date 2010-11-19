@@ -13,8 +13,8 @@ module Slim
                         :id_delimiter => nil,
                         :generator => Temple::Generators::ArrayBuffer
 
-    use Slim::Parser, :file
-    use Slim::EmbeddedEngine
+    use Slim::Parser, :file, :tabsize
+    use Slim::EmbeddedEngine, :enable_engines, :disable_engines
     use Slim::Interpolation
     use Slim::Sections, :sections, :dictionary, :dictionary_access
     use Slim::EndInserter

@@ -187,7 +187,7 @@ module Slim
           stacks.last << [:slim, :control, broken_line, block]
           stacks << block
         when ?=
-          # Found a output bloc
+          # Found an output block.
           # We expect the line to be broken or the next line to be indented.
           block = [:multi]
           escape = line[1] != ?=
