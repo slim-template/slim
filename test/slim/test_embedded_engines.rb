@@ -74,6 +74,12 @@ ruby:
   Embedded Ruby
 }
     assert_runtime_error 'Embedded engine ruby is disabled', source, :enable_engines => %w(javascript)
+
+    source = %{
+ruby:
+  Embedded Ruby
+}
+    assert_runtime_error 'Embedded engine ruby is disabled', source, :disable_engines => %w(ruby)
   end
 
   def test_enabled_embedded_engine
