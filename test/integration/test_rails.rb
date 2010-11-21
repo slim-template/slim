@@ -81,6 +81,20 @@ p This is the captured content
     assert_html '<p>This is the captured content</p><p>a1</p><p>a2</p>', source
   end
 
+  def test_content_for
+    source = %q{
+- content_for :content do
+  - if false
+    .content_one
+  - else
+    .content_two
+p This is the captured content
+== content_for :content
+}
+
+    assert_html '<p>This is the captured content</p><div class="content_two"></div>', source
+  end
+
   def test_content_tag
     source = %q{
 = content_tag(:div) do
