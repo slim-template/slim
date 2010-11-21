@@ -2,4 +2,8 @@ source :rubygems
 
 gemspec
 
-gem "temple", :git => "git://github.com/judofyr/temple.git" if ENV["SLIM_ENV"] == "edge"
+if ENV["SLIM_ENV"] == "edge"
+  gem "temple", :git  => "git://github.com/judofyr/temple.git"
+elsif ENV["SLIM_ENV"] == "local"
+  gem "temple", :path => "/path/to/my/local/temple/repo"
+end

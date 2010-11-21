@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  s.add_runtime_dependency(%q<temple>, ["~> 0.1.5"]) unless ENV["SLIM_ENV"] == "edge"
+  s.add_runtime_dependency(%q<temple>, ["~> 0.1.5"]) unless ENV["SLIM_ENV"] == "edge" || ENV["SLIM_ENV"] == "local"
   s.add_runtime_dependency(%q<tilt>, ["~> 1.1"])
   s.add_runtime_dependency(%q<activesupport>, ["~> 3.0.0"])
 
