@@ -90,9 +90,9 @@ Here's a quick example to demonstrate what a Slim template looks like:
 
 > The pipe tells Slim to just copy the line. It essentially escapes any processing.
 
-#### `` ` `` or `'`
+#### `'`
 
-> _Same as the pipe (`|`)._
+> The single quote tells Slim to copy the line, but make sure this is a single trailing space.
 
 #### `-`
 
@@ -120,7 +120,7 @@ Here's a quick example to demonstrate what a Slim template looks like:
   `end` is forbidden behind `-`. Blocks are defined only by indentation.
 
 #### Can put content on same line or nest it.
-  If you nest content (e.g. put it on the next line), start the line with a pipe (`|`) or a backtick (`` ` ``).
+  If you nest content (e.g. put it on the next line), start the line with a pipe (`|`) or a single quote (`` ' ``).
 
 #### Indentation matters, but it's not as strict as Haml.
   If you want to first indent 2 spaces, then 5 spaces, it's your choice. To nest markup you only need to indent by one space, the rest is gravy.
@@ -226,7 +226,7 @@ Here's a quick example to demonstrate what a Slim template looks like:
 
 ### Treat multiple lines of code as text that should bypass parsing
 
-  Use a pipe (`|`) or backtick (`` ` ``) to start the escape.
+  Use a pipe (`|`) or single quote (`` ' ``) to start the escape.
   Each following line that is indented greater than
   the backtick is copied over.
 
