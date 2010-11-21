@@ -49,9 +49,6 @@ module Slim
         [:capture, tmp2,
          compile!(content)],
 
-        # Make sure that `yield` returns the output.
-        [:block, tmp2],
-
         # Close the block.
         [:block, 'end'],
 
