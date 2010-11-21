@@ -11,6 +11,7 @@ require 'slim/compiler'
 require 'slim/engine'
 require 'slim/template'
 require 'slim/version'
+require 'slim/env'
 
 module Slim
   def self.version

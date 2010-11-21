@@ -1,31 +1,30 @@
 PATH
   remote: .
   specs:
-    slim (0.7.2)
+    slim (0.7.3)
+      activesupport (~> 3.0.0)
       temple (~> 0.1.5)
       tilt (~> 1.1)
 
 GEM
   remote: http://rubygems.org/
   specs:
-    abstract (1.0.0)
-    erubis (2.6.6)
-      abstract (>= 1.0.0)
-    haml (3.0.22)
+    activesupport (3.0.3)
+    haml (3.0.24)
     liquid (2.2.2)
-    minitest (1.7.2)
+    minitest (2.0.0)
     rake (0.8.7)
     rcov (0.9.9)
     rdiscount (1.6.5)
     temple (0.1.5)
     tilt (1.1)
-    yard (0.6.1)
+    yard (0.6.3)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  erubis
+  activesupport (~> 3.0.0)
   haml
   liquid
   minitest

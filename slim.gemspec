@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 require File.dirname(__FILE__) + "/lib/slim/version"
+require File.dirname(__FILE__) + "/lib/slim/env"
 require "date"
 
 Gem::Specification.new do |s|
@@ -20,8 +21,9 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  s.add_runtime_dependency(%q<temple>, ["~> 0.1.5"])
+  s.add_runtime_dependency(%q<temple>, ["~> 0.1.5"]) unless Slim.env.edge?
   s.add_runtime_dependency(%q<tilt>, ["~> 1.1"])
+  s.add_runtime_dependency(%q<activesupport>, ["~> 3.0.0"])
 
   s.add_development_dependency(%q<rake>, [">= 0.8.7"])
   s.add_development_dependency(%q<haml>, [">= 0"])
