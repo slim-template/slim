@@ -74,7 +74,7 @@ p
 p This is a new paragraph.
 }
 
-    assert_html '<p>This is line one. This is line two.  This is line three.   This is line four.</p><p>This is a new paragraph.</p>', source
+    assert_html "<p>This is line one.\n This is line two.\n  This is line three.\n   This is line four.</p><p>This is a new paragraph.</p>", source
   end
 
   def test_nested_text_with_nested_html_one_same_line
@@ -86,7 +86,7 @@ p
  |  This is more content.
 }
 
-    assert_html '<p>This is line one. This is line two.<span class="bold">This is a bold line in the paragraph.</span> This is more content.</p>', source
+    assert_html "<p>This is line one.\n This is line two.<span class=\"bold\">This is a bold line in the paragraph.</span> This is more content.</p>", source
   end
 
   def test_nested_text_with_nested_html_one_same_line2
@@ -98,7 +98,7 @@ p
  |  This is more content.
 }
 
-    assert_html '<p>This is line one. This is line two.<span class="bold">This is a bold line in the paragraph.</span> This is more content.</p>', source
+    assert_html "<p>This is line one.\n This is line two.<span class=\"bold\">This is a bold line in the paragraph.</span> This is more content.</p>", source
   end
 
   def test_nested_text_with_nested_html
@@ -113,7 +113,7 @@ p
  |  This is more content.
 }
 
-    assert_html '<p>This is line one. This is line two.  This is line three.   This is line four.<span class="bold">This is a bold line in the paragraph.</span> This is more content.</p>', source
+    assert_html "<p>This is line one.\n This is line two.\n  This is line three.\n   This is line four.<span class=\"bold\">This is a bold line in the paragraph.</span> This is more content.</p>", source
   end
 
   def test_simple_paragraph_with_padding
@@ -130,7 +130,7 @@ p This is line one.
    This is line two.
 }
 
-    assert_html '<p>This is line one. This is line two.</p>', source
+    assert_html "<p>This is line one.\n This is line two.</p>", source
   end
 
   def test_paragraph_with_padded_nested_text
@@ -139,7 +139,7 @@ p  This is line one.
    This is line two.
 }
 
-    assert_html '<p> This is line one. This is line two.</p>', source
+    assert_html "<p> This is line one.\n This is line two.</p>", source
   end
 
   def test_paragraph_with_attributes_and_nested_text
@@ -148,7 +148,7 @@ p#test class="paragraph" This is line one.
                          This is line two.
 }
 
-    assert_html '<p class="paragraph" id="test">This is line one.This is line two.</p>', source
+    assert_html "<p class=\"paragraph\" id=\"test\">This is line one.\nThis is line two.</p>", source
   end
 
   def test_output_code_with_leading_spaces

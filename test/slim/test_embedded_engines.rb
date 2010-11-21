@@ -11,7 +11,7 @@ p
     <% if true %><%= true %><% end %>
 }
 
-    assert_html "<p><b>Hello from BEFORE ERB BLOCK!</b>\nSecond Line!\ntrue\n</p>", source
+    assert_html "<p><b>Hello from BEFORE ERB BLOCK!</b>\nSecond Line!\ntrue</p>", source
   end
 
   def test_render_with_interpolated_embedded_template
@@ -50,7 +50,7 @@ p
   liquid:
     <span>{{text}}</span>
 }
-    assert_html "<p><span>before liquid block</span>\n</p>", source
+    assert_html "<p><span>before liquid block</span></p>", source
   end
 
   def test_render_with_scss

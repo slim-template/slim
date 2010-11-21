@@ -82,7 +82,7 @@ ruby:
 = unknown_ruby_method
 }
 
-    assert_ruby_error NameError,"(__TEMPLATE__):6", source
+    assert_ruby_error NameError,"(__TEMPLATE__):5", source
   end
 
   def test_embedded_javascript
