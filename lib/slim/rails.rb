@@ -1,21 +1,6 @@
 require 'slim'
 
-module Slim
-  # Implements a safe string buffer.
-  class SafeBufferGenerator < Temple::Generators::StringBuffer
-    def preamble; "#{buffer} = ActiveSupport::SafeBuffer.new" end
-
-    def concat(str)
-      "#{buffer}.safe_concat((#{str}))"
-    end
-
-    def capture_generator
-      SafeBufferGenerator
-    end
-  end
-
-  Slim::Engine.default_options[:generator] = SafeBufferGenerator
-end
+Slim::Engine.default_options[:generator] = Temple::Generators::RailsOutputBuffer
 
 module ActionView
   module TemplateHandlers
