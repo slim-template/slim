@@ -23,11 +23,7 @@ module Slim
 
     def collect_text(body)
       body.inject('') do |text, exp|
-        if exp[0] == :slim && exp[1] == :text
-          text << exp[2]
-        elsif exp[0] == :newline
-          text << "\n"
-        end
+        text << exp[2] if exp[0] == :slim && exp[1] == :text
         text
       end
     end

@@ -17,7 +17,7 @@ p
      meet "Slim".
 }
 
-    assert_html '<p><Hello> World, meet "Slim".</p>', source
+    assert_html "<p><Hello> World,\n meet \"Slim\".</p>", source
   end
 
   def test_html_with_escaped_interpolation

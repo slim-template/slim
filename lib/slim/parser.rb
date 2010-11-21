@@ -109,6 +109,7 @@ module Slim
 
             if !in_comment
               # The indentation of first line of the text block determines the text base indentation.
+              newline = text_indent ? "\n" : ''
               text_indent ||= indent
 
               # The text block lines must be at least indented as deep as the first line.
@@ -116,8 +117,7 @@ module Slim
               syntax_error! 'Unexpected text indentation', line, lineno if offset < 0
 
               # Generate the additional spaces in front.
-              i = ' ' * offset
-              stacks.last << [:slim, :text, i + line]
+              stacks.last << [:slim, :text, newline + (' ' * offset) + line]
             end
 
             stacks.last << [:newline]
