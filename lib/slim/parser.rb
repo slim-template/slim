@@ -163,13 +163,13 @@ module Slim
         end
 
         case line[0]
-        when ?|, ?', ?`, ?/
+        when ?|, ?', ?/
           # Found a block.
 
           # We're now expecting the next line to be indented, so we'll need
           # to push a block to the stack.
           block = [:multi]
-          stacks.last << block
+          stacks.last << (line[0] == ?' ? [:multi, block, [:slim, :text, ' ']] : block)
           stacks << block
           block_indent = indent
 

@@ -45,7 +45,7 @@ h1#title This is my title
   def test_render_with_text_block
     source = %q{
 p
-  `
+  |
    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 }
 
@@ -55,12 +55,22 @@ p
   def test_render_with_text_block_with_subsequent_markup
     source = %q{
 p
-  `
+  |
     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 p Some more markup
 }
 
     assert_html '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p><p>Some more markup</p>', source
+  end
+
+  def test_render_with_text_block_with_trailing_whitespace
+    source = %q{
+' this is
+  a link to
+a href="link" page
+}
+
+    assert_html "this is\na link to <a href=\"link\">page</a>", source
   end
 
   def test_nested_text
