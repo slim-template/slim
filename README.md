@@ -29,7 +29,7 @@ Install Slim as a gem:
 
 Include Slim in your Gemfile:
 
-    gem 'slim', require: 'slim/rails'
+    gem 'slim', :require => 'slim/rails'
 
 That's it! Now, just use the .slim extension and you're good to go.
 
@@ -92,7 +92,7 @@ Here's a quick example to demonstrate what a Slim template looks like:
 
 #### `'`
 
-> The single quote tells Slim to copy the line, but make sure this is a single trailing space.
+> The single quote tells Slim to copy the line (similar to |), but makes sure that a single trailing space is appended.
 
 #### `-`
 
