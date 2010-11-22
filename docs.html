@@ -27,14 +27,14 @@
 
     <hr/>
     <p>In your Gemfile (Rails)
-      <pre>gem 'slim', require: 'slim/rails'</pre>
+      <pre>gem 'slim', :require =&gt; 'slim/rails'</pre>
     </p>
 
     <hr/>
     <p>Options:
       <pre>/ Output pretty (indented) format
-/ For Rails, you'd probably want this line in 
-/ config/environments/development.rb
+# For Rails, you'd probably want this line in
+# config/environments/development.rb
 Slim::Engine.set_default_options :pretty => true</pre>
     </p>
 
@@ -50,9 +50,9 @@ Slim::Engine.set_default_options :pretty => true</pre>
     <p>Nest static content:
       <pre>h1
  | This is my header</pre>
-    <p class='note'>Backtick can be used in place of pipe for all functionality</p>
-      <pre>h1
- ` This is my header</pre>
+    <p class='note'>Single apostrophe can be used in place of pipe if you want to ensure that a single whitespace is appended.</p>
+      <pre>' This is a link to
+a href=http://ruby-lang.org Ruby</pre>
     </p>
 
     <hr/>
