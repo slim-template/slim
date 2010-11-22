@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     slim (0.7.3)
-      temple (~> 0.1.5)
+      temple (~> 0.1.6)
       tilt (~> 1.1)
 
 GEM
@@ -14,7 +14,7 @@ GEM
     rake (0.8.7)
     rcov (0.9.9)
     rdiscount (1.6.5)
-    temple (0.1.5)
+    temple (0.1.6)
     tilt (1.1)
     yard (0.6.3)
 
@@ -29,6 +29,6 @@ DEPENDENCIES
   rcov
   rdiscount
   slim!
-  temple (~> 0.1.5)
+  temple (~> 0.1.6)
   tilt (~> 1.1)
   yard
