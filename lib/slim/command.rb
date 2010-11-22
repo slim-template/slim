@@ -54,7 +54,7 @@ module Slim
       end
 
       opts.on_tail('-v', '--version', 'Print version') do
-        puts "Slim #{Slim.version}"
+        puts "Slim #{Slim::VERSION}"
         exit
       end
     end
