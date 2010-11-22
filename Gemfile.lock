@@ -2,14 +2,12 @@ PATH
   remote: .
   specs:
     slim (0.7.3)
-      activesupport (~> 3.0.0)
       temple (~> 0.1.5)
       tilt (~> 1.1)
 
 GEM
   remote: http://rubygems.org/
   specs:
-    activesupport (3.0.3)
     haml (3.0.24)
     liquid (2.2.2)
     minitest (2.0.0)
@@ -24,7 +22,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activesupport (~> 3.0.0)
   haml
   liquid
   minitest

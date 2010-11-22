@@ -2,8 +2,10 @@ source :rubygems
 
 gemspec
 
-if ENV["SLIM_ENV"] == "edge"
+require File.dirname(__FILE__) + "/lib/slim/env"
+
+if Slim.env.edge?
   gem "temple", :git  => "git://github.com/judofyr/temple.git"
-elsif ENV["SLIM_ENV"] == "local"
-  gem "temple", :path => "/path/to/my/local/temple/repo"
+elsif Slim.env.local?
+  gem "temple", :path => "/Users/fred/Downloads/Repos/Rails/temple"
 end

@@ -1,6 +1,5 @@
 # encoding: utf-8
 
-require 'active_support/string_inquirer'
 require 'temple'
 require 'slim/parser'
 require 'slim/filter'
@@ -12,19 +11,10 @@ require 'slim/compiler'
 require 'slim/engine'
 require 'slim/template'
 require 'slim/version'
+require 'slim/env'
 
 module Slim
-  class << self
-    def version
-      VERSION
-    end
-
-    def env
-      @_env ||= ActiveSupport::StringInquirer.new(ENV["SLIM_ENV"] || "release")
-    end
-
-    def env=(environment)
-      @_env = ActiveSupport::StringInquirer.new(environment)
-    end
+  def self.version
+    VERSION
   end
 end
