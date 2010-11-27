@@ -121,3 +121,52 @@ class Env
     1337
   end
 end
+
+class ViewEnv
+  def person
+    [{:name => 'Joe'}, {:name => 'Jack'}]
+  end
+
+  def people
+    %w(Andy Fred Daniel).collect{|n| Person.new(n)}
+  end
+
+  def cities
+    %w{Atlanta Melbourne Karlsruhe}
+  end
+
+  def people_with_locations
+    array = []
+    people.each_with_index do |p,i| 
+      p.location = Location.new cities[i]
+      array << p
+    end
+    array
+  end
+end
+
+require 'forwardable'
+
+class Person
+  extend Forwardable
+
+  attr_accessor :name
+
+  def initialize(name)
+    @name = name
+  end
+
+  def location=(location)
+    @location = location
+  end
+
+  def_delegators :@location, :city
+end
+
+class Location
+  attr_accessor :city
+
+  def initialize(city)
+    @city   = city
+  end
+end

@@ -12,6 +12,10 @@ module ActionView
         include Compilable
 
         def compile(template)
+          if Slim::Engine.default_options[:sections]
+            Slim::Sections.set_default_options(:dictionary => 'Slim::Wrapper.new(self)')
+          end
+
           Slim::Engine.new.compile(template.source)
         end
       end
@@ -19,6 +23,9 @@ module ActionView
       # Slim handler for Rails 3.1 and greater
       class SlimHandler
         def self.call(template)
+          if Slim::Engine.default_options[:sections]
+            Slim::Sections.set_default_options(:dictionary => 'Slim::Wrapper.new(self)')
+          end
           Slim::Engine.new.compile(template.source)
         end
       end
