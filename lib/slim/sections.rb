@@ -9,8 +9,8 @@ module Slim
 
     def initialize(opts = {})
       super
-      unless [:string, :symbol, :wrapped].include?(@options[:dictionary_access])
-        raise "Invalid dictionary access #{@options[:dictionary_access].inspect}"
+      unless [:string, :symbol, :wrapped].include?(options[:dictionary_access])
+        raise "Invalid dictionary access #{options[:dictionary_access].inspect}"
       end
     end
 
@@ -69,19 +69,19 @@ module Slim
 
     def access(name)
       case options[:dictionary_access]
-      when :symbol
-        "_slimdict[#{name.to_sym.inspect}]"
-      else
+      when :string
         "_slimdict[#{name.to_s.inspect}]"
+      else
+        "_slimdict[#{name.to_sym.inspect}]"
       end
     end
 
     def dictionary
-      if @options[:dictionary_access] == :wrapped
-        'Slim::Wrapper.new(%s)'
+      if options[:dictionary_access] == :wrapped
+        "Slim::Wrapper.new(#{options[:dictionary]})"
       else
-        '%s'
-      end % [@options[:dictionary]]
+        options[:dictionary]
+      end
     end
 
   end
