@@ -47,15 +47,15 @@ module Slim
 
     private
 
-    def wrap(value)
+    def wrap(response)
       # Primitives are not wrapped
-      if [String, Numeric, TrueClass, FalseClass, NilClass].any? {|primitive| primitive === value }
-        value
+      if [String, Numeric, TrueClass, FalseClass, NilClass].any? {|primitive| primitive === response }
+        response
       # Enumerables are mapped with wrapped values (except Hash-like objects)
-      elsif !value.respond_to?(:has_key?) && value.respond_to?(:map)
-        value.map {|v| wrap(v) }
+      elsif !response.respond_to?(:has_key?) && response.respond_to?(:map)
+        response.map {|v| wrap(v) }
       else
-        Wrapper.new(value, self)
+        Wrapper.new(response, self)
       end
     end
   end
