@@ -27,7 +27,7 @@ ol#links{
 ol#links li{
   display: inline;
   padding: 4px;
-  font-size: 32px;
+  font-size: 22px;
 }
 
 ol#links li.first:after{ content: ":"; }
@@ -44,15 +44,11 @@ ol#links li a{
   width: 650px;
 }
 
-h1 { font-size: 3.8em; color: #dacdd2; margin-bottom: 3px; }
+h1, h2, h3 {color: #333; border-bottom: 1pt solid #333; margin: 1em 0; }
 
 h1 .small { font-size: 0.4em; }
 
 h1 a { text-decoration: none }
-
-h2 { text-align: center; font-size: 32px; font-weight: normal; }
-
-h3 { text-align: center; color: #dacdd2; }
 
 a { color: #333; }
 

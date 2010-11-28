@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link href="css/slim.css" media="screen" rel="stylesheet" type="text/css"/>
+    <title>Slim</title>
+  </head>
+
+  <body>
+    <div id="header" class="small">
+      <ol id="links">
+        <li class="first"><a href="index.html">Slim</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="docs.html">Docs</a></li>
+        <li><a href="logic-less.html">Logic-less</a></li>
+        <li><a href="contribute.html">Contribute</a></li>
+        <li class="last"><a href="http://rdoc.info/github/stonean/slim/master/frames">API</a></li>
+      </ol>
+    </div>
+  <a href="http://github.com/stonean/slim"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+
+  <div id="container">
+    <p>So, what is logic less mode and how do you use it? Examples are best, lets start with the basics, conditionals:
+      <pre>/ If the method <strong>is not</strong> false or empty?, the content will show
+- article
+  h1 = title</pre>
+    </p>
+
+    <hr/>
+    <p>Inverted conditional
+      <pre>/ If the method <strong>is</strong> false or empty?, the content will show
+-! article
+  p Sorry, article not found</pre>
+    </p>
+
+    <hr/>
+    <p>Next we'll go over resolution order.</p>
+    <p>If article.respond_to?(:title)
+      <pre>- article
+  / Slim will execute article.send(:title)
+  h1 = title</pre>
+    </p>
+
+    <p>If article.respond_to? :[]
+      <pre>- article
+  / Slim will execute article[:title]
+  h1 = title</pre>
+    </p>
+
+    <p>If article.instance_variable_defined?(@title)
+      <pre>- article
+  / Slim will execute article.instance_variable_get @title
+  h1 = title</pre>
+    </p>
+
+    <p>If all the above fails, Slim will try to resolve the title reference in the same order against the parent object.  In this example, the parent would be the initial scope you are rendering the template against.</p>
+    <p>As you might have guessed, the article reference goes through the same steps against the scope.</p>
+    <h3>Things to know</h3>
+    <p>Instance variables are not allowed in the view code, but Slim will find and use them.  Essentially, you're just using dropping the @ prefix in your template.</p>
+    <p>Parametized method calls are not allowed.</p>
+
+    <h2>Logic less support in Rails (coming soon: 0.8.0)</h2>
+    <p>Install:
+      <pre>$ gem install slim</pre>
+    </p>
+    <p>Require:
+      <pre>gem 'slim', :require =&gt; 'slim/rails'</pre>
+    </p>
+    <p>To enable logic less mode, put this line in config/environment.rb:
+      <pre>Slim::Engine.set_default_options :sections => true</pre>
+    </p>
+
+  <div class="footer">
+    Source: <a href="http://github.com/stonean/slim">stonean/slim</a>&nbsp;|&nbsp;Slim logo by <a href="http://github.com/activestylus">activestylus</a><br/>
+  </div>
+
+  <script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-19270476-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+</body>
+</html>
