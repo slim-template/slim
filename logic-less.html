@@ -72,6 +72,22 @@
       <pre>Slim::Engine.set_default_options :sections => true</pre>
     </p>
 
+    <h2>Logic less support in Sinatra (coming soon: 0.8.0)</h2>
+    <p>Sinata will have built-in support for Slim in their next release, but until then you'll need this little snippet of code:
+    <pre>module Sinatra
+  module Templates
+    def slim(template, options={}, locals={})
+      render :slim, template, options, locals
+    end 
+  end
+end</pre>
+    </p>
+    <p>Now that's out of the way, all you have to do is require slim and set the option. This can be done in your config.ru:
+    <pre>require 'slim'
+Slim::Engine.set_default_options :sections => true</pre>
+    <p>You are then ready to rock!</p>
+
+
   <div class="footer">
     Source: <a href="http://github.com/stonean/slim">stonean/slim</a>&nbsp;|&nbsp;Slim logo by <a href="http://github.com/activestylus">activestylus</a><br/>
   </div>
