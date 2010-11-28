@@ -3,7 +3,7 @@ require 'helper'
 
 class TestSlimWrapper < TestSlim
   def setup
-    Slim::Sections.set_default_options(:dictionary => 'Slim::Wrapper.new(ViewEnv.new)')
+    Slim::Sections.set_default_options(:dictionary => 'ViewEnv.new')
   end
 
   def teardown

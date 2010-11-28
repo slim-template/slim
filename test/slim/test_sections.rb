@@ -1,6 +1,10 @@
 require 'helper'
 
 class TestSlimLogicLess < TestSlim
+  def setup
+    Slim::Sections.set_default_options(:dictionary_access => :symbol)
+  end
+
   def test_sections
     source = %q{
 p

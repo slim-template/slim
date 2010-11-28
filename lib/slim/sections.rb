@@ -5,11 +5,11 @@ module Slim
   class Sections < Filter
     set_default_options :dictionary => 'self',
                         :sections => false,
-                        :dictionary_access => :symbol # :symbol, :string
+                        :dictionary_access => :wrapped # :symbol, :string, :wrapped
 
     def initialize(opts = {})
       super
-      unless [:string, :symbol].include?(@options[:dictionary_access])
+      unless [:string, :symbol, :wrapped].include?(@options[:dictionary_access])
         raise "Invalid dictionary access #{@options[:dictionary_access].inspect}"
       end
     end
@@ -18,7 +18,7 @@ module Slim
       if options[:sections]
         # Store the dictionary in the _slimdict variable
         [:multi,
-         [:block, "_slimdict = #{@options[:dictionary]}"],
+         [:block, "_slimdict = #{dictionary}"],
          super]
       else
         exp
@@ -71,9 +71,18 @@ module Slim
       case options[:dictionary_access]
       when :symbol
         "_slimdict[#{name.to_sym.inspect}]"
-      when :string
+      else
         "_slimdict[#{name.to_s.inspect}]"
       end
     end
+
+    def dictionary
+      if @options[:dictionary_access] == :wrapped
+        'Slim::Wrapper.new(%s)'
+      else
+        '%s'
+      end % [@options[:dictionary]]
+    end
+
   end
 end
