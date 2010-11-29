@@ -43,7 +43,7 @@
   h1 = title</pre>
     </p>
 
-    <p>If article.respond_to? :[]
+    <p>If article.respond_to?(:has_key?) and article.has_key?(:title)
       <pre>- article
   / Slim will execute article[:title]
   h1 = title</pre>
@@ -61,7 +61,7 @@
     <p>Instance variables are not allowed in the view code, but Slim will find and use them.  Essentially, you're just using dropping the @ prefix in your template.</p>
     <p>Parametized method calls are not allowed.</p>
 
-    <h2>Logic less support in Rails (coming soon: 0.8.0)</h2>
+    <h2>Logic less support in Rails (0.8.0 and above)</h2>
     <p>Install:
       <pre>$ gem install slim</pre>
     </p>
@@ -72,7 +72,7 @@
       <pre>Slim::Engine.set_default_options :sections => true</pre>
     </p>
 
-    <h2>Logic less support in Sinatra (coming soon: 0.8.0)</h2>
+    <h2>Logic less support in Sinatra (0.8.0 and above)</h2>
     <p>Sinata will have built-in support for Slim in their next release, but until then you'll need this little snippet of code:
     <pre>module Sinatra
   module Templates
