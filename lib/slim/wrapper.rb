@@ -26,7 +26,7 @@ module Slim
     def [](name)
       if value.respond_to?(name)
         wrap value.send(name)
-      elsif value.respond_to?(:[])
+      elsif value.respond_to?(:has_key?) && value.has_key?(name.to_sym)
         wrap value[name]
       elsif value.instance_variable_defined?("@#{name}")
         wrap value.instance_variable_get("@#{name}")
