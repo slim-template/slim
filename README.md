@@ -286,6 +286,10 @@ Here's a quick example to demonstrate what a Slim template looks like:
     haml (cached)            0.660000   0.000000   0.660000 (  0.661025)
     haml ugly (cached)       0.590000   0.010000   0.600000 (  0.602522)
 
+## License
+
+This project is released under the MIT license.
+
 ## Authors
 
 * [Andrew Stone](http://github.com/stonean)
