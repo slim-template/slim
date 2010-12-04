@@ -35,7 +35,7 @@ setlocal iskeyword+=:
 
 
 syn region slimHtml start="^\s*[^-=]\w" end="$" contains=htmlTagName,htmlArg,htmlString
-syn region slimControl start="-" end="$" contains=@slimRuby keepend
+syn region slimRubyCode start="[-=]" end="$" contains=@slimRuby keepend
 
 syn match slimFilter /\s*\w\+:\s*/ contained
 
