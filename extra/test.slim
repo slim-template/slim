@@ -28,7 +28,7 @@ html
       table
         - for user in users do
           tr
-            td.user id=user.name = user.name
+            td.user id=some_ruby('ere', @rme) data-test="some text #{with @ruby}" = @post.name 
     - else
       p There are no users.
 
@@ -36,12 +36,13 @@ html
     #content Hello #{@user.name}! Welcome to the test page!
              Try out Slim!
 
-    = function_with_many_parameters(:a, \
-      variable, :option => 1)
+    = function_with_many_parameters(:a, @variable, :option => 1)
 
     p.text
       ' Another text block
         with multiple lines
+
+    = link_to('Test', @site)
 
     .text#footer
       ` Footer text block

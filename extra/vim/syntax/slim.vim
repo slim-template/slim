@@ -33,28 +33,24 @@ unlet! b:current_syntax
 
 setlocal iskeyword+=:
 
+syn region slimInterpolation matchgroup=slimInterpolationDelimiter start="#{" end="}" contained contains=@slimRuby
 
-syn region slimHtml start="^\s*[^-=]\w" end="$" contains=htmlTagName,htmlArg,htmlString
-syn region slimRubyCode start="[-=]" end="$" contains=@slimRuby keepend
+syn region slimRubyOutput start="=\s*" skip=",\s*" end=" " contained contains=@slimRuby
+syn region slimHtml start="^\s*[^-=]\w" end="$" contains=htmlTagName,htmlArg,htmlString,slimInterpolation,slimRubyOutput keepend
+
+syn region slimRubyCode start="[-=]" end="$" contains=@slimRuby
+
+syn match slimComment /^\(\s*\)[/].*\(\n\1\s.*\)*/
+syn match slimText /^\(\s*\)[`|'].*\(\n\1\s.*\)*/
 
 syn match slimFilter /\s*\w\+:\s*/ contained
-
-syn match slimCode /^\s*[-=#.].*/ contained
-syn match slimComment /^\(\s\+\)[/].*\(\n\1\s.*\)*/ 
-syn match slimText /^\(\s\+\)[`|'].*\(\n\1\s.*\)*/ 
-
 syn match slimJs /^\(\s\+\)\<javascript:\>.*\(\n\1\s.*\)*/ contains=@htmlJavaScript,slimFilter
 syn match slimHaml /^\(\s\+\)\<haml:\>.*\(\n\1\s.*\)*/ contains=@slimHaml,slimFilter
-syn match slimHaml /^\(\s\+\)\<erb:\>.*\(\n\1\s.*\)*/ contains=@slimErb,slimFilter
-
-
-"syn match slimFilter /\s*\<javascript:\>\s*/ 
-
-
-"contained containedin=slimJs
+syn match slimErb  /^\(\s\+\)\<erb:\>.*\(\n\1\s.*\)*/ contains=@slimErb,slimFilter
 
 hi def link slimText                   String
 hi def link slimComment                Comment
 hi def link slimFilter                 Special
+hi def link slimInterpolationDelimiter Delimiter
 
 let b:current_syntax = "slim"
