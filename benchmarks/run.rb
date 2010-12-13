@@ -40,27 +40,27 @@ class SlimBenchmarks
     }
 
     if slow
-      bench('erb (1)')         { ERB.new(tpl_erb).result(eview) }
-      bench('erubis (1)')      { Erubis::Eruby.new(tpl_erb).result(eview) }
-      bench('fast erubis (1)') { Erubis::Eruby.new(tpl_erb).result(eview) }
-      bench('slim (1)')        { Slim::Template.new { tpl_slim }.render(view) }
-      bench('haml (1)')        { Haml::Engine.new(tpl_haml, :format => :html5).render(view) }
-      bench('haml ugly (1)')   { Haml::Engine.new(tpl_haml, :format => :html5, :ugly => true).render(view) }
+      bench('(1) erb')         { ERB.new(tpl_erb).result(eview) }
+      bench('(1) erubis')      { Erubis::Eruby.new(tpl_erb).result(eview) }
+      bench('(1) fast erubis') { Erubis::Eruby.new(tpl_erb).result(eview) }
+      bench('(1) slim')        { Slim::Template.new { tpl_slim }.render(view) }
+      bench('(1) haml')        { Haml::Engine.new(tpl_haml, :format => :html5).render(view) }
+      bench('(1) haml ugly')   { Haml::Engine.new(tpl_haml, :format => :html5, :ugly => true).render(view) }
     end
 
-    bench('erb (2)')         { erb.result(eview) }
-    bench('erubis (2)')      { erubis.result(eview) }
-    bench('fast (2)')        { fast_erubis.result(eview) }
-    bench('slim (2)')        { slim.render(view) }
-    bench('haml (2)')        { haml.render(view) }
-    bench('haml (2)')        { haml_ugly.render(view) }
+    bench('(2) erb')         { erb.result(eview) }
+    bench('(2) erubis')      { erubis.result(eview) }
+    bench('(2) fast erubis') { fast_erubis.result(eview) }
+    bench('(2) slim')        { slim.render(view) }
+    bench('(2) haml')        { haml.render(view) }
+    bench('(2) haml ugly')   { haml_ugly.render(view) }
 
-    bench('erb (3)')         { view.run_erb }
-    bench('erubis (3)')      { view.run_erubis }
-    bench('fast erubis (3)') { view.run_fast_erubis }
-    bench('slim (3)')        { view.run_slim }
-    bench('haml (3)')        { view.run_haml }
-    bench('haml ugly (3)')   { view.run_haml_ugly }
+    bench('(3) erb')         { view.run_erb }
+    bench('(3) erubis')      { view.run_erubis }
+    bench('(3) fast erubis') { view.run_fast_erubis }
+    bench('(3) slim')        { view.run_slim }
+    bench('(3) haml')        { view.run_haml }
+    bench('(3) haml ugly')   { view.run_haml_ugly }
   end
 
   def run
