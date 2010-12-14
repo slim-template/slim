@@ -6,3 +6,4 @@ readme.html
 .yardoc/
 doc/
 coverage/
+test/integration/rails/dummy/log/
