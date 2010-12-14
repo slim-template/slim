@@ -7,15 +7,9 @@ require 'minitest/unit'
 
 MiniTest::Unit.autorun
 
-class TestApp < Rails::Application
-  config.root = File.join(File.dirname(__FILE__), 'rails_app')
-end
-Rails.application = TestApp
-
-class TestSlimRails < MiniTest::Unit::TestCase
+class TestActionView < MiniTest::Unit::TestCase
   def render(source, &block)
     view                     = ActionView::Base.new
-    view.view_paths          = Rails.root.join('views')
     view.controller          = ActionController::Base.new
     view.controller.response = ActionController::Response.new if defined?(ActionController::Response)
 
@@ -104,11 +98,4 @@ p This is the captured content
     assert_html '<div><p>Do not escape this!</p></div>', source
   end
 
-  def test_render_partial
-    source = %q{
-= render "tests/partial"
-}
-
-    assert_html '<div id="partial"><p>Partial data.</p></div>', source
-  end
 end
