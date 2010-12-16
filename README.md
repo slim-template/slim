@@ -266,6 +266,13 @@ Here's a quick example to demonstrate what a Slim template looks like:
 
     <body><p></p></body>
 
+### Validate Slim syntax
+
+There are two helpers you could use to validate your Slim syntax:
+
+    Slim::Validator.valid?(source) # -> true or false
+    Slim::Validator.validate!(source) # -> true or exception
+
 ## Benchmarks
 
     # OS X 10.6 + Ruby 1.9.2, 1000 iterations
