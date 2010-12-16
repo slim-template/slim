@@ -9,9 +9,9 @@ Slim is a fast, lightweight templating engine with support for __Rails 3__. It h
 
 Slim's core syntax is guided by one thought: "What's the minimum required to make this work".
 
-As more people have contributed to Slim, there have been ___optional___ syntax additions influenced from their use of [Haml](http://github.com/nex3/haml) and [Jade](http://github.com/visionmedia/jade).  The Slim team is open to these optional additions because we know beauty is in the eye of the beholder.
+As more people have contributed to Slim, there have been ___optional___ syntax additions influenced from their use of [Haml](https://github.com/nex3/haml) and [Jade](https://github.com/visionmedia/jade).  The Slim team is open to these optional additions because we know beauty is in the eye of the beholder.
 
-Slim uses [Temple](http://github.com/judofyr/temple) for parsing/compilation and is also integrated into [Tilt](http://github.com/rtomayko/tilt), so it can be used together with [Sinatra](http://github.com/sinatra/sinatra) or plain [Rack](http://github.com/rack/rack).
+Slim uses [Temple](https://github.com/judofyr/temple) for parsing/compilation and is also integrated into [Tilt](https://github.com/rtomayko/tilt), so it can be used together with [Sinatra](https://github.com/sinatra/sinatra) or plain [Rack](https://github.com/rack/rack).
 
 ## Why?
 
@@ -41,7 +41,11 @@ If you want to use the Slim template directly, you can use the Tilt interface:
 
 ## Syntax Highlighters
 
-Syntax highlight support for __Vim__ (very beta) and __Emacs__ are included in the `extra` folder. There is also a [Textmate bundle](http://github.com/fredwu/ruby-slim-textmate-bundle).
+Syntax highlight support for __Vim__ (very beta) and __Emacs__ are included in the `extra` folder. There is also a [Textmate bundle](https://github.com/fredwu/ruby-slim-textmate-bundle).
+
+## Template Converters
+
+For Haml, there is a [Haml2Slim converter](https://github.com/fredwu/haml2slim). Please check out the [issue tracker](https://github.com/stonean/slim/issues) to see the status of the varies converters.
 
 ## The syntax
 
@@ -304,9 +308,9 @@ This project is released under the MIT license.
 
 ## Authors
 
-* [Andrew Stone](http://github.com/stonean)
-* [Fred Wu](http://github.com/fredwu)
-* [Daniel Mendler](http://github.com/minad)
+* [Andrew Stone](https://github.com/stonean)
+* [Fred Wu](https://github.com/fredwu)
+* [Daniel Mendler](https://github.com/minad)
 
 ## Discuss
 
@@ -314,6 +318,6 @@ This project is released under the MIT license.
 
 ## Slim related projects
 
-* [Textmate bundle](http://github.com/fredwu/ruby-slim-textmate-bundle)
-* [Rails 3 Generators](http://github.com/leogalmeida/slim-rails)
-* [Slim for Clojure](http://github.com/chaslemley/slim.clj)
+* [Textmate bundle](https://github.com/fredwu/ruby-slim-textmate-bundle)
+* [Rails 3 Generators](https://github.com/leogalmeida/slim-rails)
+* [Slim for Clojure](https://github.com/chaslemley/slim.clj)
