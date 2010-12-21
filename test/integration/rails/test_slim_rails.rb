@@ -41,7 +41,7 @@ class TestSlimRails < ActionController::IntegrationTest
 
   test "content_for" do
     get "slim/content_for"
-    assert_html "Heading set from a view<h1><p>Hello Slim!</p></h1><h2><p>Hello Slim!</p></h2>"
+    assert_html "Heading set from a view<h1>Hello Slim!</h1><h2>Hello Slim!</h2>"
   end
 
   test "nested_attributes_form" do
