@@ -45,7 +45,7 @@ class TestSlimRails < ActionController::IntegrationTest
   end
 
   test "nested_attributes_form" do
-    post "parents", :parent_name => "p1", :parent_children_attributes_0_name => "c1"
+    post "parents", 'parent[name]' => "p1", 'parent[children_attributes][0][name]' => "c1"
     get "parents/1/edit"
     assert_has_html '<input id="parent_children_attributes_0_id" name="parent[children_attributes][0][id]" type="hidden" value="1" />'
   end
