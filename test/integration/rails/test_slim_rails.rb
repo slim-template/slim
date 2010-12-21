@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/test_helper')
 
-class TestSlimViews < TestSlimRails
+class TestSlimRails < ActionController::IntegrationTest
   test "normal view" do
     get "slim/normal"
     assert_response :success
@@ -42,5 +42,22 @@ class TestSlimViews < TestSlimRails
   test "content_for" do
     get "slim/content_for"
     assert_html "Heading set from a view<h1>Hello Slim!</h1><h2>Hello Slim!</h2>"
+  end
+
+  test "nested_attributes_form" do
+    post "parents", :parent_name => "p1", :parent_children_attributes_0_name => "c1"
+    get "parents/1/edit"
+    assert_has_html '<input id="parent_children_attributes_0_id" name="parent[children_attributes][0][id]" type="hidden" value="1" />'
+  end
+
+  protected
+
+  def assert_html(expected, options = {})
+    expected = "<!DOCTYPE html><html><head><title>Dummy</title></head><body>#{expected}</body></html>" unless options[:skip_layout]
+    assert_equal expected, @response.body
+  end
+
+  def assert_has_html(expected)
+    assert_match expected, @response.body
   end
 end

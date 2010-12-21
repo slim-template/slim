@@ -13,12 +13,3 @@ Capybara.default_selector = :css
 
 # Run any available migration
 ActiveRecord::Migrator.migrate File.expand_path("../dummy/db/migrate/", __FILE__)
-
-class TestSlimRails < ActionController::IntegrationTest
-  protected
-
-  def assert_html(expected, options = {})
-    expected = "<!DOCTYPE html><html><head><title>Dummy</title></head><body>#{expected}</body></html>" unless options[:skip_layout]
-    assert_equal expected, @response.body
-  end
-end
