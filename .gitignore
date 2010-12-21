@@ -7,4 +7,5 @@ readme.html
 doc/
 coverage/
 test/integration/rails/dummy/log/
+test/integration/rails/dummy/tmp/
 test/integration/rails/dummy/db/*.sqlite3

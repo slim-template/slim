@@ -3,6 +3,6 @@
   = f.text_field :name
   h2 Children
   ul
-    - f.fields_for :children do |c|
+    = f.fields_for :children do |c|
       li= c.text_field :name
   = f.submit

@@ -55,7 +55,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  capybara (>= 0.4.0)
+  capybara (~> 0.4.0)
   haml
   launchy
   liquid
