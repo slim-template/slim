@@ -37,13 +37,13 @@ module Slim
     # @param [Array] content Temple expression
     # @return [Array] Compiled temple expression
     def on_slim_output_block(escape, code, content)
-      tmp1, tmp2 = tmp_var('capture'), tmp_var('capture')
+      tmp = tmp_var('capture')
 
       [:multi,
         # Capture the result of the code in a variable. We can't do
         # `[:dynamic, code]` because it's probably not a complete
         # expression (which is a requirement for Temple).
-        [:block, "#{tmp1} = #{code}"],
+        [:block, "#{tmp} = #{code}"],
 
         # Capture the content of a block in a separate buffer. This means
         # that `yield` will not output the content to the current buffer,
@@ -52,13 +52,13 @@ module Slim
         # The capturing can be disabled with the option :disable_capture.
         # Output code in the block writes directly to the output buffer then.
         # Rails handles this by replacing the output buffer for helpers (with_output_buffer - braindead!).
-        options[:disable_capture] ? compile!(content) : [:capture, tmp2, compile!(content)],
+        options[:disable_capture] ? compile!(content) : [:capture, tmp_var('capture'), compile!(content)],
 
         # Close the block.
         [:block, 'end'],
 
         # Output the content.
-        on_slim_output(escape, tmp1, [:multi])]
+        on_slim_output(escape, tmp, [:multi])]
     end
 
     # Handle directive expression `[:slim, :directive, type]`
