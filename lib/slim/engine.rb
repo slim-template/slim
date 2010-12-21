@@ -11,7 +11,8 @@ module Slim
                         :attr_wrapper => '"',
                         :format => :html5,
                         :id_delimiter => nil,
-                        :generator => Temple::Generators::ArrayBuffer
+                        :generator => Temple::Generators::ArrayBuffer,
+                        :debug => false
 
     use Slim::Parser, :file, :tabsize
     use Slim::EmbeddedEngine, :enable_engines, :disable_engines
@@ -24,6 +25,7 @@ module Slim
     filter :MultiFlattener
     filter :StaticMerger
     filter :DynamicInliner
+    filter :Debugger, :debug, :debug_prefix, :debug_pretty
     chain << proc {|options| options[:generator].new }
   end
 end

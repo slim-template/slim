@@ -9,7 +9,7 @@ MiniTest::Unit.autorun
 class TestSlim < MiniTest::Unit::TestCase
   def setup
     @env = Env.new
-    # Slim::Filter::DEFAULT_OPTIONS[:debug] = true
+    # Slim::Engine.set_default_options :debug => true
   end
 
   def teardown
@@ -138,7 +138,7 @@ class ViewEnv
 
   def people_with_locations
     array = []
-    people.each_with_index do |p,i| 
+    people.each_with_index do |p,i|
       p.location = Location.new cities[i]
       array << p
     end
