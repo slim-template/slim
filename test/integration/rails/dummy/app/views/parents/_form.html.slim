@@ -1,0 +1,8 @@
+= form_for @parent, :html => {:multipart => true} do |f|
+  h1 Parent
+  = f.text_field :name
+  h2 Children
+  ul
+    - f.fields_for :children do |c|
+      li= c.text_field :name
+  = f.submit

@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/test_helper')
 
-class TestSlimRails < ActionController::IntegrationTest
+class TestSlimViews < TestSlimRails
   test "normal view" do
     get "slim/normal"
     assert_response :success
@@ -42,12 +42,5 @@ class TestSlimRails < ActionController::IntegrationTest
   test "content_for" do
     get "slim/content_for"
     assert_html "Heading set from a view<h1>Hello Slim!</h1><h2>Hello Slim!</h2>"
-  end
-
-  protected
-
-  def assert_html(expected, options = {})
-    expected = "<!DOCTYPE html><html><head><title>Dummy</title></head><body>#{expected}</body></html>" unless options[:skip_layout]
-    assert_equal expected, @response.body
   end
 end
