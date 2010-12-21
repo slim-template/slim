@@ -1,6 +1,7 @@
+p Page content
 - content_for :page_heading, "Heading set from a view"
 - content_for :hello_slim do
-  = @hello
+  p= @hello
 
 h1= yield :hello_slim
 h2= yield :hello_slim
