@@ -13,11 +13,4 @@ class TestSlimIntegration < TestSlimRails
     click_button "Update Parent"
     assert_equal 1, Child.count
   end
-
-  protected
-
-  def assert_html(expected, options = {})
-    expected = "<!DOCTYPE html><html><head><title>Dummy</title></head><body>#{expected}</body></html>" unless options[:skip_layout]
-    assert_equal expected, @response.body
-  end
 end
