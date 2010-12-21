@@ -1,5 +1,5 @@
 module Slim
-  class Validator
+  module Validator
     class << self
       def validate!(source)
         Slim::Engine.new.compile(source.to_s)

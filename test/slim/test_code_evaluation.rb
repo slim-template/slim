@@ -162,26 +162,6 @@ p id=(1 + 1)*5 Test it
     assert_html '<p id="10">Test it</p>', source
   end
 
-  def test_interpolation_in_text
-    source = %q{
-p
- | #{hello_world} with "quotes"
-p
- |
-  A message from the compiler: #{hello_world}
-}
-
-    assert_html '<p>Hello World from @env with "quotes"</p><p>A message from the compiler: Hello World from @env</p>', source
-  end
-
-  def test_interpolation_in_tag
-    source = %q{
-p #{hello_world}
-}
-
-    assert_html '<p>Hello World from @env</p>', source
-  end
-
   def test_number_type_interpolation
     source = %q{
 p = output_number

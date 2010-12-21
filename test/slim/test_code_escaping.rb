@@ -9,14 +9,6 @@ p = evil_method
     assert_html '<p>&lt;script&gt;do_something_evil();&lt;&#47;script&gt;</p>', source
   end
 
-  def test_escape_interpolation
-    source = %q{
-p \\#{hello_world}
-}
-
-    assert_html '<p>#{hello_world}</p>', source
-  end
-
   def test_render_without_html_safe
     source = %q{
 p = "<strong>Hello World\\n, meet \\"Slim\\"</strong>."

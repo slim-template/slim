@@ -12,19 +12,48 @@ module Slim
       block = [:multi]
       until string.empty?
         case string
-        when /^\\(\#\{[^\}]*\})/
+        when /^\\\#\{/
           # Escaped interpolation
-          block << [:static, $1]
-        when /^\#\{([^\}]*)\}/
+          block << [:static, '#{']
+          string = $'
+        when /^\#\{/
           # Interpolation
-          block << [:slim, :output, true, $1, [:multi]]
+          string, code = parse_expression($')
+          block << [:slim, :output, true, code, [:multi]]
         when /^([^\#]+|\#)/
           # Static text
           block << [:static, $&]
+          string = $'
         end
-        string = $'
       end
       block
+    end
+
+    def parse_expression(string)
+      stack, code = [], ''
+
+      until string.empty?
+        if stack.empty? && string =~ /^\}/
+          # Stack is empty, this means we are finished
+          # if the next character is a closing bracket
+          string.slice!(0)
+          break
+        elsif string =~ Parser::DELIMITER_REGEX
+          # Delimiter found, push it on the stack
+          stack << Parser::DELIMITERS[$1]
+          code << string.slice!(0)
+        elsif string =~ Parser::CLOSE_DELIMITER_REGEX
+          # Closing delimiter found, pop it from the stack if everything is ok
+          raise "Text interpolation: Unexpected closing #{$1}" if stack.empty?
+          raise "Text interpolation: Expected closing #{stack.last}" if stack.last != $1
+          code << string.slice!(0)
+          stack.pop
+        else
+          code << string.slice!(0)
+        end
+      end
+
+      return string, code
     end
   end
 end

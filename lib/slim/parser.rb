@@ -222,6 +222,14 @@ module Slim
       result
     end
 
+    DELIMITERS = {
+      '(' => ')',
+      '[' => ']',
+      '{' => '}',
+    }.freeze
+    DELIMITER_REGEX = /^([\(\[\{])/
+    CLOSE_DELIMITER_REGEX = /^([\)\]\}])/
+
     private
 
     ATTR_REGEX = /^ (\w[:\w-]*)=/
@@ -230,13 +238,7 @@ module Slim
       '#' => 'id',
       '.' => 'class',
     }.freeze
-    DELIMITERS = {
-      '(' => ')',
-      '[' => ']',
-      '{' => '}',
-    }.freeze
-    DELIMITER_REGEX = /^([\(\[\{])/
-    CLOSE_DELIMITER_REGEX = /^([\)\]\}])/
+
     if RUBY_VERSION > '1.9'
       CLASS_ID_REGEX = /^(#|\.)([\w\u00c0-\uFFFF][\w:\u00c0-\uFFFF-]*)/
     else
