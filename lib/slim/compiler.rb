@@ -2,6 +2,8 @@ module Slim
   # Compiles Slim expressions into Temple::HTML expressions.
   # @api private
   class Compiler < Filter
+    set_default_options :disable_capture => false
+
     # Handle control expression `[:slim, :control, code, content]`
     #
     # @param [String] ruby code
@@ -46,8 +48,11 @@ module Slim
         # Capture the content of a block in a separate buffer. This means
         # that `yield` will not output the content to the current buffer,
         # but rather return the output.
-        [:capture, tmp2,
-         compile!(content)],
+        #
+        # The capturing can be disabled with the option :disable_capture.
+        # Output code in the block writes directly to the output buffer then.
+        # Rails handles this by replacing the output buffer for helpers (with_output_buffer - braindead!).
+        options[:disable_capture] ? compile!(content) : [:capture, tmp2, compile!(content)],
 
         # Close the block.
         [:block, 'end'],

@@ -1,6 +1,7 @@
 require 'slim'
 
 Slim::Engine.default_options[:generator] = Temple::Generators::RailsOutputBuffer
+Slim::Engine.default_options[:disable_capture] = true
 
 module ActionView
   module TemplateHandlers

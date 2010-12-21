@@ -12,6 +12,7 @@ module Slim
                         :format => :html5,
                         :id_delimiter => nil,
                         :generator => Temple::Generators::ArrayBuffer,
+                        :disable_capture => false,
                         :debug => false
 
     use Slim::Parser, :file, :tabsize
@@ -19,7 +20,7 @@ module Slim
     use Slim::Interpolation
     use Slim::Sections, :sections, :dictionary, :dictionary_access
     use Slim::EndInserter
-    use Slim::Compiler
+    use Slim::Compiler, :disable_capture
     filter :EscapeHTML, :use_html_safe
     use Temple::HTML::Pretty, :format, :attr_wrapper, :id_delimiter, :pretty
     filter :MultiFlattener

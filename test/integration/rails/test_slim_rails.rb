@@ -41,13 +41,20 @@ class TestSlimRails < ActionController::IntegrationTest
 
   test "content_for" do
     get "slim/content_for"
-    assert_html "Heading set from a view<h1>Hello Slim!</h1><h2>Hello Slim!</h2>"
+    assert_html "Heading set from a view<h1><p>Hello Slim!</p></h1><h2><p>Hello Slim!</p></h2>"
   end
 
   test "nested_attributes_form" do
     post "parents", 'parent[name]' => "p1", 'parent[children_attributes][0][name]' => "c1"
     get "parents/1/edit"
-    assert_has_html '<input id="parent_children_attributes_0_id" name="parent[children_attributes][0][id]" type="hidden" value="1" />'
+
+    assert_html '<form accept-charset="UTF-8" action="/parents/1" class="edit_parent" enctype="multipart/form-data" id="edit_parent_1" method="post">'+
+      '<div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="_method" type="hidden" value="put" />'+
+      '</div><h1>Parent</h1><input id="parent_name" name="parent[name]" size="30" type="text" value="p1" />'+
+      '<h2>Children</h2>'+
+      '<ul><li><input id="parent_children_attributes_0_name" name="parent[children_attributes][0][name]" size="30" type="text" value="c1" /></li>'+
+      '<input id="parent_children_attributes_0_id" name="parent[children_attributes][0][id]" type="hidden" value="1" /></ul>'+
+      '<input id="parent_submit" name="commit" type="submit" value="Update Parent" /></form>'
   end
 
   protected
@@ -55,9 +62,5 @@ class TestSlimRails < ActionController::IntegrationTest
   def assert_html(expected, options = {})
     expected = "<!DOCTYPE html><html><head><title>Dummy</title></head><body>#{expected}</body></html>" unless options[:skip_layout]
     assert_equal expected, @response.body
-  end
-
-  def assert_has_html(expected)
-    assert_match expected, @response.body
   end
 end
