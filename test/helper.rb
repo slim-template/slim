@@ -106,6 +106,10 @@ class Env
     end
   end
 
+  def message(*args)
+    args.join(' ')
+  end
+
   def action_path(*args)
     "/action-#{args.join('-')}"
   end

@@ -32,7 +32,7 @@ p \\#{hello_world}
 
   def test_complex_interpolation
     source = %q{
-p Message: #{hello_world('hello', " user #{output_number}")}
+p Message: #{message('hello', "user #{output_number}")}
 }
 
     assert_html '<p>Message: hello user 1337</p>', source
