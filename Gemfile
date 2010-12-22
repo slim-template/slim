@@ -9,3 +9,8 @@ if path = ENV['SLIM_USE_TEMPLE']
     gem 'temple', :path => path
   end
 end
+
+group :integration do
+  gem 'rails', '~> 3.0.3'
+  gem 'sqlite3-ruby'
+end
