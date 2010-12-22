@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    slim (0.8.1)
+    slim (0.8.2)
       temple (~> 0.1.6)
       tilt (~> 1.1)
 
