@@ -183,7 +183,6 @@ module Slim
           line.slice!(0)
 
           # We're entering a block of html comments, so let's add an opening tag
-          # and mark it in the system so it could be identified by the closing tag
           if in_html_comment
             block << [:static, '<!--']
           end
