@@ -15,6 +15,14 @@ module Slim
         compile!(content)]
     end
 
+    # Handle comment expression `[:slim, :comment, content]`
+    #
+    # @param [Array] content Temple expression
+    # @return [Array] Compiled temple expression
+    def on_slim_comment(content)
+      [:html, :comment, compile!(content)]
+    end
+
     # Handle output expression `[:slim, :output, escape, code, content]`
     #
     # @param [Boolean] escape Escape html

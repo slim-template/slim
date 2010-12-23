@@ -22,11 +22,12 @@ module Slim
     use Slim::EndInserter
     use Slim::Compiler, :disable_capture
     filter :EscapeHTML, :use_html_safe
+    filter :Debugger, :debug, :debug_prefix => 'After Slim'
     use Temple::HTML::Pretty, :format, :attr_wrapper, :id_delimiter, :pretty
     filter :MultiFlattener
     filter :StaticMerger
     filter :DynamicInliner
-    filter :Debugger, :debug, :debug_prefix, :debug_pretty
+    filter :Debugger, :debug, :debug_prefix => 'Optimized code'
     chain << proc {|options| options[:generator].new }
   end
 end

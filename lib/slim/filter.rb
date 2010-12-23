@@ -9,6 +9,10 @@ module Slim
       [:slim, :control, code, compile!(content)]
     end
 
+    def on_slim_comment(content)
+      [:slim, :comment, compile!(content)]
+    end
+
     def on_slim_output(code, escape, content)
       [:slim, :output, code, escape, compile!(content)]
     end
