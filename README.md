@@ -332,5 +332,6 @@ This project is released under the MIT license.
 ## Slim related projects
 
 * [Textmate bundle](https://github.com/fredwu/ruby-slim-textmate-bundle)
+* [Haml2Slim converter](https://github.com/fredwu/haml2slim)
 * [Rails 3 Generators](https://github.com/leogalmeida/slim-rails)
 * [Slim for Clojure](https://github.com/chaslemley/slim.clj)
