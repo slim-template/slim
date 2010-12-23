@@ -108,7 +108,7 @@ Here's a quick example to demonstrate what a Slim template looks like:
 
 #### `==`
 
-> Same as the single equal sign, but does not go through the escape_html method.
+> Same as the single equal sign, but does not go through the `escape_html` method.
 
 #### `!`
 
@@ -117,6 +117,11 @@ Here's a quick example to demonstrate what a Slim template looks like:
 #### `/`
 
 > Use the forward slash for ruby code comments - anything after it won't get displayed in the final render.
+
+#### `/!`
+
+> Use the forward slash immediately followed by an exclamation mark for html comments (`<!-- -->`).
+
 
 ### Things to know
 
@@ -253,18 +258,19 @@ Here's a quick example to demonstrate what a Slim template looks like:
               This line will have two spaces in front of it.
                 And so on...
 
-### Add code comments
+### Add comments
 
-  Use a forward slash for ruby code comments
+  Use `/` for ruby code comments and `/!` for html comments
 
     body
       p
         / This line won't get displayed.
           Neither does this line.
+        /! This will get displayed as html comments.
 
   The parsed result of the above:
 
-    <body><p></p></body>
+    <body><p><!--This will get displayed as html comments.--></p></body>
 
 ### Validate Slim syntax
 

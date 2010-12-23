@@ -69,7 +69,7 @@ module Slim
       #     Hello
       #     World!
       #
-      block_indent, in_comment, text_indent = nil, false, nil
+      block_indent, in_slim_comment, in_html_comment, text_indent = nil, false, false, nil
 
       str.each_line do |line|
         lineno += 1
@@ -104,10 +104,10 @@ module Slim
         # Handle blocks with multiple lines
         if block_indent
           if indent > block_indent
-            # This line happens to be indented deeper (or equal) than the block start character (|, ', `, /).
+            # This line happens to be indented deeper (or equal) than the block start character (|, ', /).
             # This means that it's a part of the block.
 
-            if !in_comment
+            if !in_slim_comment
               # The indentation of first line of the text block determines the text base indentation.
               newline = text_indent ? "\n" : ''
               text_indent ||= indent
@@ -124,10 +124,15 @@ module Slim
             next
           end
 
+          # Closes the html comment
+          if in_html_comment
+            stacks.last << [:static, '-->']
+          end
+
           # It's guaranteed that we're now *not* in a block, because
           # the indent was less than the block start indent.
           block_indent = text_indent = nil
-          in_comment = false
+          in_slim_comment = in_html_comment = false
         end
 
         # If there's more stacks than indents, it means that the previous
@@ -173,9 +178,17 @@ module Slim
           stacks << block
           block_indent = indent
 
-          in_comment = line[0] == ?/
+          in_slim_comment = line[0] == ?/ && line[1] != ?!
+          in_html_comment = line[0] == ?/ && line[1] == ?! && line.slice!(0)
           line.slice!(0)
-          if !in_comment && !line.strip.empty?
+
+          # We're entering a block of html comments, so let's add an opening tag
+          # and mark it in the system so it could be identified by the closing tag
+          if in_html_comment
+            block << [:static, '<!--']
+          end
+
+          if !in_slim_comment && !line.strip.empty?
             block << [:slim, :text, line.sub(/^( )/, '')]
             text_indent = block_indent + ($1 ? 2 : 1)
           end

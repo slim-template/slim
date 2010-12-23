@@ -7,7 +7,7 @@ class TestSlimHtmlStructure < TestSlim
 html
   head
     title Simple Test Title
-  body 
+  body
     p Hello World, meet Slim.
 }
 
@@ -257,5 +257,27 @@ closed(id="test")/
 }
 
     assert_html '<closed id="test" />', source, :format => :xhtml
+  end
+
+  def test_render_with_html_comments
+    source = %q{
+p Hello
+/! This is a comment
+p World
+}
+
+    assert_html "<p>Hello</p><!--This is a comment--><p>World</p>", source
+  end
+
+  def test_render_with_html_comments_2
+    source = %q{
+p Hello
+/! This is a comment
+   Another comment
+  Last line of comment.
+p World
+}
+
+    assert_html "<p>Hello</p><!--This is a comment\n Another comment\nLast line of comment.--><p>World</p>", source
   end
 end

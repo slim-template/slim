@@ -71,7 +71,7 @@ p
     assert_html '<p>42 is the answer</p>', source
   end
 
-  def test_render_with_comments
+  def test_render_with_slim_comments
     source = %q{
 p Hello
 / This is a comment
