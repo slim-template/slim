@@ -5,7 +5,6 @@ end
 
 class TestSlimTemplate < MiniTest::Unit::TestCase
   class Scope
-    include Tilt::CompileSite
   end
 
   def test_registered_extension
@@ -64,12 +63,8 @@ class TestSlimTemplate < MiniTest::Unit::TestCase
   def test_compiling_template_source_to_a_method
     template = Slim::Template.new { |t| "Hello World!" }
     template.render(Scope.new)
-    method_name = template.send(:compiled_method_name, [])
-    method_name = method_name.to_sym if Symbol === Kernel.methods.first
-    assert Tilt::CompileSite.instance_methods.include?(method_name),
-      "CompileSite.instance_methods.include?(#{method_name.inspect})"
-    assert Scope.new.respond_to?(method_name),
-      "scope.respond_to?(#{method_name.inspect})"
+    method = template.send(:compiled_method, [])
+    assert_kind_of UnboundMethod, method
   end
   
 
