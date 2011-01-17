@@ -68,6 +68,7 @@ module Slim
     end
 
     def access(name)
+      return name if name == 'yield'
       case options[:dictionary_access]
       when :string
         "_slimdict[#{name.to_s.inspect}]"
