@@ -3,13 +3,15 @@ module Slim
   # This filter can be activated with the option "sections"
   # @api private
   class Sections < Filter
+    # dictionary_access is not used if dictionary_type == :object
     set_default_options :dictionary => 'self',
                         :sections => false,
-                        :dictionary_access => :wrapped # :symbol, :string, :wrapped
+                        :dictionary_access => :method # :symbol, :string, :method
 
     def initialize(opts = {})
       super
-      unless [:string, :symbol, :wrapped].include?(options[:dictionary_access])
+
+      unless [:method, :string, :symbol].include?(options[:dictionary_access])
         raise "Invalid dictionary access #{options[:dictionary_access].inspect}"
       end
     end
@@ -18,7 +20,7 @@ module Slim
       if options[:sections]
         # Store the dictionary in the _slimdict variable
         [:multi,
-         [:block, "_slimdict = #{dictionary}"],
+         [:block, "_slimdict = #{options[:dictionary]}"],
          super]
       else
         exp
@@ -70,20 +72,13 @@ module Slim
     def access(name)
       return name if name == 'yield'
       case options[:dictionary_access]
+      when :method
+        "_slimdict.#{name}"
       when :string
         "_slimdict[#{name.to_s.inspect}]"
       else
         "_slimdict[#{name.to_sym.inspect}]"
       end
     end
-
-    def dictionary
-      if options[:dictionary_access] == :wrapped
-        "Slim::Wrapper.new(#{options[:dictionary]})"
-      else
-        options[:dictionary]
-      end
-    end
-
   end
 end

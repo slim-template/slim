@@ -13,7 +13,7 @@ class TestSlim < MiniTest::Unit::TestCase
   end
 
   def teardown
-    Slim::Sections.set_default_options(:dictionary_access => :wrapped)
+    Slim::Sections.set_default_options(:dictionary_access => :method)
     Temple::Filters::EscapeHTML.default_options.delete(:use_html_safe)
   end
 
@@ -128,8 +128,12 @@ class Env
 end
 
 class ViewEnv
-  def person
-    [{:name => 'Joe'}, {:name => 'Jack'}]
+  def link_to(title, href)
+    %{<a href="#{href}">#{title}</a>}
+  end
+
+  def users_path
+    "/users"
   end
 
   def people

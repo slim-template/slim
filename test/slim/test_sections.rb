@@ -83,4 +83,27 @@ p = method_with_block do
 }
     assert_runtime_error 'Output statements with content are forbidden in sections mode', source, :sections => true
   end
+
+  def test_method_call_with_params
+    source = %q{
+li
+  == link_to("Home", "/")
+li
+  == link_to("Users", users_path)
+}
+
+    hash = {:person => Person.new("Joe")}
+
+    assert_html '<li><a href="/">Home</a></li><li><a href="/users">Users</a></li>', source, :scope => ViewEnv.new, :sections => true, :dictionary_access => :method
+  end
+
+
+  def test_collection_iteration
+    source = %q{
+- people
+ p = name
+}
+
+    assert_html '<p>Andy</p><p>Fred</p><p>Daniel</p>', source, :scope => ViewEnv.new, :sections => true, :dictionary_access => :method
+  end
 end
