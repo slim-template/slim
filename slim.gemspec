@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_runtime_dependency(%q<temple>, ["~> 0.1.6"]) unless ENV['SLIM_USE_TEMPLE']
-  s.add_runtime_dependency(%q<tilt>, ["~> 1.1"])
+  s.add_runtime_dependency(%q<tilt>, ["~> 1.2"])
 
   s.add_development_dependency(%q<rake>, [">= 0.8.7"])
   s.add_development_dependency(%q<haml>, [">= 0"])
