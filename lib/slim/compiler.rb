@@ -74,7 +74,7 @@ module Slim
     # @param [String] type Directive type
     # @return [Array] Compiled temple expression
     def on_slim_directive(type)
-      if type =~ /^doctype/
+      if type =~ /^doctype/i
         [:html, :doctype, $'.strip]
       end
     end

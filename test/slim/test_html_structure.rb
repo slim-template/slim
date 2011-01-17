@@ -32,6 +32,15 @@ html
     assert_html '<!DOCTYPE html><html></html>', source
   end
 
+  def test_capitalized_doctype
+    source = %q{
+! DOCTYPE 5
+html
+}
+
+    assert_html '<!DOCTYPE html><html></html>', source
+  end
+
   def test_render_with_shortcut_attributes
     source = %q{
 h1#title This is my title
