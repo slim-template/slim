@@ -20,7 +20,7 @@ module Slim
       if options[:sections]
         # Store the dictionary in the _slimdict variable
         [:multi,
-         [:block, "_slimdict = #{options[:dictionary]}"],
+         [:block, "_slimdict = #{dictionary}"],
          super]
       else
         exp
@@ -78,6 +78,14 @@ module Slim
         "_slimdict[#{name.to_s.inspect}]"
       else
         "_slimdict[#{name.to_sym.inspect}]"
+      end
+    end
+
+    def dictionary
+      if options[:dictionary_access] == :method
+        "Slim::Wrapper.new(#{options[:dictionary]})"
+      else
+        options[:dictionary]
       end
     end
   end
