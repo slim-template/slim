@@ -7,9 +7,9 @@ class TestSlimWrapper < TestSlim
   end
 
   def teardown
-    Slim::Sections.set_default_options(:dictionary => 'self') 
+    Slim::Sections.set_default_options(:dictionary => 'self')
   end
-  
+
   def test_sections
     source = %q{
 p

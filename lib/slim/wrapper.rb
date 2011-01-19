@@ -24,15 +24,13 @@ module Slim
     # go through the same steps on the parent object.  This is useful when
     # you are iterating over objects.
     def [](name)
-      if value.respond_to?(name)
-        wrap value.send(name)
-      elsif value.respond_to?(:has_key?) && value.has_key?(name.to_sym)
-        wrap value[name]
-      elsif value.instance_variable_defined?("@#{name}")
-        wrap value.instance_variable_get("@#{name}")
-      elsif parent
-        parent[name]
+      return wrap(value.send(name)) if value.respond_to?(name)
+      if value.respond_to?(:has_key?)
+        return wrap(value[name.to_sym]) if value.has_key?(name.to_sym)
+        return wrap(value[name.to_s]) if value.has_key?(name.to_s)
       end
+      return wrap(value.instance_variable_get("@#{name}")) if value.instance_variable_defined?("@#{name}")
+      parent[name] if parent
     end
 
     # Empty objects must appear empty for inverted sections
