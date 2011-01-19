@@ -1,9 +1,5 @@
 module Slim
   # For logic-less mode, objects can be encased in the Wrapper class.
-  #
-  # For Rails, this allows us to use the environment provided for rendering
-  # a view including the instance variables, view helper and application helper
-  # methods.
   class Wrapper
     attr_reader :value, :parent
 
