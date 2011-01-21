@@ -13,9 +13,10 @@ module Slim
                         :id_delimiter => nil,
                         :generator => Temple::Generators::ArrayBuffer,
                         :disable_capture => false,
-                        :debug => false
+                        :debug => false,
+                        :auto_escape => true
 
-    use Slim::Parser, :file, :tabsize
+    use Slim::Parser, :file, :tabsize, :auto_escape
     use Slim::EmbeddedEngine, :enable_engines, :disable_engines
     use Slim::Interpolation
     use Slim::Sections, :sections, :dictionary, :dictionary_access

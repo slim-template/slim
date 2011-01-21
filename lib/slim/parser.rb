@@ -199,7 +199,7 @@ module Slim
           # Found an output block.
           # We expect the line to be broken or the next line to be indented.
           block = [:multi]
-          escape = line[1] != ?=
+          escape = @options[:auto_escape] && (line[1] != ?=)
           broken_line = escape ? line[1..-1].strip : line[2..-1].strip
           stacks.last << [:slim, :output, escape, broken_line, block]
           stacks << block

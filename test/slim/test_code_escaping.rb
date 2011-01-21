@@ -52,4 +52,26 @@ p = HtmlSafeString.new("<strong>Hello World\\n, meet \\"Slim\\"</strong>.")
 
     assert_html "<p><strong>Hello World\n, meet \"Slim\"</strong>.</p>", source
   end
+
+  def test_render_with_auto_escape_true
+    Slim::Engine.default_options[:auto_escape] = true
+
+    source = %q{
+= "<p>Hello</p>"
+== "<p>World</p>"
+}
+
+    assert_html "&lt;p&gt;Hello&lt;&#47;p&gt;<p>World</p>", source
+  end
+
+  def test_render_with_auto_escape_false
+    Slim::Engine.default_options[:auto_escape] = false
+
+    source = %q{
+= "<p>Hello</p>"
+== "<p>World</p>"
+}
+
+    assert_html "<p>Hello</p><p>World</p>", source
+  end
 end
