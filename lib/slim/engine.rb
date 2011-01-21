@@ -14,6 +14,26 @@ module Slim
                         :id_delimiter => nil,
                         :generator => Temple::Generators::ArrayBuffer
 
+    # Document all supported options with purpose, type etc.
+    #
+    # Type        | Name               | Default value         | Purpose
+    # ---------------------------------------------------------------------------
+    # String      | :file              | nil                   | Name of parsed file, set automatically by Slim::Template
+    # Integer     | :tabsize           | 4                     | Tab size used by the parser
+    # String list | :enable_engines    | All enabled           | List of enabled embedded engines (whitelist)
+    # String list | :disable_engines   | No disabled           | List of disabled embedded engines (blacklist)
+    # Boolean     | :sections          | false                 | Enable sections mode (logic-less)
+    # String      | :dictionary        | "self"                | Name of dictionary variable in sections mode
+    # Symbol      | :dictionary_access | :wrapped              | Access mode of dictionary variable (:wrapped, :symbol, :string)
+    # Boolean     | :disable_capture   | false (true in Rails) | Disable capturing in blocks (blocks write to the default buffer then)
+    # Boolean     | :auto_escape       | true                  | Enable automatic escaping of strings
+    # Boolean     | :use_html_safe     | false (true in Rails) | Check html_safe? (Works together with :auto_escape)
+    # Boolean     | :debug             | false                 | Enable debug outputs (Temple internals)
+    # Symbol      | :format            | :html5                | HTML output format
+    # String      | :attr_wrapper      | '"'                   | Character to wrap attributes in html (can be ' or ")
+    # String      | :id_delimiter      | '_'                   | Joining character used if multiple html ids are supplied (e.g. #id1#id2)
+    # Boolean     | :pretty            | false                 | Pretty html indenting (This is slower!)
+    # Class       | :generator         | ArrayBuffer           | Temple code generator (defaults generates array buffer)
     use Slim::Parser, :file, :tabsize
     use Slim::EmbeddedEngine, :enable_engines, :disable_engines
     use Slim::Interpolation
