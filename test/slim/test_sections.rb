@@ -5,6 +5,10 @@ class TestSlimLogicLess < TestSlim
     Slim::Sections.set_default_options(:dictionary_access => :symbol)
   end
 
+  def teardown
+    Slim::Sections.set_default_options(:dictionary => 'self')
+  end
+
   def test_sections
     source = %q{
 p
