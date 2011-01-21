@@ -2,7 +2,7 @@ module Slim
   # Compiles Slim expressions into Temple::HTML expressions.
   # @api private
   class Compiler < Filter
-    set_default_options :disable_capture => false
+    set_default_options :auto_escape => true
 
     # Handle control expression `[:slim, :control, code, content]`
     #
@@ -31,7 +31,7 @@ module Slim
     # @return [Array] Compiled temple expression
     def on_slim_output(escape, code, content)
       if empty_exp?(content)
-        [:multi, escape ? [:escape, :dynamic, code] : [:dynamic, code], content]
+        [:multi, escape && options[:auto_escape] ? [:escape, :dynamic, code] : [:dynamic, code], content]
       else
         on_slim_output_block(escape, code, content)
       end

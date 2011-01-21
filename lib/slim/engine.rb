@@ -7,21 +7,19 @@ module Slim
     #     # Indent html for pretty debugging
     #     Slim::Engine.set_default_options :pretty => true
     #
+    # This overwrites some temple default options.
     set_default_options :pretty => false,
                         :attr_wrapper => '"',
                         :format => :html5,
                         :id_delimiter => nil,
-                        :generator => Temple::Generators::ArrayBuffer,
-                        :disable_capture => false,
-                        :debug => false,
-                        :auto_escape => true
+                        :generator => Temple::Generators::ArrayBuffer
 
-    use Slim::Parser, :file, :tabsize, :auto_escape
+    use Slim::Parser, :file, :tabsize
     use Slim::EmbeddedEngine, :enable_engines, :disable_engines
     use Slim::Interpolation
     use Slim::Sections, :sections, :dictionary, :dictionary_access
     use Slim::EndInserter
-    use Slim::Compiler, :disable_capture
+    use Slim::Compiler, :disable_capture, :auto_escape
     filter :EscapeHTML, :use_html_safe
     filter :Debugger, :debug, :debug_prefix => 'After Slim'
     use Temple::HTML::Pretty, :format, :attr_wrapper, :id_delimiter, :pretty
