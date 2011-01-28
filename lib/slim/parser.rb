@@ -236,8 +236,8 @@ module Slim
       '[' => ']',
       '{' => '}',
     }.freeze
-    DELIMITER_REGEX = /^([\(\[\{])/
-    CLOSE_DELIMITER_REGEX = /^([\)\]\}])/
+    DELIMITER_REGEX = /^[\(\[\{]/
+    CLOSE_DELIMITER_REGEX = /^[\)\]\}]/
 
     private
 
@@ -281,7 +281,7 @@ module Slim
       # Check to see if there is a delimiter right after the tag name
       delimiter = ''
       if line =~ DELIMITER_REGEX
-        delimiter = DELIMITERS[$1]
+        delimiter = DELIMITERS[$&]
         # Replace the delimiter with a space so we can continue parsing as normal.
         line[0] = ?\s
       end
@@ -350,12 +350,12 @@ module Slim
           break
         elsif line =~ DELIMITER_REGEX
           # Delimiter found, push it on the stack
-          stack << DELIMITERS[$1]
+          stack << DELIMITERS[$&]
           value << line.slice!(0)
         elsif line =~ CLOSE_DELIMITER_REGEX
           # Closing delimiter found, pop it from the stack if everything is ok
-          syntax_error! "Unexpected closing #{$1}", orig_line, lineno if stack.empty?
-          syntax_error! "Expected closing #{stack.last}", orig_line, lineno if stack.last != $1
+          syntax_error! "Unexpected closing #{$&}", orig_line, lineno if stack.empty?
+          syntax_error! "Expected closing #{stack.last}", orig_line, lineno if stack.last != $&
           value << line.slice!(0)
           stack.pop
         else
@@ -368,7 +368,7 @@ module Slim
 
       # Remove attribute wrapper which doesn't belong to the ruby code
       # e.g id=[hash[:a] + hash[:b]]
-      value = value[1..-2] if value =~ DELIMITER_REGEX && DELIMITERS[$1] == value[-1, 1]
+      value = value[1..-2] if value =~ DELIMITER_REGEX && DELIMITERS[$&] == value[-1, 1]
 
       return line, value
     end

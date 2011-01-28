@@ -19,7 +19,7 @@ module Slim
         when /^\#\{/
           # Interpolation
           string, code = parse_expression($')
-          escape = code !~ Parser::DELIMITER_REGEX || Parser::DELIMITERS[$1] != code[-1, 1]
+          escape = code !~ Parser::DELIMITER_REGEX || Parser::DELIMITERS[$&] != code[-1, 1]
           block << [:slim, :output, escape, escape ? code : code[1..-2], [:multi]]
         when /^([^\#]+|\#)/
           # Static text
@@ -41,12 +41,12 @@ module Slim
           break
         elsif string =~ Parser::DELIMITER_REGEX
           # Delimiter found, push it on the stack
-          stack << Parser::DELIMITERS[$1]
+          stack << Parser::DELIMITERS[$&]
           code << string.slice!(0)
         elsif string =~ Parser::CLOSE_DELIMITER_REGEX
           # Closing delimiter found, pop it from the stack if everything is ok
-          raise "Text interpolation: Unexpected closing #{$1}" if stack.empty?
-          raise "Text interpolation: Expected closing #{stack.last}" if stack.last != $1
+          raise "Text interpolation: Unexpected closing #{$&}" if stack.empty?
+          raise "Text interpolation: Expected closing #{stack.last}" if stack.last != $&
           code << string.slice!(0)
           stack.pop
         else
