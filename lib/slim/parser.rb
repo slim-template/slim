@@ -368,7 +368,7 @@ module Slim
 
       # Remove attribute wrapper which doesn't belong to the ruby code
       # e.g id=[hash[:a] + hash[:b]]
-      value = value[1..-2] if value =~ DELIMITER_REGEX && DELIMITERS[value[0, 1]] == value[-1, 1]
+      value = value[1..-2] if value =~ DELIMITER_REGEX && DELIMITERS[$1] == value[-1, 1]
 
       return line, value
     end

@@ -19,7 +19,8 @@ module Slim
         when /^\#\{/
           # Interpolation
           string, code = parse_expression($')
-          block << [:slim, :output, true, code, [:multi]]
+          escape = code !~ Parser::DELIMITER_REGEX || Parser::DELIMITERS[$1] != code[-1, 1]
+          block << [:slim, :output, escape, escape ? code : code[1..-2], [:multi]]
         when /^([^\#]+|\#)/
           # Static text
           block << [:static, $&]
