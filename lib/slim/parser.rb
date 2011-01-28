@@ -258,7 +258,7 @@ module Slim
       orig_line = line
 
       case line
-      when /^(#|\.)/
+      when /^[#\.]/
         tag = 'div'
       when /^\w[:\w-]*/
         tag = $&

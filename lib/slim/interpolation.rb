@@ -12,16 +12,16 @@ module Slim
       block = [:multi]
       until string.empty?
         case string
-        when /^\\\#\{/
+        when /^\\#\{/
           # Escaped interpolation
           block << [:static, '#{']
           string = $'
-        when /^\#\{/
+        when /^#\{/
           # Interpolation
           string, code = parse_expression($')
           escape = code !~ Parser::DELIMITER_REGEX || Parser::DELIMITERS[$&] != code[-1, 1]
           block << [:slim, :output, escape, escape ? code : code[1..-2], [:multi]]
-        when /^([^\#]+|\#)/
+        when /^([^#]+|#)/
           # Static text
           block << [:static, $&]
           string = $'
