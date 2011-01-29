@@ -241,7 +241,7 @@ module Slim
 
     private
 
-    ATTR_REGEX = /^ (\w[:\w-]*)=/
+    ATTR_REGEX = /^ +(\w[:\w-]*)=/
     QUOTED_VALUE_REGEX = /^("[^"]+"|'[^']+')/
     ATTR_SHORTHAND = {
       '#' => 'id',
@@ -303,8 +303,8 @@ module Slim
 
       # Find ending delimiter
       if !delimiter.empty?
-        if line[0, 1] == delimiter
-          line.slice!(0)
+        if line =~ /^ *#{Regexp.escape delimiter}/
+          line = $'
         else
           syntax_error! "Expected closing delimiter #{delimiter}", orig_line, lineno, orig_line.size - line.size
         end
