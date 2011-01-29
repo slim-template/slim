@@ -124,6 +124,9 @@ a href='http://ruby-lang.org' Ruby</pre>
     Rails provides an html_safe? method that Slim takes advantage of, but when rendering partials, you'll need to use the double equal to bypass the escape html functionality:
       <pre>== render :partial, 'user'</pre>
     </p>
+    <p>To bypass escaping with interpolation:
+      <pre>p Current location: #{{request.path}}</pre>
+    </p>
     <hr/>
     <p>Haml like shortcuts:
       <pre>#myid.myclass.myclass2 My example</pre>
