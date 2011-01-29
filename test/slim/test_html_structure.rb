@@ -262,6 +262,11 @@ closed/
     assert_html '<label for="filter">Hello World from @env</label>', source
   end
 
+  def test_attributs_with_multiple_spaces
+    source = %q{label  for='filter'  class="test" = hello_world}
+    assert_html '<label class="test" for="filter">Hello World from @env</label>', source
+  end
+
   def test_closed_tag_with_attributes
     source = %q{
 closed id="test" /
