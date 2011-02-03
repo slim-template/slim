@@ -42,7 +42,7 @@ module Slim
       # Since you can indent however you like in Slim, we need to keep a list
       # of how deeply indented you are. For instance, in a template like this:
       #
-      #   ! doctype     # 0 spaces
+      #   doctype       # 0 spaces
       #   html          # 0 spaces
       #    head         # 1 space
       #       title     # 4 spaces

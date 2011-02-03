@@ -55,7 +55,7 @@ Slim's syntax has been influenced by both _Haml_ and _Jade_.
 
 Here's a quick example to demonstrate what a Slim template looks like:
 
-    ! doctype html
+    doctype html
     html
       head
         title Slim Examples
