@@ -205,7 +205,8 @@ module Slim
           stacks << block
         when ?!
           # Found a directive (currently only used for doctypes)
-          stacks.last << [:slim, :directive, line[1..-1].strip]
+          directive = line[1..-1].strip.split(/\s+/, 2)
+          stacks.last << [:slim, :directive, directive[0].downcase, directive[1]]
         else
           if line =~ /^(\w+):\s*$/
             # Embedded template detected. It is treated as block.

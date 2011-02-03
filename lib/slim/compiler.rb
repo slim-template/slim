@@ -69,13 +69,13 @@ module Slim
         on_slim_output(escape, tmp, [:multi])]
     end
 
-    # Handle directive expression `[:slim, :directive, type]`
+    # Handle directive expression `[:slim, :directive, type, args]`
     #
     # @param [String] type Directive type
     # @return [Array] Compiled temple expression
-    def on_slim_directive(type)
-      if type =~ /^doctype/i
-        [:html, :doctype, $'.strip]
+    def on_slim_directive(type, args)
+      if type == 'doctype'
+        [:html, :doctype, args]
       end
     end
 
