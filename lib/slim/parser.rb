@@ -215,6 +215,8 @@ module Slim
             stacks << block
             block_indent = indent
             next
+          elsif line =~ /^doctype\s+/i
+            stacks.last << [:slim, :directive, 'doctype', $'.strip]
           else
             # Found a HTML tag.
             tag, block, broken_line, text_indent = parse_tag(line, lineno)

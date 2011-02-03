@@ -25,11 +25,20 @@ html:body
 
   def test_doctype
     source = %q{
-! doctype 5
+! doctype 1.1
 html
 }
 
-    assert_html '<!DOCTYPE html><html></html>', source
+    assert_html '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"><html></html>', source, :format => :xhtml
+  end
+
+  def test_doctype_new_syntax
+    source = %q{
+doctype 5
+html
+}
+
+    assert_html '<!DOCTYPE html><html></html>', source, :format => :xhtml
   end
 
   def test_capitalized_doctype
