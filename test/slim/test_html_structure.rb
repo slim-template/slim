@@ -41,6 +41,15 @@ html
     assert_html '<!DOCTYPE html><html></html>', source, :format => :xhtml
   end
 
+  def test_doctype_new_syntax_html5
+    source = %q{
+doctype html
+html
+}
+
+    assert_html '<!DOCTYPE html><html></html>', source, :format => :xhtml
+  end
+
   def test_capitalized_doctype
     source = %q{
 ! DOCTYPE 5
