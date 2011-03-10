@@ -19,7 +19,7 @@ module Slim
         when /^#\{/
           # Interpolation
           string, code = parse_expression($')
-          escape = code !~ /^\{/ || code[-1, 1] != '}'
+          escape = code !~ /^\{.*\}$/
           block << [:slim, :output, escape, escape ? code : code[1..-2], [:multi]]
         when /^([^#]+|#)/
           # Static text
