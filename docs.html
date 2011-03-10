@@ -43,6 +43,48 @@ Slim::Engine.set_default_options :pretty => true</pre>
     <p>Just use the .slim extension on your templates and you're good to go.  Now on to the syntax...</p>
 
     <hr/>
+    <p>doctype declarations:
+      <pre style="font-size: 10px">
+/ XHTML DOCTYPES 
+
+doctype html      
+  &lt;!DOCTYPE html&gt;
+
+doctype 5         
+  &lt;!DOCTYPE html&gt;
+
+doctype 1.1       
+  &lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"&gt;
+
+doctype strict
+  &lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"&gt;
+
+doctype frameset
+  &lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd"&gt;
+
+doctype mobile
+  &lt;!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.2//EN" "http://www.openmobilealliance.org/tech/DTD/xhtml-mobile12.dtd"&gt;
+
+doctype basic
+  &lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN" "http://www.w3.org/TR/xhtml-basic/xhtml-basic11.dtd"&gt;
+
+doctype transitional
+  &lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;
+
+/ HTML 4 DOCTYPES
+
+doctype strict
+  &lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"&gt;
+
+doctype frameset
+  &lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd"&gt;
+
+doctype transitional
+&lt;!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"&gt;
+      </pre>
+    </p>
+
+    <hr/>
     <p>Static content on same line:
       <pre>h1 This is my header</pre>
     </p>
