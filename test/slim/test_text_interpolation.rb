@@ -53,4 +53,11 @@ p Message: #{message('hello', "user #{output_number}")}
 
     assert_html '<script>do_something_evil();</script>', source
   end
+
+  def test_interpolation_with_escaping_and_delimiter
+    source = %q{
+| #{(evil_method)}
+}
+    assert_html '&lt;script&gt;do_something_evil();&lt;&#47;script&gt;', source
+  end
 end
