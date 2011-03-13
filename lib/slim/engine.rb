@@ -34,15 +34,21 @@ module Slim
     # String      | :id_delimiter      | '_'                           | Joining character used if multiple html ids are supplied (e.g. #id1#id2)
     # Boolean     | :pretty            | false                         | Pretty html indenting (This is slower!)
     # Class       | :generator         | ArrayBuffer/RailsOutputBuffer | Temple code generator (defaults generates array buffer)
+    # Proc/Filter | :before_compile    | nil                           | Before compile hook
+    # Proc/Filter | :before_html       | nil                           | Before html transformation hook
+    # Proc/Filter | :before_optimize   | nil                           | Before optimization hook
     use Slim::Parser, :file, :tabsize
     use Slim::EmbeddedEngine, :enable_engines, :disable_engines
     use Slim::Interpolation
     use Slim::Sections, :sections, :dictionary, :dictionary_access
     use Slim::EndInserter
+    filter :Hook, :before_compile
     use Slim::Compiler, :disable_capture, :auto_escape
     filter :EscapeHTML, :use_html_safe
     filter :Debugger, :debug, :debug_prefix => 'After Slim'
+    filter :Hook, :before_html
     use Temple::HTML::Pretty, :format, :attr_wrapper, :id_delimiter, :pretty
+    filter :Hook, :before_optimize
     filter :MultiFlattener
     filter :StaticMerger
     filter :DynamicInliner
