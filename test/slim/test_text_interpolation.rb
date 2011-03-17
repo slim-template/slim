@@ -1,6 +1,13 @@
 require 'helper'
 
 class TestSlimTextInterpolation < TestSlim
+  def test_interpolation_in_attribute
+    source = %q{
+p id="a#{id_helper}b" class="hello world" = hello_world
+}
+
+    assert_html '<p class="ahello worldb" id="notice">Hello World from @env</p>', source
+  end
 
   def test_interpolation_in_text
     source = %q{

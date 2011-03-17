@@ -277,6 +277,8 @@ module Slim
 
       # Find any literal class/id attributes
       while line =~ CLASS_ID_REGEX
+        # The class/id attribute is :static instead of :slim :text,
+        # because we don't want text interpolation in .class or #id shortcut
         attributes << [ATTR_SHORTHAND[$1], [:static, $2]]
         line = $'
       end
