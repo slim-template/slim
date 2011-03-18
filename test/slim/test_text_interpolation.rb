@@ -3,10 +3,10 @@ require 'helper'
 class TestSlimTextInterpolation < TestSlim
   def test_interpolation_in_attribute
     source = %q{
-p id="a#{id_helper}b" class="hello world" = hello_world
+p id="a#{id_helper}b" = hello_world
 }
 
-    assert_html '<p class="ahello worldb" id="notice">Hello World from @env</p>', source
+    assert_html '<p id="anoticeb">Hello World from @env</p>', source
   end
 
   def test_interpolation_in_text
