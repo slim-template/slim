@@ -74,8 +74,11 @@ module Slim
     # @param [String] type Directive type
     # @return [Array] Compiled temple expression
     def on_slim_directive(type, args)
-      if type == 'doctype'
+      case type
+      when 'doctype'
         [:html, :doctype, args]
+      else
+        raise "Invalid directive #{type}"
       end
     end
 
