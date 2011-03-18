@@ -20,6 +20,7 @@ module Slim
     # --------------------------------------------------------------------------------------------------------------------------------------------
     # String      | :file              | nil                           | Name of parsed file, set automatically by Slim::Template
     # Integer     | :tabsize           | 4                             | Number of whitespaces per tab (used by the parser)
+    # String      | :encoding          | utf-8                         | Set encoding of template
     # String list | :enable_engines    | All enabled                   | List of enabled embedded engines (whitelist)
     # String list | :disable_engines   | None disabled                 | List of disabled embedded engines (blacklist)
     # Boolean     | :sections          | false                         | Enable sections mode (logic-less)
@@ -37,7 +38,7 @@ module Slim
     # Proc/Filter | :before_compile    | nil                           | Before compile hook
     # Proc/Filter | :before_html       | nil                           | Before html transformation hook
     # Proc/Filter | :before_optimize   | nil                           | Before optimization hook
-    use Slim::Parser, :file, :tabsize
+    use Slim::Parser, :file, :tabsize, :encoding
     use Slim::EmbeddedEngine, :enable_engines, :disable_engines
     use Slim::Interpolation
     use Slim::Sections, :sections, :dictionary, :dictionary_access

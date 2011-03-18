@@ -4,6 +4,9 @@ module Slim
   class Parser
     include Temple::Mixins::Options
 
+    set_default_options :tabsize  => 4,
+                        :encoding => 'utf-8'
+
     class SyntaxError < StandardError
       attr_reader :error, :file, :line, :lineno, :column
 
@@ -24,8 +27,6 @@ module Slim
       end
     end
 
-    default_options[:tabsize] = 4
-
     def initialize(options = {})
       super
       @tab = ' ' * @options[:tabsize]
@@ -36,6 +37,8 @@ module Slim
     # @param [String] str Slim code
     # @return [Array] Temple expression representing the code
     def compile(str)
+      str.force_encoding(options[:encoding]) if options[:encoding] && str.respond_to?(:force_encoding)
+
       lineno = 0
       result = [:multi]
 
