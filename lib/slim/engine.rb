@@ -12,6 +12,7 @@ module Slim
                         :attr_wrapper => '"',
                         :format => :html5,
                         :id_delimiter => nil,
+                        :buffer => '_buf',
                         :generator => Temple::Generators::ArrayBuffer
 
     # Document all supported options with purpose, type etc.
@@ -35,6 +36,7 @@ module Slim
     # String      | :id_delimiter      | '_'                           | Joining character used if multiple html ids are supplied (e.g. #id1#id2)
     # Boolean     | :pretty            | false                         | Pretty html indenting (This is slower!)
     # Class       | :generator         | ArrayBuffer/RailsOutputBuffer | Temple code generator (defaults generates array buffer)
+    # String      | :buffer            | '_buf'                        | Set name of buffer variable used in generator
     # Proc/Filter | :before_compile    | nil                           | Before compile hook
     # Proc/Filter | :before_html       | nil                           | Before html transformation hook
     # Proc/Filter | :before_optimize   | nil                           | Before optimization hook
@@ -54,6 +56,6 @@ module Slim
     filter :StaticMerger
     filter :DynamicInliner
     filter :Debugger, :debug, :debug_prefix => 'Optimized code'
-    chain << proc {|options| options[:generator].new }
+    chain << proc {|options| options[:generator].new(:buffer => options[:buffer]) }
   end
 end
