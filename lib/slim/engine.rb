@@ -36,10 +36,13 @@ module Slim
     # String      | :id_delimiter      | '_'                           | Joining character used if multiple html ids are supplied (e.g. #id1#id2)
     # Boolean     | :pretty            | false                         | Pretty html indenting (This is slower!)
     # Class       | :generator         | ArrayBuffer/RailsOutputBuffer | Temple code generator (defaults generates array buffer)
-    # String      | :buffer            | '_buf'                        | Set name of buffer variable used in generator
     # Proc/Filter | :before_compile    | nil                           | Before compile hook
     # Proc/Filter | :before_html       | nil                           | Before html transformation hook
     # Proc/Filter | :before_optimize   | nil                           | Before optimization hook
+    #
+    # It is also possible to set all options supported by the generator (option :generator). The standard generators
+    # support the options :buffer and :capture_generator.
+    #
     use Slim::Parser, :file, :tabsize, :encoding
     use Slim::EmbeddedEngine, :enable_engines, :disable_engines
     use Slim::Interpolation
@@ -56,6 +59,6 @@ module Slim
     filter :StaticMerger
     filter :DynamicInliner
     filter :Debugger, :debug, :debug_prefix => 'Optimized code'
-    chain << proc {|options| options[:generator].new(:buffer => options[:buffer]) }
+    chain << proc {|options| options[:generator].new(options) }
   end
 end
