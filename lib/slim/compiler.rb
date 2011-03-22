@@ -45,7 +45,7 @@ module Slim
     # @param [Array] content Temple expression
     # @return [Array] Compiled temple expression
     def on_slim_output_block(escape, code, content)
-      tmp = tmp_var('capture')
+      tmp = tmp_var(:output)
 
       [:multi,
         # Capture the result of the code in a variable. We can't do
@@ -60,7 +60,7 @@ module Slim
         # The capturing can be disabled with the option :disable_capture.
         # Output code in the block writes directly to the output buffer then.
         # Rails handles this by replacing the output buffer for helpers (with_output_buffer - braindead!).
-        options[:disable_capture] ? compile(content) : [:capture, tmp_var('capture'), compile(content)],
+        options[:disable_capture] ? compile(content) : [:capture, tmp_var(:output), compile(content)],
 
         # Close the block.
         [:block, 'end'],
