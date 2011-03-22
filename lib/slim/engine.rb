@@ -34,10 +34,7 @@ module Slim
     # String      | :attr_wrapper      | '"'                           | Character to wrap attributes in html (can be ' or ")
     # String      | :id_delimiter      | '_'                           | Joining character used if multiple html ids are supplied (e.g. #id1#id2)
     # Boolean     | :pretty            | false                         | Pretty html indenting (This is slower!)
-    # Class       | :generator         | ArrayBuffer/RailsOutputBuffer | Temple code generator (defaults generates array buffer)
-    # Proc/Filter | :before_compile    | nil                           | Before compile hook
-    # Proc/Filter | :before_html       | nil                           | Before html transformation hook
-    # Proc/Filter | :before_optimize   | nil                           | Before optimization hook
+    # Class       | :generator         | ArrayBuffer/RailsOutputBuffer | Temple code generator (default generator generates array buffer)
     #
     # It is also possible to set all options supported by the generator (option :generator). The standard generators
     # support the options :buffer and :capture_generator.
@@ -47,17 +44,14 @@ module Slim
     use Slim::Interpolation
     use Slim::Sections, :sections, :dictionary, :dictionary_access
     use Slim::EndInserter
-    filter :Hook, :before_compile
     use Slim::Compiler, :disable_capture, :auto_escape
     filter :EscapeHTML, :use_html_safe
     filter :Debugger, :debug, :debug_prefix => 'After Slim'
-    filter :Hook, :before_html
     use Temple::HTML::Pretty, :format, :attr_wrapper, :id_delimiter, :pretty
-    filter :Hook, :before_optimize
     filter :MultiFlattener
     filter :StaticMerger
     filter :DynamicInliner
     filter :Debugger, :debug, :debug_prefix => 'Optimized code'
-    chain << proc {|options| options[:generator].new(options) }
+    use(:Generator) {|exp| options[:generator].new(options).call(exp) }
   end
 end
