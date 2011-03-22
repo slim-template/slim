@@ -1,5 +1,7 @@
 module Slim
-  # Perform interpolation of #{var_name}
+  # Perform interpolation of #{var_name} in the
+  # expressions `[:slim, :text, string]`.
+  #
   # @api private
   class Interpolation < Filter
     # Handle text expression `[:slim, :text, string]`
