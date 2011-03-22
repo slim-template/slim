@@ -40,6 +40,10 @@ module Slim
         @options[:compile] = true
       end
 
+      opts.on('-r', '--rails', :NONE, 'Generate rails compatible code (combine with -c)') do
+        @options[:rails] = true
+      end
+
       opts.on('-S', '--sections', :NONE, 'Logic-less sections mode') do
         @options[:sections] = true
       end
@@ -81,7 +85,11 @@ module Slim
       if @options[:compile]
         @options[:output].puts(Slim::Engine.new(:file => @options[:file],
                                                 :pretty => @options[:pretty],
-                                                :sections => @options[:sections]).compile(@options[:input].read))
+                                                :sections => @options[:sections],
+                                                :disable_capture => @options[:rails],
+                                                :generator => @options[:rails] ?
+                                                Temple::Generators::RailsOutputBuffer :
+                                                Temple::Generators::ArrayBuffer).compile(@options[:input].read))
       else
         @options[:output].puts(Slim::Template.new(@options[:file],
                                                   :pretty => @options[:pretty],
