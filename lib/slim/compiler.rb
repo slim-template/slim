@@ -31,7 +31,7 @@ module Slim
     # @return [Array] Compiled temple expression
     def on_slim_output(escape, code, content)
       if empty_exp?(content)
-        [:multi, escape && options[:auto_escape] ? [:escape, :dynamic, code] : [:dynamic, code], content]
+        [:multi, [:escape, escape && options[:auto_escape], [:dynamic, code]], content]
       else
         on_slim_output_block(escape, code, content)
       end
