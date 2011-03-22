@@ -262,6 +262,22 @@ p(id="marvin" class="martian" data-info="Illudium Q-36")= output_number
     assert_html '<p class="martian" data-info="Illudium Q-36" id="marvin">1337</p>', source
   end
 
+  def test_empty_attribute
+    source = %q{
+p(id="marvin" class="" data-info="Illudium Q-36")= output_number
+}
+
+    assert_html '<p data-info="Illudium Q-36" id="marvin">1337</p>', source
+  end
+
+  def test_dynamic_empty_attribute
+    source = %q{
+p(id="marvin" class=nil data-info="Illudium Q-36")= output_number
+}
+
+    assert_html '<p data-info="Illudium Q-36" id="marvin">1337</p>', source
+  end
+
   def test_closed_tag
     source = %q{
 closed/
