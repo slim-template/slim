@@ -13,6 +13,9 @@ module Slim
       engine Slim::Engine
       register :slim
 
+      # Use rails-specific generator. This is necessary
+      # to support block capturing. Disable the internal slim capturing.
+      # Rails takes care of the capturing by itself.
       set_default_options :generator => Temple::Generators::RailsOutputBuffer,
                           :disable_capture => true
     end
