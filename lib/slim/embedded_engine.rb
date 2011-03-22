@@ -56,7 +56,7 @@ module Slim
     class ERBEngine < EmbeddedEngine
       def on_slim_embedded(engine, *body)
         text = collect_text(body)
-        Temple::ERB::Parser.new(:auto_escape => true).compile(text)
+        Temple::ERB::Parser.new(:auto_escape => true).call(text)
       end
     end
 

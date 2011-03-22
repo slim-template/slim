@@ -14,7 +14,7 @@ module Slim
       end
     end
 
-    def compile(exp)
+    def call(exp)
       if options[:sections]
         # Store the dictionary in the _slimdict variable
         dictionary = options[:dictionary]
@@ -41,12 +41,12 @@ module Slim
       [:multi,
        [:block, "#{tmp} = #{access name}"],
        [:block, "if !#{tmp} || #{tmp}.respond_to?(:empty) && #{tmp}.empty?"],
-                  compile!(content),
+                  compile(content),
        [:block, 'end']]
     end
 
     def on_slim_section(name, content)
-      content = compile!(content)
+      content = compile(content)
       tmp1, tmp2 = tmp_var('dict'), tmp_var('dict')
 
       [:multi,

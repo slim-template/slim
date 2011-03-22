@@ -36,7 +36,7 @@ module Slim
     #
     # @param [String] str Slim code
     # @return [Array] Temple expression representing the code
-    def compile(str)
+    def call(str)
       str.force_encoding(options[:encoding]) if options[:encoding] && str.respond_to?(:force_encoding)
 
       lineno = 0

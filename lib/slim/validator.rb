@@ -2,7 +2,7 @@ module Slim
   module Validator
     class << self
       def validate!(source)
-        Slim::Engine.new.compile(source.to_s)
+        Slim::Engine.new.call(source.to_s)
         true
       rescue Exception => ex
         ex

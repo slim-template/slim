@@ -89,7 +89,7 @@ module Slim
                                                 :disable_capture => @options[:rails],
                                                 :generator => @options[:rails] ?
                                                 Temple::Generators::RailsOutputBuffer :
-                                                Temple::Generators::ArrayBuffer).compile(@options[:input].read))
+                                                Temple::Generators::ArrayBuffer).call(@options[:input].read))
       else
         @options[:output].puts(Slim::Template.new(@options[:file],
                                                   :pretty => @options[:pretty],

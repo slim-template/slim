@@ -12,7 +12,7 @@ module Slim
     def on_slim_control(code, content)
       [:multi,
         [:block, code],
-        compile!(content)]
+        compile(content)]
     end
 
     # Handle comment expression `[:slim, :comment, content]`
@@ -20,7 +20,7 @@ module Slim
     # @param [Array] content Temple expression
     # @return [Array] Compiled temple expression
     def on_slim_comment(content)
-      [:html, :comment, compile!(content)]
+      [:html, :comment, compile(content)]
     end
 
     # Handle output expression `[:slim, :output, escape, code, content]`
@@ -60,7 +60,7 @@ module Slim
         # The capturing can be disabled with the option :disable_capture.
         # Output code in the block writes directly to the output buffer then.
         # Rails handles this by replacing the output buffer for helpers (with_output_buffer - braindead!).
-        options[:disable_capture] ? compile!(content) : [:capture, tmp_var('capture'), compile!(content)],
+        options[:disable_capture] ? compile(content) : [:capture, tmp_var('capture'), compile(content)],
 
         # Close the block.
         [:block, 'end'],
@@ -89,7 +89,7 @@ module Slim
     # @param [Array] content Temple expression
     # @return [Array] Compiled temple expression
     def on_slim_tag(name, attrs, closed, content)
-      [:html, :tag, name, compile!(attrs), closed, compile!(content)]
+      [:html, :tag, name, compile(attrs), closed, compile(content)]
     end
 
     # Handle tag attributes expression `[:slim, :attrs, *attrs]`
@@ -97,7 +97,7 @@ module Slim
     # @param [Array] attrs Attributes
     # @return [Array] Compiled temple expression
     def on_slim_attrs(*attrs)
-      [:html, :staticattrs, *attrs.map {|k, v| [k.to_s, compile!(v)] }]
+      [:html, :staticattrs, *attrs.map {|k, v| [k.to_s, compile(v)] }]
     end
   end
 end
