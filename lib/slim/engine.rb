@@ -14,6 +14,7 @@ module Slim
                         :id_delimiter => nil,
                         :generator => Temple::Generators::ArrayBuffer
 
+    #
     # Document all supported options with purpose, type etc.
     #
     # Type        | Name               | Default value                 | Purpose
@@ -38,6 +39,19 @@ module Slim
     #
     # It is also possible to set all options supported by the generator (option :generator). The standard generators
     # support the options :buffer and :capture_generator.
+    #
+    # Options can be set at multiple positions. Slim/Temple uses a inheritance mechanism to allow
+    # subclasses to overwrite options of the superclass. The option priorities are as follows:
+    #
+    # Custom (Options passed by the user) > Slim::Template > Slim::Engine > Parser/Filter/Generator (e.g Slim::Parser, Slim::Compiler)
+    #
+    # It is also possible to set options for superclasses like Temple::Engine. But this will affect all temple template engines then.
+    #
+    # Slim::Engine > Temple::Engine
+    # Slim::Compiler > Temple::Filter
+    #
+    # It is recommended to set the default settings only once in the code and avoid duplication. Only use
+    # `set_default_options` when you have to override some default settings.
     #
     use Slim::Parser, :file, :tabsize, :encoding
     use Slim::EmbeddedEngine, :enable_engines, :disable_engines
