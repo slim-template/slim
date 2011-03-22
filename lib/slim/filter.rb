@@ -1,5 +1,10 @@
 module Slim
   # Base class for Temple filters used in Slim
+  #
+  # This base filter passes everything through and allows
+  # to override only some methods without affecting the rest
+  # of the expression.
+  #
   # @api private
   class Filter < Temple::Filter
     # Dispatch on_slim_*
