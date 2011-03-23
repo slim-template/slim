@@ -3,7 +3,7 @@ require File.dirname(__FILE__) + '/lib/slim/version'
 require 'date'
 
 Gem::Specification.new do |s|
-  s.name              = "slim"
+  s.name              = 'slim'
   s.version           = Slim::VERSION
   s.date              = Date.today.to_s
   s.authors           = ['Andrew Stone', 'Fred Wu', 'Daniel Mendler']
