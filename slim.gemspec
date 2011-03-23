@@ -30,4 +30,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency(%q<rdiscount>, [">= 0"])
   s.add_development_dependency(%q<liquid>, [">= 0"])
   s.add_development_dependency(%q<yard>, [">= 0"])
+  s.add_development_dependency(%q<creole>, [">= 0"])
 end

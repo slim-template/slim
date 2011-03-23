@@ -1,7 +1,8 @@
 require 'helper'
+require 'creole/template'
 
 class TestSlimEmbeddedEngines < TestSlim
-  def test_render_with_embedded_template
+  def test_render_with_erb
     source = %q{
 p
   - text = 'before erb block'
@@ -14,7 +15,7 @@ p
     assert_html "<p><b>Hello from BEFORE ERB BLOCK!</b>\nSecond Line!\ntrue</p>", source
   end
 
-  def test_render_with_interpolated_embedded_template
+  def test_render_with_markdown
     source = %q{
 markdown:
   #Header
@@ -22,6 +23,15 @@ markdown:
   "Second Line!"
 }
     assert_html "<h1>Header</h1>\n\n<p>Hello from Markdown!\n\"Second Line!\"</p>\n", source
+  end
+
+  def test_render_with_creole
+    source = %q{
+creole:
+  = head1
+  == head2
+}
+    assert_html "<h1>head1</h1><h2>head2</h2>", source
   end
 
   def test_render_with_javascript

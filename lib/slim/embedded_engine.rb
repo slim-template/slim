@@ -77,6 +77,7 @@ module Slim
     register :markdown, TiltEngine, :interpolate => true
     register :textile, TiltEngine, :interpolate => true
     register :rdoc, TiltEngine, :interpolate => true
+    register :creole, TiltEngine, :interpolate => true
 
     # These engines are executed at compile time
     register :coffee, TagEngine, :tag => 'script', :attributes => { :type => 'text/javascript' }, :engine => TiltEngine
