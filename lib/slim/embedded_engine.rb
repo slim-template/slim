@@ -34,7 +34,7 @@ module Slim
 
       def on_slim_embedded(engine, *body)
         text = collect_text(body)
-        engine = Tilt[engine]
+        engine = Tilt[engine] || raise("Tilt engine #{engine} is not available.")
         if options[:precompiled]
           # Wrap precompiled code in proc, local variables from out the proc are accessible
           # WARNING: This is a bit of a hack. Tilt::Engine#precompiled is protected
