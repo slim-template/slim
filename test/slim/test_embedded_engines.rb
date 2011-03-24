@@ -72,7 +72,7 @@ scss:
   $color: #f00;
   body { color: $color; }
 }
-    assert_html "<style type=\"text/css\">body {\n  color: red; }\n</style>", source
+    assert_html "<style type=\"text/css\">body{color:red}</style>", source
   end
 
   def test_disabled_embedded_engine

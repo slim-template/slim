@@ -54,7 +54,7 @@ module Slim
     # `set_default_options` when you have to override some default settings.
     #
     use Slim::Parser, :file, :tabsize, :encoding
-    use Slim::EmbeddedEngine, :enable_engines, :disable_engines
+    use Slim::EmbeddedEngine, :enable_engines, :disable_engines, :pretty
     use Slim::Interpolation
     use Slim::Sections, :sections, :dictionary, :dictionary_access
     use Slim::EndInserter

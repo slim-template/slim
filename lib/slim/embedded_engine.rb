@@ -46,6 +46,14 @@ module Slim
       end
     end
 
+    class SassEngine < TiltEngine
+      def tilt_render(engine, text)
+        text = engine.new(:style => (options[:pretty] ? :expanded : :compressed)) { text }.render
+        text.chomp!
+        [:static, options[:pretty] ? "\n#{text}\n" : text]
+      end
+    end
+
     class DynamicTiltEngine < TiltEngine
       # Code to collect local variables
       COLLECT_LOCALS = %q{eval('{' + local_variables.select {|v| v[0] != ?_ }.map {|v| ":#{v}=>#{v}" }.join(',') + '}')}
@@ -99,10 +107,10 @@ module Slim
     register :creole,     InterpolateTiltEngine
 
     # These engines are executed at compile time
-    register :coffee,     TagEngine,  :tag => 'script', :attributes => { :type => 'text/javascript' }, :engine => TiltEngine
-    register :sass,       TagEngine,  :tag => 'style',  :attributes => { :type => 'text/css' },        :engine => TiltEngine
-    register :scss,       TagEngine,  :tag => 'style',  :attributes => { :type => 'text/css' },        :engine => TiltEngine
-    register :less,       TagEngine,  :tag => 'style',  :attributes => { :type => 'text/css' },        :engine => TiltEngine
+    register :coffee,     TagEngine,  :tag => 'script', :attributes => { :type => 'text/javascript' },  :engine => TiltEngine
+    register :less,       TagEngine,  :tag => 'style',  :attributes => { :type => 'text/css' },         :engine => TiltEngine
+    register :sass,       TagEngine,  :pretty, :tag => 'style', :attributes => { :type => 'text/css' }, :engine => SassEngine
+    register :scss,       TagEngine,  :pretty, :tag => 'style', :attributes => { :type => 'text/css' }, :engine => SassEngine
 
     # These engines are precompiled, code is embedded
     register :erb,        ERBEngine
