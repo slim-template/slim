@@ -121,7 +121,7 @@ p
     1+1
 }
 
-    assert_runtime_error 'Invalid embedded engine embed_unknown', source
+    assert_runtime_error 'Embedded engine embed_unknown not found', source
   end
 
   def test_explicit_end
