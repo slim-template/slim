@@ -1,5 +1,8 @@
 require 'helper'
-require 'creole/template'
+begin
+  require('creole/template')
+rescue LoadError
+end
 
 class TestSlimEmbeddedEngines < TestSlim
   def test_render_with_erb
