@@ -5,6 +5,20 @@ rescue LoadError
 end
 
 class TestSlimEmbeddedEngines < TestSlim
+  def test_render_with_haml
+    source = %q{
+p
+  - text = 'haml'
+  haml:
+    %b Hello from #{text.upcase}!
+    Second Line!
+    - if true
+      = true
+}
+
+    assert_html "<p><b>Hello from HAML!</b>\nSecond Line!\ntrue\n</p>", source
+  end
+
   def test_render_with_erb
     source = %q{
 p
