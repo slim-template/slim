@@ -10,6 +10,7 @@ require 'ostruct'
 require 'erubis'
 require 'erb'
 require 'haml'
+require 'tilt'
 
 class SlimBenchmarks
   def initialize(slow, iterations)
@@ -29,6 +30,11 @@ class SlimBenchmarks
     haml        = Haml::Engine.new(tpl_haml, :format => :html5)
     haml_ugly   = Haml::Engine.new(tpl_haml, :format => :html5, :ugly => true)
     slim        = Slim::Template.new { tpl_slim }
+
+    tilt_erb     = Tilt::ERBTemplate.new { tpl_erb }
+    tilt_erubis  = Tilt::ErubisTemplate.new { tpl_erb }
+    tilt_haml    = Tilt::HamlTemplate.new(:format => :html5, :ugly => true){ tpl_haml }
+    tilt_slim    = Slim::Template.new { tpl_slim }
 
     haml.def_method(view, :run_haml)
     haml_ugly.def_method(view, :run_haml_ugly)
@@ -61,6 +67,11 @@ class SlimBenchmarks
     bench('(3) slim')        { view.run_slim }
     bench('(3) haml')        { view.run_haml }
     bench('(3) haml ugly')   { view.run_haml_ugly }
+
+    bench('(4) erb')    { tilt_erb.render(view) }
+    bench('(4) erubis') { tilt_erubis.render(view) }
+    bench('(4) slim')   { tilt_slim.render(view) }
+    bench('(4) haml')   { tilt_haml.render(view) }
   end
 
   def run
@@ -84,6 +95,11 @@ class SlimBenchmarks
    generated ruby code is compiled into a method.
    This is the fastest evaluation strategy because it benchmarks
    pure execution speed of the generated ruby code.
+
+4. Compiled Tilt benchmark. Template is compiled with Tilt, which gives a more
+   accurate result of the performance in production mode in frameworks like
+   Sinatra, Ramaze and Camping. (Rails still uses its own template
+   compilation.)
 
 "
   end
