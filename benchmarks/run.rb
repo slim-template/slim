@@ -31,10 +31,11 @@ class SlimBenchmarks
     haml_ugly   = Haml::Engine.new(tpl_haml, :format => :html5, :ugly => true)
     slim        = Slim::Template.new { tpl_slim }
 
-    tilt_erb     = Tilt::ERBTemplate.new { tpl_erb }
-    tilt_erubis  = Tilt::ErubisTemplate.new { tpl_erb }
-    tilt_haml    = Tilt::HamlTemplate.new(:format => :html5, :ugly => true){ tpl_haml }
-    tilt_slim    = Slim::Template.new { tpl_slim }
+    tilt_erb       = Tilt::ERBTemplate.new { tpl_erb }
+    tilt_erubis    = Tilt::ErubisTemplate.new { tpl_erb }
+    tilt_haml      = Tilt::HamlTemplate.new(:format => :html5){ tpl_haml }
+    tilt_haml_ugly = Tilt::HamlTemplate.new(:format => :html5, :ugly => true){ tpl_haml }
+    tilt_slim      = Slim::Template.new { tpl_slim }
 
     haml.def_method(view, :run_haml)
     haml_ugly.def_method(view, :run_haml_ugly)
@@ -68,10 +69,11 @@ class SlimBenchmarks
     bench('(3) haml')        { view.run_haml }
     bench('(3) haml ugly')   { view.run_haml_ugly }
 
-    bench('(4) erb')    { tilt_erb.render(view) }
-    bench('(4) erubis') { tilt_erubis.render(view) }
-    bench('(4) slim')   { tilt_slim.render(view) }
-    bench('(4) haml')   { tilt_haml.render(view) }
+    bench('(4) erb')       { tilt_erb.render(view) }
+    bench('(4) erubis')    { tilt_erubis.render(view) }
+    bench('(4) slim')      { tilt_slim.render(view) }
+    bench('(4) haml')      { tilt_haml.render(view) }
+    bench('(4) haml ugly') { tilt_haml_ugly.render(view) }
   end
 
   def run

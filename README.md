@@ -288,24 +288,29 @@ There are two helpers you could use to validate your Slim syntax:
     # OS X 10.6 + Ruby 1.9.2, 1000 iterations
 
                           user     system      total        real
-    (1) erb           0.420000   0.000000   0.420000 (  0.429334)
-    (1) erubis        0.350000   0.000000   0.350000 (  0.356078)
-    (1) fast erubis   0.350000   0.000000   0.350000 (  0.355976)
-    (1) slim          3.300000   0.010000   3.310000 (  3.340637)
-    (1) haml          2.950000   0.000000   2.950000 (  2.970671)
-    (1) haml ugly     2.840000   0.010000   2.850000 (  2.856405)
-    (2) erb           0.150000   0.000000   0.150000 (  0.151098)
-    (2) erubis        0.130000   0.000000   0.130000 (  0.130713)
-    (2) fast erubis   0.100000   0.000000   0.100000 (  0.112199)
-    (2) slim          0.030000   0.000000   0.030000 (  0.027752)
-    (2) haml          0.320000   0.000000   0.320000 (  0.332581)
-    (2) haml ugly     0.280000   0.000000   0.280000 (  0.305250)
-    (3) erb           0.010000   0.000000   0.010000 (  0.014402)
-    (3) erubis        0.010000   0.000000   0.010000 (  0.015365)
-    (3) fast erubis   0.010000   0.000000   0.010000 (  0.012789)
-    (3) slim          0.010000   0.000000   0.010000 (  0.015583)
-    (3) haml          0.120000   0.000000   0.120000 (  0.120017)
-    (3) haml ugly     0.100000   0.010000   0.110000 (  0.117665)
+    (1) erb           0.310000   0.000000   0.310000 (  0.311769)
+    (1) erubis        0.250000   0.000000   0.250000 (  0.252026)
+    (1) fast erubis   0.250000   0.000000   0.250000 (  0.257639)
+    (1) slim          3.250000   0.040000   3.290000 (  3.282734)
+    (1) haml          2.230000   0.000000   2.230000 (  2.237396)
+    (1) haml ugly     2.160000   0.000000   2.160000 (  2.154061)
+    (2) erb           0.100000   0.000000   0.100000 (  0.107232)
+    (2) erubis        0.090000   0.000000   0.090000 (  0.087301)
+    (2) fast erubis   0.080000   0.000000   0.080000 (  0.073382)
+    (2) slim          0.020000   0.000000   0.020000 (  0.017364)
+    (2) haml          0.240000   0.010000   0.250000 (  0.234680)
+    (2) haml ugly     0.200000   0.000000   0.200000 (  0.209600)
+    (3) erb           0.010000   0.000000   0.010000 (  0.010558)
+    (3) erubis        0.010000   0.000000   0.010000 (  0.008676)
+    (3) fast erubis   0.010000   0.000000   0.010000 (  0.009134)
+    (3) slim          0.010000   0.000000   0.010000 (  0.012114)
+    (3) haml          0.090000   0.000000   0.090000 (  0.086450)
+    (3) haml ugly     0.070000   0.000000   0.070000 (  0.078825)
+    (4) erb           0.020000   0.000000   0.020000 (  0.015715)
+    (4) erubis        0.010000   0.000000   0.010000 (  0.014027)
+    (4) slim          0.020000   0.000000   0.020000 (  0.017591)
+    (4) haml          0.100000   0.000000   0.100000 (  0.098249)
+    (4) haml ugly     0.090000   0.000000   0.090000 (  0.089413)
 
     1. Uncached benchmark. Template is parsed every time.
        Activate this benchmark with slow=1.
@@ -318,6 +323,11 @@ There are two helpers you could use to validate your Slim syntax:
        generated ruby code is compiled into a method.
        This is the fastest evaluation strategy because it benchmarks
        pure execution speed of the generated ruby code.
+
+    4. Compiled Tilt benchmark. Template is compiled with Tilt, which gives a more
+       accurate result of the performance in production mode in frameworks like
+       Sinatra, Ramaze and Camping. (Rails still uses its own template
+       compilation.)
 
 ## License
 
