@@ -90,6 +90,14 @@ form(method='post' action=action_path(:page, :save))
     assert_html '<form action="&#47;action-page-save" method="post"></form>', source
   end
 
+  def test_bypassing_escape_in_attribute
+    source = %q{
+form action==action_path(:page, :save) method='post'
+}
+
+    assert_html '<form action="/action-page-save" method="post"></form>', source
+  end
+
   def test_hash_call_in_attribute_without_quotes
     source = %q{
 p id=hash[:a] Test it
