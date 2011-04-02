@@ -304,8 +304,10 @@ module Slim
           attributes << [key, [:slim, :text, $1[1..-2]]]
         else
           # Value is ruby code
+          escape = line[0] != ?=
+          line = line[1..-1] unless escape
           line, value = parse_ruby_attribute(orig_line, line, lineno, delimiter)
-          attributes << [key, [:slim, :output, true, value, [:multi]]]
+          attributes << [key, [:slim, :output, escape, value, [:multi]]]
         end
       end
 
