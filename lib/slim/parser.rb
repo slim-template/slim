@@ -173,6 +173,7 @@ module Slim
           # We're now expecting the next line to be indented, so we'll need
           # to push a block to the stack.
           block = [:multi]
+          block_indent = indent
           stacks.last << if ch == ?'
                            # Additional whitespace in front
                            [:multi, block, [:slim, :text, ' ']]
@@ -180,12 +181,15 @@ module Slim
                            # HTML comment
                            line.slice!(0)
                            [:slim, :comment, block]
+                         elsif ch == ?/ && line[0] == ?[
+                           # HTML conditional comment
+                           block_indent = nil
+                           [:slim, :conditional_comment, line.slice!(0..-1), block]
                          else
                            in_comment = ch == ?/
                            block
                          end
           stacks << block
-          block_indent = indent
 
           if !in_comment && !line.strip.empty?
             block << [:slim, :text, line.sub(/^( )/, '')]

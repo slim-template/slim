@@ -338,4 +338,22 @@ p World
 
     assert_html "<p>Hello</p><!--This is a comment\n Another comment\nLast line of comment.--><p>World</p>", source
   end
+
+  def test_render_with_html_conditional_and_tag
+    source = %q{
+/[ if IE ]
+ p Get a better browser.
+}
+
+    assert_html "<!--[ if IE ]><p>Get a better browser.</p><![endif]-->", source
+  end
+
+  def test_render_with_html_conditional_and_method_output
+    source = %q{
+/[ if IE ]
+ = message 'hello'
+}
+
+    assert_html "<!--[ if IE ]>hello<![endif]-->", source
+  end
 end
