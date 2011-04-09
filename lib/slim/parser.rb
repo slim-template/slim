@@ -37,7 +37,14 @@ module Slim
     # @param [String] str Slim code
     # @return [Array] Temple expression representing the code
     def call(str)
-      str.force_encoding(options[:encoding]) if options[:encoding] && str.respond_to?(:force_encoding)
+      # Set string encoding if option is set
+      if options[:encoding] && str.respond_to?(:encoding)
+        old = str.encoding
+        str = str.dup if str.frozen?
+        str.force_encoding(options[:encoding])
+        # Fall back to old encoding if new encoding is invalid
+        str.force_encoding(old_enc) unless str.valid_encoding?
+      end
 
       lineno = 0
       result = [:multi]
