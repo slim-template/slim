@@ -1,0 +1,60 @@
+0.9.2 March 30, 2011
+
+0.9.1 March 10, 2011
+
+0.9.0 January 30, 2011
+
+0.8.4 January 26, 2011
+
+0.8.3 December 22, 2010
+
+  * Support for html comments
+
+0.8.2 December 22, 2010
+
+0.8.1 December 16, 2010
+
+0.8.0 November 29, 2010
+
+0.7.4 November 22, 2010
+
+  * Syntax for text with trailing whitespace
+  * Rails integration tests
+
+0.7.3 November 16, 2010
+
+0.7.2 November 9, 2010
+
+0.7.1 November 3, 2010
+
+  * Internal cleanup
+  * Syntax for explicitly closed tags added
+  * Support for pretty html output
+  * Logic-less mode
+
+0.7.0 October 25, 2010
+
+  * First version using Temple
+  * Support for embedded engines
+  * Support for html_safe?
+
+0.6.1 October 17, 2010
+
+0.6.0 October 17, 2010
+
+0.5.1 October 7, 2010
+
+0.5.0 October 7, 2010
+
+0.4.1 October 3, 2010
+
+0.4.0 September 21, 2010
+
+0.3.1 September 17, 2010
+
+0.3.0 September 17, 2010
+
+0.2.0 September 17, 2010
+
+0.1.0 September 15, 2010
+
