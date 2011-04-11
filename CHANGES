@@ -1,5 +1,6 @@
 master
 
+  * Allow for bypassing escaping in attributes
   * check if string encoding is valid
   * support for html conditional comments
 
