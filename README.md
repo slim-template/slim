@@ -341,7 +341,8 @@ This project is released under the MIT license.
 
 ## Discuss
 
-[Google Group](http://groups.google.com/group/slim-template)
+* [Google Group](http://groups.google.com/group/slim-template)
+* IRC Channel #slim-lang on freenode.net
 
 ## Slim related projects
 
