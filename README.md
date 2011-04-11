@@ -29,7 +29,7 @@ Install Slim as a gem:
 
 Include Slim in your Gemfile:
 
-    gem 'slim', :require => 'slim/rails'
+    gem 'slim'
 
 That's it! Now, just use the .slim extension and you're good to go.
 
