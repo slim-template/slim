@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.rdoc_options      = %w(--charset=UTF-8)
   s.rubyforge_project = s.name
 
-  s.files         = `git ls-files --  lib/* bin/* README* LICENSE* test/* Rakefile .gemtest`.split("\n")
+  s.files         = `git ls-files`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = %w(lib)
 
