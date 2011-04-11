@@ -1,60 +1,134 @@
-0.9.2 March 30, 2011
+master
 
-0.9.1 March 10, 2011
+  * check if string encoding is valid
+  * support for html conditional comments
 
-0.9.0 January 30, 2011
+0.9.2
 
-0.8.4 January 26, 2011
+  * add SassEngine which respects :pretty
+  * embedded engine code refactored
+  * temple supports denser template registration
+  * deprecate slim/rails (just require 'slim')
+  * use temple rails and tilt templates
+  * add encoding option to Slim::Parser/Slim::Engine to enforce template encoding
+  * vim support is now an external project
 
-0.8.3 December 22, 2010
+0.9.1
 
-  * Support for html comments
+  * add new doctype syntax without !
+  * slim directive expression has type and args
 
-0.8.2 December 22, 2010
+0.9.0
 
-0.8.1 December 16, 2010
+  * slim should not be registered as the default template handler.
+  * add support for unescaped text interpolation
 
-0.8.0 November 29, 2010
+0.8.4
 
-0.7.4 November 22, 2010
+  * Added the option to turn off automatic HTML escaping.
+  * update to tilt 1.2.2
+  * allow call to yield in logic less mode
+  * allow doctype declaration to be capitalized
 
-  * Syntax for text with trailing whitespace
-  * Rails integration tests
+0.8.3
 
-0.7.3 November 16, 2010
+  * Added support for html comments. The parser uses the :static filter instead of the :comment filter due to the way the parser is constructed.
 
-0.7.2 November 9, 2010
+0.8.2
 
-0.7.1 November 3, 2010
+  * fix issue #96
+  * Added the Temple Debugger filter.
+  * Rails problems fixed
 
-  * Internal cleanup
-  * Syntax for explicitly closed tags added
-  * Support for pretty html output
-  * Logic-less mode
+0.8.1
 
-0.7.0 October 25, 2010
+  * remove backtick slim syntax -- no longer supported
+  * slim executable conflict. issue #91
+  * vim syntax support improved
 
-  * First version using Temple
-  * Support for embedded engines
-  * Support for html_safe?
+0.8.0
 
-0.6.1 October 17, 2010
+  * rails logic less support
 
-0.6.0 October 17, 2010
+0.7.4
 
-0.5.1 October 7, 2010
+  * use ' for text block with trailing whitespace
+  * allow to disable/enable embedded engines
 
-0.5.0 October 7, 2010
+0.7.3
 
-0.4.1 October 3, 2010
+  * fix #82
+  * basic rails test added
 
-0.4.0 September 21, 2010
+0.7.2
 
-0.3.1 September 17, 2010
+  * get rid of rails deprecation warning
+  * use_html_safe is activated automatically by temple
 
-0.3.0 September 17, 2010
+0.7.1
 
-0.2.0 September 17, 2010
+  * logic less mode
+  * add syntax for explicitly closed tags
 
-0.1.0 September 15, 2010
+0.7.0
 
+  * slim-mode.el for emacs added (modified haml-mode.el, needs some work to be fully functional for slim)
+  * embedded engines
+  * escape interpolated strings/attributes
+  * Slim#Filter now uses optional configuration hash
+  * Initial implementation for Rail's `html_safe`. Closes #25
+  * fallback to escape_html stolen from cgi.rb if escape_utils is unavailable, use normal requires because slim is on the load path
+  * Limit the allowed characters used for attributes delimiters (now only allows parentheses, square brackets and curly braces). See #16 for more info.
+  * Default to HTML5-mode
+  * Slim now uses Temple and Tilt.
+  * Choose your own attribute delimiter!
+
+0.6.1
+
+  * can wrap parens around attributes if you so desire
+  * added erubis to the benchmarks
+
+0.6.0
+
+  * Added slim itself, haml and mustache to the development env for easier benchmarking.
+  * added escape_html functionality.  need to tweak for speed
+
+0.5.1
+
+  * Consecutive condition statements now working as expected.
+
+0.5.0
+
+  * Added 'unless' to the list of control words.
+  * Fixes for inline conditions. There must be a better way of doing this??
+  * '-' is a valid character in HTML attributes, so let's allow that.
+  * Improved the regex so that control code now supports code blocks.
+  * Output code (start with '=') can now accept code blocks.
+  * Method calls no longer need parenthesis. We need more tests to ensure the implementation's robustness.
+
+0.4.1
+
+  * Added '|' as an alias of '`' for parsing plain text. This simulates the syntax of the Jade template engine.
+  * Added instructions of how to use the gem.
+
+0.4.0
+
+  * support for nesting lines under backtick
+  * make it so that one space is the left margin. any additional spaces will be copied over
+  * support for using indentation after backtick to denote paragraphs. useful for script tags and paragraphs
+
+0.3.1
+
+  * fix bug with adding end to nesting ruby code
+
+0.3.0
+
+  * Optimize compiled string to reduce number of concatentations to the buffer
+
+0.2.0
+
+  * can now make code call on same line as tag
+
+0.1.0
+
+  * Initial release
