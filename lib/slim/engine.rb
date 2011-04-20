@@ -12,7 +12,8 @@ module Slim
                         :attr_wrapper => '"',
                         :format => :html5,
                         :id_delimiter => nil,
-                        :generator => Temple::Generators::ArrayBuffer
+                        :generator => Temple::Generators::ArrayBuffer,
+                        :buffer => '@_out_buf'
 
     #
     # Document all supported options with purpose, type etc.
