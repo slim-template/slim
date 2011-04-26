@@ -95,7 +95,7 @@ module Slim
     # @param [Array] attrs Attributes
     # @return [Array] Compiled temple expression
     def on_slim_attrs(*attrs)
-      [:html, :staticattrs, *attrs.map {|k, v| [k.to_s, compile(v)] }]
+      [:html, :attrs, *attrs.map {|k, v| [:html, :attr, k, compile(v)] }]
     end
   end
 end
