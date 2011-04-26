@@ -29,4 +29,12 @@ p class="#{x}" test #{content}
 
     assert_html '<p class="&quot;">test &lt;x&gt;</p>', source
   end
+
+  def test_html_nested_escaping
+    source = %q{
+= hello_world do
+  | escaped &
+}
+    assert_html 'Hello World from @env escaped &amp; Hello World from @env', source
+  end
 end
