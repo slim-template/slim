@@ -197,13 +197,13 @@ p id="#{(false ? 'notshown' : 'shown')}" = output_number
     source = %{
 #alpha id="beta" Test it
 }
-    assert_html '<div id="alpha_beta">Test it</div>', source, :id_delimiter => '_'
+    assert_html '<div id="alpha_beta">Test it</div>', source, :join_delimiter => {'class' => ' ', 'id' => '_' }
   end
 
   def test_id_attribute_merging2
     source = %{
 #alpha id="beta" Test it
 }
-    assert_html '<div id="alpha-beta">Test it</div>', source, :id_delimiter => '-'
+    assert_html '<div id="alpha-beta">Test it</div>', source, :join_delimiter => {'class' => ' ', 'id' => '-' }
   end
 end

@@ -139,6 +139,6 @@ div
     source = %{
 #alpha id="beta" Test it
 }
-    assert_runtime_error 'Multiple id attributes specified, but id concatenation disabled', source
+    assert_runtime_error 'Multiple id attributes specified', source
   end
 end
