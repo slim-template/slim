@@ -59,9 +59,9 @@ module Slim
     use Slim::Sections, :sections, :dictionary, :dictionary_access
     use Slim::EndInserter
     use Slim::Compiler, :disable_capture, :auto_escape
-    filter :EscapeHTML, :use_html_safe
     filter :Debugger, :debug, :debug_prefix => 'After Slim'
     use Temple::HTML::Pretty, :format, :attr_wrapper, :join_delimiter, :pretty
+    filter :EscapeHTML, :use_html_safe
     filter :MultiFlattener
     filter :StaticMerger
     filter :DynamicInliner
