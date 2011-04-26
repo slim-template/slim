@@ -48,7 +48,7 @@ module Slim
 
     class SassEngine < TiltEngine
       def tilt_render(engine, text)
-        text = engine.new(:style => (options[:pretty] ? :expanded : :compressed)) { text }.render
+        text = engine.new(:style => (options[:pretty] ? :expanded : :compressed), :cache => false) { text }.render
         text.chomp!
         [:static, options[:pretty] ? "\n#{text}\n" : text]
       end
