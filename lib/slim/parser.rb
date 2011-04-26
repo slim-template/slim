@@ -293,7 +293,7 @@ module Slim
       while line =~ CLASS_ID_REGEX
         # The class/id attribute is :static instead of :slim :text,
         # because we don't want text interpolation in .class or #id shortcut
-        attributes << [ATTR_SHORTHAND[$1], [:static, $2]]
+        attributes << [:slim, :attr, ATTR_SHORTHAND[$1], [:static, $2]]
         line = $'
       end
 
@@ -312,12 +312,12 @@ module Slim
         if line =~ QUOTED_VALUE_REGEX
           # Value is quoted (static)
           line = $'
-          attributes << [key, [:slim, :text, $1[1..-2]]]
+          attributes << [:slim, :attr, key, [:slim, :text, $1[1..-2]]]
         else
           # Value is ruby code
           escape = line[0] != ?=
           line, value = parse_ruby_attribute(orig_line, escape ? line : line[1..-1], lineno, delimiter)
-          attributes << [key, [:slim, :output, escape, value, [:multi]]]
+          attributes << [:slim, :attr, key, [:slim, :output, escape, value, [:multi]]]
         end
       end
 

@@ -31,7 +31,11 @@ module Slim
     end
 
     def on_slim_attrs(*attrs)
-      [:slim, :attrs, *attrs.map {|k, v| [k, compile(v)] }]
+      [:slim, :attrs, *attrs.map {|attr| compile(attr) }]
+    end
+
+    def on_slim_attr(name, value)
+      [:slim, :attr, name, compile(value)]
     end
   end
 end

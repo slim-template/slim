@@ -95,7 +95,16 @@ module Slim
     # @param [Array] attrs Attributes
     # @return [Array] Compiled temple expression
     def on_slim_attrs(*attrs)
-      [:html, :attrs, *attrs.map {|k, v| [:html, :attr, k, compile(v)] }]
+      [:html, :attrs, *attrs.map {|attr| compile(attr) }]
+    end
+
+    # Handle tag attribute expression `[:slim, :attr, name, content]`
+    #
+    # @param [String] name Attribute name
+    # @param [Array] value Temple expression
+    # @return [Array] Compiled temple expression
+    def on_slim_attr(name, value)
+      [:html, :attr, name, compile(value)]
     end
   end
 end
