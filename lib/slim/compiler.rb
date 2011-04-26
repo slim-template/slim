@@ -32,28 +32,24 @@ module Slim
       [:multi, [:static, "<!--#{condition}>"], compile(content), [:static, '<![endif]-->']]
     end
 
-    # Handle output expression `[:slim, :output, escape, code, content]`
+    # Handle escape expression `[:slim, :escape, escape, content]`
     #
     # @param [Boolean] escape Escape html
-    # @param [String] code Ruby code
     # @param [Array] content Temple expression
     # @return [Array] Compiled temple expression
-    def on_slim_output(escape, code, content)
-      if empty_exp?(content)
-        [:multi, [:escape, escape && options[:auto_escape], [:dynamic, code]], content]
-      else
-        on_slim_output_block(escape, code, content)
-      end
+    def on_slim_escape(escape, content)
+      options[:auto_escape] ? [:escape, escape, compile(content)] : compile(content)
     end
 
-    # Handle output expression `[:slim, :output, escape, code, content]`
-    # if content is not empty.
+    # Handle output expression `[:slim, :output, code, content]`
     #
     # @param [Boolean] escape Escape html
     # @param [String] code Ruby code
     # @param [Array] content Temple expression
     # @return [Array] Compiled temple expression
-    def on_slim_output_block(escape, code, content)
+    def on_slim_output(code, content)
+      return [:multi, [:dynamic, code], content] if empty_exp?(content)
+
       tmp = tmp_var(:output)
 
       [:multi,
@@ -75,7 +71,7 @@ module Slim
         [:block, 'end'],
 
         # Output the content.
-        on_slim_output(escape, tmp, [:multi])]
+        [:dynamic, tmp]]
     end
 
     # Handle directive expression `[:slim, :directive, type, args]`

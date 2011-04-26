@@ -215,7 +215,7 @@ module Slim
           block = [:multi]
           escape = line[1] != ?=
           broken_line = escape ? line[1..-1].strip : line[2..-1].strip
-          stacks.last << [:slim, :output, escape, broken_line, block]
+          stacks.last << [:slim, :escape, escape, [:slim, :output, broken_line, block]]
           stacks << block
         when ?!
           # Found a directive (currently only used for doctypes)
@@ -317,7 +317,7 @@ module Slim
           # Value is ruby code
           escape = line[0] != ?=
           line, value = parse_ruby_attribute(orig_line, escape ? line : line[1..-1], lineno, delimiter)
-          attributes << [key, [:slim, :output, escape, value, [:multi]]]
+          attributes << [key, [:slim, :escape, escape, [:dynamic, value]]]
         end
       end
 
@@ -337,7 +337,7 @@ module Slim
         # Handle output code
         block = [:multi]
         broken_line = $'.strip
-        content << [:slim, :output, $1 != '=', broken_line, block]
+        content << [:slim, :escape, $1 != '=', [:slim, :output, broken_line, block]]
         [tag, block, broken_line, nil]
       elsif line =~ /^\s*\//
         # Closed tag

@@ -22,8 +22,12 @@ module Slim
       [:slim, :conditional_comment, condition, compile(content)]
     end
 
-    def on_slim_output(code, escape, content)
-      [:slim, :output, code, escape, compile(content)]
+    def on_slim_escape(escape, content)
+      [:slim, :escape, escape, compile(content)]
+    end
+
+    def on_slim_output(code, content)
+      [:slim, :output, code, compile(content)]
     end
 
     def on_slim_tag(name, attrs, closed, content)

@@ -33,7 +33,7 @@ p Test
 }
     chain = proc do |engine|
       engine.after(Slim::Parser, :ReplaceParsedExp) do |exp|
-        [:slim, :output, false, '1+1', [:multi]]
+        [:slim, :output, '1+1', [:multi]]
       end
     end
 
