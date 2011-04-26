@@ -22,7 +22,7 @@ module Slim
           # Interpolation
           string, code = parse_expression($')
           escape = code !~ /^\{.*\}$/
-          block << [:slim, :escape, escape, [:dynamic, escape ? code : code[1..-2]]]
+          block << [:slim, :output, escape, escape ? code : code[1..-2], [:multi]]
         when /^([^#]+|#)/
           # Static text
           block << [:static, $&]

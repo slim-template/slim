@@ -65,9 +65,9 @@ module Slim
        [:block, 'end']]
     end
 
-    def on_slim_output(name, content)
+    def on_slim_output(escape, name, content)
       raise 'Output statements with content are forbidden in sections mode' if !empty_exp?(content)
-      [:slim, :output, access(name), content]
+      [:slim, :output, escape, access(name), content]
     end
 
     private
