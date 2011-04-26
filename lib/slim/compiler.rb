@@ -42,7 +42,7 @@ module Slim
       if empty_exp?(content)
         [:multi, [:escape, escape && options[:auto_escape], [:dynamic, code]], content]
       else
-        tmp = tmp_var(:output)
+        tmp = tmp_var
 
         [:multi,
          # Capture the result of the code in a variable. We can't do
@@ -57,7 +57,7 @@ module Slim
          # The capturing can be disabled with the option :disable_capture.
          # Output code in the block writes directly to the output buffer then.
          # Rails handles this by replacing the output buffer for helpers (with_output_buffer - braindead!).
-         options[:disable_capture] ? compile(content) : [:capture, tmp_var(:output), compile(content)],
+         options[:disable_capture] ? compile(content) : [:capture, tmp_var, compile(content)],
 
          # Close the block.
          [:block, 'end'],

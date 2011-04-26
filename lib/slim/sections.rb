@@ -37,7 +37,7 @@ module Slim
     end
 
     def on_slim_inverted_section(name, content)
-      tmp = tmp_var(:section)
+      tmp = tmp_var
       [:multi,
        [:block, "#{tmp} = #{access name}"],
        [:block, "if !#{tmp} || #{tmp}.respond_to?(:empty) && #{tmp}.empty?"],
@@ -47,7 +47,7 @@ module Slim
 
     def on_slim_section(name, content)
       content = compile(content)
-      tmp1, tmp2 = tmp_var(:dict), tmp_var(:dict)
+      tmp1, tmp2 = tmp_var, tmp_var
 
       [:multi,
        [:block, "if #{tmp1} = #{access name}"],
