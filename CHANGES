@@ -3,6 +3,10 @@ master
   * Allow for bypassing escaping in attributes
   * check if string encoding is valid
   * support for html conditional comments
+  * Use new Temple html attribute expression [:html, :attrs, [:html, :attr, ...], ...]
+  * Use new slim html attribute expression (similiar to Temple)
+  * Option :id_delimiter replaced with :join_delimiter
+  * Attribute value merging improved (nil/empty values are ignored now)
 
 0.9.2
 
