@@ -213,4 +213,36 @@ p id="#{(false ? 'notshown' : 'shown')}" = output_number
 }
     assert_html '<div id="alpha-beta">Test it</div>', source, :join_delimiter => {'class' => ' ', 'id' => '-' }
   end
+
+  def test_boolean_attribute_true
+    source = %{
+option selected=1 Text
+}
+
+    assert_html '<option selected="selected">Text</option>', source
+  end
+
+  def test_boolean_attribute_false
+    source = %{
+option selected=false Text
+}
+
+    assert_html '<option>Text</option>', source
+  end
+
+  def test_non_boolean_attribute
+    source = %{
+.alpha class="beta" class=false
+}
+
+    assert_html '<div class="alpha beta false"></div>', source
+  end
+
+  def test_array_attribute
+    source = %{
+.alpha class="beta" class=[:gamma, nil, :delta, true, false]
+}
+
+    assert_html '<div class="alpha beta gamma delta true false"></div>', source
+  end
 end
