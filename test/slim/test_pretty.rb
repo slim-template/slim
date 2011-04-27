@@ -9,7 +9,7 @@ class TestSlimPretty < TestSlim
     Slim::Engine.set_default_options :pretty => false
   end
 
-  def test_pretty_sass
+  def test_pretty
     source = %q{
 doctype 5
 html
@@ -20,7 +20,9 @@ html
         background-color: red
   body
     #container
-      p Hello!
+      p Hello
+        World!
+      p= "dynamic text with\nnewline"
 }
 
     result = %q{<!DOCTYPE html>
@@ -35,7 +37,10 @@ html
   </head>
   <body>
     <div id="container">
-      <p>Hello!</p>
+      <p>Hello
+        World!</p>
+      <p>dynamic text with
+        newline</p>
     </div>
   </body>
 </html>}
