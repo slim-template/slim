@@ -40,29 +40,23 @@ module Slim
       tmp = unique_name
       [:multi,
        [:block, "#{tmp} = #{access name}"],
-       [:block, "if !#{tmp} || #{tmp}.respond_to?(:empty) && #{tmp}.empty?"],
-                  compile(content),
-       [:block, 'end']]
+       [:if, "!#{tmp} || #{tmp}.respond_to?(:empty) && #{tmp}.empty?",
+        compile(content)]]
     end
 
     def on_slim_section(name, content)
       content = compile(content)
       tmp1, tmp2 = unique_name, unique_name
 
-      [:multi,
-       [:block, "if #{tmp1} = #{access name}"],
-       [:block,   "if #{tmp1} == true"],
-                     content,
-       [:block,   'else'],
-                    # Wrap map in array because maps implement each
-       [:block,     "#{tmp1} = [#{tmp1}] if #{tmp1}.respond_to?(:has_key?) || !#{tmp1}.respond_to?(:map)"],
-       [:block,     "#{tmp2} = _slimdict"],
-       [:block,     "#{tmp1}.each do |_slimdict|"],
-                      content,
-       [:block,     'end'],
-       [:block,     "_slimdict = #{tmp2}"],
-       [:block,   'end'],
-       [:block, 'end']]
+      [:if, "#{tmp1} = #{access name}",
+       [:if, "#{tmp1} == true",
+        content,
+        [:multi,
+         # Wrap map in array because maps implement each
+         [:block, "#{tmp1} = [#{tmp1}] if #{tmp1}.respond_to?(:has_key?) || !#{tmp1}.respond_to?(:map)"],
+         [:block, "#{tmp2} = _slimdict"],
+         [:loop, "#{tmp1}.each do |_slimdict|", content],
+         [:block, "_slimdict = #{tmp2}"]]]]
     end
 
     def on_slim_output(escape, name, content)
