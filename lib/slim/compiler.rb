@@ -15,15 +15,6 @@ module Slim
         compile(content)]
     end
 
-    # Handle comment expression `[:slim, :comment, content]`
-    #
-    # @param [Array] content Temple expression
-    # @return [Array] Compiled temple expression
-    def on_slim_comment(content)
-      [:html, :comment, compile(content)]
-    end
-
-
     # Handle conditional comment expression `[:slim, :conditional_comment, conditional, content]`
     #
     # @param [Array] content Temple expression
@@ -78,33 +69,6 @@ module Slim
       else
         raise "Invalid directive #{type}"
       end
-    end
-
-    # Handle tag expression `[:slim, :tag, name, attrs, closed, content]`
-    #
-    # @param [String] name Tag name
-    # @param [Array] attrs Attributes
-    # @param [Array] content Temple expression
-    # @return [Array] Compiled temple expression
-    def on_slim_tag(name, attrs, closed, content)
-      [:html, :tag, name, compile(attrs), closed, compile(content)]
-    end
-
-    # Handle tag attributes expression `[:slim, :attrs, *attrs]`
-    #
-    # @param [Array] attrs Attributes
-    # @return [Array] Compiled temple expression
-    def on_slim_attrs(*attrs)
-      [:html, :attrs, *attrs.map {|attr| compile(attr) }]
-    end
-
-    # Handle tag attribute expression `[:slim, :attr, name, content]`
-    #
-    # @param [String] name Attribute name
-    # @param [Array] value Temple expression
-    # @return [Array] Compiled temple expression
-    def on_slim_attr(name, value)
-      [:html, :attr, name, compile(value)]
     end
   end
 end

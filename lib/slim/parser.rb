@@ -187,7 +187,7 @@ module Slim
                          elsif ch == ?/ && line[0] == ?!
                            # HTML comment
                            line.slice!(0)
-                           [:slim, :comment, block]
+                           [:html, :comment, block]
                          elsif ch == ?/ && line[0] == ?[
                            # HTML conditional comment
                            block_indent = nil
@@ -287,13 +287,13 @@ module Slim
       # Now we'll have to find all the attributes. We'll store these in an
       # nested array: [[name, value], [name2, value2]]. The value is a piece
       # of Ruby code.
-      attributes = [:slim, :attrs]
+      attributes = [:html, :attrs]
 
       # Find any literal class/id attributes
       while line =~ CLASS_ID_REGEX
         # The class/id attribute is :static instead of :slim :text,
         # because we don't want text interpolation in .class or #id shortcut
-        attributes << [:slim, :attr, ATTR_SHORTHAND[$1], [:static, $2]]
+        attributes << [:html, :attr, ATTR_SHORTHAND[$1], [:static, $2]]
         line = $'
       end
 
@@ -312,12 +312,12 @@ module Slim
         if line =~ QUOTED_VALUE_REGEX
           # Value is quoted (static)
           line = $'
-          attributes << [:slim, :attr, key, [:slim, :text, $1[1..-2]]]
+          attributes << [:html, :attr, key, [:slim, :text, $1[1..-2]]]
         else
           # Value is ruby code
           escape = line[0] != ?=
           line, value = parse_ruby_attribute(orig_line, escape ? line : line[1..-1], lineno, delimiter)
-          attributes << [:slim, :attr, key, [:slim, :output, escape, value, [:multi]]]
+          attributes << [:html, :attr, key, [:slim, :output, escape, value, [:multi]]]
         end
       end
 
@@ -331,7 +331,7 @@ module Slim
       end
 
       content = [:multi]
-      tag = [:slim, :tag, tag, attributes, false, content]
+      tag = [:html, :tag, tag, attributes, false, content]
 
       if line =~ /^\s*=(=?)/
         # Handle output code
