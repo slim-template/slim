@@ -64,7 +64,6 @@ module Slim
     use Temple::HTML::Pretty, :format, :attr_wrapper, :attr_delimiter, :pretty
     filter :Escapable, :use_html_safe
     filter :MultiFlattener
-    filter :StaticMerger
     filter :DynamicInliner
     filter :Debugger, :debug, :debug_prefix => 'Optimized code'
     use(:Generator) {|exp| options[:generator].new(options).call(exp) }
