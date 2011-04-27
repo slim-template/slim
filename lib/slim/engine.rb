@@ -11,7 +11,7 @@ module Slim
     set_default_options :pretty => false,
                         :attr_wrapper => '"',
                         :format => :html5,
-                        :join_delimiter => {'class' => ' '},
+                        :attr_delimiter => {'class' => ' '},
                         :generator => Temple::Generators::ArrayBuffer
 
     #
@@ -33,7 +33,7 @@ module Slim
     # Boolean     | :debug             | false                         | Enable debug outputs (Temple internals)
     # Symbol      | :format            | :html5                        | HTML output format
     # String      | :attr_wrapper      | '"'                           | Character to wrap attributes in html (can be ' or ")
-    # Hash        | :join_delimiter    | {'class' => ' '}              | Joining character used if multiple html attributes are supplied (e.g. id1_id2)
+    # Hash        | :attr_delimiter    | {'class' => ' '}              | Joining character used if multiple html attributes are supplied (e.g. id1_id2)
     # Boolean     | :pretty            | false                         | Pretty html indenting (This is slower!)
     # Class       | :generator         | ArrayBuffer/RailsOutputBuffer | Temple code generator (default generator generates array buffer)
     #
@@ -58,9 +58,9 @@ module Slim
     use Slim::Interpolation
     use Slim::Sections, :sections, :dictionary, :dictionary_access
     use Slim::EndInserter
-    use Slim::Compiler, :disable_capture, :auto_escape
+    use Slim::Compiler, :disable_capture, :auto_escape, :attr_delimiter, :bool_attrs
     filter :Debugger, :debug, :debug_prefix => 'After Slim'
-    use Temple::HTML::Pretty, :format, :attr_wrapper, :join_delimiter, :pretty
+    use Temple::HTML::Pretty, :format, :attr_wrapper, :attr_delimiter, :pretty
     filter :EscapeHTML, :use_html_safe
     filter :MultiFlattener
     filter :StaticMerger
