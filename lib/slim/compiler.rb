@@ -85,7 +85,7 @@ module Slim
         tmp = tmp_var
         value = [:multi,
                  [:block, "#{tmp} = #{code}"],
-                 [:dynamic, "#{tmp}.respond_to?(:join) ? #{tmp}.compact.join(#{delimiter.inspect}) : #{tmp}"]]
+                 [:dynamic, "#{tmp}.respond_to?(:join) ? #{tmp}.flatten.compact.join(#{delimiter.inspect}) : #{tmp}"]]
       else
         value = [:dynamic, code]
       end

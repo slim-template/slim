@@ -240,7 +240,7 @@ option selected=false Text
 
   def test_array_attribute
     source = %{
-.alpha class="beta" class=[:gamma, nil, :delta, true, false]
+.alpha class="beta" class=[:gamma, nil, :delta, [true, false]]
 }
 
     assert_html '<div class="alpha beta gamma delta true false"></div>', source
