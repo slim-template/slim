@@ -307,17 +307,17 @@ module Slim
 
       # Parse attributes
       while line =~ ATTR_REGEX
-        key = $1
+        name = $1
         line = $'
         if line =~ QUOTED_VALUE_REGEX
           # Value is quoted (static)
           line = $'
-          attributes << [:html, :attr, key, [:slim, :text, $1[1..-2]]]
+          attributes << [:html, :attr, name, [:slim, :text, $1[1..-2]]]
         else
           # Value is ruby code
           escape = line[0] != ?=
-          line, value = parse_ruby_attribute(orig_line, escape ? line : line[1..-1], lineno, delimiter)
-          attributes << [:html, :attr, key, [:slim, :output, escape, value, [:multi]]]
+          line, code = parse_ruby_attribute(orig_line, escape ? line : line[1..-1], lineno, delimiter)
+          attributes << [:slim, :attr, name, escape, code]
         end
       end
 

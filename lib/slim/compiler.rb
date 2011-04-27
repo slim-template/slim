@@ -2,7 +2,8 @@ module Slim
   # Compiles Slim expressions into Temple::HTML expressions.
   # @api private
   class Compiler < Filter
-    set_default_options :auto_escape => true
+    set_default_options :auto_escape => true,
+                        :bool_attrs => %w(selected)
 
     # Handle control expression `[:slim, :control, code, content]`
     #
@@ -69,6 +70,26 @@ module Slim
       else
         raise "Invalid directive #{type}"
       end
+    end
+
+    # Handle attribute expression `[:slim, :attr, escape, code]`
+    #
+    # @param [Boolean] escape Escape html
+    # @param [String] code Ruby code
+    # @return [Array] Compiled temple expression
+    def on_slim_attr(name, escape, code)
+      if options[:bool_attrs].include?(name)
+        escape = false
+        value = [:dynamic, "(#{code}) ? #{name.inspect} : nil"]
+      elsif delimiter = options[:attr_delimiter][name]
+        tmp = tmp_var
+        value = [:multi,
+                 [:block, "#{tmp} = #{code}"],
+                 [:dynamic, "#{tmp}.respond_to?(:join) ? #{tmp}.compact.join(#{delimiter.inspect}) : #{tmp}"]]
+      else
+        value = [:dynamic, code]
+      end
+      [:html, :attr, name,  [:escape, escape && options[:auto_escape], value]]
     end
   end
 end

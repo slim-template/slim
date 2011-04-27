@@ -34,6 +34,7 @@ module Slim
     # Symbol      | :format            | :html5                        | HTML output format
     # String      | :attr_wrapper      | '"'                           | Character to wrap attributes in html (can be ' or ")
     # Hash        | :attr_delimiter    | {'class' => ' '}              | Joining character used if multiple html attributes are supplied (e.g. id1_id2)
+    # String list | :bool_attrs        | %w(selected)                  | List of boolean attributes
     # Boolean     | :pretty            | false                         | Pretty html indenting (This is slower!)
     # Class       | :generator         | ArrayBuffer/RailsOutputBuffer | Temple code generator (default generator generates array buffer)
     #
