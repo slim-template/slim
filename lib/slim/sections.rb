@@ -20,7 +20,7 @@ module Slim
         dictionary = options[:dictionary]
         dictionary = "Slim::Wrapper.new(#{dictionary})" if options[:dictionary_access] == :wrapped
         [:multi,
-         [:block, "_slimdict = #{dictionary}"],
+         [:code, "_slimdict = #{dictionary}"],
          super]
       else
         exp
@@ -39,7 +39,7 @@ module Slim
     def on_slim_inverted_section(name, content)
       tmp = unique_name
       [:multi,
-       [:block, "#{tmp} = #{access name}"],
+       [:code, "#{tmp} = #{access name}"],
        [:if, "!#{tmp} || #{tmp}.respond_to?(:empty) && #{tmp}.empty?",
         compile(content)]]
     end
@@ -53,10 +53,10 @@ module Slim
         content,
         [:multi,
          # Wrap map in array because maps implement each
-         [:block, "#{tmp1} = [#{tmp1}] if #{tmp1}.respond_to?(:has_key?) || !#{tmp1}.respond_to?(:map)"],
-         [:block, "#{tmp2} = _slimdict"],
-         [:loop, "#{tmp1}.each do |_slimdict|", content],
-         [:block, "_slimdict = #{tmp2}"]]]]
+         [:code, "#{tmp1} = [#{tmp1}] if #{tmp1}.respond_to?(:has_key?) || !#{tmp1}.respond_to?(:map)"],
+         [:code, "#{tmp2} = _slimdict"],
+         [:block, "#{tmp1}.each do |_slimdict|", content],
+         [:code, "_slimdict = #{tmp2}"]]]]
     end
 
     def on_slim_output(escape, name, content)

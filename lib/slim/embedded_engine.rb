@@ -96,7 +96,7 @@ module Slim
 
     class RubyEngine < EmbeddedEngine
       def on_slim_embedded(engine, *body)
-        [:block, collect_text(body)]
+        [:code, collect_text(body)]
       end
     end
 

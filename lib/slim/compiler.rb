@@ -12,7 +12,7 @@ module Slim
     # @return [Array] Compiled temple expression
     def on_slim_control(code, content)
       [:multi,
-        [:block, code],
+        [:code, code],
         compile(content)]
     end
 
@@ -40,7 +40,7 @@ module Slim
          # Capture the result of the code in a variable. We can't do
          # `[:dynamic, code]` because it's probably not a complete
          # expression (which is a requirement for Temple).
-         [:loop, "#{tmp} = #{code}",
+         [:block, "#{tmp} = #{code}",
 
           # Capture the content of a block in a separate buffer. This means
           # that `yield` will not output the content to the current buffer,
@@ -81,7 +81,7 @@ module Slim
       elsif delimiter = options[:attr_delimiter][name]
         tmp = unique_name
         value = [:multi,
-                 [:block, "#{tmp} = #{code}"],
+                 [:code, "#{tmp} = #{code}"],
                  [:dynamic, "#{tmp}.respond_to?(:join) ? #{tmp}.flatten.compact.join(#{delimiter.inspect}) : #{tmp}"]]
       else
         value = [:dynamic, code]
