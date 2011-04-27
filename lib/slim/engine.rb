@@ -62,7 +62,7 @@ module Slim
     use Slim::Compiler, :disable_capture, :auto_escape, :attr_delimiter, :bool_attrs
     filter :Debugger, :debug, :debug_prefix => 'After Slim'
     use Temple::HTML::Pretty, :format, :attr_wrapper, :attr_delimiter, :pretty
-    filter :EscapeHTML, :use_html_safe
+    filter :Escapable, :use_html_safe
     filter :MultiFlattener
     filter :StaticMerger
     filter :DynamicInliner
