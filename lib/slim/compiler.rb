@@ -34,7 +34,7 @@ module Slim
       if empty_exp?(content)
         [:multi, [:escape, escape && options[:auto_escape], [:dynamic, code]], content]
       else
-        tmp = tmp_var
+        tmp = unique_name
 
         [:multi,
          # Capture the result of the code in a variable. We can't do
@@ -49,7 +49,7 @@ module Slim
          # The capturing can be disabled with the option :disable_capture.
          # Output code in the block writes directly to the output buffer then.
          # Rails handles this by replacing the output buffer for helpers (with_output_buffer - braindead!).
-         options[:disable_capture] ? compile(content) : [:capture, tmp_var, compile(content)],
+         options[:disable_capture] ? compile(content) : [:capture, unique_name, compile(content)],
 
          # Close the block.
          [:block, 'end'],
@@ -82,7 +82,7 @@ module Slim
         escape = false
         value = [:dynamic, "(#{code}) ? #{name.inspect} : nil"]
       elsif delimiter = options[:attr_delimiter][name]
-        tmp = tmp_var
+        tmp = unique_name
         value = [:multi,
                  [:block, "#{tmp} = #{code}"],
                  [:dynamic, "#{tmp}.respond_to?(:join) ? #{tmp}.flatten.compact.join(#{delimiter.inspect}) : #{tmp}"]]
