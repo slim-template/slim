@@ -14,8 +14,8 @@ module Slim
       [:slim, :control, code, compile(content)]
     end
 
-    def on_slim_conditional_comment(condition, content)
-      [:slim, :conditional_comment, condition, compile(content)]
+    def on_slim_condcomment(condition, content)
+      [:slim, :condcomment, condition, compile(content)]
     end
 
     def on_slim_output(code, escape, content)

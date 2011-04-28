@@ -117,7 +117,7 @@ module Slim
             # This line happens to be indented deeper (or equal) than the block start character (|, ', /).
             # This means that it's a part of the block.
 
-            if !in_comment
+            unless in_comment
               # The indentation of first line of the text block determines the text base indentation.
               newline = text_indent ? "\n" : ''
               text_indent ||= indent
@@ -173,32 +173,35 @@ module Slim
         end
 
         case line[0]
-        when ?|, ?', ?/
-          # Found a block.
-          ch = line.slice!(0)
-
+        when ?/
+          # Found a comment block.
+          block = [:multi]
+          stacks.last << if line =~ %r{^/!( ?)(.*)$}
+                           # HTML comment
+                           block_indent = indent
+                           text_indent = block_indent + ($1 ? 2 : 1)
+                           block << [:slim, :text, $2] if $2
+                           [:html, :comment, block]
+                         elsif line =~ %r{^/\[\s*(.*?)\s*\]\s*$}
+                           # HTML conditional comment
+                           [:slim, :condcomment, $1, block]
+                         else
+                           # Slim comment
+                           block_indent = indent
+                           in_comment = true
+                           block
+                         end
+          stacks << block
+        when ?|, ?'
+          # Found a text block.
           # We're now expecting the next line to be indented, so we'll need
           # to push a block to the stack.
           block = [:multi]
           block_indent = indent
-          stacks.last << if ch == ?'
-                           # Additional whitespace in front
-                           [:multi, block, [:slim, :text, ' ']]
-                         elsif ch == ?/ && line[0] == ?!
-                           # HTML comment
-                           line.slice!(0)
-                           [:html, :comment, block]
-                         elsif ch == ?/ && line[0] == ?[
-                           # HTML conditional comment
-                           block_indent = nil
-                           [:slim, :conditional_comment, line.slice!(0..-1), block]
-                         else
-                           in_comment = ch == ?/
-                           block
-                         end
+          stacks.last << (line.slice!(0) == ?' ?
+                          [:multi, block, [:slim, :text, ' ']] : block)
           stacks << block
-
-          if !in_comment && !line.strip.empty?
+          unless line.strip.empty?
             block << [:slim, :text, line.sub(/^( )/, '')]
             text_indent = block_indent + ($1 ? 2 : 1)
           end
@@ -322,7 +325,7 @@ module Slim
       end
 
       # Find ending delimiter
-      if !delimiter.empty?
+      unless delimiter.empty?
         if line =~ /^\s*#{Regexp.escape delimiter}/
           line = $'
         else
@@ -383,7 +386,7 @@ module Slim
         end
       end
 
-      syntax_error! "Expected closing attribute delimiter #{stack.last}", orig_line, lineno if !stack.empty?
+      syntax_error! "Expected closing attribute delimiter #{stack.last}", orig_line, lineno unless stack.empty?
       syntax_error! 'Invalid empty attribute', orig_line, lineno if value.empty?
 
       # Remove attribute wrapper which doesn't belong to the ruby code

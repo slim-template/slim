@@ -345,7 +345,7 @@ p World
  p Get a better browser.
 }
 
-    assert_html "<!--[ if IE ]><p>Get a better browser.</p><![endif]-->", source
+    assert_html "<!--[if IE]><p>Get a better browser.</p><![endif]-->", source
   end
 
   def test_render_with_html_conditional_and_method_output
@@ -354,6 +354,6 @@ p World
  = message 'hello'
 }
 
-    assert_html "<!--[ if IE ]>hello<![endif]-->", source
+    assert_html "<!--[if IE]>hello<![endif]-->", source
   end
 end
