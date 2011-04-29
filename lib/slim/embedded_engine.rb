@@ -22,8 +22,8 @@ module Slim
       engine.new(Temple::Utils::ImmutableHash.new(local_options, filtered_options))
     end
 
-    def on_slim_embedded(name, *body)
-      new_engine(name).on_slim_embedded(name, *body)
+    def on_slim_embedded(name, body)
+      new_engine(name).on_slim_embedded(name, body)
     end
 
     def collect_text(body)
@@ -34,7 +34,7 @@ module Slim
     end
 
     class TiltEngine < EmbeddedEngine
-      def on_slim_embedded(engine, *body)
+      def on_slim_embedded(engine, body)
         text = collect_text(body)
         engine = Tilt[engine] || raise("Tilt engine #{engine} is not available.")
         tilt_render(engine, text)
@@ -81,21 +81,21 @@ module Slim
     end
 
     class ERBEngine < EmbeddedEngine
-      def on_slim_embedded(engine, *body)
+      def on_slim_embedded(engine, body)
         text = collect_text(body)
         Temple::ERB::Parser.new(:auto_escape => true).call(text)
       end
     end
 
     class TagEngine < EmbeddedEngine
-      def on_slim_embedded(engine, *body)
-        content = options[:engine] ? options[:engine].new(options).on_slim_embedded(engine, *body) : [:multi, *body]
+      def on_slim_embedded(engine, body)
+        content = options[:engine] ? options[:engine].new(options).on_slim_embedded(engine, body) : [:multi, body]
         [:html, :tag, options[:tag], [:html, :attrs, *options[:attributes].map {|k, v| [:html, :attr, k, [:static, v]] }], false, content]
       end
     end
 
     class RubyEngine < EmbeddedEngine
-      def on_slim_embedded(engine, *body)
+      def on_slim_embedded(engine, body)
         [:code, collect_text(body)]
       end
     end

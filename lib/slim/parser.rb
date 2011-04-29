@@ -227,8 +227,8 @@ module Slim
         else
           if line =~ /^(\w+):\s*$/
             # Embedded template detected. It is treated as block.
-            block = [:slim, :embedded, $1]
-            stacks.last << [:newline] << block
+            block = [:multi]
+            stacks.last << [:newline] << [:slim, :embedded, $1, block]
             stacks << block
             block_indent = indent
             next

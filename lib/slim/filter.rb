@@ -10,6 +10,10 @@ module Slim
     # Dispatch on_slim_*
     temple_dispatch :slim
 
+    def on_slim_embedded(type, content)
+      [:slim, :embedded, code, compile(content)]
+    end
+
     def on_slim_control(code, content)
       [:slim, :control, code, compile(content)]
     end
