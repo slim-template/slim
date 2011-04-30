@@ -9,6 +9,8 @@ master
   * Attribute value merging improved (nil/empty values are ignored now)
   * Arrays attribute values are joined
   * Boolean attributes (e.g. selected=true is converted to selected="selected")
+  * Option :debug removed
+  * Slim expression grammar provided
 
 0.9.2
 
