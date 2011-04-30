@@ -215,10 +215,11 @@ Here's a quick example to demonstrate what a Slim template looks like:
 
 ### Evaluate ruby code in text
 
-  Use standard Ruby interpolation. The text will always be html escaped.
+  Use standard Ruby interpolation. The text will be html escaped by default.
 
     body
       h1 Welcome #{current_user.name} to the show.
+      | Unescaped #{{content}} is also possible.
 
   To escape the interpolation (i.e. render as is)
 
