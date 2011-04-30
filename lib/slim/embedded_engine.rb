@@ -106,10 +106,10 @@ module Slim
     register :creole,     InterpolateTiltEngine
 
     # These engines are executed at compile time
-    register :coffee,     TagEngine,  :tag => 'script', :attributes => { :type => 'text/javascript' },  :engine => TiltEngine
-    register :less,       TagEngine,  :tag => 'style',  :attributes => { :type => 'text/css' },         :engine => TiltEngine
-    register :sass,       TagEngine,  :pretty, :tag => 'style', :attributes => { :type => 'text/css' }, :engine => SassEngine
-    register :scss,       TagEngine,  :pretty, :tag => 'style', :attributes => { :type => 'text/css' }, :engine => SassEngine
+    register :coffee,     TagEngine,  :tag => :script, :attributes => { :type => 'text/javascript' },  :engine => TiltEngine
+    register :less,       TagEngine,  :tag => :style,  :attributes => { :type => 'text/css' },         :engine => TiltEngine
+    register :sass,       TagEngine,  :pretty, :tag => :style, :attributes => { :type => 'text/css' }, :engine => SassEngine
+    register :scss,       TagEngine,  :pretty, :tag => :style, :attributes => { :type => 'text/css' }, :engine => SassEngine
 
     # These engines are precompiled, code is embedded
     register :erb,        ERBEngine
@@ -123,8 +123,8 @@ module Slim
     register :markaby,    DynamicTiltEngine
 
     # Embedded javascript/css
-    register :javascript, TagEngine,  :tag => 'script', :attributes => { :type => 'text/javascript' }
-    register :css,        TagEngine,  :tag => 'style',  :attributes => { :type => 'text/css' }
+    register :javascript, TagEngine,  :tag => :script, :attributes => { :type => 'text/javascript' }
+    register :css,        TagEngine,  :tag => :style,  :attributes => { :type => 'text/css' }
 
     # Embedded ruby code
     register :ruby,       RubyEngine
