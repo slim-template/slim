@@ -30,7 +30,6 @@ module Slim
     # Boolean     | :disable_capture   | false (true in Rails)         | Disable capturing in blocks (blocks write to the default buffer then)
     # Boolean     | :auto_escape       | true                          | Enable automatic escaping of strings
     # Boolean     | :use_html_safe     | false (true in Rails)         | Use String#html_safe? from ActiveSupport (Works together with :auto_escape)
-    # Boolean     | :debug             | false                         | Enable debug outputs (Temple internals)
     # Symbol      | :format            | :html5                        | HTML output format
     # String      | :attr_wrapper      | '"'                           | Character to wrap attributes in html (can be ' or ")
     # Hash        | :attr_delimiter    | {'class' => ' '}              | Joining character used if multiple html attributes are supplied (e.g. id1_id2)
@@ -60,13 +59,11 @@ module Slim
     use Slim::Sections, :sections, :dictionary, :dictionary_access
     use Slim::EndInserter
     use Slim::Compiler, :disable_capture, :auto_escape, :attr_delimiter, :bool_attrs
-    filter :Debugger, :debug, :debug_prefix => 'After Slim'
     use Temple::HTML::Pretty, :format, :attr_wrapper, :attr_delimiter, :pretty
     filter :Escapable, :use_html_safe
     filter :ControlFlow
     filter :MultiFlattener
     filter :DynamicInliner
-    filter :Debugger, :debug, :debug_prefix => 'Optimized code'
     use(:Generator) {|exp| options[:generator].new(options).call(exp) }
   end
 end

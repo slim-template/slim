@@ -9,7 +9,6 @@ MiniTest::Unit.autorun
 
 Slim::Engine.before Slim::Compiler, Temple::Filters::Validator, :grammar => Slim::Grammar
 Slim::Engine.before Temple::HTML::Pretty, Temple::Filters::Validator
-# Slim::Engine.set_default_options :debug => true
 
 class TestSlim < MiniTest::Unit::TestCase
   def setup

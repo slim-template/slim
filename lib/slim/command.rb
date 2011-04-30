@@ -52,10 +52,6 @@ module Slim
         @options[:pretty] = true
       end
 
-      opts.on('-d', '--debug', :NONE, 'Debugging output') do
-        @options[:debug] = true
-      end
-
       opts.on_tail('-h', '--help', 'Show this message') do
         puts opts
         exit
@@ -91,14 +87,12 @@ module Slim
                                                 :pretty => @options[:pretty],
                                                 :sections => @options[:sections],
                                                 :disable_capture => @options[:rails],
-                                                :debug => @options[:debug],
                                                 :generator => @options[:rails] ?
                                                 Temple::Generators::RailsOutputBuffer :
                                                 Temple::Generators::ArrayBuffer).call(@options[:input].read))
       else
         @options[:output].puts(Slim::Template.new(@options[:file],
                                                   :pretty => @options[:pretty],
-                                                  :debug => @options[:debug],
                                                   :sections => @options[:sections]) { @options[:input].read }.render)
       end
     end
