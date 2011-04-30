@@ -27,9 +27,8 @@ module Slim
     end
 
     def collect_text(body)
-      body.inject('') do |text, exp|
-        text << exp[2] if exp[0] == :slim && exp[1] == :text
-        text
+      body[1..-1].inject('') do |text, exp|
+        exp[0] == :slim && exp[1] == :text ? (text << exp[2]) : text
       end
     end
 
