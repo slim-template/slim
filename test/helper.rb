@@ -7,6 +7,7 @@ require 'slim/grammar'
 
 MiniTest::Unit.autorun
 
+Slim::Engine.after  Slim::Parser, Temple::Filters::Validator, :grammar => Slim::Grammar
 Slim::Engine.before Slim::Compiler, Temple::Filters::Validator, :grammar => Slim::Grammar
 Slim::Engine.before Temple::HTML::Pretty, Temple::Filters::Validator
 
