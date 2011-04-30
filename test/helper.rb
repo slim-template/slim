@@ -3,13 +3,17 @@
 require 'rubygems'
 require 'minitest/unit'
 require 'slim'
+require 'slim/grammar'
 
 MiniTest::Unit.autorun
+
+Slim::Engine.before Slim::Compiler, Temple::Filters::Validator, :grammar => Slim::Grammar
+Slim::Engine.before Temple::HTML::Pretty, Temple::Filters::Validator
+# Slim::Engine.set_default_options :debug => true
 
 class TestSlim < MiniTest::Unit::TestCase
   def setup
     @env = Env.new
-    # Slim::Engine.set_default_options :debug => true
   end
 
   def teardown
