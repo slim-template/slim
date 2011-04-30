@@ -19,7 +19,7 @@ module Slim
                                                      (options[:disable_engines] && options[:disable_engines].include?(name))
       engine, option_filter, local_options = self.class.engines[name] || raise("Embedded engine #{name} not found")
       filtered_options = Hash[*option_filter.select {|k| options.include?(k) }.map {|k| [k, options[k]] }.flatten]
-      engine.new(Temple::Utils::ImmutableHash.new(local_options, filtered_options))
+      engine.new(Temple::ImmutableHash.new(local_options, filtered_options))
     end
 
     def on_slim_embedded(name, body)
