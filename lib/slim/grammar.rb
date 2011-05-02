@@ -1,4 +1,6 @@
 module Slim
+  # Slim expression grammar
+  # @api private
   module Grammar
     extend Temple::Grammar
 

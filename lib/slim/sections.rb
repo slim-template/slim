@@ -36,6 +36,13 @@ module Slim
       end
     end
 
+    def on_slim_output(escape, name, content)
+      raise 'Output statements with content are forbidden in sections mode' if !empty_exp?(content)
+      [:slim, :output, escape, access(name), content]
+    end
+
+    protected
+
     def on_slim_inverted_section(name, content)
       tmp = unique_name
       [:multi,
@@ -57,11 +64,6 @@ module Slim
          [:code, "#{tmp2} = _slimdict"],
          [:block, "#{tmp1}.each do |_slimdict|", content],
          [:code, "_slimdict = #{tmp2}"]]]]
-    end
-
-    def on_slim_output(escape, name, content)
-      raise 'Output statements with content are forbidden in sections mode' if !empty_exp?(content)
-      [:slim, :output, escape, access(name), content]
     end
 
     private

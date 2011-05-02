@@ -16,7 +16,8 @@ module Slim
         compile(content)]
     end
 
-    # Handle conditional comment expression `[:slim, :conditional_comment, conditional, content]`
+    # Handle conditional comment expression
+    # `[:slim, :conditional_comment, conditional, content]`
     #
     # @param [Array] content Temple expression
     # @return [Array] Compiled temple expression
@@ -48,7 +49,7 @@ module Slim
           #
           # The capturing can be disabled with the option :disable_capture.
           # Output code in the block writes directly to the output buffer then.
-          # Rails handles this by replacing the output buffer for helpers (with_output_buffer - braindead!).
+          # Rails handles this by replacing the output buffer for helpers.
           options[:disable_capture] ? compile(content) : [:capture, unique_name, compile(content)]],
 
          # Output the content.

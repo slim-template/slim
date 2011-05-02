@@ -396,7 +396,7 @@ module Slim
       return line, value
     end
 
-    # A little helper for raising exceptions.
+    # Helper for raising exceptions
     def syntax_error!(message, *args)
       raise SyntaxError.new(message, options[:file], *args)
     end
