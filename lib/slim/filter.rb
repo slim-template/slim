@@ -7,9 +7,6 @@ module Slim
   #
   # @api private
   class Filter < Temple::HTML::Filter
-    # Dispatch on_slim_*
-    dispatch :slim
-
     def on_slim_embedded(type, content)
       [:slim, :embedded, code, compile(content)]
     end
