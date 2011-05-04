@@ -32,6 +32,8 @@ module Slim
       block
     end
 
+    protected
+
     def parse_expression(string)
       stack, code = [], ''
 
