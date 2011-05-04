@@ -334,7 +334,7 @@ module Slim
       end
 
       content = [:multi]
-      tag = [:html, :tag, tag, attributes, false, content]
+      tag = [:html, :tag, tag, attributes, content]
 
       if line =~ /^\s*=(=?)/
         # Handle output code
@@ -344,7 +344,7 @@ module Slim
         [tag, block, broken_line, nil]
       elsif line =~ /^\s*\//
         # Closed tag
-        tag[4] = true
+        tag.pop
         [tag, block, nil, nil]
       elsif line =~ /^\s*$/
         # Empty line

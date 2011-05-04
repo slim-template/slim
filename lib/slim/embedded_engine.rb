@@ -89,7 +89,7 @@ module Slim
     class TagEngine < EmbeddedEngine
       def on_slim_embedded(engine, body)
         content = options[:engine] ? options[:engine].new(options).on_slim_embedded(engine, body) : [:multi, body]
-        [:html, :tag, options[:tag], [:html, :attrs, *options[:attributes].map {|k, v| [:html, :attr, k, [:static, v]] }], false, content]
+        [:html, :tag, options[:tag], [:html, :attrs, *options[:attributes].map {|k, v| [:html, :attr, k, [:static, v]] }], content]
       end
     end
 
