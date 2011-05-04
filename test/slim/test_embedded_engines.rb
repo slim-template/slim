@@ -10,13 +10,15 @@ class TestSlimEmbeddedEngines < TestSlim
 p
   - text = 'haml'
   haml:
+    - passed_from_haml = 'from haml'
     %b Hello from #{text.upcase}!
     Second Line!
     - if true
       = true
+  = passed_from_haml
 }
 
-    assert_html "<p><b>Hello from HAML!</b>\nSecond Line!\ntrue\n</p>", source
+    assert_html "<p><b>Hello from HAML!</b>\nSecond Line!\ntrue\nfrom haml</p>", source
   end
 
   def test_render_with_erb

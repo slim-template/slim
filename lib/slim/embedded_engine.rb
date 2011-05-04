@@ -86,10 +86,8 @@ module Slim
       protected
 
       def tilt_render(engine, text)
-        # Wrap precompiled code in proc, local variables from out the proc are accessible
         # WARNING: This is a bit of a hack. Tilt::Engine#precompiled is protected
-        precompiled = engine.new { text }.send(:precompiled, {}).first
-        [:dynamic, "proc { #{precompiled} }.call"]
+        [:dynamic, engine.new { text }.send(:precompiled, {}).first]
       end
     end
 
