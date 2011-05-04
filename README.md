@@ -234,9 +234,9 @@ Here's a quick example to demonstrate what a Slim template looks like:
       h1 id="headline"
         == page_headline
 
-  Alternatively, if you prefer to use single equal sign, you may do so by setting the `auto_escape` option to false.
+  Alternatively, if you prefer to use single equal sign, you may do so by setting the `disable_escape` option to true.
 
-    Slim::Engine.default_options[:auto_escape] = false
+    Slim::Engine.default_options[:disable_escape] = true
 
 ### Treat multiple lines of code as text that should bypass parsing
 

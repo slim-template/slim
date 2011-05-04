@@ -28,8 +28,8 @@ module Slim
     # String      | :dictionary        | "self"                        | Name of dictionary variable in sections mode
     # Symbol      | :dictionary_access | :wrapped                      | Access mode of dictionary variable (:wrapped, :symbol, :string)
     # Boolean     | :disable_capture   | false (true in Rails)         | Disable capturing in blocks (blocks write to the default buffer then)
-    # Boolean     | :auto_escape       | true                          | Enable automatic escaping of strings
-    # Boolean     | :use_html_safe     | false (true in Rails)         | Use String#html_safe? from ActiveSupport (Works together with :auto_escape)
+    # Boolean     | :disable_escape    | false                         | Disable automatic escaping of strings
+    # Boolean     | :use_html_safe     | false (true in Rails)         | Use String#html_safe? from ActiveSupport (Works together with :disable_escape)
     # Symbol      | :format            | :html5                        | HTML output format
     # String      | :attr_wrapper      | '"'                           | Character to wrap attributes in html (can be ' or ")
     # Hash        | :attr_delimiter    | {'class' => ' '}              | Joining character used if multiple html attributes are supplied (e.g. id1_id2)
@@ -58,9 +58,9 @@ module Slim
     use Slim::Interpolation
     use Slim::Sections, :sections, :dictionary, :dictionary_access
     use Slim::EndInserter
-    use Slim::Compiler, :disable_capture, :auto_escape, :attr_delimiter, :bool_attrs
+    use Slim::Compiler, :disable_capture, :attr_delimiter, :bool_attrs
     use Temple::HTML::Pretty, :format, :attr_wrapper, :attr_delimiter, :pretty
-    filter :Escapable, :use_html_safe
+    filter :Escapable, :use_html_safe, :disable_escape
     filter :ControlFlow
     filter :MultiFlattener
     filter :DynamicInliner

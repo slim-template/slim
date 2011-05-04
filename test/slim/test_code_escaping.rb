@@ -33,7 +33,7 @@ p = HtmlSafeString.new("<strong>Hello World\\n, meet \\"Slim\\"</strong>.")
     assert_html "<p><strong>Hello World\n, meet \"Slim\"</strong>.</p>", source, :use_html_safe => true
   end
 
-  def test_render_with_auto_escape_true
+  def test_render_with_disable_escape_false
     source = %q{
 = "<p>Hello</p>"
 == "<p>World</p>"
@@ -42,12 +42,12 @@ p = HtmlSafeString.new("<strong>Hello World\\n, meet \\"Slim\\"</strong>.")
     assert_html "&lt;p&gt;Hello&lt;&#47;p&gt;<p>World</p>", source
   end
 
-  def test_render_with_auto_escape_false
+  def test_render_with_disable_escape_true
     source = %q{
 = "<p>Hello</p>"
 == "<p>World</p>"
 }
 
-    assert_html "<p>Hello</p><p>World</p>", source, :auto_escape => false
+    assert_html "<p>Hello</p><p>World</p>", source, :disable_escape => true
   end
 end
