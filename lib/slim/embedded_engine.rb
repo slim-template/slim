@@ -40,11 +40,17 @@ module Slim
       end
     end
 
+    def collect_newlines(body)
+      body[1..-1].inject([:multi]) do |multi, exp|
+        exp[0] == :newline ? (multi << exp) : multi
+      end
+    end
+
     # Basic tilt engine
     class TiltEngine < EmbeddedEngine
       def on_slim_embedded(engine, body)
         engine = Tilt[engine] || raise("Tilt engine #{engine} is not available.")
-        render(engine, collect_text(body))
+        [:multi, render(engine, collect_text(body)), collect_newlines(body)]
       end
     end
 
@@ -118,7 +124,7 @@ module Slim
     # Embeds ruby code
     class RubyEngine < EmbeddedEngine
       def on_slim_embedded(engine, body)
-        [:code, collect_text(body)]
+        [:code, "\n" + collect_text(body)]
       end
     end
 
