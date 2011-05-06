@@ -8,7 +8,7 @@ module Slim
       [:slim, :control, String, Expression]       |
       [:slim, :condcomment, String, Expression]   |
       [:slim, :output, Bool, String, Expression]  |
-      [:slim, :text, String]                      |
+      [:slim, :interpolate, String]               |
       [:slim, :embedded, String, Expression]      |
       [:slim, :directive, Value('doctype'), String]
 

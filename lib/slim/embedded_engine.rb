@@ -36,16 +36,15 @@ module Slim
 
     def collect_text(body)
       body[1..-1].inject('') do |text, exp|
-        exp[0] == :slim && exp[1] == :text ? (text << exp[2]) : text
+        exp[0] == :slim && exp[1] == :interpolate ? (text << exp[2]) : text
       end
     end
 
     # Basic tilt engine
     class TiltEngine < EmbeddedEngine
       def on_slim_embedded(engine, body)
-        text = collect_text(body)
         engine = Tilt[engine] || raise("Tilt engine #{engine} is not available.")
-        render(engine, text)
+        render(engine, collect_text(body))
       end
     end
 
@@ -96,15 +95,14 @@ module Slim
       protected
 
       def render(engine, text)
-        [:slim, :text, engine.new { text }.render]
+        [:slim, :interpolate, engine.new { text }.render]
       end
     end
 
     # ERB engine (uses the Temple ERB implementation)
     class ERBEngine < EmbeddedEngine
       def on_slim_embedded(engine, body)
-        text = collect_text(body)
-        Temple::ERB::Parser.new.call(text)
+        Temple::ERB::Parser.new.call(collect_text(body))
       end
     end
 

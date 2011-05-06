@@ -1,14 +1,14 @@
 module Slim
   # Perform interpolation of #{var_name} in the
-  # expressions `[:slim, :text, string]`.
+  # expressions `[:slim, :interpolate, string]`.
   #
   # @api private
   class Interpolation < Filter
-    # Handle text expression `[:slim, :text, string]`
+    # Handle interpolate expression `[:slim, :interpolate, string]`
     #
-    # @param [String] string Static text
+    # @param [String] string Static interpolate
     # @return [Array] Compiled temple expression
-    def on_slim_text(string)
+    def on_slim_interpolate(string)
       # Interpolate variables in text (#{variable}).
       # Split the text into multiple dynamic and static parts.
       block = [:multi]

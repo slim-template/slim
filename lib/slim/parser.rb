@@ -127,7 +127,7 @@ module Slim
               syntax_error! 'Unexpected text indentation', line, lineno if offset < 0
 
               # Generate the additional spaces in front.
-              stacks.last << [:slim, :text, newline + (' ' * offset) + line]
+              stacks.last << [:slim, :interpolate, newline + (' ' * offset) + line]
             end
 
             stacks.last << [:newline]
@@ -180,7 +180,7 @@ module Slim
                            # HTML comment
                            block_indent = indent
                            text_indent = block_indent + ($1 ? 2 : 1)
-                           block << [:slim, :text, $2] if $2
+                           block << [:slim, :interpolate, $2] if $2
                            [:html, :comment, block]
                          elsif line =~ %r{^/\[\s*(.*?)\s*\]\s*$}
                            # HTML conditional comment
@@ -199,10 +199,10 @@ module Slim
           block = [:multi]
           block_indent = indent
           stacks.last << (line.slice!(0) == ?' ?
-                          [:multi, block, [:slim, :text, ' ']] : block)
+                          [:multi, block, [:static, ' ']] : block)
           stacks << block
           unless line.strip.empty?
-            block << [:slim, :text, line.sub(/^( )/, '')]
+            block << [:slim, :interpolate, line.sub(/^( )/, '')]
             text_indent = block_indent + ($1 ? 2 : 1)
           end
         when ?-
@@ -315,7 +315,7 @@ module Slim
         if line =~ QUOTED_VALUE_REGEX
           # Value is quoted (static)
           line = $'
-          attributes << [:html, :attr, name, [:slim, :text, $1[1..-2]]]
+          attributes << [:html, :attr, name, [:slim, :interpolate, $1[1..-2]]]
         else
           # Value is ruby code
           escape = line[0] != ?=
@@ -351,7 +351,7 @@ module Slim
         [tag, content, nil, nil]
       else
         # Handle text content
-        content << [:slim, :text, line.sub(/^( )/, '')]
+        content << [:slim, :interpolate, line.sub(/^( )/, '')]
         [tag, content, nil, orig_line.size - line.size + ($1 ? 1 : 0)]
       end
     end
