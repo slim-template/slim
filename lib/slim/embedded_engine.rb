@@ -45,7 +45,7 @@ module Slim
       def on_slim_embedded(engine, body)
         text = collect_text(body)
         engine = Tilt[engine] || raise("Tilt engine #{engine} is not available.")
-        tilt_render(engine, text)
+        render(engine, text)
       end
     end
 
@@ -53,7 +53,7 @@ module Slim
     class StaticTiltEngine < TiltEngine
       protected
 
-      def tilt_render(engine, text)
+      def render(engine, text)
         [:static, engine.new { text }.render]
       end
     end
@@ -62,7 +62,7 @@ module Slim
     class SassEngine < StaticTiltEngine
       protected
 
-      def tilt_render(engine, text)
+      def render(engine, text)
         text = engine.new(:style => (options[:pretty] ? :expanded : :compressed), :cache => false) { text }.render
         text.chomp!
         [:static, options[:pretty] ? "\n#{text}\n" : text]
@@ -76,7 +76,7 @@ module Slim
       # Code to collect local variables
       COLLECT_LOCALS = %q{eval('{' + local_variables.select {|v| v[0] != ?_ }.map {|v| ":#{v}=>#{v}" }.join(',') + '}')}
 
-      def tilt_render(engine, text)
+      def render(engine, text)
         [:dynamic, "#{engine.name}.new { #{text.inspect} }.render(self, #{COLLECT_LOCALS})"]
       end
     end
@@ -85,7 +85,7 @@ module Slim
     class PrecompiledTiltEngine < StaticTiltEngine
       protected
 
-      def tilt_render(engine, text)
+      def render(engine, text)
         # WARNING: This is a bit of a hack. Tilt::Engine#precompiled is protected
         [:dynamic, engine.new { text }.send(:precompiled, {}).first]
       end
@@ -95,7 +95,7 @@ module Slim
     class InterpolateTiltEngine < StaticTiltEngine
       protected
 
-      def tilt_render(engine, text)
+      def render(engine, text)
         [:slim, :text, engine.new { text }.render]
       end
     end
