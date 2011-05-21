@@ -41,6 +41,18 @@ module Slim
       [:slim, :output, escape, access(name), content]
     end
 
+    def on_slim_attr(name, escape, value)
+      [:slim, :attr, name, escape, access(value)]
+    end
+
+    def on_dynamic(code)
+      raise 'Embedded code is forbidden in sections mode'
+    end
+
+    def on_code(code)
+      raise 'Embedded code is forbidden in sections mode'
+    end
+
     protected
 
     def on_slim_inverted_section(name, content)
