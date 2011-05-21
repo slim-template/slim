@@ -131,6 +131,10 @@ class Env
 end
 
 class ViewEnv
+  def output_number
+     1337
+  end
+
   def person
     [{:name => 'Joe'}, {:name => 'Jack'}]
   end

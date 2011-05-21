@@ -29,4 +29,11 @@ ul
     assert_html '<ul><li>Andy</li><li>Atlanta</li><li>Fred</li><li>Melbourne</li><li>Daniel</li><li>Karlsruhe</li></ul>', source, :sections => true
   end
 
+  def test_method
+    source = %q{
+a href=output_number Link
+}
+    assert_html '<a href="1337">Link</a>', source, :sections => true
+  end
+
 end
