@@ -1,5 +1,7 @@
 master
 
+  * Fixed html attribute issue in sections mode (#127)
+
 0.9.3
 
   * Allow for bypassing escaping in attributes
