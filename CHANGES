@@ -1,6 +1,9 @@
 master
 
   * Fixed html attribute issue in sections mode (#127)
+  * Obsolete directive syntax removed
+  * Syntax for trailing whitespace added (==' and =')
+  * Deprecated file 'slim/rails.rb' removed
 
 0.9.3
 
