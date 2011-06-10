@@ -221,10 +221,6 @@ module Slim
           stacks.last << [:slim, :output, $1.empty?, broken_line, block]
           stacks.last << [:static, ' '] unless $2.empty?
           stacks << block
-        when ?!
-          # Found a directive (currently only used for doctypes)
-          directive = line[1..-1].strip.split(/\s+/, 2)
-          stacks.last << [:slim, :directive, directive[0].downcase, directive[1]]
         else
           if line =~ /^(\w+):\s*$/
             # Embedded template detected. It is treated as block.
@@ -234,7 +230,7 @@ module Slim
             block_indent = indent
             next
           elsif line =~ /^doctype\s+/i
-            stacks.last << [:slim, :directive, 'doctype', $'.strip]
+            stacks.last << [:html, :doctype, $'.strip]
           else
             # Found a HTML tag.
             tag, block, broken_line, text_indent = parse_tag(line, lineno)

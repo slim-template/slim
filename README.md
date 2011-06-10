@@ -118,10 +118,6 @@ Here's a quick example to demonstrate what a Slim template looks like:
 
 > Same as the double equal sign (`==`), except that it adds a trailing whitespace.
 
-#### `!`
-
-> This is a directive.  Most common example: `! doctype html # renders <!doctype html>`
-
 #### `/`
 
 > Use the forward slash for ruby code comments - anything after it won't get displayed in the final render.

@@ -25,7 +25,7 @@ html:body
 
   def test_doctype
     source = %q{
-! doctype 1.1
+doctype 1.1
 html
 }
 
@@ -48,15 +48,6 @@ html
 }
 
     assert_html '<!DOCTYPE html><html></html>', source, :format => :xhtml
-  end
-
-  def test_capitalized_doctype
-    source = %q{
-! DOCTYPE 5
-html
-}
-
-    assert_html '<!DOCTYPE html><html></html>', source
   end
 
   def test_render_with_shortcut_attributes

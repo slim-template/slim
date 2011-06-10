@@ -56,19 +56,6 @@ module Slim
       end
     end
 
-    # Handle directive expression `[:slim, :directive, type, args]`
-    #
-    # @param [String] type Directive type
-    # @return [Array] Compiled temple expression
-    def on_slim_directive(type, args)
-      case type
-      when 'doctype'
-        [:html, :doctype, args]
-      else
-        raise "Invalid directive #{type}"
-      end
-    end
-
     # Handle attribute expression `[:slim, :attr, escape, code]`
     #
     # @param [Boolean] escape Escape html
