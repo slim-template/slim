@@ -215,13 +215,11 @@ module Slim
         when ?=
           # Found an output block.
           # We expect the line to be broken or the next line to be indented.
+          line =~ /^=(=?)('?)/
+          broken_line = $'.strip
           block = [:multi]
-          escape = line[1] != ?=
-          whitespace = escape ? line[1] == ?' : line[2] == ?'
-          line_start = !escape && whitespace && 3 || escape && !whitespace && 1 || 2
-          broken_line = line[line_start..-1].strip
-          inner_block = [:slim, :output, escape, broken_line, block]
-          stacks.last << (whitespace ? [:multi, inner_block, [:static, ' ']] : inner_block)
+          stacks.last << [:slim, :output, $1.empty?, broken_line, block]
+          stacks.last << [:static, ' '] unless $2.empty?
           stacks << block
         when ?!
           # Found a directive (currently only used for doctypes)
