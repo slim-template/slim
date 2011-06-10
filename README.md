@@ -106,9 +106,17 @@ Here's a quick example to demonstrate what a Slim template looks like:
 
 > The equal sign tells Slim it's a Ruby call that produces output to add to the buffer (similar to Erb and Haml).
 
+#### `='`
+
+> Same as the single equal sign (`=`), except that it adds a trailing whitespace.
+
 #### `==`
 
-> Same as the single equal sign, but does not go through the `escape_html` method.
+> Same as the single equal sign (`=`), but does not go through the `escape_html` method.
+
+#### `=='`
+
+> Same as the double equal sign (`==`), except that it adds a trailing whitespace.
 
 #### `!`
 

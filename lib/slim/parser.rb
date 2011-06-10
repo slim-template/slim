@@ -217,8 +217,11 @@ module Slim
           # We expect the line to be broken or the next line to be indented.
           block = [:multi]
           escape = line[1] != ?=
-          broken_line = escape ? line[1..-1].strip : line[2..-1].strip
-          stacks.last << [:slim, :output, escape, broken_line, block]
+          whitespace = escape ? line[1] == ?' : line[2] == ?'
+          line_start = !escape && whitespace && 3 || escape && !whitespace && 1 || 2
+          broken_line = line[line_start..-1].strip
+          inner_block = [:slim, :output, escape, broken_line, block]
+          stacks.last << (whitespace ? [:multi, inner_block, [:static, ' ']] : inner_block)
           stacks << block
         when ?!
           # Found a directive (currently only used for doctypes)
