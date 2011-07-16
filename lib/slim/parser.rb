@@ -124,7 +124,9 @@ module Slim
 
               # The text block lines must be at least indented as deep as the first line.
               offset = indent - text_indent
-              syntax_error! 'Unexpected text indentation', line, lineno if offset < 0
+              if offset < 0
+                syntax_error!('Unexpected text indentation', line, lineno)
+              end
 
               # Generate the additional spaces in front.
               stacks.last << [:slim, :interpolate, newline + (' ' * offset) + line]
@@ -147,7 +149,9 @@ module Slim
         if indent > indents.last
           # This line was actually indented, so we'll have to check if it was
           # supposed to be indented or not.
-          syntax_error! 'Unexpected indentation', line, lineno unless expecting_indentation
+          unless expecting_indentation
+            syntax_error!('Unexpected indentation', line, lineno)
+          end
 
           indents << indent
         else
@@ -169,7 +173,9 @@ module Slim
           #   hello
           #       world
           #     this      # <- This should not be possible!
-          syntax_error! 'Malformed indentation', line, lineno if indents.last < indent
+          if indents.last < indent
+            syntax_error!('Malformed indentation', line, lineno)
+          end
         end
 
         case line[0]
@@ -374,8 +380,12 @@ module Slim
           value << line.slice!(0)
         elsif line =~ CLOSE_DELIMITER_REGEX
           # Closing delimiter found, pop it from the stack if everything is ok
-          syntax_error! "Unexpected closing #{$&}", orig_line, lineno if stack.empty?
-          syntax_error! "Expected closing #{stack.last}", orig_line, lineno if stack.last != $&
+          if stack.empty?
+            syntax_error!("Unexpected closing #{$&}", orig_line, lineno)
+          end
+          if stack.last != $&
+            syntax_error!("Expected closing #{stack.last}", orig_line, lineno)
+          end
           value << line.slice!(0)
           stack.pop
         else
@@ -383,8 +393,13 @@ module Slim
         end
       end
 
-      syntax_error! "Expected closing attribute delimiter #{stack.last}", orig_line, lineno unless stack.empty?
-      syntax_error! 'Invalid empty attribute', orig_line, lineno if value.empty?
+      unless stack.empty?
+        syntax_error!("Expected closing attribute delimiter #{stack.last}", orig_line, lineno)
+      end
+
+      if value.empty?
+        syntax_error!('Invalid empty attribute', orig_line, lineno)
+      end
 
       # Remove attribute wrapper which doesn't belong to the ruby code
       # e.g id=[hash[:a] + hash[:b]]
