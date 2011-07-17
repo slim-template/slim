@@ -39,9 +39,13 @@ p
 markdown:
   #Header
   Hello from #{"Markdown!"}
-  "Second Line!"
+  
+  Paragraph.
+  
+  * one
+  * two
 }
-    assert_html "<h1>Header</h1>\n\n<p>Hello from Markdown!\n\"Second Line!\"</p>\n", source
+    assert_html "<h1>Header</h1>\n\n<p>Hello from Markdown!</p>\n\n<p>Paragraph.</p>\n\n<ul>\n<li>one</li>\n<li>two</li>\n</ul>\n\n", source
   end
 
   def test_render_with_creole

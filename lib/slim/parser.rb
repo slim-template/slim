@@ -96,14 +96,6 @@ module Slim
           broken_line = nil
         end
 
-        if line.strip.empty?
-          # This happens to be an empty line, so we'll just have to make sure
-          # the generated code includes a newline (so the line numbers in the
-          # stack trace for an exception matches the ones in the template).
-          stacks.last << [:newline]
-          next
-        end
-
         # Figure out the indentation. Kinda ugly/slow way to support tabs,
         # but remember that this is only done at parsing time.
         indent = line[/^[ \t]*/].gsub("\t", @tab).size
@@ -140,6 +132,14 @@ module Slim
           # the indent was less than the block start indent.
           block_indent = text_indent = nil
           in_comment = false
+        end
+
+        if line.strip.empty?
+          # This happens to be an empty line, so we'll just have to make sure
+          # the generated code includes a newline (so the line numbers in the
+          # stack trace for an exception matches the ones in the template).
+          stacks.last << [:newline]
+          next
         end
 
         # If there's more stacks than indents, it means that the previous
