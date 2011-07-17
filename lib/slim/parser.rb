@@ -4,6 +4,8 @@ module Slim
   class Parser
     include Temple::Mixins::Options
 
+    ATTR_REGEX = /^\s*(\w[:\w-]*)=/
+
     set_default_options :tabsize  => 4,
                         :encoding => 'utf-8'
 
@@ -265,7 +267,6 @@ module Slim
 
     private
 
-    ATTR_REGEX = /^\s+(\w[:\w-]*)=/
     QUOTED_VALUE_REGEX = /^("[^"]*"|'[^']*')/
     ATTR_SHORTHAND = {
       '#' => 'id',
@@ -284,6 +285,33 @@ module Slim
         line = orig_line
       end
 
+      line, attributes = parse_attributes(orig_line, line, lineno)
+
+      content = [:multi]
+      tag = [:html, :tag, tag, attributes, content]
+
+      case line
+      when /^\s*=(=?)/
+        # Handle output code
+        block = [:multi]
+        broken_line = $'.strip
+        content << [:slim, :output, $1 != '=', broken_line, block]
+        [tag, block, broken_line, nil]
+      when /^\s*\//
+        # Closed tag
+        tag.pop
+        [tag, block, nil, nil]
+      when /^\s*$/
+        # Empty line
+        [tag, content, nil, nil]
+      else
+        # Handle text content
+        content << [:slim, :interpolate, line.sub(/^( )/, '')]
+        [tag, content, nil, orig_line.size - line.size + ($1 ? 1 : 0)]
+      end
+    end
+
+    def parse_attributes(orig_line, line, lineno)
       # Now we'll have to find all the attributes. We'll store these in an
       # nested array: [[name, value], [name2, value2]]. The value is a piece
       # of Ruby code.
@@ -330,28 +358,7 @@ module Slim
         end
       end
 
-      content = [:multi]
-      tag = [:html, :tag, tag, attributes, content]
-
-      case line
-      when /^\s*=(=?)/
-        # Handle output code
-        block = [:multi]
-        broken_line = $'.strip
-        content << [:slim, :output, $1 != '=', broken_line, block]
-        [tag, block, broken_line, nil]
-      when /^\s*\//
-        # Closed tag
-        tag.pop
-        [tag, block, nil, nil]
-      when /^\s*$/
-        # Empty line
-        [tag, content, nil, nil]
-      else
-        # Handle text content
-        content << [:slim, :interpolate, line.sub(/^( )/, '')]
-        [tag, content, nil, orig_line.size - line.size + ($1 ? 1 : 0)]
-      end
+      return line, attributes
     end
 
     def parse_ruby_attribute(orig_line, line, lineno, delimiter)
