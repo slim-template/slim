@@ -178,27 +178,27 @@ module Slim
           end
         end
 
-        case line[0]
-        when ?/
+        case line
+        when /^\//
           # Found a comment block.
           block = [:multi]
-          stacks.last << if line =~ %r{^/!( ?)(.*)$}
-                           # HTML comment
-                           block_indent = indent
-                           text_indent = block_indent + ($1 ? 2 : 1)
-                           block << [:slim, :interpolate, $2] if $2
-                           [:html, :comment, block]
-                         elsif line =~ %r{^/\[\s*(.*?)\s*\]\s*$}
-                           # HTML conditional comment
-                           [:slim, :condcomment, $1, block]
-                         else
-                           # Slim comment
-                           block_indent = indent
-                           in_comment = true
-                           block
-                         end
+          stacks.last <<  if line =~ %r{^/!( ?)(.*)$}
+                            # HTML comment
+                            block_indent = indent
+                            text_indent = block_indent + ($1 ? 2 : 1)
+                            block << [:slim, :interpolate, $2] if $2
+                            [:html, :comment, block]
+                          elsif line =~ %r{^/\[\s*(.*?)\s*\]\s*$}
+                            # HTML conditional comment
+                            [:slim, :condcomment, $1, block]
+                          else
+                            # Slim comment
+                            block_indent = indent
+                            in_comment = true
+                            block
+                          end
           stacks << block
-        when ?|, ?'
+        when /^\|/, /^'/
           # Found a text block.
           # We're now expecting the next line to be indented, so we'll need
           # to push a block to the stack.
@@ -211,14 +211,14 @@ module Slim
             block << [:slim, :interpolate, line.sub(/^( )/, '')]
             text_indent = block_indent + ($1 ? 2 : 1)
           end
-        when ?-
+        when /^-/
           # Found a code block.
           # We expect the line to be broken or the next line to be indented.
           block = [:multi]
           broken_line = line[1..-1].strip
           stacks.last << [:slim, :control, broken_line, block]
           stacks << block
-        when ?=
+        when /^=/
           # Found an output block.
           # We expect the line to be broken or the next line to be indented.
           line =~ /^=(=?)('?)/
@@ -227,26 +227,27 @@ module Slim
           stacks.last << [:slim, :output, $1.empty?, broken_line, block]
           stacks.last << [:static, ' '] unless $2.empty?
           stacks << block
-        else
-          if line =~ /^(\w+):\s*$/
-            # Embedded template detected. It is treated as block.
-            block = [:multi]
-            stacks.last << [:newline] << [:slim, :embedded, $1, block]
-            stacks << block
+        when /^(\w+):\s*$/
+          # Embedded template detected. It is treated as block.
+          block = [:multi]
+          stacks.last << [:newline] << [:slim, :embedded, $1, block]
+          stacks << block
+          block_indent = indent
+          next
+        when /^doctype\s+/i
+          # Found doctype declaration
+          stacks.last << [:html, :doctype, $'.strip]
+        when /^[#\.]/, /^\w[:\w-]*/
+          # Found a HTML tag.
+          tag, block, broken_line, text_indent = parse_tag($&, $', line, lineno)
+          stacks.last << tag
+          stacks << block if block
+          if text_indent
             block_indent = indent
-            next
-          elsif line =~ /^doctype\s+/i
-            stacks.last << [:html, :doctype, $'.strip]
-          else
-            # Found a HTML tag.
-            tag, block, broken_line, text_indent = parse_tag(line, lineno)
-            stacks.last << tag
-            stacks << block if block
-            if text_indent
-              block_indent = indent
-              text_indent += indent
-            end
+            text_indent += indent
           end
+        else
+          syntax_error! 'Unknown line indicator', line, lineno
         end
         stacks.last << [:newline]
       end
@@ -277,17 +278,10 @@ module Slim
       CLASS_ID_REGEX = /^(#|\.)(\w[\w:-]*)/
     end
 
-    def parse_tag(line, lineno)
-      orig_line = line
-
-      case line
-      when /^[#\.]/
+    def parse_tag(tag, line, orig_line, lineno)
+      if tag == ?# || tag == ?.
         tag = 'div'
-      when /^\w[:\w-]*/
-        tag = $&
-        line = $'
-      else
-        syntax_error! 'Unknown line indicator', orig_line, lineno
+        line = orig_line
       end
 
       # Now we'll have to find all the attributes. We'll store these in an
@@ -339,17 +333,18 @@ module Slim
       content = [:multi]
       tag = [:html, :tag, tag, attributes, content]
 
-      if line =~ /^\s*=(=?)/
+      case line
+      when /^\s*=(=?)/
         # Handle output code
         block = [:multi]
         broken_line = $'.strip
         content << [:slim, :output, $1 != '=', broken_line, block]
         [tag, block, broken_line, nil]
-      elsif line =~ /^\s*\//
+      when /^\s*\//
         # Closed tag
         tag.pop
         [tag, block, nil, nil]
-      elsif line =~ /^\s*$/
+      when /^\s*$/
         # Empty line
         [tag, content, nil, nil]
       else
