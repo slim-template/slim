@@ -23,7 +23,7 @@ module Slim
         when /\A#\{/
           # Interpolation
           string, code = parse_expression($')
-          escape = code !~ /^\{.*\}$/
+          escape = code !~ /\A\{.*\}\Z/
           block << [:slim, :output, escape, escape ? code : code[1..-2], [:multi]]
         when /\A([^#]+|#)/
           # Static text
@@ -40,7 +40,7 @@ module Slim
       stack, code = [], ''
 
       until string.empty?
-        if stack.empty? && string =~ /^\}/
+        if stack.empty? && string =~ /\A\}/
           # Stack is empty, this means we are finished
           # if the next character is a closing bracket
           string.slice!(0)

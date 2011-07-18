@@ -29,7 +29,7 @@ module Slim
 
     # Interpret control blocks as sections or inverted sections
     def on_slim_control(name, content)
-      if name =~ /^!\s*(.*)/
+      if name =~ /\A!\s*(.*)/
         on_slim_inverted_section($1, content)
       else
         on_slim_section(name, content)

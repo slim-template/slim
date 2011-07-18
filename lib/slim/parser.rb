@@ -4,7 +4,7 @@ module Slim
   class Parser
     include Temple::Mixins::Options
 
-    ATTR_REGEX = /^\s*(\w[:\w-]*)=/
+    ATTR_REGEX = /\A\s*(\w[:\w-]*)=/
 
     set_default_options :tabsize  => 4,
                         :encoding => 'utf-8'
@@ -100,7 +100,7 @@ module Slim
 
         # Figure out the indentation. Kinda ugly/slow way to support tabs,
         # but remember that this is only done at parsing time.
-        indent = line[/^[ \t]*/].gsub("\t", @tab).size
+        indent = line[/\A[ \t]*/].gsub("\t", @tab).size
 
         # Remove the indentation
         line.lstrip!
@@ -181,16 +181,16 @@ module Slim
         end
 
         case line
-        when /^\//
+        when /\A\//
           # Found a comment block.
           block = [:multi]
-          stacks.last <<  if line =~ %r{^/!( ?)(.*)$}
+          stacks.last <<  if line =~ %r{\A/!( ?)(.*)\Z}
                             # HTML comment
                             block_indent = indent
                             text_indent = block_indent + ($1 ? 2 : 1)
                             block << [:slim, :interpolate, $2] if $2
                             [:html, :comment, block]
-                          elsif line =~ %r{^/\[\s*(.*?)\s*\]\s*$}
+                          elsif line =~ %r{\A/\[\s*(.*?)\s*\]\s*\Z}
                             # HTML conditional comment
                             [:slim, :condcomment, $1, block]
                           else
@@ -200,7 +200,7 @@ module Slim
                             block
                           end
           stacks << block
-        when /^\|/, /^'/
+        when /\A\|/, /\A'/
           # Found a text block.
           # We're now expecting the next line to be indented, so we'll need
           # to push a block to the stack.
@@ -210,36 +210,36 @@ module Slim
                           [:multi, block, [:static, ' ']] : block)
           stacks << block
           unless line.strip.empty?
-            block << [:slim, :interpolate, line.sub(/^( )/, '')]
+            block << [:slim, :interpolate, line.sub(/\A( )/, '')]
             text_indent = block_indent + ($1 ? 2 : 1)
           end
-        when /^-/
+        when /\A-/
           # Found a code block.
           # We expect the line to be broken or the next line to be indented.
           block = [:multi]
           broken_line = line[1..-1].strip
           stacks.last << [:slim, :control, broken_line, block]
           stacks << block
-        when /^=/
+        when /\A=/
           # Found an output block.
           # We expect the line to be broken or the next line to be indented.
-          line =~ /^=(=?)('?)/
+          line =~ /\A=(=?)('?)/
           broken_line = $'.strip
           block = [:multi]
           stacks.last << [:slim, :output, $1.empty?, broken_line, block]
           stacks.last << [:static, ' '] unless $2.empty?
           stacks << block
-        when /^(\w+):\s*$/
+        when /\A(\w+):\s*\Z/
           # Embedded template detected. It is treated as block.
           block = [:multi]
           stacks.last << [:newline] << [:slim, :embedded, $1, block]
           stacks << block
           block_indent = indent
           next
-        when /^doctype\s+/i
+        when /\Adoctype\s+/i
           # Found doctype declaration
           stacks.last << [:html, :doctype, $'.strip]
-        when /^[#\.]/, /^\w[:\w-]*/
+        when /\A[#\.]/, /\A\w[:\w-]*/
           # Found a HTML tag.
           tag, block, broken_line, text_indent = parse_tag($&, $', line, lineno)
           stacks.last << tag
@@ -262,21 +262,21 @@ module Slim
       '[' => ']',
       '{' => '}',
     }.freeze
-    DELIMITER_REGEX = /^[\(\[\{]/
-    CLOSE_DELIMITER_REGEX = /^[\)\]\}]/
+    DELIMITER_REGEX = /\A[\(\[\{]/
+    CLOSE_DELIMITER_REGEX = /\A[\)\]\}]/
 
     private
 
-    QUOTED_VALUE_REGEX = /^("[^"]*"|'[^']*')/
+    QUOTED_VALUE_REGEX = /\A("[^"]*"|'[^']*')/
     ATTR_SHORTHAND = {
       '#' => 'id',
       '.' => 'class',
     }.freeze
 
     if RUBY_VERSION > '1.9'
-      CLASS_ID_REGEX = /^(#|\.)([\w\u00c0-\uFFFF][\w:\u00c0-\uFFFF-]*)/
+      CLASS_ID_REGEX = /\A(#|\.)([\w\u00c0-\uFFFF][\w:\u00c0-\uFFFF-]*)/
     else
-      CLASS_ID_REGEX = /^(#|\.)(\w[\w:-]*)/
+      CLASS_ID_REGEX = /\A(#|\.)(\w[\w:-]*)/
     end
 
     def parse_tag(tag, line, orig_line, lineno)
@@ -291,22 +291,22 @@ module Slim
       tag = [:html, :tag, tag, attributes, content]
 
       case line
-      when /^\s*=(=?)/
+      when /\A\s*=(=?)/
         # Handle output code
         block = [:multi]
         broken_line = $'.strip
         content << [:slim, :output, $1 != '=', broken_line, block]
         [tag, block, broken_line, nil]
-      when /^\s*\//
+      when /\A\s*\//
         # Closed tag
         tag.pop
         [tag, block, nil, nil]
-      when /^\s*$/
+      when /\A\s*\Z/
         # Empty line
         [tag, content, nil, nil]
       else
         # Handle text content
-        content << [:slim, :interpolate, line.sub(/^( )/, '')]
+        content << [:slim, :interpolate, line.sub(/\A( )/, '')]
         [tag, content, nil, orig_line.size - line.size + ($1 ? 1 : 0)]
       end
     end
@@ -351,7 +351,7 @@ module Slim
 
       # Find ending delimiter
       unless delimiter.empty?
-        if line =~ /^\s*#{Regexp.escape delimiter}/
+        if line =~ /\A\s*#{Regexp.escape delimiter}/
           line = $'
         else
           syntax_error! "Expected closing delimiter #{delimiter}", orig_line, lineno, orig_line.size - line.size
@@ -369,7 +369,7 @@ module Slim
       value = ''
 
       # Attribute ends with space or attribute delimiter
-      end_regex = /^[\s#{Regexp.escape delimiter}]/
+      end_regex = /\A[\s#{Regexp.escape delimiter}]/
 
       until line.empty?
         if stack.empty? && line =~ end_regex
