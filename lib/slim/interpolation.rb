@@ -16,7 +16,9 @@ module Slim
         case string
         when /^\\#\{/
           # Escaped interpolation
-          block << [:static, '#{']
+          # HACK: Use :slim :output because this is used by InterpolateTiltEngine
+          # to filter out protected strings (Issue #141).
+          block << [:slim, :output, false, '\'#{\'', [:multi]]
           string = $'
         when /^#\{/
           # Interpolation

@@ -1,4 +1,30 @@
 module Slim
+  class CollectText < Filter
+    def call(exp)
+      @collected = ''
+      super(exp)
+      @collected
+    end
+
+    def on_slim_interpolate(text)
+      @collected << text
+      nil
+    end
+  end
+
+  class CollectNewlines < Filter
+    def call(exp)
+      @collected = [:multi]
+      super(exp)
+      @collected
+    end
+
+    def on_newline
+      @collected << [:newline]
+      nil
+    end
+  end
+
   # Temple filter which processes embedded engines
   # @api private
   class EmbeddedEngine < Filter
@@ -34,23 +60,11 @@ module Slim
       engine.new(Temple::ImmutableHash.new(local_options, filtered_options))
     end
 
-    def collect_text(body)
-      body[1..-1].inject('') do |text, exp|
-        exp[0] == :slim && exp[1] == :interpolate ? (text << exp[2]) : text
-      end
-    end
-
-    def collect_newlines(body)
-      body[1..-1].inject([:multi]) do |multi, exp|
-        exp[0] == :newline ? (multi << exp) : multi
-      end
-    end
-
     # Basic tilt engine
-    class TiltEngine < EmbeddedEngine
+    class TiltEngine < Filter
       def on_slim_embedded(engine, body)
         engine = Tilt[engine] || raise("Tilt engine #{engine} is not available.")
-        [:multi, render(engine, collect_text(body)), collect_newlines(body)]
+        [:multi, render(engine, CollectText.new.call(body)), CollectNewlines.new.call(body)]
       end
     end
 
@@ -64,7 +78,7 @@ module Slim
     end
 
     # Sass engine which supports :pretty option
-    class SassEngine < StaticTiltEngine
+    class SassEngine < TiltEngine
       protected
 
       def render(engine, text)
@@ -75,7 +89,7 @@ module Slim
     end
 
     # Tilt-based engine which is fully dynamically evaluated during runtime (Slow and uncached)
-    class DynamicTiltEngine < StaticTiltEngine
+    class DynamicTiltEngine < TiltEngine
       protected
 
       # Code to collect local variables
@@ -87,7 +101,7 @@ module Slim
     end
 
     # Tilt-based engine which is precompiled
-    class PrecompiledTiltEngine < StaticTiltEngine
+    class PrecompiledTiltEngine < TiltEngine
       protected
 
       def render(engine, text)
@@ -97,7 +111,7 @@ module Slim
     end
 
     # Static template with interpolated ruby code
-    class InterpolateTiltEngine < StaticTiltEngine
+    class InterpolateTiltEngine < TiltEngine
       protected
 
       def render(engine, text)
@@ -106,15 +120,15 @@ module Slim
     end
 
     # ERB engine (uses the Temple ERB implementation)
-    class ERBEngine < EmbeddedEngine
+    class ERBEngine < Filter
       def on_slim_embedded(engine, body)
-        Temple::ERB::Parser.new.call(collect_text(body))
+        Temple::ERB::Parser.new.call(CollectText.new.call(body))
       end
     end
 
     # Tag wrapper engine
     # Generates a html tag and wraps another engine (specified via :engine option)
-    class TagEngine < EmbeddedEngine
+    class TagEngine < Filter
       def on_slim_embedded(engine, body)
         content = options[:engine] ? options[:engine].new(options).on_slim_embedded(engine, body) : [:multi, body]
         [:html, :tag, options[:tag], [:html, :attrs, *options[:attributes].map {|k, v| [:html, :attr, k, [:static, v]] }], content]
@@ -122,9 +136,9 @@ module Slim
     end
 
     # Embeds ruby code
-    class RubyEngine < EmbeddedEngine
+    class RubyEngine < Filter
       def on_slim_embedded(engine, body)
-        [:code, "\n" + collect_text(body)]
+        [:code, "\n" + CollectText.new.call(body)]
       end
     end
 
