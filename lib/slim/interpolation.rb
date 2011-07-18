@@ -14,18 +14,18 @@ module Slim
       block = [:multi]
       until string.empty?
         case string
-        when /^\\#\{/
+        when /\A\\#\{/
           # Escaped interpolation
           # HACK: Use :slim :output because this is used by InterpolateTiltEngine
           # to filter out protected strings (Issue #141).
           block << [:slim, :output, false, '\'#{\'', [:multi]]
           string = $'
-        when /^#\{/
+        when /\A#\{/
           # Interpolation
           string, code = parse_expression($')
           escape = code !~ /^\{.*\}$/
           block << [:slim, :output, escape, escape ? code : code[1..-2], [:multi]]
-        when /^([^#]+|#)/
+        when /\A([^#]+|#)/
           # Static text
           block << [:static, $&]
           string = $'

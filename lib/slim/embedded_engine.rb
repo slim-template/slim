@@ -25,6 +25,36 @@ module Slim
     end
   end
 
+  class ProtectOutput < Filter
+    def call(exp)
+      @protect = []
+      @collected = ''
+      super(exp)
+      @collected
+    end
+
+    def on_static(text)
+      @collected << text
+      nil
+    end
+
+    def on_slim_output(escape, text, content)
+      @collected << "pro#{@protect.size}tect"
+      @protect << [:slim, :output, escape, text, content]
+      nil
+    end
+
+    def unprotect(text)
+      block = [:multi]
+      while text =~ /pro(\d+)tect/
+        block << [:static, $`]
+        block << @protect[$1.to_i]
+        text = $'
+      end
+      block << [:static, text]
+    end
+  end
+
   # Temple filter which processes embedded engines
   # @api private
   class EmbeddedEngine < Filter
@@ -64,7 +94,13 @@ module Slim
     class TiltEngine < Filter
       def on_slim_embedded(engine, body)
         engine = Tilt[engine] || raise("Tilt engine #{engine} is not available.")
-        [:multi, render(engine, CollectText.new.call(body)), CollectNewlines.new.call(body)]
+        [:multi, render(engine, collect_text(body)), CollectNewlines.new.call(body)]
+      end
+
+      protected
+
+      def collect_text(body)
+        CollectText.new.call(body)
       end
     end
 
@@ -112,10 +148,18 @@ module Slim
 
     # Static template with interpolated ruby code
     class InterpolateTiltEngine < TiltEngine
-      protected
+      def initialize(opts = {})
+        super
+        @protect = ProtectOutput.new
+      end
+
+      def collect_text(body)
+        text = Interpolation.new.call(body)
+        @protect.call(text)
+      end
 
       def render(engine, text)
-        [:slim, :interpolate, engine.new { text }.render]
+        @protect.unprotect(engine.new { text }.render)
       end
     end
 
