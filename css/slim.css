@@ -10,16 +10,10 @@ body {
   font-family: 'Lato', Helvetica, Arial, "FreeSans";
   color: #323232;
   display:block;
-  min-width:960px;
   position:relative;
 }
-#side,#main {
-  top:0;
-}
 #side{
-  left:0;
   text-align:center;
-  position:absolute;
   width:390px;
 }
 #side ul {
@@ -68,10 +62,8 @@ a.github span {color:#999;padding:0px 3px}
   margin-top:0;
 }
 #main{
-  position:absolute;
-  left:390px;
   color:#bbb;
-  right:0;
+  background: #545454;
 }
 #main strong {color:#fff;font-weight:normal;}
 #main a {color:#fa0;text-decoration:none;}
@@ -81,13 +73,7 @@ a.github span {color:#999;padding:0px 3px}
   height:100%;
 }
 #forkme {
-  position:absolute;
-  top:0;
-  right:0;
-  background: url(../img/fork.png) no-repeat top right;
-  width:200px;
-  height:200px;
-   text-indent:-9999px;
+  display: none;
 }
 #header div.small{
   text-align: left;
@@ -283,3 +269,32 @@ p.foot.up {
 #main .mixed-pad h3, #main .mixed-pad h4, #main .mixed-pad p {padding-right:80px;}
 h4.note {padding:20px 30px 20px 70px;background:#b30 url(../img/warning.png) no-repeat 30px center;font-weight:bold;}
 a {outline:none}
+
+@media only screen and (min-width: 480px) {
+  body {
+    min-width:960px;
+  }
+  #side,#main {
+    top:0;
+  }
+  #side {
+    left:0;
+    position:absolute;
+  }
+  #main {
+    position:absolute;
+    left:390px;
+    right:0;
+  }
+  #forkme {
+    position:absolute;
+    top:0;
+    right:0;
+    background: url(../img/fork.png) no-repeat top right;
+    width:200px;
+    height:200px;
+    text-indent:-9999px;
+    display: block;
+  }
+}
+
