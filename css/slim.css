@@ -275,12 +275,6 @@ p.foot {
 #main .about {padding:80px 80px 0 0}
 #main p.first {padding-right:150px}
 #main pre code .comment strong {color:#FDFFA9;}
-#main *::selection {background: #999; /* Safari */}
-#main *::-moz-selection {background: #999; /* Firefox */}
-#main pre code::selection {background: #666; /* Safari */}
-#main pre code::-moz-selection {background: #666; /* Firefox */}
-#main pre code span::selection {background: #666; /* Safari */}
-#main pre code span::-moz-selection {background: #666; /* Firefox */}
 #main .wrap.pad {padding-top:40px;}
 #main .wrap.padder {padding-top:80px;}
 #main .mixed-pad h3, #main .mixed-pad h4, #main .mixed-pad p {padding-right:80px;}
