@@ -1,4 +1,4 @@
-@import url("http://fonts.googleapis.com/css?family=Lato:300,700&v2");
+@import url("http://fonts.googleapis.com/css?family=Lato:400,900&v2");
 
 body, ul, li, div, span, p, strong {
   margin:0;
@@ -69,7 +69,7 @@ a.github span {color:#999;padding:0px 3px}
   position:absolute;
   right:0;
   left:390px;
-  color:#fff;
+  color:#bbb;
 }
 #main strong {color:#fff;font-weight:normal;}
 #main a {color:#fa0;text-decoration:none;}
@@ -115,7 +115,7 @@ h3,h4  {color:#fff;}
 h4 {margin:0;padding:18px 0 5px 30px;font-weight:normal;font-size:20px;}
 hr { border: 0; width: 100%; border-bottom: 1px solid #676767; padding: 10px 0;}
 hr.first {margin:0;}
-p {margin:12px 0;font-size:18px;}
+p {margin:12px 0;font-size:16px;}
 p.note{ text-align: center; font-size: 12px; font-weight: bold; }
 
 p.big_note{ text-align: center; font-size: 18px; font-weight: bold; }
