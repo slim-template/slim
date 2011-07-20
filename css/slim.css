@@ -74,7 +74,7 @@ a.github span {color:#999;padding:0px 3px}
 #main strong {color:#fff;font-weight:normal;}
 #main a {color:#fa0;text-decoration:none;}
 #main a:hover {color:#fff;text-decoration:underline;}
-#main.home .wrap{padding-top:10px; background:#2b2b2b;}
+#main.home .wrap{padding-top:10px;}
 #main .wrap {
   height:100%;
 }
