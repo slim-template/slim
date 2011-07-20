@@ -8,7 +8,7 @@ body {
   background:#545454 url(../img/body.png) repeat-y 0 0;
   font-family: 'Lato', Helvetica, Arial, "FreeSans";
   color: #323232;
-  width:960px;
+  min-width:960px;
   display:block;
 }
 #side,#main {
@@ -67,7 +67,6 @@ a.github span {color:#999;padding:0px 3px}
 }
 #main{
   position:absolute;
-  right:0;
   left:390px;
   color:#bbb;
 }
