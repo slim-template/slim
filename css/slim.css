@@ -123,8 +123,6 @@ p.note{ text-align: center; font-size: 12px; font-weight: bold; }
 p.big_note{ text-align: center; font-size: 18px; font-weight: bold; }
 
 .clear{ clear: both; }
-
-.footer { text-align:center; padding-top:30px; font-style: italic; }
 /*
 
 CODE
@@ -271,6 +269,9 @@ p.foot {
   margin-top:40px;
   font-style:italic;
   color:#777;
+}
+p.foot.up {
+  margin-top:0;
 }
 #main p.foot a {color:#999;font-weight:normal;}
 #main p.foot a:hover {color:#fff;}
