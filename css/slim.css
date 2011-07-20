@@ -69,7 +69,7 @@ a.github span {color:#999;padding:0px 3px}
   position:absolute;
   right:0;
   left:390px;
-  color:#bbb;
+  color:#ccc;
 }
 #main strong {color:#fff;font-weight:normal;}
 #main a {color:#fa0;text-decoration:none;}
@@ -110,7 +110,7 @@ h1 a { text-decoration: none }
 a { color: #333; }
 h3 {font-size:30px;margin:12px 0 4px;font-weight:normal;}
 h3.first {margin-top:0px;padding-top:20px;}
-p,h3,h4 {text-shadow:1px 1px 1px #000}
+p,h3,h4 {text-shadow:0px 1px 0px black}
 h3,h4  {color:#fff;}
 h4 {margin:0;padding:18px 0 5px 30px;font-weight:normal;font-size:20px;}
 hr { border: 0; width: 100%; border-bottom: 1px solid #676767; padding: 10px 0;}
