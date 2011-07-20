@@ -3,13 +3,15 @@
 body, ul, li, div, span, p, strong {
   margin:0;
   padding:0;
+  position:relative;
 }
 body {
   background:#545454 url(../img/body.png) repeat-y 0 0;
   font-family: 'Lato', Helvetica, Arial, "FreeSans";
   color: #323232;
-  min-width:960px;
   display:block;
+  min-width:960px;
+  position:relative;
 }
 #side,#main {
   top:0;
@@ -17,7 +19,7 @@ body {
 #side{
   left:0;
   text-align:center;
-  position:fixed;
+  position:absolute;
   width:390px;
 }
 #side ul {
@@ -69,6 +71,7 @@ a.github span {color:#999;padding:0px 3px}
   position:absolute;
   left:390px;
   color:#bbb;
+  right:0;
 }
 #main strong {color:#fff;font-weight:normal;}
 #main a {color:#fa0;text-decoration:none;}

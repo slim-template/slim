@@ -26,47 +26,46 @@
     </div>
     <div id="main" class="home">
       <div class="wrap">
-        <a id="forkme" href="http://github.com/stonean/slim">Fork me on Github</a>
-        <div class="ruby">
-          <pre>
-            <code>
+        <pre>
+          <code>
 <span class='tag'>doctype</span> html
 <span class='tag'>html</span>
-  <span class='tag'>head</span>
-    <span class='tag'>title</span> Slim Core Example
-    <span class='tag'>meta</span> name=<span class='string'>"keywords"</span> content=<span class='string'>"template language"</span>
+<span class='tag'>head</span>
+  <span class='tag'>title</span> Slim Core Example
+  <span class='tag'>meta</span> name=<span class='string'>"keywords"</span> content=<span class='string'>"template language"</span>
 
-  <span class='tag'>body</span>
-    <span class='tag'>h1</span> Markup examples
+<span class='tag'>body</span>
+  <span class='tag'>h1</span> Markup examples
 
-    <span class='tag'>div</span> id=<span class='string'>"content"</span> class=<span class='string'>"example1"</span>
-      <span class='tag'>p</span> Nest by indentation
+  <span class='tag'>div</span> id=<span class='string'>"content"</span> class=<span class='string'>"example1"</span>
+    <span class='tag'>p</span> Nest by indentation
 
-      == <span class='keyword'>yield</span>
+    == <span class='keyword'>yield</span>
 
-      - <span class='keyword'>unless</span> items.empty?
-        <span class='tag'>table</span>
-          - <span class='keyword'>for</span> item <span class='keyword'>in</span> items <span class='keyword'>do</span>
-            <span class='tag'>tr</span>
-              <span class='tag'>td</span> = item.name
-              <span class='tag'>td</span> = item.price
-      - <span class='keyword'>else</span>
-        <span class='tag'>p</span>
-         | No items found.  Please add some inventory.
-            Thank you!
+    - <span class='keyword'>unless</span> items.empty?
+      <span class='tag'>table</span>
+        - <span class='keyword'>for</span> item <span class='keyword'>in</span> items <span class='keyword'>do</span>
+          <span class='tag'>tr</span>
+            <span class='tag'>td</span> = item.name
+            <span class='tag'>td</span> = item.price
+    - <span class='keyword'>else</span>
+      <span class='tag'>p</span>
+       | No items found.  Please add some inventory.
+          Thank you!
 
-    <span class='tag'>div</span> id=<span class='string'>"footer"</span>
-      | Copyright &copy; 2010 Andrew Stone
+  <span class='tag'>div</span> id=<span class='string'>"footer"</span>
+    | Copyright &copy; 2010 Andrew Stone
 
-    = <span class='keyword'>render</span> <span class='string'>'tracking_code'</span>
+  = <span class='keyword'>render</span> <span class='string'>'tracking_code'</span>
 
-    <span class='filter'>javascript:</span>
-      $(content).do_something();
-            </pre>
-          </code>
-        </div>
+  <span class='filter'>javascript:</span>
+    $(content).do_something();
+          </pre>
+        </code>
       </div>
     </div>
+
+    <a id="forkme" href="http://github.com/stonean/slim">Fork me on Github</a>
     <script type="text/javascript">
       var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
       document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
