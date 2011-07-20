@@ -1,68 +1,121 @@
-@import url("http://fonts.googleapis.com/css?family=Cantarell&subset=latin");
+@import url("http://fonts.googleapis.com/css?family=Lato:300,700&v2");
 
+body, ul, li, div, span, p, strong {
+  margin:0;
+  padding:0;
+}
 body {
-  margin-top: 1.0em;
-  font-family: 'Cantarell', Helvetica, Arial, "FreeSans";
+  background:#545454 url(../img/body.png) repeat-y 0 0;
+  font-family: 'Lato', Helvetica, Arial, "FreeSans";
   color: #323232;
+  width:960px;
+  display:block;
 }
-
-#header{
-  margin: 0 auto;
-  width: 700px;
-  display: block;
-  text-align: center;
+#side,#main {
+  top:0;
 }
-
+#side{
+  left:0;
+  text-align:center;
+  position:fixed;
+  width:390px;
+}
+#side ul {
+  list-style-type:none;
+  margin:0;
+  padding:7px 20% 54px;
+  background:url(../img/arrow.png) no-repeat center top;
+}
+#side ul li {
+  display:block;
+  margin:0;
+}
+#side ul li a {
+  color: #000;
+  display:inline;
+  font-size: 20px;
+  text-decoration:none;
+  text-shadow:0px 1px 0px #fc9;
+  padding:4px 0px;
+  line-height:33px;
+}
+#side ul li a:hover {font-weight:bold;}
+#side ul li a.active {
+  color: #fff;
+  text-shadow:1px 1px 1px #000;
+  font-weight: bold;
+}
+h2#slogan {
+  font-size: 16px;
+  font-weight:normal;
+  margin-top:-34px;
+}
+a.github {
+  background:url(../img/public.png) no-repeat left center;
+  font-size:24px;
+  font-family: Arial;
+  color:#f87;
+  text-decoration:none;
+  padding-left:20px;
+}
+a.github:hover {color:#f50;}
+a.github:hover span {color:#444;}
+a.github span {color:#999;padding:0px 3px}
+#side p {
+  text-shadow:none;
+  margin-top:0;
+}
+#main{
+  position:absolute;
+  right:0;
+  left:390px;
+  color:#bababa;
+}
+#main strong {color:#fff;font-weight:normal;}
+#main a {color:#fa0;text-decoration:none;}
+#main a:hover {color:#fff;text-decoration:underline;}
+#main.home .wrap{padding-top:10px; background:#2b2b2b;}
+#main .wrap {
+  height:100%;
+}
+#forkme {
+  position:absolute;
+  top:0;
+  right:0;
+  background: url(../img/fork.png) no-repeat top right;
+  width:200px;
+  height:200px;
+   text-indent:-9999px;
+}
 #header div.small{
   text-align: left;
 }
-
-ol#links{
-  width: 700px;
-  text-align: center;
-  margin: 0 auto;
-  padding: 0;
+p,h3,h4 {
+  padding: 0 30px;
 }
 
-ol#links li{
-  display: inline;
-  padding: 4px;
-  font-size: 22px;
+h1 {
+  background:url(../img/slim-logo.png) no-repeat center center;
+  width:100%;
+  height:398px;
+  text-indent:-9999px;
+  margin:0;
 }
-
-ol#links li.first:after{ content: ":"; }
-ol#links li:after{ content: " | "; }
-ol#links li.last:after{ content: ""; }
-
-ol#links li a{
-  text-decoration: none;
-  color: #323232;
-}
-
-#container {
-  margin: 0 auto;
-  width: 650px;
-}
-
-h1, h2, h3 {color: #333; border-bottom: 1pt solid #333; margin: 1em 0; }
 
 h1 .small { font-size: 0.4em; }
 
 h1 a { text-decoration: none }
 
+
 a { color: #333; }
-
-pre {
-  background: #000;
-  color: #fff;
-  padding: 15px;
-  border-radius: 5px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-}
-
-hr { border: 0; width: 80%; border-bottom: 1px solid #aaa; padding: 10px 0;}
-
+h3 {font-size:30px;margin:12px 0 4px;font-weight:normal;}
+h3.first {margin-top:0px;padding-top:20px;}
+p,h3,h4 {text-shadow:1px 1px 1px #000}
+h3,h4  {color:#ddd;}
+h4 {margin:0;padding:18px 0 5px 30px;font-weight:normal;font-size:20px;}
+hr { border: 0; width: 100%; border-bottom: 1px solid #676767; padding: 10px 0;}
+hr.first {margin:0;}
+p {margin:12px 0;font-size:18px;}
 p.note{ text-align: center; font-size: 12px; font-weight: bold; }
 
 p.big_note{ text-align: center; font-size: 18px; font-weight: bold; }
@@ -70,3 +123,166 @@ p.big_note{ text-align: center; font-size: 18px; font-weight: bold; }
 .clear{ clear: both; }
 
 .footer { text-align:center; padding-top:30px; font-style: italic; }
+/*
+
+CODE
+
+*/
+pre {
+  margin:0;
+  padding:0;
+}
+
+pre code {
+  background: #2b2b2b;
+  color: #ddd;
+  display: block;
+  font-size:14px;
+  font-family:Monaco;
+  letter-spacing:0.4px;
+  line-height:20px;
+  padding:10px 30px;
+}
+pre .filter {color:#0fb;}
+pre .tag {color:#fb0;}
+pre .keyword  {color:#e75521;}
+pre .django .tag,
+pre .django .keyword,
+pre .css .class,
+pre .css .id,
+pre .lisp .title {
+  color: #E3CEAB;
+}
+
+pre .django .template_tag,
+pre .django .variable,
+pre .django .filter .argument {
+  color: #DCDCDC;
+}
+
+pre .number,
+pre .date {
+  color: #8CD0D3;
+}
+
+pre .dos .envvar,
+pre .dos .stream,
+pre .variable,
+pre .apache .sqbracket {
+  color: #EFDCBC;
+}
+
+pre .dos .flow,
+pre .diff .change,
+pre .python .exception,
+pre .python .built_in,
+pre .literal,
+pre .tex .special {
+  color: #EFEFAF;
+}
+
+pre .diff .chunk,
+pre .ruby .subst {
+  color: #8F8F8F;
+}
+
+pre .dos .keyword,
+pre .python .decorator,
+pre .class .title,
+pre .haskell .label,
+pre .function .title,
+pre .ini .title,
+pre .diff .header,
+pre .ruby .class .parent,
+pre .apache .tag,
+pre .nginx .built_in,
+pre .tex .command,
+pre .input_number {
+    color: #efef8f;
+}
+
+pre .dos .winutils,
+pre .ruby .symbol,
+pre .ruby .symbol .string,
+pre .ruby .symbol .keyword,
+pre .ruby .symbol .keymethods,
+pre .ruby .string,
+pre .ruby .instancevar {
+  color: #fe8;
+}
+
+pre .diff .deletion,
+pre .string,
+pre .tag .value,
+pre .preprocessor,
+pre .built_in,
+pre .sql .aggregate,
+pre .javadoc,
+pre .smalltalk .class,
+pre .smalltalk .localvars,
+pre .smalltalk .array,
+pre .css .rules .value,
+pre .attr_selector,
+pre .pseudo,
+pre .apache .cbracket,
+pre .tex .formula {
+  color: #fe8;
+}
+
+pre .shebang,
+pre .diff .addition,
+pre .comment,
+pre .java .annotation,
+pre .template_comment,
+pre .pi,
+pre .doctype {
+  color: #909090;
+}
+
+pre .xml .css,
+pre .xml .javascript,
+pre .xml .vbscript,
+pre .tex .formula {
+  opacity: 0.5;
+}
+pre .symbol {
+  color:#f00;
+}
+pre .instancevar {
+  color: #0ff;
+}
+pre .interpolation {
+  color: #989326;
+}
+pre .htmlclass {
+  color:#BE8443;
+}
+pre .constant {
+  color:#42BEAB;
+}
+p.foot {
+  font: 12px Arial;
+  padding:10px 40px 10px 0;
+  text-align:right;
+  background:#444;
+  margin-bottom:0;
+  margin-top:40px;
+  font-style:italic;
+  color:#777;
+}
+#main p.foot a {color:#999;font-weight:normal;}
+#main p.foot a:hover {color:#fff;}
+#main .about {padding:80px 80px 0 0}
+#main p.first {padding-right:150px}
+#main pre code .comment strong {color:#FDFFA9;}
+#main *::selection {background: #999; /* Safari */}
+#main *::-moz-selection {background: #999; /* Firefox */}
+#main pre code::selection {background: #666; /* Safari */}
+#main pre code::-moz-selection {background: #666; /* Firefox */}
+#main pre code span::selection {background: #666; /* Safari */}
+#main pre code span::-moz-selection {background: #666; /* Firefox */}
+#main .wrap.pad {padding-top:40px;}
+#main .wrap.padder {padding-top:80px;}
+#main .mixed-pad h3, #main .mixed-pad h4, #main .mixed-pad p {padding-right:80px;}
+h4.note {padding:20px 30px 20px 70px;background:#b30 url(../img/warning.png) no-repeat 30px center;font-weight:bold;}
+a {outline:none}

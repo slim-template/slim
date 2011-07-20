@@ -9,88 +9,93 @@
   </head>
 
   <body>
-    <div id="header" class="small">
-      <ol id="links">
-        <li class="first"><a href="index.html">Slim</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="docs.html">Docs</a></li>
-        <li><a href="logic-less.html">Logic-less</a></li>
-        <li><a href="contribute.html">Contribute</a></li>
-        <li class="last"><a href="http://rdoc.info/github/stonean/slim/master/frames">API</a></li>
-      </ol>
+    <div id="side">
+      <div class="wrap">
+        <h1>Slim > Home</h1>
+        <h2 id="slogan">A lightweight templating engine</h2>
+        <ul id="links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="docs.html">Docs</a></li>
+          <li><a href="logic-less.html"  class="active">Logic-less</a></li>
+          <li><a href="contribute.html">Contribute</a></li>
+          <li class="last"><a href="http://rdoc.info/github/stonean/slim/master/frames">API</a></li>
+        </ul>
+        <p><a href="https://github.com/stonean/slim" class='github'>stonean<span>/</span><strong>slim</strong></a></p>
+      </div>
     </div>
-  <a href="http://github.com/stonean/slim"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+    
+    <div id="main">
+      <div class="wrap pad">
+        <a id="forkme" href="http://github.com/stonean/slim">Fork me on Github</a>
+        <h3>Logic-less</h3>
 
-  <div id="container">
-    <p>So, what is logic less mode and how do you use it? Examples are best, lets start with the basics, conditionals:
-      <pre>/ If the method <strong>is not</strong> false or empty?, the content will show
+  <div>
+    <p class='first'>So, what is logic less mode and how do you use it? Examples are best, lets start with the basics, conditionals:</p>
+      <pre><code><span class="comment">/ If the method <strong>is not</strong> false or empty?, the content will show</span>
 - article
-  h1 = title</pre>
-    </p>
-
+  <span class="tag">h1</span> = title</pre></code>
     <hr/>
-    <p>Inverted conditional
-      <pre>/ If the method <strong>is</strong> false or empty?, the content will show
+    <h4>Inverted conditional</h4>
+      <pre><code><span class="comment">/ If the method <strong>is</strong> false or empty?, the content will show</span>
 -! article
-  p Sorry, article not found</pre>
-    </p>
-
+  <span class="tag">p</span> Sorry, article not found</pre></code>
     <hr/>
-    <p>Next we'll go over resolution order.</p>
-    <p>If article.respond_to?(:title)
-      <pre>- article
-  / Slim will execute article.send(:title)
-  h1 = title</pre>
-    </p>
+    <h4>Resolution order</h4>
+    <p>If article.respond_to?(<span class="symbol">:title</span>)</p>
+      <pre><code>- article
+  <span class="comment">/ Slim will execute article.send(:title)</span>
+  <span class="tag">h1</span> = title</pre></code>
 
-    <p>If article.respond_to?(:has_key?) and article.has_key?(:title)
-      <pre>- article
-  / Slim will execute article[:title]
-  h1 = title</pre>
-    </p>
 
-    <p>If article.instance_variable_defined?(@title)
-      <pre>- article
-  / Slim will execute article.instance_variable_get @title
-  h1 = title</pre>
-    </p>
+    <p>If article.respond_to?(:has_key?) and article.has_key?(:title)</p>
+      <pre><code>- article
+  <span class="comment">/ Slim will execute article[:title]</span>
+  <span class="tag">h1</span> = title</pre></code>
+
+
+    <p>If article.instance_variable_defined?(@title)</p>
+      <pre><code>- article
+  <span class="comment">/ Slim will execute article.instance_variable_get @title</span>
+  <span class="tag">h1</span> = title</pre></code>
+
 
     <p>If all the above fails, Slim will try to resolve the title reference in the same order against the parent object.  In this example, the parent would be the initial scope you are rendering the template against.</p>
     <p>As you might have guessed, the article reference goes through the same steps against the scope.</p>
-    <h3>Things to know</h3>
+    <hr/>
+    <h4>Things to know</h4>
     <p>Instance variables are not allowed in the view code, but Slim will find and use them.  Essentially, you're just using dropping the @ prefix in your template.</p>
     <p>Parametized method calls are not allowed.</p>
-
-    <h2>Logic less support in Rails</h2>
-    <p>Install:
-      <pre>$ gem install slim</pre>
-    </p>
-    <p>Require:
-      <pre>gem 'slim', :require =&gt; 'slim/rails'</pre>
-    </p>
+    <hr/>
+    <h4>Logic less support in Rails</h4>
+    <p>Install:</p>
+      <pre><code>$ gem install slim</pre></code>
+    <p>Require:</p>
+      <pre><code><span class='keyword'>gem</span> <span class='string'>'slim'</span>, <span class='symbol'>:require</span> =&gt; <span class='string'>'slim/rails'</span></pre></code>
     <p>To enable logic less mode, put this line in config/environment.rb:
-      <pre>Slim::Engine.set_default_options :sections => true</pre>
+      <pre><code><span class="constant">Slim</span>::<span class="constant">Engine</span>.set_default_options <span class="symbol">:sections</span> =&gt; <span class="keyword">true</span></pre></code>
     </p>
-
-    <h2>Logic less support in Sinatra</h2>
+    <hr/>
+    <h4>Logic less support in Sinatra</h4>
     <p>Sinata will have built-in support for Slim in their next release, but until then you'll need this little snippet of code:
-    <pre>module Sinatra
-  module Templates
-    def slim(template, options={}, locals={})
-      render :slim, template, options, locals
-    end 
+    <pre><code><span class="keyword">module</span> Sinatra
+  <span class="keyword">module</span> <span class="constant">Templates</span>
+    <span class="keyword">def</span> <span class="tag">slim</span>(template, options={}, locals={})
+      <span class="keyword">render</span> <span class="symbol">:slim</span>, template, options, locals
+    <span class="keyword">end 
   end
-end</pre>
+end</span></pre></code>
     </p>
     <p>Now that's out of the way, all you have to do is require slim and set the option. This can be done in your config.ru:
-    <pre>require 'slim'
-Slim::Engine.set_default_options :sections => true</pre>
+    <pre><code><span class="keyword">require</span> <span class="string">'slim'</span>
+      
+<span class="constant">Slim</span>::<span class="constant">Engine</span>.set_default_options <span class="symbol">:sections</span> =&gt; <span class="keyword">true</span></pre></code>
     <p>You are then ready to rock!</p>
 
 
-  <div class="footer">
+  <p class="foot">
     Source: <a href="http://github.com/stonean/slim">stonean/slim</a>&nbsp;|&nbsp;Slim logo by <a href="http://github.com/activestylus">activestylus</a><br/>
-  </div>
+  </p>
 
   <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");

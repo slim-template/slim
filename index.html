@@ -1,70 +1,71 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <link href="css/slim.css" media="screen" rel="stylesheet" type="text/css"/>
     <title>Slim - A Fast, Lightweight Template Engine for Ruby</title>
     <script language="javascript" src="http://www.google.com/jsapi"></script>
+
   </head>
   <body>
-    <div id="header">
-      <img src="img/slim-logo.png"/>
+    <div id="side">
+      <div class="wrap">
+        <h1>Slim > Home</h1>
+        <h2 id="slogan">A lightweight templating engine</h2>
+        <ul id="links">
+          <li><a href="about.html" class="active">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="docs.html">Docs</a></li>
+          <li><a href="logic-less.html">Logic-less</a></li>
+          <li><a href="contribute.html">Contribute</a></li>
+          <li class="last"><a href="http://rdoc.info/github/stonean/slim/master/frames">API</a></li>
+        </ul>
+        <p><a href="https://github.com/stonean/slim" class='github'>stonean<span>/</span><strong>slim</strong></a></p>
+      </div>
     </div>
-    <div class="clear">&nbsp;</div>
-    <a href="http://github.com/stonean/slim"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+    <div id="main" class="home">
+      <div class="wrap">
+        <a id="forkme" href="http://github.com/stonean/slim">Fork me on Github</a>
+        <div class="ruby">
+          <pre>
+            <code>
+<span class='tag'>doctype</span> html
+<span class='tag'>html</span>
+  <span class='tag'>head</span>
+    <span class='tag'>title</span> Slim Core Example
+    <span class='tag'>meta</span> name=<span class='string'>"keywords"</span> content=<span class='string'>"template language"</span>
 
-    <ol id="links">
-      <li><a href="about.html">About</a></li>
-      <li><a href="docs.html">Docs</a></li>
-      <li><a href="logic-less.html">Logic-less</a></li>
-      <li><a href="contribute.html">Contribute</a></li>
-      <li class="last"><a href="http://rdoc.info/github/stonean/slim/master/frames">API</a></li>
-    </ol>
+  <span class='tag'>body</span>
+    <span class='tag'>h1</span> Markup examples
 
-    <div id="container">
-      <p>
-        <pre>
-doctype html
-html
-  head
-    title Slim Core Example
-    meta name="keywords" content="template language"
+    <span class='tag'>div</span> id=<span class='string'>"content"</span> class=<span class='string'>"example1"</span>
+      <span class='tag'>p</span> Nest by indentation
 
-  body
-    h1 Markup examples
+      == <span class='keyword'>yield</span>
 
-    div id="content" class="example1"
-      p Nest by indentation
-
-      == yield
-
-      - unless items.empty?
-        table
-          - for item in items do
-            tr
-              td = item.name
-              td = item.price
-      - else
-        p
+      - <span class='keyword'>unless</span> items.empty?
+        <span class='tag'>table</span>
+          - <span class='keyword'>for</span> item <span class='keyword'>in</span> items <span class='keyword'>do</span>
+            <span class='tag'>tr</span>
+              <span class='tag'>td</span> = item.name
+              <span class='tag'>td</span> = item.price
+      - <span class='keyword'>else</span>
+        <span class='tag'>p</span>
          | No items found.  Please add some inventory.
             Thank you!
 
-    div id="footer"
+    <span class='tag'>div</span> id=<span class='string'>"footer"</span>
       | Copyright &copy; 2010 Andrew Stone
 
-    = render 'tracking_code'
+    = <span class='keyword'>render</span> <span class='string'>'tracking_code'</span>
 
-    javascript:
-      $(content).do_something();</pre>
-      </p>
+    <span class='filter'>javascript:</span>
+      $(content).do_something();
+            </pre>
+          </code>
+        </div>
+      </div>
     </div>
-
-    <div class="footer">
-      Source: <a href="http://github.com/stonean/slim">stonean/slim</a>&nbsp;|&nbsp;Slim logo by <a href="http://github.com/activestylus">activestylus</a><br/>
-    </div>
-
     <script type="text/javascript">
       var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
       document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));

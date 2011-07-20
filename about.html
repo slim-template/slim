@@ -9,41 +9,49 @@
   </head>
 
   <body>
-    <div id="header" class="small">
-      <ol id="links">
-        <li class="first"><a href="index.html">Slim</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="docs.html">Docs</a></li>
-        <li><a href="logic-less.html">Logic-less</a></li>
-        <li><a href="contribute.html">Contribute</a></li>
-        <li class="last"><a href="http://rdoc.info/github/stonean/slim/master/frames">API</a></li>
-      </ol>
+    <div id="side">
+      <div class="wrap">
+        <h1>Slim > Home</h1>
+        <h2 id="slogan">A lightweight templating engine</h2>
+        <ul id="links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html" class="active">About</a></li>
+          <li><a href="docs.html">Docs</a></li>
+          <li><a href="logic-less.html">Logic-less</a></li>
+          <li><a href="contribute.html">Contribute</a></li>
+          <li class="last"><a href="http://rdoc.info/github/stonean/slim/master/frames">API</a></li>
+        </ul>
+        <p><a href="https://github.com/stonean/slim" class='github'>stonean<span>/</span><strong>slim</strong></a></p>
+      </div>
     </div>
-  <a href="http://github.com/stonean/slim"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+    
+    <div id="main">
+      <div class="wrap ">
+        <div class="about">
+        <a id="forkme" href="http://github.com/stonean/slim">Fork me on Github</a>
+        <h3>About</h3>
+        <p>
+          Slim is a template language whose goal is reduce the syntax to the essential parts without becoming cryptic.
+        </p>
 
-  <div id="container">
-    <p>
-      Slim is a template language whose goal is reduce the syntax to the essential parts without becoming cryptic.
-    </p>
+        <p>
+          The initial design of Slim is what you see on the home page.  It started as an exercise to see how much could be removed from a standard html template (&lt;, &gt;, closing tags, etc...). As more people took an interest in Slim, the functionality grew and so did the flexibility of the syntax.
+        </p>
 
-    <p>
-      The initial design of Slim is what you see on the home page.  It started as an exercise to see how much could be removed from a standard html template (&lt;, &gt;, closing tags, etc...). As more people took an interest in Slim, the functionality grew and so did the flexibility of the syntax.
-    </p>
+        <p>
+          While your Slim template can look more like <a href="http://haml-lang.com">Haml</a> by using the id and class shortcuts, their use is optional.  Slim will strive to maintain simplicity, but not everyone's definition of a readable syntax is the same.  To this end, Slim provides optional syntax support so you can make it your own. The <a href="docs.html">docs</a> will show you the options.
+        </p>
 
-    <p>
-      While your Slim template can look more like <a href="http://haml-lang.com">Haml</a> by using the id and class shortcuts, their use is optional.  Slim will strive to maintain simplicity, but not everyone's definition of a readable syntax is the same.  To this end, Slim provides optional syntax support so you can make it your own. The <a href="docs.html">docs</a> will show you the options.
-    </p>
+        <p>
+          Slim uses <a href="http://dojo.rubyforge.org/temple/">Temple</a> and <a href="http://github.com/rtomayko/tilt">Tilt</a>.  If you want to learn how Slim works, you'll need to study these projects.
+        </p>
 
-    <p>
-      Slim uses <a href="http://dojo.rubyforge.org/temple/">Temple</a> and <a href="http://github.com/rtomayko/tilt">Tilt</a>.  If you want to learn how Slim works, you'll need to study these projects.
-    </p>
-  </div>
-
-  <hr/>
-
-  <div class="footer">
-    Source: <a href="http://github.com/stonean/slim">stonean/slim</a>&nbsp;|&nbsp;Slim logo by <a href="http://github.com/activestylus">activestylus</a><br/>
-  </div>
+      </div>
+      <p class="foot">
+        Source: <a href="http://github.com/stonean/slim">stonean/slim</a>&nbsp;|&nbsp;Slim logo &amp; site design by <a href="http://github.com/activestylus">activestylus</a><br/>
+      </p>
+      </div>
+    </div>
 
   <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
