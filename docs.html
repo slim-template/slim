@@ -192,25 +192,26 @@
 
         <hr/>
         <p>Thanks to <a href="http://github.com/rtomayko/tilt">Tilt</a>, Slim has impressive support for embedding other template engines:</p>
-          <pre><code>ENGINE                     FILTER            REQUIRED LIBRARIES
--------------------------- ----------------- ----------------------------
-Ruby                       ruby:             none 
-Javascript                 javascript:       none 
-CSS                        css:              none 
-ERB                        erb:              none
-Haml                       haml:             haml
-Sass                       sass:             haml
-Scss                       scss:             haml
-Less CSS                   less:             less
-Builder                    builder:          builder
-Liquid                     liquid:           liquid
-RDiscount                  markdown:         rdiscount
-RedCloth                   textile:          redcloth
-RDoc                       rdoc:             rdoc
-Radius                     radius:           radius
-Markaby                    markaby:          markaby
-Nokogiri                   nokogiri:         nokogiri
-CoffeeScript               coffee:           coffee-script (+node coffee) </code></pre>
+	<pre><code><table>
+	  <tr><td>ENGINE</td><td>FILTER</td><td>REQUIRED LIBRARIES</td></tr>
+	  <tr><td>Ruby</td><td>ruby:</td><td>none</td></tr>
+	  <tr><td>Javascript</td><td>javascript:</td><td>none</td></tr>
+	  <tr><td>CSS</td><td>css:</td><td>none</td></tr>
+	  <tr><td>ERB</td><td>erb:</td><td>none</td></tr>
+	  <tr><td>Haml</td><td>haml:</td><td>haml</td></tr>
+	  <tr><td>Sass</td><td>sass:</td><td>haml/sass</td></tr>
+	  <tr><td>Scss</td><td>scss:</td><td>haml/sass</td></tr>
+	  <tr><td>LessCSS</td><td>less:</td><td>less</td></tr>
+	  <tr><td>Builder</td><td>builder:</td><td>builder</td></tr>
+	  <tr><td>Liquid</td><td>liquid:</td><td>liquid</td></tr>
+	  <tr><td>RDiscount</td><td>markdown:</td><td>rdiscount/kramdown</td></tr>
+	  <tr><td>RedCloth</td><td>textile:</td><td>redcloth</td></tr>
+	  <tr><td>RDoc</td><td>rdoc:</td><td>rdoc</td></tr>
+	  <tr><td>Radius</td><td>radius:</td><td>radius</td></tr>
+	  <tr><td>Markaby</td><td>markaby:</td><td>markaby</td></tr>
+	  <tr><td>Nokogiri</td><td>nokogiri:</td><td>nokogiri</td></tr>
+	  <tr><td>CoffeeScript</td><td>coffee:</td><td>coffee-script (+node coffee)</td></tr>
+	</table></code></pre>
         <p><small>The following engines are embedded:</small><br/>
           <strong>javascript, css, ruby</strong></p>
         <p><small>The following engines are executed at compile time:</small><br/>
