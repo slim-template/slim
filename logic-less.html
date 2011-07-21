@@ -71,24 +71,16 @@
     <p>Install:</p>
       <pre><code>$ gem install slim</pre></code>
     <p>Require:</p>
-      <pre><code><span class='keyword'>gem</span> <span class='string'>'slim'</span>, <span class='symbol'>:require</span> =&gt; <span class='string'>'slim/rails'</span></pre></code>
+      <pre><code><span class='keyword'>gem</span> <span class='string'>'slim'</span></pre></code>
     <p>To enable logic less mode, put this line in config/environment.rb:
       <pre><code><span class="constant">Slim</span>::<span class="constant">Engine</span>.set_default_options <span class="symbol">:sections</span> =&gt; <span class="keyword">true</span></pre></code>
     </p>
     <hr/>
     <h4>Logic less support in Sinatra</h4>
-    <p>Sinata will have built-in support for Slim in their next release, but until then you'll need this little snippet of code:
-    <pre><code><span class="keyword">module</span> Sinatra
-  <span class="keyword">module</span> <span class="constant">Templates</span>
-    <span class="keyword">def</span> <span class="tag">slim</span>(template, options={}, locals={})
-      <span class="keyword">render</span> <span class="symbol">:slim</span>, template, options, locals
-    <span class="keyword">end 
-  end
-end</span></pre></code>
-    </p>
-    <p>Now that's out of the way, all you have to do is require slim and set the option. This can be done in your config.ru:
+    <p>Sinata has built-in support for Slim. All you have to do is require slim and set the logic-less option.
+      This can be done in your config.ru:
     <pre><code><span class="keyword">require</span> <span class="string">'slim'</span>
-      
+
 <span class="constant">Slim</span>::<span class="constant">Engine</span>.set_default_options <span class="symbol">:sections</span> =&gt; <span class="keyword">true</span></pre></code>
     <p>You are then ready to rock!</p>
 
