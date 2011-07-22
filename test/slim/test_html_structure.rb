@@ -347,4 +347,68 @@ p World
 
     assert_html "<!--[if IE]>hello<![endif]-->", source
   end
+
+  def test_multiline_attributes_with_method
+    source = %q{
+p<id="marvin"
+  class="martian"
+  data-info="Illudium Q-36"> = output_number
+}
+    Slim::Parser::DELIMITERS.each do |k,v|
+      str = source.sub('<',k).sub('>',v)
+      assert_html '<p class="martian" data-info="Illudium Q-36" id="marvin">1337</p>', str
+    end
+  end
+
+  def test_multiline_attributes_with_text_on_same_line
+    source = %q{
+p<id="marvin"
+  class="martian"
+  data-info="Illudium Q-36"> THE space modulator
+}
+    Slim::Parser::DELIMITERS.each do |k,v|
+      str = source.sub('<',k).sub('>',v)
+      assert_html '<p class="martian" data-info="Illudium Q-36" id="marvin">THE space modulator</p>', str
+    end
+  end
+
+  def test_multiline_attributes_with_nested_text
+    source = %q{
+p<id="marvin"
+  class="martian"
+  data-info="Illudium Q-36">
+  | THE space modulator
+}
+    Slim::Parser::DELIMITERS.each do |k,v|
+      str = source.sub('<',k).sub('>',v)
+      assert_html '<p class="martian" data-info="Illudium Q-36" id="marvin">THE space modulator</p>', str
+    end
+  end
+
+  def test_multiline_attributes_with_dynamic_attr
+    source = %q{
+p<id=id_helper
+  class="martian"
+  data-info="Illudium Q-36">
+  | THE space modulator
+}
+    Slim::Parser::DELIMITERS.each do |k,v|
+      str = source.sub('<',k).sub('>',v)
+      assert_html '<p class="martian" data-info="Illudium Q-36" id="notice">THE space modulator</p>', str
+    end
+  end
+
+  def test_multiline_attributes_with_nested_tag
+    source = %q{
+p<id=id_helper
+  class="martian"
+  data-info="Illudium Q-36">
+  span.emphasis THE
+  |  space modulator
+}
+    Slim::Parser::DELIMITERS.each do |k,v|
+      str = source.sub('<',k).sub('>',v)
+      assert_html '<p class="martian" data-info="Illudium Q-36" id="notice"><span class="emphasis">THE</span> space modulator</p>', str
+    end
+  end
 end

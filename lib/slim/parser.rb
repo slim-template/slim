@@ -4,8 +4,6 @@ module Slim
   class Parser
     include Temple::Mixins::Options
 
-    ATTR_REGEX = /\A\s*(\w[:\w-]*)=/
-
     set_default_options :tabsize  => 4,
                         :encoding => 'utf-8'
 
@@ -81,7 +79,9 @@ module Slim
       #     Hello
       #     World!
       #
-      block_indent, text_indent, in_comment = nil, nil, false
+      in_comment, block_indent, text_indent,
+        current_tag, delimiter, delimiter_line,
+        delimiter_lineno  = false, nil, nil, nil, nil, nil, nil
 
       str.each_line do |line|
         lineno += 1
@@ -240,18 +240,42 @@ module Slim
           # Found doctype declaration
           stacks.last << [:html, :doctype, $'.strip]
         when /\A[#\.]/, /\A\w[:\w-]*/
-          # Found a HTML tag.
-          tag, block, broken_line, text_indent = parse_tag($&, $', line, lineno)
-          stacks.last << tag
-          stacks << block if block
+          # Found an HTML tag or attribute
+          tag, block, broken_line, text_indent, end_delimiter = parse_tag($&, $', line, lineno, delimiter)
+
+          if delimiter
+            # We are in attribute parsing mode and parse_tag returned attributes
+            # to be added to the tag.
+            current_tag[-2] << tag
+            current_tag[-1] << block if block
+          else
+            # Standard tag parsing mode
+            current_tag = tag
+            stacks.last << current_tag
+            stacks << block if block
+          end
+
           if text_indent
             block_indent = indent
             text_indent += indent
           end
+
+          # If end_delimiter was returned we are in attribute parsing
+          # mode. Set it as the delimiter to denote this state.
+          if delimiter = end_delimiter
+            # Save this information for easy error reporting
+            # if closing delimiter is not found
+            delimiter_line = line
+            delimiter_lineno = lineno
+          end
         else
           syntax_error! 'Unknown line indicator', line, lineno
         end
-        stacks.last << [:newline]
+        stacks.last << [:newline] unless delimiter
+      end
+
+      if delimiter
+        syntax_error! "Expected closing delimiter #{delimiter}", delimiter_line, delimiter_lineno
       end
 
       result
@@ -267,6 +291,7 @@ module Slim
 
     private
 
+    ATTR_REGEX = /\A\s*(\w[:\w-]*)=/
     QUOTED_VALUE_REGEX = /\A("[^"]*"|'[^']*')/
     ATTR_SHORTHAND = {
       '#' => 'id',
@@ -279,13 +304,40 @@ module Slim
       CLASS_ID_REGEX = /\A(#|\.)(\w[\w:-]*)/
     end
 
-    def parse_tag(tag, line, orig_line, lineno)
+    def parse_tag(tag, line, orig_line, lineno, delimiter)
+      in_attribute_mode = !delimiter.nil?
+
       if tag == ?# || tag == ?.
         tag = 'div'
         line = orig_line
+      elsif in_attribute_mode
+        line = orig_line
       end
 
-      line, attributes = parse_attributes(orig_line, line, lineno)
+      if in_attribute_mode
+        attributes = []
+      else
+        attributes = [:html, :attrs]
+      end
+
+      unless line.empty?
+        # Find any literal class/id attributes
+        while line =~ CLASS_ID_REGEX
+          # The class/id attribute is :static instead of :slim :text,
+          # because we don't want text interpolation in .class or #id shortcut
+          attributes << [:html, :attr, ATTR_SHORTHAND[$1], [:static, $2]]
+          line = $'
+        end
+
+        # Check to see if there is a delimiter right after the tag name
+        if line =~ DELIMITER_REGEX
+          delimiter = DELIMITERS[$&]
+          # Replace the delimiter with a space so we can continue parsing as normal.
+          line[0] = ?\s
+        end
+
+        line, attributes, delimiter = parse_attributes(attributes, orig_line, line, lineno, delimiter)
+      end
 
       content = [:multi]
       tag = [:html, :tag, tag, attributes, content]
@@ -296,42 +348,38 @@ module Slim
         block = [:multi]
         broken_line = $'.strip
         content << [:slim, :output, $1 != '=', broken_line, block]
-        [tag, block, broken_line, nil]
+        if in_attribute_mode
+          [attributes[0], content , broken_line, nil, delimiter]
+        else
+          [tag, block, broken_line, nil, delimiter]
+        end
       when /\A\s*\//
         # Closed tag
         tag.pop
-        [tag, block, nil, nil]
+        [tag, nil, nil, nil, delimiter]
       when /\A\s*\Z/
         # Empty line
-        [tag, content, nil, nil]
+        if in_attribute_mode
+          [attributes[0], nil, nil, 1, delimiter]
+        else
+          [tag, content, nil, nil, delimiter]
+        end
       else
         # Handle text content
         content << [:slim, :interpolate, line.sub(/\A( )/, '')]
-        [tag, content, nil, orig_line.size - line.size + ($1 ? 1 : 0)]
+        indent = orig_line.size - line.size + ($1 ? 1 : 0)
+        if in_attribute_mode
+          [attributes[0], content, nil, indent, delimiter]
+        else
+          [tag, content, nil, indent, delimiter]
+        end
       end
     end
 
-    def parse_attributes(orig_line, line, lineno)
+    def parse_attributes(attributes, orig_line, line, lineno, delimiter)
       # Now we'll have to find all the attributes. We'll store these in an
       # nested array: [[name, value], [name2, value2]]. The value is a piece
       # of Ruby code.
-      attributes = [:html, :attrs]
-
-      # Find any literal class/id attributes
-      while line =~ CLASS_ID_REGEX
-        # The class/id attribute is :static instead of :slim :text,
-        # because we don't want text interpolation in .class or #id shortcut
-        attributes << [:html, :attr, ATTR_SHORTHAND[$1], [:static, $2]]
-        line = $'
-      end
-
-      # Check to see if there is a delimiter right after the tag name
-      delimiter = ''
-      if line =~ DELIMITER_REGEX
-        delimiter = DELIMITERS[$&]
-        # Replace the delimiter with a space so we can continue parsing as normal.
-        line[0] = ?\s
-      end
 
       # Parse attributes
       while line =~ ATTR_REGEX
@@ -350,15 +398,12 @@ module Slim
       end
 
       # Find ending delimiter
-      unless delimiter.empty?
-        if line =~ /\A\s*#{Regexp.escape delimiter}/
-          line = $'
-        else
-          syntax_error! "Expected closing delimiter #{delimiter}", orig_line, lineno, orig_line.size - line.size
-        end
+      if delimiter && line =~ /\A\s*#{Regexp.escape delimiter}/
+        line = $'
+        delimiter = nil
       end
 
-      return line, attributes
+      return line, attributes, delimiter
     end
 
     def parse_ruby_attribute(orig_line, line, lineno, delimiter)
@@ -369,7 +414,7 @@ module Slim
       value = ''
 
       # Attribute ends with space or attribute delimiter
-      end_regex = /\A[\s#{Regexp.escape delimiter}]/
+      end_regex = /\A[\s#{Regexp.escape delimiter.to_s}]/
 
       until line.empty?
         if stack.empty? && line =~ end_regex
