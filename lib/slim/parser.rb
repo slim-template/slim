@@ -200,7 +200,7 @@ module Slim
                             block
                           end
           stacks << block
-        when /\A\|/, /\A'/
+        when /\A[\|']/
           # Found a text block.
           # We're now expecting the next line to be indented, so we'll need
           # to push a block to the stack.
@@ -239,7 +239,7 @@ module Slim
         when /\Adoctype\s+/i
           # Found doctype declaration
           stacks.last << [:html, :doctype, $'.strip]
-        when /\A[#\.]/, /\A\w[:\w-]*/
+        when /\A([#\.]|\w[:\w-]*)/
           # Found a HTML tag.
           tag, block, broken_line, text_indent = parse_tag($&, $', line, lineno)
           stacks.last << tag
