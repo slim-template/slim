@@ -1,6 +1,17 @@
 require 'helper'
 
 class TestSlimRubyErrors < TestSlim
+  def test_multline_attribute
+    source = %q{
+p(data-1=1
+data2-=1)
+  p
+    = unknown_ruby_method
+}
+
+    assert_ruby_error NameError, "test.slim:5", source, :file => 'test.slim'
+  end
+
   def test_broken_output_line
     source = %q{
 p = hello_world + \

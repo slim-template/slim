@@ -354,14 +354,17 @@ module Slim
           end
         end
 
-        # Find ending delimiter
+        # No ending delimiter, attribute end
         break if delimiter.empty?
 
+        # Find ending delimiter
         if @line =~ /\A\s*#{Regexp.escape delimiter}/
           @line = $'
           break
         end
 
+        # Attributes span multiple lines
+        @stacks.last << [:newline]
         next_line || syntax_error!("Expected closing delimiter #{delimiter}",
                                    :orig_line => orig_line, :lineno => lineno, :column => orig_line.size)
       end
