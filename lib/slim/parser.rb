@@ -15,7 +15,7 @@ module Slim
       def initialize(error, file, line, lineno, column)
         @error = error
         @file = file || '(__TEMPLATE__)'
-        @line = line
+        @line = line.to_s
         @lineno = lineno
         @column = column
       end
@@ -116,10 +116,6 @@ module Slim
         @lineno += 1
         @line = @orig_line.dup
       end
-    end
-
-    def expect_next_line
-      next_line || syntax_error!('Unexpected end of file')
     end
 
     def get_indent(line)
@@ -275,7 +271,8 @@ module Slim
     def parse_broken_line
       broken_line = @line.strip
       while broken_line[-1] == ?\\
-        broken_line << "\n" << expect_next_line.strip
+        next_line || syntax_error!('Unexpected end of file')
+        broken_line << "\n" << @line.strip
       end
       broken_line
     end
@@ -338,29 +335,35 @@ module Slim
         @line[0] = ?\s
       end
 
-      # Parse attributes
-      while @line =~ ATTR_REGEX
-        name = $1
-        @line = $'
-        if @line =~ QUOTED_VALUE_REGEX
-          # Value is quoted (static)
+      orig_line = @orig_line
+      lineno = @lineno
+      while true
+        # Parse attributes
+        while @line =~ ATTR_REGEX
+          name = $1
           @line = $'
-          attributes << [:html, :attr, name, [:slim, :interpolate, $1[1..-2]]]
-        else
-          # Value is ruby code
-          escape = @line[0] != ?=
-          @line.slice!(0) unless escape
-          attributes << [:slim, :attr, name, escape, parse_ruby_attribute(delimiter)]
+          if @line =~ QUOTED_VALUE_REGEX
+            # Value is quoted (static)
+            @line = $'
+            attributes << [:html, :attr, name, [:slim, :interpolate, $1[1..-2]]]
+          else
+            # Value is ruby code
+            escape = @line[0] != ?=
+            @line.slice!(0) unless escape
+            attributes << [:slim, :attr, name, escape, parse_ruby_attribute(delimiter)]
+          end
         end
-      end
 
-      # Find ending delimiter
-      unless delimiter.empty?
+        # Find ending delimiter
+        break if delimiter.empty?
+
         if @line =~ /\A\s*#{Regexp.escape delimiter}/
           @line = $'
-        else
-          syntax_error! "Expected closing delimiter #{delimiter}"
+          break
         end
+
+        next_line || syntax_error!("Expected closing delimiter #{delimiter}",
+                                   :orig_line => orig_line, :lineno => lineno, :column => orig_line.size)
       end
 
       return attributes
@@ -407,9 +410,12 @@ module Slim
     end
 
     # Helper for raising exceptions
-    def syntax_error!(message)
-      raise SyntaxError.new(message, options[:file], @orig_line, @lineno,
-                            @orig_line && @line ? @orig_line.size - @line.size : 0)
+    def syntax_error!(message, args = {})
+      args[:orig_line] ||= @orig_line
+      args[:line] ||= @line
+      args[:lineno] ||= @lineno
+      args[:column] ||= args[:orig_line] && args[:line] ? args[:orig_line].size - args[:line].size : 0
+      raise SyntaxError.new(message, options[:file], args[:orig_line], args[:lineno], args[:column])
     end
   end
 end
