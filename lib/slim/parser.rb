@@ -251,11 +251,13 @@ module Slim
 
         next_line
 
-        # The indentation of first line of the text block determines the text base indentation.
+        # The indentation of first line of the text block
+        # determines the text base indentation.
         newline = text_indent ? "\n" : ''
         text_indent ||= indent
 
-        # The text block lines must be at least indented as deep as the first line.
+        # The text block lines must be at least indented
+        # as deep as the first line.
         if indent < text_indent
           @line.lstrip!
           syntax_error!('Unexpected text indentation')
@@ -350,7 +352,8 @@ module Slim
             # Value is ruby code
             escape = @line[0] != ?=
             @line.slice!(0) unless escape
-            attributes << [:slim, :attr, name, escape, parse_ruby_attribute(delimiter)]
+            attributes << [:slim, :attr, name, escape,
+                           parse_ruby_attribute(delimiter)]
           end
         end
 
@@ -366,7 +369,9 @@ module Slim
         # Attributes span multiple lines
         @stacks.last << [:newline]
         next_line || syntax_error!("Expected closing delimiter #{delimiter}",
-                                   :orig_line => orig_line, :lineno => lineno, :column => orig_line.size)
+                                   :orig_line => orig_line,
+                                   :lineno => lineno,
+                                   :column => orig_line.size)
       end
 
       return attributes
@@ -402,12 +407,18 @@ module Slim
         end
       end
 
-      syntax_error!("Expected closing attribute delimiter #{stack.last}") unless stack.empty?
-      syntax_error!('Invalid empty attribute') if value.empty?
+      unless stack.empty?
+        syntax_error!("Expected closing attribute delimiter #{stack.last}")
+      end
+
+      if value.empty?
+        syntax_error!('Invalid empty attribute')
+      end
 
       # Remove attribute wrapper which doesn't belong to the ruby code
       # e.g id=[hash[:a] + hash[:b]]
-      value = value[1..-2] if value =~ DELIMITER_REGEX && DELIMITERS[$&] == value[-1, 1]
+      value = value[1..-2] if value =~ DELIMITER_REGEX &&
+        DELIMITERS[$&] == value[-1, 1]
 
       return value
     end
@@ -417,8 +428,10 @@ module Slim
       args[:orig_line] ||= @orig_line
       args[:line] ||= @line
       args[:lineno] ||= @lineno
-      args[:column] ||= args[:orig_line] && args[:line] ? args[:orig_line].size - args[:line].size : 0
-      raise SyntaxError.new(message, options[:file], args[:orig_line], args[:lineno], args[:column])
+      args[:column] ||= args[:orig_line] && args[:line] ?
+                        args[:orig_line].size - args[:line].size : 0
+      raise SyntaxError.new(message, options[:file],
+                            args[:orig_line], args[:lineno], args[:column])
     end
   end
 end
