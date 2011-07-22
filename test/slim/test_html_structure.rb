@@ -351,8 +351,8 @@ p World
   def test_multiline_attributes_with_method
     source = %q{
 p<id="marvin"
-  class="martian"
-  data-info="Illudium Q-36"> = output_number
+class="martian"
+ data-info="Illudium Q-36"> = output_number
 }
     Slim::Parser::DELIMITERS.each do |k,v|
       str = source.sub('<',k).sub('>',v)
@@ -364,7 +364,7 @@ p<id="marvin"
     source = %q{
 p<id="marvin"
   class="martian"
-  data-info="Illudium Q-36"> THE space modulator
+ data-info="Illudium Q-36"> THE space modulator
 }
     Slim::Parser::DELIMITERS.each do |k,v|
       str = source.sub('<',k).sub('>',v)
@@ -376,7 +376,7 @@ p<id="marvin"
     source = %q{
 p<id="marvin"
   class="martian"
-  data-info="Illudium Q-36">
+data-info="Illudium Q-36">
   | THE space modulator
 }
     Slim::Parser::DELIMITERS.each do |k,v|
@@ -416,7 +416,7 @@ p<id=id_helper
     source = %q{
 li< id="myid"
     class="myclass"
-    data-info="myinfo">
+data-info="myinfo">
   a href="link" My Link
 }
     Slim::Parser::DELIMITERS.each do |k,v|
