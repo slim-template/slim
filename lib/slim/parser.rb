@@ -81,7 +81,7 @@ module Slim
       #
       in_comment, block_indent, text_indent,
         current_tag, delimiter, delimiter_line,
-        delimiter_lineno  = false, nil, nil, nil, nil, nil, nil
+        delimiter_lineno, delimiter_indent  = false, nil, nil, nil, nil, nil, nil, nil
 
       str.each_line do |line|
         lineno += 1
@@ -164,9 +164,10 @@ module Slim
           # This line was deindented.
           # Now we're have to go through the all the indents and figure out
           # how many levels we've deindented.
+          last_indent = 0
           while indent < indents.last
-            indents.pop
-            stacks.pop
+            last_indent = indents.pop
+            stacks.pop unless last_indent == delimiter_indent
           end
 
           # This line's indentation happens lie "between" two other line's
@@ -175,8 +176,20 @@ module Slim
           #   hello
           #       world
           #     this      # <- This should not be possible!
+          #
+          # However, for readability, this is possible:
+          #
+          #   li( id="myid"
+          #       class="myclass"
+          #       data-info="myinfo")
+          #     a href="link" = edit_user
+          #
           if indents.last < indent
-            syntax_error!('Malformed indentation', line, lineno)
+            if last_indent == delimiter_indent
+              delimiter_indent = nil
+            else
+              syntax_error!('Malformed indentation', line, lineno)
+            end
           end
         end
 
@@ -265,6 +278,7 @@ module Slim
           if delimiter = end_delimiter
             # Save this information for easy error reporting
             # if closing delimiter is not found
+            delimiter_indent = indent
             delimiter_line = line
             delimiter_lineno = lineno
           end

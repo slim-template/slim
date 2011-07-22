@@ -411,4 +411,18 @@ p<id=id_helper
       assert_html '<p class="martian" data-info="Illudium Q-36" id="notice"><span class="emphasis">THE</span> space modulator</p>', str
     end
   end
+
+  def test_multiline_attributes_with_nested_text_and_extra_indentation
+    source = %q{
+li< id="myid"
+    class="myclass"
+    data-info="myinfo">
+  a href="link" My Link
+}
+    Slim::Parser::DELIMITERS.each do |k,v|
+      str = source.sub('<',k).sub('>',v)
+      assert_html '<li class="myclass" data-info="myinfo" id="myid"><a href="link">My Link</a></li>', str
+    end
+  end
+
 end
