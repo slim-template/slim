@@ -7,7 +7,7 @@ doctype 5
   div Invalid
 }
 
-    assert_syntax_error "Unexpected indentation\n  test.slim, Line 3\n    div Invalid\n    ^\n        ", source, :file => 'test.slim'
+    assert_syntax_error "Unexpected indentation\n  test.slim, Line 3\n    div Invalid\n    ^\n", source, :file => 'test.slim'
   end
 
   def test_unexpected_indentation
@@ -16,7 +16,7 @@ doctype 5
   div Invalid
 }
 
-    assert_syntax_error "Unexpected indentation\n  (__TEMPLATE__), Line 3\n    div Invalid\n    ^\n        ", source
+    assert_syntax_error "Unexpected indentation\n  (__TEMPLATE__), Line 3\n    div Invalid\n    ^\n", source
   end
 
   def test_unexpected_text_indentation
@@ -26,7 +26,7 @@ p
    text
 }
 
-    assert_syntax_error "Unexpected text indentation\n  (__TEMPLATE__), Line 4\n    text\n    ^\n        ", source
+    assert_syntax_error "Unexpected text indentation\n  (__TEMPLATE__), Line 4\n    text\n    ^\n", source
   end
 
   def test_malformed_indentation
@@ -36,7 +36,7 @@ p
  div Invalid
 }
 
-    assert_syntax_error "Malformed indentation\n  (__TEMPLATE__), Line 4\n    div Invalid\n    ^\n        ", source
+    assert_syntax_error "Malformed indentation\n  (__TEMPLATE__), Line 4\n    div Invalid\n    ^\n", source
   end
 
   def test_unknown_line_indicator
@@ -48,7 +48,7 @@ p
   ?invalid
 }
 
-    assert_syntax_error "Unknown line indicator\n  (__TEMPLATE__), Line 6\n    ?invalid\n    ^\n        ", source
+    assert_syntax_error "Unknown line indicator\n  (__TEMPLATE__), Line 6\n    ?invalid\n    ^\n", source
   end
 
   def test_expected_closing_delimiter
@@ -57,7 +57,7 @@ p
   img(src="img.jpg" title={title}
 }
 
-    assert_syntax_error "Expected closing delimiter )\n  (__TEMPLATE__), Line 3\n    img(src=\"img.jpg\" title={title}\n    ^\n        ", source
+    assert_syntax_error "Expected closing delimiter )\n  (__TEMPLATE__), Line 3\n    img(src=\"img.jpg\" title={title}\n                                   ^\n", source
   end
 
   def test_expected_closing_attribute_delimiter
@@ -66,7 +66,7 @@ p
   img src=[hash[1] + hash[2]
 }
 
-    assert_syntax_error "Expected closing attribute delimiter ]\n  (__TEMPLATE__), Line 3\n    img src=[hash[1] + hash[2]\n    ^\n        ", source
+    assert_syntax_error "Expected closing attribute delimiter ]\n  (__TEMPLATE__), Line 3\n    img src=[hash[1] + hash[2]\n                              ^\n", source
   end
 
   def test_unexpected_closing
@@ -75,7 +75,7 @@ p
   img src=(1+1)]
 }
 
-    assert_syntax_error "Unexpected closing ]\n  (__TEMPLATE__), Line 3\n    img src=(1+1)]\n    ^\n        ", source
+    assert_syntax_error "Unexpected closing ]\n  (__TEMPLATE__), Line 3\n    img src=(1+1)]\n                 ^\n", source
   end
 
   def test_invalid_empty_attribute
@@ -84,7 +84,7 @@ p
   img{src= }
 }
 
-    assert_syntax_error "Invalid empty attribute\n  (__TEMPLATE__), Line 3\n    img{src= }\n    ^\n        ", source
+    assert_syntax_error "Invalid empty attribute\n  (__TEMPLATE__), Line 3\n    img{src= }\n            ^\n", source
   end
 
   def test_invalid_empty_attribute2
@@ -93,7 +93,7 @@ p
   img{src=}
 }
 
-    assert_syntax_error "Invalid empty attribute\n  (__TEMPLATE__), Line 3\n    img{src=}\n    ^\n        ", source
+    assert_syntax_error "Invalid empty attribute\n  (__TEMPLATE__), Line 3\n    img{src=}\n            ^\n", source
   end
 
   def test_invalid_empty_attribute3
@@ -102,6 +102,6 @@ p
   img src=
 }
 
-    assert_syntax_error "Invalid empty attribute\n  (__TEMPLATE__), Line 3\n    img src=\n    ^\n        ", source
+    assert_syntax_error "Invalid empty attribute\n  (__TEMPLATE__), Line 3\n    img src=\n            ^\n", source
   end
 end
