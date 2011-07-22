@@ -4,6 +4,8 @@ master
   * Obsolete directive syntax removed
   * Syntax for trailing whitespace added (==' and =')
   * Deprecated file 'slim/rails.rb' removed
+  * Parsing of #{interpolation} in markdown fixed
+  * Support for attributes which span multiple lines
 
 0.9.3
 
