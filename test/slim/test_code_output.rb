@@ -118,9 +118,10 @@ p(id="test")==hello_world
   end
 
   def test_render_with_backslash_end
+# Keep trailing spaces!
     source = %q{
-p = \
-"Hello" + \
+p = \  
+"Hello" + \  
 " Ruby!"
 - variable = 1 + \
       2 + \
