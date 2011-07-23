@@ -6,6 +6,8 @@ master
   * Deprecated file 'slim/rails.rb' removed
   * Parsing of #{interpolation} in markdown fixed
   * Support for attributes which span multiple lines
+  * Dynamic attributes with value true/false are interpreted as boolean
+  * Support boolean attributes without value e.g. option(selected id="abc")
 
 0.9.3
 
