@@ -67,9 +67,9 @@ module Slim
 
     private
 
-    ATTR_REGEX = /\A\s*(\w[:\w-]*)=/
+    ATTR_NAME_REGEX = '\A\s*(\w[:\w-]*)'
     QUOTED_VALUE_REGEX = /\A("[^"]*"|'[^']*')/
-    ATTR_SHORTHAND = {
+    ATTR_SHORTCUT = {
       '#' => 'id',
       '.' => 'class',
     }.freeze
@@ -324,12 +324,12 @@ module Slim
       while @line =~ CLASS_ID_REGEX
         # The class/id attribute is :static instead of :slim :text,
         # because we don't want text interpolation in .class or #id shortcut
-        attributes << [:html, :attr, ATTR_SHORTHAND[$1], [:static, $2]]
+        attributes << [:html, :attr, ATTR_SHORTCUT[$1], [:static, $2]]
         @line = $'
       end
 
       # Check to see if there is a delimiter right after the tag name
-      delimiter = ''
+      delimiter = nil
       if @line =~ DELIMITER_REGEX
         delimiter = DELIMITERS[$&]
         @line.slice!(0)
@@ -339,10 +339,14 @@ module Slim
       lineno = @lineno
       while true
         # Parse attributes
-        while @line =~ ATTR_REGEX
-          name = $1
+        attr_regex = delimiter ? /#{ATTR_NAME_REGEX}(=|\s|(?=#{Regexp.escape delimiter}))/
+                               : /#{ATTR_NAME_REGEX}=/
+        while @line =~ attr_regex
           @line = $'
-          if @line =~ QUOTED_VALUE_REGEX
+          name = $1
+          if delimiter && $2 != '='
+            attributes << [:slim, :attr, name, false, 'true']
+          elsif @line =~ QUOTED_VALUE_REGEX
             # Value is quoted (static)
             @line = $'
             attributes << [:html, :attr, name, [:slim, :interpolate, $1[1..-2]]]
@@ -350,13 +354,12 @@ module Slim
             # Value is ruby code
             escape = @line[0] != ?=
             @line.slice!(0) unless escape
-            attributes << [:slim, :attr, name, escape,
-                           parse_ruby_attribute(delimiter)]
+            attributes << [:slim, :attr, name, escape, parse_ruby_attribute(delimiter)]
           end
         end
 
         # No ending delimiter, attribute end
-        break if delimiter.empty?
+        break unless delimiter
 
         # Find ending delimiter
         if @line =~ /\A\s*#{Regexp.escape delimiter}/
@@ -387,7 +390,7 @@ module Slim
       value = ''
 
       # Attribute ends with space or attribute delimiter
-      end_regex = /\A[\s#{Regexp.escape delimiter}]/
+      end_regex = /\A[\s#{Regexp.escape delimiter.to_s}]/
 
       until @line.empty?
         if stack.empty? && @line =~ end_regex

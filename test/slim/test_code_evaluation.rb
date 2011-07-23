@@ -214,9 +214,25 @@ p id="#{(false ? 'notshown' : 'shown')}" = output_number
     assert_html '<div id="alpha-beta">Test it</div>', source, :attr_delimiter => {'class' => ' ', 'id' => '-' }
   end
 
+  def test_boolean_attribute_false
+    source = %{
+option selected=false Text
+}
+
+    assert_html '<option>Text</option>', source
+  end
+
   def test_boolean_attribute_true
     source = %{
-option selected=1 Text
+option selected=true Text
+}
+
+    assert_html '<option selected="selected">Text</option>', source
+  end
+
+  def test_boolean_attribute_dynamic
+    source = %{
+option selected=method_which_returns_true Text
 }
 
     assert_html '<option selected="selected">Text</option>', source
@@ -230,12 +246,37 @@ option selected=false Text
     assert_html '<option>Text</option>', source
   end
 
-  def test_non_boolean_attribute
+  def test_boolean_attribute_nil
     source = %{
-.alpha class="beta" class=false
+option selected=nil Text
 }
 
-    assert_html '<div class="alpha beta false"></div>', source
+    assert_html '<option>Text</option>', source
+  end
+
+  def test_boolean_attribute_false
+    source = %{
+option selected=false Text
+}
+
+    assert_html '<option>Text</option>', source
+  end
+
+  def test_boolean_attribute_string2
+    source = %{
+option selected="selected" Text
+}
+
+    assert_html '<option selected="selected">Text</option>', source
+  end
+
+  def test_boolean_attribute_shortcut
+    source = %{
+option(class="clazz" selected) Text
+option(selected class="clazz") Text
+}
+
+    assert_html '<option class="clazz" selected="selected">Text</option><option class="clazz" selected="selected">Text</option>', source
   end
 
   def test_array_attribute
