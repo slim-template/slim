@@ -333,8 +333,7 @@ module Slim
       delimiter = ''
       if @line =~ DELIMITER_REGEX
         delimiter = DELIMITERS[$&]
-        # Replace the delimiter with a space so we can continue parsing as normal.
-        @line[0] = ?\s
+        @line.slice!(0)
       end
 
       orig_line = @orig_line
@@ -365,6 +364,10 @@ module Slim
           @line = $'
           break
         end
+
+        # Found something where an attribute should be
+        @line.lstrip!
+        syntax_error!('Expected attribute') unless @line.empty?
 
         # Attributes span multiple lines
         @stacks.last << [:newline]

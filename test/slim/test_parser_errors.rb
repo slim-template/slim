@@ -69,6 +69,15 @@ p
     assert_syntax_error "Expected closing attribute delimiter ]\n  (__TEMPLATE__), Line 3\n    img src=[hash[1] + hash[2]\n                              ^\n", source
   end
 
+  def test_expected_attribute
+    source = %q{
+p
+  img(src='img.png' whatsthis?!)
+}
+
+    assert_syntax_error "Expected attribute\n  (__TEMPLATE__), Line 3\n    img(src='img.png' whatsthis?!)\n                      ^\n", source
+  end
+
   def test_unexpected_closing
     source = %q{
 p
