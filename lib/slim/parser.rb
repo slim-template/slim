@@ -4,8 +4,6 @@ module Slim
   class Parser
     include Temple::Mixins::Options
 
-    ATTR_REGEX = /\A\s*(\w[:\w-]*)=/
-
     set_default_options :tabsize  => 4,
                         :encoding => 'utf-8'
 
@@ -69,6 +67,7 @@ module Slim
 
     private
 
+    ATTR_REGEX = /\A\s*(\w[:\w-]*)=/
     QUOTED_VALUE_REGEX = /\A("[^"]*"|'[^']*')/
     ATTR_SHORTHAND = {
       '#' => 'id',
