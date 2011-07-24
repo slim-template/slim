@@ -138,12 +138,24 @@
           <pre><code><span class="tag">a</span> href=<span class="string">"</span><span class="interpolation">#{</span>url_for <span class="instancevar">@user</span><span class="interpolation">}</span><span class="string">"</span> = <span class="instancevar">@user</span>.name</code></pre>
           <p>An attribute without quotes is deemed dynamic!</p>
           <pre><code><span class="tag">a</span> href=url_for(<span class="instancevar">@user</span>) = <span class="instancevar">@user</span>.name</code></pre>
+          <p>Attributes with methods that return a boolean are special. Methods that return true will show the attribute without a value. The attribute will not show if the method returns false.</p>
+          <pre><code><span class="tag">option</span> value=<span class="string">"Slim"</span> selected=option_selected?(<span class="string">"Slim"</span>)</code></pre>
 
         <hr/>
         <h4>Optional attribute wrappers: {...}, [...], (...)</h4>
           <pre><code><span class="tag">h1</span>{class=page_header_class} = page_header</code></pre>
           <pre><code><span class="tag">h1</span>[class=page_header_class] = page_header</code></pre>
           <pre><code><span class="tag">h1</span>(class=page_header_class) = page_header</code></pre>
+
+          <p>When using an attribute wrapper you can have attributes span multiple lines:</p>
+
+          <pre><code><span class="tag">h1</span>( class=page_header_class
+    id=<span class="string">"myid"</span>)= page_header</code></pre>
+
+          <p>The indentation is forgiving for readiblity:</p>
+          <pre><code><span class="tag">h1</span>( class=page_header_class
+    id=<span class="string">"myid"</span>)
+ | Slim is sweet.</code></pre>
 
         <hr/>
         <h4>Optional attribute value wrappers: {...}, [...], (...)</h4>
