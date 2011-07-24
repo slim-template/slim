@@ -67,6 +67,16 @@ javascript:
     assert_html '<script type="text/javascript">$(function() {});</script>', source
   end
 
+  def test_render_with_javascript_including_variable
+    # Keep the trailing space behind "javascript:   "!
+    source = %q{
+- func = "alert('hello');"
+javascript:   
+  $(function() { #{func} });
+}
+    assert_html %q|<script type="text/javascript">$(function() { alert('hello'); });</script>|, source
+  end
+
   def test_render_with_ruby
     source = %q{
 ruby:
