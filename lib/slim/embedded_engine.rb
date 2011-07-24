@@ -1,4 +1,5 @@
 module Slim
+  # @api private
   class CollectText < Filter
     def call(exp)
       @collected = ''
@@ -12,6 +13,7 @@ module Slim
     end
   end
 
+  # @api private
   class CollectNewlines < Filter
     def call(exp)
       @collected = [:multi]
@@ -25,6 +27,7 @@ module Slim
     end
   end
 
+  # @api private
   class ProtectOutput < Filter
     def call(exp)
       @protect = []
