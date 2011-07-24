@@ -1,4 +1,6 @@
-1.0   
+master
+
+1.0.0
 
   * Fixed html attribute issue in sections mode (#127)
   * Obsolete directive syntax removed
