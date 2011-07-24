@@ -281,7 +281,7 @@ module Slim
     def parse_tag(tag)
       size = @line.size
 
-      if tag == ?# || tag == ?.
+      if tag == '#' || tag == '.'
         tag = 'div'
       else
         @line.slice!(0, tag.size)
@@ -339,8 +339,7 @@ module Slim
       lineno = @lineno
       while true
         # Parse attributes
-        attr_regex = delimiter ? /#{ATTR_NAME_REGEX}(=|\s|(?=#{Regexp.escape delimiter}))/
-                               : /#{ATTR_NAME_REGEX}=/
+        attr_regex = delimiter ? /#{ATTR_NAME_REGEX}(=|\s|(?=#{Regexp.escape delimiter}))/ : /#{ATTR_NAME_REGEX}=/
         while @line =~ attr_regex
           @line = $'
           name = $1
