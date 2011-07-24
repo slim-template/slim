@@ -238,25 +238,9 @@ option selected=method_which_returns_true Text
     assert_html '<option selected="selected">Text</option>', source
   end
 
-  def test_boolean_attribute_false
-    source = %{
-option selected=false Text
-}
-
-    assert_html '<option>Text</option>', source
-  end
-
   def test_boolean_attribute_nil
     source = %{
 option selected=nil Text
-}
-
-    assert_html '<option>Text</option>', source
-  end
-
-  def test_boolean_attribute_false
-    source = %{
-option selected=false Text
 }
 
     assert_html '<option>Text</option>', source
