@@ -41,7 +41,7 @@ If you want to use the Slim template directly, you can use the Tilt interface:
 
 ## Syntax Highlighters
 
-Syntax highlight support for __Emacs__ is included in the `extra` folder. There are also [Vim](https://github.com/bbommarito/vim-slim) and [Textmate](https://github.com/fredwu/ruby-slim-textmate-bundle) plugins.
+Syntax highlight support for __Emacs__ is included in the `extra` folder. There are also [Vim](https://github.com/bbommarito/vim-slim) and [Textmate](https://github.com/fredwu/ruby-slim-tmbundle) plugins.
 
 ## Template Converters
 
@@ -345,7 +345,7 @@ This project is released under the MIT license.
 ## Slim related projects
 
 * [Vim files](https://github.com/bbommarito/vim-slim)
-* [Textmate bundle](https://github.com/fredwu/ruby-slim-textmate-bundle)
+* [Textmate bundle](https://github.com/fredwu/ruby-slim-tmbundle)
 * [Haml2Slim converter](https://github.com/fredwu/haml2slim)
 * [Rails 3 Generators](https://github.com/leogalmeida/slim-rails)
 * [Slim for Clojure](https://github.com/chaslemley/slim.clj)
