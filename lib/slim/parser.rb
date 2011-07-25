@@ -316,9 +316,6 @@ module Slim
     end
 
     def parse_attributes
-      # Now we'll have to find all the attributes. We'll store these in an
-      # nested array: [[name, value], [name2, value2]]. The value is a piece
-      # of Ruby code.
       attributes = [:html, :attrs]
 
       # Find any literal class/id attributes
