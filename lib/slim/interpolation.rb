@@ -37,27 +37,19 @@ module Slim
     protected
 
     def parse_expression(string)
-      count, code = 1, ''
-
-      until string.empty? || count == 0
-        if string =~ /\A\{/
+      count, i = 1, 0
+      while i < string.size && count != 0
+        if string[i] == ?{
           count += 1
-          code << string.slice!(0)
-        elsif string =~ /\A\}/
+        elsif string[i] == ?}
           count -= 1
-          if count == 0
-            string.slice!(0)
-          else
-            code << string.slice!(0)
-          end
-        else
-          code << string.slice!(0)
         end
+        i += 1
       end
 
       raise "Text interpolation: Expected closing }" if count != 0
 
-      return string, code
+      return string[i..-1], string[0, i-1]
     end
   end
 end

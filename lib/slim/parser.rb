@@ -422,7 +422,7 @@ module Slim
       value = value[1..-2] if value =~ DELIMITER_REGEX &&
         DELIMITERS[$&] == value[-1, 1]
 
-      return value
+      value
     end
 
     # Helper for raising exceptions
