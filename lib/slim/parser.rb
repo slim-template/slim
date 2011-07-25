@@ -71,7 +71,6 @@ module Slim
     }.freeze
 
     DELIMITER_REGEX = /\A[\(\[\{]/
-    CLOSE_DELIMITER_REGEX = /\A[\)\]\}]/
     ATTR_NAME_REGEX = '\A\s*(\w[:\w-]*)'
     QUOTED_VALUE_REGEX = /\A("[^"]*"|'[^']*')/
 
@@ -379,43 +378,32 @@ module Slim
       return attributes
     end
 
-    def parse_ruby_attribute(delimiter)
-      # Delimiter stack
-      stack = []
+    def parse_ruby_attribute(outer_delimiter)
+      # Delimiter count
+      count, delimiter, close_delimiter = 0, nil, nil
 
       # Attribute value buffer
       value = ''
 
       # Attribute ends with space or attribute delimiter
-      end_regex = /\A[\s#{Regexp.escape delimiter.to_s}]/
+      end_regex = /\A[\s#{Regexp.escape outer_delimiter.to_s}]/
 
-      until @line.empty?
-        if stack.empty? && @line =~ end_regex
-          # Stack is empty, this means we left the attribute value
-          # if next character is space or attribute delimiter
-          break
+      until @line.empty? || (count == 0 && @line =~ end_regex)
+        if count > 0
+          if @line[0] == delimiter[0]
+            count += 1
+          elsif @line[0] == close_delimiter[0]
+            count -= 1
+          end
         elsif @line =~ DELIMITER_REGEX
-          # Delimiter found, push it on the stack
-          stack << DELIMITERS[$&]
-          value << @line.slice!(0)
-        elsif @line =~ CLOSE_DELIMITER_REGEX
-          # Closing delimiter found, pop it from the stack if everything is ok
-          syntax_error!("Unexpected closing #{$&}") if stack.empty?
-          syntax_error!("Expected closing #{stack.last}") if stack.last != $&
-          value << @line.slice!(0)
-          stack.pop
-        else
-          value << @line.slice!(0)
+          count = 1
+          delimiter, close_delimiter = $&, DELIMITERS[$&]
         end
+        value << @line.slice!(0)
       end
 
-      unless stack.empty?
-        syntax_error!("Expected closing attribute delimiter #{stack.last}")
-      end
-
-      if value.empty?
-        syntax_error!('Invalid empty attribute')
-      end
+      syntax_error!("Expected closing attribute delimiter #{close_delimiter}") if count != 0
+      syntax_error!('Invalid empty attribute') if value.empty?
 
       # Remove attribute wrapper which doesn't belong to the ruby code
       # e.g id=[hash[:a] + hash[:b]]

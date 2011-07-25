@@ -78,15 +78,6 @@ p
     assert_syntax_error "Expected attribute\n  (__TEMPLATE__), Line 3\n    img(src='img.png' whatsthis?!)\n                      ^\n", source
   end
 
-  def test_unexpected_closing
-    source = %q{
-p
-  img src=(1+1)]
-}
-
-    assert_syntax_error "Unexpected closing ]\n  (__TEMPLATE__), Line 3\n    img src=(1+1)]\n                 ^\n", source
-  end
-
   def test_invalid_empty_attribute
     source = %q{
 p
