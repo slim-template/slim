@@ -57,22 +57,23 @@ module Slim
       result
     end
 
+    private
+
     DELIMITERS = {
       '(' => ')',
       '[' => ']',
       '{' => '}',
     }.freeze
-    DELIMITER_REGEX = /\A[\(\[\{]/
-    CLOSE_DELIMITER_REGEX = /\A[\)\]\}]/
 
-    private
-
-    ATTR_NAME_REGEX = '\A\s*(\w[:\w-]*)'
-    QUOTED_VALUE_REGEX = /\A("[^"]*"|'[^']*')/
     ATTR_SHORTCUT = {
       '#' => 'id',
       '.' => 'class',
     }.freeze
+
+    DELIMITER_REGEX = /\A[\(\[\{]/
+    CLOSE_DELIMITER_REGEX = /\A[\)\]\}]/
+    ATTR_NAME_REGEX = '\A\s*(\w[:\w-]*)'
+    QUOTED_VALUE_REGEX = /\A("[^"]*"|'[^']*')/
 
     if RUBY_VERSION > '1.9'
       CLASS_ID_REGEX = /\A(#|\.)([\w\u00c0-\uFFFF][\w:\u00c0-\uFFFF-]*)/

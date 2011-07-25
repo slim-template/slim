@@ -37,28 +37,25 @@ module Slim
     protected
 
     def parse_expression(string)
-      stack, code = [], ''
+      count, code = 1, ''
 
-      until string.empty?
-        if stack.empty? && string =~ /\A\}/
-          # Stack is empty, this means we are finished
-          # if the next character is a closing bracket
-          string.slice!(0)
-          break
-        elsif string =~ Parser::DELIMITER_REGEX
-          # Delimiter found, push it on the stack
-          stack << Parser::DELIMITERS[$&]
+      until string.empty? || count == 0
+        if string =~ /\A\{/
+          count += 1
           code << string.slice!(0)
-        elsif string =~ Parser::CLOSE_DELIMITER_REGEX
-          # Closing delimiter found, pop it from the stack if everything is ok
-          raise "Text interpolation: Unexpected closing #{$&}" if stack.empty?
-          raise "Text interpolation: Expected closing #{stack.last}" if stack.last != $&
-          code << string.slice!(0)
-          stack.pop
+        elsif string =~ /\A\}/
+          count -= 1
+          if count == 0
+            string.slice!(0)
+          else
+            code << string.slice!(0)
+          end
         else
           code << string.slice!(0)
         end
       end
+
+      raise "Text interpolation: Expected closing }" if count != 0
 
       return string, code
     end
