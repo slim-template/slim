@@ -73,7 +73,7 @@ module Slim
          [:code, "#{tmp} = #{code}"],
          [:case, tmp,
           ['true', [:static, name]],
-          ['false, nil', [:static, '']],
+          ['false, nil', [:multi]],
           [:else,
            [:dynamic,
             if delimiter = options[:attr_delimiter][name]
