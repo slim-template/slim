@@ -375,7 +375,7 @@ module Slim
                                    :column => orig_line.size)
       end
 
-      return attributes
+      attributes
     end
 
     def parse_ruby_attribute(outer_delimiter)
