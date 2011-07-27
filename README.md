@@ -15,11 +15,11 @@ Slim uses [Temple](https://github.com/judofyr/temple) for parsing/compilation an
 
 ## Why?
 
-Within the Rails community, _Erb_ and _Haml_ are without doubt the two most popular templating engines. However, _Erb_'s syntax is cumbersome and _Haml_'s performance isn't exactly the best.
+Within the Rails community, _Erb_ and _Haml_ are without doubt the two most popular templating engines. However, _Erb_'s syntax is cumbersome and _Haml_'s syntax can be quite cryptic to the uninitiated.
 
 Slim was born to bring a minimalist syntax approach with speed. If people chose not to use Slim, it would not be because of speed.
 
-___Yes, Slim is speedy!___ Benchmarks are provided at the end of this README file. Alternatively, a benchmark rake task is provided so you could test it yourself (`rake bench`).
+___Yes, Slim is speedy!___ Benchmarks are provided at the end of this README file. Don't trust the numbers? That's as it should be. Therefore we provide a benchmark rake task so you could test it yourself (`rake bench`).
 
 ## How?
 
@@ -151,6 +151,12 @@ Here's a quick example to demonstrate what a Slim template looks like:
     body
       h1(id="logo") = page_logo
       h2[id="tagline" class="small tagline"] = page_tagline
+
+
+  If you wrap the attributes, you can spread them across multiple lines:
+
+    h2[ id="tagline" 
+        class="small tagline"] = page_tagline
 
 ### Add content to a tag
 
