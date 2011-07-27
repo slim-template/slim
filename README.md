@@ -283,6 +283,11 @@ Here's a quick example to demonstrate what a Slim template looks like:
 
 ## Benchmarks
 
+  *The benchmarks are only to demonstrate that Slim's speed should not
+  be determining factor in your template choice. Even if we don't agree, 
+  we'd prefer you to use any other reason for choosing another 
+  template language.*
+
     # Linux + Ruby 1.9.2, 1000 iterations
 
                           user     system      total        real
