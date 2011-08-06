@@ -312,22 +312,11 @@ closed(id="test")/
     source = %q{
 p Hello
 /! This is a comment
-p World
-}
-
-    assert_html "<p>Hello</p><!--This is a comment--><p>World</p>", source
-  end
-
-  def test_render_with_html_comments_2
-    source = %q{
-p Hello
-/! This is a comment
    Another comment
-  Last line of comment.
 p World
 }
 
-    assert_html "<p>Hello</p><!--This is a comment\n Another comment\nLast line of comment.--><p>World</p>", source
+    assert_html "<p>Hello</p><!--This is a comment\nAnother comment--><p>World</p>", source
   end
 
   def test_render_with_html_conditional_and_tag
