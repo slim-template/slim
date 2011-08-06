@@ -1,5 +1,9 @@
 master
 
+  * Only delimiting brackets must be balanced in ruby attributes
+    e.g this is possible now `a href=(ruby_code "{")
+  * Skip empty lines in text block (#156)
+
 1.0.0
 
   * Fixed html attribute issue in sections mode (#127)
