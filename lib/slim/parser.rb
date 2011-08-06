@@ -178,8 +178,8 @@ module Slim
           block = [:multi]
           @stacks.last <<  [:html, :comment, block]
           @stacks << block
-          @stacks.last << [:slim, :interpolate, $2] if $2
-          parse_text_block($1 ? 2 : 1)
+          @stacks.last << [:slim, :interpolate, $2] unless $2.empty?
+          parse_text_block($2.empty? ? nil : @indents.last + $1.size + 2)
         elsif @line =~ %r{\A/\[\s*(.*?)\s*\]\s*\Z}
           # HTML conditional comment
           block = [:multi]
@@ -189,15 +189,11 @@ module Slim
           # Slim comment
           parse_comment_block
         end
-      when /\A[\|']/
+      when /\A([\|'])( ?)(.*)\Z/
         # Found a text block.
-        trailing_ws = @line.slice!(0) == ?'
-        if @line.strip.empty?
-          parse_text_block
-        else
-          @stacks.last << [:slim, :interpolate, @line.sub(/\A( )/, '')]
-          parse_text_block($1 ? 2 : 1)
-        end
+        trailing_ws = $1 == "'"
+        @stacks.last << [:slim, :interpolate, $3] unless $3.empty?
+        parse_text_block($3.empty? ? nil : @indents.last + $2.size + 1)
         @stacks.last << [:static, ' '] if trailing_ws
       when /\A-/
         # Found a code block.
@@ -241,9 +237,7 @@ module Slim
       end
     end
 
-    def parse_text_block(offset = nil)
-      text_indent = offset ? @indents.last + offset : nil
-
+    def parse_text_block(text_indent = nil)
       until @lines.empty?
         indent = get_indent(@lines.first)
         break if indent <= @indents.last
@@ -279,8 +273,6 @@ module Slim
     end
 
     def parse_tag(tag)
-      size = @line.size
-
       if tag == '#' || tag == '.'
         tag = 'div'
       else
@@ -305,12 +297,12 @@ module Slim
         content = [:multi]
         tag << content
         @stacks << content
-      else
+      when /\A( ?)(.*)\Z/
         # Text content
-        content = [:multi, [:slim, :interpolate, @line.sub(/\A( )/, '')]]
+        content = [:multi, [:slim, :interpolate, $2]]
         tag << content
         @stacks << content
-        parse_text_block(size - @line.size + ($1 ? 1 : 0))
+        parse_text_block(@orig_line.size - @line.size + $1.size)
       end
     end
 
