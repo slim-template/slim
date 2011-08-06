@@ -63,8 +63,12 @@ creole:
     source = %q{
 javascript:   
   $(function() {});
+
+
+  alert('hello')
+p Hi
 }
-    assert_html '<script type="text/javascript">$(function() {});</script>', source
+    assert_html %{<script type="text/javascript">$(function() {});\n\n\nalert('hello')</script><p>Hi</p>}, source
   end
 
   def test_render_with_javascript_including_variable

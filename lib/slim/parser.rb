@@ -124,7 +124,7 @@ module Slim
     end
 
     def parse_line
-      if @line.strip.empty?
+      if @line =~ /\A\s*\Z/
         @stacks.last << [:newline]
         return
       end
@@ -231,35 +231,43 @@ module Slim
     end
 
     def parse_comment_block
-      until @lines.empty? || get_indent(@lines.first) <= @indents.last
+      while !@lines.empty? && (@lines.first =~ /\A\s*\Z/ || get_indent(@lines.first) > @indents.last)
         next_line
         @stacks.last << [:newline]
       end
     end
 
     def parse_text_block(text_indent = nil)
+      empty_lines = 0
       until @lines.empty?
-        indent = get_indent(@lines.first)
-        break if indent <= @indents.last
+        if @lines.first =~ /\A\s*\Z/
+          next_line
+          @stacks.last << [:newline]
+          empty_lines += 1 if text_indent
+        else
+          indent = get_indent(@lines.first)
+          break if indent <= @indents.last
 
-        next_line
+          next_line
 
-        # The indentation of first line of the text block
-        # determines the text base indentation.
-        newline = text_indent ? "\n" : ''
-        text_indent ||= indent
+          empty_lines.times { @stacks.last << [:slim, :interpolate, "\n"] }
+          empty_lines = 0
 
-        # The text block lines must be at least indented
-        # as deep as the first line.
-        if indent < text_indent
-          @line.lstrip!
-          syntax_error!('Unexpected text indentation')
+          # The text block lines must be at least indented
+          # as deep as the first line.
+          if text_indent && indent < text_indent
+            @line.lstrip!
+            syntax_error!('Unexpected text indentation')
+          end
+
+          @line.slice!(0, text_indent || indent)
+
+          @stacks.last << [:newline] << [:slim, :interpolate, (text_indent ? "\n" : '') + @line]
+
+          # The indentation of first line of the text block
+          # determines the text base indentation.
+          text_indent ||= indent
         end
-
-        @line.slice!(0, text_indent)
-
-        # Generate the additional spaces in front.
-        @stacks.last  << [:newline] << [:slim, :interpolate, newline + @line]
       end
     end
 

@@ -7,11 +7,22 @@ class TestSlimHtmlStructure < TestSlim
 html
   head
     title Simple Test Title
-  body
+  body 
     p Hello World, meet Slim.
 }
 
     assert_html '<html><head><title>Simple Test Title</title></head><body><p>Hello World, meet Slim.</p></body></html>', source
+  end
+
+  def test_html_tag_with_text_and_empty_line
+    # Keep the trailing space behind "body "!
+    source = %q{
+p Hello
+
+p World
+}
+
+    assert_html "<p>Hello</p><p>World</p>", source
   end
 
   def test_html_namespaces
@@ -312,11 +323,12 @@ closed(id="test")/
     source = %q{
 p Hello
 /! This is a comment
+
    Another comment
 p World
 }
 
-    assert_html "<p>Hello</p><!--This is a comment\nAnother comment--><p>World</p>", source
+    assert_html "<p>Hello</p><!--This is a comment\n\nAnother comment--><p>World</p>", source
   end
 
   def test_render_with_html_conditional_and_tag
