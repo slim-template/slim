@@ -248,10 +248,12 @@ module Slim
           indent = get_indent(@lines.first)
           break if indent <= @indents.last
 
-          next_line
+          if empty_lines > 0
+            @stacks.last << [:slim, :interpolate, "\n" * empty_lines]
+            empty_lines = 0
+          end
 
-          empty_lines.times { @stacks.last << [:slim, :interpolate, "\n"] }
-          empty_lines = 0
+          next_line
 
           # The text block lines must be at least indented
           # as deep as the first line.
@@ -261,7 +263,6 @@ module Slim
           end
 
           @line.slice!(0, text_indent || indent)
-
           @stacks.last << [:newline] << [:slim, :interpolate, (text_indent ? "\n" : '') + @line]
 
           # The indentation of first line of the text block
