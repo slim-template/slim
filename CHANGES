@@ -1,5 +1,7 @@
 master
 
+1.0.1
+
   * Only delimiting brackets must be balanced in ruby attributes
     e.g this is possible now `a href=(ruby_code "{")
   * Skip empty lines in text block (#156)
