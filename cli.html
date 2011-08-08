@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="description" content="Slim is a template language whose goal is reduce html syntax to the essential parts without becoming cryptic."/>
+    <link href="css/slim.css" media="screen" rel="stylesheet" type="text/css"/>
+    <title>Slim</title>
+  </head>
+
+  <body>
+    <div id="side">
+      <div class="wrap">
+        <h1>Slim > Home</h1>
+        <h2 id="slogan">A lightweight templating engine</h2>
+        <ul id="links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="docs.html">Docs</a></li>
+          <li><a href="logic-less.html">Logic-less</a></li>
+          <li><a href="contribute.html">Contribute</a></li>
+          <li><a href="http://rdoc.info/github/stonean/slim/master/frames">API</a></li>
+          <li class="last"><a href="cli.html" class="active">CLI</a></li>
+        </ul>
+        <p><a href="https://github.com/stonean/slim" class='github'>stonean<span>/</span><strong>slim</strong></a></p>
+      </div>
+    </div>
+    
+    <div id="main">
+      <div class="wrap pad">
+        
+
+        <h3 class="first">Slim CLI</h3>
+        <h4>Install:</h4>
+        <pre><code>$ gem install slim</code></pre>
+
+        <hr/>
+        <h4>The command:</h4>
+        <pre><code>$ slimrb</code></pre>
+
+        <hr/>
+        <h4>The options:</h4>
+        <pre><code>$ slimrb --help
+Usage: slimrb [options]
+  -s, --stdin                      Read input from standard input instead of an input file
+      --trace                      Show a full traceback on error
+  -c, --compile                    Compile only but do not run
+  -r, --rails                      Generate rails compatible code (combine with -c)
+  -S, --sections                   Logic-less sections mode
+  -p, --pretty                     Produce pretty html
+  -h, --help                       Show this message
+  -v, --version                    Print version
+        </code></pre>
+
+        <hr/>
+        <h4>Tring it out (this example requires the rdiscount gem):</h4>
+        <p>Type your tempate, when you're done CTRL-D to send EOF.</p>
+        <pre><code>$ slimrb
+markdown:
+  First paragraph.
+
+  Second paragraph.
+
+  * one
+  * two
+  * three
+
+//Enter CTRL-D
+&lt;p&gt;First paragraph &lt;/p&gt;
+
+&lt;p&gt;Second paragraph &lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;one&lt;/li&gt;
+&lt;li&gt;two&lt;/li&gt;
+&lt;li&gt;three&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+        <hr/>
+        <h4>Want to see the compiled code for a Rails view?:</h4>
+        <pre><code>$ slimrb --rails --compile app/views/show.slim</code></pre>
+
+    <p class="foot">
+      Source: <a href="http://github.com/stonean/slim">stonean/slim</a>&nbsp;|&nbsp;Slim logo &amp; site design by <a href="http://github.com/activestylus">activestylus</a><br/>
+    </p>
+    </div>
+  </div>
+  <a id="forkme" href="http://github.com/stonean/slim">Fork me on Github</a>
+  <script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-19270476-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+</body>
+</html>

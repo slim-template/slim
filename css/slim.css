@@ -39,7 +39,7 @@ body {
   text-decoration:none;
   text-shadow:0px 1px 0px #fc9;
   padding:4px 0px;
-  line-height:33px;
+  line-height:32px;
 }
 #side ul li a:hover {font-weight:bold;}
 #side ul li a.active {
