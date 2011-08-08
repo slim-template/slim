@@ -27,13 +27,13 @@ module Slim
     # Boolean     | :sections          | false                         | Enable sections mode (logic-less)
     # String      | :dictionary        | "self"                        | Name of dictionary variable in sections mode
     # Symbol      | :dictionary_access | :wrapped                      | Access mode of dictionary variable (:wrapped, :symbol, :string)
-    # Boolean     | :disable_capture   | false (true in Rails)         | Disable capturing in blocks (blocks write to the default buffer then)
     # Boolean     | :disable_escape    | false                         | Disable automatic escaping of strings
     # Boolean     | :use_html_safe     | false (true in Rails)         | Use String#html_safe? from ActiveSupport (Works together with :disable_escape)
     # Symbol      | :format            | :html5                        | HTML output format
     # String      | :attr_wrapper      | '"'                           | Character to wrap attributes in html (can be ' or ")
     # Hash        | :attr_delimiter    | {'class' => ' '}              | Joining character used if multiple html attributes are supplied (e.g. id1_id2)
     # Boolean     | :pretty            | false                         | Pretty html indenting (This is slower!)
+    # Boolean     | :streaming         | true                          | Enable output streaming (Has an effect only in Rails > 3.1)
     # Class       | :generator         | ArrayBuffer/RailsOutputBuffer | Temple code generator (default generator generates array buffer)
     #
     # It is also possible to set all options supported by the generator (option :generator). The standard generators
@@ -57,12 +57,22 @@ module Slim
     use Slim::Interpolation
     use Slim::Sections, :sections, :dictionary, :dictionary_access
     use Slim::EndInserter
-    use Slim::Compiler, :disable_capture, :attr_delimiter
+    use Slim::Compiler, :attr_delimiter
     use Temple::HTML::Pretty, :format, :attr_wrapper, :attr_delimiter, :pretty
     filter :Escapable, :use_html_safe, :disable_escape
     filter :ControlFlow
     filter :MultiFlattener
-    filter :DynamicInliner
-    use(:Generator) {|exp| options[:generator].new(options).call(exp) }
+
+    use(:Optimizer) do |exp|
+      if options[:streaming]
+        Temple::Filters::StaticMerger.new.call(exp)
+      else
+        Temple::Filters::DynamicInliner.new.call(exp)
+      end
+    end
+
+    use(:Generator) do |exp|
+      options[:generator].new(options).call(exp)
+    end
   end
 end

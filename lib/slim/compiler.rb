@@ -43,11 +43,7 @@ module Slim
           # Capture the content of a block in a separate buffer. This means
           # that `yield` will not output the content to the current buffer,
           # but rather return the output.
-          #
-          # The capturing can be disabled with the option :disable_capture.
-          # Output code in the block writes directly to the output buffer then.
-          # Rails handles this by replacing the output buffer for helpers.
-          options[:disable_capture] ? compile(content) : [:capture, unique_name, compile(content)]],
+          [:capture, unique_name, compile(content)]],
 
          # Output the content.
          [:escape, escape, [:dynamic, tmp]]]

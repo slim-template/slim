@@ -9,9 +9,8 @@ module Slim
     RailsTemplate = Temple::Templates::Rails(Slim::Engine,
                                              :register_as => :slim,
                                              # Use rails-specific generator. This is necessary
-                                             # to support block capturing. Disable the internal slim capturing.
-                                             # Rails takes care of the capturing by itself.
+                                             # to support block capturing and streaming.
                                              :generator => Temple::Generators::RailsOutputBuffer,
-                                             :disable_capture => true)
+                                             :streaming => true)
   end
 end

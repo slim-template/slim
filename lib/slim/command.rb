@@ -86,7 +86,6 @@ module Slim
         @options[:output].puts(Slim::Engine.new(:file => @options[:file],
                                                 :pretty => @options[:pretty],
                                                 :sections => @options[:sections],
-                                                :disable_capture => @options[:rails],
                                                 :generator => @options[:rails] ?
                                                 Temple::Generators::RailsOutputBuffer :
                                                 Temple::Generators::ArrayBuffer).call(@options[:input].read))

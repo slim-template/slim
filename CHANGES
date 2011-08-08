@@ -1,5 +1,7 @@
 master
 
+  * Support for Rails 3.1 streaming (Temple > 0.3.2 required)
+
 1.0.1
 
   * Only delimiting brackets must be balanced in ruby attributes
