@@ -37,12 +37,12 @@
 - article
   <span class="tag">h1</span> = title</pre></code>
     <hr/>
-    <h4>Inverted conditional</h4>
+    <h4><a name="inverted-conditional" href="#inverted-conditional">Inverted conditional</a></h4>
       <pre><code><span class="comment">/ If the method <strong>is</strong> false or empty?, the content will show</span>
 -! article
   <span class="tag">p</span> Sorry, article not found</pre></code>
     <hr/>
-    <h4>Resolution order</h4>
+    <h4><a name="resolution-order" href="#resolution-order">Resolution order</a></h4>
     <p>If article.respond_to?(<span class="symbol">:title</span>)</p>
       <pre><code>- article
   <span class="comment">/ Slim will execute article.send(:title)</span>
@@ -64,11 +64,11 @@
     <p>If all the above fails, Slim will try to resolve the title reference in the same order against the parent object.  In this example, the parent would be the initial scope you are rendering the template against.</p>
     <p>As you might have guessed, the article reference goes through the same steps against the scope.</p>
     <hr/>
-    <h4>Things to know</h4>
+    <h4><a name="things-to-know" href="#things-to-know">Things to know</a></h4>
     <p>Instance variables are not allowed in the view code, but Slim will find and use them.  Essentially, you're just using dropping the @ prefix in your template.</p>
     <p>Parametized method calls are not allowed.</p>
     <hr/>
-    <h4>Logic less support in Rails</h4>
+    <h4><a name="rails-support" href="#rails-support">Logic less support in Rails</a></h4>
     <p>Install:</p>
       <pre><code>$ gem install slim</pre></code>
     <p>Require:</p>
@@ -77,7 +77,7 @@
       <pre><code><span class="constant">Slim</span>::<span class="constant">Engine</span>.set_default_options <span class="symbol">:sections</span> =&gt; <span class="keyword">true</span></pre></code>
     </p>
     <hr/>
-    <h4>Logic less support in Sinatra</h4>
+    <h4><a name="sinatra-support" href="#sinatra-support">Logic less support in Sinatra</a></h4>
     <p>Sinata has built-in support for Slim. All you have to do is require slim and set the logic-less option.
       This can be done in your config.ru:
     <pre><code><span class="keyword">require</span> <span class="string">'slim'</span>

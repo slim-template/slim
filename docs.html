@@ -32,14 +32,14 @@
         
 
         <h3 class="first">Slim Docs</h3>
-        <h4>Install:</h4>
+        <h4><a name="install" href="#install">Install:</a></h4>
         <pre><code>$ gem install slim</code></pre>
 
         <p>In your Gemfile (Rails)</p>
         <pre><code><span class='keyword'>gem</span> <span class='string'>'slim'</span></code></pre>
 
         <hr/>
-        <h4>Options:</h4>
+        <h4><a name="options" href="#options">Options:</a></h4>
         <pre><code><span class="comment"># Output pretty (indented) format
 # For Rails, you'd probably want this line in
 # config/environments/development.rb</span>
@@ -47,7 +47,7 @@
     <p>Just use the .slim extension on your templates and you're good to go. <br> Now on to the syntax...</p>
 
         <hr/>
-        <h4>doctype declarations:</h4>
+        <h4><a name="doctypes" href="#doctypes">doctype declarations:</a></h4>
           <pre><code>
 <span class="comment">/ XHTML DOCTYPES </span>
 
@@ -97,21 +97,21 @@
       </code></pre>
 
         <hr/>
-        <h4>HTML Comments</h4>
+        <h4><a name="html-comments" href="#html-comments">HTML Comments</a></h4>
         <pre><code>/! This is an HTML Comment
    Which you can nest if you'd like for multiline comments.</code></pre>
 
         <hr/>
-        <h4>HTML Conditional Comments</h4>
+        <h4><a name="html-conditional-comments" href="#html-conditional-comments">HTML Conditional Comments</a></h4>
         <pre><code>/[ if lt IE 9 ]
    <span class="tag">link</span> href=<span class="string">'/styles/iefix.css'</span> media=<span class="string">'screen'</span> rel=<span class="string">'stylesheet'</span> type=<span class="string">'text/css'</span></span></code></pre>
 
         <hr/>
-        <h4>Static content on same line:</h4>
+        <h4><a name="static-content" href="#static-content">Static content on same line:</a></h4>
         <pre><code><span class="tag">h1</span> This is my header</code></pre>
 
         <hr/>
-        <h4>Nest static content:</h4>
+        <h4><a name="nest-static-content" href="#nest-static-content">Nest static content:</a></h4>
           <pre><code><span class="tag">h1</span>
   | This is my header</code></pre>
         <p>Single apostrophe can be used in place of pipe if you want to ensure that a single whitespace is appended.</p>
@@ -120,7 +120,7 @@
         
 
         <hr/>
-        <h4>Nest static content over multiple lines:</h4>
+        <h4><a name="nest-static-content-multiline" href="#nest-static-content-multiline">Nest static content over multiple lines:</a></h4>
           <pre><code><span class="tag">p</span>
   | I have a lot to say ..
     Too much for one line
@@ -128,7 +128,7 @@
           </code></pre>
           <p>The space after the pipe becomes your left margin. Any additional leading spaces will be carried over.</p>
         <hr/>
-        <h4>Dynamic Content</h4>
+        <h4><a name="dynamic-content" href="#dynamic-content">Dynamic Content</a></h4>
           <pre><code><span class="tag">h1</span> = page_header</code></pre>
           <p>Can also nest the call.</p>
           <pre><code><span class="tag">h1</span>
@@ -138,14 +138,14 @@
   alert(<span class="string">'Hello'</span>);</code></pre>
 
         <hr/>
-        <h4>Control logic (as you would expect):</h4>
+        <h4><a name="control-logic" href="#control-logic">Control logic (as you would expect):</a></h4>
           <pre><code>- <span class="keyword">if</span> logged_in?
   <span class="tag">li</span> = link_to(<span class="string">"Logout"</span>, logout_path)
 - <span class="keyword">else</span>
   <span class="tag">li</span> = link_to(<span class="string">"Login"</span>, login_path) </code></pre>
 
         <hr/>
-        <h4>Dynamic content in attribute</h4>
+        <h4><a name="dynamic-content-in-attribute" href="#dynamic-content-in-attribute">Dynamic content in attribute</a></h4>
           <pre><code><span class="tag">a</span> href=<span class="string">"</span><span class="interpolation">#{</span>url_for <span class="instancevar">@user</span><span class="interpolation">}</span><span class="string">"</span> = <span class="instancevar">@user</span>.name</code></pre>
           <p>An attribute without quotes is deemed dynamic!</p>
           <pre><code><span class="tag">a</span> href=url_for(<span class="instancevar">@user</span>) = <span class="instancevar">@user</span>.name</code></pre>
@@ -153,7 +153,7 @@
           <pre><code><span class="tag">option</span> value=<span class="string">"Slim"</span> selected=option_selected?(<span class="string">"Slim"</span>)</code></pre>
 
         <hr/>
-        <h4>Optional attribute wrappers: {...}, [...], (...)</h4>
+        <h4><a name="optional-attribute-wrappers" href="#optional-attribute-wrappers">Optional attribute wrappers: {...}, [...], (...)</a></h4>
           <pre><code><span class="tag">h1</span>{class=page_header_class} = page_header</code></pre>
           <pre><code><span class="tag">h1</span>[class=page_header_class] = page_header</code></pre>
           <pre><code><span class="tag">h1</span>(class=page_header_class) = page_header</code></pre>
@@ -172,7 +172,7 @@
           <pre><code><span class="tag">option</span>(value=<span class="string">"Slim"</span> selected)</code></pre>
 
         <hr/>
-        <h4>Optional attribute value wrappers: {...}, [...], (...)</h4>
+        <h4><a name="optional-attribute-value-wrappers" href="#optional-attribute-value-wrappers">Optional attribute value wrappers: {...}, [...], (...)</a></h4>
           <pre><code><span class="tag">h1</span>{class=(page_header_class)} = page_header</code></pre>
           <pre><code><span class="tag">h1</span>[class={page_header_class}] = page_header</code></pre>
           <pre><code><span class="tag">h1</span>(class=[page_header_class]) = page_header</code></pre>
@@ -183,7 +183,7 @@
           <p>Use whatever reads best for you!</p>
 
         <hr/>
-        <h4>Evaluate Ruby code in text</h4>
+        <h4><a name="code-eval" href="#code-eval">Evaluate Ruby code in text</a></h4>
           <pre><code><span class="tag">h1</span> Welcome <span class="interpolation">#{</span>current_user.name<span class="interpolation">}</span> to Slim!</code></pre>
           <p>To bypass the interpolation (i.e. render as is)</p>
           <pre><code><span class="tag">h1</span> Welcome \#{current_user.name} to Slim!</code></pre>
@@ -196,13 +196,13 @@
         <pre><code><span class="tag">p</span> Current location: <span class="interpolation">#{{</span>request.path<span class="interpolation">}}</span></code></pre>
         
         <hr/>
-        <h4>Haml like shortcuts:</h4>
+        <h4><a name="class-and-id-shortcuts" href="#class-and-id-shortcuts">Haml like shortcuts:</a></h4>
           <pre><code><span class="tag">#myid</span><span class="htmlclass">.myclass.myclass2</span> My example</code></pre>
            <p>renders:</p>
           <pre><code><code>&lt;div id="myid" class="myclass myclass2"&gt;My example&lt;/div&gt;</code></code></pre>
 
         <hr/>
-        <h4>Code comments (use a forward slash):</h4>
+        <h4><a name="code-comments" href="#code-comments">Code comments (use a forward slash):</a></h4>
           <pre><code><span class="comment">/ This is my comment, it will not be included on output</span>
 <span class="tag">p</span> This is my content</code></pre>
           <p>Can also nest comments.</p>
@@ -211,12 +211,14 @@
 <span class="tag">p</span> This is my content</code></pre>
 
         <hr/>
-        <h4>Span multiple lines (use a back slash):</h4>
+        <h4><a name="span-lines" href="#span-lines">Span multiple lines (use a back slash):</a></h4>
           <pre><code>= javascript_include_tag <span class="string">'jquery'</span>,      \
                          <span class="string">'jquery-ui'</span>,   \
                          <span class="string">'application'</span></code></pre>
 
         <hr/>
+
+        <h4><a name="engines" href="#engines">Engines:</a></h4>
         <p>Thanks to <a href="http://github.com/rtomayko/tilt">Tilt</a>, Slim has impressive support for embedding other template engines:</p>
 	<pre><code><table>
 	  <tr><td>ENGINE</td><td>FILTER</td><td>REQUIRED LIBRARIES</td></tr>
