@@ -9,6 +9,14 @@ p id="a#{id_helper}b" = hello_world
     assert_html '<p id="anoticeb">Hello World from @env</p>', source
   end
 
+  def test_nested_interpolation_in_attribute
+    source = %q{
+p id="#{"abc#{1+1}" + "("}" = hello_world
+}
+
+    assert_html '<p id="abc2(">Hello World from @env</p>', source
+  end
+
   def test_interpolation_in_text
     source = %q{
 p

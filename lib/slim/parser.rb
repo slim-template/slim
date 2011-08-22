@@ -72,7 +72,6 @@ module Slim
 
     DELIMITER_REGEX = /\A[\(\[\{]/
     ATTR_NAME_REGEX = '\A\s*(\w[:\w-]*)'
-    QUOTED_VALUE_REGEX = /\A("[^"]*"|'[^']*')/
 
     if RUBY_VERSION > '1.9'
       CLASS_ID_REGEX = /\A(#|\.)([\w\u00c0-\uFFFF][\w:\u00c0-\uFFFF-]*)/
@@ -343,10 +342,10 @@ module Slim
           name = $1
           if delimiter && $2 != '='
             attributes << [:slim, :attr, name, false, 'true']
-          elsif @line =~ QUOTED_VALUE_REGEX
+          elsif @line =~ /\A(["'])/
             # Value is quoted (static)
             @line = $'
-            attributes << [:html, :attr, name, [:slim, :interpolate, $1[1..-2]]]
+            attributes << [:html, :attr, name, [:slim, :interpolate, parse_quoted_attribute($1)]]
           else
             # Value is ruby code
             escape = @line[0] != ?=
@@ -410,6 +409,46 @@ module Slim
       # e.g id=[hash[:a] + hash[:b]]
       value = value[1..-2] if value =~ DELIMITER_REGEX &&
         DELIMITERS[$&] == value[-1, 1]
+
+      value
+    end
+
+
+    def parse_quoted_attribute(outer_delimiter)
+      # Delimiter count
+      count = 0
+
+      # Attribute value buffer
+      value = ''
+
+      # Attribute ends with space or attribute delimiter
+      end_regex = /\A#{Regexp.escape outer_delimiter.to_s}/
+
+      until @line.empty? || (count == 0 && @line =~ end_regex)
+        if count > 0
+          if @line =~ /\A\{/
+            @line = $'
+            value << $&
+            count += 1
+          elsif @line =~ /\A\}/
+            @line = $'
+            value << $&
+            count -= 1
+          else
+            value << @line.slice!(0)
+          end
+        elsif @line =~ /\A#\{/
+          @line = $'
+          value << $&
+          count = 1
+        else
+          value << @line.slice!(0)
+        end
+      end
+
+      syntax_error!("Expected closing brace }") if count != 0
+
+      @line.slice!(0)
 
       value
     end
