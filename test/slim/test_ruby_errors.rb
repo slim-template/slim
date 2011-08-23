@@ -19,12 +19,7 @@ p = hello_world + \
   unknown_ruby_method
 }
 
-    # Hack for now.
-    if RUBY_PLATFORM == "java"
-      assert_ruby_error NameError, "test.slim:2", source, :file => 'test.slim'
-    else
-      assert_ruby_error NameError, "test.slim:4", source, :file => 'test.slim'
-    end
+    assert_ruby_error NameError, "test.slim:4", source, :file => 'test.slim'
   end
 
   def test_broken_output_line2
