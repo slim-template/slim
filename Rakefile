@@ -13,13 +13,13 @@ end
 
 Rake::TestTask.new('test') do |t|
   t.libs << 'lib' << 'test/slim'
-  t.pattern = 'test/slim/test_*.rb'
+  t.test_files = FileList['test/slim/test_*.rb']
   t.verbose = true
 end
 
 Rake::TestTask.new('test:rails') do |t|
   t.libs << 'lib'
-  t.pattern = 'test/rails/test/test_*.rb'
+  t.test_files = FileList['test/rails/test/test_*.rb']
   t.verbose = true
 end
 
@@ -30,8 +30,8 @@ end
 begin
   require 'rcov/rcovtask'
   Rcov::RcovTask.new do |t|
-    t.libs << 'lib' << 'test'
-    t.pattern = 'test/**/test_*.rb'
+    t.libs << 'lib' << 'test/slim'
+    t.test_files = FileList['test/slim/test_*.rb']
     t.verbose = true
   end
 rescue LoadError
