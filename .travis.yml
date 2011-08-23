@@ -3,4 +3,5 @@ rvm:
   - 1.9.2
   - jruby
   - ree
-
+  - rbx
+  - rbx-2.0
