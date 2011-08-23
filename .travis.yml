@@ -9,7 +9,7 @@ env:
   - "TASK=test"
   - "TASK=test TEMPLE=master"
   - "TASK=test:rails TEMPLE=master RAILS=master"
-  - "TASK=test:rails RAILS=3.0.0"
+  - "TASK=test:rails RAILS=3.0.10"
 script: "bundle exec rake test:ci"
 notifications:
   email: false

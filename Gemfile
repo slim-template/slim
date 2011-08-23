@@ -10,7 +10,7 @@ if ENV['RAILS']
   if ENV['RAILS'] == 'master'
     gem 'rails', :git => 'git://github.com/rails/rails.git'
   else
-    gem 'rails', "~> #{ENV['RAILS']}"
+    gem 'rails', "= #{ENV['RAILS']}"
   end
   gem 'sqlite3-ruby'
 end
