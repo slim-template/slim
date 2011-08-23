@@ -12,3 +12,7 @@ env:
   - "TASK=test:rails TEMPLE=master RAILS=master"
   - "TASK=test:rails RAILS=3.0.0"
 script: "bundle exec rake test:ci"
+notifications:
+  email: false
+  irc:
+    - "irc.freenode.org#slim-lang"
