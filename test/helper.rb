@@ -62,13 +62,13 @@ end
 class Env
   attr_reader :var
 
-  class HtmlSafeString < String
+  class ::HtmlSafeString < String
     def html_safe?
       true
     end
   end
 
-  class HtmlUnsafeString < String
+  class ::HtmlUnsafeString < String
     def html_safe?
       false
     end
