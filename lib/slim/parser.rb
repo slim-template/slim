@@ -5,7 +5,8 @@ module Slim
     include Temple::Mixins::Options
 
     set_default_options :tabsize  => 4,
-                        :encoding => 'utf-8'
+                        :encoding => 'utf-8',
+                        :default_tag => 'div'
 
     class SyntaxError < StandardError
       attr_reader :error, :file, :line, :lineno, :column
@@ -282,7 +283,7 @@ module Slim
 
     def parse_tag(tag)
       if tag == '#' || tag == '.'
-        tag = 'div'
+        tag = options[:default_tag]
       else
         @line.slice!(0, tag.size)
       end
