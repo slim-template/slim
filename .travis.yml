@@ -1,12 +1,14 @@
 rvm:
   - 1.8.7
   - 1.9.2
-  - jruby
+  - ruby-head
   - ree
+  - jruby
   - rbx
   - rbx-2.0
-gemfile:
-  - test/gemfiles/Gemfile.rails-3.0
-  - test/gemfiles/Gemfile.rails-3.1
-script: "bundle exec rake test integration"
-
+env:
+  - "TASK=test"
+  - "TASK=test TEMPLE=master"
+  - "TASK=test:rails TEMPLE=master RAILS=master"
+  - "TASK=test:rails RAILS=3.0.0"
+script: "bundle exec rake test:ci"

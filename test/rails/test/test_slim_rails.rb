@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + '/test_helper')
+require File.expand_path('../helper', __FILE__)
 
 class TestSlimRails < ActionController::IntegrationTest
   test "normal view" do
@@ -54,7 +54,7 @@ class TestSlimRails < ActionController::IntegrationTest
       '<h2>Children</h2>'+
       '<ul><li><input id="parent_children_attributes_0_name" name="parent[children_attributes][0][name]" size="30" type="text" value="c1" /></li>'+
       '<input id="parent_children_attributes_0_id" name="parent[children_attributes][0][id]" type="hidden" value="1" /></ul>'+
-      '<input id="parent_submit" name="commit" type="submit" value="Update Parent" /></form>'
+      '</form>'
   end
 
   protected

@@ -13,6 +13,6 @@ doc
 coverage
 pkg
 
-test/integration/rails/dummy/log/
-test/integration/rails/dummy/tmp/
-test/integration/rails/dummy/db/*.sqlite3
+test/rails/log/
+test/rails/tmp/
+test/rails/db/*.sqlite3

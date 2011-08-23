@@ -11,16 +11,20 @@ task :bench, :iterations, :slow do |t, args|
   ruby("benchmarks/run.rb #{args[:slow]} #{args[:iterations]}")
 end
 
-Rake::TestTask.new(:test) do |t|
-  t.libs << 'lib' << 'test'
+Rake::TestTask.new('test') do |t|
+  t.libs << 'lib' << 'test/slim'
   t.pattern = 'test/slim/**/test_*.rb'
   t.verbose = true
 end
 
-Rake::TestTask.new(:integration) do |t|
-  t.libs << 'lib' << 'test'
-  t.pattern = 'test/integration/**/test_*.rb'
+Rake::TestTask.new('test:rails') do |t|
+  t.libs << 'lib'
+  t.pattern = 'test/rails/test/test_*.rb'
   t.verbose = true
+end
+
+task 'test:ci' do |t|
+  Rake::Task[ENV['TASK']].execute
 end
 
 begin
