@@ -414,42 +414,29 @@ module Slim
     end
 
 
-    def parse_quoted_attribute(outer_delimiter)
+    def parse_quoted_attribute(quote)
       # Delimiter count
       count = 0
 
       # Attribute value buffer
       value = ''
 
-      # Attribute ends with space or attribute delimiter
-      end_regex = /\A#{Regexp.escape outer_delimiter.to_s}/
-
-      until @line.empty? || (count == 0 && @line =~ end_regex)
+      until @line.empty? || (count == 0 && @line[0] == quote[0])
         if count > 0
-          if @line =~ /\A\{/
-            @line = $'
-            value << $&
+          if @line[0] == ?{
             count += 1
-          elsif @line =~ /\A\}/
-            @line = $'
-            value << $&
+          elsif @line[0] == ?}
             count -= 1
-          else
-            value << @line.slice!(0)
           end
         elsif @line =~ /\A#\{/
-          @line = $'
-          value << $&
-          count = 1
-        else
           value << @line.slice!(0)
+          count = 1
         end
+        value << @line.slice!(0)
       end
 
       syntax_error!("Expected closing brace }") if count != 0
-
       @line.slice!(0)
-
       value
     end
 
