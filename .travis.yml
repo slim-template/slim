@@ -5,3 +5,8 @@ rvm:
   - ree
   - rbx
   - rbx-2.0
+gemfile:
+  - test/gemfiles/Gemfile.rails-3.0
+  - test/gemfiles/Gemfile.rails-3.1
+script: "bundle exec rake test integration"
+
