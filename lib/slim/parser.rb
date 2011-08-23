@@ -342,10 +342,10 @@ module Slim
           name = $1
           if delimiter && $2 != '='
             attributes << [:slim, :attr, name, false, 'true']
-          elsif @line =~ /\A(["'])/
+          elsif @line =~ /\A["']/
             # Value is quoted (static)
             @line = $'
-            attributes << [:html, :attr, name, [:slim, :interpolate, parse_quoted_attribute($1)]]
+            attributes << [:html, :attr, name, [:slim, :interpolate, parse_quoted_attribute($&)]]
           else
             # Value is ruby code
             escape = @line[0] != ?=
@@ -379,11 +379,7 @@ module Slim
     end
 
     def parse_ruby_attribute(outer_delimiter)
-      # Delimiter count
-      count, delimiter, close_delimiter = 0, nil, nil
-
-      # Attribute value buffer
-      value = ''
+      value, count, delimiter, close_delimiter = '', 0, nil, nil
 
       # Attribute ends with space or attribute delimiter
       end_regex = /\A[\s#{Regexp.escape outer_delimiter.to_s}]/
@@ -413,13 +409,8 @@ module Slim
       value
     end
 
-
     def parse_quoted_attribute(quote)
-      # Delimiter count
-      count = 0
-
-      # Attribute value buffer
-      value = ''
+      value, count = '', 0
 
       until @line.empty? || (count == 0 && @line[0] == quote[0])
         if count > 0
