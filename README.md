@@ -155,7 +155,7 @@ Here's a quick example to demonstrate what a Slim template looks like:
 
   If you wrap the attributes, you can spread them across multiple lines:
 
-    h2[ id="tagline" 
+    h2[ id="tagline"
         class="small tagline"] = page_tagline
 
 ### Add content to a tag
@@ -290,8 +290,8 @@ Here's a quick example to demonstrate what a Slim template looks like:
 ## Benchmarks
 
   *The benchmarks are only to demonstrate that Slim's speed should not
-  be a determining factor in your template choice. Even if we don't 
-  agree, we'd prefer you to use any other reason for choosing another 
+  be a determining factor in your template choice. Even if we don't
+  agree, we'd prefer you to use any other reason for choosing another
   template language.*
 
     # Linux + Ruby 1.9.2, 1000 iterations
@@ -337,6 +337,20 @@ Here's a quick example to demonstrate what a Slim template looks like:
        accurate result of the performance in production mode in frameworks like
        Sinatra, Ramaze and Camping. (Rails still uses its own template
        compilation.)
+
+## Tests
+
+Slim provides an extensive test-suite based on minitest. You can run the tests
+with 'rake test' and the rails integration tests with 'rake test:rails'.
+
+Travis-CI is used for continous integration testing: http://travis-ci.org/#!/stonean/slim
+
+Slim is working well on the following ruby implementations:
+
+* Ruby 1.8.7
+* Ruby 1.9.2
+* Ruby EE
+* JRuby
 
 ## License
 
