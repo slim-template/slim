@@ -26,9 +26,12 @@ Gem::Specification.new do |s|
   s.add_development_dependency('haml', ['>= 3.1.0'])
   s.add_development_dependency('sass', ['>= 3.1.0'])
   s.add_development_dependency('minitest', ['>= 0'])
-  s.add_development_dependency('rcov', ['>= 0'])
   s.add_development_dependency('rdiscount', ['>= 0'])
   s.add_development_dependency('liquid', ['>= 0'])
   s.add_development_dependency('yard', ['>= 0'])
   s.add_development_dependency('creole', ['>= 0'])
+
+  unless defined?(RUBY_ENGINE) && RUBY_ENGINE == 'rbx'
+    s.add_development_dependency('rcov', ['>= 0'])
+  end
 end
