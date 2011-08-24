@@ -63,17 +63,8 @@ module Slim
     filter :Escapable, :use_html_safe, :disable_escape
     filter :ControlFlow
     filter :MultiFlattener
-
-    use(:Optimizer) do |exp|
-      if options[:streaming]
-        Temple::Filters::StaticMerger.new.call(exp)
-      else
-        Temple::Filters::DynamicInliner.new.call(exp)
-      end
-    end
-
-    use(:Generator) do |exp|
-      options[:generator].new(options).call(exp)
-    end
+    wildcard(:Optimizer) { (options[:streaming] ? Temple::Filters::StaticMerger :
+                            Temple::Filters::DynamicInliner).new }
+    wildcard(:Generator) { options[:generator].new(options) }
   end
 end
