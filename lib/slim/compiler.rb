@@ -83,7 +83,7 @@ module Slim
             end
            ]]]]
       end
-      [:html, :attr, name,  [:escape, escape, value]]
+      [:html, :attr, name, [:escape, escape, value]]
     end
   end
 end
