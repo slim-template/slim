@@ -59,7 +59,8 @@ module Slim
     use Slim::Sections, :sections, :dictionary, :dictionary_access
     use Slim::EndInserter
     use Slim::Compiler, :disable_capture, :attr_delimiter
-    use Temple::HTML::Pretty, :format, :attr_wrapper, :attr_delimiter, :pretty
+    use Temple::HTML::AttributeMerger, :attr_delimiter
+    use Temple::HTML::Pretty, :format, :attr_wrapper, :pretty
     filter :Escapable, :use_html_safe, :disable_escape
     filter :ControlFlow
     filter :MultiFlattener
