@@ -1,5 +1,7 @@
 master
 
+1.0.2
+
   * Support for Rails 3.1 streaming (Temple > 0.3.2 required)
   * Switch to default format xhtml (supports all doctypes, including html5)
   * Improve parsing of #{interpolation} in quoted attributes (issue #159)
