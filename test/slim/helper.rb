@@ -39,8 +39,20 @@ class TestSlim < MiniTest::Unit::TestCase
     render(source, options)
     raise 'Ruby error expected'
   rescue error => ex
-    ex.backtrace[0] =~ /^(.*?:\d+):/
-    assert_equal from, $1
+    assert_backtrace(ex, from)
+  end
+
+  def assert_backtrace(ex, from)
+    if defined?(RUBY_ENGINE) && RUBY_ENGINE == 'rbx'
+      # HACK: Rubinius stack trace sometimes has one entry more
+      if ex.backtrace[0] !~ /^#{Regexp.escape from}:/
+        ex.backtrace[1] =~ /^(.*?:\d+):/
+        assert_equal from, $1
+      end
+    else
+      ex.backtrace[0] =~ /^(.*?:\d+):/
+      assert_equal from, $1
+    end
   end
 
   def assert_ruby_syntax_error(from, source, options = {})
