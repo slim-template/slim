@@ -217,7 +217,7 @@ module Slim
         @stacks.last << [:newline] << [:slim, :embedded, $1, block]
         @stacks << block
         parse_text_block
-        return # Don't append newline
+        return # Don't append newline, this has already been done before
       when /\Adoctype\s+/i
         # Found doctype declaration
         @stacks.last << [:html, :doctype, $'.strip]
@@ -263,7 +263,7 @@ module Slim
           end
 
           @line.slice!(0, text_indent || indent)
-          @stacks.last << [:newline] << [:slim, :interpolate, (text_indent ? "\n" : '') + @line]
+          @stacks.last << [:slim, :interpolate, (text_indent ? "\n" : '') + @line] << [:newline]
 
           # The indentation of first line of the text block
           # determines the text base indentation.

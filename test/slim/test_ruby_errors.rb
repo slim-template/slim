@@ -94,7 +94,7 @@ p Text line 1
     assert_ruby_error NameError,"(__TEMPLATE__):4", source
   end
 
-  def test_embedded_ruby
+  def test_embedded_ruby1
     source = %q{
 ruby:
   a = 1
@@ -104,6 +104,16 @@ ruby:
 }
 
     assert_ruby_error NameError,"(__TEMPLATE__):6", source
+  end
+
+  def test_embedded_ruby2
+    source = %q{
+ruby:
+  a = 1
+  unknown_ruby_method
+}
+
+    assert_ruby_error NameError,"(__TEMPLATE__):4", source
   end
 
   def test_embedded_markdown

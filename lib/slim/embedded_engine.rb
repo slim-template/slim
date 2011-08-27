@@ -177,7 +177,7 @@ module Slim
     # Generates a html tag and wraps another engine (specified via :engine option)
     class TagEngine < Filter
       def on_slim_embedded(engine, body)
-        content = options[:engine] ? options[:engine].new(options).on_slim_embedded(engine, body) : [:multi, body]
+        content = options[:engine] ? options[:engine].new(options).on_slim_embedded(engine, body) : body
         [:html, :tag, options[:tag], [:html, :attrs, *options[:attributes].map {|k, v| [:html, :attr, k, [:static, v]] }], content]
       end
     end
@@ -185,7 +185,7 @@ module Slim
     # Embeds ruby code
     class RubyEngine < Filter
       def on_slim_embedded(engine, body)
-        [:code, "\n" + CollectText.new.call(body)]
+        [:code, CollectText.new.call(body) + "\n"]
       end
     end
 
