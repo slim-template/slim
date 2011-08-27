@@ -23,7 +23,6 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency('tilt', ['~> 1.3.2'])
 
   s.add_development_dependency('rake', ['>= 0.8.7'])
-  s.add_development_dependency('haml', ['>= 3.1.0'])
   s.add_development_dependency('sass', ['>= 3.1.0'])
   s.add_development_dependency('minitest', ['>= 0'])
   s.add_development_dependency('rdiscount', ['>= 0'])

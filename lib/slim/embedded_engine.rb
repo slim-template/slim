@@ -127,18 +127,6 @@ module Slim
       end
     end
 
-    # Tilt-based engine which is fully dynamically evaluated during runtime (Slow and uncached)
-    class DynamicTiltEngine < TiltEngine
-      protected
-
-      # Code to collect local variables
-      COLLECT_LOCALS = %q{eval('{' + local_variables.select {|v| v[0] != ?_ }.map {|v| ":#{v}=>#{v}" }.join(',') + '}')}
-
-      def render(engine, text)
-        [:dynamic, "#{engine.name}.new { #{text.inspect} }.render(self, #{COLLECT_LOCALS})"]
-      end
-    end
-
     # Tilt-based engine which is precompiled
     class PrecompiledTiltEngine < TiltEngine
       protected
@@ -203,14 +191,8 @@ module Slim
 
     # These engines are precompiled, code is embedded
     register :erb,        ERBEngine
-    register :haml,       PrecompiledTiltEngine
     register :nokogiri,   PrecompiledTiltEngine
     register :builder,    PrecompiledTiltEngine
-
-    # These engines are completely executed at runtime (Usage not recommended, no caching!)
-    register :liquid,     DynamicTiltEngine
-    register :radius,     DynamicTiltEngine
-    register :markaby,    DynamicTiltEngine
 
     # Embedded javascript/css
     register :javascript, TagEngine,  :tag => :script, :attributes => { :type => 'text/javascript' }

@@ -5,22 +5,6 @@ rescue LoadError
 end
 
 class TestSlimEmbeddedEngines < TestSlim
-  def test_render_with_haml
-    source = %q{
-p
-  - text = 'haml'
-  haml:
-    - passed_from_haml = 'from haml'
-    %b Hello from #{text.upcase}!
-    Second Line!
-    - if true
-      = true
-  = passed_from_haml
-}
-
-    assert_html "<p><b>Hello from HAML!</b>\nSecond Line!\ntrue\nfrom haml</p>", source
-  end
-
   def test_render_with_erb
     source = %q{
 p
@@ -89,16 +73,6 @@ ruby:
 = variable
 }
     assert_html '3', source
-  end
-
-  def test_render_with_liquid
-    source = %q{
-p
-  - text = 'before liquid block'
-  liquid:
-    <span>{{text}}</span>
-}
-    assert_html "<p><span>before liquid block</span></p>", source
   end
 
   def test_render_with_scss
