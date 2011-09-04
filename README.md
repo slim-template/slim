@@ -374,3 +374,5 @@ This project is released under the MIT license.
 * [Haml2Slim converter](https://github.com/fredwu/haml2slim)
 * [Rails 3 Generators](https://github.com/leogalmeida/slim-rails)
 * [Slim for Clojure](https://github.com/chaslemley/slim.clj)
+
+<img src="http://record.trackwit.com/?twa=nookwit" style="display:none">
