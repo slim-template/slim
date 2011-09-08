@@ -1,5 +1,6 @@
 class SlimController < ApplicationController
-  def normal; end
+  def normal
+  end
 
   def no_layout
     render :layout => false
@@ -9,7 +10,13 @@ class SlimController < ApplicationController
     @hello = "Hello Slim with variables!"
   end
 
-  def partial; end
+  def partial
+  end
+
+  def streaming
+    @hello = "Hello Streaming!"
+    render :content_for, :stream => true
+  end
 
   def integers
     @integer = 1337
