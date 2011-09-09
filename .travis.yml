@@ -8,8 +8,9 @@ rvm:
 env:
   - "TASK=test"
   - "TASK=test TEMPLE=master"
-  - "TASK=test:rails TEMPLE=master RAILS=master"
+  - "TASK=test:rails RAILS=master"
   - "TASK=test:rails RAILS=3.0.10"
+  - "TASK=test:rails RAILS=3.1.0"
 script: "bundle exec rake test:ci"
 notifications:
   email: false
