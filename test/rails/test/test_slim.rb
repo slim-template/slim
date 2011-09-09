@@ -1,6 +1,6 @@
 require File.expand_path('../helper', __FILE__)
 
-class TestSlimRails < ActionController::IntegrationTest
+class TestSlim < ActionController::IntegrationTest
   test "normal view" do
     get "slim/normal"
     assert_response :success
