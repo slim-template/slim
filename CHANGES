@@ -1,5 +1,12 @@
 master
 
+  * Fix rubinius test cases
+  * Fix line numbers for embedded engines
+  * Require temple 0.3.4
+  * Remove dynamic embedded engines Haml, Liquid, Radius, Markaby
+  * More thorough integration testing using travis-ci
+    See http://travis-ci.org/#!/stonean/slim
+
 1.0.2
 
   * Support for Rails 3.1 streaming (Temple > 0.3.2 required)
