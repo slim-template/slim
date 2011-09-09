@@ -14,6 +14,6 @@ module Slim
                                              # Disable the internal slim capturing.
                                              # Rails takes care of the capturing by itself.
                                              :disable_capture => true,
-                                             :streaming => true)
+                                             :streaming => Object.const_defined?(:Fiber))
   end
 end
