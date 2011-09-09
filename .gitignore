@@ -15,4 +15,3 @@ pkg
 
 test/rails/log/
 test/rails/tmp/
-test/rails/db/*.sqlite3
