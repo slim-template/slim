@@ -25,8 +25,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency('rake', ['>= 0.8.7'])
   s.add_development_dependency('sass', ['>= 3.1.0'])
   s.add_development_dependency('minitest', ['>= 0'])
-  s.add_development_dependency('rdiscount', ['>= 0'])
-  s.add_development_dependency('liquid', ['>= 0'])
+  s.add_development_dependency('kramdown', ['>= 0'])
   s.add_development_dependency('yard', ['>= 0'])
   s.add_development_dependency('creole', ['>= 0'])
 

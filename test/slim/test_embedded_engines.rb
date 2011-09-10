@@ -30,7 +30,7 @@ markdown:
   * one
   * two
 }
-    assert_html "<h1>Header</h1>\n\n<p>Hello from Markdown!</p>\n\n<p>3</p>\n\n<ul>\n<li>one</li>\n<li>two</li>\n</ul>\n\n", source
+    assert_html "<h1 id=\"header\">Header</h1>\n<p>Hello from Markdown!</p>\n\n<p>3</p>\n\n<ul>\n  <li>one</li>\n  <li>two</li>\n</ul>\n", source
   end
 
   def test_render_with_creole
