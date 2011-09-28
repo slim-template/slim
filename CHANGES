@@ -6,6 +6,8 @@ master
   * Remove dynamic embedded engines Haml, Liquid, Radius, Markaby
   * More thorough integration testing using travis-ci
     See http://travis-ci.org/#!/stonean/slim
+  * Empty static attributes are not removed anymore
+  * Line indicator =' is supported in tags
 
 1.0.2
 
