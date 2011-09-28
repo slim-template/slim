@@ -12,7 +12,7 @@ module Slim
       # Interpolate variables in text (#{variable}).
       # Split the text into multiple dynamic and static parts.
       block = [:multi]
-      until string.empty?
+      begin
         case string
         when /\A\\#\{/
           # Escaped interpolation
@@ -25,12 +25,12 @@ module Slim
           string, code = parse_expression($')
           escape = code !~ /\A\{.*\}\Z/
           block << [:slim, :output, escape, escape ? code : code[1..-2], [:multi]]
-        when /\A([^#]+|#)/
+        when /\A(#|[^#]*)/
           # Static text
           block << [:static, $&]
           string = $'
         end
-      end
+      end until string.empty?
       block
     end
 
