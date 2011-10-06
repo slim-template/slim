@@ -15,6 +15,16 @@ doctype 5
 html
   head
     title Hello World!
+    /! Meta tags
+       with long explanatory
+       multiline comment
+    meta name="description" content="template language"
+    /! Stylesheets
+    link href="style.css" media="screen" rel="stylesheet" type="text/css"
+    link href="colors.css" media="screen" rel="stylesheet" type="text/css"
+    /! Javascripts
+    script src="jquery.js"
+    script src="jquery.ui.js"
     sass:
       body
         background-color: red
@@ -29,6 +39,16 @@ html
 <html>
   <head>
     <title>Hello World!</title>
+    <!--Meta tags
+    with long explanatory
+    multiline comment-->
+    <meta content="template language" name="description" />
+    <!--Stylesheets-->
+    <link href="style.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="colors.css" media="screen" rel="stylesheet" type="text/css" />
+    <!--Javascripts-->
+    <script src="jquery.js"></script>
+    <script src="jquery.ui.js"></script>
     <style type="text/css">
       body {
         background-color: red;
