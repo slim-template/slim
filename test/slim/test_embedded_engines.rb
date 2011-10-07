@@ -38,6 +38,15 @@ creole:
     assert_html "<h1>head1</h1><h2>head2</h2>", source
   end
 
+  def test_render_with_wiki
+    source = %q{
+wiki:
+  = head1
+  == head2
+}
+    assert_html "<h1>head1</h1><h2>head2</h2>", source
+  end
+
   def test_render_with_javascript
     # Keep the trailing space behind "javascript:   "!
     source = %q{
