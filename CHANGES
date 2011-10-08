@@ -1,5 +1,7 @@
 master
 
+1.0.3
+
   * Fix rubinius test cases
   * Fix line numbers for embedded engines
   * Require temple 0.3.4
