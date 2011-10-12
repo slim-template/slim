@@ -1,5 +1,9 @@
 master
 
+  * Pass options to embedded Tilt engine
+    Slim::EmbeddedEngine.set_default_options :markdown => {...}
+  * Add test case for precompiled embedded engine 'builder'
+
 1.0.3
 
   * Fix rubinius test cases
