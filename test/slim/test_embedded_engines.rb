@@ -38,6 +38,16 @@ creole:
     assert_html "<h1>head1</h1><h2>head2</h2>", source
   end
 
+  def test_render_with_builder
+    source = %q{
+builder:
+  xml.p(:id => 'test') {
+    xml.text!('Hello')
+  }
+}
+    assert_html "<p id=\"test\">\nHello</p>\n", source
+  end
+
   def test_render_with_wiki
     source = %q{
 wiki:
