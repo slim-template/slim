@@ -79,18 +79,12 @@ module Slim
     end
 
     def on_slim_embedded(name, body)
-      new_engine(name).on_slim_embedded(name, body)
-    end
-
-    protected
-
-    def new_engine(name)
       name = name.to_s
       raise "Embedded engine #{name} is disabled" if (options[:enable_engines] && !options[:enable_engines].include?(name)) ||
                                                      (options[:disable_engines] && options[:disable_engines].include?(name))
       engine, option_filter, local_options = self.class.engines[name] || raise("Embedded engine #{name} not found")
       filtered_options = Hash[*option_filter.select {|k| options.include?(k) }.map {|k| [k, options[k]] }.flatten]
-      engine.new(Temple::ImmutableHash.new(local_options, filtered_options))
+      engine.new(Temple::ImmutableHash.new(local_options, filtered_options)).on_slim_embedded(name, body)
     end
 
     # Basic tilt engine
