@@ -14,5 +14,12 @@ if ENV['RAILS']
   else
     gem 'rails', "= #{ENV['RAILS']}"
   end
-  gem 'sqlite3-ruby'
+
+  if defined?(JRUBY_VERSION)
+    gem 'jdbc-sqlite3'
+    gem 'activerecord-jdbc-adapter'
+    gem 'activerecord-jdbcsqlite3-adapter'
+  else
+    gem 'sqlite3-ruby'
+  end
 end
