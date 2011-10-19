@@ -25,6 +25,9 @@ html
     /! Javascripts
     script src="jquery.js"
     script src="jquery.ui.js"
+    /[if lt IE 9]
+      script src="old-ie1.js"
+      script src="old-ie2.js"
     sass:
       body
         background-color: red
@@ -49,6 +52,8 @@ html
     <!--Javascripts-->
     <script src="jquery.js"></script>
     <script src="jquery.ui.js"></script>
+    <!--[if lt IE 9]><script src="old-ie1.js"></script>
+    <script src="old-ie2.js"></script><![endif]-->
     <style type="text/css">
       body {
         background-color: red;
