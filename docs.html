@@ -191,7 +191,7 @@
         <br/>
         <h4 class="note">Slim escapes html by default!</h4>
         <p>Rails provides an html_safe? method that Slim takes advantage of, but when rendering partials, you'll need to use the double equal to bypass the escape html functionality:</p>
-        <pre><code>== <span class="keyword">render</span> =&gt; <span class="symbol">:partial</span>, <span class="string">'user'</span></code></pre>
+        <pre><code>== <span class="keyword">render</span> <span class="symbol">:partial</span> =&gt; <span class="string">'user'</span></code></pre>
         <p>To bypass escaping with interpolation:</p>
         <pre><code><span class="tag">p</span> Current location: <span class="interpolation">#{{</span>request.path<span class="interpolation">}}</span></code></pre>
         
