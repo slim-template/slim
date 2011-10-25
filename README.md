@@ -348,12 +348,14 @@ with 'rake test' and the rails integration tests with 'rake test:rails'.
 
 Travis-CI is used for continous integration testing: http://travis-ci.org/#!/stonean/slim
 
-Slim is working well on the following ruby implementations:
+Slim is working well on all major Ruby implementations:
 
 * Ruby 1.8.7
 * Ruby 1.9.2
+* Ruby 1.9.3
 * Ruby EE
 * JRuby
+* Rubinius 2.0
 
 ## License
 
