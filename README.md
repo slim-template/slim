@@ -141,7 +141,7 @@ Here's a quick example to demonstrate what a Slim template looks like:
 #### If your ruby code needs to use multiple lines, append a `\` at the end of the lines, for example:
     = javascript_include_tag \
        "jquery", \
-       "application"`
+       "application"
 
 ### Wrap attributes with delimiters
 
