@@ -254,16 +254,14 @@ module Slim
           end
 
           next_line
+          @line.lstrip!
 
           # The text block lines must be at least indented
           # as deep as the first line.
-          if text_indent && indent < text_indent
-            @line.lstrip!
-            syntax_error!('Unexpected text indentation')
-          end
+          offset = text_indent ? indent - text_indent : 0
+          syntax_error!('Unexpected text indentation') if offset < 0
 
-          @line.slice!(0, text_indent || indent)
-          @stacks.last << [:slim, :interpolate, (text_indent ? "\n" : '') + @line] << [:newline]
+          @stacks.last << [:slim, :interpolate, (text_indent ? "\n" : '') + (' ' * offset) + @line] << [:newline]
 
           # The indentation of first line of the text block
           # determines the text base indentation.

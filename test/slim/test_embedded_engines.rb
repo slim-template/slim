@@ -76,6 +76,12 @@ p Hi
     assert_html %{<script type="text/javascript">$(function() {});\n\n\nalert('hello')</script><p>Hi</p>}, source
   end
 
+  def test_render_with_javascript_with_tabs
+    # Keep the trailing space behind "javascript:   "!
+    source = "javascript:\n\t$(function() {});\n\talert('hello')\np Hi"
+    assert_html "<script type=\"text/javascript\">$(function() {});\nalert('hello')</script><p>Hi</p>", source
+  end
+
   def test_render_with_javascript_including_variable
     # Keep the trailing space behind "javascript:   "!
     source = %q{
