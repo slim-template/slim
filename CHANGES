@@ -3,6 +3,7 @@ master
   * Pass options to embedded Tilt engine
     Slim::EmbeddedEngine.set_default_options :markdown => {...}
   * Add test case for precompiled embedded engine 'builder'
+  * Bug #204 fixed, tabs were not parsed correctly
 
 1.0.3
 
