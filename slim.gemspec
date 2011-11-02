@@ -29,8 +29,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency('yard', ['>= 0'])
   s.add_development_dependency('creole', ['>= 0'])
   s.add_development_dependency('builder', ['>= 0'])
-
-  unless defined?(RUBY_ENGINE) && RUBY_ENGINE == 'rbx'
-    s.add_development_dependency('rcov', ['>= 0'])
-  end
+  #s.add_development_dependency('rcov', ['>= 0'])
 end
