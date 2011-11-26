@@ -42,7 +42,7 @@ module Slim
     def call(str)
       # Set string encoding if option is set
       if options[:encoding] && str.respond_to?(:encoding)
-        old = str.encoding
+        old_enc = str.encoding
         str = str.dup if str.frozen?
         str.force_encoding(options[:encoding])
         # Fall back to old encoding if new encoding is invalid
