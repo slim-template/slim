@@ -74,6 +74,7 @@ module Slim
     DELIMITER_REGEX = /\A[\(\[\{]/
     ATTR_NAME_REGEX = '\A\s*(\w[:\w-]*)'
     CLASS_ID_REGEX = /\A(#|\.)(\w[\w-]*\w|\w+)/
+    TAG_REGEX = /\A([#\.]|\w[\w:-]*\w|\w+)/
 
     def reset(lines = nil, stacks = nil)
       # Since you can indent however you like in Slim, we need to keep a list
@@ -216,7 +217,7 @@ module Slim
       when /\Adoctype\s+/i
         # Found doctype declaration
         @stacks.last << [:html, :doctype, $'.strip]
-      when /\A([#\.]|\w[:\w-]*)/
+      when TAG_REGEX
         # Found a HTML tag.
         parse_tag($&)
       else
@@ -285,6 +286,16 @@ module Slim
       @stacks.last << tag
 
       case @line
+      when /\A\s*:\s*/
+        # Block expansion
+        @line = $'
+        (@line =~ TAG_REGEX) || syntax_error!('Expected tag')
+        content = [:multi]
+        tag << content
+        i = @stacks.size
+        @stacks << content
+        parse_tag($1)
+        @stacks.delete_at(i)
       when /\A\s*=(=?)('?)/
         # Handle output code
         block = [:multi]
