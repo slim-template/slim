@@ -1,5 +1,8 @@
 master
 
+  * Support for special characters in class/id shortcut removed
+  * Do not allow : in class/id shortcut
+  * Add support for block expansion syntax
 
 1.0.4
 
