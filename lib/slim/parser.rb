@@ -73,7 +73,7 @@ module Slim
 
     DELIMITER_REGEX = /\A[\(\[\{]/
     ATTR_NAME_REGEX = '\A\s*(\w[:\w-]*)'
-    CLASS_ID_REGEX = /\A(#|\.)(\w[\w:-]*)/
+    CLASS_ID_REGEX = /\A(#|\.)(\w[\w-]*\w|\w+)/
 
     def reset(lines = nil, stacks = nil)
       # Since you can indent however you like in Slim, we need to keep a list
