@@ -104,4 +104,24 @@ p
 
     assert_syntax_error "Invalid empty attribute\n  (__TEMPLATE__), Line 3\n    img src=\n            ^\n", source
   end
+
+  def test_missing_tag_in_block_expansion
+    source = %{
+html: body:
+}
+
+    assert_syntax_error "Expected tag\n  (__TEMPLATE__), Line 2\n    html: body:\n               ^\n", source
+  end
+
+  def test_invalid_tag_in_block_expansion
+    source = %{
+html: body: /comment
+}
+    assert_syntax_error "Expected tag\n  (__TEMPLATE__), Line 2\n    html: body: /comment\n                ^\n", source
+
+    source = %{
+html: body:/comment
+}
+    assert_syntax_error "Expected tag\n  (__TEMPLATE__), Line 2\n    html: body:/comment\n               ^\n", source
+  end
 end

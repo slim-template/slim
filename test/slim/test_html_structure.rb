@@ -435,4 +435,28 @@ data-info="myinfo">
     end
   end
 
+  def test_block_expansion_support
+    source = %q{
+ul
+  li.first: a href='a' foo
+  li:       a href='b' bar
+  li.last:  a href='c' baz
+}
+    assert_html %{<ul><li class=\"first\"><a href=\"a\">foo</a></li><li><a href=\"b\">bar</a></li><li class=\"last\"><a href=\"c\">baz</a></li></ul>}, source
+  end
+
+  def test_block_expansion_class_attributes
+    source = %q{
+.a: .b: #c d
+}
+    assert_html %{<div class="a"><div class="b"><div id="c">d</div></div></div>}, source
+  end
+
+  def test_block_expansion_nesting
+    source = %q{
+html: body: .content
+  | Text
+}
+    assert_html %{<html><body><div class=\"content\">Text</div></body></html>}, source
+  end
 end
