@@ -171,11 +171,7 @@ module Slim
         # Found a comment block.
         if @line =~ %r{\A/!( ?)(.*)\Z}
           # HTML comment
-          block = [:multi]
-          @stacks.last <<  [:html, :comment, block]
-          @stacks << block
-          @stacks.last << [:slim, :interpolate, $2] unless $2.empty?
-          parse_text_block($2.empty? ? nil : @indents.last + $1.size + 2)
+          @stacks.last << [:html, :comment, parse_text_block($2, @indents.last + $1.size + 2)]
         elsif @line =~ %r{\A/\[\s*(.*?)\s*\]\s*\Z}
           # HTML conditional comment
           block = [:multi]
@@ -188,8 +184,7 @@ module Slim
       when /\A([\|'])( ?)(.*)\Z/
         # Found a text block.
         trailing_ws = $1 == "'"
-        @stacks.last << [:slim, :interpolate, $3] unless $3.empty?
-        parse_text_block($3.empty? ? nil : @indents.last + $2.size + 1)
+        @stacks.last << parse_text_block($3, @indents.last + $2.size + 1)
         @stacks.last << [:static, ' '] if trailing_ws
       when /\A-/
         # Found a code block.
@@ -209,11 +204,7 @@ module Slim
         @stacks << block
       when /\A(\w+):\s*\Z/
         # Embedded template detected. It is treated as block.
-        block = [:multi]
-        @stacks.last << [:newline] << [:slim, :embedded, $1, block]
-        @stacks << block
-        parse_text_block
-        return # Don't append newline, this has already been done before
+        @stacks.last << [:slim, :embedded, $1, parse_text_block]
       when /\Adoctype\s+/i
         # Found doctype declaration
         @stacks.last << [:html, :doctype, $'.strip]
@@ -233,19 +224,26 @@ module Slim
       end
     end
 
-    def parse_text_block(text_indent = nil)
+    def parse_text_block(first_line = nil, text_indent = nil)
+      result = [:multi]
+      if !first_line || first_line.empty?
+        text_indent = nil
+      else
+        result << [:slim, :interpolate, first_line]
+      end
+
       empty_lines = 0
       until @lines.empty?
         if @lines.first =~ /\A\s*\Z/
           next_line
-          @stacks.last << [:newline]
+          result << [:newline]
           empty_lines += 1 if text_indent
         else
           indent = get_indent(@lines.first)
           break if indent <= @indents.last
 
           if empty_lines > 0
-            @stacks.last << [:slim, :interpolate, "\n" * empty_lines]
+            result << [:slim, :interpolate, "\n" * empty_lines]
             empty_lines = 0
           end
 
@@ -257,13 +255,14 @@ module Slim
           offset = text_indent ? indent - text_indent : 0
           syntax_error!('Unexpected text indentation') if offset < 0
 
-          @stacks.last << [:slim, :interpolate, (text_indent ? "\n" : '') + (' ' * offset) + @line] << [:newline]
+          result << [:newline] << [:slim, :interpolate, (text_indent ? "\n" : '') + (' ' * offset) + @line]
 
           # The indentation of first line of the text block
           # determines the text base indentation.
           text_indent ||= indent
         end
       end
+      result
     end
 
     def parse_broken_line
@@ -313,10 +312,7 @@ module Slim
         @stacks << content
       when /\A( ?)(.*)\Z/
         # Text content
-        content = [:multi, [:slim, :interpolate, $2]]
-        tag << content
-        @stacks << content
-        parse_text_block(@orig_line.size - @line.size + $1.size)
+        tag << parse_text_block($2, @orig_line.size - @line.size + $1.size)
       end
     end
 
