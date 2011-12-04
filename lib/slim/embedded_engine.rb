@@ -153,7 +153,7 @@ module Slim
     # ERB engine (uses the Temple ERB implementation)
     class ERBEngine < EmbeddedEngine
       def on_slim_embedded(engine, body)
-        Temple::ERB::Parser.new.call(CollectText.new.call(body))
+        Temple::ERB::Parser.new.call(CollectText.new.call(body) + "\n")
       end
     end
 
