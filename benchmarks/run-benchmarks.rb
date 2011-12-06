@@ -3,26 +3,24 @@
 $:.unshift(File.join(File.dirname(__FILE__), '..', 'lib'), File.dirname(__FILE__))
 
 require 'slim'
-require 'complex_view'
+require 'context'
 
 require 'benchmark'
-require 'ostruct'
 require 'erubis'
 require 'erb'
 require 'haml'
-require 'tilt'
 
 class SlimBenchmarks
   def initialize(slow, iterations)
     @iterations = (iterations || 1000).to_i
     @benches    = []
 
-    tpl_erb  = File.read(File.dirname(__FILE__) + '/complex.erb')
-    tpl_haml = File.read(File.dirname(__FILE__) + '/complex.haml')
-    tpl_slim = File.read(File.dirname(__FILE__) + '/complex.slim')
+    tpl_erb  = File.read(File.dirname(__FILE__) + '/view.erb')
+    tpl_haml = File.read(File.dirname(__FILE__) + '/view.haml')
+    tpl_slim = File.read(File.dirname(__FILE__) + '/view.slim')
 
-    view  = ComplexView.new
-    eview = OpenStruct.new(:header => view.header, :item => view.item).instance_eval{ binding }
+    context  = Context.new
+    context_binding = context.instance_eval { binding }
 
     erb         = ERB.new(tpl_erb)
     erubis      = Erubis::Eruby.new(tpl_erb)
@@ -37,9 +35,9 @@ class SlimBenchmarks
     tilt_haml_ugly = Tilt::HamlTemplate.new(:format => :html5, :ugly => true){ tpl_haml }
     tilt_slim      = Slim::Template.new { tpl_slim }
 
-    haml.def_method(view, :run_haml)
-    haml_ugly.def_method(view, :run_haml_ugly)
-    view.instance_eval %{
+    haml.def_method(context, :run_haml)
+    haml_ugly.def_method(context, :run_haml_ugly)
+    context.instance_eval %{
       def run_erb; #{erb.src}; end
       def run_erubis; #{erubis.src}; end
       def run_fast_erubis; #{fast_erubis.src}; end
@@ -47,33 +45,33 @@ class SlimBenchmarks
     }
 
     if slow
-      bench('(1) erb')         { ERB.new(tpl_erb).result(eview) }
-      bench('(1) erubis')      { Erubis::Eruby.new(tpl_erb).result(eview) }
-      bench('(1) fast erubis') { Erubis::Eruby.new(tpl_erb).result(eview) }
-      bench('(1) slim')        { Slim::Template.new { tpl_slim }.render(view) }
-      bench('(1) haml')        { Haml::Engine.new(tpl_haml, :format => :html5).render(view) }
-      bench('(1) haml ugly')   { Haml::Engine.new(tpl_haml, :format => :html5, :ugly => true).render(view) }
+      bench('(1) erb')         { ERB.new(tpl_erb).result(context_binding) }
+      bench('(1) erubis')      { Erubis::Eruby.new(tpl_erb).result(context_binding) }
+      bench('(1) fast erubis') { Erubis::Eruby.new(tpl_erb).result(context_binding) }
+      bench('(1) slim')        { Slim::Template.new { tpl_slim }.render(context) }
+      bench('(1) haml')        { Haml::Engine.new(tpl_haml, :format => :html5).render(context) }
+      bench('(1) haml ugly')   { Haml::Engine.new(tpl_haml, :format => :html5, :ugly => true).render(context) }
     end
 
-    bench('(2) erb')         { erb.result(eview) }
-    bench('(2) erubis')      { erubis.result(eview) }
-    bench('(2) fast erubis') { fast_erubis.result(eview) }
-    bench('(2) slim')        { slim.render(view) }
-    bench('(2) haml')        { haml.render(view) }
-    bench('(2) haml ugly')   { haml_ugly.render(view) }
+    bench('(2) erb')         { erb.result(context_binding) }
+    bench('(2) erubis')      { erubis.result(context_binding) }
+    bench('(2) fast erubis') { fast_erubis.result(context_binding) }
+    bench('(2) slim')        { slim.render(context) }
+    bench('(2) haml')        { haml.render(context) }
+    bench('(2) haml ugly')   { haml_ugly.render(context) }
 
-    bench('(3) erb')         { view.run_erb }
-    bench('(3) erubis')      { view.run_erubis }
-    bench('(3) fast erubis') { view.run_fast_erubis }
-    bench('(3) slim')        { view.run_slim }
-    bench('(3) haml')        { view.run_haml }
-    bench('(3) haml ugly')   { view.run_haml_ugly }
+    bench('(3) erb')         { context.run_erb }
+    bench('(3) erubis')      { context.run_erubis }
+    bench('(3) fast erubis') { context.run_fast_erubis }
+    bench('(3) slim')        { context.run_slim }
+    bench('(3) haml')        { context.run_haml }
+    bench('(3) haml ugly')   { context.run_haml_ugly }
 
-    bench('(4) erb')       { tilt_erb.render(view) }
-    bench('(4) erubis')    { tilt_erubis.render(view) }
-    bench('(4) slim')      { tilt_slim.render(view) }
-    bench('(4) haml')      { tilt_haml.render(view) }
-    bench('(4) haml ugly') { tilt_haml_ugly.render(view) }
+    bench('(4) erb')       { tilt_erb.render(context) }
+    bench('(4) erubis')    { tilt_erubis.render(context) }
+    bench('(4) slim')      { tilt_slim.render(context) }
+    bench('(4) haml')      { tilt_haml.render(context) }
+    bench('(4) haml ugly') { tilt_haml_ugly.render(context) }
   end
 
   def run
