@@ -1,7 +1,7 @@
 begin
   require 'bundler'
   Bundler::GemHelper.install_tasks
-rescue Exception => e
+rescue Exception
 end
 
 require 'rake/testtask'
@@ -36,7 +36,7 @@ begin
   end
 rescue LoadError
   task :rcov do
-    abort "RCov is not available. In order to run rcov, you must: gem install rcov"
+    abort 'RCov is not available. In order to run rcov, you must: gem install rcov'
   end
 end
 
@@ -47,7 +47,7 @@ begin
   end
 rescue LoadError
   task :yard do
-    abort "YARD is not available. In order to run yard, you must: gem install yard"
+    abort 'YARD is not available. In order to run yard, you must: gem install yard'
   end
 end
 
