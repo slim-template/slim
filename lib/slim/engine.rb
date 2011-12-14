@@ -33,6 +33,7 @@ module Slim
     # Symbol      | :format            | :xhtml                        | HTML output format
     # String      | :attr_wrapper      | '"'                           | Character to wrap attributes in html (can be ' or ")
     # Hash        | :attr_delimiter    | {'class' => ' '}              | Joining character used if multiple html attributes are supplied (e.g. id1_id2)
+    # Symbol      | :sort_attrs        | true                          | Sort attributes by name
     # Boolean     | :pretty            | false                         | Pretty html indenting (This is slower!)
     # Boolean     | :streaming         | false (true in Rails > 3.1)   | Enable output streaming
     # Class       | :generator         | ArrayBuffer/RailsOutputBuffer | Temple code generator (default generator generates array buffer)
@@ -59,7 +60,7 @@ module Slim
     use Slim::Sections, :sections, :dictionary, :dictionary_access
     use Slim::EndInserter
     use Slim::Compiler, :disable_capture, :attr_delimiter
-    use Temple::HTML::AttributeMerger, :attr_delimiter
+    use Temple::HTML::AttributeMerger, :attr_delimiter, :sort_attrs
     use Temple::HTML::Pretty, :format, :attr_wrapper, :pretty
     filter :Escapable, :use_html_safe, :disable_escape
     filter :ControlFlow
