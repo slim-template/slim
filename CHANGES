@@ -3,6 +3,8 @@ master
   * Support for special characters in class/id shortcut removed
   * Do not allow : in class/id shortcut
   * Add support for block expansion syntax
+  * Support options :indent, :sort_attrs
+  * Require temple 0.3.5
 
 1.0.4
 
