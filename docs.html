@@ -26,10 +26,10 @@
         <p><a href="https://github.com/stonean/slim" class='github'>stonean<span>/</span><strong>slim</strong></a></p>
       </div>
     </div>
-    
+
     <div id="main">
       <div class="wrap pad">
-        
+
 
         <h3 class="first">Slim Docs</h3>
         <h4><a name="install" href="#install">Install:</a></h4>
@@ -51,13 +51,13 @@
           <pre><code>
 <span class="comment">/ XHTML DOCTYPES </span>
 
-<span class="tag">doctype</span> html     
+<span class="tag">doctype</span> html
   <span class="comment">&lt;!DOCTYPE html&gt;</span>
 
 <span class="tag">doctype 5</span>
   <span class="comment">&lt;!DOCTYPE html&gt;</span>
 
-<span class="tag">doctype</span> 1.1       
+<span class="tag">doctype</span> 1.1
   <span class="comment">&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
     "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"&gt;</span>
 
@@ -117,7 +117,6 @@
         <p>Single apostrophe can be used in place of pipe if you want to ensure that a single whitespace is appended.</p>
         <pre><code>' This is a link to
     <span class="tag">a</span> href=<span class="string">'http://ruby-lang.org'</span> Ruby</code></pre>
-        
 
         <hr/>
         <h4><a name="nest-static-content-multiline" href="#nest-static-content-multiline">Nest static content over multiple lines:</a></h4>
@@ -194,12 +193,18 @@
         <pre><code>== <span class="keyword">render</span> <span class="symbol">:partial</span> =&gt; <span class="string">'user'</span></code></pre>
         <p>To bypass escaping with interpolation:</p>
         <pre><code><span class="tag">p</span> Current location: <span class="interpolation">#{{</span>request.path<span class="interpolation">}}</span></code></pre>
-        
+
         <hr/>
         <h4><a name="class-and-id-shortcuts" href="#class-and-id-shortcuts">Haml like shortcuts:</a></h4>
           <pre><code><span class="tag">#myid</span><span class="htmlclass">.myclass.myclass2</span> My example</code></pre>
            <p>renders:</p>
           <pre><code><code>&lt;div id="myid" class="myclass myclass2"&gt;My example&lt;/div&gt;</code></code></pre>
+
+        <hr/>
+        <h4><a name="block-expansion" href="#block-expansion">Block expansion:</a></h4>
+          <pre><code><span class="tag">li</span><span class="htmlclass">.first</span>: <span class="tag">a </span> href='a' foo</code></pre>
+           <p>renders:</p>
+          <pre><code><code>&lt;li class="first"&gt;&lt;a href='a'i&gt;foo&lt;/a&gt;</code></code></pre>
 
         <hr/>
         <h4><a name="code-comments" href="#code-comments">Code comments (use a forward slash):</a></h4>
