@@ -208,6 +208,20 @@ Here's a quick example to demonstrate what a Slim template looks like:
       div class="content"
         = show_content
 
+### Inline tags
+
+  Sometimes you may want to be a little more compact and inline the tags.
+
+    ul
+      li.first: a href="/a" A link
+      li: a href="/b" B link
+
+  For readability, don't forget you can wrap the attributes.
+
+    ul
+      li.first: a[href="/a"] A link
+      li: a[href="/b"] B link
+
 ### Set an attribute's value with a method
 
   * Alternative 1: Use parentheses (), {}, []. The code in the parentheses will be evaluated.
