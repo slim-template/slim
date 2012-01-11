@@ -79,7 +79,7 @@ module Slim
             if delimiter = options[:attr_delimiter][name]
               "#{tmp}.respond_to?(:join) ? #{tmp}.flatten.compact.join(#{delimiter.inspect}) : #{tmp}"
             else
-              code
+              tmp
             end
            ]]]]
       end
