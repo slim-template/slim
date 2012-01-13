@@ -295,14 +295,19 @@ module Slim
         @stacks << content
         parse_tag($1)
         @stacks.delete_at(i)
-      when /\A\s*=(=?)('?)/
-        # Handle output code
-        block = [:multi]
-        @line = $'
-        content = [:slim, :output, $1 != '=', parse_broken_line, block]
-        tag << content
-        @stacks.last << [:static, ' '] unless $2.empty?
-        @stacks << block
+      when /\A\s*=(=?)('?)(\s*#)?/
+        if $3
+          # Commented output call so don't output tag
+          @stacks.last.pop
+        else
+          # Handle output code
+          block = [:multi]
+          @line = $'
+          content = [:slim, :output, $1 != '=', parse_broken_line, block]
+          tag << content
+          @stacks.last << [:static, ' '] unless $2.empty?
+          @stacks << block
+        end
       when /\A\s*\//
         # Closed tag. Do nothing
       when /\A\s*\Z/
