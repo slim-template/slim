@@ -156,16 +156,4 @@ p
 
     assert_html '<p>Hello World from @env</p>', source
   end
-
-  def test_commented_out_call
-    source = %q{
-table
-  tr
-    td Name
-    td = #hello_world
-    td =# not_gonna_be_called
-}
-
-    assert_html '<table><tr><td>Name</td></tr></table>', source
-  end
 end
