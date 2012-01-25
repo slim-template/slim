@@ -1,5 +1,7 @@
 master
 
+  * Evaluating a html attribute now happens only once. Fixed #219
+
 1.1.0
 
   * Support for special characters in class/id shortcut removed
