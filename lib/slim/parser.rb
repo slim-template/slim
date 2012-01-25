@@ -267,7 +267,7 @@ module Slim
 
     def parse_broken_line
       broken_line = @line.strip
-      while broken_line[-1] == ?\\
+      while broken_line =~ /[,\\]\Z/
         next_line || syntax_error!('Unexpected end of file')
         broken_line << "\n" << @line.strip
       end

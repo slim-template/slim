@@ -149,6 +149,15 @@ p = \
     assert_html '<p>Hello Ruby!</p>7', source
   end
 
+  def test_render_with_comma_end
+    source = %q{
+p = message("Hello",
+            "Ruby!")
+}
+
+    assert_html '<p>Hello Ruby!</p>', source
+  end
+
   def test_render_with_no_trailing_character
     source = %q{
 p
