@@ -6,7 +6,7 @@ class TestSlimChainManipulation < TestSlim
 p Test
 }
     chain = proc do |engine|
-      engine.replace(Temple::HTML::Pretty, :ReplacementFilter) do |exp|
+      engine.replace(:Pretty, :ReplacementFilter) do |exp|
         [:dynamic, '1+1']
       end
     end

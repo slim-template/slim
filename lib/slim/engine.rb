@@ -62,10 +62,10 @@ module Slim
     use Slim::Sections, :sections, :dictionary, :dictionary_access
     use Slim::EndInserter
     use Slim::Compiler, :disable_capture, :attr_delimiter
-    use Temple::HTML::AttributeMerger, :attr_delimiter
-    use Temple::HTML::AttributeSorter, :sort_attrs
-    use Temple::HTML::AttributeRemover, :remove_empty_attrs
-    use Temple::HTML::Pretty, :format, :attr_wrapper, :pretty, :indent
+    html :AttributeMerger, :attr_delimiter
+    html :AttributeSorter, :sort_attrs
+    html :AttributeRemover, :remove_empty_attrs
+    html :Pretty, :format, :attr_wrapper, :pretty, :indent
     filter :Escapable, :use_html_safe, :disable_escape
     filter :ControlFlow
     filter :MultiFlattener
