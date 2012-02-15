@@ -224,7 +224,7 @@ module Slim
       end
     end
 
-    def parse_text_block(first_line = nil, text_indent = nil)
+    def parse_text_block(first_line = nil, text_indent = nil, in_tag = false)
       result = [:multi]
       if !first_line || first_line.empty?
         text_indent = nil
@@ -253,7 +253,11 @@ module Slim
           # The text block lines must be at least indented
           # as deep as the first line.
           offset = text_indent ? indent - text_indent : 0
-          syntax_error!('Unexpected text indentation') if offset < 0
+          if offset < 0
+            syntax_error!("Text line not indented deep enough.\n" +
+                          "The first text line defines the necessary text indentation." +
+                          (in_tag ? "\nAre you trying to nest a child tag in a tag containing text? Use | for the text block!" : ''))
+          end
 
           result << [:newline] << [:slim, :interpolate, (text_indent ? "\n" : '') + (' ' * offset) + @line]
 
@@ -312,7 +316,7 @@ module Slim
         @stacks << content
       when /\A( ?)(.*)\Z/
         # Text content
-        tag << parse_text_block($2, @orig_line.size - @line.size + $1.size)
+        tag << parse_text_block($2, @orig_line.size - @line.size + $1.size, true)
       end
     end
 
