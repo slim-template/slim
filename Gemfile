@@ -2,9 +2,6 @@ source :rubygems
 
 gemspec
 
-# Force Temple master; Slim currently relies on unreleased Temple features.
-ENV['TEMPLE'] = 'master'
-
 if ENV['TEMPLE'] == 'master'
    gem 'temple', :git => 'git://github.com/judofyr/temple.git'
 end
