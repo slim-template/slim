@@ -3,6 +3,7 @@ master
   * Evaluating a html attribute now happens only once (#219)
   * Code with trailing comma is treated as broken line (#226)
   * Support option :remove_empty_attrs (default true)
+  * Require temple 0.4.0
 
 1.1.0
 
