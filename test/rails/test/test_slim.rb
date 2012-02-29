@@ -59,13 +59,7 @@ class TestSlim < ActionDispatch::IntegrationTest
     post "parents", 'parent[name]' => "p1", 'parent[children_attributes][0][name]' => "c1"
     get "parents/1/edit"
 
-    assert_html '<form accept-charset="UTF-8" action="/parents/1" class="edit_parent" enctype="multipart/form-data" id="edit_parent_1" method="post">'+
-      '<div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="_method" type="hidden" value="put" />'+
-      '</div><h1>Parent</h1><input id="parent_name" name="parent[name]" size="30" type="text" value="p1" />'+
-      '<h2>Children</h2>'+
-      '<ul><li><input id="parent_children_attributes_0_name" name="parent[children_attributes][0][name]" size="30" type="text" value="c1" /></li>'+
-      '<input id="parent_children_attributes_0_id" name="parent[children_attributes][0][id]" type="hidden" value="1" /></ul>'+
-      '</form>'
+    assert_match(%r{<form accept-charset="UTF-8" action="/parents/1" class="edit_parent" enctype="multipart/form-data" id="edit_parent_1" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="_method" type="hidden" value="[^"]+" /></div><h1>Parent</h1><input id="parent_name" name="parent\[name\]" size="30" type="text" value="p1" /><h2>Children</h2><ul><li><input id="parent_children_attributes_0_name" name="parent\[children_attributes\]\[0\]\[name\]" size="30" type="text" value="c1" /></li><input id="parent_children_attributes_0_id" name="parent\[children_attributes\]\[0\]\[id\]" type="hidden" value="1" /></ul></form>}, @response.body)
   end
 
   protected
