@@ -15,7 +15,6 @@ html
   end
 
   def test_html_tag_with_text_and_empty_line
-    # Keep the trailing space behind "body "!
     source = %q{
 p Hello
 

@@ -15,14 +15,13 @@ p
   end
 
   def test_render_with_markdown
-    # Keep the trailing spaces.
     source = %q{
 markdown:
   #Header
   Hello from #{"Markdown!"}
-  
+
   #{1+2}
-  
+
   * one
   * two
 }
@@ -77,7 +76,6 @@ p Hi
   end
 
   def test_render_with_javascript_with_tabs
-    # Keep the trailing space behind "javascript:   "!
     source = "javascript:\n\t$(function() {});\n\talert('hello')\np Hi"
     assert_html "<script type=\"text/javascript\">$(function() {});\nalert('hello')</script><p>Hi</p>", source
   end

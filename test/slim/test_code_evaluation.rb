@@ -194,6 +194,14 @@ p id="#{(false ? 'notshown' : 'shown')}" = output_number
     assert_html '<p id="shown">1337</p>', source
   end
 
+  def test_ternary_operation_in_attribute_2
+    source = %q{
+p id=(false ? 'notshown' : 'shown') = output_number
+}
+
+    assert_html '<p id="shown">1337</p>', source
+  end
+
   def test_class_attribute_merging
     source = %{
 .alpha class="beta" Test it
