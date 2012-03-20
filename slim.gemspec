@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.email             = ['andy@stonean.com', 'ifredwu@gmail.com', 'mail@daniel-mendler.de']
   s.summary           = 'Slim is a template language.'
   s.description       = 'Slim is a template language whose goal is reduce the syntax to the essential parts without becoming cryptic.'
-  s.homepage          = 'http://github.com/stonean/slim'
+  s.homepage          = 'http://slim-lang.com/'
   s.extra_rdoc_files  = %w(README.md)
   s.rdoc_options      = %w(--charset=UTF-8)
   s.rubyforge_project = s.name
