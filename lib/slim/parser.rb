@@ -6,9 +6,10 @@ module Slim
 
     set_default_options :tabsize  => 4,
                         :encoding => 'utf-8',
+                        :default_tag => 'div',
                         :shortcut => {
-                          '#' => 'div id',
-                          '.' => 'div class'
+                          '#' => 'id',
+                          '.' => 'class'
                         }
 
     class SyntaxError < StandardError
@@ -37,7 +38,13 @@ module Slim
       super
       @tab = ' ' * @options[:tabsize]
       @shortcut = {}
-      @options[:shortcut].each {|k,v| @shortcut[k] = v.split(/\s+/, 2) }
+      @options[:shortcut].each do |k,v|
+        @shortcut[k] = if v =~ /\A([^\s]+)\s+([^\s]+)\Z/
+                         [$1, $2]
+                       else
+                         [@options[:default_tag], v]
+                       end
+      end
       shortcuts = "[#{Regexp.escape @shortcut.keys.join}]"
       @shortcut_regex = /\A(#{shortcuts})(\w[\w-]*\w|\w+)/
       @tag_regex = /\A(#{shortcuts}|\w[\w:-]*\w|\w+)/

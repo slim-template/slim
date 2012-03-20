@@ -70,6 +70,15 @@ h1#title This is my title
     assert_html '<h1 id="title">This is my title</h1><div class="hello world" id="notice">Hello World from @env</div>', source
   end
 
+  def test_render_with_overwritten_default_tag
+    source = %q{
+#notice.hello.world
+   = hello_world
+ }
+
+    assert_html '<section class="hello world" id="notice">Hello World from @env</section>', source, :default_tag => 'section'
+   end
+
   def test_render_with_custom_shortcut
     source = %q{
 #notice.hello.world@test
@@ -78,7 +87,7 @@ h1#title This is my title
   = hello_world
 }
 
-    assert_html '<section class="hello world" id="notice" role="test">Hello World from @env</section><div role="abc">Hello World from @env</div>', source, :shortcut => {'#' => 'section id', '.' => 'section class', '@' => 'div role'}
+    assert_html '<div class="hello world" id="notice" role="test">Hello World from @env</div><section role="abc">Hello World from @env</section>', source, :shortcut => {'#' => 'id', '.' => 'class', '@' => 'section role'}
   end
 
   def test_render_with_text_block

@@ -21,7 +21,8 @@ module Slim
     # String      | :file              | nil                           | Name of parsed file, set automatically by Slim::Template
     # Integer     | :tabsize           | 4                             | Number of whitespaces per tab (used by the parser)
     # String      | :encoding          | "utf-8"                       | Set encoding of template
-    # Hash        | :shortcut          | {'.' => 'div class', ...}     | Attribute shortcuts
+    # String      | :default_tag       | "div"                         | Default tag to be used if tag name is omitted
+    # Hash        | :shortcut          | {'.' => 'class', ...}         | Attribute shortcuts
     # String list | :enable_engines    | All enabled                   | List of enabled embedded engines (whitelist)
     # String list | :disable_engines   | None disabled                 | List of disabled embedded engines (blacklist)
     # Boolean     | :sections          | false                         | Enable sections mode (logic-less)
@@ -56,7 +57,7 @@ module Slim
     # It is recommended to set the default settings only once in the code and avoid duplication. Only use
     # `set_default_options` when you have to override some default settings.
     #
-    use Slim::Parser, :file, :tabsize, :encoding, :shortcut
+    use Slim::Parser, :file, :tabsize, :encoding, :default_tag, :shortcut
     use Slim::EmbeddedEngine, :enable_engines, :disable_engines, :pretty
     use Slim::Interpolation
     use Slim::Sections, :sections, :dictionary, :dictionary_access
