@@ -1,3 +1,9 @@
+master
+
+  * Remove option :default_tag
+  * Add option :shortcut which configures attribute shortcuts
+    Example: :shortcut => {'#' => 'div id', '.' => 'div class', '@' => 'div role'}
+
 1.1.1
 
   * Evaluating a html attribute now happens only once (#219)

@@ -6,7 +6,10 @@ module Slim
 
     set_default_options :tabsize  => 4,
                         :encoding => 'utf-8',
-                        :default_tag => 'div'
+                        :shortcut => {
+                          '#' => 'div id',
+                          '.' => 'div class'
+                        }
 
     class SyntaxError < StandardError
       attr_reader :error, :file, :line, :lineno, :column
@@ -33,6 +36,11 @@ module Slim
     def initialize(options = {})
       super
       @tab = ' ' * @options[:tabsize]
+      @shortcut = {}
+      @options[:shortcut].each {|k,v| @shortcut[k] = v.split(/\s+/, 2) }
+      shortcuts = "[#{Regexp.escape @shortcut.keys.join}]"
+      @shortcut_regex = /\A(#{shortcuts})(\w[\w-]*\w|\w+)/
+      @tag_regex = /\A(#{shortcuts}|\w[\w:-]*\w|\w+)/
     end
 
     # Compile string to Temple expression
@@ -66,15 +74,8 @@ module Slim
       '{' => '}',
     }.freeze
 
-    ATTR_SHORTCUT = {
-      '#' => 'id',
-      '.' => 'class',
-    }.freeze
-
     DELIMITER_REGEX = /\A[\(\[\{]/
     ATTR_NAME_REGEX = '\A\s*(\w[:\w-]*)'
-    CLASS_ID_REGEX = /\A(#|\.)(\w[\w-]*\w|\w+)/
-    TAG_REGEX = /\A([#\.]|\w[\w:-]*\w|\w+)/
 
     def reset(lines = nil, stacks = nil)
       # Since you can indent however you like in Slim, we need to keep a list
@@ -208,7 +209,7 @@ module Slim
       when /\Adoctype\s+/i
         # Found doctype declaration
         @stacks.last << [:html, :doctype, $'.strip]
-      when TAG_REGEX
+      when @tag_regex
         # Found a HTML tag.
         parse_tag($&)
       else
@@ -279,8 +280,8 @@ module Slim
     end
 
     def parse_tag(tag)
-      if tag == '#' || tag == '.'
-        tag = options[:default_tag]
+      if @shortcut[tag]
+        tag = @shortcut[tag][0]
       else
         @line.slice!(0, tag.size)
       end
@@ -292,7 +293,7 @@ module Slim
       when /\A\s*:\s*/
         # Block expansion
         @line = $'
-        (@line =~ TAG_REGEX) || syntax_error!('Expected tag')
+        (@line =~ @tag_regex) || syntax_error!('Expected tag')
         content = [:multi]
         tag << content
         i = @stacks.size
@@ -323,11 +324,11 @@ module Slim
     def parse_attributes
       attributes = [:html, :attrs]
 
-      # Find any literal class/id attributes
-      while @line =~ CLASS_ID_REGEX
+      # Find any shortcut attributes
+      while @line =~ @shortcut_regex
         # The class/id attribute is :static instead of :slim :text,
         # because we don't want text interpolation in .class or #id shortcut
-        attributes << [:html, :attr, ATTR_SHORTCUT[$1], [:static, $2]]
+        attributes << [:html, :attr, @shortcut[$1][1], [:static, $2]]
         @line = $'
       end
 
