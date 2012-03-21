@@ -93,13 +93,22 @@ module Slim
     def on_slim_splat(code)
       name, value = unique_name, unique_name
       [:block, "(#{code}).each do |#{name},#{value}|",
-       [:multi,
-        [:static, ' '],
-        [:escape, true, [:dynamic, name]],
-        [:static, "=#{options[:attr_wrapper]}"],
-        [:escape, true, [:dynamic, value]],
-        [:static, options[:attr_wrapper]]
-       ]]
+       [:case, value,
+        ['true',
+         [:multi,
+          [:static, ' '],
+          [:dynamic, name],
+          [:static, "=#{options[:attr_wrapper]}"],
+          [:dynamic, name],
+          [:static, options[:attr_wrapper]]]],
+        ['false, nil', [:multi]],
+        [:else,
+         [:multi,
+          [:static, ' '],
+          [:dynamic, name],
+          [:static, "=#{options[:attr_wrapper]}"],
+          [:escape, true, [:dynamic, value]],
+          [:static, options[:attr_wrapper]]]]]]
     end
   end
 end
