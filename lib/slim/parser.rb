@@ -82,7 +82,9 @@ module Slim
     }.freeze
 
     DELIMITER_REGEX = /\A[#{Regexp.escape DELIMITERS.keys.join}]/
-    ATTR_NAME_REGEX = '\A\s*(\w[:\w-]*)'
+    ATTR_NAME = '\A\s*(\w[:\w-]*)'
+    QUOTED_ATTR_REGEX = /#{ATTR_NAME}=("|')/
+    CODE_ATTR_REGEX = /#{ATTR_NAME}=/
 
     def reset(lines = nil, stacks = nil)
       # Since you can indent however you like in Slim, we need to keep a list
@@ -347,17 +349,22 @@ module Slim
         @line.slice!(0)
       end
 
+      if delimiter
+        boolean_attr_regex = /#{ATTR_NAME}(?=(\s|#{Regexp.escape delimiter}))/
+        end_regex = /\A\s*#{Regexp.escape delimiter}/
+      end
+
       while true
         case @line
         when /\A\s*\*(?=[^\s]+)/
           # Splat attribute
           @line = $'
           result << [:slim, :splat, parse_ruby_code(delimiter)]
-        when /#{ATTR_NAME_REGEX}=("|')/
+        when QUOTED_ATTR_REGEX
           # Value is quoted (static)
           @line = $'
           attributes << [:html, :attr, $1, [:slim, :interpolate, parse_quoted_attribute($2)]]
-        when /#{ATTR_NAME_REGEX}=/
+        when CODE_ATTR_REGEX
           # Value is ruby code
           @line = $'
           escape = @line[0] != ?=
@@ -373,11 +380,11 @@ module Slim
           break unless delimiter
 
           case @line
-          when /#{ATTR_NAME_REGEX}(?=(\s|#{Regexp.escape delimiter}))/
+          when boolean_attr_regex
             # Boolean attribute
             @line = $'
             attributes << [:slim, :attr, $1, false, 'true']
-          when /\A\s*#{Regexp.escape delimiter}/
+          when end_regex
             # Find ending delimiter
             @line = $'
             break
