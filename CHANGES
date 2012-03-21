@@ -7,6 +7,7 @@ master
       Slim::Parser.default_options[:shortcut] = {'@' => 'role'}
     Define custom shortcut attribute with tag (e.g. @ajax-link renders <a role="ajax-link"></a>)
       Slim::Parser.default_options[:shortcut] = {'@' => 'a role'}
+  * Add syntax for splat attributes (#109)
 
 1.1.1
 
