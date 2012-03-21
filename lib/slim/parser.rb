@@ -347,9 +347,6 @@ module Slim
         @line.slice!(0)
       end
 
-      orig_line = @orig_line
-      lineno = @lineno
-
       while true
         case @line
         when /\A\s*\*(?=[^\s]+)/
@@ -391,13 +388,11 @@ module Slim
 
             # Attributes span multiple lines
             @stacks.last << [:newline]
+            orig_line, lineno = @orig_line, @lineno
             next_line || syntax_error!("Expected closing delimiter #{delimiter}",
                                        :orig_line => orig_line,
                                        :lineno => lineno,
                                        :column => orig_line.size)
-
-            orig_line = @orig_line
-            lineno = @lineno
           end
         end
       end
