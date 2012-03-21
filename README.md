@@ -388,8 +388,13 @@ This project is released under the MIT license.
 
 ## Slim related projects
 
+* [Temple](https://github.com/judofyr/slim)
 * [Vim files](https://github.com/bbommarito/vim-slim)
 * [Textmate bundle](https://github.com/fredwu/ruby-slim-tmbundle)
 * [Haml2Slim converter](https://github.com/fredwu/haml2slim)
+* [Html2Slim converter](https://github.com/joaomilho/html2slim)
 * [Rails 3 Generators](https://github.com/leogalmeida/slim-rails)
+* [Slim support for the Espresso text editor from MacRabbits](https://github.com/CiiDub/Slim-Sugar)
+* [Skim (Slim for Javascript)](https://github.com/jfirebaugh/skim)
 * [Slim for Clojure](https://github.com/chaslemley/slim.clj)
+* [Hamlet.rb (Similar template language)](https://github.com/gregwebs/hamlet.rb)
