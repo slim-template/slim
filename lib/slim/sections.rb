@@ -45,6 +45,10 @@ module Slim
       [:slim, :attr, name, escape, access(value)]
     end
 
+    def on_slim_splat(code)
+      [:slim, :splat, access(code)]
+    end
+
     def on_dynamic(code)
       raise 'Embedded code is forbidden in sections mode'
     end
