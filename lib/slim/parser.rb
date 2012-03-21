@@ -348,9 +348,10 @@ module Slim
 
       orig_line = @orig_line
       lineno = @lineno
+
+      # Parse attributes
+      attr_regex = delimiter ? /#{ATTR_NAME_REGEX}(=|\s|(?=#{Regexp.escape delimiter}))/ : /#{ATTR_NAME_REGEX}=/
       while true
-        # Parse attributes
-        attr_regex = delimiter ? /#{ATTR_NAME_REGEX}(=|\s|(?=#{Regexp.escape delimiter}))/ : /#{ATTR_NAME_REGEX}=/
         while @line =~ attr_regex
           @line = $'
           name = $1
