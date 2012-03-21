@@ -346,48 +346,65 @@ module Slim
         @line.slice!(0)
       end
 
-      orig_line = @orig_line
-      lineno = @lineno
+      if delimiter
+        orig_line = @orig_line
+        lineno = @lineno
 
-      # Parse attributes
-      attr_regex = delimiter ? /#{ATTR_NAME_REGEX}(=|\s|(?=#{Regexp.escape delimiter}))/ : /#{ATTR_NAME_REGEX}=/
-      while true
-        while @line =~ attr_regex
-          @line = $'
-          name = $1
-          if delimiter && $2 != '='
-            attributes << [:slim, :attr, name, false, 'true']
-          elsif @line =~ /\A["']/
+        # Attributes delimited
+        while true
+          case @line
+          when /#{ATTR_NAME_REGEX}=("|')/
             # Value is quoted (static)
             @line = $'
-            attributes << [:html, :attr, name, [:slim, :interpolate, parse_quoted_attribute($&)]]
-          else
+            attributes << [:html, :attr, $1, [:slim, :interpolate, parse_quoted_attribute($2)]]
+          when /#{ATTR_NAME_REGEX}=/
             # Value is ruby code
+            @line = $'
             escape = @line[0] != ?=
             @line.slice!(0) unless escape
-            attributes << [:slim, :attr, name, escape, parse_ruby_attribute(delimiter)]
+            attributes << [:slim, :attr, $1, escape, parse_ruby_attribute(delimiter)]
+          when /#{ATTR_NAME_REGEX}(?=(\s|#{Regexp.escape delimiter}))/
+            # Boolean attribute
+            @line = $'
+            attributes << [:slim, :attr, $1, false, 'true']
+          when /\A\s*#{Regexp.escape delimiter}/
+            # Find ending delimiter
+            @line = $'
+            break
+          else
+            # Found something where an attribute should be
+            @line.lstrip!
+            syntax_error!('Expected attribute') unless @line.empty?
+
+            # Attributes span multiple lines
+            @stacks.last << [:newline]
+            next_line || syntax_error!("Expected closing delimiter #{delimiter}",
+                                       :orig_line => orig_line,
+                                       :lineno => lineno,
+                                       :column => orig_line.size)
+
+            orig_line = @orig_line
+            lineno = @lineno
           end
         end
-
-        # No ending delimiter, attribute end
-        break unless delimiter
-
-        # Find ending delimiter
-        if @line =~ /\A\s*#{Regexp.escape delimiter}/
-          @line = $'
-          break
+      else
+        # No delimiter used
+        while true
+          case @line
+          when /#{ATTR_NAME_REGEX}=("|')/
+            # Value is quoted (static)
+            @line = $'
+            attributes << [:html, :attr, $1, [:slim, :interpolate, parse_quoted_attribute($2)]]
+          when /#{ATTR_NAME_REGEX}=/
+            # Value is ruby code
+            @line = $'
+            escape = @line[0] != ?=
+            @line.slice!(0) unless escape
+            attributes << [:slim, :attr, $1, escape, parse_ruby_attribute(nil)]
+          else
+            break
+          end
         end
-
-        # Found something where an attribute should be
-        @line.lstrip!
-        syntax_error!('Expected attribute') unless @line.empty?
-
-        # Attributes span multiple lines
-        @stacks.last << [:newline]
-        next_line || syntax_error!("Expected closing delimiter #{delimiter}",
-                                   :orig_line => orig_line,
-                                   :lineno => lineno,
-                                   :column => orig_line.size)
       end
 
       attributes
