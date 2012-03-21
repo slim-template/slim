@@ -103,6 +103,12 @@ module Slim
           [:dynamic, name],
           [:static, options[:attr_wrapper]]]],
         ['false, nil', [:multi]],
+        ["''",
+         options[:remove_empty_attrs] ? [:multi] :
+         [:multi,
+          [:static, ' '],
+          [:dynamic, name],
+          [:static, "=#{options[:attr_wrapper]}#{options[:attr_wrapper]}"]]],
         [:else,
          [:multi,
           [:static, ' '],
