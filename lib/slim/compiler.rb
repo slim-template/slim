@@ -85,5 +85,21 @@ module Slim
       end
       [:html, :attr, name, [:escape, escape, value]]
     end
+
+    # Handle splat expression `[:slim, ;splat, code]`
+    #
+    # @param [String] code Ruby code
+    # @return [Array] Compiled temple expression
+    def on_slim_splat(code)
+      name, value = unique_name, unique_name
+      [:block, "(#{code}).each do |#{name},#{value}|",
+       [:multi,
+        [:static, ' '],
+        [:escape, true, [:dynamic, name]],
+        [:static, "=#{options[:attr_wrapper]}"],
+        [:escape, true, [:dynamic, value]],
+        [:static, options[:attr_wrapper]]
+       ]]
+    end
   end
 end

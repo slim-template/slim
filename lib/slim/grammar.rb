@@ -9,7 +9,8 @@ module Slim
       [:slim, :condcomment, String, Expression]   |
       [:slim, :output, Bool, String, Expression]  |
       [:slim, :interpolate, String]               |
-      [:slim, :embedded, String, Expression]
+      [:slim, :embedded, String, Expression]      |
+      [:slim, :splat, String]
 
     HTMLAttr <<
       [:slim, :attr, String, Bool, String]
