@@ -62,10 +62,8 @@ module Slim
     def on_slim_attr(name, escape, code)
       value = case code
       when 'true'
-        escape = false
         [:static, name]
       when 'false', 'nil'
-        escape = false
         [:multi]
       else
         tmp = unique_name
@@ -75,15 +73,15 @@ module Slim
           ['true', [:static, name]],
           ['false, nil', [:multi]],
           [:else,
-           [:dynamic,
+           [:escape, escape, [:dynamic,
             if delimiter = options[:attr_delimiter][name]
               "#{tmp}.respond_to?(:join) ? #{tmp}.flatten.compact.join(#{delimiter.inspect}) : #{tmp}"
             else
               tmp
             end
-           ]]]]
+           ]]]]]
       end
-      [:html, :attr, name, [:escape, escape, value]]
+      [:html, :attr, name, value]
     end
 
     # Handle splat expression `[:slim, ;splat, code]`
