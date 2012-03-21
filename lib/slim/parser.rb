@@ -81,7 +81,7 @@ module Slim
       '{' => '}',
     }.freeze
 
-    DELIMITER_REGEX = /\A[\(\[\{]/
+    DELIMITER_REGEX = /\A[#{Regexp.escape DELIMITERS.keys.join}]/
     ATTR_NAME_REGEX = '\A\s*(\w[:\w-]*)'
 
     def reset(lines = nil, stacks = nil)
