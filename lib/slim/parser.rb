@@ -410,8 +410,8 @@ module Slim
       attributes
     end
 
-    def parse_ruby_attribute(outer_delimiter)
-      value, count, delimiter, close_delimiter = '', 0, nil, nil
+    def parse_ruby_code(outer_delimiter)
+      code, count, delimiter, close_delimiter = '', 0, nil, nil
 
       # Attribute ends with space or attribute delimiter
       end_regex = /\A[\s#{Regexp.escape outer_delimiter.to_s}]/
@@ -427,18 +427,24 @@ module Slim
           count = 1
           delimiter, close_delimiter = $&, DELIMITERS[$&]
         end
-        value << @line.slice!(0)
+        code << @line.slice!(0)
       end
 
-      syntax_error!("Expected closing attribute delimiter #{close_delimiter}") if count != 0
-      syntax_error!('Invalid empty attribute') if value.empty?
+      syntax_error!("Expected closing delimiter #{close_delimiter}") if count != 0
+      syntax_error!('Invalid empty attribute') if code.empty?
+
+      code
+    end
+
+    def parse_ruby_attribute(outer_delimiter)
+      code = parse_ruby_code(outer_delimiter)
 
       # Remove attribute wrapper which doesn't belong to the ruby code
       # e.g id=[hash[:a] + hash[:b]]
-      value = value[1..-2] if value =~ DELIMITER_REGEX &&
-        DELIMITERS[$&] == value[-1, 1]
+      code = code[1..-2] if code =~ DELIMITER_REGEX &&
+        DELIMITERS[$&] == code[-1, 1]
 
-      value
+      code
     end
 
     def parse_quoted_attribute(quote)
