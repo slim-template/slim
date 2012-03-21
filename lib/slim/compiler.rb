@@ -92,7 +92,8 @@ module Slim
     # @return [Array] Compiled temple expression
     def on_slim_splat(code)
       name, value = unique_name, unique_name
-      [:block, "(#{code}).each do |#{name},#{value}|",
+      code = options[:sort_attrs] ? "(#{code}).sort_by {|#{name},#{value}| #{name}.to_s }" : "(#{code})"
+      [:block, "#{code}.each do |#{name},#{value}|",
        [:case, value,
         ['true',
          [:multi,

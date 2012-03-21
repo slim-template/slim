@@ -9,6 +9,7 @@ module Slim
     #
     # This overwrites some temple default options.
     set_default_options :pretty => false,
+                        :sort_attrs => true,
                         :attr_wrapper => '"',
                         :attr_delimiter => {'class' => ' '},
                         :generator => Temple::Generators::ArrayBuffer
@@ -62,7 +63,7 @@ module Slim
     use Slim::Interpolation
     use Slim::Sections, :sections, :dictionary, :dictionary_access
     use Slim::EndInserter
-    use Slim::Compiler, :disable_capture, :attr_delimiter, :attr_wrapper
+    use Slim::Compiler, :disable_capture, :attr_delimiter, :attr_wrapper, :sort_attrs
     html :AttributeMerger, :attr_delimiter
     html :AttributeSorter, :sort_attrs
     html :AttributeRemover, :remove_empty_attrs
