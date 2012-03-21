@@ -330,6 +330,7 @@ module Slim
 
     def parse_attributes
       attributes = [:html, :attrs]
+      result = [:multi, attributes]
 
       # Find any shortcut attributes
       while @line =~ @shortcut_regex
@@ -353,6 +354,10 @@ module Slim
         # Attributes delimited
         while true
           case @line
+          when /\A\s*\*(?=[^\s]+)/
+            # Splat attribute
+            @line = $'
+            result << [:slim, :splat, parse_ruby_code(delimiter)]
           when /#{ATTR_NAME_REGEX}=("|')/
             # Value is quoted (static)
             @line = $'
@@ -391,6 +396,10 @@ module Slim
         # No delimiter used
         while true
           case @line
+          when /\A\s*\*(?=[^\s]+)/
+            # Splat attribute
+            @line = $'
+            result << [:slim, :splat, parse_ruby_code(nil)]
           when /#{ATTR_NAME_REGEX}=("|')/
             # Value is quoted (static)
             @line = $'
@@ -407,7 +416,7 @@ module Slim
         end
       end
 
-      attributes
+      result
     end
 
     def parse_ruby_code(outer_delimiter)
