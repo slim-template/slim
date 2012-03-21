@@ -347,27 +347,35 @@ module Slim
         @line.slice!(0)
       end
 
-      if delimiter
-        orig_line = @orig_line
-        lineno = @lineno
+      orig_line = @orig_line
+      lineno = @lineno
 
-        # Attributes delimited
-        while true
+      while true
+        case @line
+        when /\A\s*\*(?=[^\s]+)/
+          # Splat attribute
+          @line = $'
+          result << [:slim, :splat, parse_ruby_code(delimiter)]
+        when /#{ATTR_NAME_REGEX}=("|')/
+          # Value is quoted (static)
+          @line = $'
+          attributes << [:html, :attr, $1, [:slim, :interpolate, parse_quoted_attribute($2)]]
+        when /#{ATTR_NAME_REGEX}=/
+          # Value is ruby code
+          @line = $'
+          escape = @line[0] != ?=
+          @line.slice!(0) unless escape
+          name = $1
+          value = parse_ruby_code(delimiter)
+          # Remove attribute wrapper which doesn't belong to the ruby code
+          # e.g id=[hash[:a] + hash[:b]]
+          value = value[1..-2] if value =~ DELIMITER_REGEX &&
+            DELIMITERS[$&] == value[-1, 1]
+          attributes << [:slim, :attr, name, escape, value]
+        else
+          break unless delimiter
+
           case @line
-          when /\A\s*\*(?=[^\s]+)/
-            # Splat attribute
-            @line = $'
-            result << [:slim, :splat, parse_ruby_code(delimiter)]
-          when /#{ATTR_NAME_REGEX}=("|')/
-            # Value is quoted (static)
-            @line = $'
-            attributes << [:html, :attr, $1, [:slim, :interpolate, parse_quoted_attribute($2)]]
-          when /#{ATTR_NAME_REGEX}=/
-            # Value is ruby code
-            @line = $'
-            escape = @line[0] != ?=
-            @line.slice!(0) unless escape
-            attributes << [:slim, :attr, $1, escape, parse_ruby_attribute(delimiter)]
           when /#{ATTR_NAME_REGEX}(?=(\s|#{Regexp.escape delimiter}))/
             # Boolean attribute
             @line = $'
@@ -390,28 +398,6 @@ module Slim
 
             orig_line = @orig_line
             lineno = @lineno
-          end
-        end
-      else
-        # No delimiter used
-        while true
-          case @line
-          when /\A\s*\*(?=[^\s]+)/
-            # Splat attribute
-            @line = $'
-            result << [:slim, :splat, parse_ruby_code(nil)]
-          when /#{ATTR_NAME_REGEX}=("|')/
-            # Value is quoted (static)
-            @line = $'
-            attributes << [:html, :attr, $1, [:slim, :interpolate, parse_quoted_attribute($2)]]
-          when /#{ATTR_NAME_REGEX}=/
-            # Value is ruby code
-            @line = $'
-            escape = @line[0] != ?=
-            @line.slice!(0) unless escape
-            attributes << [:slim, :attr, $1, escape, parse_ruby_attribute(nil)]
-          else
-            break
           end
         end
       end
@@ -441,17 +427,6 @@ module Slim
 
       syntax_error!("Expected closing delimiter #{close_delimiter}") if count != 0
       syntax_error!('Invalid empty attribute') if code.empty?
-
-      code
-    end
-
-    def parse_ruby_attribute(outer_delimiter)
-      code = parse_ruby_code(outer_delimiter)
-
-      # Remove attribute wrapper which doesn't belong to the ruby code
-      # e.g id=[hash[:a] + hash[:b]]
-      code = code[1..-2] if code =~ DELIMITER_REGEX &&
-        DELIMITERS[$&] == code[-1, 1]
 
       code
     end
