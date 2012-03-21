@@ -41,11 +41,12 @@ If you want to use the Slim template directly, you can use the Tilt interface:
 
 ## Syntax Highlighters
 
-There are plugins for Vim, Emacs and Textmate:
+There are plugins for Vim, Emacs, Textmate and Espresso text editor:
 
 * [Vim](https://github.com/bbommarito/vim-slim)
 * [Textmate](https://github.com/fredwu/ruby-slim-tmbundle)
 * [Emacs](https://github.com/minad/emacs-slim)
+* [Espresso text editor](https://github.com/CiiDub/Slim-Sugar)
 
 ## Template Converters
 
@@ -393,13 +394,17 @@ This project is released under the MIT license.
 ## Slim related projects
 
 * [Temple](https://github.com/judofyr/slim)
+
 * [Vim syntax highlighting](https://github.com/bbommarito/vim-slim)
 * [Emacs syntax highlighting](https://github.com/minad/emacs-slim)
 * [Textmate bundle](https://github.com/fredwu/ruby-slim-tmbundle)
+* [Slim support for the Espresso text editor from MacRabbits](https://github.com/CiiDub/Slim-Sugar)
+
 * [Haml2Slim converter](https://github.com/fredwu/haml2slim)
 * [Html2Slim converter](https://github.com/joaomilho/html2slim)
+
 * [Rails 3 Generators](https://github.com/leogalmeida/slim-rails)
-* [Slim support for the Espresso text editor from MacRabbits](https://github.com/CiiDub/Slim-Sugar)
+
 * [Skim (Slim for Javascript)](https://github.com/jfirebaugh/skim)
 * [Slim for Clojure](https://github.com/chaslemley/slim.clj)
 * [Hamlet.rb (Similar template language)](https://github.com/gregwebs/hamlet.rb)
