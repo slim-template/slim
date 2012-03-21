@@ -41,11 +41,15 @@ If you want to use the Slim template directly, you can use the Tilt interface:
 
 ## Syntax Highlighters
 
-Syntax highlight support for __Emacs__ is included in the `extra` folder. There are also [Vim](https://github.com/bbommarito/vim-slim) and [Textmate](https://github.com/fredwu/ruby-slim-tmbundle) plugins.
+There are plugins for Vim, Emacs and Textmate:
+
+* [Vim](https://github.com/bbommarito/vim-slim)
+* [Textmate](https://github.com/fredwu/ruby-slim-tmbundle)
+* [Emacs](https://github.com/minad/emacs-slim)
 
 ## Template Converters
 
-For Haml, there is a [Haml2Slim converter](https://github.com/fredwu/haml2slim). Please check out the [issue tracker](https://github.com/stonean/slim/issues) to see the status of the varies converters.
+For Haml, there is a [Haml2Slim converter](https://github.com/fredwu/haml2slim). For HTML, there is a [HTML2Slim converter](https://github.com/joaomilho/html2slim).
 
 ## The syntax
 
@@ -389,7 +393,8 @@ This project is released under the MIT license.
 ## Slim related projects
 
 * [Temple](https://github.com/judofyr/slim)
-* [Vim files](https://github.com/bbommarito/vim-slim)
+* [Vim syntax highlighting](https://github.com/bbommarito/vim-slim)
+* [Emacs syntax highlighting](https://github.com/minad/emacs-slim)
 * [Textmate bundle](https://github.com/fredwu/ruby-slim-tmbundle)
 * [Haml2Slim converter](https://github.com/fredwu/haml2slim)
 * [Html2Slim converter](https://github.com/joaomilho/html2slim)
