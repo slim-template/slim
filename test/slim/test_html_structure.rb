@@ -487,32 +487,17 @@ input[value=succ_x]
   end
 
   def test_custom_shortcut_splat
-    shortcut = {'#' => 'id', '.' => 'class', '*' => '*', '<' => '*'}
+    shortcuts = {'#' => 'id', '.' => 'class', '*' => '*'}
 
-    source = %q{
-<hash This is my title
+    chars = %w(@ + _ < >)
+    chars.each do |c|
+      shortcuts[c] = '*'
+      source = %Q{
+#{c}hash This is my title
 }
-    assert_html '<div a="The letter a" b="The letter b">This is my title</div>', source, :shortcut => shortcut
+      assert_html '<div a="The letter a" b="The letter b">This is my title</div>', source, :shortcut => shortcuts
+    end
   end
-
-  def test_custom_shortcut_splat_2
-    shortcut = {'#' => 'id', '.' => 'class', '*' => '*', '@' => '*'}
-
-    source = %q{
-@hash This is my title
-}
-    assert_html '<div a="The letter a" b="The letter b">This is my title</div>', source, :shortcut => shortcut
-  end
-
-  def test_custom_shortcut_splat_3
-    shortcut = {'#' => 'id', '.' => 'class', '*' => '*', '+' => '*'}
-
-    source = %q{
-+hash This is my title
-}
-    assert_html '<div a="The letter a" b="The letter b">This is my title</div>', source, :shortcut => shortcut
-  end
-
 
   def test_splat
     source = %q{
