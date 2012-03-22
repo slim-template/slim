@@ -5,7 +5,11 @@ module Slim
     include Temple::Mixins::Options
 
     set_default_options :tabsize => 4,
-                        :encoding => 'utf-8'
+                        :encoding => 'utf-8',
+                        :shortcut => {
+                          '#' => 'id',
+                          '.' => 'class'
+                        }
 
     class SyntaxError < StandardError
       attr_reader :error, :file, :line, :lineno, :column
@@ -32,7 +36,15 @@ module Slim
     def initialize(options = {})
       super
       @tab = ' ' * @options[:tabsize]
-      shortcut = "[#{Regexp.escape @options[:shortcut].keys.join}]"
+      @shortcut = {}
+      @options[:shortcut].each do |k,v|
+        @shortcut[k] = if v =~ /\A([^\s]+)\s+([^\s]+)\Z/
+                         [$1, $2]
+                       else
+                         [@options[:default_tag], v]
+                       end
+      end
+      shortcut = "[#{Regexp.escape @shortcut.keys.join}]"
       @shortcut_regex = /\A(#{shortcut})(\w[\w-]*\w|\w+)/
       @tag_regex = /\A(?:#{shortcut}|\*(?=[^\s]+)|(\w[\w:-]*\w|\w+))/
     end
@@ -277,7 +289,7 @@ module Slim
     end
 
     def parse_tag(tag)
-      tag = [:slim, :tag, tag, parse_attributes]
+      tag = [:slim, :tag, @shortcut[tag] ? @shortcut[tag][0] : tag, parse_attributes]
       @stacks.last << tag
 
       case @line
@@ -319,7 +331,9 @@ module Slim
 
       # Find any shortcut attributes
       while @line =~ @shortcut_regex
-        attributes << [:slim, :shortcut, $1, $2]
+        # The class/id attribute is :static instead of :slim :text,
+        # because we don't want text interpolation in .class or #id shortcut
+        attributes << [:html, :attr, @shortcut[$1][1], [:static, $2]]
         @line = $'
       end
 

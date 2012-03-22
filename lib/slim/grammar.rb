@@ -17,7 +17,6 @@ module Slim
 
     SlimAttr <<
       HTMLAttr                             |
-      [:slim, :shortcut, String, String]   |
       [:slim, :attr, String, Bool, String] |
       [:slim, :splat, String]
   end
