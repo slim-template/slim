@@ -13,7 +13,12 @@ module Slim
                         :attr_wrapper => '"',
                         :attr_delimiter => {'class' => ' '},
                         :remove_empty_attrs => true,
-                        :generator => Temple::Generators::ArrayBuffer
+                        :generator => Temple::Generators::ArrayBuffer,
+                        :default_tag => 'div',
+                        :shortcut => {
+                          '#' => 'id',
+                          '.' => 'class'
+                        }
 
     #
     # Document all supported options with purpose, type etc.
@@ -59,12 +64,13 @@ module Slim
     # It is recommended to set the default settings only once in the code and avoid duplication. Only use
     # `set_default_options` when you have to override some default settings.
     #
-    use Slim::Parser, :file, :tabsize, :encoding, :default_tag, :shortcut
+    use Slim::Parser, :file, :tabsize, :encoding, :shortcut
     use Slim::EmbeddedEngine, :enable_engines, :disable_engines, :pretty
     use Slim::Interpolation
     use Slim::Sections, :sections, :dictionary, :dictionary_access
     use Slim::EndInserter
-    use Slim::Compiler, :disable_capture, :attr_delimiter, :attr_wrapper, :sort_attrs, :remove_empty_attrs
+    use Slim::Compiler, :disable_capture, :attr_delimiter, :attr_wrapper, :sort_attrs,
+                        :remove_empty_attrs, :default_tag, :shortcut
     html :AttributeMerger, :attr_delimiter
     html :AttributeSorter, :sort_attrs
     html :AttributeRemover, :remove_empty_attrs

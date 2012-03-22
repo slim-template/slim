@@ -5,15 +5,20 @@ module Slim
     extend Temple::Grammar
 
     Expression <<
-      [:slim, :control, String, Expression]       |
-      [:slim, :condcomment, String, Expression]   |
-      [:slim, :output, Bool, String, Expression]  |
-      [:slim, :interpolate, String]               |
-      [:slim, :embedded, String, Expression]      |
+      [:slim, :control, String, Expression]           |
+      [:slim, :condcomment, String, Expression]       |
+      [:slim, :output, Bool, String, Expression]      |
+      [:slim, :interpolate, String]                   |
+      [:slim, :embedded, String, Expression]          |
+      [:slim, :tag, String, SlimAttrs, 'Expression?']
+
+    SlimAttrs <<
+      [:slim, :attrs, 'SlimAttr*']
+
+    SlimAttr <<
+      HTMLAttr                             |
+      [:slim, :shortcut, String, String]   |
+      [:slim, :attr, String, Bool, String] |
       [:slim, :splat, String]
-
-    HTMLAttr <<
-      [:slim, :attr, String, Bool, String]
-
   end
 end

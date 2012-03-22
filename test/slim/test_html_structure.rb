@@ -486,19 +486,6 @@ input[value=succ_x]
     assert_html '<div a="The letter a" b="The letter b">This is my title</div>', source
   end
 
-  def test_custom_shortcut_splat
-    shortcuts = {'#' => 'id', '.' => 'class', '*' => '*'}
-
-    chars = %w(@ + _ < >)
-    chars.each do |c|
-      shortcuts[c] = '*'
-      source = %Q{
-#{c}hash This is my title
-}
-      assert_html '<div a="The letter a" b="The letter b">This is my title</div>', source, :shortcut => shortcuts
-    end
-  end
-
   def test_splat
     source = %q{
 h1 *hash This is my title
@@ -512,7 +499,7 @@ h1 *hash This is my title
 #myid*hash This is my title
 }
 
-    assert_html '<div id="myid" a="The letter a" b="The letter b">This is my title</div>', source
+    assert_html '<div a="The letter a" b="The letter b" id="myid">This is my title</div>', source
   end
 
   def test_splat_with_class_shortcut
@@ -520,7 +507,7 @@ h1 *hash This is my title
 .myclass*hash This is my title
 }
 
-    assert_html '<div class="myclass" a="The letter a" b="The letter b">This is my title</div>', source
+    assert_html '<div a="The letter a" b="The letter b" class="myclass">This is my title</div>', source
   end
 
   def test_splat_with_id_and_class_shortcuts
@@ -528,7 +515,7 @@ h1 *hash This is my title
 #myid.myclass*hash This is my title
 }
 
-    assert_html '<div class="myclass" id="myid" a="The letter a" b="The letter b">This is my title</div>', source
+    assert_html '<div a="The letter a" b="The letter b" class="myclass" id="myid">This is my title</div>', source
   end
 
   def test_splat_with_other_attributes
@@ -536,6 +523,6 @@ h1 *hash This is my title
 h1 data-id="123" *hash This is my title
 }
 
-    assert_html '<h1 data-id="123" a="The letter a" b="The letter b">This is my title</h1>', source
+    assert_html '<h1 a="The letter a" b="The letter b" data-id="123">This is my title</h1>', source
   end
 end

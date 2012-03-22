@@ -5,13 +5,7 @@ module Slim
     include Temple::Mixins::Options
 
     set_default_options :tabsize  => 4,
-                        :encoding => 'utf-8',
-                        :default_tag => 'div',
-                        :shortcut => {
-                          '#' => 'id',
-                          '.' => 'class',
-                          '*' => '*'
-                        }
+                        :encoding => 'utf-8'
 
     class SyntaxError < StandardError
       attr_reader :error, :file, :line, :lineno, :column
@@ -38,17 +32,9 @@ module Slim
     def initialize(options = {})
       super
       @tab = ' ' * @options[:tabsize]
-      @shortcut = {}
-      @options[:shortcut].each do |k,v|
-        @shortcut[k] = if v =~ /\A([^\s]+)\s+([^\s]+)\Z/
-                         [$1, $2]
-                       else
-                         [@options[:default_tag], v]
-                       end
-      end
-      shortcuts = "[#{Regexp.escape @shortcut.keys.join}]"
-      @shortcut_regex = /\A(#{shortcuts})(\w[\w-]*\w|\w+)/
-      @tag_regex = /\A(#{shortcuts}|\w[\w:-]*\w|\w+)/
+      shortcut = "[#{Regexp.escape @options[:shortcut].keys.join}]"
+      @shortcut_regex = /\A(#{shortcut})(\w[\w-]*\w|\w+)/
+      @tag_regex = /\A(?:#{shortcut}|\*|(\w[\w:-]*\w|\w+))/
     end
 
     # Compile string to Temple expression
@@ -221,6 +207,7 @@ module Slim
         @stacks.last << [:html, :doctype, $'.strip]
       when @tag_regex
         # Found a HTML tag.
+        @line = $' if $1
         parse_tag($&)
       else
         syntax_error! 'Unknown line indicator'
@@ -290,13 +277,7 @@ module Slim
     end
 
     def parse_tag(tag)
-      if @shortcut[tag]
-        tag = @shortcut[tag][0]
-      else
-        @line.slice!(0, tag.size)
-      end
-
-      tag = [:html, :tag, tag, parse_attributes]
+      tag = [:slim, :tag, tag, parse_attributes]
       @stacks.last << tag
 
       case @line
@@ -304,11 +285,12 @@ module Slim
         # Block expansion
         @line = $'
         (@line =~ @tag_regex) || syntax_error!('Expected tag')
+        @line = $' if $1
         content = [:multi]
         tag << content
         i = @stacks.size
         @stacks << content
-        parse_tag($1)
+        parse_tag($&)
         @stacks.delete_at(i)
       when /\A\s*=(=?)('?)/
         # Handle output code
@@ -332,18 +314,12 @@ module Slim
     end
 
     def parse_attributes
-      attributes = [:html, :attrs]
-      result = [:multi, attributes]
+      attributes = [:slim, :attrs]
+      attribute = nil
 
       # Find any shortcut attributes
       while @line =~ @shortcut_regex
-        # The class/id attribute is :static instead of :slim :text,
-        # because we don't want text interpolation in .class or #id shortcut
-        if @shortcut[$1][1] == '*'
-          result << [:slim, :splat, $2]
-        else
-          attributes << [:html, :attr, @shortcut[$1][1], [:static, $2]]
-        end
+        attributes << [:slim, :shortcut, $1, $2]
         @line = $'
       end
 
@@ -364,7 +340,7 @@ module Slim
         when /\A\s*\*(?=[^\s]+)/
           # Splat attribute
           @line = $'
-          result << [:slim, :splat, parse_ruby_code(delimiter)]
+          attributes << [:slim, :splat, parse_ruby_code(delimiter)]
         when QUOTED_ATTR_REGEX
           # Value is quoted (static)
           @line = $'
@@ -380,6 +356,7 @@ module Slim
           # e.g id=[hash[:a] + hash[:b]]
           value = value[1..-2] if value =~ DELIMITER_REGEX &&
             DELIMITERS[$&] == value[-1, 1]
+          syntax_error!('Invalid empty attribute') if value.empty?
           attributes << [:slim, :attr, name, escape, value]
         else
           break unless delimiter
@@ -409,7 +386,7 @@ module Slim
         end
       end
 
-      result
+      attributes
     end
 
     def parse_ruby_code(outer_delimiter)
@@ -431,10 +408,7 @@ module Slim
         end
         code << @line.slice!(0)
       end
-
       syntax_error!("Expected closing delimiter #{close_delimiter}") if count != 0
-      syntax_error!('Invalid empty attribute') if code.empty?
-
       code
     end
 

@@ -2,6 +2,18 @@ module Slim
   # Compiles Slim expressions into Temple::HTML expressions.
   # @api private
   class Compiler < Filter
+    def initialize(options = {})
+      super
+      @shortcut = {}
+      @options[:shortcut].each do |k,v|
+        @shortcut[k] = if v =~ /\A([^\s]+)\s+([^\s]+)\Z/
+                         [$1, $2]
+                       else
+                         [@options[:default_tag], v]
+                       end
+      end
+    end
+
     # Handle control expression `[:slim, :control, code, content]`
     #
     # @param [String] ruby code
@@ -54,6 +66,67 @@ module Slim
       end
     end
 
+    # Handle tag expression `[:slim, :tag, name, attrs, content]`
+    #
+    # @param [String] name Tag name
+    # @param [Array] attrs Temple expression
+    # @param [Array] content Temple expression
+    # @return [Array] Compiled temple expression
+    def on_slim_tag(name, attrs, content = nil)
+      if name == '*'
+        hash = unique_name
+        if content && !empty_exp?(content)
+          tmp = unique_name
+          [:multi,
+           splat_merge(hash, attrs[2..-1]),
+           [:code, "#{tmp} = #{hash}.delete('tag') || #{@options[:default_tag].inspect}"],
+           [:static, '<'],
+           [:dynamic, "#{tmp}"],
+           splat_attributes(hash),
+           [:static, '>'],
+           content,
+           [:static, '</'],
+           [:dynamic, "#{tmp}"],
+           [:static, '>']]
+        else
+          [:multi,
+           splat_merge(hash, attrs[2..-1]),
+           [:static, '<'],
+           [:dynamic, "#{hash}.delete('tag') || #{@options[:default_tag].inspect}"],
+           splat_attributes(hash),
+           [:static, '/>']]
+        end
+      elsif @shortcut[name]
+        tag = [:html, :tag, @shortcut[name][0], compile(attrs)]
+        content ? (tag << compile(content)) : tag
+      else
+        tag = [:html, :tag, name, compile(attrs)]
+        content ? (tag << compile(content)) : tag
+      end
+    end
+
+    # Handle shortcut expression `[:slim, :shortcut, type, value]`
+    #
+    # @param [String] type Shortcut type
+    # @param [String] value Shortcut value
+    # @return [Array] Compiled temple expression
+    def on_slim_shortcut(type, value)
+      [:html, :attr, @shortcut[type][1], [:static, value]]
+    end
+
+    # Handle attributes expression `[:slim, :attrs, *attrs]`
+    #
+    # @param [Array] *attrs Array of temple expressions
+    # @return [Array] Compiled temple expression
+    def on_slim_attrs(*attrs)
+      if attrs.any? {|a| a[0] == :slim && a[1] == :splat}
+        hash = unique_name
+        [:multi, splat_merge(hash, attrs), splat_attributes(hash)]
+      else
+        [:html, :attrs, *attrs.map {|a| compile(a) }]
+      end
+    end
+
     # Handle attribute expression `[:slim, :attr, escape, code]`
     #
     # @param [Boolean] escape Escape html
@@ -84,36 +157,49 @@ module Slim
       [:html, :attr, name, value]
     end
 
-    # Handle splat expression `[:slim, ;splat, code]`
-    #
-    # @param [String] code Ruby code
-    # @return [Array] Compiled temple expression
-    def on_slim_splat(code)
+    private
+
+    def splat_merge(hash, attrs)
+      result = [:multi,
+                [:code, "#{hash} = {}"]]
+      attrs.each do |attr|
+        result << if attr[0] == :html && attr[1] == :attr
+          tmp = unique_name
+          [:multi, [:capture, tmp, compile(attr[3])], [:code, "#{hash}[#{attr[2].inspect}] = #{tmp}"]]
+        elsif attr[0] == :slim
+          if attr[1] == :attr
+            [:code, "#{hash}[#{attr[2].inspect}] = #{attr[4]}"]
+          elsif attr[1] == :splat
+            name, value = unique_name, unique_name
+            [:code, "(#{attr[2]}).each {|#{name},#{value}| #{hash}[#{name}.to_s] = #{value} }"]
+          elsif attr[1] == :shortcut
+            [:code, "#{hash}[#{@shortcut[attr[2]][1].inspect}] = #{attr[3].inspect}"]
+          else
+            attr
+          end
+        else
+          attr
+        end
+      end
+      result
+    end
+
+    def splat_attributes(hash)
       name, value = unique_name, unique_name
-      code = options[:sort_attrs] ? "(#{code}).sort_by {|#{name},#{value}| #{name}.to_s }" : "(#{code})"
-      [:block, "#{code}.each do |#{name},#{value}|",
-       [:case, value,
-        ['true',
-         [:multi,
-          [:static, ' '],
-          [:dynamic, name],
-          [:static, "=#{options[:attr_wrapper]}"],
-          [:dynamic, name],
-          [:static, options[:attr_wrapper]]]],
-        ['false, nil', [:multi]],
-        ["''",
-         options[:remove_empty_attrs] ? [:multi] :
-         [:multi,
-          [:static, ' '],
-          [:dynamic, name],
-          [:static, "=#{options[:attr_wrapper]}#{options[:attr_wrapper]}"]]],
-        [:else,
-         [:multi,
-          [:static, ' '],
-          [:dynamic, name],
-          [:static, "=#{options[:attr_wrapper]}"],
-          [:escape, true, [:dynamic, value]],
-          [:static, options[:attr_wrapper]]]]]]
+      hash = "#{hash}.sort_by {|#{name},#{value}| #{name}.to_s }" if options[:sort_attrs]
+      attr = [:multi,
+              [:static, ' '],
+              [:dynamic, name],
+              [:static, "=#{options[:attr_wrapper]}"],
+              [:escape, true, [:dynamic, value]],
+              [:static, options[:attr_wrapper]]]
+      if options[:remove_empty_attrs]
+        attr = [:multi,
+                [:code, "#{value} = #{value}.to_s"],
+                [:if, "!#{value}.empty?",
+                 attr]]
+      end
+      [:block, "#{hash}.each do |#{name},#{value}|", attr]
     end
   end
 end
