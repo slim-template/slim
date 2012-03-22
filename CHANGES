@@ -8,6 +8,7 @@ master
     Define custom shortcut attribute with tag (e.g. @ajax-link renders <a role="ajax-link"></a>)
       Slim::Parser.default_options[:shortcut] = {'@' => 'a role'}
   * Add syntax for splat attributes (#109)
+  * Support for dynamic tags, e.g. *{:tag => 'img', :src => 'image.jpg'}
 
 1.1.1
 
