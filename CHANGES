@@ -2,12 +2,14 @@ master
 
   * Add option :shortcut which configures attribute shortcuts
     Default setting:
-      Slim::Parser.default_options[:shortcut] = {'#' => 'id', '.' => 'class'}
+      Slim::Parser.default_options[:shortcut] = {'#' => 'id', '.' => 'class', '*' => '*'}
     Define custom shortcut attribute (e.g. a@ajax-link renders <a role="ajax-link"></a>)
       Slim::Parser.default_options[:shortcut] = {'@' => 'role'}
     Define custom shortcut attribute with tag (e.g. @ajax-link renders <a role="ajax-link"></a>)
       Slim::Parser.default_options[:shortcut] = {'@' => 'a role'}
   * Add syntax for splat attributes (#109)
+    Define custom character for splat behavior
+      Slim::Parser.default_options[:shortcut] = {'@' => '*'}
 
 1.1.1
 
