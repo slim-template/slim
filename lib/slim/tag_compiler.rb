@@ -1,71 +1,6 @@
 module Slim
-  # Compiles Slim expressions into Temple::HTML expressions.
   # @api private
-  class Compiler < Filter
-    def initialize(options = {})
-      super
-      @shortcut = {}
-      @options[:shortcut].each do |k,v|
-        @shortcut[k] = if v =~ /\A([^\s]+)\s+([^\s]+)\Z/
-                         [$1, $2]
-                       else
-                         [@options[:default_tag], v]
-                       end
-      end
-    end
-
-    # Handle control expression `[:slim, :control, code, content]`
-    #
-    # @param [String] ruby code
-    # @param [Array] content Temple expression
-    # @return [Array] Compiled temple expression
-    def on_slim_control(code, content)
-      [:multi,
-        [:code, code],
-        compile(content)]
-    end
-
-    # Handle conditional comment expression
-    # `[:slim, :conditional_comment, conditional, content]`
-    #
-    # @param [Array] content Temple expression
-    # @return [Array] Compiled temple expression
-    def on_slim_condcomment(condition, content)
-      [:html, :comment, [:multi, [:static, "[#{condition}]>"], compile(content), [:static, '<![endif]']]]
-    end
-
-    # Handle output expression `[:slim, :output, escape, code, content]`
-    #
-    # @param [Boolean] escape Escape html
-    # @param [String] code Ruby code
-    # @param [Array] content Temple expression
-    # @return [Array] Compiled temple expression
-    def on_slim_output(escape, code, content)
-      if empty_exp?(content)
-        [:multi, [:escape, escape, [:dynamic, code]], content]
-      else
-        tmp = unique_name
-
-        [:multi,
-         # Capture the result of the code in a variable. We can't do
-         # `[:dynamic, code]` because it's probably not a complete
-         # expression (which is a requirement for Temple).
-         [:block, "#{tmp} = #{code}",
-
-          # Capture the content of a block in a separate buffer. This means
-          # that `yield` will not output the content to the current buffer,
-          # but rather return the output.
-          #
-          # The capturing can be disabled with the option :disable_capture.
-          # Output code in the block writes directly to the output buffer then.
-          # Rails handles this by replacing the output buffer for helpers.
-          options[:disable_capture] ? compile(content) : [:capture, unique_name, compile(content)]],
-
-         # Output the content.
-         [:escape, escape, [:dynamic, tmp]]]
-      end
-    end
-
+  class TagCompiler < Filter
     # Handle tag expression `[:slim, :tag, name, attrs, content]`
     #
     # @param [String] name Tag name
@@ -96,22 +31,10 @@ module Slim
            splat_attributes(hash),
            [:static, '/>']]
         end
-      elsif @shortcut[name]
-        tag = [:html, :tag, @shortcut[name][0], compile(attrs)]
-        content ? (tag << compile(content)) : tag
       else
         tag = [:html, :tag, name, compile(attrs)]
         content ? (tag << compile(content)) : tag
       end
-    end
-
-    # Handle shortcut expression `[:slim, :shortcut, type, value]`
-    #
-    # @param [String] type Shortcut type
-    # @param [String] value Shortcut value
-    # @return [Array] Compiled temple expression
-    def on_slim_shortcut(type, value)
-      [:html, :attr, @shortcut[type][1], [:static, value]]
     end
 
     # Handle attributes expression `[:slim, :attrs, *attrs]`
@@ -172,8 +95,6 @@ module Slim
           elsif attr[1] == :splat
             name, value = unique_name, unique_name
             [:code, "(#{attr[2]}).each {|#{name},#{value}| #{hash}[#{name}.to_s] = #{value} }"]
-          elsif attr[1] == :shortcut
-            [:code, "#{hash}[#{@shortcut[attr[2]][1].inspect}] = #{attr[3].inspect}"]
           else
             attr
           end

@@ -69,8 +69,9 @@ module Slim
     use Slim::Interpolation
     use Slim::Sections, :sections, :dictionary, :dictionary_access
     use Slim::EndInserter
-    use Slim::Compiler, :disable_capture, :attr_delimiter, :attr_wrapper, :sort_attrs,
-                        :remove_empty_attrs, :default_tag, :shortcut
+    use Slim::Shortcuts, :default_tag, :shortcut
+    use Slim::TagCompiler, :attr_delimiter, :attr_wrapper, :sort_attrs, :remove_empty_attrs, :default_tag
+    use Slim::CoreCompiler, :disable_capture
     html :AttributeMerger, :attr_delimiter
     html :AttributeSorter, :sort_attrs
     html :AttributeRemover, :remove_empty_attrs
