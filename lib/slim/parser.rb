@@ -9,7 +9,8 @@ module Slim
                         :default_tag => 'div',
                         :shortcut => {
                           '#' => 'id',
-                          '.' => 'class'
+                          '.' => 'class',
+                          '*' => '*'
                         }
 
     class SyntaxError < StandardError
@@ -338,7 +339,11 @@ module Slim
       while @line =~ @shortcut_regex
         # The class/id attribute is :static instead of :slim :text,
         # because we don't want text interpolation in .class or #id shortcut
-        attributes << [:html, :attr, @shortcut[$1][1], [:static, $2]]
+        if @shortcut[$1][1] == '*'
+          result << [:slim, :splat, $2]
+        else
+          attributes << [:html, :attr, @shortcut[$1][1], [:static, $2]]
+        end
         @line = $'
       end
 
