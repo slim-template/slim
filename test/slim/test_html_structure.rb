@@ -486,6 +486,14 @@ input[value=succ_x]
     assert_html '<div a="The letter a" b="The letter b">This is my title</div>', source
   end
 
+  def test_splat_tag_name
+    source = %q{
+*{:tag => 'h1', :id => 'title'} This is my title
+}
+
+    assert_html '<h1 id="title">This is my title</h1>', source
+  end
+
   def test_splat
     source = %q{
 h1 *hash This is my title
@@ -516,6 +524,14 @@ h1 *hash This is my title
 }
 
     assert_html '<div a="The letter a" b="The letter b" class="myclass" id="myid">This is my title</div>', source
+  end
+
+  def test_splat_with_class_merging
+    source = %q{
+#myid.myclass *{:class => [:secondclass, %w(x y z)]} *hash This is my title
+}
+
+    assert_html '<div a="The letter a" b="The letter b" class="myclass secondclass x y z" id="myid">This is my title</div>', source
   end
 
   def test_splat_with_other_attributes

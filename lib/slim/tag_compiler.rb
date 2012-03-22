@@ -83,18 +83,19 @@ module Slim
     private
 
     def splat_merge(hash, attrs)
+      tmphash, name, value, tmp = unique_name, unique_name, unique_name, unique_name
+
       result = [:multi,
-                [:code, "#{hash} = {}"]]
+                [:code, "#{hash}, #{tmphash} = {}, {}"]]
       attrs.each do |attr|
         result << if attr[0] == :html && attr[1] == :attr
-          tmp = unique_name
-          [:multi, [:capture, tmp, compile(attr[3])], [:code, "#{hash}[#{attr[2].inspect}] = #{tmp}"]]
+          [:multi, [:capture, tmp, compile(attr[3])], [:code, "(#{tmphash}[#{attr[2].inspect}] ||= []) << #{tmp}"]]
         elsif attr[0] == :slim
           if attr[1] == :attr
-            [:code, "#{hash}[#{attr[2].inspect}] = #{attr[4]}"]
+            [:code, "(#{tmphash}[#{attr[2].inspect}] ||= []) << #{attr[4]}"]
           elsif attr[1] == :splat
             name, value = unique_name, unique_name
-            [:code, "(#{attr[2]}).each {|#{name},#{value}| #{hash}[#{name}.to_s] = #{value} }"]
+            [:code, "(#{attr[2]}).each {|#{name},#{value}| (#{tmphash}[#{name}.to_s] ||= []) << #{value} }"]
           else
             attr
           end
@@ -102,24 +103,38 @@ module Slim
           attr
         end
       end
-      result
+
+      join = [:case, name]
+      options[:attr_delimiter].each do |attr, delim|
+        join << [attr.inspect, [:code, "#{hash}[#{name}] = #{value}.flatten.compact.join(#{delim.inspect})"]]
+      end
+      join << [:else,
+               [:multi,
+                [:code, "#{value}.flatten!"],
+                [:if, "#{value}.size == 1",
+                 [:code, "#{hash}[#{name}] = #{value}.last"],
+                 [:code, "raise(\"Multiple #\{#{name}\} attributes specified\")"]]]]
+
+      result << [:block, "#{tmphash}.each do |#{name},#{value}|",
+                 [:multi,
+                  [:block, "#{value}.map! do |#{tmp}|",
+                   [:case, tmp,
+                    ['true', [:code, name]],
+                    ['false, nil', [:multi]],
+                    [:else, [:code, tmp]]]],
+                  join]]
     end
 
     def splat_attributes(hash)
       name, value = unique_name, unique_name
-      hash = "#{hash}.sort_by {|#{name},#{value}| #{name}.to_s }" if options[:sort_attrs]
       attr = [:multi,
               [:static, ' '],
               [:dynamic, name],
               [:static, "=#{options[:attr_wrapper]}"],
               [:escape, true, [:dynamic, value]],
               [:static, options[:attr_wrapper]]]
-      if options[:remove_empty_attrs]
-        attr = [:multi,
-                [:code, "#{value} = #{value}.to_s"],
-                [:if, "!#{value}.empty?",
-                 attr]]
-      end
+      attr = [:if, "!#{value}.empty?", attr] if options[:remove_empty_attrs]
+      hash = "#{hash}.sort_by {|#{name},#{value}| #{name} }" if options[:sort_attrs]
       [:block, "#{hash}.each do |#{name},#{value}|", attr]
     end
   end

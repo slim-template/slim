@@ -4,7 +4,7 @@ module Slim
   class Parser
     include Temple::Mixins::Options
 
-    set_default_options :tabsize  => 4,
+    set_default_options :tabsize => 4,
                         :encoding => 'utf-8'
 
     class SyntaxError < StandardError
@@ -34,7 +34,7 @@ module Slim
       @tab = ' ' * @options[:tabsize]
       shortcut = "[#{Regexp.escape @options[:shortcut].keys.join}]"
       @shortcut_regex = /\A(#{shortcut})(\w[\w-]*\w|\w+)/
-      @tag_regex = /\A(?:#{shortcut}|\*|(\w[\w:-]*\w|\w+))/
+      @tag_regex = /\A(?:#{shortcut}|\*(?=[^\s]+)|(\w[\w:-]*\w|\w+))/
     end
 
     # Compile string to Temple expression
