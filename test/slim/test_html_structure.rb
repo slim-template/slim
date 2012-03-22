@@ -478,4 +478,51 @@ input[value=succ_x]
     assert_html %{<input value="1" /><input value="2" />}, source
   end
 
+#  def test_splat_as_shortcut
+#    source = %q{
+#*hash This is my title
+#}
+#
+#    assert_html '<div a="The letter a" b="The letter b">This is my title</div>', source
+#  end
+
+  def test_splat
+    source = %q{
+h1 *hash This is my title
+}
+
+    assert_html '<h1 a="The letter a" b="The letter b">This is my title</h1>', source
+  end
+
+  def test_splat_with_id_shortcut
+    source = %q{
+#myid*hash This is my title
+}
+
+    assert_html '<div id="myid" a="The letter a" b="The letter b">This is my title</div>', source
+  end
+
+  def test_splat_with_class_shortcut
+    source = %q{
+.myclass*hash This is my title
+}
+
+    assert_html '<div class="myclass" a="The letter a" b="The letter b">This is my title</div>', source
+  end
+
+  def test_splat_with_id_and_class_shortcuts
+    source = %q{
+#myid.myclass*hash This is my title
+}
+
+    assert_html '<div class="myclass" id="myid" a="The letter a" b="The letter b">This is my title</div>', source
+  end
+
+  def test_splat_with_other_attributes
+    source = %q{
+h1 data-id="123" *hash This is my title
+}
+
+    assert_html '<h1 data-id="123" a="The letter a" b="The letter b">This is my title</h1>', source
+  end
 end
