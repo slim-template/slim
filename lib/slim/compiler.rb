@@ -28,7 +28,11 @@ module Slim
     # @param [Array] content Temple expression
     # @return [Array] Compiled temple expression
     def on_slim_condcomment(condition, content)
-      [:html, :comment, [:multi, [:static, "[#{condition}]>"], compile(content), [:static, '<![endif]']]]
+      [:html, :comment,
+       [:multi,
+        [:static, "[#{condition}]>"],
+        compile(content),
+        [:static, '<![endif]']]]
     end
 
     # Handle output expression `[:slim, :output, escape, code, content]`
@@ -150,7 +154,9 @@ module Slim
       merger = [:multi, [:code, "#{hash} = {}"]]
       attrs.each do |attr|
         merger << if attr[0] == :html && attr[1] == :attr
-          [:multi, [:capture, tmp, compile(attr[3])], [:code, "(#{hash}[#{attr[2].inspect}] ||= []) << #{tmp}"]]
+          [:multi,
+           [:capture, tmp, compile(attr[3])],
+           [:code, "(#{hash}[#{attr[2].inspect}] ||= []) << #{tmp}"]]
         elsif attr[0] == :slim
           if attr[1] == :attr
             [:code, "(#{hash}[#{attr[2].inspect}] ||= []) << (#{attr[4]})"]
