@@ -72,27 +72,25 @@ module Slim
     def on_slim_tag(name, attrs, content = nil)
       if name == '*'
         hash, merger, formatter = splat_attributes(attrs[2..-1])
-        if content && !empty_exp?(content)
-          tmp = unique_name
-          [:multi,
-           merger,
-           [:code, "#{tmp} = #{hash}.delete('tag') || #{@options[:default_tag].inspect}"],
-           [:static, '<'],
-           [:dynamic, "#{tmp}"],
-           formatter,
-           [:static, '>'],
-           content,
-           [:static, '</'],
-           [:dynamic, "#{tmp}"],
-           [:static, '>']]
-        else
-          [:multi,
-           merger,
-           [:static, '<'],
-           [:dynamic, "#{hash}.delete('tag') || #{@options[:default_tag].inspect}"],
-           formatter,
-           [:static, '/>']]
-        end
+        tmp = unique_name
+        tag = [:multi,
+               merger,
+               [:code, "#{tmp} = #{hash}.delete('tag').to_s"],
+               [:if, "#{tmp}.empty?",
+                [:code, "#{tmp} = #{@options[:default_tag].inspect}"]],
+               [:static, '<'],
+               [:dynamic, "#{tmp}"],
+               formatter]
+        tag << if content
+                 [:multi,
+                  [:static, '>'],
+                  compile(content),
+                  [:static, '</'],
+                  [:dynamic, "#{tmp}"],
+                  [:static, '>']]
+               else
+                 [:static, '/>']
+               end
       else
         tag = [:html, :tag, name, compile(attrs)]
         content ? (tag << compile(content)) : tag
@@ -149,17 +147,15 @@ module Slim
 
       hash, name, value, tmp = unique_name, unique_name, unique_name, unique_name
 
-      merger = [:multi,
-                [:code, "#{hash} = {}"]]
+      merger = [:multi, [:code, "#{hash} = {}"]]
       attrs.each do |attr|
         merger << if attr[0] == :html && attr[1] == :attr
           [:multi, [:capture, tmp, compile(attr[3])], [:code, "(#{hash}[#{attr[2].inspect}] ||= []) << #{tmp}"]]
         elsif attr[0] == :slim
           if attr[1] == :attr
-            [:code, "(#{hash}[#{attr[2].inspect}] ||= []) << #{attr[4]}"]
+            [:code, "(#{hash}[#{attr[2].inspect}] ||= []) << (#{attr[4]})"]
           elsif attr[1] == :splat
-            name, value = unique_name, unique_name
-            [:code, "(#{attr[2]}).each {|#{name},#{value}| (#{hash}[#{name}.to_s] ||= []) << #{value} }"]
+            [:code, "(#{attr[2]}).each {|#{name},#{value}| (#{hash}[#{name}.to_s] ||= []) << (#{value}) }"]
           else
             attr
           end

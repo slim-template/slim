@@ -486,6 +486,14 @@ input[value=succ_x]
     assert_html '<div a="The letter a" b="The letter b">This is my title</div>', source
   end
 
+  def test_splat
+    source = %q{
+h1 *hash This is my title
+}
+
+    assert_html '<h1 a="The letter a" b="The letter b">This is my title</h1>', source
+  end
+
   def test_splat_tag_name
     source = %q{
 *{:tag => 'h1', :id => 'title'} This is my title
@@ -494,12 +502,22 @@ input[value=succ_x]
     assert_html '<h1 id="title">This is my title</h1>', source
   end
 
-  def test_splat
+
+  def test_splat_empty_tag_name
     source = %q{
-h1 *hash This is my title
+*{:tag => '', :id => 'test'} This is my title
 }
 
-    assert_html '<h1 a="The letter a" b="The letter b">This is my title</h1>', source
+    assert_html '<div id="test">This is my title</div>', source, :remove_empty_attrs => true
+    assert_html '<div id="test">This is my title</div>', source, :remove_empty_attrs => false
+  end
+
+  def test_closed_splat_tag
+    source = %q{
+*hash / This is my title
+}
+
+    assert_html '<div a="The letter a" b="The letter b"/>', source
   end
 
   def test_splat_with_id_shortcut
