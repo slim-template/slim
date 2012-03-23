@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
   s.require_paths = %w(lib)
 
   s.add_runtime_dependency('temple', ['~> 0.4.0'])
-  s.add_runtime_dependency('tilt', ['~> 1.3.2'])
+  s.add_runtime_dependency('tilt', ['~> 1.3.3'])
 
   s.add_development_dependency('rake', ['>= 0.8.7'])
   s.add_development_dependency('sass', ['>= 3.1.0'])
