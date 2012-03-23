@@ -129,7 +129,7 @@ Here's a quick example to demonstrate what a Slim template looks like:
 
 #### `/!`
 
-> Use the forward slash immediately followed by an exclamation mark for html comments (`<!-- -->`).
+> Use the forward slash immediately followed by an exclamation mark for html comments (` <!-- --> `).
 
 
 ### Things to know

@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.summary           = 'Slim is a template language.'
   s.description       = 'Slim is a template language whose goal is reduce the syntax to the essential parts without becoming cryptic.'
   s.homepage          = 'http://slim-lang.com/'
-  s.extra_rdoc_files  = %w(README.md)
+  s.extra_rdoc_files  = %w(README.md LICENSE CHANGES)
   s.rdoc_options      = %w(--charset=UTF-8)
   s.rubyforge_project = s.name
 
