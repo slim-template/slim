@@ -1,6 +1,16 @@
 module Slim
   # @api private
   class Compiler < Filter
+    def call(exp)
+      @attr_delimiter, @splat_used = unique_name, false
+      exp = compile(exp)
+      if @splat_used
+        [:multi, [:code, "#{@attr_delimiter} = #{@options[:attr_delimiter].inspect}"], exp]
+      else
+        exp
+      end
+    end
+
     # Handle control expression `[:slim, :control, code, content]`
     #
     # @param [String] ruby code
@@ -61,15 +71,15 @@ module Slim
     # @return [Array] Compiled temple expression
     def on_slim_tag(name, attrs, content = nil)
       if name == '*'
-        hash = unique_name
+        hash, merger, formatter = splat_attributes(attrs[2..-1])
         if content && !empty_exp?(content)
           tmp = unique_name
           [:multi,
-           splat_merge(hash, attrs[2..-1]),
+           merger,
            [:code, "#{tmp} = #{hash}.delete('tag') || #{@options[:default_tag].inspect}"],
            [:static, '<'],
            [:dynamic, "#{tmp}"],
-           splat_attributes(hash),
+           formatter,
            [:static, '>'],
            content,
            [:static, '</'],
@@ -77,10 +87,10 @@ module Slim
            [:static, '>']]
         else
           [:multi,
-           splat_merge(hash, attrs[2..-1]),
+           merger,
            [:static, '<'],
            [:dynamic, "#{hash}.delete('tag') || #{@options[:default_tag].inspect}"],
-           splat_attributes(hash),
+           formatter,
            [:static, '/>']]
         end
       else
@@ -94,9 +104,9 @@ module Slim
     # @param [Array] *attrs Array of temple expressions
     # @return [Array] Compiled temple expression
     def on_slim_attrs(*attrs)
-      if attrs.any? {|a| a[0] == :slim && a[1] == :splat}
-        hash = unique_name
-        [:multi, splat_merge(hash, attrs), splat_attributes(hash)]
+      if attrs.any? {|attr| attr[1] == :splat}
+        hash, merger, formatter = splat_attributes(attrs)
+        [:multi, merger, formatter]
       else
         [:html, :attrs, *attrs.map {|a| compile(a) }]
       end
@@ -132,22 +142,24 @@ module Slim
       [:html, :attr, name, value]
     end
 
-    private
+    protected
 
-    def splat_merge(hash, attrs)
-      tmphash, name, value, tmp = unique_name, unique_name, unique_name, unique_name
+    def splat_attributes(attrs)
+      @splat_used = true
 
-      result = [:multi,
-                [:code, "#{hash}, #{tmphash} = {}, {}"]]
+      hash, name, value, tmp = unique_name, unique_name, unique_name, unique_name
+
+      merger = [:multi,
+                [:code, "#{hash} = {}"]]
       attrs.each do |attr|
-        result << if attr[0] == :html && attr[1] == :attr
-          [:multi, [:capture, tmp, compile(attr[3])], [:code, "(#{tmphash}[#{attr[2].inspect}] ||= []) << #{tmp}"]]
+        merger << if attr[0] == :html && attr[1] == :attr
+          [:multi, [:capture, tmp, compile(attr[3])], [:code, "(#{hash}[#{attr[2].inspect}] ||= []) << #{tmp}"]]
         elsif attr[0] == :slim
           if attr[1] == :attr
-            [:code, "(#{tmphash}[#{attr[2].inspect}] ||= []) << #{attr[4]}"]
+            [:code, "(#{hash}[#{attr[2].inspect}] ||= []) << #{attr[4]}"]
           elsif attr[1] == :splat
             name, value = unique_name, unique_name
-            [:code, "(#{attr[2]}).each {|#{name},#{value}| (#{tmphash}[#{name}.to_s] ||= []) << #{value} }"]
+            [:code, "(#{attr[2]}).each {|#{name},#{value}| (#{hash}[#{name}.to_s] ||= []) << #{value} }"]
           else
             attr
           end
@@ -156,29 +168,19 @@ module Slim
         end
       end
 
-      join = [:case, name]
-      options[:attr_delimiter].each do |attr, delim|
-        join << [attr.inspect, [:code, "#{hash}[#{name}] = #{value}.flatten.compact.join(#{delim.inspect})"]]
-      end
-      join << [:else,
-               [:multi,
-                [:code, "#{value}.flatten!"],
-                [:if, "#{value}.size == 1",
-                 [:code, "#{hash}[#{name}] = #{value}.last"],
-                 [:code, "raise(\"Multiple #\{#{name}\} attributes specified\")"]]]]
-
-      result << [:block, "#{tmphash}.each do |#{name},#{value}|",
+      merger << [:block, "#{hash}.keys.each do |#{name}|",
                  [:multi,
+                  [:code, "#{value} = #{hash}[#{name}]"],
+                  [:code, "#{value}.flatten!"],
                   [:block, "#{value}.map! do |#{tmp}|",
                    [:case, tmp,
                     ['true', [:code, name]],
                     ['false, nil', [:multi]],
                     [:else, [:code, tmp]]]],
-                  join]]
-    end
+                  [:if, "#{value}.size > 1 && !#{@attr_delimiter}[#{name}]",
+                   [:code, "raise(\"Multiple #\{#{name}\} attributes specified\")"]],
+                  [:code, "#{hash}[#{name}] = #{value}.compact.join(#{@attr_delimiter}[#{name}].to_s)"]]]
 
-    def splat_attributes(hash)
-      name, value = unique_name, unique_name
       attr = [:multi,
               [:static, ' '],
               [:dynamic, name],
@@ -186,8 +188,10 @@ module Slim
               [:escape, true, [:dynamic, value]],
               [:static, options[:attr_wrapper]]]
       attr = [:if, "!#{value}.empty?", attr] if options[:remove_empty_attrs]
-      hash = "#{hash}.sort_by {|#{name},#{value}| #{name} }" if options[:sort_attrs]
-      [:block, "#{hash}.each do |#{name},#{value}|", attr]
+      enumerator = options[:sort_attrs] ? "#{hash}.sort_by {|#{name},#{value}| #{name} }" : hash
+      formatter = [:block, "#{enumerator}.each do |#{name},#{value}|", attr]
+
+      return hash, merger, formatter
     end
   end
 end
