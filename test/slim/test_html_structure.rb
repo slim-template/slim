@@ -534,6 +534,15 @@ h1 *hash This is my title
     assert_html '<div a="The letter a" b="The letter b" class="myclass secondclass x y z" id="myid">This is my title</div>', source
   end
 
+  def test_splat_with_boolean_attribute
+    source = %q{
+*{:disabled => true, :empty1 => false, :empty2 => '', :empty3 => nil} This is my title
+}
+
+    assert_html '<div disabled="disabled">This is my title</div>', source
+    assert_html '<div disabled="disabled" empty1="" empty2="" empty3="">This is my title</div>', source, :remove_empty_attrs => false
+  end
+
   def test_splat_with_other_attributes
     source = %q{
 h1 data-id="123" *hash This is my title
