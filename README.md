@@ -408,3 +408,4 @@ This project is released under the MIT license.
 * [Skim (Slim for Javascript)](https://github.com/jfirebaugh/skim)
 * [Slim for Clojure](https://github.com/chaslemley/slim.clj)
 * [Hamlet.rb (Similar template language)](https://github.com/gregwebs/hamlet.rb)
+* [Coffee script plugin for Slim](https://github.com/yury/coffee-views)
