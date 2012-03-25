@@ -40,12 +40,38 @@
 
         <hr/>
         <h4><a name="options" href="#options">Options:</a></h4>
-        <pre><code><span class="comment"># Output pretty (indented) format
-# For Rails, you'd probably want this line in
-# config/environments/development.rb</span>
-<span class="constant">Slim</span>::<span class="constant">Engine</span>.set_default_options <span class="symbol">:pretty</span> => <span class="keyword">true</span></code></pre>
-    <p>Just use the .slim extension on your templates and you're good to go. <br> Now on to the syntax...</p>
-
+        <p>Set one of the below options like so:
+        <pre><code>
+        <span class="constant">Slim</span>::<span class="constant">Engine</span>.set_default_options <span class="symbol">:pretty</span> => <span class="keyword">true</span>
+      </code></pre>
+        </p>
+        <table class='options'>
+          <thead><tr><td>Type</td><td>Name</td><td>Default</td><td>Purpose</td></tr></thead>
+          <tbody>
+            <tr class="odd"><td>String</td><td>:file</td><td>nil</td><td>Name of parsed file, set automatically by Slim::Template</td></tr>
+            <tr><td>Integer</td><td>:tabsize</td><td>4</td><td>Number of whitespaces per tab (used by the parser)</td></tr>
+            <tr class="odd"><td>String</td><td>:encoding</td><td>"utf-8"</td><td>Set encoding of template</td></tr>
+            <tr><td>String</td><td>:default_tag</td><td>"div"</td><td>Default tag to be used if tag name is omitted</td></tr>
+            <tr class="odd"><td>Hash</td><td>:shortcut</td><td>{'.' => 'class', ...}</td><td>Attribute shortcuts</td></tr>
+            <tr><td>String list</td><td>:enable_engines</td><td>All enabled</td><td>List of enabled embedded engines (whitelist)</td></tr>
+            <tr class="odd"><td>String list</td><td>:disable_engines</td><td>None disabled</td><td>List of disabled embedded engines (blacklist)</td></tr>
+            <tr><td>Boolean</td><td>:sections</td><td>false</td><td>Enable sections mode (logic-less)</td></tr>
+            <tr class="odd"><td>String</td><td>:dictionary</td><td>"self"</td><td>Name of dictionary variable in sections mode</td></tr>
+            <tr><td>Symbol</td><td>:dictionary_access</td><td>:wrapped</td><td>Access mode of dictionary variable (:wrapped, :symbol, :string)</td></tr>
+            <tr class="odd"><td>Boolean</td><td>:disable_capture</td><td>false (true in Rails)</td><td>Disable capturing in blocks (blocks write to the default buffer </td></tr>
+            <tr><td>Boolean</td><td>:disable_escape</td><td>false</td><td>Disable automatic escaping of strings</td></tr>
+            <tr class="odd"><td>Boolean</td><td>:use_html_safe</td><td>false (true in Rails)</td><td>Use String#html_safe? from ActiveSupport (Works together with :disable_escape)</td></tr>
+            <tr><td>Symbol</td><td>:format</td><td>:xhtml</td><td>HTML output format</td></tr>
+            <tr class="odd"><td>String</td><td>:attr_wrapper</td><td>'"'</td><td>Character to wrap attributes in html (can be ' or ")</td></tr>
+            <tr><td>Hash</td><td>:attr_delimiter</td><td>{'class' => ' '}</td><td>Joining character used if multiple html attributes are supplied (e.g. id1_id2)</td></tr>
+            <tr class="odd"><td>Boolean</td><td>:sort_attrs</td><td>true</td><td>Sort attributes by name</td></tr>
+            <tr><td>Boolean</td><td>:remove_empty_attrs</td><td>true</td><td>Remove attributes with empty value</td></tr>
+            <tr class="odd"><td>Boolean</td><td>:pretty</td><td>false</td><td>Pretty html indenting (This is slower!)</td></tr>
+            <tr><td>String</td><td>:indent</td><td>'  '</td><td>Indentation string</td></tr>
+            <tr class="odd"><td>Boolean</td><td>:streaming</td><td>false (true in Rails > 3.1)</td><td>Enable output streaming</td></tr>
+            <tr><td>Class</td><td>:generator</td><td>ArrayBuffer/RailsOutputBuffer</td><td>Temple code generator (default generator generates array buffer)</td></tr>
+          </tbody>
+        </table>
         <hr/>
         <h4><a name="doctypes" href="#doctypes">doctype declarations:</a></h4>
           <pre><code>
@@ -144,6 +170,30 @@
   <span class="tag">li</span> = link_to(<span class="string">"Login"</span>, login_path) </code></pre>
 
         <hr/>
+        <h4><a name="attribute-shortcuts" href="#attribute-shortcuts">Attribute shortcuts</a></h4>
+          <p>The expected id ('#') and class ('.') shortcuts:</p>
+          <pre><code><span class="tag">#myid</span><span class="htmlclass">.myclass.myclass2</span> My example
+
+&lt;div id="myid" class="myclass myclass2"&gt;My example&lt;/div&gt;</code></pre>
+
+          <br/><p>The splat shortcut allows you turn a hash in to attribute/value pairs</p>
+          <pre><code><span class="htmlclass"><span class="comment">/ splat turns a hash into attribute/value pairs</span>
+.card*{'data-url'=>place_path(place), 'data-id'=>place.id}</span> = place.name
+
+&lt;div class="card" data-id="1234" data-url="/place/1234"&gt;Slim's house&lt;/div&gt;</code></pre>
+
+          <br/><p>Custom shortcut allows you to define your own. If you do this you must define the '#' and '.' shortcuts.</p>
+          <pre><code><span class="htmlclass"><span class="comment">/ To use this use must set the option
+/ Slim::Engine.set_default_options shortcut: {'@' => 'role', '#' => 'id', '.' => 'class'}</span>
+
+.person@admin</span> = person.name
+
+&lt;div class="person" role="admin"&gt;Daniel&lt;/div&gt;</code></pre>
+
+
+
+
+        <hr/>
         <h4><a name="dynamic-content-in-attribute" href="#dynamic-content-in-attribute">Dynamic content in attribute</a></h4>
           <pre><code><span class="tag">a</span> href=<span class="string">"</span><span class="interpolation">#{</span>url_for <span class="instancevar">@user</span><span class="interpolation">}</span><span class="string">"</span> = <span class="instancevar">@user</span>.name</code></pre>
           <p>An attribute without quotes is deemed dynamic!</p>
@@ -193,12 +243,6 @@
         <pre><code>== <span class="keyword">render</span> <span class="symbol">:partial</span> =&gt; <span class="string">'user'</span></code></pre>
         <p>To bypass escaping with interpolation:</p>
         <pre><code><span class="tag">p</span> Current location: <span class="interpolation">#{{</span>request.path<span class="interpolation">}}</span></code></pre>
-
-        <hr/>
-        <h4><a name="class-and-id-shortcuts" href="#class-and-id-shortcuts">Haml like shortcuts:</a></h4>
-          <pre><code><span class="tag">#myid</span><span class="htmlclass">.myclass.myclass2</span> My example</code></pre>
-           <p>renders:</p>
-          <pre><code>&lt;div id="myid" class="myclass myclass2"&gt;My example&lt;/div&gt;</code></pre>
 
         <hr/>
         <h4><a name="inline-tags" href="#inline-tags">Inline tags:</a></h4>

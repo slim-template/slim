@@ -284,3 +284,7 @@ p.foot.up {
 #main .mixed-pad h3, #main .mixed-pad h4, #main .mixed-pad p {padding-right:80px;}
 h4.note {padding:20px 30px 20px 70px;background:#b30 url(../img/warning.png) no-repeat 30px center;font-weight:bold;}
 a {outline:none}
+.options{ background: #000; padding-left: 30px; font-size: 12pt}
+.options thead td{font-weight: bold}
+.options td{padding: 6px 8px}
+.options tr.odd{background: #333}
