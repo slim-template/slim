@@ -561,6 +561,14 @@ h1 *hash This is my title
     assert_html '<div disabled="disabled" empty1="" empty2="" empty3="">This is my title</div>', source, :remove_empty_attrs => false
   end
 
+  def test_splat_merging_with_arrays
+    source = %q{
+*{:a => 1, :b => 2} *[[:c, 3], [:d, 4]] *[[:e, 5], [:f, 6]] This is my title
+}
+
+    assert_html '<div a="1" b="2" c="3" d="4" e="5" f="6">This is my title</div>', source
+  end
+
   def test_splat_with_other_attributes
     source = %q{
 h1 data-id="123" *hash This is my title
