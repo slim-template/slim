@@ -1,3 +1,7 @@
+master
+
+  * Support stylus as embedded engine
+
 1.2.0
 
   * Add option :shortcut which configures attribute shortcuts
