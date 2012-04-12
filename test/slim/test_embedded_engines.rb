@@ -1,4 +1,5 @@
 require 'helper'
+require 'stylus'
 
 class TestSlimEmbeddedEngines < TestSlim
   def test_render_with_erb
@@ -107,6 +108,16 @@ scss:
   body { color: $color; }
 }
     assert_html "<style type=\"text/css\">body{color:red}</style>", source
+  end
+
+  def test_render_with_styl
+    source = %q{
+styl:
+  red = hotpink
+  body
+    color red
+}
+    assert_html "<style type=\"text/css\">body {\n  color: #ff69b4;\n}\n</style>", source
   end
 
   def test_disabled_embedded_engine
