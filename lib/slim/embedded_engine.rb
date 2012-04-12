@@ -186,6 +186,7 @@ module Slim
     register :less,       TagEngine,  :tag => :style,  :attributes => { :type => 'text/css' },         :engine => StaticTiltEngine
     register :sass,       TagEngine,  :pretty, :tag => :style, :attributes => { :type => 'text/css' }, :engine => SassEngine
     register :scss,       TagEngine,  :pretty, :tag => :style, :attributes => { :type => 'text/css' }, :engine => SassEngine
+    register :styl,       TagEngine,  :tag => :style,  :attributes => { :type => 'text/css' },         :engine => StaticTiltEngine
 
     # These engines are precompiled, code is embedded
     register :erb,        ERBEngine
