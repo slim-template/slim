@@ -73,7 +73,7 @@ Here's a quick example to demonstrate what a Slim template looks like:
 
         = yield
 
-        - unless items.empty?
+        - if items.any?
           table
             - for item in items do
               tr
