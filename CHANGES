@@ -1,6 +1,7 @@
 master
 
   * Support stylus as embedded engine
+  * Fix issue #257
 
 1.2.0
 
