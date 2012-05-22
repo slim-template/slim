@@ -25,7 +25,7 @@ module Slim
           string, code = parse_expression($')
           escape = code !~ /\A\{.*\}\Z/
           block << [:slim, :output, escape, escape ? code : code[1..-2], [:multi]]
-        when /\A(#|[^#]*)/
+        when /\A([#\\]|[^#\\]*)/
           # Static text
           block << [:static, $&]
           string = $'

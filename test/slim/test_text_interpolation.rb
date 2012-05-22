@@ -40,9 +40,10 @@ p #{hello_world}
   def test_escape_interpolation
     source = %q{
 p \\#{hello_world}
+p text1 \\#{hello_world} text2
 }
 
-    assert_html '<p>#{hello_world}</p>', source
+    assert_html '<p>#{hello_world}</p><p>text1 #{hello_world} text2</p>', source
   end
 
   def test_complex_interpolation
