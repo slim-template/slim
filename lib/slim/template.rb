@@ -6,7 +6,8 @@ module Slim
   if Object.const_defined?(:Rails)
     # Rails template implementation for Slim
     # @api public
-    RailsTemplate = Temple::Templates::Rails(Slim::Engine,
+    begin
+      RailsTemplate = Temple::Templates::Rails(Slim::Engine,
                                              :register_as => :slim,
                                              # Use rails-specific generator. This is necessary
                                              # to support block capturing and streaming.
@@ -15,5 +16,8 @@ module Slim
                                              # Rails takes care of the capturing by itself.
                                              :disable_capture => true,
                                              :streaming => Object.const_defined?(:Fiber))
+    rescue RuntimeError => e
+      warn "Failed to load RailsTemplate #{e.message}"
+    end
   end
 end
