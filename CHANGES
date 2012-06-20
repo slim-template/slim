@@ -1,3 +1,7 @@
+1.2.2
+
+  * Fix issue #264
+
 1.2.1
 
   * Support stylus as embedded engine
