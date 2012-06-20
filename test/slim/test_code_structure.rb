@@ -37,6 +37,18 @@ div
     assert_html '<div><p>The second paragraph</p></div>', source
   end
 
+  def test_render_with_when_string_in_condition
+    source = %q{
+- if true
+  | Hello
+
+- unless 'when' == nil
+  |  world
+}
+
+    assert_html 'Hello world', source
+  end
+
   def test_render_with_conditional_and_following_nonconditonal
     source = %q{
 div
