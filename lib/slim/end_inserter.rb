@@ -10,7 +10,7 @@ module Slim
   #
   # @api private
   class EndInserter < Filter
-    ELSE_REGEX = /\Aelse|elsif|when\b/
+    ELSE_REGEX = /\A(else|elsif|when)\b/
     END_REGEX = /\Aend\b/
 
     # Handle multi expression `[:multi, *exps]`
