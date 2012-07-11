@@ -20,6 +20,9 @@ matrix:
       env: "TASK=test:rails RAILS=master"
     - rvm: rbx-18mode
       env: "TASK=test:rails RAILS=master"
+  allow_failures:
+    - rvm: ruby-head
+    - env: "TASK=test:rails RAILS=master"
 script: "bundle exec rake test:ci"
 notifications:
   email: false
