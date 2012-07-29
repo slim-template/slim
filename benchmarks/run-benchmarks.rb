@@ -99,7 +99,8 @@ class SlimBenchmarks
    This benchmark uses the standard API of the template engine.
 
 4. Uncached benchmark. Template is parsed every time.
-   Activate this benchmark with 'rake bench slow=1'.
+   This is not the recommended way to use the template engine
+   and Slim is not optimized for it. Activate this benchmark with 'rake bench slow=1'.   
 "
   end
 
