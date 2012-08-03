@@ -3,6 +3,8 @@ module Slim
   # @api public
   Template = Temple::Templates::Tilt(Slim::Engine, :register_as => :slim)
 
+  Template.default_mime_type = 'text/html'
+
   if Object.const_defined?(:Rails)
     # Rails template implementation for Slim
     # @api public
