@@ -7,6 +7,10 @@ class TestSlimTemplate < TestSlim
   class Scope
   end
 
+  def test_default_mime_type
+    assert_equal 'text/html', Slim::Template.default_mime_type
+  end
+
   def test_registered_extension
     assert_equal Slim::Template, Tilt['test.slim']
   end
