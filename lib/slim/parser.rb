@@ -64,7 +64,7 @@ module Slim
       end
 
       result = [:multi]
-      reset(str.split($/), [result])
+      reset(str.split(/\r?\n/), [result])
 
       parse_line while next_line
 
