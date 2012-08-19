@@ -6,8 +6,9 @@ rvm:
   - rbx-18mode
   - rbx-19mode
 env:
-  - "TASK=test"
-  - "TASK=test TEMPLE=master"
+  - "TASK=test:core"
+  - "TASK=test:core TEMPLE=master"
+  - "TASK=test:logic_less"
   - "TASK=test:rails RAILS=master"
   - "TASK=test:rails RAILS=3.0.11"
   - "TASK=test:rails RAILS=3.1.3"

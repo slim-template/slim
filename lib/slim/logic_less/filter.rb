@@ -1,10 +1,10 @@
 module Slim
   # Handle logic-less mode
-  # This filter can be activated with the option "sections"
+  # This filter can be activated with the option "logic_less"
   # @api private
-  class Sections < Filter
-    set_default_options :dictionary => 'self',
-                        :sections => false,
+  class LogicLess < Filter
+    set_default_options :logic_less => true,
+                        :dictionary => 'self',
                         :dictionary_access => :wrapped # :symbol, :string, :wrapped
 
     def initialize(opts = {})
@@ -15,12 +15,12 @@ module Slim
     end
 
     def call(exp)
-      if options[:sections]
-        # Store the dictionary in the _slimdict variable
+      if options[:logic_less]
+        @dict = unique_name
         dictionary = options[:dictionary]
-        dictionary = "Slim::Wrapper.new(#{dictionary})" if options[:dictionary_access] == :wrapped
+        dictionary = "Slim::LogicLess::Wrapper.new(#{dictionary})" if options[:dictionary_access] == :wrapped
         [:multi,
-         [:code, "_slimdict = #{dictionary}"],
+         [:code, "#{@dict} = #{dictionary}"],
          super]
       else
         exp
@@ -37,7 +37,7 @@ module Slim
     end
 
     def on_slim_output(escape, name, content)
-      raise 'Output statements with content are forbidden in sections mode' if !empty_exp?(content)
+      raise 'Output statements with content are forbidden in logic less mode' if !empty_exp?(content)
       [:slim, :output, escape, access(name), content]
     end
 
@@ -50,11 +50,11 @@ module Slim
     end
 
     def on_dynamic(code)
-      raise 'Embedded code is forbidden in sections mode'
+      raise 'Embedded code is forbidden in logic less mode'
     end
 
     def on_code(code)
-      raise 'Embedded code is forbidden in sections mode'
+      raise 'Embedded code is forbidden in logic less mode'
     end
 
     protected
@@ -77,9 +77,9 @@ module Slim
         [:multi,
          # Wrap map in array because maps implement each
          [:code, "#{tmp1} = [#{tmp1}] if #{tmp1}.respond_to?(:has_key?) || !#{tmp1}.respond_to?(:map)"],
-         [:code, "#{tmp2} = _slimdict"],
-         [:block, "#{tmp1}.each do |_slimdict|", content],
-         [:code, "_slimdict = #{tmp2}"]]]]
+         [:code, "#{tmp2} = #{@dict}"],
+         [:block, "#{tmp1}.each do |#{@dict}|", content],
+         [:code, "#{@dict} = #{tmp2}"]]]]
     end
 
     private
@@ -88,9 +88,9 @@ module Slim
       return name if name == 'yield'
       case options[:dictionary_access]
       when :string
-        "_slimdict[#{name.to_s.inspect}]"
+        "#{@dict}[#{name.to_s.inspect}]"
       else
-        "_slimdict[#{name.to_sym.inspect}]"
+        "#{@dict}[#{name.to_sym.inspect}]"
       end
     end
   end

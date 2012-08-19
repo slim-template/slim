@@ -16,10 +16,6 @@ class TestSlim < MiniTest::Unit::TestCase
     @env = Env.new
   end
 
-  def teardown
-    Slim::Sections.set_default_options(:dictionary_access => :wrapped)
-  end
-
   def render(source, options = {}, &block)
     Slim::Template.new(options[:file], options) { source }.render(options[:scope] || @env, &block)
   end

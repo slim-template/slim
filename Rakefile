@@ -11,20 +11,30 @@ task :bench, :iterations, :slow do
   ruby('benchmarks/run-benchmarks.rb')
 end
 
-Rake::TestTask.new('test') do |t|
-  t.libs << 'lib' << 'test/slim'
-  t.test_files = FileList['test/slim/test_*.rb']
-  t.verbose = true
-end
+task 'test' => %w(test:core test:logic_less)
 
-Rake::TestTask.new('test:rails') do |t|
-  t.libs << 'lib'
-  t.test_files = FileList['test/rails/test/test_*.rb']
-  t.verbose = true
-end
+namespace 'test' do
+  Rake::TestTask.new('core') do |t|
+    t.libs << 'lib' << 'test/slim'
+    t.test_files = FileList['test/slim/test_*.rb']
+    t.verbose = true
+  end
 
-task 'test:ci' do |t|
-  Rake::Task[ENV['TASK']].execute
+  Rake::TestTask.new('logic_less') do |t|
+    t.libs << 'lib' << 'test/slim'
+    t.test_files = FileList['test/slim/logic_less/test_*.rb']
+    t.verbose = true
+  end
+
+  Rake::TestTask.new('rails') do |t|
+    t.libs << 'lib'
+    t.test_files = FileList['test/rails/test/test_*.rb']
+    t.verbose = true
+  end
+
+  task 'ci' do |t|
+    Rake::Task[ENV['TASK']].execute
+  end
 end
 
 begin

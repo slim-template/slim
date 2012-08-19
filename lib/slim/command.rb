@@ -1,4 +1,5 @@
 require 'slim'
+require 'slim/logic_less'
 require 'optparse'
 
 module Slim
@@ -44,8 +45,8 @@ module Slim
         @options[:rails] = true
       end
 
-      opts.on('-S', '--sections', :NONE, 'Logic-less sections mode') do
-        @options[:sections] = true
+      opts.on('-l', '--logic-less', :NONE, 'Logic-less mode') do
+        @options[:logic_less] = true
       end
 
       opts.on('-p', '--pretty', :NONE, 'Produce pretty html') do
@@ -85,7 +86,7 @@ module Slim
       if @options[:compile]
         @options[:output].puts(Slim::Engine.new(:file => @options[:file],
                                                 :pretty => @options[:pretty],
-                                                :sections => @options[:sections],
+                                                :logic_less => @options[:logic_less],
                                                 :disable_capture => @options[:rails],
                                                 :generator => @options[:rails] ?
                                                 Temple::Generators::RailsOutputBuffer :
@@ -93,7 +94,7 @@ module Slim
       else
         @options[:output].puts(Slim::Template.new(@options[:file],
                                                   :pretty => @options[:pretty],
-                                                  :sections => @options[:sections]) { @options[:input].read }.render)
+                                                  :logic_less => @options[:logic_less]) { @options[:input].read }.render)
       end
     end
   end

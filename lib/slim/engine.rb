@@ -27,10 +27,7 @@ module Slim
     # Hash        | :shortcut          | {'.' => 'class', ...}         | Attribute shortcuts
     # String list | :enable_engines    | All enabled                   | List of enabled embedded engines (whitelist)
     # String list | :disable_engines   | None disabled                 | List of disabled embedded engines (blacklist)
-    # Boolean     | :sections          | false                         | Enable sections mode (logic-less)
-    # String      | :dictionary        | "self"                        | Name of dictionary variable in sections mode
-    # Symbol      | :dictionary_access | :wrapped                      | Access mode of dictionary variable (:wrapped, :symbol, :string)
-    # Boolean     | :disable_capture   | false (true in Rails)         | Disable capturing in blocks (blocks write to the default buffer 
+    # Boolean     | :disable_capture   | false (true in Rails)         | Disable capturing in blocks (blocks write to the default buffer
     # Boolean     | :disable_escape    | false                         | Disable automatic escaping of strings
     # Boolean     | :use_html_safe     | false (true in Rails)         | Use String#html_safe? from ActiveSupport (Works together with :disable_escape)
     # Symbol      | :format            | :xhtml                        | HTML output format
@@ -62,7 +59,6 @@ module Slim
     use Slim::Parser, :file, :tabsize, :encoding, :shortcut, :default_tag
     use Slim::EmbeddedEngine, :enable_engines, :disable_engines, :pretty
     use Slim::Interpolation
-    use Slim::Sections, :sections, :dictionary, :dictionary_access
     use Slim::EndInserter
     use Slim::Compiler, :disable_capture, :attr_delimiter, :attr_wrapper, :sort_attrs, :remove_empty_attrs, :default_tag
     html :AttributeMerger, :attr_delimiter
