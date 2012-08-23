@@ -11,7 +11,7 @@ task :bench, :iterations, :slow do
   ruby('benchmarks/run-benchmarks.rb')
 end
 
-task 'test' => %w(test:core test:logic_less)
+task 'test' => %w(test:core test:logic_less test:translator)
 
 namespace 'test' do
   Rake::TestTask.new('core') do |t|
@@ -23,6 +23,12 @@ namespace 'test' do
   Rake::TestTask.new('logic_less') do |t|
     t.libs << 'lib' << 'test/slim'
     t.test_files = FileList['test/slim/logic_less/test_*.rb']
+    t.verbose = true
+  end
+
+  Rake::TestTask.new('translator') do |t|
+    t.libs << 'lib' << 'test/slim'
+    t.test_files = FileList['test/slim/translator/test_*.rb']
     t.verbose = true
   end
 
