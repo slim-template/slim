@@ -1,6 +1,6 @@
 module Slim
   # @api private
-  class CollectText < Filter
+  class TextCollector < Filter
     def call(exp)
       @collected = ''
       super(exp)
@@ -14,7 +14,7 @@ module Slim
   end
 
   # @api private
-  class CollectNewlines < Filter
+  class NewlineCollector < Filter
     def call(exp)
       @collected = [:multi]
       super(exp)
@@ -28,7 +28,7 @@ module Slim
   end
 
   # @api private
-  class ProtectOutput < Filter
+  class OutputProtector < Filter
     def call(exp)
       @protect = []
       @collected = ''
@@ -87,18 +87,26 @@ module Slim
       engine.new(Temple::ImmutableHash.new(local_options, filtered_options)).on_slim_embedded(name, body)
     end
 
+    protected
+
+    def collect_text(body)
+      @text_collector ||= TextCollector.new
+      @text_collector.call(body)
+    end
+
     # Basic tilt engine
     class TiltEngine < EmbeddedEngine
       def on_slim_embedded(engine, body)
         tilt_engine = Tilt[engine] || raise("Tilt engine #{engine} is not available.")
         tilt_options = options[engine.to_sym] || {}
-        [:multi, tilt_render(tilt_engine, tilt_options, collect_text(body)), CollectNewlines.new.call(body)]
+        [:multi, tilt_render(tilt_engine, tilt_options, collect_text(body)), collect_newlines(body)]
       end
 
       protected
 
-      def collect_text(body)
-        CollectText.new.call(body)
+      def collect_newlines(body)
+        @newline_collector ||= NewlineCollector.new
+        @newline_collector.call(body)
       end
     end
 
@@ -135,25 +143,35 @@ module Slim
 
     # Static template with interpolated ruby code
     class InterpolateTiltEngine < TiltEngine
-      def initialize(opts = {})
-        super
-        @protect = ProtectOutput.new
-      end
-
       def collect_text(body)
-        text = Interpolation.new.call(body)
-        @protect.call(text)
+        output_protector.call(interpolation.call(body))
       end
 
       def tilt_render(tilt_engine, tilt_options, text)
-        @protect.unprotect(tilt_engine.new(tilt_options) { text }.render)
+        output_protector.unprotect(tilt_engine.new(tilt_options) { text }.render)
+      end
+
+      private
+
+      def interpolation
+        @interpolation ||= Interpolation.new
+      end
+
+      def output_protector
+        @output_protector ||= OutputProtector.new
       end
     end
 
     # ERB engine (uses the Temple ERB implementation)
     class ERBEngine < EmbeddedEngine
       def on_slim_embedded(engine, body)
-        [:multi, [:newline], Temple::ERB::Parser.new.call(CollectText.new.call(body))]
+        [:multi, [:newline], erb_parser.call(collect_text(body))]
+      end
+
+      protected
+
+      def erb_parser
+        @erb_parser ||= Temple::ERB::Parser.new
       end
     end
 
@@ -169,7 +187,7 @@ module Slim
     # Embeds ruby code
     class RubyEngine < EmbeddedEngine
       def on_slim_embedded(engine, body)
-        [:multi, [:newline], [:code, CollectText.new.call(body)]]
+        [:multi, [:newline], [:code, collect_text(body)]]
       end
     end
 
