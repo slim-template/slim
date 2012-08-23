@@ -1,3 +1,4 @@
+require 'slim'
 require 'slim/logic_less/filter'
 require 'slim/logic_less/wrapper'
 

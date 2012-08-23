@@ -1,4 +1,3 @@
-require 'slim'
 require 'slim/logic_less'
 require 'optparse'
 

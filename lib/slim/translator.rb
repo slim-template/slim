@@ -1,3 +1,5 @@
+require 'slim'
+
 module Slim
   class Translator < Filter
     set_default_options :tr_mode => :dynamic
