@@ -1,3 +1,9 @@
+master
+
+  * Parser wraps text blocks in [:slim, :text, ...] (Used by Translator/I18n plugin)
+  * Added Translator/I18n plugin which uses GetText or FastGettext (require 'slim/translator')
+  * Moved logic less mode out of the core to plugin (require 'slim/logic_less')
+
 1.2.2
 
   * Fix issue #264
