@@ -18,11 +18,6 @@ module Slim
     end
 
     # Pass-through handler
-    def on_slim_condcomment(condition, content)
-      [:slim, :condcomment, condition, compile(content)]
-    end
-
-    # Pass-through handler
     def on_slim_output(code, escape, content)
       [:slim, :output, code, escape, compile(content)]
     end

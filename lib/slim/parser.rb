@@ -184,7 +184,7 @@ module Slim
         elsif @line =~ %r{\A/\[\s*(.*?)\s*\]\s*\Z}
           # HTML conditional comment
           block = [:multi]
-          @stacks.last << [:slim, :condcomment, $1, block]
+          @stacks.last << [:html, :condcomment, $1, block]
           @stacks << block
         else
           # Slim comment

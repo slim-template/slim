@@ -6,7 +6,6 @@ module Slim
 
     Expression <<
       [:slim, :control, String, Expression]           |
-      [:slim, :condcomment, String, Expression]       |
       [:slim, :output, Bool, String, Expression]      |
       [:slim, :interpolate, String]                   |
       [:slim, :embedded, String, Expression]          |

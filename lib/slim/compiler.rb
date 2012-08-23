@@ -22,19 +22,6 @@ module Slim
         compile(content)]
     end
 
-    # Handle conditional comment expression
-    # `[:slim, :conditional_comment, conditional, content]`
-    #
-    # @param [Array] content Temple expression
-    # @return [Array] Compiled temple expression
-    def on_slim_condcomment(condition, content)
-      [:html, :comment,
-       [:multi,
-        [:static, "[#{condition}]>"],
-        compile(content),
-        [:static, '<![endif]']]]
-    end
-
     # Handle output expression `[:slim, :output, escape, code, content]`
     #
     # @param [Boolean] escape Escape html
