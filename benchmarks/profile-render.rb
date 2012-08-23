@@ -3,10 +3,10 @@
 $:.unshift(File.join(File.dirname(__FILE__), '..', 'lib'), File.dirname(__FILE__))
 
 require 'slim'
-require 'complex_view'
+require 'context'
 
 content = File.read(File.dirname(__FILE__) + '/view.slim')
 slim = Slim::Template.new { content }
-view  = ComplexView.new
+context = Context.new
 
 10000.times { slim.render(view) }
