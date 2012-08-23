@@ -180,7 +180,7 @@ module Slim
         # Found a comment block.
         if @line =~ %r{\A/!( ?)(.*)\Z}
           # HTML comment
-          @stacks.last << [:html, :comment, parse_text_block($2, @indents.last + $1.size + 2)]
+          @stacks.last << [:html, :comment, [:slim, :text, parse_text_block($2, @indents.last + $1.size + 2)]]
         elsif @line =~ %r{\A/\[\s*(.*?)\s*\]\s*\Z}
           # HTML conditional comment
           block = [:multi]
@@ -193,7 +193,7 @@ module Slim
       when /\A([\|'])( ?)(.*)\Z/
         # Found a text block.
         trailing_ws = $1 == "'"
-        @stacks.last << parse_text_block($3, @indents.last + $2.size + 1)
+        @stacks.last << [:slim, :text, parse_text_block($3, @indents.last + $2.size + 1)]
         @stacks.last << [:static, ' '] if trailing_ws
       when /\A-/
         # Found a code block.
@@ -321,7 +321,7 @@ module Slim
         @stacks << content
       when /\A( ?)(.*)\Z/
         # Text content
-        tag << parse_text_block($2, @orig_line.size - @line.size + $1.size, true)
+        tag << [:slim, :text, parse_text_block($2, @orig_line.size - @line.size + $1.size, true)]
       end
     end
 

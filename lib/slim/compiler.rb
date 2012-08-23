@@ -54,6 +54,14 @@ module Slim
       end
     end
 
+    # Handle text expression `[:slim, :text, content]`
+    #
+    # @param [Array] content Temple expression
+    # @return [Array] Compiled temple expression
+    def on_slim_text(content)
+      compile(content)
+    end
+
     # Handle tag expression `[:slim, :tag, name, attrs, content]`
     #
     # @param [String] name Tag name

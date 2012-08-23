@@ -9,6 +9,7 @@ module Slim
       [:slim, :output, Bool, String, Expression]      |
       [:slim, :interpolate, String]                   |
       [:slim, :embedded, String, Expression]          |
+      [:slim, :text, Expression]                      |
       [:slim, :tag, String, SlimAttrs, 'Expression?']
 
     SlimAttrs <<
