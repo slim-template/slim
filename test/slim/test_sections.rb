@@ -87,4 +87,12 @@ p = method_with_block do
 }
     assert_runtime_error 'Output statements with content are forbidden in sections mode', source, :sections => true
   end
+
+  def test_escaped_interpolation
+    source = %q{
+p text with \#{123} test
+}
+
+    assert_html '<p>text with #{123} test</p>', source
+  end
 end
