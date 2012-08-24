@@ -87,7 +87,7 @@ Indentation matters, but the indentation depth can be chosen as you like.
 
 ### Text `|`
 
-> The pipe tells Slim to just copy the line. It essentially escapes any processing.
+The pipe tells Slim to just copy the line. It essentially escapes any processing.
 
   Use a pipe (`|`) or single quote (`` ' ``) to start the escape.
   Each following line that is indented greater than
@@ -114,17 +114,17 @@ Indentation matters, but the indentation depth can be chosen as you like.
 
 ### Text with trailing space `'`
 
-> The single quote tells Slim to copy the line (similar to |), but makes sure that a single trailing space is appended.
+The single quote tells Slim to copy the line (similar to |), but makes sure that a single trailing space is appended.
 
 ### Control code `-`
 
-> The dash denotes control code.  Examples of control code are loops and conditionals.
+The dash denotes control code.  Examples of control code are loops and conditionals.
 
 Standard Ruby syntax after `-` and `=` `end` is forbidden behind `-`. Blocks are defined only by indentation.
 
 ### Dynamic output `=`
 
-> The equal sign tells Slim it's a Ruby call that produces output to add to the buffer.
+The equal sign tells Slim it's a Ruby call that produces output to add to the buffer.
 
   If your ruby code needs to use multiple lines, append a `\` at the end of the lines, for example:
     = javascript_include_tag \
@@ -133,19 +133,19 @@ Standard Ruby syntax after `-` and `=` `end` is forbidden behind `-`. Blocks are
 
 ### Output with trailing white space `='`
 
-> Same as the single equal sign (`=`), except that it adds a trailing whitespace.
+Same as the single equal sign (`=`), except that it adds a trailing whitespace.
 
 ### Output without HTML escaping `==`
 
-> Same as the single equal sign (`=`), but does not go through the `escape_html` method.
+Same as the single equal sign (`=`), but does not go through the `escape_html` method.
 
 ### Output without HTML escaping and trailing ws `=='`
 
-> Same as the double equal sign (`==`), except that it adds a trailing whitespace.
+Same as the double equal sign (`==`), except that it adds a trailing whitespace.
 
 ### Code comment `/`
 
-> Use the forward slash for code comments - anything after it won't get displayed in the final render.
+Use the forward slash for code comments - anything after it won't get displayed in the final render.
 
   Use `/` for ruby code comments and `/!` for html comments
 
@@ -161,7 +161,7 @@ Standard Ruby syntax after `-` and `=` `end` is forbidden behind `-`. Blocks are
 
 ### HTML comment `/!`
 
-> Use the forward slash immediately followed by an exclamation mark for html comments (` <!-- --> `).
+Use the forward slash immediately followed by an exclamation mark for html comments (` <!-- --> `).
 
 ### IE conditional comment `/![IE]`
 
