@@ -196,6 +196,12 @@ Or nest it.
 
 ### Attributes
 
+You write attributes directly after the tag. For normal text attributes you must use double `"` or single quotes `'` (Quoted attributes).
+
+    a href="http://slim-lang.com" title='Slim Homepage' Goto the Slim homepage
+
+You can use text interpolation in the quoted attributes.
+
 #### Attributes wrapper
 
 If a delimiter makes the syntax more readable for you,
@@ -213,22 +219,40 @@ If you wrap the attributes, you can spread them across multiple lines:
 
 #### Quoted attributes
 
+Example:
+
+    a href="http://slim-lang.com" title='Slim Homepage' Goto the Slim homepage
+
+You can use text interpolation in the quoted attributes:
+
+    a href="http://#{url}" Goto the #{url}
+
 #### Ruby attributes
 
-* Alternative 1: Use parentheses (), {}, []. The code in the parentheses will be evaluated.
-* Alternative 2: If the code doesn't contain any spaces you can omit the parentheses.
-* Alternative 3: Use standard ruby interpolation #{}
+Write the ruby code directly after the `=`. If the code contains spaces you have to wrap
+the code into parenthes (), {} or []. The code in the parentheses will be evaluated.
 
-        body
-          table
-            - for user in users do
-              td id="user_#{user.id}" class=user.role
-                a href=user_action(user, :edit) Edit #{user.name}
-                a href={path_to_user user} = user.name
+    body
+      table
+        - for user in users do
+          td id="user_#{user.id}" class=user.role
+            a href=user_action(user, :edit) Edit #{user.name}
+            a href={path_to_user user} = user.name
 
 Use == if you want to disable escaping in the attribute.
 
 #### Boolean attributes
+
+The attribute values `true`, `false` and `nil` are interpreted
+as booleans. If you use the attribut wrapper you can omit the attribute assigment
+
+    input type="text" disabled="disabled"
+    input type="text" disabled=true
+    input(type="text" disabled)
+
+    input type="text"
+    input type="text" disabled=false
+    input type="text" disabled=nil
 
 #### Splat attributes `*`
 
