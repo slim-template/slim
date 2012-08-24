@@ -382,6 +382,46 @@ To escape the interpolation (i.e. render as is)
 
 ## Embedded engines (Markdown, ...)
 
+Thanks to Tilt, Slim has impressive support for embedding other template engines:
+
+<table>
+<tr><td>ENGINE</td><td>FILTER</td><td>REQUIRED LIBRARIES</td></tr>
+<tr><td>Ruby</td><td>ruby:</td><td>none</td></tr>
+<tr><td>Javascript</td><td>javascript:</td><td>none</td></tr>
+<tr><td>CSS</td><td>css:</td><td>none</td></tr>
+<tr><td>ERB</td><td>erb:</td><td>none</td></tr>
+<tr><td>Sass</td><td>sass:</td><td>sass</td></tr>
+<tr><td>Scss</td><td>scss:</td><td>sass</td></tr>
+<tr><td>LessCSS</td><td>less:</td><td>less</td></tr>
+<tr><td>Builder</td><td>builder:</td><td>builder</td></tr>
+<tr><td>Liquid</td><td>liquid:</td><td>liquid</td></tr>
+<tr><td>RDiscount</td><td>markdown:</td><td>rdiscount/kramdown</td></tr>
+<tr><td>RedCloth</td><td>textile:</td><td>redcloth</td></tr>
+<tr><td>RDoc</td><td>rdoc:</td><td>rdoc</td></tr>
+<tr><td>Radius</td><td>radius:</td><td>radius</td></tr>
+<tr><td>Markaby</td><td>markaby:</td><td>markaby</td></tr>
+<tr><td>Nokogiri</td><td>nokogiri:</td><td>nokogiri</td></tr>
+<tr><td>CoffeeScript</td><td>coffee:</td><td>coffee-script (+node coffee)</td></tr>
+</table>
+
+The following engines are just shortcuts: javascript, css, ruby
+
+The following engines are executed at compile time (embedded ruby is interpolated): markdown, textile, rdoc
+
+The following engines are executed at compile time: coffee, sass, scss, less
+
+The following engines are precompiled, code is embedded: erb, haml, nokogiri, builder
+
+The following engines are completely executed at runtime (*Usage not recommended, no caching!*): liquid, radius, markaby
+
+    coffee:
+      square = (x) -> x * x
+
+    markdown:
+      #Header
+        Hello from #{"Markdown!"}
+        Second Line!
+
 ## Plugins
 
 ### Logic-less mode
