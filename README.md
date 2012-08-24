@@ -42,19 +42,6 @@ If you want to use the Slim template directly, you can use the Tilt interface:
     Slim::Template.new(filename, optional_option_hash).render(scope)
     Slim::Template.new(optional_option_hash) { source }.render(scope)
 
-## Syntax Highlighters
-
-There are plugins for Vim, Emacs, Textmate and Espresso text editor:
-
-* [Vim](https://github.com/bbommarito/vim-slim)
-* [Textmate](https://github.com/fredwu/ruby-slim-tmbundle)
-* [Emacs](https://github.com/minad/emacs-slim)
-* [Espresso text editor](https://github.com/CiiDub/Slim-Sugar)
-
-## Template Converters
-
-For Haml, there is a [Haml2Slim converter](https://github.com/fredwu/haml2slim). For HTML, there is a [HTML2Slim converter](https://github.com/joaomilho/html2slim).
-
 ## The syntax
 
 As a Rails developer, you might already be very familiar with _Haml_'s syntax and you think it is fantastic - until you entered the magic kingdom of _node.js_ and got introduced to _Jade_.
@@ -309,6 +296,21 @@ Here's a quick example to demonstrate what a Slim template looks like:
 
     <body><p><!--This will get displayed as html comments.--></p></body>
 
+## Syntax Highlighters
+
+There are plugins for Vim, Emacs, Textmate and Espresso text editor:
+
+* [Vim](https://github.com/bbommarito/vim-slim)
+* [Textmate](https://github.com/fredwu/ruby-slim-tmbundle)
+* [Emacs](https://github.com/minad/emacs-slim)
+* [Espresso text editor](https://github.com/CiiDub/Slim-Sugar)
+
+## Template Converters
+
+* For Haml, there is a [Haml2Slim converter](https://github.com/fredwu/haml2slim).
+* For HTML, there is a [HTML2Slim converter](https://github.com/joaomilho/html2slim).
+* For ERB, there is a [ERB2Slim converter](https://github.com/c0untd0wn/erb2slim).
+
 ## Benchmarks
 
   *The benchmarks are only to demonstrate that Slim's speed should not
@@ -410,6 +412,7 @@ This project is released under the MIT license.
 
 * [Haml2Slim converter](https://github.com/fredwu/haml2slim)
 * [Html2Slim converter](https://github.com/joaomilho/html2slim)
+* [ERB2Slim converter](https://github.com/c0untd0wn/erb2slim)
 
 * [Rails 3 Generators](https://github.com/leogalmeida/slim-rails)
 
