@@ -232,6 +232,13 @@ Use == if you want to disable escaping in the attribute.
 
 #### Splat attributes `*`
 
+The splat shortcut allows you turn a hash in to attribute/value pairs
+
+    .card*{'data-url'=>place_path(place), 'data-id'=>place.id} = place.name
+    .card *method_which_returns_hash = place.name
+
+    <div class="card" data-id="1234" data-url="/place/1234">Slim's house</div>
+
 #### ID shortcut `#` and class shortcut `.`
 
 Similarly to Haml, you can specify the `id` and `class` attributes in the following shortcut form
@@ -395,9 +402,8 @@ run the slow parsing benchmark which needs more time. You can also increase the 
 
     rake bench slow=1 iterations=1000
 
-    # Linux + Ruby 1.9.3, 1000 iterations
-
 <pre>
+Linux + Ruby 1.9.3, 1000 iterations
                       user     system      total        real
 (1) erb           0.020000   0.000000   0.020000 (  0.016618)
 (1) erubis        0.010000   0.000000   0.010000 (  0.013974)
