@@ -6,9 +6,10 @@
 Slim is a template language whose goal is to reduce the view syntax to the essential parts without becoming cryptic.
 
 
-## What?
+## What is Slim?
 
-Slim is a fast, lightweight templating engine with support for __Rails 3__. It has been tested on Ruby 1.9.2 and Ruby/REE 1.8.7.
+Slim is a fast, lightweight templating engine with support for __Rails 3__. It has been heavily tested on all major ruby implementations. We use
+continous integration (travis-ci).
 
 Slim's core syntax is guided by one thought: "What's the minimum required to make this work".
 
@@ -16,7 +17,10 @@ As more people have contributed to Slim, there have been syntax additions influe
 
 Slim uses [Temple](https://github.com/judofyr/temple) for parsing/compilation and is also integrated into [Tilt](https://github.com/rtomayko/tilt), so it can be used together with [Sinatra](https://github.com/sinatra/sinatra) or plain [Rack](https://github.com/rack/rack).
 
-## Why?
+The architecture of Temple is very flexible and allows the extension of the parsing and compilation process without monkey-patching. This is used
+by the logic-less plugin and the translator plugin which provides I18n.
+
+## Why use Slim?
 
 Within the Rails community, _Erb_ and _Haml_ are without doubt the two most popular templating engines. However, _Erb_'s syntax is cumbersome and _Haml_'s syntax can be quite cryptic to the uninitiated.
 
@@ -24,7 +28,7 @@ Slim was born to bring a minimalist syntax approach with speed. If people chose 
 
 ___Yes, Slim is speedy!___ Benchmarks are provided at the end of this README file. Don't trust the numbers? That's as it should be. Therefore we provide a benchmark rake task so you could test it yourself (`rake bench`).
 
-## How?
+## How to start?
 
 Install Slim as a gem:
 
@@ -76,184 +80,14 @@ Here's a quick example to demonstrate what a Slim template looks like:
         script
           | $(content).do_something();
 
-
-## Language features
-
-### Line indicators
-
-#### `|`
-
-> The pipe tells Slim to just copy the line. It essentially escapes any processing.
-
-#### `'`
-
-> The single quote tells Slim to copy the line (similar to |), but makes sure that a single trailing space is appended.
-
-#### `-`
-
-> The dash denotes control code.  Examples of control code are loops and conditionals.
-
-#### `=`
-
-> The equal sign tells Slim it's a Ruby call that produces output to add to the buffer.
-
-#### `='`
-
-> Same as the single equal sign (`=`), except that it adds a trailing whitespace.
-
-#### `==`
-
-> Same as the single equal sign (`=`), but does not go through the `escape_html` method.
-
-#### `=='`
-
-> Same as the double equal sign (`==`), except that it adds a trailing whitespace.
-
-#### `/`
-
-> Use the forward slash for ruby code comments - anything after it won't get displayed in the final render.
-
-#### `/!`
-
-> Use the forward slash immediately followed by an exclamation mark for html comments (` <!-- --> `).
-
-
-### Things to know
-
-#### Standard Ruby syntax after `-` and `=`
-  `end` is forbidden behind `-`. Blocks are defined only by indentation.
-
-#### Can put content on same line or nest it.
-  If you nest content (e.g. put it on the next line), start the line with a pipe (`|`) or a single quote (`` ' ``).
-
-#### Indentation matters, but the indentation depth can be chosen as you like.
+Indentation matters, but the indentation depth can be chosen as you like.
   If you want to first indent 2 spaces, then 5 spaces, it's your choice. To nest markup you only need to indent by one space, the rest is gravy.
 
-#### If your ruby code needs to use multiple lines, append a `\` at the end of the lines, for example:
-    = javascript_include_tag \
-       "jquery", \
-       "application"
+## Line indicators
 
-### Wrap attributes with delimiters
+### Text `|`
 
-  If a delimiter makes the syntax more readable for you,
-  you can use the characters {...}, (...), [...] to wrap the attributes.
-
-    body
-      h1(id="logo") = page_logo
-      h2[id="tagline" class="small tagline"] = page_tagline
-
-
-  If you wrap the attributes, you can spread them across multiple lines:
-
-    h2[ id="tagline"
-        class="small tagline"] = page_tagline
-
-### Add content to a tag
-
-  Either start on the same line as the tag
-
-    body
-      h1 id="headline" Welcome to my site.
-
-  Or nest it.  __Note:__ Must use a pipe or a backtick to escape processing
-
-    body
-      h1 id="headline"
-        | Welcome to my site.
-
-### Add content to a tag with code
-
-  Can make the call on the same line
-
-    body
-      h1 id="headline" = page_headline
-
-  Or nest it.
-
-    body
-      h1 id="headline"
-        = page_headline
-
-### Shortcut form for `id` and `class` attributes
-
-  Similarly to Haml, you can specify the `id` and `class`
-  attributes in the following shortcut form
-  Note: the shortcut form does not evaluate ruby code
-
-    body
-      h1#headline
-        = page_headline
-      h2#tagline.small.tagline
-        = page_tagline
-      .content
-        = show_content
-
-  this is the same as
-
-    body
-      h1 id="headline"
-        = page_headline
-      h2 id="tagline" class="small tagline"
-        = page_tagline
-      div class="content"
-        = show_content
-
-### Inline tags
-
-  Sometimes you may want to be a little more compact and inline the tags.
-
-    ul
-      li.first: a href="/a" A link
-      li: a href="/b" B link
-
-  For readability, don't forget you can wrap the attributes.
-
-    ul
-      li.first: a[href="/a"] A link
-      li: a[href="/b"] B link
-
-### Set an attribute's value with a method
-
-  * Alternative 1: Use parentheses (), {}, []. The code in the parentheses will be evaluated.
-  * Alternative 2: If the code doesn't contain any spaces you can omit the parentheses.
-  * Alternative 3: Use standard ruby interpolation #{}
-
-  Attributes will always be html escaped.
-
-        body
-          table
-            - for user in users do
-              td id="user_#{user.id}" class=user.role
-                a href=user_action(user, :edit) Edit #{user.name}
-                a href={path_to_user user} = user.name
-
-### Evaluate ruby code in text
-
-  Use standard Ruby interpolation. The text will be html escaped by default.
-
-    body
-      h1 Welcome #{current_user.name} to the show.
-      | Unescaped #{{content}} is also possible.
-
-  To escape the interpolation (i.e. render as is)
-
-    body
-      h1 Welcome \#{current_user.name} to the show.
-
-### Skip the html escaping
-
-  Use a double equal sign
-
-    body
-      h1 id="headline"
-        == page_headline
-
-  Alternatively, if you prefer to use single equal sign, you may do so by setting the `disable_escape` option to true.
-
-    Slim::Engine.default_options[:disable_escape] = true
-
-### Treat multiple lines of code as text that should bypass parsing
+> The pipe tells Slim to just copy the line. It essentially escapes any processing.
 
   Use a pipe (`|`) or single quote (`` ' ``) to start the escape.
   Each following line that is indented greater than
@@ -278,7 +112,40 @@ Here's a quick example to demonstrate what a Slim template looks like:
               This line will have two spaces in front of it.
                 And so on...
 
-### Add comments
+### Text with trailing space `'`
+
+> The single quote tells Slim to copy the line (similar to |), but makes sure that a single trailing space is appended.
+
+### Control code `-`
+
+> The dash denotes control code.  Examples of control code are loops and conditionals.
+
+Standard Ruby syntax after `-` and `=` `end` is forbidden behind `-`. Blocks are defined only by indentation.
+
+### Dynamic output `=`
+
+> The equal sign tells Slim it's a Ruby call that produces output to add to the buffer.
+
+  If your ruby code needs to use multiple lines, append a `\` at the end of the lines, for example:
+    = javascript_include_tag \
+       "jquery", \
+       "application"
+
+### Output with trailing white space `='`
+
+> Same as the single equal sign (`=`), except that it adds a trailing whitespace.
+
+### Output without HTML escaping `==`
+
+> Same as the single equal sign (`=`), but does not go through the `escape_html` method.
+
+### Output without HTML escaping and trailing ws `=='`
+
+> Same as the double equal sign (`==`), except that it adds a trailing whitespace.
+
+### Code comment `/`
+
+> Use the forward slash for code comments - anything after it won't get displayed in the final render.
 
   Use `/` for ruby code comments and `/!` for html comments
 
@@ -292,7 +159,168 @@ Here's a quick example to demonstrate what a Slim template looks like:
 
     <body><p><!--This will get displayed as html comments.--></p></body>
 
-## Syntax Highlighters
+### HTML comment `/!`
+
+> Use the forward slash immediately followed by an exclamation mark for html comments (` <!-- --> `).
+
+### IE conditional comment `/![IE]`
+
+## HTML tags
+
+### Doctype tag
+
+### Closed tags
+
+### Inline tags
+
+  Sometimes you may want to be a little more compact and inline the tags.
+
+    ul
+      li.first: a href="/a" A link
+      li: a href="/b" B link
+
+  For readability, don't forget you can wrap the attributes.
+
+    ul
+      li.first: a[href="/a"] A link
+      li: a[href="/b"] B link
+
+### Text content
+
+  Either start on the same line as the tag
+
+    body
+      h1 id="headline" Welcome to my site.
+
+  Or nest it.  __Note:__ Must use a pipe or a backtick to escape processing
+
+    body
+      h1 id="headline"
+        | Welcome to my site.
+
+### Dynamic content
+
+  Can make the call on the same line
+
+    body
+      h1 id="headline" = page_headline
+
+  Or nest it.
+
+    body
+      h1 id="headline"
+        = page_headline
+
+### Attributes
+
+### Attributes wrapper
+
+  If a delimiter makes the syntax more readable for you,
+  you can use the characters {...}, (...), [...] to wrap the attributes.
+
+    body
+      h1(id="logo") = page_logo
+      h2[id="tagline" class="small tagline"] = page_tagline
+
+
+  If you wrap the attributes, you can spread them across multiple lines:
+
+    h2[ id="tagline"
+        class="small tagline"] = page_tagline
+
+#### Quoted attributes
+
+#### Ruby attributes
+
+  * Alternative 1: Use parentheses (), {}, []. The code in the parentheses will be evaluated.
+  * Alternative 2: If the code doesn't contain any spaces you can omit the parentheses.
+  * Alternative 3: Use standard ruby interpolation #{}
+
+  Attributes will always be html escaped.
+
+        body
+          table
+            - for user in users do
+              td id="user_#{user.id}" class=user.role
+                a href=user_action(user, :edit) Edit #{user.name}
+                a href={path_to_user user} = user.name
+
+#### Boolean attributes
+
+#### Splat attributes `*`
+
+#### ID shortcut `#`
+
+#### Class shortcut `.`
+
+  Similarly to Haml, you can specify the `id` and `class`
+  attributes in the following shortcut form
+  Note: the shortcut form does not evaluate ruby code
+
+    body
+      h1#headline
+        = page_headline
+      h2#tagline.small.tagline
+        = page_tagline
+      .content
+        = show_content
+
+  this is the same as
+
+    body
+      h1 id="headline"
+        = page_headline
+      h2 id="tagline" class="small tagline"
+        = page_tagline
+      div class="content"
+        = show_content
+
+## Text interpolation
+
+  Use standard Ruby interpolation. The text will be html escaped by default.
+
+    body
+      h1 Welcome #{current_user.name} to the show.
+      | Unescaped #{{content}} is also possible.
+
+  To escape the interpolation (i.e. render as is)
+
+    body
+      h1 Welcome \#{current_user.name} to the show.
+
+## Embedded engines (Markdown, ...)
+
+## Plugins
+
+### Logic-less mode
+
+#### Variable output
+
+#### Section
+
+#### Inverted section
+
+### Translator
+
+## Configuring Slim
+
+  Alternatively, if you prefer to use single equal sign, you may do so by setting the `disable_escape` option to true.
+
+    Slim::Engine.default_options[:disable_escape] = true
+
+## Framework support
+
+### Tilt
+
+### Sinatra
+
+### Rails
+
+* [Rails 3 Generators](https://github.com/leogalmeida/slim-rails)
+
+## Tools
+
+### Syntax Highlighters
 
 There are plugins for Vim, Emacs, Textmate and Espresso text editor:
 
@@ -301,18 +329,19 @@ There are plugins for Vim, Emacs, Textmate and Espresso text editor:
 * [Emacs](https://github.com/minad/emacs-slim)
 * [Espresso text editor](https://github.com/CiiDub/Slim-Sugar)
 
-## Template Converters
+### Template Converters (HAML, ERB, ...)
 
-* For Haml, there is a [Haml2Slim converter](https://github.com/fredwu/haml2slim).
-* For HTML, there is a [HTML2Slim converter](https://github.com/joaomilho/html2slim).
-* For ERB, there is a [ERB2Slim converter](https://github.com/c0untd0wn/erb2slim).
+* [Haml2Slim converter](https://github.com/fredwu/haml2slim).
+* [HTML2Slim converter](https://github.com/joaomilho/html2slim).
+* [ERB2Slim converter](https://github.com/c0untd0wn/erb2slim).
 
-## Benchmarks
+## Testing
 
-  *The benchmarks are only to demonstrate that Slim's speed should not
-  be a determining factor in your template choice. Even if we don't
-  agree, we'd prefer you to use any other reason for choosing another
-  template language.*
+### Benchmarks
+
+  *The benchmarks demonstrate that Slim in production mode
+   is nearly as fast as ERB. So if you choose not to use Slim it
+   is not due to its speed.*
 
     # Linux + Ruby 1.9.3, 1000 iterations
 
@@ -366,7 +395,7 @@ There are plugins for Vim, Emacs, Textmate and Espresso text editor:
     Temple ERB is the ERB implementation using the Temple framework. It shows the
     overhead added by the Temple framework compared to ERB.
 
-## Tests
+### Test suite and continous integration
 
 Slim provides an extensive test-suite based on minitest. You can run the tests
 with 'rake test' and the rails integration tests with 'rake test:rails'.
@@ -397,7 +426,7 @@ This project is released under the MIT license.
 * [Google Group](http://groups.google.com/group/slim-template)
 * IRC Channel #slim-lang on freenode.net
 
-## Slim related projects
+## Related projects
 
 * [Temple](https://github.com/judofyr/slim)
 
@@ -418,4 +447,3 @@ This project is released under the MIT license.
 * [Hamlet.rb (Similar template language)](https://github.com/gregwebs/hamlet.rb)
 * [Plim (Python port of Slim)](https://github.com/2nd/plim)
 * [Skim (Slim for Javascript)](https://github.com/jfirebaugh/skim)
-
