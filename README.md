@@ -88,10 +88,7 @@ Indentation matters, but the indentation depth can be chosen as you like.
 ### Text `|`
 
 The pipe tells Slim to just copy the line. It essentially escapes any processing.
-
-  Use a pipe (`|`) or single quote (`` ' ``) to start the escape.
-  Each following line that is indented greater than
-  the backtick is copied over.
+Each following line that is indented greater than the backtick is copied over.
 
     body
       p
@@ -118,15 +115,13 @@ The single quote tells Slim to copy the line (similar to |), but makes sure that
 
 ### Control code `-`
 
-The dash denotes control code.  Examples of control code are loops and conditionals.
-
-Standard Ruby syntax after `-` and `=` `end` is forbidden behind `-`. Blocks are defined only by indentation.
+The dash denotes control code.  Examples of control code are loops and conditionals. `end` is forbidden behind `-`. Blocks are defined only by indentation.
+If your ruby code needs to use multiple lines, append a `\` at the end of the lines.
 
 ### Dynamic output `=`
 
-The equal sign tells Slim it's a Ruby call that produces output to add to the buffer.
+The equal sign tells Slim it's a Ruby call that produces output to add to the buffer. If your ruby code needs to use multiple lines, append a `\` at the end of the lines, for example:
 
-  If your ruby code needs to use multiple lines, append a `\` at the end of the lines, for example:
     = javascript_include_tag \
        "jquery", \
        "application"
@@ -145,9 +140,7 @@ Same as the double equal sign (`==`), except that it adds a trailing whitespace.
 
 ### Code comment `/`
 
-Use the forward slash for code comments - anything after it won't get displayed in the final render.
-
-  Use `/` for ruby code comments and `/!` for html comments
+Use the forward slash for code comments - anything after it won't get displayed in the final render. Use `/` for code comments and `/!` for html comments
 
     body
       p
@@ -173,13 +166,13 @@ Use the forward slash immediately followed by an exclamation mark for html comme
 
 ### Inline tags
 
-  Sometimes you may want to be a little more compact and inline the tags.
+Sometimes you may want to be a little more compact and inline the tags.
 
     ul
       li.first: a href="/a" A link
       li: a href="/b" B link
 
-  For readability, don't forget you can wrap the attributes.
+For readability, don't forget you can wrap the attributes.
 
     ul
       li.first: a[href="/a"] A link
@@ -187,12 +180,12 @@ Use the forward slash immediately followed by an exclamation mark for html comme
 
 ### Text content
 
-  Either start on the same line as the tag
+Either start on the same line as the tag
 
     body
       h1 id="headline" Welcome to my site.
 
-  Or nest it.  __Note:__ Must use a pipe or a backtick to escape processing
+Or nest it.  You must use a pipe or a backtick to escape processing
 
     body
       h1 id="headline"
@@ -200,12 +193,12 @@ Use the forward slash immediately followed by an exclamation mark for html comme
 
 ### Dynamic content
 
-  Can make the call on the same line
+Can make the call on the same line
 
     body
       h1 id="headline" = page_headline
 
-  Or nest it.
+Or nest it.
 
     body
       h1 id="headline"
@@ -215,15 +208,15 @@ Use the forward slash immediately followed by an exclamation mark for html comme
 
 ### Attributes wrapper
 
-  If a delimiter makes the syntax more readable for you,
-  you can use the characters {...}, (...), [...] to wrap the attributes.
+If a delimiter makes the syntax more readable for you,
+you can use the characters {...}, (...), [...] to wrap the attributes.
 
     body
       h1(id="logo") = page_logo
       h2[id="tagline" class="small tagline"] = page_tagline
 
 
-  If you wrap the attributes, you can spread them across multiple lines:
+If you wrap the attributes, you can spread them across multiple lines:
 
     h2[ id="tagline"
         class="small tagline"] = page_tagline
@@ -232,11 +225,9 @@ Use the forward slash immediately followed by an exclamation mark for html comme
 
 #### Ruby attributes
 
-  * Alternative 1: Use parentheses (), {}, []. The code in the parentheses will be evaluated.
-  * Alternative 2: If the code doesn't contain any spaces you can omit the parentheses.
-  * Alternative 3: Use standard ruby interpolation #{}
-
-  Attributes will always be html escaped.
+* Alternative 1: Use parentheses (), {}, []. The code in the parentheses will be evaluated.
+* Alternative 2: If the code doesn't contain any spaces you can omit the parentheses.
+* Alternative 3: Use standard ruby interpolation #{}
 
         body
           table
@@ -245,17 +236,15 @@ Use the forward slash immediately followed by an exclamation mark for html comme
                 a href=user_action(user, :edit) Edit #{user.name}
                 a href={path_to_user user} = user.name
 
+Use == if you want to disable escaping in the attribute.
+
 #### Boolean attributes
 
 #### Splat attributes `*`
 
-#### ID shortcut `#`
+#### ID shortcut `#` and class shortcut `.`
 
-#### Class shortcut `.`
-
-  Similarly to Haml, you can specify the `id` and `class`
-  attributes in the following shortcut form
-  Note: the shortcut form does not evaluate ruby code
+Similarly to Haml, you can specify the `id` and `class` attributes in the following shortcut form
 
     body
       h1#headline
@@ -265,7 +254,7 @@ Use the forward slash immediately followed by an exclamation mark for html comme
       .content
         = show_content
 
-  this is the same as
+This is the same as
 
     body
       h1 id="headline"
@@ -277,13 +266,13 @@ Use the forward slash immediately followed by an exclamation mark for html comme
 
 ## Text interpolation
 
-  Use standard Ruby interpolation. The text will be html escaped by default.
+Use standard Ruby interpolation. The text will be html escaped by default.
 
     body
       h1 Welcome #{current_user.name} to the show.
       | Unescaped #{{content}} is also possible.
 
-  To escape the interpolation (i.e. render as is)
+To escape the interpolation (i.e. render as is)
 
     body
       h1 Welcome \#{current_user.name} to the show.
@@ -304,15 +293,52 @@ Use the forward slash immediately followed by an exclamation mark for html comme
 
 ## Configuring Slim
 
-  Alternatively, if you prefer to use single equal sign, you may do so by setting the `disable_escape` option to true.
-
-    Slim::Engine.default_options[:disable_escape] = true
+<table>
+<thead style="font-weight:bold"><tr><td>Type</td><td>Name</td><td>Default</td><td>Purpose</td></tr></thead>
+<tbody>
+<tr><td>String</td><td>:file</td><td>nil</td><td>Name of parsed file, set automatically by Slim::Template</td></tr>
+<tr><td>Integer</td><td>:tabsize</td><td>4</td><td>Number of whitespaces per tab (used by the parser)</td></tr>
+<tr><td>String</td><td>:encoding</td><td>"utf-8"</td><td>Set encoding of template</td></tr>
+<tr><td>String</td><td>:default_tag</td><td>"div"</td><td>Default tag to be used if tag name is omitted</td></tr>
+<tr><td>Hash</td><td>:shortcut</td><td>{'.' => 'class', ...}</td><td>Attribute shortcuts</td></tr>
+<tr><td>String list</td><td>:enable_engines</td><td>All enabled</td><td>List of enabled embedded engines (whitelist)</td></tr>
+<tr><td>String list</td><td>:disable_engines</td><td>None disabled</td><td>List of disabled embedded engines (blacklist)</td></tr>
+<tr><td>Boolean</td><td>:disable_capture</td><td>false (true in Rails)</td><td>Disable capturing in blocks (blocks write to the default buffer </td></tr>
+<tr><td>Boolean</td><td>:disable_escape</td><td>false</td><td>Disable automatic escaping of strings</td></tr>
+<tr><td>Boolean</td><td>:use_html_safe</td><td>false (true in Rails)</td><td>Use String#html_safe? from ActiveSupport (Works together with :disable_escape)</td></tr>
+<tr><td>Symbol</td><td>:format</td><td>:xhtml</td><td>HTML output format</td></tr>
+<tr><td>String</td><td>:attr_wrapper</td><td>'"'</td><td>Character to wrap attributes in html (can be ' or ")</td></tr>
+<tr><td>Hash</td><td>:attr_delimiter</td><td>{'class' => ' '}</td><td>Joining character used if multiple html attributes are supplied (e.g. id1_id2)</td></tr>
+<tr><td>Boolean</td><td>:sort_attrs</td><td>true</td><td>Sort attributes by name</td></tr>
+<tr><td>Boolean</td><td>:remove_empty_attrs</td><td>true</td><td>Remove attributes with empty value</td></tr>
+<tr><td>Boolean</td><td>:pretty</td><td>false</td><td>Pretty html indenting (This is slower!)</td></tr>
+<tr><td>String</td><td>:indent</td><td>'  '</td><td>Indentation string</td></tr>
+<tr><td>Boolean</td><td>:streaming</td><td>false (true in Rails > 3.1)</td><td>Enable output streaming</td></tr>
+<tr><td>Class</td><td>:generator</td><td>ArrayBuffer/RailsOutputBuffer</td><td>Temple code generator (default generator generates array buffer)</td></tr>
+</tbody>
+</table>
 
 ## Framework support
 
 ### Tilt
 
 ### Sinatra
+
+<pre>
+require 'sinatra'
+require 'slim'
+
+get('/') { slim :index }
+
+__END__
+@@ index
+doctype html
+html
+  head
+    title Sinatra With Slim
+  body
+    h1 Slim Is Fun!
+</pre>
 
 ### Rails
 
@@ -429,23 +455,28 @@ This project is released under the MIT license.
 ## Related projects
 
 Template compilation:
+
 * [Temple](https://github.com/judofyr/slim)
 
 Syntax highlighting:
+
 * [Vim syntax highlighting](https://github.com/bbommarito/vim-slim)
 * [Emacs syntax highlighting](https://github.com/minad/emacs-slim)
 * [Textmate bundle](https://github.com/fredwu/ruby-slim-tmbundle)
 * [Slim support for the Espresso text editor from MacRabbits](https://github.com/CiiDub/Slim-Sugar)
 
 Converters:
+
 * [Haml2Slim converter](https://github.com/fredwu/haml2slim)
 * [Html2Slim converter](https://github.com/joaomilho/html2slim)
 * [ERB2Slim converter](https://github.com/c0untd0wn/erb2slim)
 
 Framework support:
+
 * [Rails 3 Generators](https://github.com/leogalmeida/slim-rails)
 
 Language ports/Similar languages:
+
 * [Coffee script plugin for Slim](https://github.com/yury/coffee-views)
 * [Clojure port of Slim](https://github.com/chaslemley/slim.clj)
 * [Hamlet.rb (Similar template language)](https://github.com/gregwebs/hamlet.rb)

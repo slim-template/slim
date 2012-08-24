@@ -13,7 +13,7 @@ module Slim
 
     # Handle control expression `[:slim, :control, code, content]`
     #
-    # @param [String] ruby code
+    # @param [String] code Ruby code
     # @param [Array] content Temple expression
     # @return [Array] Compiled temple expression
     def on_slim_control(code, content)
@@ -98,7 +98,7 @@ module Slim
 
     # Handle attributes expression `[:slim, :attrs, *attrs]`
     #
-    # @param [Array] *attrs Array of temple expressions
+    # @param [Array] attrs Array of temple expressions
     # @return [Array] Compiled temple expression
     def on_slim_attrs(*attrs)
       if attrs.any? {|attr| attr[1] == :splat}
