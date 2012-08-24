@@ -34,17 +34,7 @@ Install Slim as a gem:
 
     gem install slim
 
-Include Slim in your Gemfile:
-
-    gem 'slim'
-
-That's it! Now, just use the .slim extension and you're good to go.
-
-If you want to use the Slim template directly, you can use the Tilt interface:
-
-    Tilt.new['template.slim'].render(scope)
-    Slim::Template.new(filename, optional_option_hash).render(scope)
-    Slim::Template.new(optional_option_hash) { source }.render(scope)
+Include Slim in your Gemfile with `gem 'slim'` or require it with `require 'slim'`. That's it! Now, just use the .slim extension and you're good to go.
 
 ## The syntax
 
@@ -162,7 +152,7 @@ Use the forward slash immediately followed by an exclamation mark for html comme
 
 ### Doctype tag
 
-### Closed tags
+### Closed tags (trailing `/`)
 
 ### Inline tags
 
@@ -191,7 +181,7 @@ Or nest it.  You must use a pipe or a backtick to escape processing
       h1 id="headline"
         | Welcome to my site.
 
-### Dynamic content
+### Dynamic content (`=` and `==`)
 
 Can make the call on the same line
 
@@ -206,7 +196,7 @@ Or nest it.
 
 ### Attributes
 
-### Attributes wrapper
+#### Attributes wrapper
 
 If a delimiter makes the syntax more readable for you,
 you can use the characters {...}, (...), [...] to wrap the attributes.
@@ -264,6 +254,22 @@ This is the same as
       div class="content"
         = show_content
 
+#### Attribute shortcuts
+
+You can define custom shortcuts (Similar to `#` for id and `.` for class).
+
+In this example we add `@` to create a shortcut for the role attribute.
+
+    Slim::Engine.set_default_options :shortcut => {'@' => 'role', '#' => 'id', '.' => 'class'}
+
+We can use it in Slim code like this
+
+    .person@admin = person.name
+
+which renders to
+
+    <div class="person" role="admin">Daniel</div>
+
 ## Text interpolation
 
 Use standard Ruby interpolation. The text will be html escaped by default.
@@ -283,6 +289,10 @@ To escape the interpolation (i.e. render as is)
 
 ### Logic-less mode
 
+Enable the logic-less plugin with
+
+    require 'slim/logic_less'
+
 #### Variable output
 
 #### Section
@@ -290,6 +300,10 @@ To escape the interpolation (i.e. render as is)
 #### Inverted section
 
 ### Translator
+
+Enable the translator plugin with
+
+    require 'slim/translator'
 
 ## Configuring Slim
 
@@ -322,6 +336,12 @@ To escape the interpolation (i.e. render as is)
 
 ### Tilt
 
+Slim uses Tilt to compile the generated code. If you want to use the Slim template directly, you can use the Tilt interface.
+
+    Tilt.new['template.slim'].render(scope)
+    Slim::Template.new('template.slim', optional_option_hash).render(scope)
+    Slim::Template.new(optional_option_hash) { source }.render(scope)
+
 ### Sinatra
 
 <pre>
@@ -342,7 +362,8 @@ To escape the interpolation (i.e. render as is)
 
 ### Rails
 
-* [Rails 3 Generators](https://github.com/leogalmeida/slim-rails)
+Rails generators are provided by  [slim-rails](https://github.com/leogalmeida/slim-rails). slim-rails
+is not necessary to use Slim in Rails though.
 
 ## Tools
 
@@ -369,57 +390,68 @@ There are plugins for Vim, Emacs, Textmate and Espresso text editor:
    is nearly as fast as ERB. So if you choose not to use Slim it
    is not due to its speed.*
 
+Run the benchmarks with `rake bench`. You can add the option `slow` to
+run the slow parsing benchmark which needs more time. You can also increase the number of iterations.
+
+    rake bench slow=1 iterations=1000
+
     # Linux + Ruby 1.9.3, 1000 iterations
 
+<pre>
                       user     system      total        real
-    (1) erb           0.050000   0.000000   0.050000 (  0.045828)
-    (1) erubis        0.040000   0.000000   0.040000 (  0.037326)
-    (1) fast erubis   0.040000   0.000000   0.040000 (  0.036370)
-    (1) temple erb    0.070000   0.000000   0.070000 (  0.065535)
-    (1) slim          0.060000   0.000000   0.060000 (  0.054656)
-    (1) haml          0.280000   0.000000   0.280000 (  0.281672)
-    (1) haml ugly     0.260000   0.000000   0.260000 (  0.252447)
-    (2) erb           0.100000   0.000000   0.100000 (  0.095057)
-    (2) erubis        0.050000   0.000000   0.050000 (  0.055655)
-    (2) temple erb    0.090000   0.000000   0.090000 (  0.087447)
-    (2) slim          0.080000   0.000000   0.080000 (  0.077192)
-    (2) haml          0.340000   0.000000   0.340000 (  0.341044)
-    (2) haml ugly     0.300000   0.000000   0.300000 (  0.310842)
-    (3) erb           0.360000   0.000000   0.360000 (  0.353302)
-    (3) erubis        0.290000   0.000000   0.290000 (  0.285159)
-    (3) fast erubis   0.250000   0.000000   0.250000 (  0.245528)
-    (3) temple erb    0.090000   0.000000   0.090000 (  0.086185)
-    (3) slim          0.070000   0.000000   0.070000 (  0.076631)
-    (3) haml          0.740000   0.000000   0.740000 (  0.739527)
-    (3) haml ugly     0.610000   0.020000   0.630000 (  0.627558)
-    (4) erb           0.890000   0.020000   0.910000 (  0.910320)
-    (4) erubis        0.740000   0.000000   0.740000 (  0.749550)
-    (4) fast erubis   0.720000   0.000000   0.720000 (  0.726432)
-    (4) temple erb    2.350000   0.000000   2.350000 (  2.346997)
-    (4) slim          7.550000   0.030000   7.580000 (  7.585212)
-    (4) haml          5.610000   0.020000   5.630000 (  5.633347)
-    (4) haml ugly     5.240000   0.130000   5.370000 (  5.368209)
+(1) erb           0.020000   0.000000   0.020000 (  0.016618)
+(1) erubis        0.010000   0.000000   0.010000 (  0.013974)
+(1) fast erubis   0.010000   0.000000   0.010000 (  0.014625)
+(1) temple erb    0.030000   0.000000   0.030000 (  0.024930)
+(1) slim pretty   0.030000   0.000000   0.030000 (  0.030838)
+(1) slim ugly     0.020000   0.000000   0.020000 (  0.021263)
+(1) haml pretty   0.120000   0.000000   0.120000 (  0.121439)
+(1) haml ugly     0.110000   0.000000   0.110000 (  0.105082)
+(2) erb           0.030000   0.000000   0.030000 (  0.034145)
+(2) erubis        0.020000   0.000000   0.020000 (  0.022493)
+(2) temple erb    0.040000   0.000000   0.040000 (  0.034921)
+(2) slim pretty   0.040000   0.000000   0.040000 (  0.041750)
+(2) slim ugly     0.030000   0.000000   0.030000 (  0.030792)
+(2) haml pretty   0.140000   0.000000   0.140000 (  0.144159)
+(2) haml ugly     0.130000   0.000000   0.130000 (  0.129690)
+(3) erb           0.140000   0.000000   0.140000 (  0.140154)
+(3) erubis        0.110000   0.000000   0.110000 (  0.110870)
+(3) fast erubis   0.100000   0.000000   0.100000 (  0.098940)
+(3) temple erb    0.040000   0.000000   0.040000 (  0.036024)
+(3) slim pretty   0.040000   0.000000   0.040000 (  0.043326)
+(3) slim ugly     0.040000   0.000000   0.040000 (  0.031623)
+(3) haml pretty   0.310000   0.000000   0.310000 (  0.317270)
+(3) haml ugly     0.250000   0.000000   0.250000 (  0.256257)
+(4) erb           0.350000   0.000000   0.350000 (  0.352818)
+(4) erubis        0.310000   0.000000   0.310000 (  0.308558)
+(4) fast erubis   0.310000   0.000000   0.310000 (  0.308920)
+(4) temple erb    0.920000   0.000000   0.920000 (  0.920607)
+(4) slim pretty   3.510000   0.000000   3.510000 (  3.513418)
+(4) slim ugly     2.940000   0.000000   2.940000 (  2.944823)
+(4) haml pretty   2.320000   0.000000   2.320000 (  2.321830)
+(4) haml ugly     2.180000   0.000000   2.180000 (  2.179788)
 
-    (1) Compiled benchmark. Template is parsed before the benchmark and
-        generated ruby code is compiled into a method.
-        This is the fastest evaluation strategy because it benchmarks
-        pure execution speed of the generated ruby code.
+(1) Compiled benchmark. Template is parsed before the benchmark and
+    generated ruby code is compiled into a method.
+    This is the fastest evaluation strategy because it benchmarks
+    pure execution speed of the generated ruby code.
 
-    (2) Compiled Tilt benchmark. Template is compiled with Tilt, which gives a more
-        accurate result of the performance in production mode in frameworks like
-        Sinatra, Ramaze and Camping. (Rails still uses its own template
-        compilation.)
+(2) Compiled Tilt benchmark. Template is compiled with Tilt, which gives a more
+    accurate result of the performance in production mode in frameworks like
+    Sinatra, Ramaze and Camping. (Rails still uses its own template
+    compilation.)
 
-    (3) Cached benchmark. Template is parsed before the benchmark.
-        The ruby code generated by the template engine might be evaluated every time.
-        This benchmark uses the standard API of the template engine.
+(3) Cached benchmark. Template is parsed before the benchmark.
+    The ruby code generated by the template engine might be evaluated every time.
+    This benchmark uses the standard API of the template engine.
 
-    (4) Uncached benchmark. Template is parsed every time.
-        This is not the recommended way to use the template engine
-        and Slim is not optimized for it. Activate this benchmark with 'rake bench slow=1'.
+(4) Parsing benchmark. Template is parsed every time.
+    This is not the recommended way to use the template engine
+    and Slim is not optimized for it. Activate this benchmark with 'rake bench slow=1'.
 
-    Temple ERB is the ERB implementation using the Temple framework. It shows the
-    overhead added by the Temple framework compared to ERB.
+Temple ERB is the ERB implementation using the Temple framework. It shows the
+overhead added by the Temple framework compared to ERB.
+</pre>
 
 ### Test suite and continous integration
 
