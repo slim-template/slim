@@ -39,67 +39,72 @@ module Slim
 
     def initialize(opts)
       super
-      raise "Invalid translator mode #{options[:tr_mode].inspect}" unless [:static, :dynamic].include?(options[:tr_mode])
-      @translate = eval("proc {|string| #{options[:tr_fn]}(string) }") if options[:tr_mode] == :static
+      case options[:tr_mode]
+      when :static
+        @translator = StaticTranslator.new(options)
+      when :dynamic
+        @translator = DynamicTranslator.new(options)
+      else
+        raise "Invalid translator mode #{options[:tr_mode].inspect}"
+      end
     end
 
     def on_slim_text(exp)
-      @flattener ||= Temple::Filters::MultiFlattener.new
-      exp = @flattener.call(exp)
-      exps = (exp[0] == :multi ? exp[1..-1] : [exp])
-
-      if options[:tr_mode] == :dynamic
-        translate_dynamic(exps)
-      else
-        translate_static(exps)
-      end
+      @translator.call(exp)
     end
 
     private
 
-    def translate_static(exps)
-      result, text, captures = [:multi], '', []
-      exps.each do |exp|
-        if exp.first == :static
-          text << exp.last
-        elsif exp[0] == :slim && exp[1] == :output
-          captures << exp
-          text << "%#{captures.size}"
-        elsif exp.first == :newline
-          result << [:newline]
-        else
-          raise "Invalid expression #{exp.inspect}"
+    class StaticTranslator < Filter
+      def call(exp)
+        @translate ||= eval("proc {|string| #{options[:tr_fn]}(string) }")
+
+        @text, @captures = '', []
+        result = compile(exp)
+
+        text = @translate.call(@text)
+        while text =~ /%(\d+)/
+          result << [:static, $`] << @captures[$1.to_i - 1]
+          text = $'
         end
+        result << [:static, text]
       end
 
-      text = @translate.call(text)
-      while text =~ /%(\d+)/
-        result << [:static, $`] << captures[$1.to_i - 1]
-        text = $'
+      def on_static(text)
+        @text << text
+        [:multi]
       end
-      result << [:static, text]
+
+      def on_slim_output(escape, code, content)
+        @captures << [:slim, :output, escape, code, content]
+        @text << "%#{@captures.size}"
+        [:multi]
+      end
     end
 
-    def translate_dynamic(exps)
-      result, text, captures_var, captures_count = [:multi], '', unique_name, 0
-      exps.each do |exp|
-        if exp.first == :newline
-          result << [:newline]
-        elsif exp[0] == :slim && exp[1] == :output
-          result << [:capture, "#{captures_var}[#{captures_count}]", exp]
-          captures_count += 1
-          text << "%#{captures_count}"
-        elsif exp.first == :static
-          text << exp.last
+    class DynamicTranslator < Filter
+      def call(exp)
+        @captures_count, @captures_var, @text = 0, unique_name, ''
+
+        result = compile(exp)
+
+        if @captures_count > 0
+          result.insert(1, [:code, "#{@captures_var}=[]"])
+          result << [:slim, :output, false, "#{options[:tr_fn]}(#{@text.inspect}).gsub(/%(\\d+)/) { #{@captures_var}[$1.to_i-1] }", [:multi]]
         else
-          raise "Invalid expression #{exp.inspect}"
+          result << [:slim, :output, false, "#{options[:tr_fn]}(#{@text.inspect})", [:multi]]
         end
       end
-      if captures_count > 0
-        result.insert(1, [:code, "#{captures_var}=[]"])
-        result << [:slim, :output, false, "#{options[:tr_fn]}(#{text.inspect}).gsub(/%(\\d+)/) { #{captures_var}[$1.to_i-1] }", [:multi]]
-      else
-        result << [:slim, :output, false, "#{options[:tr_fn]}(#{text.inspect})", [:multi]]
+
+      def on_static(text)
+        @text << text
+        [:multi]
+      end
+
+      def on_slim_output(escape, code, content)
+        @captures_count += 1
+        @text << "%#{@captures_count}"
+        [:capture, "#{@captures_var}[#{@captures_count-1}]", [:slim, :output, escape, code, content]]
       end
     end
   end
