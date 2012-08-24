@@ -11,6 +11,10 @@ class TestSlimTranslator < TestSlim
     s.upcase
   end
 
+  def self.tr_reverse(s)
+    s.reverse.gsub(/(\d+)%/, '%\1')
+  end
+
   def test_no_translation_of_embedded
     source = %q{
 markdown:
@@ -47,5 +51,14 @@ p translate #{hello_world} this
     assert_html "<p>translate Hello World from @env this\nsecond line\nthird 3 line</p>", source, :tr => false
     assert_html "<p>TRANSLATE Hello World from @env THIS\nSECOND LINE\nTHIRD 3 LINE</p>", source, :tr_mode => :dynamic
     assert_html "<p>TRANSLATE Hello World from @env THIS\nSECOND LINE\nTHIRD 3 LINE</p>", source, :tr_mode => :static
+  end
+
+  def test_translation_reverse
+    source = %q{
+' alpha #{1} beta #{2} gamma #{3}
+}
+
+    assert_html "3 ammag 2 ateb 1 ahpla ", source, :tr_mode => :dynamic, :tr_fn => 'TestSlimTranslator.tr_reverse'
+    assert_html "3 ammag 2 ateb 1 ahpla ", source, :tr_mode => :static, :tr_fn => 'TestSlimTranslator.tr_reverse'
   end
 end

@@ -46,35 +46,44 @@ module Slim
       @flattener ||= Temple::Filters::MultiFlattener.new
       exp = @flattener.call(exp)
       exps = (exp[0] == :multi ? exp[1..-1] : [exp])
-      result = [:multi]
 
       text, captures = '', []
       exps.each do |exp|
         if exp.first == :static
           text << exp.last
-        elsif exp.first == :newline
-          result << exp
-        else
+        elsif exp[0] == :slim && exp[1] == :output
           captures << exp
           text << "%#{captures.size}"
+        elsif exp.first != :newline
+          raise "Invalid expression #{exp.inspect}"
         end
       end
 
+      result = [:multi]
       if options[:tr_mode] == :dynamic
         if captures.empty?
           result << [:slim, :output, false, "#{options[:tr_fn]}(#{text.inspect})", [:multi]]
         else
           captures_var = unique_name
           result << [:code, "#{captures_var}=[]"]
-          captures.each_with_index {|exp, i| result << [:capture, "#{captures_var}[#{i}]", exp] }
+          i = 0
+          exps.each do |exp|
+            if exp.first == :newline
+              result << [:newline]
+            elsif exp.first != :static
+              result << [:capture, "#{captures_var}[#{i}]", exp]
+              i += 1
+            end
+          end
           result << [:slim, :output, false, "#{options[:tr_fn]}(#{text.inspect}).gsub(/%(\\d+)/) { #{captures_var}[$1.to_i-1] }", [:multi]]
         end
       else
-        text = @translate.call(text).split(/%\d+/)
-        text.each_with_index do |s, i|
-          result << [:static, s]
-          result << captures[i] if i < captures.size
+        text = @translate.call(text)
+        while text =~ /%(\d+)/
+          result << [:static, $`] << captures[$1.to_i - 1]
+          text = $'
         end
+        result << [:static, text]
       end
       result
     end
