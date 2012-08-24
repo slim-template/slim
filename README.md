@@ -264,6 +264,22 @@ This is the same as
       div class="content"
         = show_content
 
+#### Attribute shortcuts
+
+You can define custom shortcuts (Similar to `#` for id and `.` for class).
+
+In this example we add `@` to create a shortcut for the role attribute.
+
+    Slim::Engine.set_default_options :shortcut => {'@' => 'role', '#' => 'id', '.' => 'class'}
+
+We can use it in Slim code like this
+
+    .person@admin = person.name
+
+which renders to
+
+    <div class="person" role="admin">Daniel</div>
+
 ## Text interpolation
 
 Use standard Ruby interpolation. The text will be html escaped by default.
@@ -283,6 +299,10 @@ To escape the interpolation (i.e. render as is)
 
 ### Logic-less mode
 
+Enable the logic-less plugin with
+
+    require 'slim/logic_less'
+
 #### Variable output
 
 #### Section
@@ -290,6 +310,10 @@ To escape the interpolation (i.e. render as is)
 #### Inverted section
 
 ### Translator
+
+Enable the translator plugin with
+
+    require 'slim/translator'
 
 ## Configuring Slim
 
@@ -322,6 +346,12 @@ To escape the interpolation (i.e. render as is)
 
 ### Tilt
 
+Slim uses Tilt to compile the generated code.
+
+    Tilt.new['template.slim'].render(scope)
+    Slim::Template.new('template.slim', optional_option_hash).render(scope)
+    Slim::Template.new(optional_option_hash) { source }.render(scope)
+
 ### Sinatra
 
 <pre>
@@ -342,7 +372,8 @@ To escape the interpolation (i.e. render as is)
 
 ### Rails
 
-* [Rails 3 Generators](https://github.com/leogalmeida/slim-rails)
+Rails generators are provided by  [slim-rails](https://github.com/leogalmeida/slim-rails). slim-rails
+is not necessary to use Slim in Rails though.
 
 ## Tools
 
