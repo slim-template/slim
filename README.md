@@ -44,10 +44,6 @@ If you want to use the Slim template directly, you can use the Tilt interface:
 
 ## The syntax
 
-As a Rails developer, you might already be very familiar with _Haml_'s syntax and you think it is fantastic - until you entered the magic kingdom of _node.js_ and got introduced to _Jade_.
-
-Slim's syntax has been influenced by both _Haml_ and _Jade_.
-
 Here's a quick example to demonstrate what a Slim template looks like:
 
     doctype html
@@ -95,11 +91,11 @@ Here's a quick example to demonstrate what a Slim template looks like:
 
 #### `-`
 
-> The dash denotes control code (similar to Haml).  Examples of control code are loops and conditionals.
+> The dash denotes control code.  Examples of control code are loops and conditionals.
 
 #### `=`
 
-> The equal sign tells Slim it's a Ruby call that produces output to add to the buffer (similar to Erb and Haml).
+> The equal sign tells Slim it's a Ruby call that produces output to add to the buffer.
 
 #### `='`
 
@@ -130,7 +126,7 @@ Here's a quick example to demonstrate what a Slim template looks like:
 #### Can put content on same line or nest it.
   If you nest content (e.g. put it on the next line), start the line with a pipe (`|`) or a single quote (`` ' ``).
 
-#### Indentation matters, but it's not as strict as Haml.
+#### Indentation matters, but the indentation depth can be chosen as you like.
   If you want to first indent 2 spaces, then 5 spaces, it's your choice. To nest markup you only need to indent by one space, the rest is gravy.
 
 #### If your ruby code needs to use multiple lines, append a `\` at the end of the lines, for example:
