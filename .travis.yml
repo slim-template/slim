@@ -7,7 +7,6 @@ rvm:
   - rbx-19mode
 env:
   - "TASK=test:core"
-  - "TASK=test:core TEMPLE=master"
   - "TASK=test:logic_less"
   - "TASK=test:translator"
   - "TASK=test:rails RAILS=master"

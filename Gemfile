@@ -2,7 +2,7 @@ source :rubygems
 
 gemspec
 
-if ENV['TEMPLE'] == 'master'
+if ENV['TRAVIS'] || ENV['TEMPLE'] == 'master'
    gem 'temple', :git => 'git://github.com/judofyr/temple.git'
 end
 
