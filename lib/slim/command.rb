@@ -1,4 +1,5 @@
 require 'slim/logic_less'
+require 'slim/translator'
 require 'optparse'
 
 module Slim
@@ -44,7 +45,11 @@ module Slim
         @options[:rails] = true
       end
 
-      opts.on('-l', '--logic-less', :NONE, 'Logic-less mode') do
+      opts.on('-t', '--translator', :NONE, 'Enable translator plugin') do
+        @options[:translator] = true
+      end
+
+      opts.on('-l', '--logic-less', :NONE, 'Enable logic-less plugin') do
         @options[:logic_less] = true
       end
 
@@ -87,12 +92,14 @@ module Slim
                                                 :pretty => @options[:pretty],
                                                 :logic_less => @options[:logic_less],
                                                 :disable_capture => @options[:rails],
+                                                :tr => @options[:translator],
                                                 :generator => @options[:rails] ?
                                                 Temple::Generators::RailsOutputBuffer :
                                                 Temple::Generators::ArrayBuffer).call(@options[:input].read))
       else
         @options[:output].puts(Slim::Template.new(@options[:file],
                                                   :pretty => @options[:pretty],
+                                                  :tr => @options[:translator],
                                                   :logic_less => @options[:logic_less]) { @options[:input].read }.render)
       end
     end
