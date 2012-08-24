@@ -238,12 +238,12 @@ Here's a quick example to demonstrate what a Slim template looks like:
 
   Attributes will always be html escaped.
 
-    body
-      table
-        - for user in users do
-          td id="user_#{user.id}" class=user.role
-            a href=user_action(user, :edit) Edit #{user.name}
-            a href={path_to_user user} = user.name
+        body
+          table
+            - for user in users do
+              td id="user_#{user.id}" class=user.role
+                a href=user_action(user, :edit) Edit #{user.name}
+                a href={path_to_user user} = user.name
 
 ### Evaluate ruby code in text
 
