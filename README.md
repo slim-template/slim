@@ -428,22 +428,28 @@ This project is released under the MIT license.
 
 ## Related projects
 
+Template compilation:
 * [Temple](https://github.com/judofyr/slim)
 
+Syntax highlighting:
 * [Vim syntax highlighting](https://github.com/bbommarito/vim-slim)
 * [Emacs syntax highlighting](https://github.com/minad/emacs-slim)
 * [Textmate bundle](https://github.com/fredwu/ruby-slim-tmbundle)
 * [Slim support for the Espresso text editor from MacRabbits](https://github.com/CiiDub/Slim-Sugar)
 
+Converters:
 * [Haml2Slim converter](https://github.com/fredwu/haml2slim)
 * [Html2Slim converter](https://github.com/joaomilho/html2slim)
 * [ERB2Slim converter](https://github.com/c0untd0wn/erb2slim)
 
+Framework support:
 * [Rails 3 Generators](https://github.com/leogalmeida/slim-rails)
 
+Language ports/Similar languages:
 * [Coffee script plugin for Slim](https://github.com/yury/coffee-views)
-
 * [Clojure port of Slim](https://github.com/chaslemley/slim.clj)
 * [Hamlet.rb (Similar template language)](https://github.com/gregwebs/hamlet.rb)
 * [Plim (Python port of Slim)](https://github.com/2nd/plim)
 * [Skim (Slim for Javascript)](https://github.com/jfirebaugh/skim)
+* [Haml](https://github.com/nex3/haml)
+* [Jade](https://github.com/visionmedia/jade)
