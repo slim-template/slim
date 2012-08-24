@@ -148,11 +148,77 @@ Use the forward slash immediately followed by an exclamation mark for html comme
 
 ### IE conditional comment `/![IE]`
 
+    /[ if IE ]
+        p Get a better browser.
+
+    <!--[if IE]><p>Get a better browser.</p><![endif]-->
+
 ## HTML tags
 
 ### Doctype tag
 
+XML VERSION
+
+    doctype xml
+      <?xml version="1.0" encoding="utf-8" ?>
+
+    doctype xml ISO-8859-1
+      <?xml version="1.0" encoding="iso-8859-1" ?>
+
+XHTML DOCTYPES
+
+    doctype html
+      <!DOCTYPE html>
+
+    doctype 5
+      <!DOCTYPE html>
+
+    doctype 1.1
+      <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+        "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+    doctype strict
+      <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+    doctype frameset
+      <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+
+    doctype mobile
+      <!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.2//EN"
+        "http://www.openmobilealliance.org/tech/DTD/xhtml-mobile12.dtd">
+
+    doctype basic
+      <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN"
+        "http://www.w3.org/TR/xhtml-basic/xhtml-basic11.dtd">
+
+    doctype transitional
+      <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+HTML 4 DOCTYPES
+
+    doctype strict
+      <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+        "http://www.w3.org/TR/html4/strict.dtd">
+
+    doctype frameset
+      <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN"
+        "http://www.w3.org/TR/html4/frameset.dtd">
+
+    doctype transitional
+      <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+
 ### Closed tags (trailing `/`)
+
+You can close tags explicitly by appending a trailing `/`.
+
+    img src="image.png"/
+
+Note, that this is usually not necessary since the standard html
+tags (img, br, ...) are closed automatically.
 
 ### Inline tags
 
@@ -488,7 +554,7 @@ overhead added by the Temple framework compared to ERB.
 Slim provides an extensive test-suite based on minitest. You can run the tests
 with 'rake test' and the rails integration tests with 'rake test:rails'.
 
-Travis-CI is used for continous integration testing: http://travis-ci.org/#!/stonean/slim
+Travis-CI is used for continous integration testing: {http://travis-ci.org/#!/stonean/slim}
 
 Slim is working well on all major Ruby implementations:
 
