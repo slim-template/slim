@@ -325,19 +325,19 @@ To escape the interpolation (i.e. render as is)
 ### Sinatra
 
 <pre>
-require 'sinatra'
-require 'slim'
-
-get('/') { slim :index }
-
-__END__
-@@ index
-doctype html
-html
-  head
-    title Sinatra With Slim
-  body
-    h1 Slim Is Fun!
+    require 'sinatra'
+    require 'slim'
+    
+    get('/') { slim :index }
+    
+    __END__
+    @@ index
+    doctype html
+    html
+      head
+        title Sinatra With Slim
+      body
+        h1 Slim Is Fun!
 </pre>
 
 ### Rails
