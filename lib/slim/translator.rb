@@ -2,7 +2,8 @@ require 'slim'
 
 module Slim
   class Translator < Filter
-    set_default_options :tr_mode => :dynamic
+    set_default_options :tr_mode => :dynamic,
+                        :tr_fn   => '_'
 
     if Object.const_defined?(:I18n)
       set_default_options :tr_fn => '::Slim::Translator.i18n_text',
@@ -47,45 +48,59 @@ module Slim
       exp = @flattener.call(exp)
       exps = (exp[0] == :multi ? exp[1..-1] : [exp])
 
-      text, captures = '', []
+      if options[:tr_mode] == :dynamic
+        translate_dynamic(exps)
+      else
+        translate_static(exps)
+      end
+    end
+
+    private
+
+    def translate_static(exps)
+      result, text, captures = [:multi], '', []
       exps.each do |exp|
         if exp.first == :static
           text << exp.last
         elsif exp[0] == :slim && exp[1] == :output
           captures << exp
           text << "%#{captures.size}"
-        elsif exp.first != :newline
+        elsif exp.first == :newline
+          result << [:newline]
+        else
           raise "Invalid expression #{exp.inspect}"
         end
       end
 
-      result = [:multi]
-      if options[:tr_mode] == :dynamic
-        if captures.empty?
-          result << [:slim, :output, false, "#{options[:tr_fn]}(#{text.inspect})", [:multi]]
-        else
-          captures_var = unique_name
-          result << [:code, "#{captures_var}=[]"]
-          i = 0
-          exps.each do |exp|
-            if exp.first == :newline
-              result << [:newline]
-            elsif exp.first != :static
-              result << [:capture, "#{captures_var}[#{i}]", exp]
-              i += 1
-            end
-          end
-          result << [:slim, :output, false, "#{options[:tr_fn]}(#{text.inspect}).gsub(/%(\\d+)/) { #{captures_var}[$1.to_i-1] }", [:multi]]
-        end
-      else
-        text = @translate.call(text)
-        while text =~ /%(\d+)/
-          result << [:static, $`] << captures[$1.to_i - 1]
-          text = $'
-        end
-        result << [:static, text]
+      text = @translate.call(text)
+      while text =~ /%(\d+)/
+        result << [:static, $`] << captures[$1.to_i - 1]
+        text = $'
       end
-      result
+      result << [:static, text]
+    end
+
+    def translate_dynamic(exps)
+      result, text, captures_var, captures_count = [:multi], '', unique_name, 0
+      exps.each do |exp|
+        if exp.first == :newline
+          result << [:newline]
+        elsif exp[0] == :slim && exp[1] == :output
+          result << [:capture, "#{captures_var}[#{captures_count}]", exp]
+          captures_count += 1
+          text << "%#{captures_count}"
+        elsif exp.first == :static
+          text << exp.last
+        else
+          raise "Invalid expression #{exp.inspect}"
+        end
+      end
+      if captures_count > 0
+        result.insert(1, [:code, "#{captures_var}=[]"])
+        result << [:slim, :output, false, "#{options[:tr_fn]}(#{text.inspect}).gsub(/%(\\d+)/) { #{captures_var}[$1.to_i-1] }", [:multi]]
+      else
+        result << [:slim, :output, false, "#{options[:tr_fn]}(#{text.inspect})", [:multi]]
+      end
     end
   end
 end
