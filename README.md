@@ -271,7 +271,7 @@ You can use text interpolation in the quoted attributes.
 #### Attributes wrapper
 
 If a delimiter makes the syntax more readable for you,
-you can use the characters {...}, (...), [...] to wrap the attributes.
+you can use the characters `{...}`, `(...)`, `[...]` to wrap the attributes.
 
     body
       h1(id="logo") = page_logo
@@ -296,7 +296,7 @@ You can use text interpolation in the quoted attributes:
 #### Ruby attributes
 
 Write the ruby code directly after the `=`. If the code contains spaces you have to wrap
-the code into parenthes (), {} or []. The code in the parentheses will be evaluated.
+the code into parentheses `(...)`, `{...}` or `[...]`. The code in the parentheses will be evaluated.
 
     body
       table
@@ -451,7 +451,7 @@ Enable the translator plugin with
 <tr><td>Integer</td><td>:tabsize</td><td>4</td><td>Number of whitespaces per tab (used by the parser)</td></tr>
 <tr><td>String</td><td>:encoding</td><td>"utf-8"</td><td>Set encoding of template</td></tr>
 <tr><td>String</td><td>:default_tag</td><td>"div"</td><td>Default tag to be used if tag name is omitted</td></tr>
-<tr><td>Hash</td><td>:shortcut</td><td>{'.' => 'class', ...}</td><td>Attribute shortcuts</td></tr>
+<tr><td>Hash</td><td>:shortcut</td><td>\{'.' => 'class', ...}</td><td>Attribute shortcuts</td></tr>
 <tr><td>String list</td><td>:enable_engines</td><td>All enabled</td><td>List of enabled embedded engines (whitelist)</td></tr>
 <tr><td>String list</td><td>:disable_engines</td><td>None disabled</td><td>List of disabled embedded engines (blacklist)</td></tr>
 <tr><td>Boolean</td><td>:disable_capture</td><td>false (true in Rails)</td><td>Disable capturing in blocks (blocks write to the default buffer </td></tr>
@@ -459,7 +459,7 @@ Enable the translator plugin with
 <tr><td>Boolean</td><td>:use_html_safe</td><td>false (true in Rails)</td><td>Use String#html_safe? from ActiveSupport (Works together with :disable_escape)</td></tr>
 <tr><td>Symbol</td><td>:format</td><td>:xhtml</td><td>HTML output format</td></tr>
 <tr><td>String</td><td>:attr_wrapper</td><td>'"'</td><td>Character to wrap attributes in html (can be ' or ")</td></tr>
-<tr><td>Hash</td><td>:attr_delimiter</td><td>{'class' => ' '}</td><td>Joining character used if multiple html attributes are supplied (e.g. id1_id2)</td></tr>
+<tr><td>Hash</td><td>:attr_delimiter</td><td>\{'class' => ' '}</td><td>Joining character used if multiple html attributes are supplied (e.g. id1_id2)</td></tr>
 <tr><td>Boolean</td><td>:sort_attrs</td><td>true</td><td>Sort attributes by name</td></tr>
 <tr><td>Boolean</td><td>:remove_empty_attrs</td><td>true</td><td>Remove attributes with empty value</td></tr>
 <tr><td>Boolean</td><td>:pretty</td><td>false</td><td>Pretty html indenting (This is slower!)</td></tr>
