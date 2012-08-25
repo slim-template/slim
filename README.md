@@ -506,10 +506,10 @@ is not necessary to use Slim in Rails though.
 
 ### Syntax Highlighters
 
-There are plugins for Vim, Emacs, Textmate and Espresso text editor:
+There are plugins for Vim, Emacs, Textmate, Sublime Text and Espresso text editor:
 
 * [Vim](https://github.com/bbommarito/vim-slim)
-* [Textmate](https://github.com/fredwu/ruby-slim-tmbundle)
+* [Textmate / Sublime Text](https://github.com/fredwu/ruby-slim-tmbundle)
 * [Emacs](https://github.com/minad/emacs-slim)
 * [Espresso text editor](https://github.com/CiiDub/Slim-Sugar)
 
@@ -630,7 +630,7 @@ Syntax highlighting:
 
 * [Vim syntax highlighting](https://github.com/bbommarito/vim-slim)
 * [Emacs syntax highlighting](https://github.com/minad/emacs-slim)
-* [Textmate bundle](https://github.com/fredwu/ruby-slim-tmbundle)
+* [Textmate bundle (also works for Sublime Text)](https://github.com/fredwu/ruby-slim-tmbundle)
 * [Slim support for the Espresso text editor from MacRabbits](https://github.com/CiiDub/Slim-Sugar)
 
 Converters:
