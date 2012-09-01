@@ -198,8 +198,8 @@ module Slim
       when /\A-/
         # Found a code block.
         # We expect the line to be broken or the next line to be indented.
-        block = [:multi]
         @line.slice!(0)
+        block = [:multi]
         @stacks.last << [:slim, :control, parse_broken_line, block]
         @stacks << block
       when /\A=/
@@ -306,10 +306,9 @@ module Slim
         @stacks.delete_at(i)
       when /\A\s*=(=?)('?)/
         # Handle output code
-        block = [:multi]
         @line = $'
-        content = [:slim, :output, $1 != '=', parse_broken_line, block]
-        tag << content
+        block = [:multi]
+        tag << [:slim, :output, $1 != '=', parse_broken_line, block]
         @stacks.last << [:static, ' '] unless $2.empty?
         @stacks << block
       when /\A\s*\//
@@ -327,11 +326,10 @@ module Slim
 
     def parse_attributes
       attributes = [:slim, :attrs]
-      attribute = nil
 
       # Find any shortcut attributes
       while @line =~ @shortcut_regex
-        # The class/id attribute is :static instead of :slim :text,
+        # The class/id attribute is :static instead of :slim :interpolate,
         # because we don't want text interpolation in .class or #id shortcut
         attributes << [:html, :attr, @shortcut[$1][1], [:static, $2]]
         @line = $'
