@@ -9,4 +9,4 @@ content = File.read(File.dirname(__FILE__) + '/view.slim')
 slim = Slim::Template.new { content }
 context = Context.new
 
-10000.times { slim.render(view) }
+10000.times { slim.render(context) }

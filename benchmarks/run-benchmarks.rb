@@ -6,6 +6,7 @@ require 'slim'
 require 'context'
 
 require 'benchmark'
+require 'tilt'
 require 'erubis'
 require 'erb'
 require 'haml'

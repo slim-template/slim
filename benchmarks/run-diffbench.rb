@@ -13,9 +13,9 @@ context = Context.new
 
 DiffBench.bm do
   report("Parse") do
-    1000.times { engine.call(content) }
+    2000.times { engine.call(content) }
   end
   report("Render") do
-    10000.times { template.render(context) }
+    100000.times { template.render(context) }
   end
 end
