@@ -45,33 +45,33 @@ Here's a quick example to demonstrate what a Slim template looks like:
       head
         title Slim Examples
         meta name="keywords" content="template language"
+        meta name="author" content=author
+        link rel="icon" type="image/png" href=file_path("favicon.png")
+        javascript:
+          alert('Slim supports embedded javascript!')
 
       body
         h1 Markup examples
-        #content.example1
-          p Nest by indentation
+
+        #content
+          p This example shows you how a basic Slim file looks like.
 
         = yield
 
         - if items.any?
-          table
+          table#items
             - for item in items do
               tr
-                td = item.name
-                td = item.price
+                td.name = item.name
+                td.price = item.price
         - else
           p No items found
 
         #footer
-          | Copyright &copy; 2010 Andrew Stone
+          = render 'footer'
+          | Copyright &copy; #{year} #{author}
 
-        = render 'tracking_code'
-
-        script
-          | $(content).do_something();
-
-Indentation matters, but the indentation depth can be chosen as you like.
-  If you want to first indent 2 spaces, then 5 spaces, it's your choice. To nest markup you only need to indent by one space, the rest is gravy.
+Indentation matters, but the indentation depth can be chosen as you like. If you want to first indent 2 spaces, then 5 spaces, it's your choice. To nest markup you only need to indent by one space, the rest is gravy.
 
 ## Line indicators
 
