@@ -536,25 +536,26 @@ The optional option hash can have to options which were documented in the sectio
 
 ### Rails
 
-Rails generators are provided by  [slim-rails](https://github.com/leogalmeida/slim-rails). slim-rails
-is not necessary to use Slim in Rails though.
+Rails generators are provided by [slim-rails](https://github.com/leogalmeida/slim-rails). slim-rails
+is not necessary to use Slim in Rails though. Just install Slim and add it to your Gemfile with `gem 'slim'`.
+Then just use the .slim extension and you're good to go.
 
 ## Tools
 
 ### Syntax Highlighters
 
-There are plugins for Vim, Emacs, Textmate, Sublime Text and Espresso text editor:
+There are plugins for various text editors (including the most important ones - Vim, Emacs and Textmate):
 
 * [Vim](https://github.com/bbommarito/vim-slim)
-* [Textmate / Sublime Text](https://github.com/fredwu/ruby-slim-tmbundle)
 * [Emacs](https://github.com/minad/emacs-slim)
+* [Textmate / Sublime Text](https://github.com/fredwu/ruby-slim-tmbundle)
 * [Espresso text editor](https://github.com/CiiDub/Slim-Sugar)
 
 ### Template Converters (HAML, ERB, ...)
 
-* [Haml2Slim converter](https://github.com/fredwu/haml2slim).
-* [HTML2Slim converter](https://github.com/joaomilho/html2slim).
-* [ERB2Slim converter](https://github.com/c0untd0wn/erb2slim).
+* [Haml2Slim converter](https://github.com/fredwu/haml2slim)
+* [HTML2Slim converter](https://github.com/joaomilho/html2slim)
+* [ERB2Slim converter](https://github.com/c0untd0wn/erb2slim)
 
 ## Testing
 
@@ -659,26 +660,26 @@ This project is released under the MIT license.
 
 ## Related projects
 
-Template compilation:
+Template compilation framework:
 
 * [Temple](https://github.com/judofyr/slim)
 
-Syntax highlighting:
-
-* [Vim syntax highlighting](https://github.com/bbommarito/vim-slim)
-* [Emacs syntax highlighting](https://github.com/minad/emacs-slim)
-* [Textmate bundle (also works for Sublime Text)](https://github.com/fredwu/ruby-slim-tmbundle)
-* [Slim support for the Espresso text editor from MacRabbits](https://github.com/CiiDub/Slim-Sugar)
-
-Converters:
-
-* [Haml2Slim converter](https://github.com/fredwu/haml2slim)
-* [Html2Slim converter](https://github.com/joaomilho/html2slim)
-* [ERB2Slim converter](https://github.com/c0untd0wn/erb2slim)
-
 Framework support:
 
-* [Rails 3 Generators](https://github.com/leogalmeida/slim-rails)
+* [Rails 3 generators (slim-rails)](https://github.com/leogalmeida/slim-rails)
+
+Syntax highlighting:
+
+* [Vim](https://github.com/bbommarito/vim-slim)
+* [Emacs](https://github.com/minad/emacs-slim)
+* [Textmate / Sublime Text](https://github.com/fredwu/ruby-slim-tmbundle)
+* [Espresso text editor](https://github.com/CiiDub/Slim-Sugar)
+
+Template Converters (HAML, ERB, ...):
+
+* [Haml2Slim converter](https://github.com/fredwu/haml2slim)
+* [HTML2Slim converter](https://github.com/joaomilho/html2slim)
+* [ERB2Slim converter](https://github.com/c0untd0wn/erb2slim)
 
 Language ports/Similar languages:
 
@@ -687,5 +688,5 @@ Language ports/Similar languages:
 * [Hamlet.rb (Similar template language)](https://github.com/gregwebs/hamlet.rb)
 * [Plim (Python port of Slim)](https://github.com/2nd/plim)
 * [Skim (Slim for Javascript)](https://github.com/jfirebaugh/skim)
-* [Haml](https://github.com/nex3/haml)
-* [Jade](https://github.com/visionmedia/jade)
+* [Haml (Older engine which inspired Slim)](https://github.com/nex3/haml)
+* [Jade (Similar engine for javascript)](https://github.com/visionmedia/jade)
