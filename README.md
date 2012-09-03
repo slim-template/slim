@@ -36,7 +36,7 @@ Install Slim as a gem:
 
 Include Slim in your Gemfile with `gem 'slim'` or require it with `require 'slim'`. That's it! Now, just use the .slim extension and you're good to go.
 
-## The syntax
+## Syntax example
 
 Here's a quick example to demonstrate what a Slim template looks like:
 
@@ -427,26 +427,6 @@ The embedded engines can be configured in Slim by setting the options directly o
 
     Slim::EmbeddedEngine.default_options[:markdown] = {:auto_ids => false}
 
-## Plugins
-
-### Logic-less mode
-
-Enable the logic-less plugin with
-
-    require 'slim/logic_less'
-
-#### Variable output
-
-#### Section
-
-#### Inverted section
-
-### Translator
-
-Enable the translator plugin with
-
-    require 'slim/translator'
-
 ## Configuring Slim
 
 Slim and the underlying Temple framework are highly configurable. Unfortunately the way how you configure Slim depends on the compilation mechanism (Rails or Tilt).
@@ -503,6 +483,44 @@ The following options are exposed by the `Slim::Engine` and can be set with `Sli
 Additionally the code generator options can be set (used by the :generator class). The standard generators support the options :buffer and :capture_generator.
 There are more options which are supported by the filters which are used by `Slim::Engine` but which are not exposed and are not officially supported. You
 have to take a look at the Slim and Temple code for that.
+
+## Plugins
+
+### Logic-less mode
+
+Enable the logic-less plugin with
+
+    require 'slim/logic_less'
+
+<table>
+<thead style="font-weight:bold"><tr><td>Type</td><td>Name</td><td>Default</td><td>Purpose</td></tr></thead>
+<tbody>
+<tr><td>Boolean</td><td>:logic_less</td><td>true</td><td>Enable logic less mode (Enabled if 'slim/logic_less' is required)</td></tr>
+<tr><td>String</td><td>:dictionary</td><td>"self"</td><td>Dictionary where variables are looked up</td></tr>
+<tr><td>Symbol</td><td>:dictionary_access</td><td>:wrapped</td><td>Dictionary access mode (:string, :symbol, :wrapped)</td></tr>
+</tbody>
+</table>
+
+#### Variable output
+
+#### Section
+
+#### Inverted section
+
+### Translator
+
+Enable the translator plugin with
+
+    require 'slim/translator'
+
+<table>
+<thead style="font-weight:bold"><tr><td>Type</td><td>Name</td><td>Default</td><td>Purpose</td></tr></thead>
+<tbody>
+<tr><td>Boolean</td><td>:tr</td><td>true</td><td>Enable translator (Enabled if 'slim/translator' is required)</td></tr>
+<tr><td>Symbol</td><td>:tr_mode</td><td>:dynamic</td><td>When to translate: :static = at compile time, :dynamic = at runtime</td></tr>
+<tr><td>String</td><td>:tr_fn</td><td>Depending on installed translation library</td><td>Translation function, could be '_' for gettext</td></tr>
+</tbody>
+</table>
 
 ## Framework support
 
