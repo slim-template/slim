@@ -157,6 +157,8 @@ Use the forward slash immediately followed by an exclamation mark for html comme
 
 ### Doctype tag
 
+The doctype tag is a special tag which can be used to generate the complex doctypes in a very simple way.
+
 XML VERSION
 
     doctype xml
@@ -280,8 +282,8 @@ you can use the characters `{...}`, `(...)`, `[...]` to wrap the attributes.
 
 If you wrap the attributes, you can spread them across multiple lines:
 
-    h2[ id="tagline"
-        class="small tagline"] = page_tagline
+    h2[id="tagline"
+       class="small tagline"] = page_tagline
 
 #### Quoted attributes
 
@@ -382,37 +384,9 @@ To escape the interpolation (i.e. render as is)
 
 ## Embedded engines (Markdown, ...)
 
-Thanks to Tilt, Slim has impressive support for embedding other template engines:
+Thanks to Tilt, Slim has impressive support for embedding other template engines.
 
-<table>
-<tr><td>ENGINE</td><td>FILTER</td><td>REQUIRED LIBRARIES</td></tr>
-<tr><td>Ruby</td><td>ruby:</td><td>none</td></tr>
-<tr><td>Javascript</td><td>javascript:</td><td>none</td></tr>
-<tr><td>CSS</td><td>css:</td><td>none</td></tr>
-<tr><td>ERB</td><td>erb:</td><td>none</td></tr>
-<tr><td>Sass</td><td>sass:</td><td>sass</td></tr>
-<tr><td>Scss</td><td>scss:</td><td>sass</td></tr>
-<tr><td>LessCSS</td><td>less:</td><td>less</td></tr>
-<tr><td>Builder</td><td>builder:</td><td>builder</td></tr>
-<tr><td>Liquid</td><td>liquid:</td><td>liquid</td></tr>
-<tr><td>RDiscount</td><td>markdown:</td><td>rdiscount/kramdown</td></tr>
-<tr><td>RedCloth</td><td>textile:</td><td>redcloth</td></tr>
-<tr><td>RDoc</td><td>rdoc:</td><td>rdoc</td></tr>
-<tr><td>Radius</td><td>radius:</td><td>radius</td></tr>
-<tr><td>Markaby</td><td>markaby:</td><td>markaby</td></tr>
-<tr><td>Nokogiri</td><td>nokogiri:</td><td>nokogiri</td></tr>
-<tr><td>CoffeeScript</td><td>coffee:</td><td>coffee-script (+node coffee)</td></tr>
-</table>
-
-The following engines are just shortcuts: javascript, css, ruby
-
-The following engines are executed at compile time (embedded ruby is interpolated): markdown, textile, rdoc
-
-The following engines are executed at compile time: coffee, sass, scss, less
-
-The following engines are precompiled, code is embedded: erb, haml, nokogiri, builder
-
-The following engines are completely executed at runtime (*Usage not recommended, no caching!*): liquid, radius, markaby
+Examples:
 
     coffee:
       square = (x) -> x * x
@@ -421,6 +395,37 @@ The following engines are completely executed at runtime (*Usage not recommended
       #Header
         Hello from #{"Markdown!"}
         Second Line!
+
+Supported engines:
+
+<table>
+<thead style="font-weight:bold"><tr><td>Engine</td><td>Filter</td><td>Required libraries</td><td>Type</td><td>Description</td></tr></thead>
+<tbody>
+<tr><td>Ruby</td><td>ruby:</td><td>none</td><td>Shortcut</td><td>Shortcut to embed ruby code</td></tr>
+<tr><td>Javascript</td><td>javascript:</td><td>none</td><td>Shortcut</td><td>Shortcut to embed javascript code and wrap in script tag</td></tr>
+<tr><td>CSS</td><td>css:</td><td>none</td><td>Shortcut</td><td>Shortcut to embed css code and wrap in style tag</td></tr>
+<tr><td>Sass</td><td>sass:</td><td>sass</td><td>Compile time</td><td>Embed sass code and wrap in style tag</td></tr>
+<tr><td>Scss</td><td>scss:</td><td>sass</td><td>Compile time</td><td>Embedd scss code and wrap in style tag</td></tr>
+<tr><td>LessCSS</td><td>less:</td><td>less</td><td>Compile time</td><td>Embed less css code and wrap in style tag</td></tr>
+<tr><td>Stylus</td><td>styl:</td><td>styl</td><td>Compile time</td><td>Embed stylus css code and wrap in style tag</td></tr>
+<tr><td>CoffeeScript</td><td>coffee:</td><td>coffee-script (+node coffee)</td><td>Compile time</td><td>Compile coffee script code and wrap in script tag</td></tr>
+<tr><td>RDiscount</td><td>markdown:</td><td>rdiscount/kramdown</td><td>Compile time + Interpolation</td><td>Compile markdown code and interpolate #\{variables} in text</td></tr>
+<tr><td>RedCloth</td><td>textile:</td><td>redcloth</td><td>Compile time + Interpolation</td><td>Compile textile code and interpolate #\{variables} in text</td></tr>
+<tr><td>Creole</td><td>creole:</td><td>creole</td><td>Compile time + Interpolation</td><td>Compile creole code and interpolate #\{variables} in text</td></tr>
+<tr><td>Wikicloth</td><td>wiki:, mediawiki:</td><td>wikicloth</td><td>Compile time + Interpolation</td><td>Compile wiki code and interpolate #\{variables} in text</td></tr>
+<tr><td>RDoc</td><td>rdoc:</td><td>rdoc</td><td>Compile time + Interpolation</td><td>Compile rdoc code and interpolate #\{variables} in text</td></tr>
+<tr><td>Builder</td><td>builder:</td><td>builder</td><td>Precompiled</td><td>Embed builder code</td></tr>
+<tr><td>Nokogiri</td><td>nokogiri:</td><td>nokogiri</td><td>Precompiled</td><td>Embed nokogiri builder code</td></tr>
+<tr><td>ERB</td><td>erb:</td><td>none</td><td>Precompiled</td><td>Embed erb code</td></tr>
+<tr><td>Liquid</td><td>liquid:</td><td>liquid</td><td>Runtime</td><td>Embed liquid code (Not recommended, no caching)</td></tr>
+<tr><td>Radius</td><td>radius:</td><td>radius</td><td>Runtime</td><td>Embed radius code (Not recommended, no caching)</td></tr>
+<tr><td>Markaby</td><td>markaby:</td><td>markaby</td><td>Runtime</td><td>Embed markaby code (Not recommended, no caching)</td></tr>
+</tbody>
+</table>
+
+The embedded engines can be configured in Slim by setting the options directly on the `Slim::EmbeddedEngine` filter. Example:
+
+    Slim::EmbeddedEngine.default_options[:markdown] = {:auto_ids => false}
 
 ## Plugins
 
@@ -444,6 +449,32 @@ Enable the translator plugin with
 
 ## Configuring Slim
 
+Slim and the underlying Temple framework are highly configurable. Unfortunately the way how you configure Slim depends on the compilation mechanism (Rails or Tilt).
+It is always possible to set default options. This can be done in Rails' environment files. For instance, in config/environments/development.rb you probably want:
+
+    # Indent html for pretty debugging and do not sort attributes (Ruby 1.8)
+    Slim::Engine.set_default_options :pretty => true, :sort_attrs => false
+
+    # Indent html for pretty debugging and do not sort attributes (Ruby 1.9)
+    Slim::Engine.set_default_options pretty: true, sort_attrs: false
+
+You can also access the option hash directly:
+
+    Slim::Engine.default_options[:pretty] = true
+
+For developers who know more about Slim and Temple architecture it is possible to override default
+options at different positions. Temple uses an inheritance mechanism to allow subclasses to override
+options of the superclass. The option priorities are as follows:
+
+    Options passed at engine instantination > Slim::Template > Slim::Engine > Parser/Filter/Generator (e.g Slim::Parser, Slim::Compiler)
+
+It is also possible to set options for superclasses like Temple::Engine. But this will affect all temple template engines then.
+
+    Slim::Engine > Temple::Engine
+    Slim::Compiler > Temple::Filter
+
+The following options are exposed by the `Slim::Engine` and can be set with `Slim::Engine.set_default_options`.
+
 <table>
 <thead style="font-weight:bold"><tr><td>Type</td><td>Name</td><td>Default</td><td>Purpose</td></tr></thead>
 <tbody>
@@ -451,23 +482,27 @@ Enable the translator plugin with
 <tr><td>Integer</td><td>:tabsize</td><td>4</td><td>Number of whitespaces per tab (used by the parser)</td></tr>
 <tr><td>String</td><td>:encoding</td><td>"utf-8"</td><td>Set encoding of template</td></tr>
 <tr><td>String</td><td>:default_tag</td><td>"div"</td><td>Default tag to be used if tag name is omitted</td></tr>
-<tr><td>Hash</td><td>:shortcut</td><td>\{'.' => 'class', ...}</td><td>Attribute shortcuts</td></tr>
-<tr><td>String list</td><td>:enable_engines</td><td>All enabled</td><td>List of enabled embedded engines (whitelist)</td></tr>
-<tr><td>String list</td><td>:disable_engines</td><td>None disabled</td><td>List of disabled embedded engines (blacklist)</td></tr>
+<tr><td>Hash</td><td>:shortcut</td><td>\{'.' => 'class', '#' => 'id'}</td><td>Attribute shortcuts</td></tr>
+<tr><td>String list</td><td>:enable_engines</td><td>nil <i>(All enabled)</i></td><td>List of enabled embedded engines (whitelist)</td></tr>
+<tr><td>String list</td><td>:disable_engines</td><td>nil <i>(None disabled)</i></td><td>List of disabled embedded engines (blacklist)</td></tr>
 <tr><td>Boolean</td><td>:disable_capture</td><td>false (true in Rails)</td><td>Disable capturing in blocks (blocks write to the default buffer </td></tr>
 <tr><td>Boolean</td><td>:disable_escape</td><td>false</td><td>Disable automatic escaping of strings</td></tr>
 <tr><td>Boolean</td><td>:use_html_safe</td><td>false (true in Rails)</td><td>Use String#html_safe? from ActiveSupport (Works together with :disable_escape)</td></tr>
-<tr><td>Symbol</td><td>:format</td><td>:xhtml</td><td>HTML output format</td></tr>
+<tr><td>Symbol</td><td>:format</td><td>:xhtml</td><td>HTML output format (Possible formats :xhtml, :html4, :html5, :html)</td></tr>
 <tr><td>String</td><td>:attr_wrapper</td><td>'"'</td><td>Character to wrap attributes in html (can be ' or ")</td></tr>
-<tr><td>Hash</td><td>:attr_delimiter</td><td>\{'class' => ' '}</td><td>Joining character used if multiple html attributes are supplied (e.g. id1_id2)</td></tr>
+<tr><td>Hash</td><td>:attr_delimiter</td><td>\{'class' => ' '}</td><td>Joining character used if multiple html attributes are supplied (e.g. class="class1 class2")</td></tr>
 <tr><td>Boolean</td><td>:sort_attrs</td><td>true</td><td>Sort attributes by name</td></tr>
 <tr><td>Boolean</td><td>:remove_empty_attrs</td><td>true</td><td>Remove attributes with empty value</td></tr>
-<tr><td>Boolean</td><td>:pretty</td><td>false</td><td>Pretty html indenting (This is slower!)</td></tr>
+<tr><td>Boolean</td><td>:pretty</td><td>false</td><td>Pretty html indenting <b>(This is slower!)</b></td></tr>
 <tr><td>String</td><td>:indent</td><td>'  '</td><td>Indentation string</td></tr>
 <tr><td>Boolean</td><td>:streaming</td><td>false (true in Rails > 3.1)</td><td>Enable output streaming</td></tr>
-<tr><td>Class</td><td>:generator</td><td>ArrayBuffer/RailsOutputBuffer</td><td>Temple code generator (default generator generates array buffer)</td></tr>
+<tr><td>Class</td><td>:generator</td><td>Temple::Generators::ArrayBuffer/RailsOutputBuffer</td><td>Temple code generator (default generator generates array buffer)</td></tr>
 </tbody>
 </table>
+
+Additionally the code generator options can be set (used by the :generator class). The standard generators support the options :buffer and :capture_generator.
+There are more options which are supported by the filters which are used by `Slim::Engine` but which are not exposed and are not officially supported. You
+have to take a look at the Slim and Temple code for that.
 
 ## Framework support
 
@@ -478,6 +513,8 @@ Slim uses Tilt to compile the generated code. If you want to use the Slim templa
     Tilt.new['template.slim'].render(scope)
     Slim::Template.new('template.slim', optional_option_hash).render(scope)
     Slim::Template.new(optional_option_hash) { source }.render(scope)
+
+The optional option hash can have to options which were documented in the section above.
 
 ### Sinatra
 
