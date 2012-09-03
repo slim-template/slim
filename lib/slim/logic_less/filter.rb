@@ -18,7 +18,7 @@ module Slim
       if options[:logic_less]
         @dict = unique_name
         dictionary = options[:dictionary]
-        dictionary = "Slim::LogicLess::Wrapper.new(#{dictionary})" if options[:dictionary_access] == :wrapped
+        dictionary = "::Slim::LogicLess::Wrapper.new(#{dictionary})" if options[:dictionary_access] == :wrapped
         [:multi,
          [:code, "#{@dict} = #{dictionary}"],
          super]

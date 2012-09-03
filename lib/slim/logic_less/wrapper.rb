@@ -27,7 +27,12 @@ module Slim
           return wrap(value[name.to_sym]) if value.has_key?(name.to_sym)
           return wrap(value[name.to_s]) if value.has_key?(name.to_s)
         end
-        return wrap(value.instance_variable_get("@#{name}")) if value.instance_variable_defined?("@#{name}")
+        begin
+          var_name = "@#{name}"
+          return wrap(value.instance_variable_get(var_name)) if value.instance_variable_defined?(var_name)
+        rescue NameError
+          # Do nothing
+        end
         parent[name] if parent
       end
 
