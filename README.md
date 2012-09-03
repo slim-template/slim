@@ -5,8 +5,9 @@
 
 Slim is a template language whose goal is to reduce the view syntax to the essential parts without becoming cryptic.
 
+## Introduction
 
-## What is Slim?
+### What is Slim?
 
 Slim is a fast, lightweight templating engine with support for __Rails 3__. It has been heavily tested on all major ruby implementations. We use
 continous integration (travis-ci).
@@ -20,7 +21,7 @@ Slim uses [Temple](https://github.com/judofyr/temple) for parsing/compilation an
 The architecture of Temple is very flexible and allows the extension of the parsing and compilation process without monkey-patching. This is used
 by the logic-less plugin and the translator plugin which provides I18n.
 
-## Why use Slim?
+### Why use Slim?
 
 Within the Rails community, _Erb_ and _Haml_ are without doubt the two most popular templating engines. However, _Erb_'s syntax is cumbersome and _Haml_'s syntax can be quite cryptic to the uninitiated.
 
@@ -28,7 +29,7 @@ Slim was born to bring a minimalist syntax approach with speed. If people chose 
 
 ___Yes, Slim is speedy!___ Benchmarks are provided at the end of this README file. Don't trust the numbers? That's as it should be. Therefore we provide a benchmark rake task so you could test it yourself (`rake bench`).
 
-## How to start?
+### How to start?
 
 Install Slim as a gem:
 
@@ -36,7 +37,7 @@ Install Slim as a gem:
 
 Include Slim in your Gemfile with `gem 'slim'` or require it with `require 'slim'`. That's it! Now, just use the .slim extension and you're good to go.
 
-## Syntax example
+### Syntax example
 
 Here's a quick example to demonstrate what a Slim template looks like:
 
