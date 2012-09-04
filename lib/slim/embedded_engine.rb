@@ -136,7 +136,7 @@ module Slim
       protected
 
       def tilt_render(tilt_engine, tilt_options, text)
-        # WARNING: This is a bit of a hack. Tilt::Engine#precompiled is protected
+        # HACK: Tilt::Engine#precompiled is protected
         [:dynamic, tilt_engine.new(tilt_options) { text }.send(:precompiled, {}).first]
       end
     end

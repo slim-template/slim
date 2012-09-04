@@ -1,11 +1,10 @@
 # Slim
 
-
 [![Build Status](https://secure.travis-ci.org/stonean/slim.png?branch=master)](http://travis-ci.org/stonean/slim) [![Dependency Status](https://gemnasium.com/stonean/slim.png?travis)](https://gemnasium.com/stonean/slim) [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/stonean/slim)
 
 Slim is a template language whose goal is to reduce the view syntax to the essential parts without becoming cryptic. It started as an exercise to see how much could be removed from a standard html template (<, >, closing tags, etc...). As more people took an interest in Slim, the functionality grew and so did the flexibility of the syntax.
 
-Slim uses Temple and Tilt. If you want to learn how Slim works, you'll need to study these projects.
+Slim uses [Temple](https://github.com/judofyr/temple) and [Tilt](https://github.com/rtomayko/tilt). If you want to learn how Slim works, you'll need to study these projects.
 
 ## Introduction
 
@@ -387,7 +386,7 @@ To escape the interpolation (i.e. render as is)
 
 ## Embedded engines (Markdown, ...)
 
-Thanks to Tilt, Slim has impressive support for embedding other template engines.
+Thanks to [Tilt](https://github.com/rtomayko/tilt), Slim has impressive support for embedding other template engines.
 
 Examples:
 
@@ -402,27 +401,24 @@ Examples:
 Supported engines:
 
 <table>
-<thead style="font-weight:bold"><tr><td>Engine</td><td>Filter</td><td>Required libraries</td><td>Type</td><td>Description</td></tr></thead>
+<thead style="font-weight:bold"><tr><td>Filter</td><td>Required gems</td><td>Type</td><td>Description</td></tr></thead>
 <tbody>
-<tr><td>Ruby</td><td>ruby:</td><td>none</td><td>Shortcut</td><td>Shortcut to embed ruby code</td></tr>
-<tr><td>Javascript</td><td>javascript:</td><td>none</td><td>Shortcut</td><td>Shortcut to embed javascript code and wrap in script tag</td></tr>
-<tr><td>CSS</td><td>css:</td><td>none</td><td>Shortcut</td><td>Shortcut to embed css code and wrap in style tag</td></tr>
-<tr><td>Sass</td><td>sass:</td><td>sass</td><td>Compile time</td><td>Embed sass code and wrap in style tag</td></tr>
-<tr><td>Scss</td><td>scss:</td><td>sass</td><td>Compile time</td><td>Embedd scss code and wrap in style tag</td></tr>
-<tr><td>LessCSS</td><td>less:</td><td>less</td><td>Compile time</td><td>Embed less css code and wrap in style tag</td></tr>
-<tr><td>Stylus</td><td>styl:</td><td>styl</td><td>Compile time</td><td>Embed stylus css code and wrap in style tag</td></tr>
-<tr><td>CoffeeScript</td><td>coffee:</td><td>coffee-script (+node coffee)</td><td>Compile time</td><td>Compile coffee script code and wrap in script tag</td></tr>
-<tr><td>RDiscount</td><td>markdown:</td><td>rdiscount/kramdown</td><td>Compile time + Interpolation</td><td>Compile markdown code and interpolate #\{variables} in text</td></tr>
-<tr><td>RedCloth</td><td>textile:</td><td>redcloth</td><td>Compile time + Interpolation</td><td>Compile textile code and interpolate #\{variables} in text</td></tr>
-<tr><td>Creole</td><td>creole:</td><td>creole</td><td>Compile time + Interpolation</td><td>Compile creole code and interpolate #\{variables} in text</td></tr>
-<tr><td>Wikicloth</td><td>wiki:, mediawiki:</td><td>wikicloth</td><td>Compile time + Interpolation</td><td>Compile wiki code and interpolate #\{variables} in text</td></tr>
-<tr><td>RDoc</td><td>rdoc:</td><td>rdoc</td><td>Compile time + Interpolation</td><td>Compile rdoc code and interpolate #\{variables} in text</td></tr>
-<tr><td>Builder</td><td>builder:</td><td>builder</td><td>Precompiled</td><td>Embed builder code</td></tr>
-<tr><td>Nokogiri</td><td>nokogiri:</td><td>nokogiri</td><td>Precompiled</td><td>Embed nokogiri builder code</td></tr>
-<tr><td>ERB</td><td>erb:</td><td>none</td><td>Precompiled</td><td>Embed erb code</td></tr>
-<tr><td>Liquid</td><td>liquid:</td><td>liquid</td><td>Runtime</td><td>Embed liquid code (Not recommended, no caching)</td></tr>
-<tr><td>Radius</td><td>radius:</td><td>radius</td><td>Runtime</td><td>Embed radius code (Not recommended, no caching)</td></tr>
-<tr><td>Markaby</td><td>markaby:</td><td>markaby</td><td>Runtime</td><td>Embed markaby code (Not recommended, no caching)</td></tr>
+<tr><td>ruby:</td><td>none</td><td>Shortcut</td><td>Shortcut to embed ruby code</td></tr>
+<tr><td>javascript:</td><td>none</td><td>Shortcut</td><td>Shortcut to embed javascript code and wrap in script tag</td></tr>
+<tr><td>css:</td><td>none</td><td>Shortcut</td><td>Shortcut to embed css code and wrap in style tag</td></tr>
+<tr><td>sass:</td><td>sass</td><td>Compile time</td><td>Embed sass code and wrap in style tag</td></tr>
+<tr><td>scss:</td><td>sass</td><td>Compile time</td><td>Embedd scss code and wrap in style tag</td></tr>
+<tr><td>less:</td><td>less</td><td>Compile time</td><td>Embed less css code and wrap in style tag</td></tr>
+<tr><td>styl:</td><td>styl</td><td>Compile time</td><td>Embed stylus css code and wrap in style tag</td></tr>
+<tr><td>coffee:</td><td>coffee-script</td><td>Compile time</td><td>Compile coffee script code and wrap in script tag</td></tr>
+<tr><td>markdown:</td><td>redcarpet/rdiscount/kramdown</td><td>Compile time + Interpolation</td><td>Compile markdown code and interpolate #\{variables} in text</td></tr>
+<tr><td>textile:</td><td>redcloth</td><td>Compile time + Interpolation</td><td>Compile textile code and interpolate #\{variables} in text</td></tr>
+<tr><td>creole:</td><td>creole</td><td>Compile time + Interpolation</td><td>Compile creole code and interpolate #\{variables} in text</td></tr>
+<tr><td>wiki:, mediawiki:</td><td>wikicloth</td><td>Compile time + Interpolation</td><td>Compile wiki code and interpolate #\{variables} in text</td></tr>
+<tr><td>rdoc:</td><td>rdoc</td><td>Compile time + Interpolation</td><td>Compile rdoc code and interpolate #\{variables} in text</td></tr>
+<tr><td>builder:</td><td>builder</td><td>Precompiled</td><td>Embed builder code</td></tr>
+<tr><td>nokogiri:</td><td>nokogiri</td><td>Precompiled</td><td>Embed nokogiri builder code</td></tr>
+<tr><td>erb:</td><td>none</td><td>Precompiled</td><td>Embed erb code</td></tr>
 </tbody>
 </table>
 
@@ -432,7 +428,7 @@ The embedded engines can be configured in Slim by setting the options directly o
 
 ## Configuring Slim
 
-Slim and the underlying Temple framework are highly configurable. Unfortunately the way how you configure Slim depends on the compilation mechanism (Rails or Tilt).
+Slim and the underlying [Temple](https://github.com/judofyr/temple) framework are highly configurable. Unfortunately the way how you configure Slim depends on the compilation mechanism (Rails or [Tilt](https://github.com/rtomayko/tilt)).
 It is always possible to set default options. This can be done in Rails' environment files. For instance, in config/environments/development.rb you probably want:
 
     # Indent html for pretty debugging and do not sort attributes (Ruby 1.8)
@@ -529,7 +525,7 @@ Enable the translator plugin with
 
 ### Tilt
 
-Slim uses Tilt to compile the generated code. If you want to use the Slim template directly, you can use the Tilt interface.
+Slim uses [Tilt](https://github.com/rtomayko/tilt) to compile the generated code. If you want to use the Slim template directly, you can use the Tilt interface.
 
     Tilt.new['template.slim'].render(scope)
     Slim::Template.new('template.slim', optional_option_hash).render(scope)
