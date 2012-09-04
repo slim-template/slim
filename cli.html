@@ -44,18 +44,19 @@
         <h4>The options:</h4>
         <pre><code>$ slimrb --help
 Usage: slimrb [options]
-  -s, --stdin                      Read input from standard input instead of an input file
-      --trace                      Show a full traceback on error
-  -c, --compile                    Compile only but do not run
-  -r, --rails                      Generate rails compatible code (combine with -c)
-  -S, --sections                   Logic-less sections mode
-  -p, --pretty                     Produce pretty html
-  -h, --help                       Show this message
-  -v, --version                    Print version
+    -s, --stdin                      Read input from standard input instead of an input file
+        --trace                      Show a full traceback on error
+    -c, --compile                    Compile only but do not run
+    -r, --rails                      Generate rails compatible code (combine with -c)
+    -t, --translator                 Enable translator plugin
+    -l, --logic-less                 Enable logic-less plugin
+    -p, --pretty                     Produce pretty html
+    -h, --help                       Show this message
+    -v, --version                    Print version
         </code></pre>
 
         <hr/>
-        <h4>Trying it out (this example requires the rdiscount gem):</h4>
+        <h4>Trying it out (this example requires the redcarpet or kramdown gem):</h4>
         <p>Type your template, when you're done CTRL-D to send EOF.</p>
         <pre><code>$ slimrb
 markdown:
