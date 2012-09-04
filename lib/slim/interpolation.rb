@@ -45,7 +45,7 @@ module Slim
         i += 1
       end
 
-      raise "Text interpolation: Expected closing }" if count != 0
+      raise(Temple::FilterError, "Text interpolation: Expected closing }") if count != 0
 
       return string[i..-1], string[0, i-1]
     end

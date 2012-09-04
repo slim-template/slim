@@ -175,7 +175,7 @@ module Slim
                     ['false, nil', [:multi]],
                     [:else, [:code, tmp]]]],
                   [:if, "#{value}.size > 1 && !#{@attr_delimiter}[#{name}]",
-                   [:code, "raise(\"Multiple #\{#{name}\} attributes specified\")"]],
+                   [:code, %{raise("Multiple #\{#{name}\} attributes specified")}]],
                   [:code, "#{hash}[#{name}] = #{value}.compact.join(#{@attr_delimiter}[#{name}].to_s)"]]]
 
       attr = [:multi,

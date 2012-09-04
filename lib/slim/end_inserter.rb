@@ -24,7 +24,7 @@ module Slim
 
       exps.each do |exp|
         if control?(exp)
-          raise 'Explicit end statements are forbidden' if exp[2] =~ END_REGEX
+          raise(Temple::FilterError, 'Explicit end statements are forbidden') if exp[2] =~ END_REGEX
 
           # Two control code in a row. If this one is *not*
           # an else block, we should close the previous one.

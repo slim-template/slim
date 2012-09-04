@@ -10,7 +10,7 @@ module Slim
     def initialize(opts = {})
       super
       unless [:string, :symbol, :wrapped].include?(options[:dictionary_access])
-        raise "Invalid dictionary access #{options[:dictionary_access].inspect}"
+        raise ArgumentError, "Invalid dictionary access #{options[:dictionary_access].inspect}"
       end
     end
 
@@ -37,7 +37,7 @@ module Slim
     end
 
     def on_slim_output(escape, name, content)
-      raise 'Output statements with content are forbidden in logic less mode' if !empty_exp?(content)
+      raise(Temple::FilterError, 'Output statements with content are forbidden in logic less mode') if !empty_exp?(content)
       [:slim, :output, escape, access(name), content]
     end
 
@@ -50,11 +50,11 @@ module Slim
     end
 
     def on_dynamic(code)
-      raise 'Embedded code is forbidden in logic less mode'
+      raise Temple::FilterError, 'Embedded code is forbidden in logic less mode'
     end
 
     def on_code(code)
-      raise 'Embedded code is forbidden in logic less mode'
+      raise Temple::FilterError, 'Embedded code is forbidden in logic less mode'
     end
 
     protected

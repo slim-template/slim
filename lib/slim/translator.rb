@@ -45,7 +45,7 @@ module Slim
       when :dynamic
         @translator = DynamicTranslator.new(options)
       else
-        raise "Invalid translator mode #{options[:tr_mode].inspect}"
+        raise ArgumentError, "Invalid translator mode #{options[:tr_mode].inspect}"
       end
     end
 
