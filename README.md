@@ -3,7 +3,9 @@
 
 [![Build Status](https://secure.travis-ci.org/stonean/slim.png?branch=master)](http://travis-ci.org/stonean/slim) [![Dependency Status](https://gemnasium.com/stonean/slim.png?travis)](https://gemnasium.com/stonean/slim) [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/stonean/slim)
 
-Slim is a template language whose goal is to reduce the view syntax to the essential parts without becoming cryptic.
+Slim is a template language whose goal is to reduce the view syntax to the essential parts without becoming cryptic. It started as an exercise to see how much could be removed from a standard html template (<, >, closing tags, etc...). As more people took an interest in Slim, the functionality grew and so did the flexibility of the syntax.
+
+Slim uses Temple and Tilt. If you want to learn how Slim works, you'll need to study these projects.
 
 ## Introduction
 
@@ -561,6 +563,49 @@ Then just use the .slim extension and you're good to go.
 
 ## Tools
 
+### Slim Command 'slimrb'
+
+The gem 'slim' comes with the small tool 'slimrb' to test Slim from the command line.
+
+<pre>
+$ slimrb --help
+Usage: slimrb [options]
+    -s, --stdin                      Read input from standard input instead of an input file
+        --trace                      Show a full traceback on error
+    -c, --compile                    Compile only but do not run
+    -r, --rails                      Generate rails compatible code (combine with -c)
+    -t, --translator                 Enable translator plugin
+    -l, --logic-less                 Enable logic-less plugin
+    -p, --pretty                     Produce pretty html
+    -h, --help                       Show this message
+    -v, --version                    Print version
+</pre>
+
+Start 'slimrb', type your code and press Ctrl-d to send EOF. Example usage:
+
+<pre>
+$ slimrb
+markdown:
+  First paragraph.
+
+  Second paragraph.
+
+  * one
+  * two
+  * three
+
+//Enter Ctrl-d
+<p>First paragraph </p>
+
+<p>Second paragraph </p>
+
+<ul>
+<li>one</li>
+<li>two</li>
+<li>three</li>
+</ul>
+</pre>
+
 ### Syntax Highlighters
 
 There are plugins for various text editors (including the most important ones - Vim, Emacs and Textmate):
@@ -662,9 +707,26 @@ Slim is working well on all major Ruby implementations:
 * JRuby
 * Rubinius 2.0
 
+## Contributing
+
+If you'd like to help improve Slim, clone the project with Git by running:
+
+    $ git clone git://github.com/stonean/slim
+
+Work your magic and then submit a pull request. We love pull requests!
+
+Please remember to test against Ruby versions 1.9.2 and 1.8.7.
+
+If you find the documentation lacking (and you probably will), help us out
+The docs are located in the gh-pages branch:
+
+    $ git checkout gh-pages
+
+If you don't have the time to work on Slim, but found something we should know about, please submit an issue.
+
 ## License
 
-This project is released under the MIT license.
+Slim is released under the [MIT license](http://www.opensource.org/licenses/MIT).
 
 ## Authors
 
