@@ -3,12 +3,14 @@ source :rubygems
 gemspec
 
 if ENV['TRAVIS'] || ENV['TEMPLE'] == 'master'
-   gem 'temple', :git => 'git://github.com/judofyr/temple.git'
+  gem 'temple', :github => 'judofyr/temple'
+elsif ENV['TEMPLE_PATH']
+  gem 'temple', :path => ENV['TEMPLE_PATH']
 end
 
 if ENV['RAILS']
   if ENV['RAILS'] == 'master'
-    gem 'rails', :git => 'git://github.com/rails/rails.git'
+    gem 'rails', :github => 'rails/rails'
   else
     gem 'rails', "= #{ENV['RAILS']}"
   end
