@@ -8,8 +8,9 @@ rvm:
 env:
   - "TASK=test"
   - "TASK=test:rails RAILS=master"
-  - "TASK=test:rails RAILS=3.0.11"
-  - "TASK=test:rails RAILS=3.1.3"
+  - "TASK=test:rails RAILS=3.0.17"
+  - "TASK=test:rails RAILS=3.1.8"
+  - "TASK=test:rails RAILS=3.2.8"
 matrix:
   exclude:
     # Test Rails master only on 1.9.3+ Rubies
