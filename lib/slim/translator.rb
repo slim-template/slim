@@ -50,15 +50,18 @@ module Slim
     end
 
     def on_slim_text(exp)
-      @translator.call(exp)
+      [:slim, :text, @translator.call(exp)]
     end
 
     private
 
     class StaticTranslator < Filter
-      def call(exp)
-        @translate ||= eval("proc {|string| #{options[:tr_fn]}(string) }")
+      def initialize(opts)
+        super
+        @translate = eval("proc {|string| #{options[:tr_fn]}(string) }")
+      end
 
+      def call(exp)
         @text, @captures = '', []
         result = compile(exp)
 

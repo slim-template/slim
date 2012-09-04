@@ -1,6 +1,5 @@
 # encoding: utf-8
 
-require 'rubygems'
 require 'minitest/unit'
 require 'slim'
 require 'slim/grammar'
