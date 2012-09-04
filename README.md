@@ -591,15 +591,15 @@ markdown:
   * three
 
 //Enter Ctrl-d
-<p>First paragraph </p>
+&lt;p&gt;First paragraph &lt;/p&gt;
 
-<p>Second paragraph </p>
+&lt;p&gt;Second paragraph &lt;/p&gt;
 
-<ul>
-<li>one</li>
-<li>two</li>
-<li>three</li>
-</ul>
+&lt;ul&gt;
+&lt;li&gt;one&lt;/li&gt;
+&lt;li&gt;two&lt;/li&gt;
+&lt;li&gt;three&lt;/li&gt;
+&lt;/ul&gt;
 </pre>
 
 ### Syntax Highlighters
