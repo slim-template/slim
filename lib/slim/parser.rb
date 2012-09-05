@@ -176,24 +176,21 @@ module Slim
 
     def parse_line_indicators
       case @line
+      when /\A\/!( ?)/
+        # HTML comment
+        @stacks.last << [:html, :comment, [:slim, :text, parse_text_block($', @indents.last + $1.size + 2)]]
+      when /\A\/\[\s*(.*?)\s*\]\s*\Z/
+        # HTML conditional comment
+        block = [:multi]
+        @stacks.last << [:html, :condcomment, $1, block]
+        @stacks << block
       when /\A\//
-        # Found a comment block.
-        if @line =~ %r{\A/!( ?)(.*)\Z}
-          # HTML comment
-          @stacks.last << [:html, :comment, [:slim, :text, parse_text_block($2, @indents.last + $1.size + 2)]]
-        elsif @line =~ %r{\A/\[\s*(.*?)\s*\]\s*\Z}
-          # HTML conditional comment
-          block = [:multi]
-          @stacks.last << [:html, :condcomment, $1, block]
-          @stacks << block
-        else
-          # Slim comment
-          parse_comment_block
-        end
-      when /\A([\|'])( ?)(.*)\Z/
+        # Slim comment
+        parse_comment_block
+      when /\A([\|'])( ?)/
         # Found a text block.
         trailing_ws = $1 == "'"
-        @stacks.last << [:slim, :text, parse_text_block($3, @indents.last + $2.size + 1)]
+        @stacks.last << [:slim, :text, parse_text_block($', @indents.last + $2.size + 1)]
         @stacks.last << [:static, ' '] if trailing_ws
       when /\A</
         # Inline html
