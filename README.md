@@ -100,6 +100,11 @@ Each following line that is indented greater than the backtick is copied over.
               This line will have two spaces in front of it.
                 And so on...
 
+You can also embed html in the text line
+
+    - articles.each do |a|
+      | <tr><td>#{a.name}</td><td>#{a.description}</td></tr>
+
 ### Text with trailing space `'`
 
 The single quote tells Slim to copy the line (similar to |), but makes sure that a single trailing space is appended.
