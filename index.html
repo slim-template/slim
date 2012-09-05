@@ -34,14 +34,17 @@
 <span class='tag'>doctype</span> html
 <span class='tag'>html</span>
   <span class='tag'>head</span>
-    <span class='tag'>title</span> Slim Core Example
+    <span class='tag'>title</span> Slim Examples
     <span class='tag'>meta</span> name=<span class='string'>"keywords"</span> content=<span class='string'>"template language"</span>
+    <span class='tag'>meta</span> name=<span class='string'>"author"</span> content=author
+    <span class='filter'>javascript:</span>
+      alert('Slim supports embedded javascript!')
 
   <span class='tag'>body</span>
     <span class='tag'>h1</span> Markup examples
 
-    <span class='tag'>div</span> id=<span class='string'>"content"</span> class=<span class='string'>"example1"</span>
-      <span class='tag'>p</span> Nest by indentation
+    <span class='tag'>#content</span>
+      <span class='tag'>p</span> This example shows you how a basic Slim file looks like.
 
       == <span class='keyword'>yield</span>
 
@@ -49,20 +52,16 @@
         <span class='tag'>table</span>
           - <span class='keyword'>for</span> item <span class='keyword'>in</span> items <span class='keyword'>do</span>
             <span class='tag'>tr</span>
-              <span class='tag'>td</span> = item.name
-              <span class='tag'>td</span> = item.price
+              <span class='tag'>td.name</span> = item.name
+              <span class='tag'>td.price</span> = item.price
       - <span class='keyword'>else</span>
         <span class='tag'>p</span>
          | No items found.  Please add some inventory.
             Thank you!
 
     <span class='tag'>div</span> id=<span class='string'>"footer"</span>
-      | Copyright &copy; 2010 Andrew Stone
-
-    = <span class='keyword'>render</span> <span class='string'>'tracking_code'</span>
-
-    <span class='filter'>javascript:</span>
-      $(content).do_something();
+      = <span class='keyword'>render</span> <span class='string'>'footer'</span>
+      | Copyright &copy; #{year} #{author}
           </pre>
         </code>
       </div>
