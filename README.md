@@ -109,6 +109,22 @@ You can also embed html in the text line
 
 The single quote tells Slim to copy the line (similar to |), but makes sure that a single trailing space is appended.
 
+### Inline html `<`
+
+You can write html tags directly in Slim which allows you to write your templates in a more html like style with closing tags or mix html and Slim style.
+
+    <html>
+      head
+        title Example
+      <body>
+        - if articles.empty?
+        - else
+          table
+            - articles.each do |a|
+              <tr><td>#{a.name}</td><td>#{a.description}</td></tr>
+      </body>
+    </html>
+
 ### Control code `-`
 
 The dash denotes control code.  Examples of control code are loops and conditionals. `end` is forbidden behind `-`. Blocks are defined only by indentation.

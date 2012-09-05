@@ -195,6 +195,12 @@ module Slim
         trailing_ws = $1 == "'"
         @stacks.last << [:slim, :text, parse_text_block($3, @indents.last + $2.size + 1)]
         @stacks.last << [:static, ' '] if trailing_ws
+      when /\A</
+        # Inline html
+        # @stacks.last << parse_text_block(@line, @indents.last + 1)
+        block = [:multi]
+        @stacks.last << [:multi, [:slim, :interpolate, @line], block]
+        @stacks << block
       when /\A-/
         # Found a code block.
         # We expect the line to be broken or the next line to be indented.

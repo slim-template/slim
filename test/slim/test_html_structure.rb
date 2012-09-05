@@ -576,4 +576,18 @@ h1 data-id="123" *hash This is my title
 
     assert_html '<h1 a="The letter a" b="The letter b" data-id="123">This is my title</h1>', source
   end
+
+  def test_html_line_indicator
+    source = %q{
+<html>
+  head
+    meta name="keywords" content=hello_world
+  - if true
+    <p>#{hello_world}</p>
+      span = hello_world
+</html>
+    }
+
+    assert_html '<html><head><meta content="Hello World from @env" name="keywords" /></head><p>Hello World from @env</p><span>Hello World from @env</span></html>', source
+  end
 end
