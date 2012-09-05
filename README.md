@@ -4,8 +4,6 @@
 
 Slim is a template language whose goal is to reduce the view syntax to the essential parts without becoming cryptic. It started as an exercise to see how much could be removed from a standard html template (<, >, closing tags, etc...). As more people took an interest in Slim, the functionality grew and so did the flexibility of the syntax.
 
-Slim uses [Temple](https://github.com/judofyr/temple) and [Tilt](https://github.com/rtomayko/tilt). If you want to learn how Slim works, you'll need to study these projects.
-
 ## Introduction
 
 ### What is Slim?
@@ -487,7 +485,7 @@ have to take a look at the Slim and Temple code for that.
 
 ### Logic-less mode
 
-Enable the logic-less plugin with
+Logic-less mode is inspired by mustache. You can enable the logic-less plugin with
 
     require 'slim/logic_less'
 
@@ -506,7 +504,22 @@ Enable the logic-less plugin with
 
 #### Inverted section
 
-### Translator
+### Translator/I18n
+
+The translator plugin provides automatic translation of the templates using Gettext, Fast-Gettext or Rails I18n. Static text
+in the template is replaced by the translated version.
+
+Example:
+
+    h1 Welcome to #{url}!
+
+Gettext translates the string from english to german where interpolations are replaced by %1, %2, ...
+
+    "Welcome to %1!" -> "Willkommen auf %1!"
+
+and renders as
+
+    <h1>Willkommen auf slim-lang.com!</h1>
 
 Enable the translator plugin with
 
@@ -556,6 +569,10 @@ The optional option hash can have to options which were documented in the sectio
 Rails generators are provided by [slim-rails](https://github.com/leogalmeida/slim-rails). slim-rails
 is not necessary to use Slim in Rails though. Just install Slim and add it to your Gemfile with `gem 'slim'`.
 Then just use the .slim extension and you're good to go.
+
+#### Streaming
+
+HTTP streaming is enabled enabled by default if you use a Rails version which supports it.
 
 ## Tools
 
