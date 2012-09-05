@@ -65,9 +65,10 @@ Here's a quick example to demonstrate what a Slim template looks like:
                 td.name = item.name
                 td.price = item.price
         - else
-          p No items found
+          p No items found Please add some inventory.
+            Thank you!
 
-        #footer
+        div id="footer"
           = render 'footer'
           | Copyright &copy; #{year} #{author}
 
