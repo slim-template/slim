@@ -11,11 +11,12 @@ A short list of the features...
 * Configurable shortcut tags (`#` for `div id` and `.` for `div class` in the default configuration)
 * Automatic HTML escaping and support for Rails' `html_safe?`
 * HTML style mode with closing tags
-* Logic-less mode similar to mustache, realized as plugin
+* Logic less mode similar to mustache, realized as plugin
 * Translator/I18n, realized as plugin
 * Highly configurable and extendable
 * High performance (Comparable to ERB)
 * Supported by all major frameworks (Rails, Sinatra, ...)
+* Streaming support in Rails
 
 ## Introduction
 
@@ -31,7 +32,7 @@ As more people have contributed to Slim, there have been syntax additions influe
 Slim uses [Temple](https://github.com/judofyr/temple) for parsing/compilation and is also integrated into [Tilt](https://github.com/rtomayko/tilt), so it can be used together with [Sinatra](https://github.com/sinatra/sinatra) or plain [Rack](https://github.com/rack/rack).
 
 The architecture of Temple is very flexible and allows the extension of the parsing and compilation process without monkey-patching. This is used
-by the logic-less plugin and the translator plugin which provides I18n.
+by the logic less plugin and the translator plugin which provides I18n.
 
 ### Why use Slim?
 
@@ -120,7 +121,7 @@ You can also embed html in the text line
 
 ### Text with trailing space `'`
 
-The single quote tells Slim to copy the line (similar to |), but makes sure that a single trailing space is appended.
+The single quote tells Slim to copy the line (similar to `|`), but makes sure that a single trailing space is appended.
 
 ### Inline html `<` (HTML style)
 
@@ -141,7 +142,7 @@ You can write html tags directly in Slim which allows you to write your template
 ### Control code `-`
 
 The dash denotes control code.  Examples of control code are loops and conditionals. `end` is forbidden behind `-`. Blocks are defined only by indentation.
-If your ruby code needs to use multiple lines, append a `\` at the end of the lines.
+If your ruby code needs to use multiple lines, append a backslash `\` at the end of the lines.
 
     body
       - if articles.empty?
@@ -149,7 +150,7 @@ If your ruby code needs to use multiple lines, append a `\` at the end of the li
 
 ### Dynamic output `=`
 
-The equal sign tells Slim it's a Ruby call that produces output to add to the buffer. If your ruby code needs to use multiple lines, append a `\` at the end of the lines, for example:
+The equal sign tells Slim it's a Ruby call that produces output to add to the buffer. If your ruby code needs to use multiple lines, append a backslash `\` at the end of the lines, for example:
 
     = javascript_include_tag \
        "jquery", \
@@ -183,12 +184,14 @@ Use the forward slash for code comments - anything after it won't get displayed 
 
 ### HTML comment `/!`
 
-Use the forward slash immediately followed by an exclamation mark for html comments (` <!-- --> `).
+Use the forward slash immediately followed by an exclamation mark for html comments (`<!-- ... -->`).
 
-### IE conditional comment `/![IE]`
+### IE conditional comment `/[...]`
 
-    /[ if IE ]
+    /[if IE]
         p Get a better browser.
+
+renders as
 
     <!--[if IE]><p>Get a better browser.</p><![endif]-->
 
@@ -368,6 +371,8 @@ The splat shortcut allows you turn a hash in to attribute/value pairs
     .card*{'data-url'=>place_path(place), 'data-id'=>place.id} = place.name
     .card *method_which_returns_hash = place.name
 
+renders as
+
     <div class="card" data-id="1234" data-url="/place/1234">Slim's house</div>
 
 #### ID shortcut `#` and class shortcut `.`
@@ -522,9 +527,9 @@ have to take a look at the Slim and Temple code for that.
 
 ## Plugins
 
-### Logic-less mode
+### Logic less mode
 
-Logic-less mode is inspired by mustache. Logic less mode uses a dictionary object
+Logic less mode is inspired by mustache. Logic less mode uses a dictionary object
 e.g. a recursive hash tree which contains the dynamic content.
 
 #### Conditional
@@ -565,21 +570,21 @@ If all the above fails, Slim will try to resolve the title reference in the same
 
 As you might have guessed, the article reference goes through the same steps against the dictionary. Instance variables are not allowed in the view code, but Slim will find and use them. Essentially, you're just using dropping the @ prefix in your template. Parameterized method calls are not allowed.
 
-#### Logic less support in Rails
+#### Logic less in Rails
 
 Install:
 
-$ gem install slim
+    $ gem install slim
 
 Require:
 
-gem 'slim', :require => 'slim/logic_less'
+    gem 'slim', :require => 'slim/logic_less'
 
-#### Logic less support in Sinatra
+#### Logic less in Sinatra
 
-Sinata has built-in support for Slim. All you have to do is require the logic-less Slim plugin. This can be done in your config.ru:
+Sinata has built-in support for Slim. All you have to do is require the logic less Slim plugin. This can be done in your config.ru:
 
-require 'slim/logic_less'
+    require 'slim/logic_less'
 
 You are then ready to rock!
 
@@ -640,20 +645,19 @@ The optional option hash can have to options which were documented in the sectio
 
 ### Sinatra
 
-<pre>
-    require 'sinatra'
-    require 'slim'
-    
-    get('/') { slim :index }
-    
-    __END__
-    @@ index
-    doctype html
-    html
-      head
-        title Sinatra With Slim
-      body
-        h1 Slim Is Fun!
+<pre>require 'sinatra'
+require 'slim'
+
+get('/') { slim :index }
+
+ __END__
+@@ index
+doctype html
+html
+  head
+    title Sinatra With Slim
+  body
+    h1 Slim Is Fun!
 </pre>
 
 ### Rails
@@ -680,7 +684,7 @@ Usage: slimrb [options]
     -c, --compile                    Compile only but do not run
     -r, --rails                      Generate rails compatible code (combine with -c)
     -t, --translator                 Enable translator plugin
-    -l, --logic-less                 Enable logic-less plugin
+    -l, --logic-less                 Enable logic less plugin
     -p, --pretty                     Produce pretty html
     -h, --help                       Show this message
     -v, --version                    Print version

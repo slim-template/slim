@@ -1,5 +1,5 @@
 module Slim
-  # Handle logic-less mode
+  # Handle logic less mode
   # This filter can be activated with the option "logic_less"
   # @api private
   class LogicLess < Filter

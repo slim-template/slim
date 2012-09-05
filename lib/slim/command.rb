@@ -49,7 +49,7 @@ module Slim
         @options[:translator] = true
       end
 
-      opts.on('-l', '--logic-less', :NONE, 'Enable logic-less plugin') do
+      opts.on('-l', '--logic-less', :NONE, 'Enable logic less plugin') do
         @options[:logic_less] = true
       end
 

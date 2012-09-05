@@ -1,6 +1,6 @@
 module Slim
   class LogicLess
-    # For logic-less mode, objects can be encased in the Wrapper class.
+    # For logic less mode, objects can be encased in the Wrapper class.
     # @api private
     class Wrapper
       attr_reader :value, :parent
