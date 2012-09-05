@@ -4,6 +4,19 @@
 
 Slim is a template language whose goal is to reduce the view syntax to the essential parts without becoming cryptic. It started as an exercise to see how much could be removed from a standard html template (<, >, closing tags, etc...). As more people took an interest in Slim, the functionality grew and so did the flexibility of the syntax.
 
+A short list of the features...
+
+* Short syntax without closing tags (Using indentation instead)
+* Embedded engines like Markdown and Textile
+* Configurable shortcut tags (`#` for `div id` and `.` for `div class` in the default configuration)
+* Automatic HTML escaping and support for Rails' `html_safe?`
+* HTML style mode with closing tags
+* Logic-less mode similar to mustache, realized as plugin
+* Translator/I18n, realized as plugin
+* Highly configurable and extendable
+* High performance (Comparable to ERB)
+* Supported by all major frameworks (Rails, Sinatra, ...)
+
 ## Introduction
 
 ### What is Slim?
@@ -109,7 +122,7 @@ You can also embed html in the text line
 
 The single quote tells Slim to copy the line (similar to |), but makes sure that a single trailing space is appended.
 
-### Inline html `<`
+### Inline html `<` (HTML style)
 
 You can write html tags directly in Slim which allows you to write your templates in a more html like style with closing tags or mix html and Slim style.
 
@@ -129,6 +142,10 @@ You can write html tags directly in Slim which allows you to write your template
 
 The dash denotes control code.  Examples of control code are loops and conditionals. `end` is forbidden behind `-`. Blocks are defined only by indentation.
 If your ruby code needs to use multiple lines, append a `\` at the end of the lines.
+
+    body
+      - if articles.empty?
+        | No inventory
 
 ### Dynamic output `=`
 
