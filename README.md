@@ -485,9 +485,61 @@ have to take a look at the Slim and Temple code for that.
 
 ### Logic-less mode
 
-Logic-less mode is inspired by mustache. You can enable the logic-less plugin with
+Logic-less mode is inspired by mustache. Logic less mode uses a dictionary object
+e.g. a recursive hash tree which contains the dynamic content.
 
-    require 'slim/logic_less'
+#### Conditional
+
+If the method is not false or empty?, the content will show
+
+    - article
+      h1 = title
+
+#### Inverted conditional
+
+If the method is false or empty?, the content will show
+
+    -! article
+      p Sorry, article not found
+
+#### Iteration
+
+#### Wrapped dictionary - Resolution order
+
+Example code:
+
+    - article
+      h1 = title
+
+In wrapped dictionary acccess mode (the default, see the options), the dictionary object is accessed in the following order.
+
+1. If article.respond_to?(:title), Slim will execute article.send(:title)
+2. If article.respond_to?(:has_key?) and article.has_key?(:title), Slim will execute article[:title]
+3. If article.instance_variable_defined?(@title),Slim will execute article.instance_variable_get @title
+
+If all the above fails, Slim will try to resolve the title reference in the same order against the parent object. In this example, the parent would be the dictionary object you are rendering the template against.
+
+As you might have guessed, the article reference goes through the same steps against the dictionary. Instance variables are not allowed in the view code, but Slim will find and use them. Essentially, you're just using dropping the @ prefix in your template. Parameterized method calls are not allowed.
+
+#### Logic less support in Rails
+
+Install:
+
+$ gem install slim
+
+Require:
+
+gem 'slim', :require => 'slim/logic_less'
+
+#### Logic less support in Sinatra
+
+Sinata has built-in support for Slim. All you have to do is require the logic-less Slim plugin. This can be done in your config.ru:
+
+require 'slim/logic_less'
+
+You are then ready to rock!
+
+#### Options
 
 <table>
 <thead style="font-weight:bold"><tr><td>Type</td><td>Name</td><td>Default</td><td>Purpose</td></tr></thead>
@@ -497,12 +549,6 @@ Logic-less mode is inspired by mustache. You can enable the logic-less plugin wi
 <tr><td>Symbol</td><td>:dictionary_access</td><td>:wrapped</td><td>Dictionary access mode (:string, :symbol, :wrapped)</td></tr>
 </tbody>
 </table>
-
-#### Variable output
-
-#### Section
-
-#### Inverted section
 
 ### Translator/I18n
 
@@ -524,6 +570,8 @@ and renders as
 Enable the translator plugin with
 
     require 'slim/translator'
+
+#### Options
 
 <table>
 <thead style="font-weight:bold"><tr><td>Type</td><td>Name</td><td>Default</td><td>Purpose</td></tr></thead>
