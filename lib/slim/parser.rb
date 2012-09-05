@@ -1,9 +1,7 @@
 module Slim
   # Parses Slim code and transforms it to a Temple expression
   # @api private
-  class Parser
-    include Temple::Mixins::Options
-
+  class Parser < Temple::Parser
     set_default_options :tabsize => 4,
                         :encoding => 'utf-8',
                         :shortcut => {
@@ -33,15 +31,15 @@ module Slim
       end
     end
 
-    def initialize(options = {})
+    def initialize(o = {})
       super
-      @tab = ' ' * @options[:tabsize]
+      @tab = ' ' * options[:tabsize]
       @shortcut = {}
-      @options[:shortcut].each do |k,v|
+      options[:shortcut].each do |k,v|
         @shortcut[k] = if v =~ /\A([^\s]+)\s+([^\s]+)\Z/
                          [$1, $2]
                        else
-                         [@options[:default_tag], v]
+                         [options[:default_tag], v]
                        end
       end
       shortcut = "[#{Regexp.escape @shortcut.keys.join}]"
