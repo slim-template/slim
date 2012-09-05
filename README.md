@@ -529,7 +529,7 @@ have to take a look at the Slim and Temple code for that.
 
 ### Logic less mode
 
-Logic less mode is inspired by mustache. Logic less mode uses a dictionary object
+<a name="logicless">Logic less mode</a> is inspired by mustache. Logic less mode uses a dictionary object
 e.g. a recursive hash tree which contains the dynamic content.
 
 #### Conditional
