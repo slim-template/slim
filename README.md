@@ -491,19 +491,24 @@ e.g. a recursive hash tree which contains the dynamic content.
 
 #### Conditional
 
-If the method is not false or empty?, the content will show
+If the object is not false or empty?, the content will show
 
     - article
       h1 = title
 
 #### Inverted conditional
 
-If the method is false or empty?, the content will show
+If the object is false or empty?, the content will show
 
     -! article
       p Sorry, article not found
 
 #### Iteration
+
+If the object is an array, the section will iterate
+
+    - articles
+      tr: td = title
 
 #### Wrapped dictionary - Resolution order
 
