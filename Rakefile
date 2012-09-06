@@ -15,20 +15,20 @@ task 'test' => %w(test:core test:logic_less test:translator)
 
 namespace 'test' do
   Rake::TestTask.new('core') do |t|
-    t.libs << 'lib' << 'test/slim'
-    t.test_files = FileList['test/slim/test_*.rb']
+    t.libs << 'lib' << 'test/core'
+    t.test_files = FileList['test/core/test_*.rb']
     t.verbose = true
   end
 
   Rake::TestTask.new('logic_less') do |t|
-    t.libs << 'lib' << 'test/slim'
-    t.test_files = FileList['test/slim/logic_less/test_*.rb']
+    t.libs << 'lib' << 'test/core'
+    t.test_files = FileList['test/logic_less/test_*.rb']
     t.verbose = true
   end
 
   Rake::TestTask.new('translator') do |t|
-    t.libs << 'lib' << 'test/slim'
-    t.test_files = FileList['test/slim/translator/test_*.rb']
+    t.libs << 'lib' << 'test/core'
+    t.test_files = FileList['test/translator/test_*.rb']
     t.verbose = true
   end
 
