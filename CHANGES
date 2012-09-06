@@ -2,6 +2,7 @@ master
 
   * Support inline html at the beginning of a line. No pipe symbol is | necessary.
     It is even possible to wrap other Slim syntax in such a html block.
+  * Escape quoted attributes by default, use == if you don't want that.
 
 1.3.0
 

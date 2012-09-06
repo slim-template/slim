@@ -37,4 +37,20 @@ p class="#{x}" test #{content}
 }
     assert_html 'Hello World from @env escaped &amp; Hello World from @env', source
   end
+
+  def test_html_quoted_attr_escape
+    source = %q{
+p id="&" class=="&amp;"
+}
+
+    assert_html '<p class="&amp;" id="&amp;"></p>', source
+  end
+
+  def test_html_ruby_attr_escape
+    source = %q{
+p id=('&'.to_s) class==('&amp;'.to_s)
+}
+
+    assert_html '<p class="&amp;" id="&amp;"></p>', source
+  end
 end

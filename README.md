@@ -337,6 +337,10 @@ You can use text interpolation in the quoted attributes:
 
     a href="http://#{url}" Goto the #{url}
 
+The attribute value will be escaped by default. Use == if you want to disable escaping in the attribute.
+
+    a href=="&amp;"
+
 #### Ruby attributes
 
 Write the ruby code directly after the `=`. If the code contains spaces you have to wrap
@@ -349,7 +353,9 @@ the code into parentheses `(...)`, `{...}` or `[...]`. The code in the parenthes
             a href=user_action(user, :edit) Edit #{user.name}
             a href={path_to_user user} = user.name
 
-Use == if you want to disable escaping in the attribute.
+The attribute value will be escaped by default. Use == if you want to disable escaping in the attribute.
+
+    a href==action_path(:start)
 
 #### Boolean attributes
 

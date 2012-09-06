@@ -80,8 +80,8 @@ module Slim
 
     DELIMITER_REGEX = /\A[#{Regexp.escape DELIMITERS.keys.join}]/
     ATTR_NAME = '\A\s*(\w[:\w-]*)'
-    QUOTED_ATTR_REGEX = /#{ATTR_NAME}=("|')/
-    CODE_ATTR_REGEX = /#{ATTR_NAME}=/
+    QUOTED_ATTR_REGEX = /#{ATTR_NAME}=(=?)("|')/
+    CODE_ATTR_REGEX = /#{ATTR_NAME}=(=?)/
 
     def reset(lines = nil, stacks = nil)
       # Since you can indent however you like in Slim, we need to keep a list
@@ -357,13 +357,12 @@ module Slim
         when QUOTED_ATTR_REGEX
           # Value is quoted (static)
           @line = $'
-          attributes << [:html, :attr, $1, [:slim, :interpolate, parse_quoted_attribute($2)]]
+          attributes << [:html, :attr, $1, [:escape, $2.empty?, [:slim, :interpolate, parse_quoted_attribute($3)]]]
         when CODE_ATTR_REGEX
           # Value is ruby code
           @line = $'
-          escape = @line[0] != ?=
-          @line.slice!(0) unless escape
           name = $1
+          escape = $2.empty?
           value = parse_ruby_code(delimiter)
           # Remove attribute wrapper which doesn't belong to the ruby code
           # e.g id=[hash[:a] + hash[:b]]
