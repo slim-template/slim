@@ -30,11 +30,7 @@ module Slim
     end
 
     def call(exp)
-      if options[:tr]
-        super
-      else
-        exp
-      end
+      options[:tr] ? super : exp
     end
 
     def initialize(opts = {})
