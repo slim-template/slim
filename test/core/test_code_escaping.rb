@@ -6,7 +6,7 @@ class TestSlimCodeEscaping < TestSlim
 p = evil_method
 }
 
-    assert_html '<p>&lt;script&gt;do_something_evil();&lt;&#47;script&gt;</p>', source
+    assert_html '<p>&lt;script&gt;do_something_evil();&lt;/script&gt;</p>', source
   end
 
   def test_render_without_html_safe
@@ -14,7 +14,7 @@ p = evil_method
 p = "<strong>Hello World\\n, meet \\"Slim\\"</strong>."
 }
 
-    assert_html "<p>&lt;strong&gt;Hello World\n, meet \&quot;Slim\&quot;&lt;&#47;strong&gt;.</p>", source
+    assert_html "<p>&lt;strong&gt;Hello World\n, meet \&quot;Slim\&quot;&lt;/strong&gt;.</p>", source
   end
 
   def test_render_with_html_safe_false
@@ -22,7 +22,7 @@ p = "<strong>Hello World\\n, meet \\"Slim\\"</strong>."
 p = HtmlUnsafeString.new("<strong>Hello World\\n, meet \\"Slim\\"</strong>.")
 }
 
-    assert_html "<p>&lt;strong&gt;Hello World\n, meet \&quot;Slim\&quot;&lt;&#47;strong&gt;.</p>", source, :use_html_safe => true
+    assert_html "<p>&lt;strong&gt;Hello World\n, meet \&quot;Slim\&quot;&lt;/strong&gt;.</p>", source, :use_html_safe => true
   end
 
   def test_render_with_html_safe_true
@@ -39,7 +39,7 @@ p = HtmlSafeString.new("<strong>Hello World\\n, meet \\"Slim\\"</strong>.")
 == "<p>World</p>"
 }
 
-    assert_html "&lt;p&gt;Hello&lt;&#47;p&gt;<p>World</p>", source
+    assert_html "&lt;p&gt;Hello&lt;/p&gt;<p>World</p>", source
   end
 
   def test_render_with_disable_escape_true

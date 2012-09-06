@@ -59,7 +59,7 @@ p Message: #{message('hello', "user #{output_number}")}
 | #{evil_method}
 }
 
-    assert_html '&lt;script&gt;do_something_evil();&lt;&#47;script&gt;', source
+    assert_html '&lt;script&gt;do_something_evil();&lt;/script&gt;', source
   end
 
   def test_interpolation_without_escaping
@@ -74,6 +74,6 @@ p Message: #{message('hello', "user #{output_number}")}
     source = %q{
 | #{(evil_method)}
 }
-    assert_html '&lt;script&gt;do_something_evil();&lt;&#47;script&gt;', source
+    assert_html '&lt;script&gt;do_something_evil();&lt;/script&gt;', source
   end
 end

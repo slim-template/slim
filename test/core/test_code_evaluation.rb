@@ -71,7 +71,7 @@ p id=@var
 form action=action_path(:page, :save) method='post'
 }
 
-    assert_html '<form action="&#47;action-page-save" method="post"></form>', source
+    assert_html '<form action="/action-page-save" method="post"></form>', source
   end
 
   def test_ruby_attribute_with_unbalanced_delimiters
@@ -79,7 +79,7 @@ form action=action_path(:page, :save) method='post'
 div crazy=action_path('[') id="crazy_delimiters"
 }
 
-    assert_html '<div crazy="&#47;action-[" id="crazy_delimiters"></div>', source
+    assert_html '<div crazy="/action-[" id="crazy_delimiters"></div>', source
   end
 
   def test_method_call_in_delimited_attribute_without_quotes
@@ -87,7 +87,7 @@ div crazy=action_path('[') id="crazy_delimiters"
 form(action=action_path(:page, :save) method='post')
 }
 
-    assert_html '<form action="&#47;action-page-save" method="post"></form>', source
+    assert_html '<form action="/action-page-save" method="post"></form>', source
   end
 
   def test_method_call_in_delimited_attribute_without_quotes2
@@ -95,7 +95,7 @@ form(action=action_path(:page, :save) method='post')
 form(method='post' action=action_path(:page, :save))
 }
 
-    assert_html '<form action="&#47;action-page-save" method="post"></form>', source
+    assert_html '<form action="/action-page-save" method="post"></form>', source
   end
 
   def test_bypassing_escape_in_attribute
