@@ -11,7 +11,7 @@ A short list of the features...
 * Configurable shortcut tags (`#` for `div id` and `.` for `div class` in the default configuration)
 * Automatic HTML escaping and support for Rails' `html_safe?`
 * HTML style mode with closing tags
-* Logic less mode similar to mustache, realized as plugin
+* Logic less mode similar to Mustache, realized as plugin
 * Translator/I18n, realized as plugin
 * Highly configurable and extendable
 * High performance (Comparable to ERB)
@@ -529,7 +529,7 @@ have to take a look at the Slim and Temple code for that.
 
 ### Logic less mode
 
-<a name="logicless">Logic less mode</a> is inspired by mustache. Logic less mode uses a dictionary object
+<a name="logicless">Logic less mode</a> is inspired by [Mustache](https://github.com/defunkt/mustache). Logic less mode uses a dictionary object
 e.g. a recursive hash tree which contains the dynamic content.
 
 #### Conditional
