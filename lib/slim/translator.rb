@@ -37,7 +37,7 @@ module Slim
       end
     end
 
-    def initialize(opts)
+    def initialize(opts = {})
       super
       case options[:tr_mode]
       when :static
@@ -56,7 +56,7 @@ module Slim
     private
 
     class StaticTranslator < Filter
-      def initialize(opts)
+      def initialize(opts = {})
         super
         @translate = eval("proc {|string| #{options[:tr_fn]}(string) }")
       end

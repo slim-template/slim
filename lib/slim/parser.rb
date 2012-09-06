@@ -31,7 +31,7 @@ module Slim
       end
     end
 
-    def initialize(o = {})
+    def initialize(opts = {})
       super
       @tab = ' ' * options[:tabsize]
       @shortcut = {}
