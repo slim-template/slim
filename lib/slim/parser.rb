@@ -70,7 +70,7 @@ module Slim
       result
     end
 
-    private
+    protected
 
     DELIMITERS = {
       '(' => ')',
@@ -390,11 +390,8 @@ module Slim
 
             # Attributes span multiple lines
             @stacks.last << [:newline]
-            orig_line, lineno = @orig_line, @lineno
-            next_line || syntax_error!("Expected closing delimiter #{delimiter}",
-                                       :orig_line => orig_line,
-                                       :lineno => lineno,
-                                       :column => orig_line.size)
+            syntax_error!("Expected closing delimiter #{delimiter}") if @lines.empty?
+            next_line
           end
         end
       end
@@ -448,14 +445,9 @@ module Slim
     end
 
     # Helper for raising exceptions
-    def syntax_error!(message, args = {})
-      args[:orig_line] ||= @orig_line
-      args[:line] ||= @line
-      args[:lineno] ||= @lineno
-      args[:column] ||= args[:orig_line] && args[:line] ?
-                        args[:orig_line].size - args[:line].size : 0
-      raise SyntaxError.new(message, options[:file],
-                            args[:orig_line], args[:lineno], args[:column])
+    def syntax_error!(message)
+      raise SyntaxError.new(message, options[:file], @orig_line, @lineno,
+                            @orig_line && @line ? @orig_line.size - @line.size : 0)
     end
   end
 end
