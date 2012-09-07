@@ -76,6 +76,15 @@ p
     assert_syntax_error "Expected closing delimiter )\n  (__TEMPLATE__), Line 3\n    img(src=\"img.jpg\" title={title}\n                                   ^\n", source
   end
 
+  def test_expected_closing_quote
+    source = %q{
+p
+  img(src="img.jpg
+}
+
+    assert_syntax_error "Expected closing quote \"\n  (__TEMPLATE__), Line 3\n    img(src=\"img.jpg\n                    ^\n", source
+  end
+
   def test_expected_closing_attribute_delimiter
     source = %q{
 p

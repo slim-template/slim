@@ -439,7 +439,9 @@ module Slim
       end
 
       syntax_error!("Expected closing brace }") if count != 0
+      syntax_error!("Expected closing quote #{quote}") if @line[0] != quote[0]
       @line.slice!(0)
+
       value
     end
 
