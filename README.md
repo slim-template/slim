@@ -519,7 +519,7 @@ The following options are exposed by the `Slim::Engine` and can be set with `Sli
 <tr><td>String</td><td>:attr_wrapper</td><td>'"'</td><td>Character to wrap attributes in html (can be ' or ")</td></tr>
 <tr><td>Hash</td><td>:attr_delimiter</td><td>\{'class' => ' '}</td><td>Joining character used if multiple html attributes are supplied (e.g. class="class1 class2")</td></tr>
 <tr><td>Boolean</td><td>:sort_attrs</td><td>true</td><td>Sort attributes by name</td></tr>
-<tr><td>Boolean</td><td>:remove_empty_attrs</td><td>true</td><td>Remove attributes with empty value</td></tr>
+<tr><td>Boolean</td><td>:remove_empty_attrs</td><td>true</td><td>Remove dynamic attributes with empty value (Static/quoted attributes are unaffected)</td></tr>
 <tr><td>Boolean</td><td>:pretty</td><td>false</td><td>Pretty html indenting <b>(This is slower!)</b></td></tr>
 <tr><td>String</td><td>:indent</td><td>'  '</td><td>Indentation string</td></tr>
 <tr><td>Boolean</td><td>:streaming</td><td>false (true in Rails > 3.1)</td><td>Enable output streaming</td></tr>

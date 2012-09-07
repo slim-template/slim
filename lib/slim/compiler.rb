@@ -165,9 +165,8 @@ module Slim
         end
       end
 
-      merger << [:block, "#{hash}.keys.each do |#{name}|",
+      merger << [:block, "#{hash}.each do |#{name},#{value}|",
                  [:multi,
-                  [:code, "#{value} = #{hash}[#{name}]"],
                   [:code, "#{value}.flatten!"],
                   [:block, "#{value}.map! do |#{tmp}|",
                    [:case, tmp,
@@ -176,7 +175,8 @@ module Slim
                     [:else, [:code, tmp]]]],
                   [:if, "#{value}.size > 1 && !#{@attr_delimiter}[#{name}]",
                    [:code, %{raise("Multiple #\{#{name}\} attributes specified")}]],
-                  [:code, "#{hash}[#{name}] = #{value}.compact.join(#{@attr_delimiter}[#{name}].to_s)"]]]
+                  [:code, "#{value}.compact!"],
+                  [:code, "#{hash}[#{name}] = #{value}.join(#{@attr_delimiter}[#{name}].to_s)"]]]
 
       attr = [:multi,
               [:static, ' '],
