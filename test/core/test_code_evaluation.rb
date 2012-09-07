@@ -216,6 +216,13 @@ p id=(false ? 'notshown' : 'shown') = output_number
     assert_html '<div class="alpha beta gamma">Test it</div>', source
   end
 
+  def test_class_attribute_merging_with_empty_static
+    source = %{
+.alpha class="beta" class="" class="gamma" Test it
+}
+    assert_html '<div class="alpha beta gamma">Test it</div>', source
+  end
+
   def test_id_attribute_merging
     source = %{
 #alpha id="beta" Test it
