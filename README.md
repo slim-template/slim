@@ -740,8 +740,8 @@ There are plugins for various text editors (including the most important ones - 
 ### Benchmarks
 
   *The benchmarks demonstrate that Slim in production mode
-   is nearly as fast as ERB. So if you choose not to use Slim it
-   is not due to its speed.*
+   is nearly as fast as Erubis (which is the fastest template engine).
+   So if you choose not to use Slim it is not due to its speed.*
 
 Run the benchmarks with `rake bench`. You can add the option `slow` to
 run the slow parsing benchmark which needs more time. You can also increase the number of iterations.
@@ -750,38 +750,39 @@ run the slow parsing benchmark which needs more time. You can also increase the 
 
 <pre>
 Linux + Ruby 1.9.3, 1000 iterations
+
                       user     system      total        real
-(1) erb           0.020000   0.000000   0.020000 (  0.016618)
-(1) erubis        0.010000   0.000000   0.010000 (  0.013974)
-(1) fast erubis   0.010000   0.000000   0.010000 (  0.014625)
-(1) temple erb    0.030000   0.000000   0.030000 (  0.024930)
-(1) slim pretty   0.030000   0.000000   0.030000 (  0.030838)
-(1) slim ugly     0.020000   0.000000   0.020000 (  0.021263)
-(1) haml pretty   0.120000   0.000000   0.120000 (  0.121439)
-(1) haml ugly     0.110000   0.000000   0.110000 (  0.105082)
-(2) erb           0.030000   0.000000   0.030000 (  0.034145)
-(2) erubis        0.020000   0.000000   0.020000 (  0.022493)
-(2) temple erb    0.040000   0.000000   0.040000 (  0.034921)
-(2) slim pretty   0.040000   0.000000   0.040000 (  0.041750)
-(2) slim ugly     0.030000   0.000000   0.030000 (  0.030792)
-(2) haml pretty   0.140000   0.000000   0.140000 (  0.144159)
-(2) haml ugly     0.130000   0.000000   0.130000 (  0.129690)
-(3) erb           0.140000   0.000000   0.140000 (  0.140154)
-(3) erubis        0.110000   0.000000   0.110000 (  0.110870)
-(3) fast erubis   0.100000   0.000000   0.100000 (  0.098940)
-(3) temple erb    0.040000   0.000000   0.040000 (  0.036024)
-(3) slim pretty   0.040000   0.000000   0.040000 (  0.043326)
-(3) slim ugly     0.040000   0.000000   0.040000 (  0.031623)
-(3) haml pretty   0.310000   0.000000   0.310000 (  0.317270)
-(3) haml ugly     0.250000   0.000000   0.250000 (  0.256257)
-(4) erb           0.350000   0.000000   0.350000 (  0.352818)
-(4) erubis        0.310000   0.000000   0.310000 (  0.308558)
-(4) fast erubis   0.310000   0.000000   0.310000 (  0.308920)
-(4) temple erb    0.920000   0.000000   0.920000 (  0.920607)
-(4) slim pretty   3.510000   0.000000   3.510000 (  3.513418)
-(4) slim ugly     2.940000   0.000000   2.940000 (  2.944823)
-(4) haml pretty   2.320000   0.000000   2.320000 (  2.321830)
-(4) haml ugly     2.180000   0.000000   2.180000 (  2.179788)
+(1) erb           0.020000   0.000000   0.020000 (  0.017383)
+(1) erubis        0.020000   0.000000   0.020000 (  0.015048)
+(1) fast erubis   0.020000   0.000000   0.020000 (  0.015372) <===
+(1) temple erb    0.030000   0.000000   0.030000 (  0.026239)
+(1) slim pretty   0.030000   0.000000   0.030000 (  0.031463)
+(1) slim ugly     0.020000   0.000000   0.020000 (  0.018868) <===
+(1) haml pretty   0.130000   0.000000   0.130000 (  0.122521)
+(1) haml ugly     0.110000   0.000000   0.110000 (  0.106640)
+(2) erb           0.030000   0.000000   0.030000 (  0.035520)
+(2) erubis        0.020000   0.000000   0.020000 (  0.023070)
+(2) temple erb    0.040000   0.000000   0.040000 (  0.036514)
+(2) slim pretty   0.040000   0.000000   0.040000 (  0.040086)
+(2) slim ugly     0.030000   0.000000   0.030000 (  0.028461)
+(2) haml pretty   0.150000   0.000000   0.150000 (  0.145618)
+(2) haml ugly     0.130000   0.000000   0.130000 (  0.129492)
+(3) erb           0.140000   0.000000   0.140000 (  0.134953)
+(3) erubis        0.120000   0.000000   0.120000 (  0.119723)
+(3) fast erubis   0.100000   0.000000   0.100000 (  0.097456)
+(3) temple erb    0.040000   0.000000   0.040000 (  0.035916)
+(3) slim pretty   0.040000   0.000000   0.040000 (  0.039626)
+(3) slim ugly     0.030000   0.000000   0.030000 (  0.027827)
+(3) haml pretty   0.310000   0.000000   0.310000 (  0.306664)
+(3) haml ugly     0.250000   0.000000   0.250000 (  0.248742)
+(4) erb           0.350000   0.000000   0.350000 (  0.350719)
+(4) erubis        0.310000   0.000000   0.310000 (  0.304832)
+(4) fast erubis   0.300000   0.000000   0.300000 (  0.303070)
+(4) temple erb    0.910000   0.000000   0.910000 (  0.911745)
+(4) slim pretty   3.410000   0.000000   3.410000 (  3.413267)
+(4) slim ugly     2.880000   0.000000   2.880000 (  2.885265)
+(4) haml pretty   2.280000   0.000000   2.280000 (  2.292623)
+(4) haml ugly     2.170000   0.000000   2.170000 (  2.169292)
 
 (1) Compiled benchmark. Template is parsed before the benchmark and
     generated ruby code is compiled into a method.
