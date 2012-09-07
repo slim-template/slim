@@ -9,7 +9,6 @@ module Slim
                         :sort_attrs => true,
                         :attr_wrapper => '"',
                         :attr_delimiter => {'class' => ' '},
-                        :remove_empty_attrs => true,
                         :generator => Temple::Generators::ArrayBuffer,
                         :default_tag => 'div'
 
@@ -17,10 +16,11 @@ module Slim
     use Slim::EmbeddedEngine, :enable_engines, :disable_engines, :pretty
     use Slim::Interpolation
     use Slim::EndInserter
-    use Slim::Compiler, :disable_capture, :attr_delimiter, :attr_wrapper, :sort_attrs, :remove_empty_attrs, :default_tag
-    html :AttributeMerger, :attr_delimiter
+    use Slim::ControlStructures, :disable_capture
+    use Slim::SplatAttributes, :attr_delimiter, :attr_wrapper, :sort_attrs, :default_tag
     html :AttributeSorter, :sort_attrs
-    html :AttributeRemover, :remove_empty_attrs
+    html :AttributeMerger, :attr_delimiter
+    use Slim::BooleanAttributes, :attr_delimiter
     html :Pretty, :format, :attr_wrapper, :pretty, :indent
     filter :Escapable, :use_html_safe, :disable_escape
     filter :ControlFlow

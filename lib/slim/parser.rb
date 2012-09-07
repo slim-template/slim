@@ -290,7 +290,7 @@ module Slim
     end
 
     def parse_tag(tag)
-      tag = [:slim, :tag, @shortcut[tag] ? @shortcut[tag][0] : tag, parse_attributes]
+      tag = [:html, :tag, @shortcut[tag] ? @shortcut[tag][0] : tag, parse_attributes]
       @stacks.last << tag
 
       case @line
@@ -326,7 +326,7 @@ module Slim
     end
 
     def parse_attributes
-      attributes = [:slim, :attrs]
+      attributes = [:html, :attrs]
 
       # Find any shortcut attributes
       while @line =~ @shortcut_regex
@@ -369,7 +369,7 @@ module Slim
           value = value[1..-2] if value =~ DELIMITER_REGEX &&
             DELIMITERS[$&] == value[-1, 1]
           syntax_error!('Invalid empty attribute') if value.empty?
-          attributes << [:slim, :attr, name, escape, value]
+          attributes << [:html, :attr, name, [:slim, :attrvalue, name, escape, value]]
         else
           break unless delimiter
 
@@ -377,7 +377,7 @@ module Slim
           when boolean_attr_regex
             # Boolean attribute
             @line = $'
-            attributes << [:slim, :attr, $1, false, 'true']
+            attributes << [:html, :attr, $1, [:slim, :attrvalue, $1, false, 'true']]
           when end_regex
             # Find ending delimiter
             @line = $'

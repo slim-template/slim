@@ -293,10 +293,10 @@ p(id="marvin" class="" data-info="Illudium Q-36")= output_number
 
   def test_dynamic_empty_attribute
     source = %q{
-p(id="marvin" class=nil other_empty=("".to_s) data-info="Illudium Q-36")= output_number
+p(id="marvin" class=nil nonempty=("".to_s) data-info="Illudium Q-36")= output_number
 }
 
-    assert_html '<p data-info="Illudium Q-36" id="marvin">1337</p>', source
+    assert_html '<p data-info="Illudium Q-36" id="marvin" nonempty="">1337</p>', source
   end
 
   def test_closed_tag
@@ -508,8 +508,7 @@ h1 *hash This is my title
 *{:tag => '', :id => 'test'} This is my title
 }
 
-    assert_html '<div id="test">This is my title</div>', source, :remove_empty_attrs => true
-    assert_html '<div id="test">This is my title</div>', source, :remove_empty_attrs => false
+    assert_html '<div id="test">This is my title</div>', source
   end
 
   def test_closed_splat_tag
@@ -554,11 +553,10 @@ h1 *hash This is my title
 
   def test_splat_with_boolean_attribute
     source = %q{
-*{:disabled => true, :empty1 => false, :empty2 => '', :empty3 => nil} This is my title
+*{:disabled => true, :empty1 => false, :nonempty => '', :empty2 => nil} This is my title
 }
 
-    assert_html '<div disabled="disabled">This is my title</div>', source
-    assert_html '<div disabled="disabled" empty1="" empty2="" empty3="">This is my title</div>', source, :remove_empty_attrs => false
+    assert_html '<div disabled="disabled" nonempty="">This is my title</div>', source
   end
 
   def test_splat_merging_with_arrays
@@ -575,6 +573,17 @@ h1 data-id="123" *hash This is my title
 }
 
     assert_html '<h1 a="The letter a" b="The letter b" data-id="123">This is my title</h1>', source
+  end
+
+  def test_attribute_merging
+    source = %q{
+a class=true class=false
+a class=false *{:class=>true}
+a class=true
+a class=false
+}
+
+    assert_html '<a class="true false"></a><a class="false true"></a><a class="class"></a><a></a>', source
   end
 
   def test_html_line_indicator

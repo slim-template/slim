@@ -31,11 +31,5 @@ module Slim
     def on_slim_attrs(*attrs)
       [:slim, :attrs, *attrs.map {|a| compile(a) }]
     end
-
-    # Pass-through handler
-    def on_slim_tag(name, attrs, content = nil)
-      tag = [:slim, :tag, name, compile(attrs)]
-      content ? (tag << compile(content)) : tag
-    end
   end
 end
