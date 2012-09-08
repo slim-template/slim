@@ -369,7 +369,7 @@ module Slim
           value = value[1..-2] if value =~ DELIMITER_REGEX &&
             DELIMITERS[$&] == value[-1, 1]
           syntax_error!('Invalid empty attribute') if value.empty?
-          attributes << [:html, :attr, name, [:slim, :attrvalue, name, escape, value]]
+          attributes << [:html, :attr, name, [:slim, :attrvalue, escape, value]]
         else
           break unless delimiter
 
@@ -377,7 +377,7 @@ module Slim
           when boolean_attr_regex
             # Boolean attribute
             @line = $'
-            attributes << [:html, :attr, $1, [:slim, :attrvalue, $1, false, 'true']]
+            attributes << [:html, :attr, $1, [:slim, :attrvalue, false, 'true']]
           when end_regex
             # Find ending delimiter
             @line = $'

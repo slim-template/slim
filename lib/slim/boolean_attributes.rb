@@ -15,10 +15,13 @@ module Slim
     # @param [String] code Ruby code
     # @return [Array] Compiled temple expression
     def on_html_attr(name, value)
-      return super unless value[0] == :slim && value[1] == :attrvalue
+      unless value[0] == :slim && value[1] == :attrvalue
+        @attr = name
+        return super
+      end
 
-      escape = value[3]
-      code = value[4]
+      escape = value[2]
+      code = value[3]
       case code
       when 'true'
         [:html, :attr, name, [:static, name]]
@@ -49,13 +52,13 @@ module Slim
     # @param [Boolean] escape Escape html
     # @param [String] code Ruby code
     # @return [Array] Compiled temple expression
-    def on_slim_attrvalue(name, escape, code)
+    def on_slim_attrvalue(escape, code)
       tmp = unique_name
       [:multi,
        [:code, "#{tmp} = #{code}"],
        [:escape, escape,
         [:dynamic,
-         if delimiter = options[:attr_delimiter][name]
+         if delimiter = options[:attr_delimiter][@attr]
            "Array === #{tmp} ? #{tmp}.flatten.compact.join(#{delimiter.inspect}) : #{tmp}"
          else
            tmp
