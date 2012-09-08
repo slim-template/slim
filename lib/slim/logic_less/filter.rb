@@ -3,9 +3,9 @@ module Slim
   # This filter can be activated with the option "logic_less"
   # @api private
   class LogicLess < Filter
-    set_default_options :logic_less => true,
-                        :dictionary => 'self',
-                        :dictionary_access => :wrapped # :symbol, :string, :wrapped
+    define_options :logic_less => true,
+                   :dictionary => 'self',
+                   :dictionary_access => :wrapped # :symbol, :string, :wrapped
 
     def initialize(opts = {})
       super

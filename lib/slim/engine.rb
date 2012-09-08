@@ -4,13 +4,13 @@ module Slim
   class Engine < Temple::Engine
     # This overwrites some Temple default options or sets default options for Slim specific filters.
     # It is recommended to set the default settings only once in the code and avoid duplication. Only use
-    # `set_default_options` when you have to override some default settings.
-    set_default_options :pretty => false,
-                        :sort_attrs => true,
-                        :attr_wrapper => '"',
-                        :attr_delimiter => {'class' => ' '},
-                        :generator => Temple::Generators::ArrayBuffer,
-                        :default_tag => 'div'
+    # `define_options` when you have to override some default settings.
+    define_options :pretty => false,
+                   :sort_attrs => true,
+                   :attr_wrapper => '"',
+                   :attr_delimiter => {'class' => ' '},
+                   :generator => Temple::Generators::ArrayBuffer,
+                   :default_tag => 'div'
 
     use Slim::Parser, :file, :tabsize, :encoding, :shortcut, :default_tag
     use Slim::EmbeddedEngine, :enable_engines, :disable_engines, :pretty
@@ -27,6 +27,6 @@ module Slim
     filter :MultiFlattener
     use(:Optimizer) { (options[:streaming] ? Temple::Filters::StaticMerger :
                        Temple::Filters::DynamicInliner).new }
-    use(:Generator) { options[:generator].new(options) }
+    use(:Generator) { options[:generator].new }
   end
 end

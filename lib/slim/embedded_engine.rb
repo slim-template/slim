@@ -70,14 +70,17 @@ module Slim
     # @param option_filter List of options to pass to engine.
     #                      Last argument can be default option hash.
     def self.register(name, klass, *option_filter)
+      name = name.to_sym
       local_options = Hash === option_filter.last ? option_filter.pop : nil
       @engines[name.to_sym] = [klass, option_filter, local_options]
     end
 
     def self.create(name, options)
       engine, option_filter, local_options = @engines[name] || raise(Temple::FilterError, "Embedded engine #{name} not found")
-      engine.new(Temple::ImmutableHash.new(local_options, Temple::Utils.hash_select(options, option_filter)))
+      engine.new(Temple::ImmutableHash.new(local_options, options.only(option_filter)))
     end
+
+    define_options :pretty, :enable_engines, :disable_engines
 
     def initialize(opts = {})
       super
@@ -88,6 +91,7 @@ module Slim
       name = name.to_sym
       raise(Temple::FilterError, "Embedded engine #{name} is disabled") if (options[:enable_engines] && !options[:enable_engines].include?(name)) ||
         (options[:disable_engines] && options[:disable_engines].include?(name))
+      self.class.define_options(name)
       @engines[name] ||= self.class.create(name, options)
       @engines[name].on_slim_embedded(name, body)
     end
@@ -183,9 +187,11 @@ module Slim
     # Tag wrapper engine
     # Generates a html tag and wraps another engine (specified via :engine option)
     class TagEngine < EmbeddedEngine
+      disable_option_validator!
+
       def on_slim_embedded(engine, body)
         if options[:engine]
-          @engine ||= options[:engine].new(options)
+          @engine ||= options[:engine].new(options.without(:engine, :tag, :attributes))
           body = @engine.on_slim_embedded(engine, body)
         end
         [:html, :tag, options[:tag], [:html, :attrs, *options[:attributes].map {|k, v| [:html, :attr, k, [:static, v]] }], body]

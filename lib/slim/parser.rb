@@ -2,12 +2,14 @@ module Slim
   # Parses Slim code and transforms it to a Temple expression
   # @api private
   class Parser < Temple::Parser
-    set_default_options :tabsize => 4,
-                        :encoding => 'utf-8',
-                        :shortcut => {
-                          '#' => 'id',
-                          '.' => 'class'
-                        }
+    define_options :file,
+                   :default_tag,
+                   :tabsize => 4,
+                   :encoding => 'utf-8',
+                   :shortcut => {
+                     '#' => 'id',
+                     '.' => 'class'
+                   }
 
     class SyntaxError < StandardError
       attr_reader :error, :file, :line, :lineno, :column

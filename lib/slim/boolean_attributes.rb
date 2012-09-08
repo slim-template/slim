@@ -1,6 +1,8 @@
 module Slim
   # @api private
   class BooleanAttributes < Filter
+    define_options :attr_delimiter
+
     # Handle attributes expression `[:html, :attrs, *attrs]`
     #
     # @param [Array] attrs Array of temple expressions

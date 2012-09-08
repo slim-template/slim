@@ -526,8 +526,7 @@ The following options are exposed by the `Slim::Engine` and can be set with `Sli
 </tbody>
 </table>
 
-Additionally the code generator options can be set (used by the :generator class). The standard generators support the options :buffer and :capture_generator.
-There are more options which are supported by the filters which are used by `Slim::Engine` but which are not exposed and are not officially supported. You
+There are more options which are supported by the Temple filters but which are not exposed and are not officially supported. You
 have to take a look at the Slim and Temple code for that.
 
 ## Plugins
