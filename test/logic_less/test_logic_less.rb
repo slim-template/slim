@@ -16,7 +16,7 @@ p
       ]
     }
 
-    assert_html '<p><div class="name">Joe</div><div class="name">Jack</div></p>', source, :scope => hash, :dictionary_access => :symbol
+    assert_html '<p><div class="name">Joe</div><div class="name">Jack</div></p>', source, :dictionary => hash, :dictionary_access => :symbol
   end
 
   def test_string_access
@@ -33,7 +33,7 @@ p
       ]
     }
 
-    assert_html '<p><div class="name">Joe</div><div class="name">Jack</div></p>', source, :scope => hash, :dictionary_access => :string
+    assert_html '<p><div class="name">Joe</div><div class="name">Jack</div></p>', source, :dictionary => hash, :dictionary_access => :string
   end
 
   def test_flag_section
@@ -54,7 +54,7 @@ p
       ]
     }
 
-    assert_html '<p><div class="name">Joe</div><div class="name">Jack</div>shown</p>', source, :scope => hash
+    assert_html '<p><div class="name">Joe</div><div class="name">Jack</div>shown</p>', source, :dictionary => hash
   end
 
   def test_inverted_section
@@ -70,7 +70,7 @@ p
 
     hash = {}
 
-    assert_html '<p>No person No person 2</p>', source, :scope => hash
+    assert_html '<p>No person No person 2</p>', source, :dictionary => hash
   end
 
   def test_output_with_content
