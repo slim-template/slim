@@ -1,6 +1,8 @@
 module Slim
   # @api private
   class ControlStructures < Filter
+    define_options :disable_capture
+
     # Handle control expression `[:slim, :control, code, content]`
     #
     # @param [String] code Ruby code
