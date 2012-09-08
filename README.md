@@ -689,10 +689,11 @@ Usage: slimrb [options]
     -s, --stdin                      Read input from standard input instead of an input file
         --trace                      Show a full traceback on error
     -c, --compile                    Compile only but do not run
-    -r, --rails                      Generate rails compatible code (combine with -c)
+    -r, --rails                      Generate rails compatible code (Implies --compile)
     -t, --translator                 Enable translator plugin
     -l, --logic-less                 Enable logic less plugin
     -p, --pretty                     Produce pretty html
+    -o, --option [NAME=CODE]         Set slim option
     -h, --help                       Show this message
     -v, --version                    Print version
 </pre>
