@@ -510,8 +510,8 @@ The following options are exposed by the `Slim::Engine` and can be set with `Sli
 <tr><td>String</td><td>:encoding</td><td>"utf-8"</td><td>Set encoding of template</td></tr>
 <tr><td>String</td><td>:default_tag</td><td>"div"</td><td>Default tag to be used if tag name is omitted</td></tr>
 <tr><td>Hash</td><td>:shortcut</td><td>\{'.' => 'class', '#' => 'id'}</td><td>Attribute shortcuts</td></tr>
-<tr><td>String list</td><td>:enable_engines</td><td>nil <i>(All enabled)</i></td><td>List of enabled embedded engines (whitelist)</td></tr>
-<tr><td>String list</td><td>:disable_engines</td><td>nil <i>(None disabled)</i></td><td>List of disabled embedded engines (blacklist)</td></tr>
+<tr><td>Symbol list</td><td>:enable_engines</td><td>nil <i>(All enabled)</i></td><td>List of enabled embedded engines (whitelist)</td></tr>
+<tr><td>Symbol list</td><td>:disable_engines</td><td>nil <i>(None disabled)</i></td><td>List of disabled embedded engines (blacklist)</td></tr>
 <tr><td>Boolean</td><td>:disable_capture</td><td>false (true in Rails)</td><td>Disable capturing in blocks (blocks write to the default buffer </td></tr>
 <tr><td>Boolean</td><td>:disable_escape</td><td>false</td><td>Disable automatic escaping of strings</td></tr>
 <tr><td>Boolean</td><td>:use_html_safe</td><td>false (true in Rails)</td><td>Use String#html_safe? from ActiveSupport (Works together with :disable_escape)</td></tr>

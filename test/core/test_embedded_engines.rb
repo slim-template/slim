@@ -114,19 +114,19 @@ scss:
 ruby:
   Embedded Ruby
 }
-    assert_runtime_error 'Embedded engine ruby is disabled', source, :enable_engines => %w(javascript)
+    assert_runtime_error 'Embedded engine ruby is disabled', source, :enable_engines => [:javascript]
 
     source = %{
 ruby:
   Embedded Ruby
 }
-    assert_runtime_error 'Embedded engine ruby is disabled', source, :enable_engines => %w(javascript)
+    assert_runtime_error 'Embedded engine ruby is disabled', source, :enable_engines => [:javascript]
 
     source = %{
 ruby:
   Embedded Ruby
 }
-    assert_runtime_error 'Embedded engine ruby is disabled', source, :disable_engines => %w(ruby)
+    assert_runtime_error 'Embedded engine ruby is disabled', source, :disable_engines => [:ruby]
   end
 
   def test_enabled_embedded_engine
@@ -134,12 +134,12 @@ ruby:
 javascript:
   $(function() {});
 }
-    assert_html '<script type="text/javascript">$(function() {});</script>', source, :disable_engines => %w(ruby)
+    assert_html '<script type="text/javascript">$(function() {});</script>', source, :disable_engines => [:ruby]
 
     source = %q{
 javascript:
   $(function() {});
 }
-    assert_html '<script type="text/javascript">$(function() {});</script>', source, :enable_engines => %w(javascript)
+    assert_html '<script type="text/javascript">$(function() {});</script>', source, :enable_engines => [:javascript]
   end
 end
