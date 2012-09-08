@@ -12,6 +12,7 @@ master
   * / is not escaped anymore to &#47;
   * Parser: check for missing closing quote in quoted attributes
   * Removed option :remove_empty_attrs
+  * Use new temple option validation to make Slim configuration more user friendly.
 
 1.3.0
 

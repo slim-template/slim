@@ -489,6 +489,7 @@ You can also access the option hash directly:
 
     Slim::Engine.default_options[:pretty] = true
 
+
 For developers who know more about Slim and Temple architecture it is possible to override default
 options at different positions. Temple uses an inheritance mechanism to allow subclasses to override
 options of the superclass. The option priorities are as follows:
@@ -501,6 +502,7 @@ It is also possible to set options for superclasses like Temple::Engine. But thi
     Slim::Compiler > Temple::Filter
 
 The following options are exposed by the `Slim::Engine` and can be set with `Slim::Engine.set_default_options`.
+There are a lot of them but the good thing is, that Slim checks the configuration keys and reports an error if you try to use an invalid configuration key.
 
 <table>
 <thead style="font-weight:bold"><tr><td>Type</td><td>Name</td><td>Default</td><td>Purpose</td></tr></thead>
