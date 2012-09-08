@@ -185,8 +185,11 @@ module Slim
     # Generates a html tag and wraps another engine (specified via :engine option)
     class TagEngine < EmbeddedEngine
       def on_slim_embedded(engine, body)
-        content = options[:engine] ? options[:engine].new(options).on_slim_embedded(engine, body) : body
-        [:html, :tag, options[:tag], [:html, :attrs, *options[:attributes].map {|k, v| [:html, :attr, k, [:static, v]] }], content]
+        if options[:engine]
+          @engine ||= options[:engine].new(options)
+          body = @engine.on_slim_embedded(engine, body)
+        end
+        [:html, :tag, options[:tag], [:html, :attrs, *options[:attributes].map {|k, v| [:html, :attr, k, [:static, v]] }], body]
       end
     end
 
