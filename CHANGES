@@ -6,13 +6,13 @@ master
   * BACKWARD INCOMPATIBLE CHANGE -  Dynamic attributes which return empty value "" are not removed anymore
     (this means "" is now interpreted as true), whereas false and nil are still removed.
     This corresponds to the definition of boolean attributes in XHTML and HTML5.
+  * Removed option :remove_empty_attrs
   * Add option :escape_quoted_attrs to escape quoted attributes, use == if you don't want that.
     The default is false to stay backward compatible.
   * Use Temple::FilterError exception
   * Use Temple::Parser
   * / is not escaped anymore to &#47;
   * Parser: check for missing closing quote in quoted attributes
-  * Removed option :remove_empty_attrs
   * Use new temple option validation to make Slim configuration more user friendly.
 
 1.3.0
