@@ -4,6 +4,7 @@ module Slim
   class Parser < Temple::Parser
     define_options :file,
                    :default_tag,
+                   :escape_quoted_attrs => false,
                    :tabsize => 4,
                    :encoding => 'utf-8',
                    :shortcut => {
@@ -359,7 +360,9 @@ module Slim
         when QUOTED_ATTR_REGEX
           # Value is quoted (static)
           @line = $'
-          attributes << [:html, :attr, $1, [:escape, $2.empty?, [:slim, :interpolate, parse_quoted_attribute($3)]]]
+          attributes << [:html, :attr, $1,
+                         [:escape, options[:escape_quoted_attrs] && $2.empty?,
+                          [:slim, :interpolate, parse_quoted_attribute($3)]]]
         when CODE_ATTR_REGEX
           # Value is ruby code
           @line = $'

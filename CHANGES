@@ -3,10 +3,11 @@ master
   * Support inline html at the beginning of a line (New line indicator <). No pipe symbol is | necessary.
     It is even possible to wrap other Slim syntax in such a html block.
   * Code restructured - Handling of boolean and splat attributes improved and PERFORMANCE improved.
-  * BACKWARD INCOMPATIBLE CHANGE -  Dynamic attributes which return empty value are not removed anymore
+  * BACKWARD INCOMPATIBLE CHANGE -  Dynamic attributes which return empty value "" are not removed anymore
     (this means "" is now interpreted as true), whereas false and nil are still removed.
     This corresponds to the definition of boolean attributes in XHTML and HTML5.
-  * BACKWARD INCOMPATIBLE CHANGE - Escape quoted attributes by default, use == if you don't want that.
+  * Add option :escape_quoted_attrs to escape quoted attributes, use == if you don't want that.
+    The default is false to stay backward compatible.
   * Use Temple::FilterError exception
   * Use Temple::Parser
   * / is not escaped anymore to &#47;

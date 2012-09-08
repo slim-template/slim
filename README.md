@@ -516,6 +516,7 @@ There are a lot of them but the good thing is, that Slim checks the configuratio
 <tr><td>Symbol list</td><td>:disable_engines</td><td>nil <i>(None disabled)</i></td><td>List of disabled embedded engines (blacklist)</td></tr>
 <tr><td>Boolean</td><td>:disable_capture</td><td>false (true in Rails)</td><td>Disable capturing in blocks (blocks write to the default buffer </td></tr>
 <tr><td>Boolean</td><td>:disable_escape</td><td>false</td><td>Disable automatic escaping of strings</td></tr>
+<tr><td>Boolean</td><td>:escape_quoted_attrs</td><td>false</td><td>Escape quoted attributes</td></tr>
 <tr><td>Boolean</td><td>:use_html_safe</td><td>false (true in Rails)</td><td>Use String#html_safe? from ActiveSupport (Works together with :disable_escape)</td></tr>
 <tr><td>Symbol</td><td>:format</td><td>:xhtml</td><td>HTML output format (Possible formats :xhtml, :html4, :html5, :html)</td></tr>
 <tr><td>String</td><td>:attr_wrapper</td><td>'"'</td><td>Character to wrap attributes in html (can be ' or ")</td></tr>
