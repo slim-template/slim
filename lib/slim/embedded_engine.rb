@@ -63,28 +63,34 @@ module Slim
   class EmbeddedEngine < Filter
     @engines = {}
 
-    class << self
-      attr_reader :engines
+    # Register embedded engine
+    #
+    # @param [String] name Name of the engine
+    # @param [Class]  klass Engine class
+    # @param option_filter List of options to pass to engine.
+    #                      Last argument can be default option hash.
+    def self.register(name, klass, *option_filter)
+      local_options = Hash === option_filter.last ? option_filter.pop : nil
+      @engines[name.to_s] = [klass, option_filter, local_options]
+    end
 
-      # Register embedded engine
-      #
-      # @param [String] name Name of the engine
-      # @param [Class]  klass Engine class
-      # @param option_filter List of options to pass to engine.
-      #                      Last argument can be default option hash.
-      def register(name, klass, *option_filter)
-        local_options = Hash === option_filter.last ? option_filter.pop : nil
-        @engines[name.to_s] = [klass, option_filter, local_options]
-      end
+    def self.create(name, options)
+      engine, option_filter, local_options = @engines[name] || raise(Temple::FilterError, "Embedded engine #{name} not found")
+      filtered_options = Hash[*option_filter.select {|k| options.include?(k) }.map {|k| [k, options[k]] }.flatten]
+      engine.new(Temple::ImmutableHash.new(local_options, filtered_options))
+    end
+
+    def initialize(opts = {})
+      super
+      @engines = {}
     end
 
     def on_slim_embedded(name, body)
       name = name.to_s
       raise(Temple::FilterError, "Embedded engine #{name} is disabled") if (options[:enable_engines] && !options[:enable_engines].include?(name)) ||
         (options[:disable_engines] && options[:disable_engines].include?(name))
-      engine, option_filter, local_options = self.class.engines[name] || raise(Temple::FilterError, "Embedded engine #{name} not found")
-      filtered_options = Hash[*option_filter.select {|k| options.include?(k) }.map {|k| [k, options[k]] }.flatten]
-      engine.new(Temple::ImmutableHash.new(local_options, filtered_options)).on_slim_embedded(name, body)
+      @engines[name] ||= self.class.create(name, options)
+      @engines[name].on_slim_embedded(name, body)
     end
 
     protected
