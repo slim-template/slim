@@ -27,6 +27,6 @@ module Slim
     filter :MultiFlattener
     use(:Optimizer) { (options[:streaming] ? Temple::Filters::StaticMerger :
                        Temple::Filters::DynamicInliner).new }
-    use(:Generator) { options[:generator].new }
+    use(:Generator) { options[:generator].new(options.only(options[:generator].default_options.valid_keys)) }
   end
 end
