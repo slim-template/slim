@@ -85,18 +85,29 @@ module Slim
     def initialize(opts = {})
       super
       @engines = {}
+      @enabled = normalize_engine_list(options[:enable_engines])
+      @disabled = normalize_engine_list(options[:disable_engines])
     end
 
     def on_slim_embedded(name, body)
       name = name.to_sym
-      raise(Temple::FilterError, "Embedded engine #{name} is disabled") if (options[:enable_engines] && !options[:enable_engines].include?(name)) ||
-        (options[:disable_engines] && options[:disable_engines].include?(name))
+      raise(Temple::FilterError, "Embedded engine #{name} is disabled") unless enabled?(name)
       self.class.define_options(name)
       @engines[name] ||= self.class.create(name, options)
       @engines[name].on_slim_embedded(name, body)
     end
 
+    def enabled?(name)
+      (!@enabled || @enabled.include?(name)) &&
+        (!@disabled || !@disabled.include?(name))
+    end
+
     protected
+
+    def normalize_engine_list(list)
+      raise(ArgumentError, "Option :enable_engines/:disable_engines must be String or Symbol list") unless !list || Array === list
+      list ? list.map {|s| s.to_sym } : list
+    end
 
     def collect_text(body)
       @text_collector ||= TextCollector.new
