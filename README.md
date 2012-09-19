@@ -27,7 +27,7 @@ continous integration (travis-ci).
 
 Slim's core syntax is guided by one thought: "What's the minimum required to make this work".
 
-As more people have contributed to Slim, there have been syntax additions influenced from their use of [Haml](https://github.com/nex3/haml) and [Jade](https://github.com/visionmedia/jade).  The Slim team is open to these additions because we know beauty is in the eye of the beholder.
+As more people have contributed to Slim, there have been syntax additions influenced from their use of [Haml](https://github.com/haml/haml) and [Jade](https://github.com/visionmedia/jade).  The Slim team is open to these additions because we know beauty is in the eye of the beholder.
 
 Slim uses [Temple](https://github.com/judofyr/temple) for parsing/compilation and is also integrated into [Tilt](https://github.com/rtomayko/tilt), so it can be used together with [Sinatra](https://github.com/sinatra/sinatra) or plain [Rack](https://github.com/rack/rack).
 
@@ -890,5 +890,5 @@ Language ports/Similar languages:
 * [Hamlet.rb (Similar template language)](https://github.com/gregwebs/hamlet.rb)
 * [Plim (Python port of Slim)](https://github.com/2nd/plim)
 * [Skim (Slim for Javascript)](https://github.com/jfirebaugh/skim)
-* [Haml (Older engine which inspired Slim)](https://github.com/nex3/haml)
+* [Haml (Older engine which inspired Slim)](https://github.com/haml/haml)
 * [Jade (Similar engine for javascript)](https://github.com/visionmedia/jade)
