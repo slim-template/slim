@@ -476,8 +476,11 @@ The embedded engines can be configured in Slim by setting the options directly o
 
 ## Configuring Slim
 
-Slim and the underlying [Temple](https://github.com/judofyr/temple) framework are highly configurable. Unfortunately the way how you configure Slim depends on the compilation mechanism (Rails or [Tilt](https://github.com/rtomayko/tilt)).
-It is always possible to set default options. This can be done in Rails' environment files. For instance, in config/environments/development.rb you probably want:
+Slim and the underlying [Temple](https://github.com/judofyr/temple) framework are highly configurable.
+The way how you configure Slim depends a bit on the compilation mechanism (Rails or [Tilt](https://github.com/rtomayko/tilt)). It is always possible to set default options per
+Slim::Engine class. This can be done in Rails' environment files. For instance, in config/environments/development.rb you probably want:
+
+### Default options
 
     # Indent html for pretty debugging and do not sort attributes (Ruby 1.8)
     Slim::Engine.set_default_options :pretty => true, :sort_attrs => false
@@ -489,17 +492,34 @@ You can also access the option hash directly:
 
     Slim::Engine.default_options[:pretty] = true
 
+### Setting options at runtime
 
-For developers who know more about Slim and Temple architecture it is possible to override default
-options at different positions. Temple uses an inheritance mechanism to allow subclasses to override
-options of the superclass. The option priorities are as follows:
+There are two ways to set options at runtime. For Tilt templates (Slim::Template) you can set
+the options when you instatiate the template:
 
-    Options passed at engine instantination > Slim::Template > Slim::Engine > Parser/Filter/Generator (e.g Slim::Parser, Slim::Compiler)
+    Slim::Template.new('template.slim', optional_option_hash).render(scope)
 
-It is also possible to set options for superclasses like Temple::Engine. But this will affect all temple template engines then.
+The other possibility is to set the options per thread which is interesting mostly for Rails:
 
-    Slim::Engine > Temple::Engine
-    Slim::Compiler > Temple::Filter
+    Slim::Engine.with_options(option_hash) do
+       # Any Slim engines which are created here use the option_hash
+       # For example in Rails:
+       render :page, layout => true
+    end
+
+You have to be aware that the compiled engine code and the options are cached per template in Rails and you cannot change the option afterwards.
+
+    # First render call
+    Slim::Engine.with_options(:pretty => true) do
+       render :page, layout => true
+    end
+
+    # Second render call
+    Slim::Engine.with_options(:pretty => false) do
+       render :page, layout => true # :pretty is still true because it is cached
+    end
+
+### Available options
 
 The following options are exposed by the `Slim::Engine` and can be set with `Slim::Engine.set_default_options`.
 There are a lot of them but the good thing is, that Slim checks the configuration keys and reports an error if you try to use an invalid configuration key.
@@ -534,6 +554,22 @@ the code generator code documentation for details on that (Temple::Generators).
 
 There are more options which are supported by the Temple filters but which are not exposed and are not officially supported. You
 have to take a look at the Slim and Temple code for that.
+
+### Option priority and inheritance
+
+For developers who know more about Slim and Temple architecture it is possible to override default
+options at different positions. Temple uses an inheritance mechanism to allow subclasses to override
+options of the superclass. The option priorities are as follows:
+
+1. Slim::Template options passed at engine instatination
+2. Slim::Template default_options
+3. Slim::Engine thread_options, default_options
+5. Parser/Filter/Generator thread_options, default_options (e.g Slim::Parser, Slim::Compiler)
+
+It is also possible to set options for superclasses like Temple::Engine. But this will affect all temple template engines then.
+
+    Slim::Engine > Temple::Engine
+    Slim::Compiler > Temple::Filter
 
 ## Plugins
 
@@ -590,6 +626,20 @@ Require:
 
     gem 'slim', :require => 'slim/logic_less'
 
+You might want to activate logic less mode only for a few actions, you should disable logic-less mode globally at first in the configuration
+
+    Slim::Engine.set_default_options :logic_less => false
+
+and activate logic less mode per render call in your action
+
+    class Controller
+      def action
+        Slim::Engine.with_options(:logic_less => true) do
+          render
+        end
+      end
+    end
+
 #### Logic less in Sinatra
 
 Sinata has built-in support for Slim. All you have to do is require the logic less Slim plugin. This can be done in your config.ru:
@@ -597,6 +647,16 @@ Sinata has built-in support for Slim. All you have to do is require the logic le
     require 'slim/logic_less'
 
 You are then ready to rock!
+
+You might want to activate logic less mode only for a few actions, you should disable logic-less mode globally at first in the configuration
+
+    Slim::Engine.set_default_options :logic_less => false
+
+and activate logic less mode per render call in your application
+
+    get '/page'
+      slim :page, :logic_less => true
+    end
 
 #### Options
 
