@@ -22,8 +22,10 @@ class SlimController < ApplicationController
     @integer = 1337
   end
 
-  def nil
-    @nil = nil
+  def thread_options
+    Slim::Engine.with_options(:shortcut => {'@' => "div #{params[:attr]}"}) do
+      render
+    end
   end
 
   def content_for

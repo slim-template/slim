@@ -45,9 +45,11 @@ class TestSlim < ActionDispatch::IntegrationTest
     assert_html "<p>1337</p>"
   end
 
-  test "render nil" do
-    get "slim/nil"
-    assert_html "<p></p>"
+  test "render thread_options" do
+    get "slim/thread_options", :attr => 'role'
+    assert_html '<p role="empty">Test</p>'
+    get "slim/thread_options", :attr => 'id' # Overwriting doesn't work because of caching
+    assert_html '<p role="empty">Test</p>'
   end
 
   test "content_for" do
