@@ -72,15 +72,18 @@ module Slim
     def self.register(name, klass, *option_filter)
       name = name.to_sym
       local_options = Hash === option_filter.last ? option_filter.pop : nil
-      @engines[name.to_sym] = [klass, option_filter, local_options]
+      define_options(name, *option_filter)
+      @engines[name.to_sym] = proc do |options|
+        klass.new(Temple::ImmutableHash.new(local_options, options.only(option_filter)))
+      end
     end
 
     def self.create(name, options)
-      engine, option_filter, local_options = @engines[name] || raise(Temple::FilterError, "Embedded engine #{name} not found")
-      engine.new(Temple::ImmutableHash.new(local_options, options.only(option_filter)))
+      constructor = @engines[name] || raise(Temple::FilterError, "Embedded engine #{name} not found")
+      constructor.call(options)
     end
 
-    define_options :pretty, :enable_engines, :disable_engines
+    define_options :enable_engines, :disable_engines
 
     def initialize(opts = {})
       super
@@ -92,7 +95,6 @@ module Slim
     def on_slim_embedded(name, body)
       name = name.to_sym
       raise(Temple::FilterError, "Embedded engine #{name} is disabled") unless enabled?(name)
-      self.class.define_options(name)
       @engines[name] ||= self.class.create(name, options)
       @engines[name].on_slim_embedded(name, body)
     end
@@ -225,11 +227,11 @@ module Slim
     register :mediawiki,  InterpolateTiltEngine
 
     # These engines are executed at compile time
-    register :coffee,     TagEngine,  :tag => :script, :attributes => { :type => 'text/javascript' },  :engine => StaticTiltEngine
-    register :less,       TagEngine,  :tag => :style,  :attributes => { :type => 'text/css' },         :engine => StaticTiltEngine
-    register :styl,       TagEngine,  :tag => :style,  :attributes => { :type => 'text/css' },         :engine => StaticTiltEngine
-    register :sass,       TagEngine,  :pretty, :tag => :style, :attributes => { :type => 'text/css' }, :engine => SassEngine
-    register :scss,       TagEngine,  :pretty, :tag => :style, :attributes => { :type => 'text/css' }, :engine => SassEngine
+    register :coffee,     TagEngine, :tag => :script, :attributes => { :type => 'text/javascript' },  :engine => StaticTiltEngine
+    register :less,       TagEngine, :tag => :style,  :attributes => { :type => 'text/css' },         :engine => StaticTiltEngine
+    register :styl,       TagEngine, :tag => :style,  :attributes => { :type => 'text/css' },         :engine => StaticTiltEngine
+    register :sass,       TagEngine, :pretty, :tag => :style, :attributes => { :type => 'text/css' }, :engine => SassEngine
+    register :scss,       TagEngine, :pretty, :tag => :style, :attributes => { :type => 'text/css' }, :engine => SassEngine
 
     # These engines are precompiled, code is embedded
     register :erb,        ERBEngine
@@ -237,8 +239,8 @@ module Slim
     register :builder,    PrecompiledTiltEngine
 
     # Embedded javascript/css
-    register :javascript, TagEngine,  :tag => :script, :attributes => { :type => 'text/javascript' }
-    register :css,        TagEngine,  :tag => :style,  :attributes => { :type => 'text/css' }
+    register :javascript, TagEngine, :tag => :script, :attributes => { :type => 'text/javascript' }
+    register :css,        TagEngine, :tag => :style,  :attributes => { :type => 'text/css' }
 
     # Embedded ruby code
     register :ruby,       RubyEngine
