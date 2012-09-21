@@ -504,19 +504,19 @@ The other possibility is to set the options per thread which is interesting most
     Slim::Engine.with_options(option_hash) do
        # Any Slim engines which are created here use the option_hash
        # For example in Rails:
-       render :page, layout => true
+       render :page, :layout => true
     end
 
 You have to be aware that the compiled engine code and the options are cached per template in Rails and you cannot change the option afterwards.
 
     # First render call
     Slim::Engine.with_options(:pretty => true) do
-       render :page, layout => true
+       render :page, :layout => true
     end
 
     # Second render call
     Slim::Engine.with_options(:pretty => false) do
-       render :page, layout => true # :pretty is still true because it is cached
+       render :page, :layout => true # :pretty is still true because it is cached
     end
 
 ### Available options
