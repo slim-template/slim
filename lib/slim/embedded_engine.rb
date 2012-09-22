@@ -111,24 +111,26 @@ module Slim
       list ? list.map {|s| s.to_sym } : list
     end
 
-    def collect_text(body)
-      @text_collector ||= TextCollector.new
-      @text_collector.call(body)
-    end
-
-    # Basic tilt engine
-    class TiltEngine < EmbeddedEngine
-      def on_slim_embedded(engine, body)
-        tilt_engine = Tilt[engine] || raise(Temple::FilterError, "Tilt engine #{engine} is not available.")
-        tilt_options = options[engine.to_sym] || {}
-        [:multi, tilt_render(tilt_engine, tilt_options, collect_text(body)), collect_newlines(body)]
-      end
-
+    class Engine < Filter
       protected
+
+      def collect_text(body)
+        @text_collector ||= TextCollector.new
+        @text_collector.call(body)
+      end
 
       def collect_newlines(body)
         @newline_collector ||= NewlineCollector.new
         @newline_collector.call(body)
+      end
+    end
+
+    # Basic tilt engine
+    class TiltEngine < Engine
+      def on_slim_embedded(engine, body)
+        tilt_engine = Tilt[engine] || raise(Temple::FilterError, "Tilt engine #{engine} is not available.")
+        tilt_options = options[engine.to_sym] || {}
+        [:multi, tilt_render(tilt_engine, tilt_options, collect_text(body)), collect_newlines(body)]
       end
     end
 
@@ -143,6 +145,8 @@ module Slim
 
     # Sass engine which supports :pretty option
     class SassEngine < TiltEngine
+      define_options :pretty
+
       protected
 
       def tilt_render(tilt_engine, tilt_options, text)
@@ -185,7 +189,7 @@ module Slim
     end
 
     # ERB engine (uses the Temple ERB implementation)
-    class ERBEngine < EmbeddedEngine
+    class ERBEngine < Engine
       def on_slim_embedded(engine, body)
         [:multi, [:newline], erb_parser.call(collect_text(body))]
       end
@@ -199,7 +203,7 @@ module Slim
 
     # Tag wrapper engine
     # Generates a html tag and wraps another engine (specified via :engine option)
-    class TagEngine < EmbeddedEngine
+    class TagEngine < Engine
       disable_option_validator!
 
       def on_slim_embedded(engine, body)
@@ -212,7 +216,7 @@ module Slim
     end
 
     # Embeds ruby code
-    class RubyEngine < EmbeddedEngine
+    class RubyEngine < Engine
       def on_slim_embedded(engine, body)
         [:multi, [:newline], [:code, collect_text(body)]]
       end
