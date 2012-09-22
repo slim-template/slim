@@ -28,8 +28,11 @@ module Slim
     filter :Escapable, :use_html_safe, :disable_escape
     filter :ControlFlow
     filter :MultiFlattener
-    use(:Optimizer) { (options[:streaming] ? Temple::Filters::StaticMerger :
-                       Temple::Filters::DynamicInliner).new }
-    use(:Generator) { options[:generator].new(options.only(options[:generator].default_options.valid_keys)) }
+    use :Optimizer do
+      (options[:streaming] ? Temple::Filters::StaticMerger : Temple::Filters::DynamicInliner).new
+    end
+    use :Generator do
+      options[:generator].new(options.to_hash.reject {|k| !options[:generator].default_options.valid_keys.include?(k) })
+    end
   end
 end

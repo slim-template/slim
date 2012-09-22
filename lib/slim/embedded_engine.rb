@@ -71,10 +71,11 @@ module Slim
     #                      Last argument can be default option hash.
     def self.register(name, klass, *option_filter)
       name = name.to_sym
-      local_options = Hash === option_filter.last ? option_filter.pop : nil
+      local_options = Hash === option_filter.last ? option_filter.pop : {}
       define_options(name, *option_filter)
+      klass.define_options(name)
       @engines[name.to_sym] = proc do |options|
-        klass.new(Temple::ImmutableHash.new(local_options, options.only(option_filter)))
+        klass.new({}.update(options).delete_if {|k| !option_filter.include?(k) && k != name }.update(local_options))
       end
     end
 
@@ -151,7 +152,8 @@ module Slim
 
       def tilt_render(tilt_engine, tilt_options, text)
         text = tilt_engine.new(tilt_options.merge(
-          :style => (options[:pretty] ? :expanded : :compressed), :cache => false)) { text }.render
+          :style => options[:pretty] ? :expanded : :compressed,
+          :cache => false)) { text }.render
         text.chomp!
         [:static, options[:pretty] ? "\n#{text}\n" : text]
       end
@@ -208,7 +210,11 @@ module Slim
 
       def on_slim_embedded(engine, body)
         if options[:engine]
-          @engine ||= options[:engine].new(options.without(:engine, :tag, :attributes))
+          opts = {}.update(options)
+          opts.delete(:engine)
+          opts.delete(:tag)
+          opts.delete(:attributes)
+          @engine ||= options[:engine].new(opts)
           body = @engine.on_slim_embedded(engine, body)
         end
         [:html, :tag, options[:tag], [:html, :attrs, *options[:attributes].map {|k, v| [:html, :attr, k, [:static, v]] }], body]

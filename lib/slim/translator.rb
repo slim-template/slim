@@ -38,9 +38,9 @@ module Slim
       super
       case options[:tr_mode]
       when :static
-        @translator = StaticTranslator.new(options.only(:tr_fn))
+        @translator = StaticTranslator.new(:tr_fn => options[:tr_fn])
       when :dynamic
-        @translator = DynamicTranslator.new(options.only(:tr_fn))
+        @translator = DynamicTranslator.new(:tr_fn => options[:tr_fn])
       else
         raise ArgumentError, "Invalid translator mode #{options[:tr_mode].inspect}"
       end
