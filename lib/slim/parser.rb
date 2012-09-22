@@ -27,7 +27,7 @@ module Slim
         line = @line.strip
         column = @column + line.size - @line.size
         %{#{error}
-  #{file}, Line #{lineno}
+  #{file}, Line #{lineno}, Column #{@column}
     #{line}
     #{' ' * column}^
 }

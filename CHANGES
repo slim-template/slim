@@ -15,6 +15,7 @@ master
   * Parser: check for missing closing quote in quoted attributes
   * Use new temple option validation to make Slim configuration more user friendly.
   * Support thread options Slim::Engine.with_options which especially useful for Rails
+  * Add explicit column number to SyntaxError.to_s
 
 1.3.0
 
