@@ -75,7 +75,7 @@ module Slim
       define_options(name, *option_filter)
       klass.define_options(name)
       @engines[name.to_sym] = proc do |options|
-        klass.new({}.update(options).delete_if {|k| !option_filter.include?(k) && k != name }.update(local_options))
+        klass.new({}.update(options).delete_if {|k,v| !option_filter.include?(k) && k != name }.update(local_options))
       end
     end
 
