@@ -71,7 +71,7 @@ module Slim
     #                      Last argument can be default option hash.
     def self.register(name, klass, *option_filter)
       name = name.to_sym
-      local_options = Hash === option_filter.last ? option_filter.pop : {}
+      local_options = option_filter.last.respond_to?(:to_hash) ? option_filter.pop.to_hash : {}
       define_options(name, *option_filter)
       klass.define_options(name)
       @engines[name.to_sym] = proc do |options|
