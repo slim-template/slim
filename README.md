@@ -376,6 +376,7 @@ The splat shortcut allows you turn a hash in to attribute/value pairs
 
     .card*{'data-url'=>place_path(place), 'data-id'=>place.id} = place.name
     .card *method_which_returns_hash = place.name
+    .card *@hash_instance_variable = place.name
 
 renders as
 
