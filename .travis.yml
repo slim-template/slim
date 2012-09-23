@@ -6,7 +6,7 @@ rvm:
   - rbx-18mode
   - rbx-19mode
 env:
-  - "TASK=test:core"
+  - "TASK=test:core_and_plugins"
   - "TASK=test:rails RAILS=master"
   - "TASK=test:rails RAILS=3.0.17"
   - "TASK=test:rails RAILS=3.1.8"
@@ -23,7 +23,7 @@ matrix:
   allow_failures:
     - rvm: ruby-head
     - env: "TASK=test:rails RAILS=master"
-script: "bundle exec rake test:ci"
+script: "bundle exec rake $TASK"
 notifications:
   email: false
   irc:
