@@ -10,7 +10,9 @@ module Slim
                    :attr_wrapper => '"',
                    :attr_delimiter => {'class' => ' '},
                    :generator => Temple::Generators::ArrayBuffer,
-                   :default_tag => 'div'
+                   :default_tag => 'div',
+                   :buffer => '@_out_buf', 
+                   :outvar => '@_out_buf'
 
     # TODO: Remove these options in 1.4.0
     define_deprecated_options :remove_empty_attrs, :chain
