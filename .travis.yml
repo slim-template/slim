@@ -23,8 +23,9 @@ matrix:
     - rvm: rbx-18mode
       env: "TASK=test:rails RAILS=master"
   allow_failures:
-    - rvm: ruby-head
     - env: "TASK=test:rails RAILS=master"
+    - env: "TASK=test:sinatra SINATRA=master"
+    - rvm: ruby-head
 script: "bundle exec rake $TASK"
 notifications:
   email: false
