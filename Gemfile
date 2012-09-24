@@ -26,5 +26,9 @@ end
 
 if ENV['SINATRA']
   gem 'rack-test'
-  gem 'sinatra', "= #{ENV['SINATRA']}"
+  if ENV['SINATRA'] == 'master'
+    gem 'sinatra', :github => 'sinatra/sinatra'
+  else
+    gem 'sinatra', "= #{ENV['SINATRA']}"
+  end
 end

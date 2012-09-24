@@ -560,8 +560,8 @@ options at different positions. Temple uses an inheritance mechanism to allow su
 options of the superclass. The option priorities are as follows:
 
 1. `Slim::Template` options passed at engine instatination
-2. `Slim::Template` `default_options`
-3. `Slim::Engine` `thread_options`, `default_options`
+2. `Slim::Template.default_options`
+3. `Slim::Engine.thread_options`, `Slim::Engine.default_options`
 5. Parser/Filter/Generator `thread_options`, `default_options` (e.g `Slim::Parser`, `Slim::Compiler`)
 
 It is also possible to set options for superclasses like `Temple::Engine`. But this will affect all temple template engines then.
@@ -606,9 +606,9 @@ Example code:
 
 In wrapped dictionary acccess mode (the default, see the options), the dictionary object is accessed in the following order.
 
-1. If article.respond_to?(:title), Slim will execute article.send(:title)
-2. If article.respond_to?(:has_key?) and article.has_key?(:title), Slim will execute article[:title]
-3. If article.instance_variable_defined?(@title),Slim will execute article.instance_variable_get @title
+1. If `article.respond_to?(:title)`, Slim will execute `article.send(:title)`
+2. If `article.respond_to?(:has_key?)` and `article.has_key?(:title)`, Slim will execute `article[:title]`
+3. If `article.instance_variable_defined?(@title)`, Slim will execute `article.instance_variable_get @title`
 
 If all the above fails, Slim will try to resolve the title reference in the same order against the parent object. In this example, the parent would be the dictionary object you are rendering the template against.
 
