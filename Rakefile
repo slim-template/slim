@@ -39,6 +39,20 @@ namespace 'test' do
     t.test_files = FileList['test/rails/test/test_*.rb']
     t.verbose = true
   end
+
+  begin
+    require 'sinatra'
+    spec = Gem::Specification.find_by_name('sinatra')
+    Rake::TestTask.new('sinatra') do |t|
+      # Run Slim integration test in Sinatra
+      t.test_files = FileList["#{spec.gem_dir}/test/slim_test.rb"]
+      t.verbose = true
+    end
+  rescue LoadError
+    task :sinatra do
+      abort 'Sinatra is not available'
+    end
+  end
 end
 
 begin

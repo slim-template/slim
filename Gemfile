@@ -23,3 +23,8 @@ if ENV['RAILS']
     gem 'sqlite3-ruby'
   end
 end
+
+if ENV['SINATRA']
+  gem 'rack-test'
+  gem 'sinatra', "= #{ENV['SINATRA']}"
+end
