@@ -478,8 +478,7 @@ The embedded engines can be configured in Slim by setting the options directly o
 ## Configuring Slim
 
 Slim and the underlying [Temple](https://github.com/judofyr/temple) framework are highly configurable.
-The way how you configure Slim depends a bit on the compilation mechanism (Rails or [Tilt](https://github.com/rtomayko/tilt)). It is always possible to set default options per
-Slim::Engine class. This can be done in Rails' environment files. For instance, in config/environments/development.rb you probably want:
+The way how you configure Slim depends a bit on the compilation mechanism (Rails or [Tilt](https://github.com/rtomayko/tilt)). It is always possible to set default options per `Slim::Engine` class. This can be done in Rails' environment files. For instance, in config/environments/development.rb you probably want:
 
 ### Default options
 
@@ -495,7 +494,7 @@ You can also access the option hash directly:
 
 ### Setting options at runtime
 
-There are two ways to set options at runtime. For Tilt templates (Slim::Template) you can set
+There are two ways to set options at runtime. For Tilt templates (`Slim::Template`) you can set
 the options when you instatiate the template:
 
     Slim::Template.new('template.slim', optional_option_hash).render(scope)
@@ -547,6 +546,7 @@ There are a lot of them but the good thing is, that Slim checks the configuratio
 <tr><td>String</td><td>:indent</td><td>'  '</td><td>Indentation string</td></tr>
 <tr><td>Boolean</td><td>:streaming</td><td>false (true in Rails > 3.1)</td><td>Enable output streaming</td></tr>
 <tr><td>Class</td><td>:generator</td><td>Temple::Generators::ArrayBuffer/RailsOutputBuffer</td><td>Temple code generator (default generator generates array buffer)</td></tr>
+<tr><td>String</td><td>:buffer</td><td>'_buf' ('@output_buffer' in Rails)</td><td>Variable used for buffer</td></tr>
 </tbody>
 </table>
 
@@ -559,15 +559,15 @@ For developers who know more about Slim and Temple architecture it is possible t
 options at different positions. Temple uses an inheritance mechanism to allow subclasses to override
 options of the superclass. The option priorities are as follows:
 
-1. Slim::Template options passed at engine instatination
-2. Slim::Template default_options
-3. Slim::Engine thread_options, default_options
-5. Parser/Filter/Generator thread_options, default_options (e.g Slim::Parser, Slim::Compiler)
+1. `Slim::Template` options passed at engine instatination
+2. `Slim::Template` `default_options`
+3. `Slim::Engine` `thread_options`, `default_options`
+5. Parser/Filter/Generator `thread_options`, `default_options` (e.g `Slim::Parser`, `Slim::Compiler`)
 
-It is also possible to set options for superclasses like Temple::Engine. But this will affect all temple template engines then.
+It is also possible to set options for superclasses like `Temple::Engine`. But this will affect all temple template engines then.
 
-    Slim::Engine > Temple::Engine
-    Slim::Compiler > Temple::Filter
+    Slim::Engine < Temple::Engine
+    Slim::Compiler < Temple::Filter
 
 ## Plugins
 
