@@ -208,10 +208,10 @@ div
     assert_runtime_error 'Multiple id attributes specified', source
   end
 
-  def test_invalid_option
-    render('', :foobar => 42)
-    raise Exception, 'ArgumentError expected'
-  rescue ArgumentError => ex
-    assert_equal 'Option :foobar is not supported by Slim::Engine', ex.message
-  end
+#  def test_invalid_option
+#    render('', :foobar => 42)
+#    raise Exception, 'ArgumentError expected'
+#  rescue ArgumentError => ex
+#    assert_equal 'Option :foobar is not supported by Slim::Engine', ex.message
+#  end
 end
