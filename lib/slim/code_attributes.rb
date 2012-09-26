@@ -1,6 +1,6 @@
 module Slim
   # @api private
-  class BooleanAttributes < Filter
+  class CodeAttributes < Filter
     define_options :attr_delimiter
 
     # Handle attributes expression `[:html, :attrs, *attrs]`

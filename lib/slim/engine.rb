@@ -23,7 +23,7 @@ module Slim
     use Slim::SplatAttributes, :attr_delimiter, :attr_wrapper, :sort_attrs, :default_tag
     html :AttributeSorter, :sort_attrs
     html :AttributeMerger, :attr_delimiter
-    use Slim::BooleanAttributes, :attr_delimiter
+    use Slim::CodeAttributes, :attr_delimiter
     use(:AttributeRemover) { Temple::HTML::AttributeRemover.new(:remove_empty_attrs => options[:attr_delimiter].keys) }
     html :Pretty, :format, :attr_wrapper, :pretty, :indent
     filter :Escapable, :use_html_safe, :disable_escape
