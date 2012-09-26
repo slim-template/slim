@@ -99,14 +99,23 @@ option(selected class="clazz") Text
     assert_html '<option class="clazz" selected="selected">Text</option><option class="clazz" selected="selected">Text</option>', source
   end
 
-  def test_array_attribute
+  def test_array_attribute_merging
     source = %{
-.alpha class="beta" class=[:gamma, nil, :delta, [true, false]]
+.alpha class="beta" class=[[""], :gamma, nil, :delta, [true, false]]
+.alpha class=:beta,:gamma
 }
 
-    assert_html '<div class="alpha beta gamma delta true false"></div>', source
+    assert_html '<div class="alpha beta gamma delta true false"></div><div class="alpha beta gamma"></div>', source
   end
 
+  def test_array_attribute_not_merging
+    source = %{
+div id=[[""], :gamma, nil, :delta, [true, false]]
+div id=:beta,:gamma
+}
+
+    assert_html '<div id="[[&quot;&quot;], :gamma, nil, :delta, [true, false]]"></div><div id="[:beta, :gamma]"></div>',source
+  end
 
   def test_shortcut_splat
     source = %q{
@@ -181,6 +190,14 @@ h1 *hash This is my title
     assert_html '<div a="The letter a" b="The letter b" class="myclass secondclass x y z" id="myid">This is my title</div>', source
   end
 
+  def test_splat_with_array_not_merging
+    source = %q{
+.myclass *{:id => [:myid, %w(x y z)]} *hash This is my title
+}
+
+    assert_html '<div a="The letter a" b="The letter b" class="myclass" id="[:myid, [&quot;x&quot;, &quot;y&quot;, &quot;z&quot;]]">This is my title</div>', source
+  end
+
   def test_splat_with_boolean_attribute
     source = %q{
 *{:disabled => true, :empty1 => false, :nonempty => '', :empty2 => nil} This is my title
@@ -218,7 +235,7 @@ a class=false
 
   def test_static_empty_attribute
     source = %q{
-p(id="marvin" name="" data-info="Illudium Q-36")= output_number
+p(id="marvin" name="" class="" data-info="Illudium Q-36")= output_number
 }
 
     assert_html '<p data-info="Illudium Q-36" id="marvin" name="">1337</p>', source

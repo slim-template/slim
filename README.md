@@ -384,6 +384,7 @@ This renders as
 You can also use an `Array` as attribute value and the array elements will be merged using the delimiter.
 
     a class=["menu","highlight"]
+    a class=:menu,:highlight
 
 #### Splat attributes `*`
 
