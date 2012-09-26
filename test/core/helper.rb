@@ -133,10 +133,6 @@ class Env
     "<script>do_something_evil();</script>"
   end
 
-  def method_which_returns_true
-    true
-  end
-
   def output_number
     1337
   end

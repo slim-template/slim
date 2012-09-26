@@ -22,8 +22,7 @@ module Slim
         return super
       end
 
-      escape = value[2]
-      code = value[3]
+      escape, code = value[2], value[3]
       case code
       when 'true'
         [:html, :attr, name, [:static, name]]
@@ -31,21 +30,18 @@ module Slim
         [:multi]
       else
         tmp = unique_name
-        [:html, :attr, name,
-         [:multi,
-          [:code, "#{tmp} = (#{code})"],
-          [:case, tmp,
-           ['true', [:static, name]],
-           ['false, nil', [:multi]],
-           [:else,
-            [:escape, escape,
-             [:dynamic,
-              if delimiter = options[:attr_delimiter][name]
-                "Array === #{tmp} ? #{tmp}.flatten.compact.join(#{delimiter.inspect}) : #{tmp}"
-              else
-                tmp
-              end
-             ]]]]]]
+        conds = [:case, tmp,
+                 ['true', [:html, :attr, name, [:static, name]]],
+                 ['false, nil', [:multi]]]
+        if delimiter = options[:attr_delimiter][name]
+          conds << ['Array',
+                    [:multi,
+                     [:code, "#{tmp} = #{tmp}.flatten.compact.join(#{delimiter.inspect})"],
+                     [:if, "!#{tmp}.empty?",
+                      [:html, :attr, name, [:escape, escape, [:dynamic, tmp]]]]]]
+        end
+        conds << [:else, [:html, :attr, name, [:escape, escape, [:dynamic, tmp]]]]
+        [:multi, [:code, "#{tmp} = (#{code})"], conds]
       end
     end
 
