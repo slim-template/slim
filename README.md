@@ -375,12 +375,23 @@ as booleans. If you use the attribut wrapper you can omit the attribute assigmen
 The splat shortcut allows you turn a hash in to attribute/value pairs
 
     .card*{'data-url'=>place_path(place), 'data-id'=>place.id} = place.name
-    .card *method_which_returns_hash = place.name
-    .card *@hash_instance_variable = place.name
 
 renders as
 
     <div class="card" data-id="1234" data-url="/place/1234">Slim's house</div>
+
+You can also use methods or instance variables which return a hash as shown here:
+
+    .card *method_which_returns_hash = place.name
+    .card *@hash_instance_variable = place.name
+
+The hash attributes which support attribute merging (see Slim option `:attr_delimiter` can be given as lists)
+
+    .first *{:class => [:second, :third]} Text
+
+renders as
+
+    div class="first second third"
 
 #### ID shortcut `#` and class shortcut `.`
 
