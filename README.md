@@ -370,6 +370,19 @@ as booleans. If you use the attribut wrapper you can omit the attribute assigmen
     input type="text" disabled=false
     input type="text" disabled=nil
 
+#### Attribute merging
+
+You can configure attributes to be merged if multiple are given (See option `:attr_delimiter`). In the default configuration
+this is done for class attributes with the white space as delimiter.
+
+    a.menu class="highlight" href="http://slim-lang.com/" Slim-lang.com
+
+This renders as
+
+    <a class="menu highlight" href="http://slim-lang.com/">Slim-lang.com</a>
+
+You can also use an `Array` as attribute value and the array elements will be merged using the delimiter.
+
 #### Splat attributes `*`
 
 The splat shortcut allows you turn a hash in to attribute/value pairs
@@ -385,7 +398,7 @@ You can also use methods or instance variables which return a hash as shown here
     .card *method_which_returns_hash = place.name
     .card *@hash_instance_variable = place.name
 
-The hash attributes which support attribute merging (see Slim option `:attr_delimiter` can be given as lists)
+The hash attributes which support attribute merging (see Slim option `:attr_delimiter`) can be given as an `Array`
 
     .first *{:class => [:second, :third]} Text
 
