@@ -32,7 +32,8 @@ module Slim
         [:multi]
       else
         tmp = unique_name
-        [:multi, [:code, "#{tmp} = (#{code})"],
+        [:multi,
+         [:code, "#{tmp} = #{code}"],
          [:case, tmp,
           ['true', [:html, :attr, name, [:static, name]]],
           ['false, nil', [:multi]],
