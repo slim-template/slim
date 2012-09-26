@@ -213,6 +213,22 @@ a class=true
 a class=false
 }
 
-    assert_html '<a class="true false"></a><a class="false true"></a><a class="class"></a><a></a>', source
+    assert_html '<a class="true false"></a><a class="false true"></a><a class="true"></a><a class="false"></a>', source
+  end
+
+  def test_static_empty_attribute
+    source = %q{
+p(id="marvin" name="" data-info="Illudium Q-36")= output_number
+}
+
+    assert_html '<p data-info="Illudium Q-36" id="marvin" name="">1337</p>', source
+  end
+
+  def test_dynamic_empty_attribute
+    source = %q{
+p(id="marvin" class=nil nonempty=("".to_s) data-info="Illudium Q-36")= output_number
+}
+
+    assert_html '<p data-info="Illudium Q-36" id="marvin" nonempty="">1337</p>', source
   end
 end

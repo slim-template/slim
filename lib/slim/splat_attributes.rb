@@ -79,30 +79,31 @@ module Slim
         end
       end
 
-      merger << [:block, "#{hash}.each do |#{name},#{value}|",
+      merger << [:block, "#{hash}.keys.each do |#{name}|",
                  [:multi,
-                  [:code, "#{value}.flatten!"],
-                  [:if, "#{value}.size > 1 && !#{@attr_delimiter}[#{name}]",
-                   [:code, %{raise("Multiple #\{#{name}\} attributes specified")}]],
-                  [:code, "#{value}.compact!"],
-                  [:case, "#{value}.size",
-                   ['0',
-                    [:code, "#{hash}[#{name}] = nil"]],
-                   ['1',
+                  [:code, "#{value} = #{hash}[#{name}]"],
+                  [:if, "#{@attr_delimiter}[#{name}]",
+                   [:multi,
+                    [:code, "#{value}.flatten!"],
+                    [:code, "#{value}.map!(&:to_s)"],
+                    [:code, "#{value}.reject!(&:empty?)"],
+                    [:if, "#{value}.empty?",
+                     [:code, "#{hash}.delete(#{name})"],
+                     [:code, "#{hash}[#{name}] = #{value}.join(#{@attr_delimiter}[#{name}].to_s)"]]],
+                   [:multi,
+                    [:if, "#{value}.size > 1",
+                     [:code, %{raise("Multiple #\{#{name}\} attributes specified")}]],
                     [:case, "#{value}.first",
                      ['true', [:code, "#{hash}[#{name}] = #{name}"]],
-                     ['false, nil', [:code, "#{hash}[#{name}] = nil"]],
-                     [:else, [:code, "#{hash}[#{name}] = #{value}.first"]]]],
-                   [:else,
-                    [:code, "#{hash}[#{name}] = #{value}.join(#{@attr_delimiter}[#{name}].to_s)"]]]]]
+                     ['false, nil', [:code, "#{hash}.delete(#{name})"]],
+                     [:else, [:code, "#{hash}[#{name}] = #{value}.first"]]]]]]]
 
-      attr = [:if, value,
-              [:multi,
-               [:static, ' '],
-               [:dynamic, name],
-               [:static, "=#{options[:attr_wrapper]}"],
-               [:escape, true, [:dynamic, value]],
-               [:static, options[:attr_wrapper]]]]
+      attr = [:multi,
+              [:static, ' '],
+              [:dynamic, name],
+              [:static, "=#{options[:attr_wrapper]}"],
+              [:escape, true, [:dynamic, value]],
+              [:static, options[:attr_wrapper]]]
       enumerator = options[:sort_attrs] ? "#{hash}.sort_by {|#{name},#{value}| #{name} }" : hash
       formatter = [:block, "#{enumerator}.each do |#{name},#{value}|", attr]
 

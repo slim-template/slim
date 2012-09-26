@@ -13,15 +13,17 @@ module Slim
 
     # Handle attribute expression `[:slim, :attr, escape, code]`
     #
-    # @param [Boolean] escape Escape html
-    # @param [String] code Ruby code
+    # @param [String] name Attribute name
+    # @param [Array] value Value expression
     # @return [Array] Compiled temple expression
     def on_html_attr(name, value)
-      unless value[0] == :slim && value[1] == :attrvalue
+      unless value[0] == :slim && value[1] == :attrvalue && !options[:attr_delimiter][name]
+        # We perform merging on the attribute
         @attr = name
         return super
       end
 
+      # We handle the attribute as a boolean attribute
       escape, code = value[2], value[3]
       case code
       when 'true'
@@ -30,18 +32,11 @@ module Slim
         [:multi]
       else
         tmp = unique_name
-        conds = [:case, tmp,
-                 ['true', [:html, :attr, name, [:static, name]]],
-                 ['false, nil', [:multi]]]
-        if delimiter = options[:attr_delimiter][name]
-          conds << ['Array',
-                    [:multi,
-                     [:code, "#{tmp} = #{tmp}.flatten.compact.join(#{delimiter.inspect})"],
-                     [:if, "!#{tmp}.empty?",
-                      [:html, :attr, name, [:escape, escape, [:dynamic, tmp]]]]]]
-        end
-        conds << [:else, [:html, :attr, name, [:escape, escape, [:dynamic, tmp]]]]
-        [:multi, [:code, "#{tmp} = (#{code})"], conds]
+        [:multi, [:code, "#{tmp} = (#{code})"],
+         [:case, tmp,
+          ['true', [:html, :attr, name, [:static, name]]],
+          ['false, nil', [:multi]],
+          [:else, [:html, :attr, name, [:escape, escape, [:dynamic, tmp]]]]]]
       end
     end
 
@@ -51,17 +46,21 @@ module Slim
     # @param [String] code Ruby code
     # @return [Array] Compiled temple expression
     def on_slim_attrvalue(escape, code)
-      tmp = unique_name
-      [:multi,
-       [:code, "#{tmp} = #{code}"],
-       [:escape, escape,
-        [:dynamic,
-         if delimiter = options[:attr_delimiter][@attr]
-           "Array === #{tmp} ? #{tmp}.flatten.compact.join(#{delimiter.inspect}) : #{tmp}"
-         else
-           tmp
-         end
-        ]]]
+      # We perform attribute merging on Array values
+      if delimiter = options[:attr_delimiter][@attr]
+        tmp = unique_name
+        [:multi,
+         [:code, "#{tmp} = #{code}"],
+         [:if, "Array === #{tmp}",
+          [:multi,
+           [:code, "#{tmp}.flatten!"],
+           [:code, "#{tmp}.map!(&:to_s)"],
+           [:code, "#{tmp}.reject!(&:empty?)"],
+           [:escape, escape, [:dynamic, "#{tmp}.join(#{delimiter.inspect})"]]],
+          [:escape, escape, [:dynamic, tmp]]]]
+      else
+        [:escape, escape, [:dynamic, code]]
+      end
     end
   end
 end
