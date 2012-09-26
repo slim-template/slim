@@ -101,7 +101,7 @@ option(selected class="clazz") Text
 
   def test_array_attribute
     source = %{
-.alpha class="beta" class=[:gamma, nil, :delta, [true, false]]
+.alpha class="beta" class=[[""], :gamma, nil, :delta, [true, false]]
 }
 
     assert_html '<div class="alpha beta gamma delta true false"></div>', source
@@ -218,7 +218,7 @@ a class=false
 
   def test_static_empty_attribute
     source = %q{
-p(id="marvin" name="" data-info="Illudium Q-36")= output_number
+p(id="marvin" name="" class="" data-info="Illudium Q-36")= output_number
 }
 
     assert_html '<p data-info="Illudium Q-36" id="marvin" name="">1337</p>', source
