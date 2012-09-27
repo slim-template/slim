@@ -108,15 +108,6 @@ option(selected class="clazz") Text
     assert_html '<div class="alpha beta gamma delta true false"></div><div class="alpha beta gamma"></div>', source
   end
 
-  def test_array_attribute_not_merging
-    source = %{
-div id=[[""], :gamma, nil, :delta, [true, false]]
-div id=:beta,:gamma
-}
-
-    assert_html '<div id="[[&quot;&quot;], :gamma, nil, :delta, [true, false]]"></div><div id="[:beta, :gamma]"></div>',source
-  end
-
   def test_shortcut_splat
     source = %q{
 *hash This is my title
@@ -188,14 +179,6 @@ h1 *hash This is my title
 }
 
     assert_html '<div a="The letter a" b="The letter b" class="myclass secondclass x y z" id="myid">This is my title</div>', source
-  end
-
-  def test_splat_with_array_not_merging
-    source = %q{
-.myclass *{:id => [:myid, %w(x y z)]} *hash This is my title
-}
-
-    assert_html '<div a="The letter a" b="The letter b" class="myclass" id="[:myid, [&quot;x&quot;, &quot;y&quot;, &quot;z&quot;]]">This is my title</div>', source
   end
 
   def test_splat_with_boolean_attribute
