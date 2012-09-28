@@ -14,11 +14,17 @@ end
 task 'test' => %w(test:core_and_plugins)
 
 namespace 'test' do
-  task 'core_and_plugins' => %w(core logic_less translator)
+  task 'core_and_plugins' => %w(core literate logic_less translator)
 
   Rake::TestTask.new('core') do |t|
     t.libs << 'lib' << 'test/core'
     t.test_files = FileList['test/core/test_*.rb']
+    t.verbose = true
+  end
+
+  Rake::TestTask.new('literate') do |t|
+    t.libs << 'lib' << 'test/literate'
+    t.test_files = FileList['test/literate/run.rb']
     t.verbose = true
   end
 

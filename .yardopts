@@ -1,2 +1,2 @@
---title Slim
---files CHANGES,LICENSE
+--markup-provider redcarpet
+--markup markdown
