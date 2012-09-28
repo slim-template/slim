@@ -288,7 +288,7 @@ renders as
 
 ### Output without HTML escaping `==`
 
-The equal sign `==` produces dynamic output without HTML escaping.
+The double equal sign `==` produces dynamic output without HTML escaping.
 
 ~~~ slim
 == '<script>evil();</script>'
@@ -320,9 +320,81 @@ renders as
 
 ### Output without HTML escaping and trailing ws `=='`
 
+
+The double equal sign with apostrophe `=='` produces dynamic output without HTML escaping and trailing white space.
+
+~~~ slim
+==' '<script>evil();</script>'
+~~~
+
+renders as
+
+~~~ html
+<script>evil();</script> 
+~~~
+
+The option option
+
+~~~ options
+:disable_escape => true
+~~~
+
+doesn't affect the output of `==`.
+
+~~~ slim
+==' '<script>evil();</script>'
+~~~
+
+renders as
+
+~~~ html
+<script>evil();</script> 
+~~~
+
 ### Code comment `/`
 
+Code comments begin with `/` and produce no output.
+
+~~~ slim
+/ Comment
+body
+  / Another comment
+    with
+
+    multiple lines
+  p Hello!
+~~~
+
+renders as
+
+~~~ html
+<body><p>Hello!</p></body>
+~~~
+
 ### HTML comment `/!`
+
+Code comments begin with `/!`.
+
+~~~ slim
+/! Comment
+body
+  /! Another comment
+     with multiple lines
+  p Hello!
+  /!
+      First line determines indentation
+
+      of the comment
+~~~
+
+renders as
+
+~~~ html
+<!--Comment--><body><!--Another comment
+with multiple lines--><p>Hello!</p><!--First line determines indentation
+
+of the comment--></body>
+~~~
 
 ### IE conditional comment `/[...]`
 
