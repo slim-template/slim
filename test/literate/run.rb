@@ -1,4 +1,6 @@
 class LiterateTest
+  attr_reader :code
+
   def initialize(file)
     lines = File.readlines(file)
     exp = parse(lines)
@@ -71,8 +73,8 @@ class LiterateTest
   end
 
   def run
-    puts @code
-    eval(@code)
+    puts code
+    eval(code)
   end
 end
 
