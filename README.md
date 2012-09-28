@@ -119,9 +119,9 @@ You can also embed html in the text line
     - articles.each do |a|
       | <tr><td>#{a.name}</td><td>#{a.description}</td></tr>
 
-### Text with trailing space `'`
+### Text with trailing white space `'`
 
-The single quote tells Slim to copy the line (similar to `|`), but makes sure that a single trailing space is appended.
+The single quote tells Slim to copy the line (similar to `|`), but makes sure that a single trailing white space is appended.
 
 ### Inline html `<` (HTML style)
 
@@ -148,7 +148,7 @@ If your ruby code needs to use multiple lines, append a backslash `\` at the end
       - if articles.empty?
         | No inventory
 
-### Dynamic output `=`
+### Output `=`
 
 The equal sign tells Slim it's a Ruby call that produces output to add to the buffer. If your ruby code needs to use multiple lines, append a backslash `\` at the end of the lines, for example:
 
@@ -158,7 +158,7 @@ The equal sign tells Slim it's a Ruby call that produces output to add to the bu
 
 ### Output with trailing white space `='`
 
-Same as the single equal sign (`=`), except that it adds a trailing whitespace.
+Same as the single equal sign (`=`), except that it adds a trailing white space.
 
 ### Output without HTML escaping `==`
 
@@ -166,7 +166,7 @@ Same as the single equal sign (`=`), but does not go through the `escape_html` m
 
 ### Output without HTML escaping and trailing ws `=='`
 
-Same as the double equal sign (`==`), except that it adds a trailing whitespace.
+Same as the double equal sign (`==`), except that it adds a trailing white space.
 
 ### Code comment `/`
 
@@ -555,7 +555,7 @@ There are a lot of them but the good thing is, that Slim checks the configuratio
 <thead style="font-weight:bold"><tr><td>Type</td><td>Name</td><td>Default</td><td>Purpose</td></tr></thead>
 <tbody>
 <tr><td>String</td><td>:file</td><td>nil</td><td>Name of parsed file, set automatically by Slim::Template</td></tr>
-<tr><td>Integer</td><td>:tabsize</td><td>4</td><td>Number of whitespaces per tab (used by the parser)</td></tr>
+<tr><td>Integer</td><td>:tabsize</td><td>4</td><td>Number of white spaces per tab (used by the parser)</td></tr>
 <tr><td>String</td><td>:encoding</td><td>"utf-8"</td><td>Set encoding of template</td></tr>
 <tr><td>String</td><td>:default_tag</td><td>"div"</td><td>Default tag to be used if tag name is omitted</td></tr>
 <tr><td>Hash</td><td>:shortcut</td><td>\{'.' => 'class', '#' => 'id'}</td><td>Attribute shortcuts</td></tr>
