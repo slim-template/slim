@@ -254,6 +254,20 @@ renders as
 &lt;script&gt;evil();&lt;/script&gt;
 ~~~
 
+Long code lines can be broken with `\`.
+
+~~~ slim
+= (0..10).map do |i|\
+  2**i \
+end.join(', ')
+~~~
+
+renders as
+
+~~~ html
+1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024
+~~~
+
 You can also disable HTML escaping globally by setting the option
 
 ~~~ options
