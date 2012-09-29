@@ -69,7 +69,7 @@ class LiterateTest < Temple::Engine
       @in_testcase = false
       result =  "  html = #{code.inspect}\n"
       result << "  options = {#{@opts}}\n" if @opts
-      result << "  assert_html(html, slim#{@opts && ', options'})\nend\n"
+      result << "  render(slim#{@opts && ', options'}).must_equal html\nend\n"
     end
 
     def on_options(code)
