@@ -39,7 +39,7 @@ class LiterateTest < Temple::Engine
       @opts = nil
       @in_testcase = nil
       @level = 0
-      "require 'helper'\n\n" << compile(exp)#, "  include Helper\n\n")
+      "require 'helper'\n\n" << compile(exp)
     end
 
     def on_section(title, body)
