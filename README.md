@@ -903,6 +903,8 @@ overhead added by the Temple framework compared to ERB.
 Slim provides an extensive test-suite based on minitest. You can run the tests
 with 'rake test' and the rails integration tests with 'rake test:rails'.
 
+We are currently experimenting with human-readable literate tests which are written as markdown files: {file:test/literate/TESTS.md TESTS.md}
+
 Travis-CI is used for continous integration testing: {http://travis-ci.org/#!/stonean/slim}
 
 Slim is working well on all major Ruby implementations:
