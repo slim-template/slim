@@ -7,7 +7,7 @@ class LiterateTest < Temple::Engine
       until lines.empty?
         case lines.shift
         when /\A(#+)\s*(.*)\Z/
-          while stack.size - 1 >= $1.size
+          while stack.size > $1.size
             stack.pop
           end
           block = [:multi]
