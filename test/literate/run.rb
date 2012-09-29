@@ -88,4 +88,6 @@ class LiterateTest < Temple::Engine
   use(:Evaluator) {|code| eval(code) }
 end
 
-LiterateTest.new.call(File.readlines(File.join(File.dirname(__FILE__), 'TESTS.md')))
+Dir.glob(File.join(File.dirname(__FILE__), '*.md')) do |file|
+  LiterateTest.new.call(File.readlines(file))
+end
