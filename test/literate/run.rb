@@ -7,27 +7,25 @@ class LiterateTest < Temple::Engine
       until lines.empty?
         case lines.shift
         when /\A(#+)\s*(.*)\Z/
-          while stack.size > $1.size
-            stack.pop
-          end
+          stack.pop(stack.size - $1.size)
           block = [:multi]
           stack.last << [:section, $2, block]
           stack << block
         when /\A~{3,}\s*(\w+)\s*\Z/
           lang = $1
-          block = []
+          code = []
           until lines.empty?
             case lines.shift
-            when /\A~{3,}\Z/
+            when /\A~{3,}\s*\Z/
               break
             when /\A.*\Z/
-              block << $&
+              code << $&
             end
           end
-          stack.last << [lang.to_sym, block.join("\n")]
+          stack.last << [lang.to_sym, code.join("\n")]
         when /\A\s*\Z/
-        when /\A.*\Z/
-          stack.last << [:comment, $&]
+        when /\A\s*(.*?)\s*Z/
+          stack.last << [:comment, $1]
         end
       end
       stack.first
@@ -36,21 +34,19 @@ class LiterateTest < Temple::Engine
 
   class Compiler < Temple::Filter
     def call(exp)
-      @opts = nil
-      @in_testcase = nil
-      @level = 0
+      @opts, @in_testcase, @level = nil, false, 0
       "require 'helper'\n\n" << compile(exp)
     end
 
     def on_section(title, body)
-      old_options = @opts
+      old_opts = @opts
       @level += 1
-      raise 'Section inside of test case' if @in_testcase
+      raise Temple::FilterError, 'New section between slim and html block' if @in_testcase
       result = "describe #{title.inspect} do\n  "
       result << "include Helper\n  " if @level == 1
       result << compile(body).gsub("\n", "\n  ") << "\nend\n"
     ensure
-      @opts = old_options
+      @opts = old_opts
       @level -= 1
     end
 
@@ -63,13 +59,13 @@ class LiterateTest < Temple::Engine
     end
 
     def on_slim(code)
-      raise 'Two slim blocks inside test case' if @in_testcase
+      raise Temple::FilterError, 'Slim block must be followed by html block' if @in_testcase
       @in_testcase = true
       "it 'should render' do\n  slim = #{code.inspect}"
     end
 
     def on_html(code)
-      raise 'HTML block must come after slim block' unless @in_testcase
+      raise Temple::FilterError, 'Html block must be preceded by slim block' unless @in_testcase
       @in_testcase = false
       result =  "  html = #{code.inspect}\n"
       result << "  options = {#{@opts}}\n" if @opts
@@ -77,9 +73,13 @@ class LiterateTest < Temple::Engine
     end
 
     def on_options(code)
-      raise 'Options set inside test case' if @in_testcase
+      raise Temple::FilterError, 'Options set inside test case' if @in_testcase
       @opts = code
       "# #{@opts.gsub("\n", "\n# ")}"
+    end
+
+    def on(*exp)
+      raise Temple::InvalidExpression, exp
     end
   end
 
