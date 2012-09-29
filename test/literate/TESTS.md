@@ -1,5 +1,7 @@
 # Slim test suite
 
+You can run this testsuite with `rake test:literate`.
+
 ## Line indicators
 
 In this section we test all line indicators.
