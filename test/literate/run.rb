@@ -34,12 +34,12 @@ class LiterateTest < Temple::Engine
 
   class Compiler < Temple::Filter
     def call(exp)
-      @opts, @in_testcase, @level = nil, false, 0
+      @opts, @in_testcase, @level = {}, false, 0
       "require 'helper'\n\n" << compile(exp)
     end
 
     def on_section(title, body)
-      old_opts = @opts
+      old_opts = @opts.dup
       @level += 1
       raise Temple::FilterError, 'New section between slim and html block' if @in_testcase
       result = "describe #{title.inspect} do\n  "
@@ -68,14 +68,17 @@ class LiterateTest < Temple::Engine
       raise Temple::FilterError, 'Html block must be preceded by slim block' unless @in_testcase
       @in_testcase = false
       result =  "  html = #{code.inspect}\n"
-      result << "  options = {#{@opts}}\n" if @opts
-      result << "  render(slim#{@opts && ', options'}).must_equal html\nend\n"
+      if @opts.empty?
+        result << "  render(slim).must_equal html\nend\n"
+      else
+        result << "  options = #{@opts.inspect}\n  render(slim, options).must_equal html\nend\n"
+      end
     end
 
     def on_options(code)
       raise Temple::FilterError, 'Options set inside test case' if @in_testcase
-      @opts = code
-      "# #{@opts.gsub("\n", "\n# ")}"
+      @opts.update(eval("{#{code}}"))
+      "# #{code.gsub("\n", "\n# ")}"
     end
 
     def on(*exp)
