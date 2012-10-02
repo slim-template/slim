@@ -636,9 +636,95 @@ renders as
 
 #### Quoted attributes
 
+You can use single or double quotes for simple text attributes.
+
+~~~ slim
+a href="http://slim-lang.com" title='Slim Homepage' Goto the Slim homepage
+~~~
+
+renders as
+
+~~~ html
+<a href="http://slim-lang.com" title="Slim Homepage">Goto the Slim homepage</a>
+~~~
+
+You can use text interpolation in the quoted attributes:
+
+~~~ slim
+- url='slim-lang.com'
+a href="http://#{url}" Goto the #{url}
+~~~
+
+renders as
+
+~~~ html
+<a href="http://slim-lang.com">Goto the slim-lang.com</a>
+~~~
+
+The attribute value will be escaped if the option
+
+~~~ options
+:escape_quoted_attrs => true
+~~~
+
+is set. Use == if you want to disable escaping in the attribute.
+
+~~~ slim
+li
+  a href='&' Link
+li
+  a href=="&amp;" Link
+~~~
+
+renders as
+
+~~~ html
+<li>
+  <a href="&amp;">Link</a>
+</li>
+<li>
+  <a href="&amp;">Link</a>
+</li>
+~~~
+
 #### Ruby attributes
 
 #### Boolean attributes
+
+The attribute values `true`, `false` and `nil` are interpreted as booleans.
+If you use the attribut wrapper you can omit the attribute assigment.
+
+~~~ slim
+- true_value1 = ""
+- true_value2 = true
+input type="text" disabled=true_value1
+input type="text" disabled=true_value2
+input type="text" disabled="disabled"
+input type="text" disabled=true
+input(type="text" disabled)
+~~~
+
+renders as
+
+~~~ html
+<input disabled="" type="text" /><input disabled="disabled" type="text" /><input disabled="disabled" type="text" /><input disabled="disabled" type="text" /><input disabled="disabled" type="text" />
+~~~
+
+~~~ slim
+- false_value1 = false
+- false_value2 = nil
+input type="text" disabled=false_value1
+input type="text" disabled=false_value2
+input type="text"
+input type="text" disabled=false
+input type="text" disabled=nil
+~~~
+
+renders as
+
+~~~ html
+<input type="text" /><input type="text" /><input type="text" /><input type="text" /><input type="text" />
+~~~
 
 #### Attribute merging
 
