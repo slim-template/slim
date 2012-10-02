@@ -116,6 +116,19 @@ renders as
 Text block 
 ~~~
 
+This is especially useful if you use tags behind a text block.
+
+~~~ slim
+' Link to
+a href="http://slim-lang.com" slim-lang.com
+~~~
+
+renders as
+
+~~~ html
+Link to <a href="http://slim-lang.com">slim-lang.com</a>
+~~~
+
 Multiple lines can be indented beneath the first text line.
 
 ~~~ slim
@@ -294,6 +307,18 @@ renders as
 ~~~
 
 ### Output with trailing white space `='`
+
+The equal sign with apostrophe `='` produces dynamic output with a trailing white space.
+
+~~~ slim
+=' 7*7
+~~~
+
+renders as
+
+~~~ html
+49 
+~~~
 
 ### Output without HTML escaping `==`
 
@@ -488,7 +513,79 @@ renders as
 
 ### Closed tags
 
+You can close tags explicitly by appending a trailing `/`.
+
+~~~ slim
+div id="not-closed"
+.closed/
+#closed/
+div id="closed"/
+~~~
+
+renders as
+
+~~~ html
+<div id="not-closed"></div>
+<div class="closed" />
+<div id="closed" />
+<div id="closed" />
+~~~
+
+Note, that this is usually not necessary since the standard html tags (img, br, ...) are closed automatically.
+
+~~~ slim
+img src="image.png"
+~~~
+
+renders as
+
+~~~ html
+<img src="image.png" />
+~~~
+
 ### Inline tags
+
+Sometimes you may want to be a little more compact and inline the tags.
+
+~~~ slim
+ul
+  li.first: a href="/first" First
+  li: a href="/second" Second
+~~~
+
+renders as
+
+~~~ html
+<ul>
+  <li class="first">
+    <a href="/first">First</a>
+  </li>
+  <li>
+    <a href="/second">Second</a>
+  </li>
+</ul>
+~~~
+
+For readability, don't forget you can wrap the attributes.
+
+~~~ slim
+ul
+  li.first: a(href="/first") First
+  li: a(href="/second") Second
+~~~
+
+renders as
+
+~~~ html
+<ul>
+  <li class="first">
+    <a href="/first">First</a>
+  </li>
+  <li>
+    <a href="/second">Second</a>
+  </li>
+</ul>
+~~~
 
 ### Text content
 
@@ -497,6 +594,45 @@ renders as
 ### Attributes
 
 #### Attribute wrapper
+
+If a delimiter makes the syntax more readable for you, you can use the characters `{...}`, `(...)`, `[...]` to wrap the attributes.
+
+~~~ slim
+li
+  a(href="http://slim-lang.com" class="important") Link
+li
+  a[href="http://slim-lang.com" class="important"] Link
+li
+  a{href="http://slim-lang.com" class="important"} Link
+~~~
+
+renders as
+
+~~~ html
+<li>
+  <a class="important" href="http://slim-lang.com">Link</a>
+</li>
+<li>
+  <a class="important" href="http://slim-lang.com">Link</a>
+</li>
+<li>
+  <a class="important" href="http://slim-lang.com">Link</a>
+</li>
+~~~
+
+If you wrap the attributes, you can spread them across multiple lines:
+
+~~~ slim
+a(href="http://slim-lang.com"
+
+     class="important") Link
+~~~
+
+renders as
+
+~~~ html
+<a class="important" href="http://slim-lang.com">Link</a>
+~~~
 
 #### Quoted attributes
 

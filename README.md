@@ -321,7 +321,6 @@ you can use the characters `{...}`, `(...)`, `[...]` to wrap the attributes.
       h1(id="logo") = page_logo
       h2[id="tagline" class="small tagline"] = page_tagline
 
-
 If you wrap the attributes, you can spread them across multiple lines:
 
     h2[id="tagline"
