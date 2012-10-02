@@ -2,6 +2,13 @@
 
 You can run this testsuite with `rake test:literate`.
 
+We use pretty mode in the test suite to make the output more readable. Pretty mode
+is enabled by setting the option
+
+~~~ options
+:pretty => true
+~~~
+
 ## Line indicators
 
 In this section we test all line indicators.
@@ -370,7 +377,9 @@ body
 renders as
 
 ~~~ html
-<body><p>Hello!</p></body>
+<body>
+  <p>Hello!</p>
+</body>
 ~~~
 
 ### HTML comment `/!`
@@ -392,10 +401,15 @@ body
 renders as
 
 ~~~ html
-<!--Comment--><body><!--Another comment
-with multiple lines--><p>Hello!</p><!--First line determines indentation
-
-of the comment--></body>
+<!--Comment-->
+<body>
+  <!--Another comment
+  with multiple lines-->
+  <p>Hello!</p>
+  <!--First line determines indentation
+  
+  of the comment-->
+</body>
 ~~~
 
 ### IE conditional comment `/[...]`
@@ -403,6 +417,74 @@ of the comment--></body>
 ## HTML tags
 
 ### Doctype tags
+
+The doctype tag is a special tag which can be used to generate the complex doctypes in a very simple way.
+
+You can output the XML version using the doctype tag.
+
+~~~ slim
+doctype xml
+doctype xml ISO-8859-1
+~~~
+
+renders as
+
+~~~ html
+<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="iso-8859-1" ?>
+~~~
+
+In XHTML mode the following doctypes are supported:
+
+~~~ slim
+doctype html
+doctype 5
+doctype 1.1
+doctype strict
+doctype frameset
+doctype mobile
+doctype basic
+doctype transitional
+~~~
+
+renders as
+
+~~~ html
+<!DOCTYPE html>
+<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.2//EN" "http://www.openmobilealliance.org/tech/DTD/xhtml-mobile12.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN" "http://www.w3.org/TR/xhtml-basic/xhtml-basic11.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+~~~
+
+If we activate HTML mode with the option
+
+~~~ options
+:format => :html
+~~~
+
+the following doctypes are supported:
+
+~~~ slim
+doctype html
+doctype 5
+doctype strict
+doctype frameset
+doctype transitional
+~~~
+
+renders as
+
+~~~ html
+<!DOCTYPE html>
+<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+~~~
 
 ### Closed tags
 

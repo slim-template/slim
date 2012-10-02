@@ -57,8 +57,8 @@ html
     <style type="text/css">
       body {
         background-color: red;
-      } 
-    </style>
+      }
+      </style>
   </head>
   <body>
     <div id="container">
