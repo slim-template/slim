@@ -336,7 +336,7 @@ You can use text interpolation in the quoted attributes:
 
     a href="http://#{url}" Goto the #{url}
 
-The attribute value will be escaped by default. Use == if you want to disable escaping in the attribute.
+The attribute value will be escaped if the option `:escape_quoted_attrs` is set. Use == if you want to disable escaping in the attribute.
 
     a href=="&amp;"
 
