@@ -515,3 +515,11 @@ renders as
 ## Text interpolation
 
 ## Embedded engines
+
+## Configuring Slim
+
+## Plugins
+
+### Logic less mode
+
+### Translator
