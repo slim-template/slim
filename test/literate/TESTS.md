@@ -439,6 +439,17 @@ renders as
 
 ### IE conditional comment `/[...]`
 
+~~~ slim
+/[if IE]
+    p Get a better browser.
+~~~
+
+renders as
+
+~~~ html
+<!--[if IE]><p>Get a better browser.</p><![endif]-->
+~~~
+
 ## HTML tags
 
 ### Doctype tags
@@ -728,6 +739,33 @@ renders as
 
 #### Attribute merging
 
+You can configure attributes to be merged if multiple are given (See option `:attr_delimiter`). In the default configuration
+this is done for class attributes with the white space as delimiter.
+
+~~~ slim
+a.menu class="highlight" href="http://slim-lang.com/" Slim-lang.com
+~~~
+
+renders as
+
+~~~ html
+<a class="menu highlight" href="http://slim-lang.com/">Slim-lang.com</a>
+~~~
+
+You can also use an `Array` as attribute value and the array elements will be merged using the delimiter.
+
+~~~ slim
+- classes = [:alpha, :beta]
+span class=["first","highlight"] class=classes First
+span class=:second,:highlight class=classes Second
+~~~
+
+renders as
+
+~~~ html
+<span class="first highlight alpha beta">First</span><span class="second highlight alpha beta">Second</span>
+~~~
+
 #### Splat attributes `*`
 
 #### ID shortcut and class shortcut `.`
@@ -735,6 +773,19 @@ renders as
 #### Attribute shortcuts
 
 ## Text interpolation
+
+Use standard Ruby interpolation. The text will be html escaped by default.
+
+~~~ slim
+- user="John Doe <john@doe.net>"
+h1 Welcome #{user}!
+~~~
+
+renders as
+
+~~~ html
+<h1>Welcome John Doe &lt;john@doe.net&gt;!</h1>
+~~~
 
 ## Embedded engines
 
