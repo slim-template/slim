@@ -55,14 +55,7 @@ module Slim
     # @param [String] str Slim code
     # @return [Array] Temple expression representing the code]]
     def call(str)
-      # Set string encoding if option is set
-      if options[:encoding] && str.respond_to?(:encoding)
-        old_enc = str.encoding
-        str = str.dup if str.frozen?
-        str.force_encoding(options[:encoding])
-        # Fall back to old encoding if new encoding is invalid
-        str.force_encoding(old_enc) unless str.valid_encoding?
-      end
+      str = remove_bom(set_encoding(str))
 
       result = [:multi]
       reset(str.split(/\r?\n/), [result])
@@ -85,6 +78,31 @@ module Slim
     ATTR_NAME = '\A\s*(\w[:\w-]*)'
     QUOTED_ATTR_REGEX = /#{ATTR_NAME}=(=?)("|')/
     CODE_ATTR_REGEX = /#{ATTR_NAME}=(=?)/
+
+    # Set string encoding if option is set
+    def set_encoding(s)
+      if options[:encoding] && s.respond_to?(:encoding)
+        old_enc = s.encoding
+        s = s.dup if s.frozen?
+        s.force_encoding(options[:encoding])
+        # Fall back to old encoding if new encoding is invalid
+        s.force_encoding(old_enc) unless s.valid_encoding?
+      end
+      s
+    end
+
+    # Remove unicode byte order mark from string
+    def remove_bom(s)
+      if s.respond_to?(:encoding)
+        if s.encoding.name =~ /^UTF-(8|16|32)(BE|LE)?/
+          s.gsub(Regexp.new("\\A\uFEFF".encode(s.encoding.name)), '')
+        else
+          s
+        end
+      else
+        s.gsub(/\A\xEF\xBB\xBF/, '')
+      end
+    end
 
     def reset(lines = nil, stacks = nil)
       # Since you can indent however you like in Slim, we need to keep a list
