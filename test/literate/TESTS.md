@@ -772,6 +772,24 @@ renders as
 
 #### Attribute shortcuts
 
+We add `&` to create a shortcut for the input elements with type attribute by setting the option `:shortcut`.
+
+~~~ options
+:shortcut => {'&' => 'input type', '#' => 'id', '.' => 'class' }
+~~~
+
+~~~ slim
+&text name="user"
+&password name="pw"
+&submit
+~~~
+
+renders to
+
+~~~ html
+<input name="user" type="text" /><input name="pw" type="password" /><input type="submit" />
+~~~
+
 ## Text interpolation
 
 Use standard Ruby interpolation. The text will be html escaped by default.
