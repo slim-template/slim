@@ -434,7 +434,23 @@ This is the same as
 
 You can define custom shortcuts (Similar to `#` for id and `.` for class).
 
-In this example we add `@` to create a shortcut for the role attribute.
+In this example we add `&` to create a shortcut for the input elements with type attribute.
+
+    Slim::Engine.set_default_options :shortcut => {'&' => 'input type', '#' => 'id', '.' => 'class'}
+
+We can use it in Slim code like this
+
+    &text name="user"
+    &password name="pw"
+    &submit
+
+which renders to
+
+    <input type="text" name="user" />
+    <input type="password" name="pw" />
+    <input type="submit" />
+
+In another example we add `@` to create a shortcut for the role attribute.
 
     Slim::Engine.set_default_options :shortcut => {'@' => 'role', '#' => 'id', '.' => 'class'}
 
