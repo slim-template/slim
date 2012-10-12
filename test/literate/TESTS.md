@@ -645,6 +645,20 @@ renders as
 <a class="important" href="http://slim-lang.com">Link</a>
 ~~~
 
+~~~ slim
+dl(
+  itemprop='address'
+  itemscope
+  itemtype='http://schema.org/PostalAddress'
+)
+~~~
+
+renders as
+
+~~~ html
+<dl itemprop="address" itemscope="itemscope" itemtype="http://schema.org/PostalAddress"></dl>
+~~~
+
 #### Quoted attributes
 
 You can use single or double quotes for simple text attributes.

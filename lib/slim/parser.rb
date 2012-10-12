@@ -365,7 +365,7 @@ module Slim
       end
 
       if delimiter
-        boolean_attr_regex = /#{ATTR_NAME}(?=(\s|#{Regexp.escape delimiter}))/
+        boolean_attr_regex = /#{ATTR_NAME}(?=(\s|#{Regexp.escape delimiter}|\Z))/
         end_regex = /\A\s*#{Regexp.escape delimiter}/
       end
 
