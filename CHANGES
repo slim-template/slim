@@ -8,6 +8,7 @@ master
   * Rename class BooleanAttributes to CodeAttributes
   * Add literate test suite (still incomplete), run with `rake test:literate`
   * Remove UTF BOM when parsing Slim code
+  * Fixed issue #303
 
 1.3.2
 
