@@ -20,6 +20,7 @@ namespace 'test' do
     t.libs << 'lib' << 'test/core'
     t.test_files = FileList['test/core/test_*.rb']
     t.verbose = true
+    #t.ruby_opts << '-w' << '-v'
   end
 
   Rake::TestTask.new('literate') do |t|
