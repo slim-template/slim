@@ -1,4 +1,4 @@
-master
+1.3.3
 
   * Attribute handling made consistent:
     - Splat attributes, static and dynamic attributes are now all handled the same
