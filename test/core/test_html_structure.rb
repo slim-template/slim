@@ -77,7 +77,7 @@ h1#title This is my title
  }
 
     assert_html '<section class="hello world" id="notice">Hello World from @env</section>', source, :default_tag => 'section'
-   end
+  end
 
   def test_render_with_custom_shortcut
     source = %q{
@@ -225,7 +225,7 @@ p class='underscored_class_name' = output_number
 }
 
     assert_html '<p class="underscored_class_name">1337</p>', source
- end
+  end
 
   def test_nonstandard_attributes
     source = %q{
