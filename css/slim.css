@@ -139,7 +139,7 @@ pre code {
   color: #ddd;
   display: block;
   font-size:14px;
-  font-family:Monaco;
+  font-family:monospace;
   letter-spacing:0.4px;
   line-height:20px;
   padding:10px 30px;
