@@ -34,20 +34,16 @@ class LiterateTest < Temple::Engine
 
   class Compiler < Temple::Filter
     def call(exp)
-      @opts, @in_testcase, @level = {}, false, 0
-      "require 'helper'\n\n" << compile(exp)
+      @opts, @in_testcase = {}, false
+      "require 'helper'\n\n#{compile(exp)}"
     end
 
     def on_section(title, body)
       old_opts = @opts.dup
-      @level += 1
       raise Temple::FilterError, 'New section between slim and html block' if @in_testcase
-      result = "describe #{title.inspect} do\n  "
-      result << "include Helper\n  " if @level == 1
-      result << compile(body).gsub("\n", "\n  ") << "\nend\n"
+      "describe #{title.inspect} do\n  #{compile(body).gsub("\n", "\n  ")}\nend\n"
     ensure
       @opts = old_opts
-      @level -= 1
     end
 
     def on_multi(*exps)

@@ -13,3 +13,7 @@ module Helper
     Slim::Template.new(options) { source }.render(self, &block)
   end
 end
+
+module MiniTest::Spec
+  include Helper
+end
