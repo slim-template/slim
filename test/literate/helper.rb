@@ -8,12 +8,8 @@ Slim::Engine.after  Slim::Parser, Temple::Filters::Validator, :grammar => Slim::
 Slim::Engine.before :Pretty, Temple::Filters::Validator
 Slim::Engine.set_default_options :tr => false, :logic_less => false
 
-module Helper
+class MiniTest::Spec
   def render(source, options = {}, &block)
     Slim::Template.new(options) { source }.render(self, &block)
   end
-end
-
-module MiniTest::Spec
-  include Helper
 end
