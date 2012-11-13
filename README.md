@@ -424,7 +424,7 @@ with the :tag key.
 
 renders as
 
-  <span>Link</span><a href="http://slim-lang.com/">Link</a>
+    <span>Link</span><a href="http://slim-lang.com/">Link</a>
 
 #### ID shortcut `#` and class shortcut `.`
 
