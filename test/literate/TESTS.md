@@ -782,6 +782,29 @@ renders as
 
 #### Splat attributes `*`
 
+
+#### Dynamic tags `*`
+
+You can create completely dynamic tags using the splat attributes. Just create a method which returns a hash
+with the :tag key.
+
+~~~ slim
+ruby:
+  def a_unless_current
+    @page_current ? {:tag => 'span'} : {:tag => 'a', :href => 'http://slim-lang.com/'}
+  end
+- @page_current = true
+*a_unless_current Link
+- @page_current = false
+*a_unless_current Link
+~~~
+
+renders as
+
+~~~ html
+<span>Link</span><a href="http://slim-lang.com/">Link</a>
+~~~
+
 #### ID shortcut and class shortcut `.`
 
 #### Attribute shortcuts

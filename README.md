@@ -408,6 +408,24 @@ renders as
 
     div class="first second third"
 
+#### Dynamic tags `*`
+
+You can create completely dynamic tags using the splat attributes. Just create a method which returns a hash
+with the :tag key.
+
+    ruby:
+      def a_unless_current
+        @page_current ? {:tag => 'span'} : {:tag => 'a', :href => 'http://slim-lang.com/'}
+      end
+    - @page_current = true
+    *a_unless_current Link
+    - @page_current = false
+    *a_unless_current Link
+
+renders as
+
+  <span>Link</span><a href="http://slim-lang.com/">Link</a>
+
 #### ID shortcut `#` and class shortcut `.`
 
 Similarly to Haml, you can specify the `id` and `class` attributes in the following shortcut form
