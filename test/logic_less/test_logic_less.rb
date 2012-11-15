@@ -6,7 +6,7 @@ class TestSlimLogicLess < TestSlim
     def initialize
       @hash = {
         :person => [
-                    { :name => 'Joe', :age => 1 },
+                    { :name => 'Joe', :age => 1, :selected => true },
                     { :name => 'Jack', :age => 2 }
                    ]
       }
@@ -121,5 +121,15 @@ p
 }
 
     assert_html '<p><b name="Joe">Person</b><a id="Joe">1</a><span class="Joe"><Person></Person></span><b name="Jack">Person</b><a id="Jack">2</a><span class="Jack"><Person></Person></span></p>', source, :scope => Scope.new, :dictionary => '@hash', :dictionary_access => :symbol
+  end
+
+  def test_boolean_attributes
+    source = %q{
+p
+ - person
+   input checked=selected = name
+}
+
+    assert_html '<p><input checked="checked">Joe</input><input>Jack</input></p>', source, :scope => Scope.new, :dictionary => '@hash', :dictionary_access => :symbol
   end
 end
