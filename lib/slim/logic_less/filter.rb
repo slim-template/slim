@@ -41,8 +41,8 @@ module Slim
       [:slim, :output, escape, access(name), content]
     end
 
-    def on_slim_attr(name, escape, value)
-      [:slim, :attr, name, escape, access(value)]
+    def on_slim_attrvalue(escape, value)
+      [:slim, :attrvalue, escape, access(value)]
     end
 
     def on_slim_splat(code)

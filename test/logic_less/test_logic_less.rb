@@ -6,8 +6,8 @@ class TestSlimLogicLess < TestSlim
     def initialize
       @hash = {
         :person => [
-                    { :name => 'Joe', },
-                    { :name => 'Jack', }
+                    { :name => 'Joe', :age => 1 },
+                    { :name => 'Jack', :age => 2 }
                    ]
       }
     end
@@ -108,5 +108,18 @@ p text with \#{123} test
 }
 
     assert_html '<p>text with #{123} test</p>', source
+  end
+
+  def test_ruby_attributes
+    source = %q{
+p
+ - person
+  b name=name Person
+  a id=name = age
+  span class=name
+    Person
+}
+
+    assert_html '<p><b name="Joe">Person</b><a id="Joe">1</a><span class="Joe"><Person></Person></span><b name="Jack">Person</b><a id="Jack">2</a><span class="Jack"><Person></Person></span></p>', source, :scope => Scope.new, :dictionary => '@hash', :dictionary_access => :symbol
   end
 end

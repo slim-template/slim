@@ -26,10 +26,5 @@ module Slim
     def on_slim_output(code, escape, content)
       [:slim, :output, code, escape, compile(content)]
     end
-
-    # Pass-through handler
-    def on_slim_attrs(*attrs)
-      [:slim, :attrs, *attrs.map {|a| compile(a) }]
-    end
   end
 end
