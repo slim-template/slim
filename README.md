@@ -93,7 +93,7 @@ Indentation matters, but the indentation depth can be chosen as you like. If you
 ### Text `|`
 
 The pipe tells Slim to just copy the line. It essentially escapes any processing.
-Each following line that is indented greater than the backtick is copied over.
+Each following line that is indented greater than the pipe is copied over.
 
     body
       p
@@ -104,7 +104,7 @@ Each following line that is indented greater than the backtick is copied over.
 
     <body><p>This is a test of the text block.</p></body>
 
-  The left margin is set at the indent of the backtick + one space.
+  The left margin is set at the indent of the pipe + one space.
   Any additional spaces will be copied over.
 
     body
