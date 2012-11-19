@@ -20,7 +20,7 @@ if ENV['RAILS']
     gem 'activerecord-jdbc-adapter'
     gem 'activerecord-jdbcsqlite3-adapter'
   else
-    gem 'sqlite3-ruby'
+    gem 'sqlite3'
   end
 end
 
