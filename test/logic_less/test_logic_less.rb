@@ -94,6 +94,45 @@ p
     assert_html '<p><div class="name">Joe</div><div class="name">Jack</div></p>', source, :scope => hash, :dictionary_access => :symbol
   end
 
+  def test_method_access
+    source = %q{
+p
+ - person
+  .name = name
+}
+
+    object = Object.new
+    def object.person
+      %w(Joe Jack).map do |name|
+        person = Object.new
+        person.instance_variable_set(:@name, name)
+        def person.name
+          @name
+        end
+        person
+      end
+    end
+
+    assert_html '<p><div class="name">Joe</div><div class="name">Jack</div></p>', source, :scope => object, :dictionary_access => :method
+  end
+
+  def test_instance_variable_access
+    source = %q{
+p
+ - person
+  .name = name
+}
+
+    object = Object.new
+    object.instance_variable_set(:@person, %w(Joe Jack).map do |name|
+                                   person = Object.new
+                                   person.instance_variable_set(:@name, name)
+                                   person
+                                 end)
+
+    assert_html '<p><div class="name">Joe</div><div class="name">Jack</div></p>', source, :scope => object, :dictionary_access => :instance_variable
+  end
+
   def test_string_hash
     source = %q{
 p
