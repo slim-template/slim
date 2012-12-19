@@ -3,21 +3,22 @@ module Slim
   # This filter can be activated with the option "logic_less"
   # @api private
   class LogicLess < Filter
-    DICTIONARY_ACCESS = [:symbol, :string, :method, :instance_variable]
+    # Default dictionary access order, change it with the option :dictionary_access
+    DEFAULT_ACCESS_ORDER = [:symbol, :string, :method, :instance_variable].freeze
 
     define_options :logic_less => true,
                    :dictionary => 'self',
-                   :dictionary_access => DICTIONARY_ACCESS
+                   :dictionary_access => DEFAULT_ACCESS_ORDER
 
     def initialize(opts = {})
       super
       if options[:directory_access] == :wrapped
         puts 'Slim::LogicLess - Wrapped directory access is deprecated'
-        options[:directory_access] = DICTIONARY_ACCESS
+        options[:directory_access] = DEFAULT_ACCESS_ORDER
       end
       access = [options[:dictionary_access]].flatten.compact
       access.each do |type|
-        raise ArgumentError, "Invalid dictionary access #{type.inspect}" unless DICTIONARY_ACCESS.include?(type)
+        raise ArgumentError, "Invalid dictionary access #{type.inspect}" unless DEFAULT_ACCESS_ORDER.include?(type)
       end
       raise ArgumentError, 'Option dictionary access is missing' if access.empty?
       @access = access.inspect
