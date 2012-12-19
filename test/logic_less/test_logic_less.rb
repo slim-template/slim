@@ -264,4 +264,15 @@ a href=output_number Link
     a href=next_page Newer}
     assert_html'<li class="previous"><a href="prev">Older</a></li><li class="next"><a href="next">Newer</a></li>', source, :scope => {:prev_page => 'prev', :next_page => 'next'}
   end
+
+  def test_render_with_yield
+    source = %q{
+div
+  == yield
+}
+
+    assert_html '<div>This is the menu</div>', source do
+      'This is the menu'
+    end
+  end
 end
