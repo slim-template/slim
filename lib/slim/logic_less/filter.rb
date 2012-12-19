@@ -12,11 +12,13 @@ module Slim
 
     def initialize(opts = {})
       super
-      if options[:directory_access] == :wrapped
-        puts 'Slim::LogicLess - Wrapped directory access is deprecated'
-        options[:directory_access] = DEFAULT_ACCESS_ORDER
+      access = options[:dictionary_access]
+      if access == :wrapped
+        puts 'Slim::LogicLess - Wrapped dictionary access is deprecated'
+        access = DEFAULT_ACCESS_ORDER
+      else
+        access = [access].flatten.compact
       end
-      access = [options[:dictionary_access]].flatten.compact
       access.each do |type|
         raise ArgumentError, "Invalid dictionary access #{type.inspect}" unless DEFAULT_ACCESS_ORDER.include?(type)
       end
