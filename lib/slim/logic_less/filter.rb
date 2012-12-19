@@ -3,17 +3,31 @@ module Slim
   # This filter can be activated with the option "logic_less"
   # @api private
   class LogicLess < Filter
+    DICTIONARY_ACCESS = [:method, :symbol, :string, :instance_variable]
+
     define_options :logic_less => true,
                    :dictionary => 'self',
-                   :dictionary_lookup => [:method, :symbol, :string, :instance_variable]
+                   :dictionary_access => DICTIONARY_ACCESS
 
-    define_deprecated_options :dictionary_access
+    def initialize(opts = {})
+      super
+      if options[:directory_access] == :wrapped
+        puts 'Slim::LogicLess - Wrapped directory access is deprecated'
+        options[:directory_access] = DICTIONARY_ACCESS
+      end
+      access = [options[:dictionary_access]].flatten.compact
+      access.each do |type|
+        raise ArgumentError, "Invalid dictionary access #{type.inspect}" unless DICTIONARY_ACCESS.include?(type)
+      end
+      raise ArgumentError, 'Option dictionary access is missing' if access.empty?
+      @access = access.inspect
+    end
 
     def call(exp)
       if options[:logic_less]
         @context = unique_name
         [:multi,
-         [:code, "#{@context} = ::Slim::LogicLess::Context.new(#{options[:dictionary]}, #{options[:dictionary_lookup].inspect})"],
+         [:code, "#{@context} = ::Slim::LogicLess::Context.new(#{options[:dictionary]}, #{@access})"],
          super]
       else
         exp
