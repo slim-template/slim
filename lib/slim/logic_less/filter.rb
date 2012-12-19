@@ -3,7 +3,7 @@ module Slim
   # This filter can be activated with the option "logic_less"
   # @api private
   class LogicLess < Filter
-    DICTIONARY_ACCESS = [:method, :symbol, :string, :instance_variable]
+    DICTIONARY_ACCESS = [:symbol, :string, :method, :instance_variable]
 
     define_options :logic_less => true,
                    :dictionary => 'self',

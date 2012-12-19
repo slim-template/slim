@@ -679,12 +679,12 @@ Example code:
     - article
       h1 = title
 
-The dictionary object is accessed in the order given by the `:dictionary_access`.
+The dictionary object is accessed in the order given by the `:dictionary_access`. Default order:
 
-* `:method` - If `article.respond_to?(:title)`, Slim will execute `article.send(:title)`
-* `:symbol` - If `article.respond_to?(:has_key?)` and `article.has_key?(:title)`, Slim will execute `article[:title]`
-* `:string` - If `article.respond_to?(:has_key?)` and `article.has_key?('title')`, Slim will execute `article['title']`
-* `:instance_variable` - If `article.instance_variable_defined?(@title)`, Slim will execute `article.instance_variable_get @title`
+1. `:symbol` - If `article.respond_to?(:has_key?)` and `article.has_key?(:title)`, Slim will execute `article[:title]`
+2. `:string` - If `article.respond_to?(:has_key?)` and `article.has_key?('title')`, Slim will execute `article['title']`
+3. `:method` - If `article.respond_to?(:title)`, Slim will execute `article.send(:title)`
+4. `:instance_variable` - If `article.instance_variable_defined?(@title)`, Slim will execute `article.instance_variable_get @title`
 
 If all the above fails, Slim will try to resolve the title reference in the same order against the parent object. In this example, the parent would be the dictionary object you are rendering the template against.
 

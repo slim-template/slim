@@ -60,6 +60,40 @@ p
     assert_html '<p><div class="name">Joe</div><div class="name">Jack</div></p>', source, :scope => hash
   end
 
+  def test_string_access
+    source = %q{
+p
+ - person
+  .name = name
+}
+
+    hash = {
+      'person' => [
+        { 'name' => 'Joe', },
+        { 'name' => 'Jack', }
+      ]
+    }
+
+    assert_html '<p><div class="name">Joe</div><div class="name">Jack</div></p>', source, :scope => hash, :dictionary_access => :string
+  end
+
+  def test_symbol_access
+    source = %q{
+p
+ - person
+  .name = name
+}
+
+    hash = {
+      :person => [
+        { :name => 'Joe', },
+        { :name => 'Jack', }
+      ]
+    }
+
+    assert_html '<p><div class="name">Joe</div><div class="name">Jack</div></p>', source, :scope => hash, :dictionary_access => :symbol
+  end
+
   def test_string_hash
     source = %q{
 p
