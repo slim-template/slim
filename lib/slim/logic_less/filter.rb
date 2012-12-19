@@ -4,23 +4,15 @@ module Slim
   # @api private
   class LogicLess < Filter
     define_options :logic_less => true,
-                   :dictionary => 'self',
-                   :dictionary_access => :wrapped # :symbol, :string, :wrapped
+                   :dictionary => 'self'
 
-    def initialize(opts = {})
-      super
-      unless [:string, :symbol, :wrapped].include?(options[:dictionary_access])
-        raise ArgumentError, "Invalid dictionary access #{options[:dictionary_access].inspect}"
-      end
-    end
+    define_deprecated_options :dictionary_access
 
     def call(exp)
       if options[:logic_less]
-        @dict = unique_name
-        dictionary = options[:dictionary]
-        dictionary = "::Slim::LogicLess::Wrapper.new(#{dictionary})" if options[:dictionary_access] == :wrapped
+        @context = unique_name
         [:multi,
-         [:code, "#{@dict} = #{dictionary}"],
+         [:code, "#{@context} = ::Slim::LogicLess::Context.new(#{options[:dictionary]})"],
          super]
       else
         exp
@@ -29,11 +21,16 @@ module Slim
 
     # Interpret control blocks as sections or inverted sections
     def on_slim_control(name, content)
-      if name =~ /\A!\s*(.*)/
-        on_slim_inverted_section($1, content)
-      else
-        on_slim_section(name, content)
-      end
+      method =
+        if name =~ /\A!\s*(.*)/
+          name = $1
+          'inverted_section'
+        else
+          'section'
+        end
+      [:multi,
+       [:block, "#{@context}.#{method}(#{name.to_sym.inspect}) do",
+        compile(content)]]
     end
 
     def on_slim_output(escape, name, content)
@@ -57,41 +54,10 @@ module Slim
       raise Temple::FilterError, 'Embedded code is forbidden in logic less mode'
     end
 
-    protected
-
-    def on_slim_inverted_section(name, content)
-      tmp = unique_name
-      [:multi,
-       [:code, "#{tmp} = #{access name}"],
-       [:if, "!#{tmp} || #{tmp}.respond_to?(:empty) && #{tmp}.empty?",
-        compile(content)]]
-    end
-
-    def on_slim_section(name, content)
-      content = compile(content)
-      tmp1, tmp2 = unique_name, unique_name
-
-      [:if, "#{tmp1} = #{access name}",
-       [:if, "#{tmp1} == true",
-        content,
-        [:multi,
-         # Wrap map in array because maps implement each
-         [:code, "#{tmp1} = [#{tmp1}] if #{tmp1}.respond_to?(:has_key?) || !#{tmp1}.respond_to?(:map)"],
-         [:code, "#{tmp2} = #{@dict}"],
-         [:block, "#{tmp1}.each do |#{@dict}|", content],
-         [:code, "#{@dict} = #{tmp2}"]]]]
-    end
-
     private
 
     def access(name)
-      return name if name == 'yield'
-      case options[:dictionary_access]
-      when :string
-        "#{@dict}[#{name.to_s.inspect}]"
-      else
-        "#{@dict}[#{name.to_sym.inspect}]"
-      end
+      name == 'yield' ? name : "#{@context}[#{name.to_sym.inspect}]"
     end
   end
 end
