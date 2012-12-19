@@ -670,7 +670,7 @@ The lambda method could be defined like this
       "<div class='person'>#{yield(:name => 'Andrew')}</div>"
     end
 
-You can optionally pass a hash to `yield`.
+You can optionally pass one or more hashes to `yield`. If you pass multiple hashes, the block will be iterated as described above.
 
 #### Dictionary access
 
