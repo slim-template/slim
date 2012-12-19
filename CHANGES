@@ -1,3 +1,10 @@
+master
+
+  * Logic-less:
+    - Rewrote logic-less mode (Issue #326, #327)
+    - Logic-less mode supports lambdas
+    - Deprecated option :dictionary_access
+
 1.3.4
 
   * Fixed #314
