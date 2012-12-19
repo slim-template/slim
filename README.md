@@ -1001,7 +1001,7 @@ Slim is released under the [MIT license](http://www.opensource.org/licenses/MIT)
 
 Template compilation framework:
 
-* [Temple](https://github.com/judofyr/slim)
+* [Temple](https://github.com/judofyr/temple)
 
 Framework support:
 
