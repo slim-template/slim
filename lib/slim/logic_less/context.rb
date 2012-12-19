@@ -11,8 +11,17 @@ module Slim
       end
 
       def lambda(name)
-        scope.lambda(name) do |dict|
-          new_scope(dict) { yield }
+        scope.lambda(name) do |*dict|
+          if dict.empty?
+            yield
+          else
+            new_scope do
+              dict.inject('') do |result, d|
+                scope.dict = d
+                result << yield
+              end
+            end
+          end
         end
       end
 

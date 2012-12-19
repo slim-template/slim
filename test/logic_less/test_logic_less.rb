@@ -18,17 +18,29 @@ class TestSlimLogicLess < TestSlim
 p
  == person
   .name = name
+ == simple
+  .hello= hello
+ == list
+  li = key
 }
 
     hash = {
+      :hello => 'Hello!',
       :person => lambda do |&block|
         %w(Joe Jack).map do |name|
           "<b>#{block.call(:name => name)}</b>"
         end.join
+      end,
+      :simple => lambda do |&block|
+        "<div class=\"simple\">#{block.call}</div>"
+      end,
+      :list => lambda do |&block|
+        list = [{:key => 'First'}, {:key => 'Second'}]
+        "<ul>#{block.call(*list)}</ul>"
       end
     }
 
-    assert_html '<p><b><div class="name">Joe</div></b><b><div class="name">Jack</div></b></p>', source, :scope => hash
+    assert_html '<p><b><div class="name">Joe</div></b><b><div class="name">Jack</div></b><div class="simple"><div class="hello">Hello!</div></div><ul><li>First</li><li>Second</li></ul></p>', source, :scope => hash
   end
 
   def test_symbol_hash

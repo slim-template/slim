@@ -657,18 +657,34 @@ If the object is an array, the section will iterate
     - articles
       tr: td = title
 
-#### Dictionary - Resolution order
+#### Lambdas
+
+Like mustache, Slim supports lambdas.
+
+    = person
+      = name
+
+The lambda method could be defined like this
+
+    def lambda_method
+      "<div class='person'>#{yield(:name => 'Andrew')}</div>"
+    end
+
+You can optionally pass a hash to `yield`.
+
+#### Dictionary access
 
 Example code:
 
     - article
       h1 = title
 
-The dictionary object is accessed in the following order.
+The dictionary object is accessed in the order given by the `:dictionary_access`.
 
-1. If `article.respond_to?(:title)`, Slim will execute `article.send(:title)`
-2. If `article.respond_to?(:has_key?)` and `article.has_key?(:title)`, Slim will execute `article[:title]`
-3. If `article.instance_variable_defined?(@title)`, Slim will execute `article.instance_variable_get @title`
+* `:method` - If `article.respond_to?(:title)`, Slim will execute `article.send(:title)`
+* `:symbol` - If `article.respond_to?(:has_key?)` and `article.has_key?(:title)`, Slim will execute `article[:title]`
+* `:string` - If `article.respond_to?(:has_key?)` and `article.has_key?('title')`, Slim will execute `article['title']`
+* `:instance_variable` - If `article.instance_variable_defined?(@title)`, Slim will execute `article.instance_variable_get @title`
 
 If all the above fails, Slim will try to resolve the title reference in the same order against the parent object. In this example, the parent would be the dictionary object you are rendering the template against.
 
