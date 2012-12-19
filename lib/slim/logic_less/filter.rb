@@ -18,11 +18,11 @@ module Slim
         access = DEFAULT_ACCESS_ORDER
       else
         access = [access].flatten.compact
+        access.each do |type|
+          raise ArgumentError, "Invalid dictionary access #{type.inspect}" unless DEFAULT_ACCESS_ORDER.include?(type)
+        end
+        raise ArgumentError, 'Option dictionary access is missing' if access.empty?
       end
-      access.each do |type|
-        raise ArgumentError, "Invalid dictionary access #{type.inspect}" unless DEFAULT_ACCESS_ORDER.include?(type)
-      end
-      raise ArgumentError, 'Option dictionary access is missing' if access.empty?
       @access = access.inspect
     end
 
