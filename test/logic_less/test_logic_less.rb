@@ -16,19 +16,19 @@ class TestSlimLogicLess < TestSlim
   def test_lambda
     source = %q{
 p
- - person
+ == person
   .name = name
 }
 
     hash = {
       :person => lambda do |&block|
-        %w(Joe Jack).each do |name|
-          block.call(:name => name)
-        end
+        %w(Joe Jack).map do |name|
+          "<b>#{block.call(:name => name)}</b>"
+        end.join
       end
     }
 
-    assert_html '<p><div class="name">Joe</div><div class="name">Jack</div></p>', source, :scope => hash
+    assert_html '<p><b><div class="name">Joe</div></b><b><div class="name">Jack</div></b></p>', source, :scope => hash
   end
 
   def test_symbol_hash
@@ -110,14 +110,6 @@ p
     hash = {}
 
     assert_html '<p>No person No person 2</p>', source, :scope => hash
-  end
-
-  def test_output_with_content
-    source = %{
-p = method_with_block do
-  block
-}
-    assert_runtime_error 'Output statements with content are forbidden in logic less mode', source
   end
 
   def test_escaped_interpolation

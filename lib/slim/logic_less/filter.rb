@@ -28,14 +28,15 @@ module Slim
         else
           'section'
         end
-      [:multi,
-       [:block, "#{@context}.#{method}(#{name.to_sym.inspect}) do",
-        compile(content)]]
+      [:block, "#{@context}.#{method}(#{name.to_sym.inspect}) do", compile(content)]
     end
 
     def on_slim_output(escape, name, content)
-      raise(Temple::FilterError, 'Output statements with content are forbidden in logic less mode') if !empty_exp?(content)
-      [:slim, :output, escape, access(name), content]
+      if empty_exp?(content)
+        [:slim, :output, escape, access(name), compile(content)]
+      else
+        [:slim, :output, escape, "#{@context}.lambda(#{name.to_sym.inspect}) do", compile(content)]
+      end
     end
 
     def on_slim_attrvalue(escape, value)

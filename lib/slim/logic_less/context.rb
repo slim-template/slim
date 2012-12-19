@@ -10,13 +10,15 @@ module Slim
         scope[name]
       end
 
+      def lambda(name)
+        scope.lambda(name) do |dict|
+          new_scope(dict) { yield }
+        end
+      end
+
       def section(name)
         if dict = scope[name]
-          if dict.respond_to?(:call)
-            dict.call do |new_dict|
-              new_scope(new_dict) { yield }
-            end
-          elsif !dict.respond_to?(:has_key?) && dict.respond_to?(:each)
+          if !dict.respond_to?(:has_key?) && dict.respond_to?(:each)
             new_scope do
               dict.each do |d|
                 scope.dict = d
@@ -43,19 +45,36 @@ module Slim
           @dict, @parent = dict, parent
         end
 
+        def lambda(name, &block)
+          return @dict.send(name, &block) if @dict.respond_to?(name)
+          if @dict.respond_to?(:has_key?)
+            return @dict[name].call(&block) if @dict.has_key?(name)
+            return @dict[name.to_s].call(&block) if @dict.has_key?(name.to_s)
+          end
+          var_name = "@#{name}"
+          return @dict.instance_variable_get(var_name).call(&block) if instance_variable?(var_name)
+          @parent.lambda(name) if @parent
+        end
+
         def [](name)
           return @dict.send(name) if @dict.respond_to?(name)
           if @dict.respond_to?(:has_key?)
             return @dict[name] if @dict.has_key?(name)
             return @dict[name.to_s] if @dict.has_key?(name.to_s)
           end
-          begin
-            var_name = "@#{name}"
-            return @dict.instance_variable_get(var_name) if @dict.instance_variable_defined?(var_name)
-          rescue NameError
-            # Do nothing
-          end
+          var_name = "@#{name}"
+          return @dict.instance_variable_get(var_name) if instance_variable?(var_name)
           @parent[name] if @parent
+        end
+
+        private
+
+        def instance_variable?(name)
+          begin
+            @dict.instance_variable_defined?(name)
+          rescue NameError
+            false
+          end
         end
       end
 
