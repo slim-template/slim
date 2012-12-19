@@ -4,7 +4,8 @@ module Slim
   # @api private
   class LogicLess < Filter
     define_options :logic_less => true,
-                   :dictionary => 'self'
+                   :dictionary => 'self',
+                   :dictionary_lookup => [:method, :symbol, :string, :instance_variable]
 
     define_deprecated_options :dictionary_access
 
@@ -12,7 +13,7 @@ module Slim
       if options[:logic_less]
         @context = unique_name
         [:multi,
-         [:code, "#{@context} = ::Slim::LogicLess::Context.new(#{options[:dictionary]})"],
+         [:code, "#{@context} = ::Slim::LogicLess::Context.new(#{options[:dictionary]}, #{options[:dictionary_lookup].inspect})"],
          super]
       else
         exp

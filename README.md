@@ -657,14 +657,14 @@ If the object is an array, the section will iterate
     - articles
       tr: td = title
 
-#### Wrapped dictionary - Resolution order
+#### Dictionary - Resolution order
 
 Example code:
 
     - article
       h1 = title
 
-In wrapped dictionary acccess mode (the default, see the options), the dictionary object is accessed in the following order.
+The dictionary object is accessed in the following order.
 
 1. If `article.respond_to?(:title)`, Slim will execute `article.send(:title)`
 2. If `article.respond_to?(:has_key?)` and `article.has_key?(:title)`, Slim will execute `article[:title]`

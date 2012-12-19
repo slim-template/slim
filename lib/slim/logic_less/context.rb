@@ -2,8 +2,8 @@ module Slim
   class LogicLess
     # @api private
     class Context
-      def initialize(dict)
-        @scope = [Scope.new(dict)]
+      def initialize(dict, lookup)
+        @scope = [Scope.new(dict, lookup)]
       end
 
       def [](name)
@@ -39,35 +39,52 @@ module Slim
       private
 
       class Scope
+        attr_reader :lookup
         attr_writer :dict
 
-        def initialize(dict, parent = nil)
-          @dict, @parent = dict, parent
+        def initialize(dict, lookup, parent = nil)
+          @dict, @lookup, @parent = dict, lookup, parent
         end
 
         def lambda(name, &block)
-          return @dict.send(name, &block) if @dict.respond_to?(name)
-          if @dict.respond_to?(:has_key?)
-            return @dict[name].call(&block) if @dict.has_key?(name)
-            return @dict[name.to_s].call(&block) if @dict.has_key?(name.to_s)
+          @lookup.each do |lookup|
+            case lookup
+            when :method
+              return @dict.send(name, &block) if @dict.respond_to?(name)
+            when :symbol
+              return @dict[name].call(&block) if has_key?(name)
+            when :string
+              return @dict[name.to_s].call(&block) if has_key?(name.to_s)
+            when :instance_variable
+              var_name = "@#{name}"
+              return @dict.instance_variable_get(var_name).call(&block) if instance_variable?(var_name)
+            end
           end
-          var_name = "@#{name}"
-          return @dict.instance_variable_get(var_name).call(&block) if instance_variable?(var_name)
           @parent.lambda(name) if @parent
         end
 
         def [](name)
-          return @dict.send(name) if @dict.respond_to?(name)
-          if @dict.respond_to?(:has_key?)
-            return @dict[name] if @dict.has_key?(name)
-            return @dict[name.to_s] if @dict.has_key?(name.to_s)
+          @lookup.each do |lookup|
+            case lookup
+            when :method
+              return @dict.send(name) if @dict.respond_to?(name)
+            when :symbol
+              return @dict[name] if has_key?(name)
+            when :string
+              return @dict[name.to_s] if has_key?(name.to_s)
+            when :instance_variable
+              var_name = "@#{name}"
+              return @dict.instance_variable_get(var_name) if instance_variable?(var_name)
+            end
           end
-          var_name = "@#{name}"
-          return @dict.instance_variable_get(var_name) if instance_variable?(var_name)
           @parent[name] if @parent
         end
 
         private
+
+        def has_key?(name)
+          @dict.respond_to?(:has_key?) && @dict.has_key?(name)
+        end
 
         def instance_variable?(name)
           begin
@@ -83,7 +100,7 @@ module Slim
       end
 
       def new_scope(dict = nil)
-        @scope << Scope.new(dict, scope)
+        @scope << Scope.new(dict, scope.lookup, scope)
         yield
       ensure
         @scope.pop
