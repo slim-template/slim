@@ -50,11 +50,8 @@ module Slim
     end
 
     def on_slim_output(escape, name, content)
-      if empty_exp?(content)
-        [:slim, :output, escape, access(name), compile(content)]
-      else
-        [:slim, :output, escape, "#{@context}.lambda(#{name.to_sym.inspect}) do", compile(content)]
-      end
+      [:slim, :output, escape, empty_exp?(content) ? access(name) :
+       "#{@context}.lambda(#{name.to_sym.inspect}) do", compile(content)]
     end
 
     def on_slim_attrvalue(escape, value)
