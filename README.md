@@ -739,7 +739,7 @@ and activate logic less mode per render call in your application
 <tbody>
 <tr><td>Boolean</td><td>:logic_less</td><td>true</td><td>Enable logic less mode (Enabled if 'slim/logic_less' is required)</td></tr>
 <tr><td>String</td><td>:dictionary</td><td>"self"</td><td>Dictionary where variables are looked up</td></tr>
-<tr><td>Symbol/Array of Symbols</td><td>:dictionary_access</td><td>[:method, :string, :symbol, :instance_variable]</td><td>Dictionary access order (:method, :string, :symbol, :instance_variable)</td></tr>
+<tr><td>Symbol/Array of Symbols</td><td>:dictionary_access</td><td>[:symbol, :string, :method, :instance_variable]</td><td>Dictionary access order (:symbol, :string, :method, :instance_variable)</td></tr>
 </tbody>
 </table>
 
