@@ -47,6 +47,12 @@ namespace 'test' do
     t.verbose = true
   end
 
+  Rake::TestTask.new('handlebars') do |t|
+    t.libs << 'lib' << 'test/core'
+    t.test_files = FileList['test/handlebars/test_*.rb']
+    t.verbose = true
+  end
+
   begin
     require 'sinatra'
     spec = Gem::Specification.find_by_name('sinatra')

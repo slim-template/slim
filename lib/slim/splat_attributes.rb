@@ -48,7 +48,7 @@ module Slim
     # @param [Array] attrs Array of temple expressions
     # @return [Array] Compiled temple expression
     def on_html_attrs(*attrs)
-      return super if attrs.all? {|attr| attr[1] != :splat}
+      return super if attrs.all? {|attr| attr[1] != :splat and attr[1] != :handlebars}
       hash, merger, formatter = splat_attributes(attrs)
       [:multi, merger, formatter]
     end
@@ -71,6 +71,8 @@ module Slim
             [:code, "(#{hash}[#{attr[2].inspect}] ||= []) << (#{attr[4]})"]
           elsif attr[1] == :splat
             [:code, "(#{attr[2]}).each {|#{name},#{value}| (#{hash}[#{name}.to_s] ||= []) << (#{value}) }"]
+          elsif attr[1] == :handlebars
+            [:static, attr[2]]
           else
             attr
           end
