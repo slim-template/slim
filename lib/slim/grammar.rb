@@ -13,7 +13,6 @@ module Slim
       [:slim, :attrvalue, Bool, String]
 
     HTMLAttr <<
-      [:slim, :splat, String]     |
-      [:slim, :handlebars, String]
+      [:slim, :splat, String]
   end
 end
