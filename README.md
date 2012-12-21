@@ -2,6 +2,23 @@
 
 [![Build Status](https://secure.travis-ci.org/stonean/slim.png?branch=master)](http://travis-ci.org/stonean/slim) [![Dependency Status](https://gemnasium.com/stonean/slim.png?travis)](https://gemnasium.com/stonean/slim) [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/stonean/slim)
 
+## What's this project
+
+This is a 'dialect' of [slim](https://github.com/stonean/slim) for people who run into need for both of slim and handlebars/ember.js. So, we can directly use similar code like below:
+
+    script type='text/x-handlebars' data-template-name='collection'
+      b Item View sample, MyApp.ItemView
+      {{collection contentBinding="MyApp.items" itemViewClass="MyApp.ItemView"}}
+
+    script  type='text/x-handlebars' data-template-name='stacked-pills'
+      ul.nav.nav-pills.nav-stacked
+        li.active
+          a href="#" Stacked-Pills
+        {{#each MyApp.items}}
+        li
+          a href="#" {{this.name}}
+        {{/each}}
+
 Slim is a template language whose goal is to reduce the view syntax to the essential parts without becoming cryptic. It started as an exercise to see how much could be removed from a standard html template (<, >, closing tags, etc...). As more people took an interest in Slim, the functionality grew and so did the flexibility of the syntax.
 
 A short list of the features...
