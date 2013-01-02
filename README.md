@@ -866,13 +866,13 @@ There are plugins for various text editors (including the most important ones - 
 
 * [Vim](https://github.com/bbommarito/vim-slim)
 * [Emacs](https://github.com/slim-template/emacs-slim)
-* [Textmate / Sublime Text](https://github.com/fredwu/ruby-slim-tmbundle)
+* [Textmate / Sublime Text](https://github.com/slim-template/ruby-slim.tmbundle)
 * [Espresso text editor](https://github.com/CiiDub/Slim-Sugar)
 * [Coda](https://github.com/nwalton3/Coda-2-Slim.mode)
 
 ### Template Converters (HAML, ERB, ...)
 
-* [Haml2Slim converter](https://github.com/fredwu/haml2slim)
+* [Haml2Slim converter](https://github.com/slim-template/haml2slim)
 * [HTML2Slim converter](https://github.com/joaomilho/html2slim)
 * [ERB2Slim converter](https://github.com/c0untd0wn/erb2slim)
 
@@ -1011,13 +1011,13 @@ Syntax highlighting:
 
 * [Vim](https://github.com/bbommarito/vim-slim)
 * [Emacs](https://github.com/slim-template/emacs-slim)
-* [Textmate / Sublime Text](https://github.com/fredwu/ruby-slim-tmbundle)
+* [Textmate / Sublime Text](https://github.com/slim-template/ruby-slim.tmbundle)
 * [Espresso text editor](https://github.com/CiiDub/Slim-Sugar)
 * [Coda](https://github.com/nwalton3/Coda-2-Slim.mode)
 
 Template Converters (HAML, ERB, ...):
 
-* [Haml2Slim converter](https://github.com/fredwu/haml2slim)
+* [Haml2Slim converter](https://github.com/slim-template/haml2slim)
 * [HTML2Slim converter](https://github.com/joaomilho/html2slim)
 * [ERB2Slim converter](https://github.com/c0untd0wn/erb2slim)
 
