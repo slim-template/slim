@@ -806,7 +806,7 @@ html
 
 ### Rails
 
-Rails generators are provided by [slim-rails](https://github.com/leogalmeida/slim-rails). slim-rails
+Rails generators are provided by [slim-rails](https://github.com/slim-template/slim-rails). slim-rails
 is not necessary to use Slim in Rails though. Just install Slim and add it to your Gemfile with `gem 'slim'`.
 Then just use the .slim extension and you're good to go.
 
@@ -864,7 +864,7 @@ markdown:
 
 There are plugins for various text editors (including the most important ones - Vim, Emacs and Textmate):
 
-* [Vim](https://github.com/bbommarito/vim-slim)
+* [Vim](https://github.com/slim-template/vim-slim)
 * [Emacs](https://github.com/slim-template/emacs-slim)
 * [Textmate / Sublime Text](https://github.com/slim-template/ruby-slim.tmbundle)
 * [Espresso text editor](https://github.com/CiiDub/Slim-Sugar)
@@ -1005,11 +1005,11 @@ Template compilation framework:
 
 Framework support:
 
-* [Rails 3 generators (slim-rails)](https://github.com/leogalmeida/slim-rails)
+* [Rails 3 generators (slim-rails)](https://github.com/slim-template/slim-rails)
 
 Syntax highlighting:
 
-* [Vim](https://github.com/bbommarito/vim-slim)
+* [Vim](https://github.com/slim-template/vim-slim)
 * [Emacs](https://github.com/slim-template/emacs-slim)
 * [Textmate / Sublime Text](https://github.com/slim-template/ruby-slim.tmbundle)
 * [Espresso text editor](https://github.com/CiiDub/Slim-Sugar)
