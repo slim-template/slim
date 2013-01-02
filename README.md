@@ -865,7 +865,7 @@ markdown:
 There are plugins for various text editors (including the most important ones - Vim, Emacs and Textmate):
 
 * [Vim](https://github.com/bbommarito/vim-slim)
-* [Emacs](https://github.com/minad/emacs-slim)
+* [Emacs](https://github.com/slim-template/emacs-slim)
 * [Textmate / Sublime Text](https://github.com/fredwu/ruby-slim-tmbundle)
 * [Espresso text editor](https://github.com/CiiDub/Slim-Sugar)
 * [Coda](https://github.com/nwalton3/Coda-2-Slim.mode)
@@ -1010,7 +1010,7 @@ Framework support:
 Syntax highlighting:
 
 * [Vim](https://github.com/bbommarito/vim-slim)
-* [Emacs](https://github.com/minad/emacs-slim)
+* [Emacs](https://github.com/slim-template/emacs-slim)
 * [Textmate / Sublime Text](https://github.com/fredwu/ruby-slim-tmbundle)
 * [Espresso text editor](https://github.com/CiiDub/Slim-Sugar)
 * [Coda](https://github.com/nwalton3/Coda-2-Slim.mode)
