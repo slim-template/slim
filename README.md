@@ -1,6 +1,6 @@
 # Slim
 
-[![Build Status](https://secure.travis-ci.org/stonean/slim.png?branch=master)](http://travis-ci.org/stonean/slim) [![Dependency Status](https://gemnasium.com/stonean/slim.png?travis)](https://gemnasium.com/stonean/slim) [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/stonean/slim)
+[![Build Status](https://secure.travis-ci.org/slim-template/slim.png?branch=master)](http://travis-ci.org/slim-template/slim) [![Dependency Status](https://gemnasium.com/slim-template/slim.png?travis)](https://gemnasium.com/slim-template/slim) [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/slim-template/slim)
 
 Slim is a template language whose goal is to reduce the view syntax to the essential parts without becoming cryptic. It started as an exercise to see how much could be removed from a standard html template (<, >, closing tags, etc...). As more people took an interest in Slim, the functionality grew and so did the flexibility of the syntax.
 
@@ -954,7 +954,7 @@ with 'rake test' and the rails integration tests with 'rake test:rails'.
 
 We are currently experimenting with human-readable literate tests which are written as markdown files: {file:test/literate/TESTS.md TESTS.md}
 
-Travis-CI is used for continous integration testing: {http://travis-ci.org/#!/stonean/slim}
+Travis-CI is used for continous integration testing: {http://travis-ci.org/#!/slim-template/slim}
 
 Slim is working well on all major Ruby implementations:
 
@@ -969,7 +969,7 @@ Slim is working well on all major Ruby implementations:
 
 If you'd like to help improve Slim, clone the project with Git by running:
 
-    $ git clone git://github.com/stonean/slim
+    $ git clone git://github.com/slim-template/slim
 
 Work your magic and then submit a pull request. We love pull requests!
 
