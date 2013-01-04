@@ -26,6 +26,8 @@ matrix:
     - env: "TASK=test:rails RAILS=master"
     - env: "TASK=test:sinatra SINATRA=master"
     - rvm: ruby-head
+# Rails master needs newest bundler
+before_install: gem install bundler --pre
 script: "bundle exec rake $TASK"
 notifications:
   email: false
