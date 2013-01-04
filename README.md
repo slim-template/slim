@@ -868,7 +868,7 @@ There are plugins for various text editors (including the most important ones - 
 * [Emacs](https://github.com/slim-template/emacs-slim)
 * [Textmate / Sublime Text](https://github.com/slim-template/ruby-slim.tmbundle)
 * [Espresso text editor](https://github.com/CiiDub/Slim-Sugar)
-* [Coda](https://github.com/nwalton3/Coda-2-Slim.mode)
+* [Coda](https://github.com/slim-template/Coda-2-Slim.mode)
 
 ### Template Converters (HAML, ERB, ...)
 
@@ -1013,7 +1013,7 @@ Syntax highlighting:
 * [Emacs](https://github.com/slim-template/emacs-slim)
 * [Textmate / Sublime Text](https://github.com/slim-template/ruby-slim.tmbundle)
 * [Espresso text editor](https://github.com/CiiDub/Slim-Sugar)
-* [Coda](https://github.com/nwalton3/Coda-2-Slim.mode)
+* [Coda](https://github.com/slim-template/Coda-2-Slim.mode)
 
 Template Converters (HAML, ERB, ...):
 
