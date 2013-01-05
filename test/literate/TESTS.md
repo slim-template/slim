@@ -290,6 +290,24 @@ renders as
 1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024
 ~~~
 
+You don't need the explicit `\` if the line ends with a comma `,`.
+
+~~~ slim
+ruby:
+  def test(*args)
+    args.join('-')
+  end
+= test('arg1',
+'arg2',
+'arg3')
+~~~
+
+renders as
+
+~~~ html
+arg1-arg2-arg3
+~~~
+
 You can also disable HTML escaping globally by setting the option
 
 ~~~ options
@@ -712,7 +730,51 @@ renders as
 </li>
 ~~~
 
+You can break quoted attributes with backslash `\`
+
+~~~ slim
+a data-title="help" data-content="extremely long help text that goes on\
+  and one and one and then starts over...." Link
+~~~
+
+renders as
+
+~~~ html
+<a data-content="extremely long help text that goes on and one and one and then starts over...." data-title="help">Link</a>
+~~~
+
 #### Ruby attributes
+
+Long ruby attributes can be broken with backslash `\`
+
+~~~ slim
+a href=1+\
+   1 Link
+~~~
+
+renders as
+
+~~~ html
+<a href="2">Link</a>
+~~~
+
+You don't need the explicit `\` if the line ends with a comma `,`.
+
+~~~ slim
+ruby:
+  def test(*args)
+    args.join('-')
+  end
+a href=test('arg1',
+'arg2',
+'arg3') Link
+~~~
+
+renders as
+
+~~~ html
+<a href="arg1-arg2-arg3">Link</a>
+~~~
 
 #### Boolean attributes
 

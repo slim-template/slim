@@ -304,8 +304,8 @@ module Slim
     def parse_broken_line
       broken_line = @line.strip
       while broken_line =~ /[,\\]\Z/
-        next_line || syntax_error!('Unexpected end of file')
-        broken_line << "\n" << @line.strip
+        expect_next_line
+        broken_line << "\n" << @line
       end
       broken_line
     end
@@ -428,17 +428,22 @@ module Slim
       end_regex = /\A[\s#{Regexp.escape outer_delimiter.to_s}]/
 
       until @line.empty? || (count == 0 && @line =~ end_regex)
-        if count > 0
-          if @line[0] == delimiter[0]
-            count += 1
-          elsif @line[0] == close_delimiter[0]
-            count -= 1
+        if @line =~ /\A[,\\]\Z/
+          code << @line << "\n"
+          expect_next_line
+        else
+          if count > 0
+            if @line[0] == delimiter[0]
+              count += 1
+            elsif @line[0] == close_delimiter[0]
+              count -= 1
+            end
+          elsif @line =~ DELIMITER_REGEX
+            count = 1
+            delimiter, close_delimiter = $&, DELIMITERS[$&]
           end
-        elsif @line =~ DELIMITER_REGEX
-          count = 1
-          delimiter, close_delimiter = $&, DELIMITERS[$&]
+          code << @line.slice!(0)
         end
-        code << @line.slice!(0)
       end
       syntax_error!("Expected closing delimiter #{close_delimiter}") if count != 0
       code
@@ -448,17 +453,22 @@ module Slim
       value, count = '', 0
 
       until @line.empty? || (count == 0 && @line[0] == quote[0])
-        if count > 0
-          if @line[0] == ?{
-            count += 1
-          elsif @line[0] == ?}
-            count -= 1
+        if @line =~ /\A\\\Z/
+          value << ' '
+          expect_next_line
+        else
+          if count > 0
+            if @line[0] == ?{
+              count += 1
+            elsif @line[0] == ?}
+              count -= 1
+            end
+          elsif @line =~ /\A#\{/
+            value << @line.slice!(0)
+            count = 1
           end
-        elsif @line =~ /\A#\{/
           value << @line.slice!(0)
-          count = 1
         end
-        value << @line.slice!(0)
       end
 
       syntax_error!("Expected closing brace }") if count != 0
@@ -472,6 +482,11 @@ module Slim
     def syntax_error!(message)
       raise SyntaxError.new(message, options[:file], @orig_line, @lineno,
                             @orig_line && @line ? @orig_line.size - @line.size : 0)
+    end
+
+    def expect_next_line
+      next_line || syntax_error!('Unexpected end of file')
+      @line.strip!
     end
   end
 end

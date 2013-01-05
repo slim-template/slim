@@ -142,7 +142,7 @@ You can write html tags directly in Slim which allows you to write your template
 ### Control code `-`
 
 The dash denotes control code.  Examples of control code are loops and conditionals. `end` is forbidden behind `-`. Blocks are defined only by indentation.
-If your ruby code needs to use multiple lines, append a backslash `\` at the end of the lines.
+If your ruby code needs to use multiple lines, append a backslash `\` at the end of the lines. If your line ends with comma `,` (e.g because of a method call) you don't need the additional backslash before the linebreak.
 
     body
       - if articles.empty?
@@ -155,6 +155,8 @@ The equal sign tells Slim it's a Ruby call that produces output to add to the bu
     = javascript_include_tag \
        "jquery", \
        "application"
+
+If your line ends with comma `,` (e.g because of a method call) you don't need the additional backslash before the linebreak.
 
 ### Output with trailing white space `='`
 
@@ -340,6 +342,11 @@ The attribute value will be escaped if the option `:escape_quoted_attrs` is set.
 
     a href=="&amp;"
 
+You can break quoted attributes with backslash `\`
+
+    a data-title="help" data-content="extremely long help text that goes on\
+      and one and one and then starts over...."
+
 #### Ruby attributes
 
 Write the ruby code directly after the `=`. If the code contains spaces you have to wrap
@@ -355,6 +362,8 @@ the code into parentheses `(...)`, `{...}` or `[...]`. The code in the parenthes
 The attribute value will be escaped by default. Use == if you want to disable escaping in the attribute.
 
     a href==action_path(:start)
+
+You can also break ruby attributes with backslash `\` or trailing `,` as describe for control sections.
 
 #### Boolean attributes
 
