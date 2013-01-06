@@ -867,7 +867,7 @@ renders as
 <span>Link</span><a href="http://slim-lang.com/">Link</a>
 ~~~
 
-#### ID shortcut and class shortcut `.`
+### Shortcuts
 
 #### Tag shortcuts
 
@@ -924,6 +924,8 @@ renders to
 ~~~ html
 <input name="user" type="text" /><input name="pw" type="password" /><input class="CLASS" id="ID" type="submit" />
 ~~~
+
+#### ID shortcut and class shortcut `.`
 
 ## Text interpolation
 

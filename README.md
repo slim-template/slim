@@ -435,27 +435,7 @@ renders as
 
     <span>Link</span><a href="http://slim-lang.com/">Link</a>
 
-#### ID shortcut `#` and class shortcut `.`
-
-Similarly to Haml, you can specify the `id` and `class` attributes in the following shortcut form
-
-    body
-      h1#headline
-        = page_headline
-      h2#tagline.small.tagline
-        = page_tagline
-      .content
-        = show_content
-
-This is the same as
-
-    body
-      h1 id="headline"
-        = page_headline
-      h2 id="tagline" class="small tagline"
-        = page_tagline
-      div class="content"
-        = show_content
+### Shortcuts
 
 #### Tag shortcuts
 
@@ -502,6 +482,28 @@ We can use it in Slim code like this
 which renders to
 
     <div class="person" role="admin">Daniel</div>
+
+#### ID shortcut `#` and class shortcut `.`
+
+Similarly to Haml, you can specify the `id` and `class` attributes in the following shortcut form
+
+    body
+      h1#headline
+        = page_headline
+      h2#tagline.small.tagline
+        = page_tagline
+      .content
+        = show_content
+
+This is the same as
+
+    body
+      h1 id="headline"
+        = page_headline
+      h2 id="tagline" class="small tagline"
+        = page_tagline
+      div class="content"
+        = show_content
 
 ## Text interpolation
 
