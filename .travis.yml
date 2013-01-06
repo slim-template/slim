@@ -35,7 +35,3 @@ before_install:
   - ./kill-travis.sh
   - gem install bundler --pre
 script: "bundle exec rake $TASK"
-notifications:
-  email: false
-  irc:
-    - "irc.freenode.org#slim-lang"
