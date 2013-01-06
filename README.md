@@ -6,17 +6,22 @@ Slim is a template language whose goal is to reduce the view syntax to the essen
 
 A short list of the features...
 
-* Short syntax without closing tags (Using indentation instead)
-* Embedded engines like Markdown and Textile
-* Configurable shortcut tags (`#` for `div id` and `.` for `div class` in the default configuration)
-* Automatic HTML escaping and support for Rails' `html_safe?`
-* HTML style mode with closing tags
-* Logic less mode similar to Mustache, realized as plugin
-* Translator/I18n, realized as plugin
-* Highly configurable and extendable
-* High performance (Comparable to ERB)
+* Elegant syntax
+    * Short syntax without closing tags (Using indentation instead)
+    * HTML style mode with closing tags
+    * Configurable shortcut tags (`#` for `<div id="...">` and `.` for `<div class="...">` in the default configuration)
+* Safety
+    * Automatic HTML escaping by default
+    * Support for Rails' `html_safe?`
+* Highly configurable and extendable via plugins
+    * Logic less mode similar to Mustache, realized as plugin
+    * Translator/I18n, realized as plugin
+* High performance
+    * Comparable speed to ERB/Erubis
+    * Streaming support in Rails
 * Supported by all major frameworks (Rails, Sinatra, ...)
-* Streaming support in Rails
+* Full Unicode support for tags and attributes on Ruby 1.9
+* Embedded engines like Markdown and Textile
 
 ## Introduction
 
