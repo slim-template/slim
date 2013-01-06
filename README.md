@@ -905,16 +905,17 @@ There are plugins for various text editors (including the most important ones - 
 
 ### Benchmarks
 
-  *The benchmarks demonstrate that Slim in production mode
-   is nearly as fast as Erubis (which is the fastest template engine).
-   So if you choose not to use Slim it is not due to its speed.*
+  *Yes, Slim is one of the fastest Ruby template engines out there!
+   In production mode Slim is nearly as fast as Erubis (which is the fastest template engine).
+   But we would be happy if you chose Slim also for any other reason, we assure
+   you performance will not be an obstacle.*
 
 Run the benchmarks with `rake bench`. You can add the option `slow` to
 run the slow parsing benchmark which needs more time. You can also increase the number of iterations.
 
     rake bench slow=1 iterations=1000
 
-If you are lazy you can also look at the newest benchmarking results on Travis-CI: {http://travis-ci.org/#!/slim-template/slim}
+We run the benchmarks for every commit on Travis-CI. Take a look at the newest benchmarking results: {http://travis-ci.org/#!/slim-template/slim}
 
 ### Test suite and continous integration
 
