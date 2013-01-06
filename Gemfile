@@ -32,3 +32,8 @@ if ENV['SINATRA']
     gem 'sinatra', "= #{ENV['SINATRA']}"
   end
 end
+
+if ENV['TASK'] == 'bench'
+  gem 'erubis'
+  gem 'haml'
+end
