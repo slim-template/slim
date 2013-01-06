@@ -1,3 +1,7 @@
+master
+
+  * Add unicode support for tags and attributes (Issue #212)
+
 1.3.6
 
   * Allow attribute values to be broken with `\` (Issue #331)
