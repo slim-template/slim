@@ -44,11 +44,11 @@ module Slim
         @tag_shortcut[k] = v[:tag] || options[:default_tag]
         if v.include?(:attr)
           @attr_shortcut[k] = v[:attr]
-          raise ArgumentError, 'You can only use special characters for attribute shortcuts' if k =~ /[\w-]/
+          raise ArgumentError, 'You can only use special characters for attribute shortcuts' if k =~ /(?:\w|-)/
         end
       end
-      @attr_shortcut_regex = /\A(#{shortcut_regex @attr_shortcut})(\w[\w-]*\w|\w+)/
-      @tag_regex = /\A(?:#{shortcut_regex @tag_shortcut}|\*(?=[^\s]+)|(\w[\w:-]*\w|\w+))/
+      @attr_shortcut_regex = /\A(#{shortcut_regex @attr_shortcut})(\w(?:\w|-)*\w|\w+)/
+      @tag_regex = /\A(?:#{shortcut_regex @tag_shortcut}|\*(?=[^\s]+)|(\w(?:\w|:|-)*\w|\w+))/
     end
 
     # Compile string to Temple expression
@@ -76,7 +76,7 @@ module Slim
     }.freeze
 
     DELIMITER_REGEX = /\A[#{Regexp.escape DELIMITERS.keys.join}]/
-    ATTR_NAME = '\A\s*(\w[:\w-]*)'
+    ATTR_NAME = '\A\s*(\w(?:\w|:|-)*)'
     QUOTED_ATTR_REGEX = /#{ATTR_NAME}=(=?)("|')/
     CODE_ATTR_REGEX = /#{ATTR_NAME}=(=?)/
 
