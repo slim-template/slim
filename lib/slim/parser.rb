@@ -71,14 +71,14 @@ module Slim
     protected
 
 
-    DELIMITERS = {
+    DELIMS = {
       '(' => ')',
       '[' => ']',
       '{' => '}',
     }.freeze
 
     WORD_RE = ''.respond_to?(:encoding) ? '\p{Word}' : '\w'
-    DELIMITER_RE = /\A[#{Regexp.escape DELIMITERS.keys.join}]/
+    DELIM_RE = /\A[#{Regexp.escape DELIMS.keys.join}]/
     ATTR_NAME = "\\A\\s*(#{WORD_RE}(?:#{WORD_RE}|:|-)*)"
     QUOTED_ATTR_RE = /#{ATTR_NAME}=(=?)("|')/
     CODE_ATTR_RE = /#{ATTR_NAME}=(=?)/
@@ -383,8 +383,8 @@ module Slim
 
       # Check to see if there is a delimiter right after the tag name
       delimiter = nil
-      if @line =~ DELIMITER_RE
-        delimiter = DELIMITERS[$&]
+      if @line =~ DELIM_RE
+        delimiter = DELIMS[$&]
         @line.slice!(0)
       end
 
@@ -413,8 +413,8 @@ module Slim
           value = parse_ruby_code(delimiter)
           # Remove attribute wrapper which doesn't belong to the ruby code
           # e.g id=[hash[:a] + hash[:b]]
-          value = value[1..-2] if value =~ DELIMITER_RE &&
-            DELIMITERS[$&] == value[-1, 1]
+          value = value[1..-2] if value =~ DELIM_RE &&
+            DELIMS[$&] == value[-1, 1]
           syntax_error!('Invalid empty attribute') if value.empty?
           attributes << [:html, :attr, name, [:slim, :attrvalue, escape, value]]
         else
@@ -462,9 +462,9 @@ module Slim
             elsif @line[0] == close_delimiter[0]
               count -= 1
             end
-          elsif @line =~ DELIMITER_RE
+          elsif @line =~ DELIM_RE
             count = 1
-            delimiter, close_delimiter = $&, DELIMITERS[$&]
+            delimiter, close_delimiter = $&, DELIMS[$&]
           end
           code << @line.slice!(0)
         end
