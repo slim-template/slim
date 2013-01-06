@@ -6,8 +6,8 @@ Gem::Specification.new do |s|
   s.name              = 'slim'
   s.version           = Slim::VERSION
   s.date              = Date.today.to_s
-  s.authors           = ['Andrew Stone', 'Fred Wu', 'Daniel Mendler']
-  s.email             = ['andy@stonean.com', 'ifredwu@gmail.com', 'mail@daniel-mendler.de']
+  s.authors           = ['Daniel Mendler', 'Andrew Stone', 'Fred Wu']
+  s.email             = ['mail@daniel-mendler.de', 'andy@stonean.com', 'ifredwu@gmail.com']
   s.summary           = 'Slim is a template language.'
   s.description       = 'Slim is a template language whose goal is reduce the syntax to the essential parts without becoming cryptic.'
   s.homepage          = 'http://slim-lang.com/'

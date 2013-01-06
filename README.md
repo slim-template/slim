@@ -957,9 +957,9 @@ Slim is released under the [MIT license](http://www.opensource.org/licenses/MIT)
 
 ## Authors
 
+* [Daniel Mendler](https://github.com/minad) (Lead developer)
 * [Andrew Stone](https://github.com/stonean)
 * [Fred Wu](https://github.com/fredwu)
-* [Daniel Mendler](https://github.com/minad)
 
 ## Discuss
 
