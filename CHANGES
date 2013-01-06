@@ -1,6 +1,8 @@
 master
 
   * Allow attribute values to be broken with `\` (Issue #331)
+  * Tag shortcuts implemented (Issue #306)
+  * Hash format of Slim::Parser option :shortcut changed, old configuration deprecated but still supported
 
 1.3.5
 
