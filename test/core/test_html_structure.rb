@@ -87,7 +87,7 @@ h1#title This is my title
   = hello_world
 }
 
-    assert_html '<div class="hello world" id="notice" role="test">Hello World from @env</div><section role="abc">Hello World from @env</section>', source, :shortcut => {'#' => 'id', '.' => 'class', '@' => 'section role'}
+    assert_html '<div class="hello world" id="notice" role="test">Hello World from @env</div><section role="abc">Hello World from @env</section>', source, :shortcut => {'#' => {:attr => 'id'}, '.' => {:attr => 'class'}, '@' => {:tag => 'section', :attr => 'role'}}
   end
 
   def test_render_with_text_block

@@ -14,7 +14,7 @@ module Slim
       super
       access = options[:dictionary_access]
       if access == :wrapped
-        puts 'Slim::LogicLess - Wrapped dictionary access is deprecated'
+        warn 'Slim::LogicLess - Wrapped dictionary access is deprecated'
         access = DEFAULT_ACCESS_ORDER
       else
         access = [access].flatten.compact

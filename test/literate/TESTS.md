@@ -869,24 +869,60 @@ renders as
 
 #### ID shortcut and class shortcut `.`
 
-#### Attribute shortcuts
+#### Tag shortcuts
 
-We add `&` to create a shortcut for the input elements with type attribute by setting the option `:shortcut`.
+We add tag shortcuts by setting the option `:shortcut`.
 
 ~~~ options
-:shortcut => {'&' => 'input type', '#' => 'id', '.' => 'class' }
+:shortcut => {'c' => {:tag => 'container'}, '#' => {:attr => 'id'}, '.' => {:attr => 'class'} }
 ~~~
 
 ~~~ slim
-&text name="user"
-&password name="pw"
-&submit
+c.content Text
 ~~~
 
 renders to
 
 ~~~ html
-<input name="user" type="text" /><input name="pw" type="password" /><input type="submit" />
+<container class="content">Text</container>
+~~~
+
+#### Attribute shortcuts
+
+We add `&` to create a shortcut for the input elements with type attribute by setting the option `:shortcut`.
+
+~~~ options
+:shortcut => {'&' => {:tag => 'input', :attr => 'type'}, '#' => {:attr => 'id'}, '.' => {:attr => 'class'} }
+~~~
+
+~~~ slim
+&text name="user"
+&password name="pw"
+&submit.CLASS#ID
+~~~
+
+renders to
+
+~~~ html
+<input name="user" type="text" /><input name="pw" type="password" /><input class="CLASS" id="ID" type="submit" />
+~~~
+
+You can also use multiple character shortcuts.
+
+~~~ options
+:shortcut => {'&' => {:tag => 'input', :attr => 'type'}, '#1' => {:attr => 'id'}, '#2' => {:attr => 'class'} }
+~~~
+
+~~~ slim
+&text name="user"
+&password name="pw"
+&submit#2CLASS#1ID
+~~~
+
+renders to
+
+~~~ html
+<input name="user" type="text" /><input name="pw" type="password" /><input class="CLASS" id="ID" type="submit" />
 ~~~
 
 ## Text interpolation
