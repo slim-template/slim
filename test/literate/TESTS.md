@@ -874,17 +874,19 @@ renders as
 We add tag shortcuts by setting the option `:shortcut`.
 
 ~~~ options
-:shortcut => {'c' => {:tag => 'container'}, '#' => {:attr => 'id'}, '.' => {:attr => 'class'} }
+:shortcut => {'c' => {:tag => 'container'}, 'sec' => {:tag =>'section'}, '#' => {:attr => 'id'}, '.' => {:attr => 'class'} }
 ~~~
 
 ~~~ slim
-c.content Text
+sec: c.content Text
 ~~~
 
 renders to
 
 ~~~ html
-<container class="content">Text</container>
+<section>
+  <container class="content">Text</container>
+</section>
 ~~~
 
 #### Attribute shortcuts
@@ -907,16 +909,34 @@ renders to
 <input name="user" type="text" /><input name="pw" type="password" /><input class="CLASS" id="ID" type="submit" />
 ~~~
 
-You can also use multiple character shortcuts.
+This is stupid, but you can also use multiple character shortcuts.
 
 ~~~ options
-:shortcut => {'&' => {:tag => 'input', :attr => 'type'}, '#1' => {:attr => 'id'}, '#2' => {:attr => 'class'} }
+:shortcut => {'&' => {:tag => 'input', :attr => 'type'}, '#<' => {:attr => 'id'}, '#>' => {:attr => 'class'} }
 ~~~
 
 ~~~ slim
 &text name="user"
 &password name="pw"
-&submit#2CLASS#1ID
+&submit#>CLASS#<ID
+~~~
+
+renders to
+
+~~~ html
+<input name="user" type="text" /><input name="pw" type="password" /><input class="CLASS" id="ID" type="submit" />
+~~~
+
+Test deprecated shortcuts:
+
+~~~ options
+:shortcut => {'&' => 'input type', '#' => 'id', '.' => 'class' }
+~~~
+
+~~~ slim
+&text name="user"
+&password name="pw"
+&submit.CLASS#ID
 ~~~
 
 renders to

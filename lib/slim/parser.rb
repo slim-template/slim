@@ -39,26 +39,16 @@ module Slim
       @tab = ' ' * options[:tabsize]
       @tag_shortcut, @attr_shortcut = {}, {}
       options[:shortcut].each do |k,v|
-        if String === v
-          warn "Slim :shortcut string values are deprecated, use hash like { '#' => { :tag => 'div', :attr => 'id' } }"
-          if v =~ /\A([^\s]+)\s+([^\s]+)\Z/
-            @tag_shortcut[k] = $1
-            @attr_shortcut[k] = $2
-          else
-            @tag_shortcut[k] = options[:default_tag]
-            @attr_shortcut[k] = v
-          end
-        else
-          @tag_shortcut[k] = v[:tag] || options[:default_tag]
-          @attr_shortcut[k] = v[:attr] if v.include?(:attr)
+        v = deprecated_shortcut(v) if String === v
+        raise ArgumentError, 'Shortcut requires :tag and/or :attr' unless (v[:attr] || v[:tag]) && (v.keys - [:attr, :tag]).empty?
+        @tag_shortcut[k] = v[:tag] || options[:default_tag]
+        if v.include?(:attr)
+          @attr_shortcut[k] = v[:attr]
+          raise ArgumentError, 'You can only use special characters for attribute shortcuts' if k =~ /[\w-]/
         end
       end
-
-      shortcut = @attr_shortcut.keys.map { |k| Regexp.escape(k) }.join('|')
-      @attr_shortcut_regex = /\A(#{shortcut})(\w[\w-]*\w|\w+)/
-
-      shortcut = @tag_shortcut.keys.map { |k| Regexp.escape(k) }.join('|')
-      @tag_regex = /\A(?:#{shortcut}|\*(?=[^\s]+)|(\w[\w:-]*\w|\w+))/
+      @attr_shortcut_regex = /\A(#{shortcut_regex @attr_shortcut})(\w[\w-]*\w|\w+)/
+      @tag_regex = /\A(?:#{shortcut_regex @tag_shortcut}|\*(?=[^\s]+)|(\w[\w:-]*\w|\w+))/
     end
 
     # Compile string to Temple expression
@@ -89,6 +79,21 @@ module Slim
     ATTR_NAME = '\A\s*(\w[:\w-]*)'
     QUOTED_ATTR_REGEX = /#{ATTR_NAME}=(=?)("|')/
     CODE_ATTR_REGEX = /#{ATTR_NAME}=(=?)/
+
+    # Convert deprecated string shortcut to hash
+    def deprecated_shortcut(v)
+      warn "Slim :shortcut string values are deprecated, use hash like { '#' => { :tag => 'div', :attr => 'id' } }"
+      if v =~ /\A([^\s]+)\s+([^\s]+)\Z/
+        { :tag => $1, :attr => $2 }
+      else
+        { :attr => v }
+      end
+    end
+
+    # Compile shortcut regular expression
+    def shortcut_regex(shortcut)
+      shortcut.map { |k,v| Regexp.escape(k) }.join('|')
+    end
 
     # Set string encoding if option is set
     def set_encoding(s)
