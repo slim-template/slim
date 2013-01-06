@@ -457,6 +457,20 @@ This is the same as
       div class="content"
         = show_content
 
+#### Tag shortcuts
+
+You can define custom tag shortcuts by setting the option `:shortcut`.
+
+    Slim::Engine.set_default_options :shortcut => {'c' => {:tag => 'container'}, '#' => {:attr => 'id'}, '.' => {:attr => 'class'} }
+
+We can use it in Slim code like this
+
+    c.content Text
+
+which renders to
+
+    <container class="content">Text</container>
+
 #### Attribute shortcuts
 
 You can define custom shortcuts (Similar to `#` for id and `.` for class).
