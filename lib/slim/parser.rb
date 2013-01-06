@@ -1,3 +1,4 @@
+# coding: utf-8
 module Slim
   # Parses Slim code and transforms it to a Temple expression
   # @api private
@@ -44,11 +45,11 @@ module Slim
         @tag_shortcut[k] = v[:tag] || options[:default_tag]
         if v.include?(:attr)
           @attr_shortcut[k] = v[:attr]
-          raise ArgumentError, 'You can only use special characters for attribute shortcuts' if k =~ /(?:\w|-)/
+          raise ArgumentError, 'You can only use special characters for attribute shortcuts' if k =~ /(#{WORD_RE}|-)/
         end
       end
-      @attr_shortcut_regex = /\A(#{shortcut_regex @attr_shortcut})(\w(?:\w|-)*\w|\w+)/
-      @tag_regex = /\A(?:#{shortcut_regex @tag_shortcut}|\*(?=[^\s]+)|(\w(?:\w|:|-)*\w|\w+))/
+      @attr_shortcut_re = /\A(#{shortcut_re @attr_shortcut})(#{WORD_RE}(?:#{WORD_RE}|-)*#{WORD_RE}|#{WORD_RE}+)/
+      @tag_re = /\A(?:#{shortcut_re @tag_shortcut}|\*(?=[^\s]+)|(#{WORD_RE}(?:#{WORD_RE}|:|-)*#{WORD_RE}|#{WORD_RE}+))/
     end
 
     # Compile string to Temple expression
@@ -69,16 +70,18 @@ module Slim
 
     protected
 
+
     DELIMITERS = {
       '(' => ')',
       '[' => ']',
       '{' => '}',
     }.freeze
 
-    DELIMITER_REGEX = /\A[#{Regexp.escape DELIMITERS.keys.join}]/
-    ATTR_NAME = '\A\s*(\w(?:\w|:|-)*)'
-    QUOTED_ATTR_REGEX = /#{ATTR_NAME}=(=?)("|')/
-    CODE_ATTR_REGEX = /#{ATTR_NAME}=(=?)/
+    WORD_RE = ''.respond_to?(:encoding) ? '\p{Word}' : '\w'
+    DELIMITER_RE = /\A[#{Regexp.escape DELIMITERS.keys.join}]/
+    ATTR_NAME = "\\A\\s*(#{WORD_RE}(?:#{WORD_RE}|:|-)*)"
+    QUOTED_ATTR_RE = /#{ATTR_NAME}=(=?)("|')/
+    CODE_ATTR_RE = /#{ATTR_NAME}=(=?)/
 
     # Convert deprecated string shortcut to hash
     def deprecated_shortcut(v)
@@ -91,7 +94,7 @@ module Slim
     end
 
     # Compile shortcut regular expression
-    def shortcut_regex(shortcut)
+    def shortcut_re(shortcut)
       shortcut.map { |k,v| Regexp.escape(k) }.join('|')
     end
 
@@ -255,7 +258,7 @@ module Slim
       when /\Adoctype\s+/i
         # Found doctype declaration
         @stacks.last << [:html, :doctype, $'.strip]
-      when @tag_regex
+      when @tag_re
         # Found a HTML tag.
         @line = $' if $1
         parse_tag($&)
@@ -339,7 +342,7 @@ module Slim
       when /\A\s*:\s*/
         # Block expansion
         @line = $'
-        (@line =~ @tag_regex) || syntax_error!('Expected tag')
+        (@line =~ @tag_re) || syntax_error!('Expected tag')
         @line = $' if $1
         content = [:multi]
         tag << content
@@ -371,7 +374,7 @@ module Slim
       attributes = [:html, :attrs]
 
       # Find any shortcut attributes
-      while @line =~ @attr_shortcut_regex
+      while @line =~ @attr_shortcut_re
         # The class/id attribute is :static instead of :slim :interpolate,
         # because we don't want text interpolation in .class or #id shortcut
         attributes << [:html, :attr, @attr_shortcut[$1], [:static, $2]]
@@ -380,14 +383,14 @@ module Slim
 
       # Check to see if there is a delimiter right after the tag name
       delimiter = nil
-      if @line =~ DELIMITER_REGEX
+      if @line =~ DELIMITER_RE
         delimiter = DELIMITERS[$&]
         @line.slice!(0)
       end
 
       if delimiter
-        boolean_attr_regex = /#{ATTR_NAME}(?=(\s|#{Regexp.escape delimiter}|\Z))/
-        end_regex = /\A\s*#{Regexp.escape delimiter}/
+        boolean_attr_re = /#{ATTR_NAME}(?=(\s|#{Regexp.escape delimiter}|\Z))/
+        end_re = /\A\s*#{Regexp.escape delimiter}/
       end
 
       while true
@@ -396,13 +399,13 @@ module Slim
           # Splat attribute
           @line = $'
           attributes << [:slim, :splat, parse_ruby_code(delimiter)]
-        when QUOTED_ATTR_REGEX
+        when QUOTED_ATTR_RE
           # Value is quoted (static)
           @line = $'
           attributes << [:html, :attr, $1,
                          [:escape, options[:escape_quoted_attrs] && $2.empty?,
                           [:slim, :interpolate, parse_quoted_attribute($3)]]]
-        when CODE_ATTR_REGEX
+        when CODE_ATTR_RE
           # Value is ruby code
           @line = $'
           name = $1
@@ -410,7 +413,7 @@ module Slim
           value = parse_ruby_code(delimiter)
           # Remove attribute wrapper which doesn't belong to the ruby code
           # e.g id=[hash[:a] + hash[:b]]
-          value = value[1..-2] if value =~ DELIMITER_REGEX &&
+          value = value[1..-2] if value =~ DELIMITER_RE &&
             DELIMITERS[$&] == value[-1, 1]
           syntax_error!('Invalid empty attribute') if value.empty?
           attributes << [:html, :attr, name, [:slim, :attrvalue, escape, value]]
@@ -418,11 +421,11 @@ module Slim
           break unless delimiter
 
           case @line
-          when boolean_attr_regex
+          when boolean_attr_re
             # Boolean attribute
             @line = $'
             attributes << [:html, :attr, $1, [:slim, :attrvalue, false, 'true']]
-          when end_regex
+          when end_re
             # Find ending delimiter
             @line = $'
             break
@@ -446,9 +449,9 @@ module Slim
       code, count, delimiter, close_delimiter = '', 0, nil, nil
 
       # Attribute ends with space or attribute delimiter
-      end_regex = /\A[\s#{Regexp.escape outer_delimiter.to_s}]/
+      end_re = /\A[\s#{Regexp.escape outer_delimiter.to_s}]/
 
-      until @line.empty? || (count == 0 && @line =~ end_regex)
+      until @line.empty? || (count == 0 && @line =~ end_re)
         if @line =~ /\A[,\\]\Z/
           code << @line << "\n"
           expect_next_line
@@ -459,7 +462,7 @@ module Slim
             elsif @line[0] == close_delimiter[0]
               count -= 1
             end
-          elsif @line =~ DELIMITER_REGEX
+          elsif @line =~ DELIMITER_RE
             count = 1
             delimiter, close_delimiter = $&, DELIMITERS[$&]
           end
