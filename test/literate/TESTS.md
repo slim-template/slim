@@ -927,24 +927,6 @@ renders to
 <input name="user" type="text" /><input name="pw" type="password" /><input class="CLASS" id="ID" type="submit" />
 ~~~
 
-Test deprecated shortcuts:
-
-~~~ options
-:shortcut => {'&' => 'input type', '#' => 'id', '.' => 'class' }
-~~~
-
-~~~ slim
-&text name="user"
-&password name="pw"
-&submit.CLASS#ID
-~~~
-
-renders to
-
-~~~ html
-<input name="user" type="text" /><input name="pw" type="password" /><input class="CLASS" id="ID" type="submit" />
-~~~
-
 #### ID shortcut and class shortcut `.`
 
 ## Text interpolation
