@@ -40,7 +40,6 @@ module Slim
       @tab = ' ' * options[:tabsize]
       @tag_shortcut, @attr_shortcut = {}, {}
       options[:shortcut].each do |k,v|
-        v = deprecated_shortcut(v) if String === v
         raise ArgumentError, 'Shortcut requires :tag and/or :attr' unless (v[:attr] || v[:tag]) && (v.keys - [:attr, :tag]).empty?
         @tag_shortcut[k] = v[:tag] || options[:default_tag]
         if v.include?(:attr)
@@ -82,16 +81,6 @@ module Slim
     ATTR_NAME = "\\A\\s*(#{WORD_RE}(?:#{WORD_RE}|:|-)*)"
     QUOTED_ATTR_RE = /#{ATTR_NAME}=(=?)("|')/
     CODE_ATTR_RE = /#{ATTR_NAME}=(=?)/
-
-    # Convert deprecated string shortcut to hash
-    def deprecated_shortcut(v)
-      warn "Slim :shortcut string values are deprecated, use hash like { '#' => { :tag => 'div', :attr => 'id' } }"
-      if v =~ /\A([^\s]+)\s+([^\s]+)\Z/
-        { :tag => $1, :attr => $2 }
-      else
-        { :attr => v }
-      end
-    end
 
     # Compile shortcut regular expression
     def shortcut_re(shortcut)

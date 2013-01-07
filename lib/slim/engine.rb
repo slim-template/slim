@@ -12,9 +12,6 @@ module Slim
                    :generator => Temple::Generators::ArrayBuffer,
                    :default_tag => 'div'
 
-    # TODO: Remove these options in 1.4.0
-    define_deprecated_options :remove_empty_attrs, :chain
-
     use Slim::Parser, :file, :tabsize, :encoding, :shortcut, :default_tag, :escape_quoted_attrs
     use Slim::EmbeddedEngine, :enable_engines, :disable_engines, :pretty
     use Slim::Interpolation
