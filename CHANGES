@@ -1,3 +1,7 @@
+branch 1.3
+
+  * Fixed issue #333
+
 1.3.6
 
   * Allow attribute values to be broken with `\` (Issue #331)
