@@ -842,7 +842,7 @@ Then just use the .slim extension and you're good to go.
 
 #### Streaming
 
-HTTP streaming is enabled enabled by default if you use a Rails version which supports it.
+HTTP streaming is enabled by default if you use a Rails version which supports it.
 
 ## Tools
 
