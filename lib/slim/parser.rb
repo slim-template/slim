@@ -346,8 +346,10 @@ module Slim
         tag << [:slim, :output, $1 != '=', parse_broken_line, block]
         @stacks.last << [:static, ' '] unless $2.empty?
         @stacks << block
-      when /\A\s*\//
+      when /\A\s*\/\s*/
         # Closed tag. Do nothing
+        @line = $'
+        syntax_error!('Unexpected text after closed tag') unless @line.empty?
       when /\A\s*\Z/
         # Empty content
         content = [:multi]
