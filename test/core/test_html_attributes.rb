@@ -143,7 +143,7 @@ h1 *hash This is my title
 
   def test_closed_splat_tag
     source = %q{
-*hash / This is my title
+*hash /
 }
 
     assert_html '<div a="The letter a" b="The letter b"/>', source
