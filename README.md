@@ -88,7 +88,7 @@ Here's a quick example to demonstrate what a Slim template looks like:
 
         div id="footer"
           = render 'footer'
-          | Copyright &copy; #{year} #{author}
+          | Copyright &copy; #{@year} #{@author}
 
 Indentation matters, but the indentation depth can be chosen as you like. If you want to first indent 2 spaces, then 5 spaces, it's your choice. To nest markup you only need to indent by one space, the rest is gravy.
 
