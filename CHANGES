@@ -6,6 +6,14 @@ master
     - Slim::LogicLess :wrapped dictionary
     - Slim::Parser :shortcut string option
   * Fixed issue #333
+  * Backward incompatible syntax change: '{...}' and '[...]' are not
+    allowed as ruby attribute wrappers anymore. Use parentheses '(...)'
+    if you want to wrap code with spaces. This allows to write arrays and hashes
+    directly.
+    Old:
+       div id={'obj' + name} data=({:a => 1, :b => 2}) class=['alpha', 'beta']
+    New:
+       div id=('obj' + name) data={:a => 1, :b => 2} class=['alpha', 'beta']
 
 1.3.6
 

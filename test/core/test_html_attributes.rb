@@ -108,6 +108,15 @@ option(selected class="clazz") Text
     assert_html '<div class="alpha beta gamma delta true false"></div><div class="alpha beta gamma"></div>', source
   end
 
+  def test_hash_attribute
+    source = %{
+.alpha data={:a => 'alpha', :b => 'beta'}
+}
+
+    assert_html '<div class="alpha" data="{:a=&gt;&quot;alpha&quot;, :b=&gt;&quot;beta&quot;}"></div>', source
+  end
+
+
   def test_shortcut_splat
     source = %q{
 *hash This is my title

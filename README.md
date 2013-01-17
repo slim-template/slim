@@ -355,14 +355,14 @@ You can break quoted attributes with backslash `\`
 #### Ruby attributes
 
 Write the ruby code directly after the `=`. If the code contains spaces you have to wrap
-the code into parentheses `(...)`, `{...}` or `[...]`. The code in the parentheses will be evaluated.
+the code into parentheses `(...)`. You can also directly write hashes `{...}` and arrays `[...]`.
 
     body
       table
         - for user in users do
           td id="user_#{user.id}" class=user.role
             a href=user_action(user, :edit) Edit #{user.name}
-            a href={path_to_user user} = user.name
+            a href=(path_to_user user) = user.name
 
 The attribute value will be escaped by default. Use == if you want to disable escaping in the attribute.
 
