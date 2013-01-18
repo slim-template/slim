@@ -36,7 +36,14 @@ module Slim
 
     def initialize(opts = {})
       super
-      @tab = ' ' * options[:tabsize]
+      tabsize = options[:tabsize]
+      if tabsize > 1
+        @tab_re = /((?: {#{tabsize}})*+) {0,#{tabsize-1}}\t/
+        @tab = '\1' + ' ' * tabsize
+      else
+        @tab_re = "\t"
+        @tab = ' '
+      end
       @tag_shortcut, @attr_shortcut = {}, {}
       options[:shortcut].each do |k,v|
         raise ArgumentError, 'Shortcut requires :tag and/or :attr' unless (v[:attr] || v[:tag]) && (v.keys - [:attr, :tag]).empty?
@@ -146,7 +153,7 @@ module Slim
     def get_indent(line)
       # Figure out the indentation. Kinda ugly/slow way to support tabs,
       # but remember that this is only done at parsing time.
-      line[/\A[ \t]*/].gsub("\t", @tab).size
+      line[/\A[ \t]*/].gsub(@tab_re, @tab).size
     end
 
     def parse_line
