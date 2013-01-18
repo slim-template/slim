@@ -110,10 +110,10 @@ option(selected class="clazz") Text
 
   def test_hash_attribute
     source = %{
-.alpha data={:a => 'alpha', :b => 'beta'}
+.alpha data={:a => 'alpha', :b => 'beta', :c_d => 'gamma'}
 }
 
-    assert_html '<div class="alpha" data="{:a=&gt;&quot;alpha&quot;, :b=&gt;&quot;beta&quot;}"></div>', source
+    assert_html '<div class="alpha" data-a="alpha" data-b="beta" data-c-d="gamma"></div>', source
   end
 
 
@@ -127,7 +127,7 @@ option(selected class="clazz") Text
 
   def test_splat
     source = %q{
-h1 *hash This is my title
+h1 *hash class=[] This is my title
 }
 
     assert_html '<h1 a="The letter a" b="The letter b">This is my title</h1>', source
@@ -138,7 +138,7 @@ h1 *hash This is my title
 *hash /
 }
 
-    assert_html '<div a="The letter a" b="The letter b"/>', source
+    assert_html '<div a="The letter a" b="The letter b" />', source
   end
 
   def test_splat_tag_name
@@ -163,7 +163,7 @@ h1 *hash This is my title
 *hash /
 }
 
-    assert_html '<div a="The letter a" b="The letter b"/>', source
+    assert_html '<div a="The letter a" b="The letter b" />', source
   end
 
   def test_splat_with_id_shortcut
