@@ -43,8 +43,16 @@ p class="#{x}" test #{content}
 p id="&" class=="&amp;"
 }
 
-    assert_html '<p class="&amp;" id="&"></p>', source
-    assert_html '<p class="&amp;" id="&amp;"></p>', source, :escape_quoted_attrs => true
+    assert_html '<p class="&amp;" id="&amp;"></p>', source
+  end
+
+  def test_html_quoted_attr_escape_with_interpolation
+    source = %q{
+p id="&#{'"'}" class=="&amp;#{'"'}"
+p id="&#{{'"'}}" class=="&amp;#{{'"'}}"
+}
+
+    assert_html '<p class="&amp;&quot;" id="&amp;&quot;"></p><p class="&amp;"" id="&amp;""></p>', source
   end
 
   def test_html_ruby_attr_escape
