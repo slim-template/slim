@@ -815,7 +815,7 @@ renders as
 
 #### Attribute merging
 
-You can configure attributes to be merged if multiple are given (See option `:attr_delimiter`). In the default configuration
+You can configure attributes to be merged if multiple are given (See option `:merge_attrs`). In the default configuration
 this is done for class attributes with the white space as delimiter.
 
 ~~~ slim

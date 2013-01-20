@@ -42,14 +42,14 @@ p id=(false ? 'notshown' : 'shown') = output_number
     source = %{
 #alpha id="beta" Test it
 }
-    assert_html '<div id="alpha_beta">Test it</div>', source, :attr_delimiter => {'class' => ' ', 'id' => '_' }
+    assert_html '<div id="alpha_beta">Test it</div>', source, :merge_attrs => {'class' => ' ', 'id' => '_' }
   end
 
   def test_id_attribute_merging2
     source = %{
 #alpha id="beta" Test it
 }
-    assert_html '<div id="alpha-beta">Test it</div>', source, :attr_delimiter => {'class' => ' ', 'id' => '-' }
+    assert_html '<div id="alpha-beta">Test it</div>', source, :merge_attrs => {'class' => ' ', 'id' => '-' }
   end
 
   def test_boolean_attribute_false
@@ -131,6 +131,14 @@ h1 *hash This is my title
 }
 
     assert_html '<h1 a="The letter a" b="The letter b">This is my title</h1>', source
+  end
+
+  def test_closed_splat
+    source = %q{
+*hash /
+}
+
+    assert_html '<div a="The letter a" b="The letter b"/>', source
   end
 
   def test_splat_tag_name

@@ -1,7 +1,7 @@
 module Slim
   # @api private
   class CodeAttributes < Filter
-    define_options :attr_delimiter
+    define_options :merge_attrs
 
     # Handle attributes expression `[:html, :attrs, *attrs]`
     #
@@ -11,33 +11,33 @@ module Slim
       [:multi, *attrs.map {|a| compile(a) }]
     end
 
-    # Handle attribute expression `[:slim, :attr, escape, code]`
+    # Handle attribute expression `[:html, :attr, escape, code]`
     #
     # @param [String] name Attribute name
     # @param [Array] value Value expression
     # @return [Array] Compiled temple expression
     def on_html_attr(name, value)
-      unless value[0] == :slim && value[1] == :attrvalue && !options[:attr_delimiter][name]
-        # We perform merging on the attribute
+      if value[0] == :slim && value[1] == :attrvalue && !options[:merge_attrs][name]
+        # We handle the attribute as a boolean attribute
+        escape, code = value[2], value[3]
+        case code
+        when 'true'
+          [:html, :attr, name, [:static, name]]
+        when 'false', 'nil'
+          [:multi]
+        else
+          tmp = unique_name
+          [:multi,
+           [:code, "#{tmp} = #{code}"],
+           [:case, tmp,
+            ['true', [:html, :attr, name, [:static, name]]],
+            ['false, nil', [:multi]],
+            [:else, [:html, :attr, name, [:escape, escape, [:dynamic, tmp]]]]]]
+        end
+      else
+        # Attribute with merging
         @attr = name
         return super
-      end
-
-      # We handle the attribute as a boolean attribute
-      escape, code = value[2], value[3]
-      case code
-      when 'true'
-        [:html, :attr, name, [:static, name]]
-      when 'false', 'nil'
-        [:multi]
-      else
-        tmp = unique_name
-        [:multi,
-         [:code, "#{tmp} = #{code}"],
-         [:case, tmp,
-          ['true', [:html, :attr, name, [:static, name]]],
-          ['false, nil', [:multi]],
-          [:else, [:html, :attr, name, [:escape, escape, [:dynamic, tmp]]]]]]
       end
     end
 
@@ -48,7 +48,7 @@ module Slim
     # @return [Array] Compiled temple expression
     def on_slim_attrvalue(escape, code)
       # We perform attribute merging on Array values
-      if delimiter = options[:attr_delimiter][@attr]
+      if delimiter = options[:merge_attrs][@attr]
         tmp = unique_name
         [:multi,
          [:code, "#{tmp} = #{code}"],

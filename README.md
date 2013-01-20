@@ -385,7 +385,7 @@ as booleans. If you use the attribut wrapper you can omit the attribute assigmen
 
 #### Attribute merging
 
-You can configure attributes to be merged if multiple are given (See option `:attr_delimiter`). In the default configuration
+You can configure attributes to be merged if multiple are given (See option `:merge_attrs`). In the default configuration
 this is done for class attributes with the white space as delimiter.
 
     a.menu class="highlight" href="http://slim-lang.com/" Slim-lang.com
@@ -414,7 +414,7 @@ You can also use methods or instance variables which return a hash as shown here
     .card *method_which_returns_hash = place.name
     .card *@hash_instance_variable = place.name
 
-The hash attributes which support attribute merging (see Slim option `:attr_delimiter`) can be given as an `Array`
+The hash attributes which support attribute merging (see Slim option `:merge_attrs`) can be given as an `Array`
 
     .first *{:class => [:second, :third]} Text
 
@@ -628,8 +628,8 @@ There are a lot of them but the good thing is, that Slim checks the configuratio
 <tr><td>Boolean</td><td>:disable_escape</td><td>false</td><td>Disable automatic escaping of strings</td></tr>
 <tr><td>Boolean</td><td>:use_html_safe</td><td>false (true in Rails)</td><td>Use String#html_safe? from ActiveSupport (Works together with :disable_escape)</td></tr>
 <tr><td>Symbol</td><td>:format</td><td>:xhtml</td><td>HTML output format (Possible formats :xhtml, :html4, :html5, :html)</td></tr>
-<tr><td>String</td><td>:attr_wrapper</td><td>'"'</td><td>Character to wrap attributes in html (can be ' or ")</td></tr>
-<tr><td>Hash</td><td>:attr_delimiter</td><td>\{'class' => ' '}</td><td>Joining character used if multiple html attributes are supplied (e.g. class="class1 class2")</td></tr>
+<tr><td>String</td><td>:attr_quote</td><td>'"'</td><td>Character to wrap attributes in html (can be ' or ")</td></tr>
+<tr><td>Hash</td><td>:merge_attrs</td><td>\{'class' => ' '}</td><td>Joining character used if multiple html attributes are supplied (e.g. class="class1 class2")</td></tr>
 <tr><td>Boolean</td><td>:sort_attrs</td><td>true</td><td>Sort attributes by name</td></tr>
 <tr><td>Boolean</td><td>:pretty</td><td>false</td><td>Pretty html indenting <b>(This is slower!)</b></td></tr>
 <tr><td>String</td><td>:indent</td><td>'  '</td><td>Indentation string</td></tr>
