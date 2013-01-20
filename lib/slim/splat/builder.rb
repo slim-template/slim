@@ -10,7 +10,6 @@ module Slim
       def code_attr(name, escape, value)
         if delim = @options[:merge_attrs][name]
           value = Array === value ? value.join(delim) : value.to_s
-          # TODO test empty array code attr
           attr(name, escape ? Temple::Utils.escape_html(value) : value) unless value.empty?
         elsif @options[:hyphen_attrs].include?(name) && Hash === value
           value.each do |n, v|
