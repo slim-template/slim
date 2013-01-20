@@ -5,6 +5,8 @@ module Slim
   class Parser < Temple::Parser
     define_options :file,
                    :default_tag,
+                   :smart_text => false,
+                   :smart_text_chars => ',.;:!?()[]{}&$%^~|\'"#',   # not - = / < > *
                    :tabsize => 4,
                    :encoding => 'utf-8',
                    :shortcut => {
@@ -55,6 +57,11 @@ module Slim
       end
       @attr_shortcut_re = /\A(#{shortcut_re @attr_shortcut})(#{WORD_RE}(?:#{WORD_RE}|-)*#{WORD_RE}|#{WORD_RE}+)/
       @tag_re = /\A(?:#{shortcut_re @tag_shortcut}|\*(?=[^\s]+)|(#{WORD_RE}(?:#{WORD_RE}|:|-)*#{WORD_RE}|#{WORD_RE}+))/
+
+      smart_text_chars = options[:smart_text_chars].split(//)
+      smart_text_chars_re = chars_re(smart_text_chars)
+      smart_text_re = /\A(?:#{SMART_TEXT_RE}|(?:#{smart_text_chars_re}(?:\s|\Z|#{smart_text_chars_re}))|#{chars_re(smart_text_chars - @tag_shortcut.keys)})/
+      @smart_text_re = options[:smart_text] ? smart_text_re : nil
     end
 
     # Compile string to Temple expression
@@ -83,6 +90,7 @@ module Slim
     }.freeze
 
     WORD_RE = ''.respond_to?(:encoding) ? '\p{Word}' : '\w'
+    SMART_TEXT_RE = ''.respond_to?(:encoding) ? '(?:\p{Upper}|\p{Digit})' : '[A-Z0-9]'
     DELIM_RE = /\A[#{Regexp.escape DELIMS.keys.join}]/
     ATTR_NAME = "\\A\\s*(#{WORD_RE}(?:#{WORD_RE}|:|-)*)"
     QUOTED_ATTR_RE = /#{ATTR_NAME}=(=?)("|')/
@@ -91,6 +99,11 @@ module Slim
     # Compile shortcut regular expression
     def shortcut_re(shortcut)
       shortcut.map { |k,v| Regexp.escape(k) }.join('|')
+    end
+
+    # Compile character set regular expression
+    def chars_re(chars)
+      "[#{chars.map{ |c| Regexp.escape(c) }.join}]"
     end
 
     # Set string encoding if option is set
@@ -247,6 +260,12 @@ module Slim
         @stacks.last << [:slim, :output, $1.empty?, parse_broken_line, block]
         @stacks.last << [:static, ' '] unless $2.empty?
         @stacks << block
+      when /\A>( ?)/
+        # Found explicit smart text block.
+        @stacks.last << [:slim, :text, parse_text_block($', @indents.last + $1.size + 1)]
+      when @smart_text_re
+        # Found implicit smart text block.
+        @stacks.last << [:slim, :text, parse_text_block(@line)]
       when /\A(\w+):\s*\Z/
         # Embedded template detected. It is treated as block.
         @stacks.last << [:slim, :embedded, $1, parse_text_block]
