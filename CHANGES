@@ -15,6 +15,8 @@ master
        a href=='http://slim-lang.com/?a=1&amp;b=2'
     You can always disable escaping completly by using :disable_escape if you
     don't want to write '=='.
+  * Added hyphenation support for data attributes (Option :hyphen_attrs)
+    Example: div data={key1_key2: 'value'} will render as '<div data-key1-key2="value"></div>'
   * Add unicode support for tags and attributes (Issue #212)
   * Removed support for deprecated options:
     - Slim::Engine :remove_empty_attrs, :chain
