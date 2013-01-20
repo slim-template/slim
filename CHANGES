@@ -1,11 +1,4 @@
 master
-
-  * Add unicode support for tags and attributes (Issue #212)
-  * Removed support for deprecated options:
-    - Slim::Engine :remove_empty_attrs, :chain
-    - Slim::LogicLess :wrapped dictionary
-    - Slim::Parser :shortcut string option
-  * Fixed issue #333
   * IMPORTANT: Backward incompatible syntax change: '{...}' and '[...]' are not
     allowed as ruby attribute wrappers anymore. Use parentheses '(...)'
     if you want to wrap code with spaces. This allows to write arrays and hashes
@@ -15,9 +8,24 @@ master
     New:
        div id=('obj' + name) data={:a => 1, :b => 2} class=['alpha', 'beta']
   * IMPORTANT: Escape quoted attributes by default (Option :escape_quoted_attrs removed)
+    Old:
+       a href='http://slim-lang.com/?a=1&amp;b=2'
+    New:
+       a href='http://slim-lang.com/?a=1&b=2'
+       a href=='http://slim-lang.com/?a=1&amp;b=2'
+    You can always disable escaping completly by using :disable_escape if you
+    don't want to write '=='.
+  * Add unicode support for tags and attributes (Issue #212)
+  * Removed support for deprecated options:
+    - Slim::Engine :remove_empty_attrs, :chain
+    - Slim::LogicLess :wrapped dictionary
+    - Slim::Parser :shortcut string option
+    Slim will raise an exception if you use them!
+  * Fixed issue #333
   * Renamed options:
     - :attr_wrapper -> :attr_quote
     - :attr_delimiter -> :merge_attrs
+    Slim will raise an exception if you use the old unsupported name.
 
 1.3.6
 
