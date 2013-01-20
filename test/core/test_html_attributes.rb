@@ -108,14 +108,13 @@ option(selected class="clazz") Text
     assert_html '<div class="alpha beta gamma delta true false"></div><div class="alpha beta gamma"></div>', source
   end
 
-  def test_hash_attribute
+  def test_hyphenated_attribute
     source = %{
-.alpha data={:a => 'alpha', :b => 'beta', :c_d => 'gamma'}
+.alpha data={:a => 'alpha', :b => 'beta', :c_d => 'gamma', :c => {:e => 'epsilon'}}
 }
 
-    assert_html '<div class="alpha" data-a="alpha" data-b="beta" data-c-d="gamma"></div>', source
+    assert_html '<div class="alpha" data-a="alpha" data-b="beta" data-c-d="gamma" data-c-e="epsilon"></div>', source
   end
-
 
   def test_shortcut_splat
     source = %q{

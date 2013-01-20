@@ -12,9 +12,7 @@ module Slim
           value = Array === value ? value.join(delim) : value.to_s
           attr(name, escape ? Temple::Utils.escape_html(value) : value) unless value.empty?
         elsif @options[:hyphen_attrs].include?(name) && Hash === value
-          value.each do |n, v|
-            code_attr("#{name}-#{n.to_s.gsub('_', '-')}", escape, v)
-          end
+          hyphen_attr(name, escape, value)
         else
           case value
           when false, nil
@@ -63,6 +61,18 @@ module Slim
         attrs.map do |k, v|
           " #{k}=#{@options[:attr_quote]}#{v}#{@options[:attr_quote]}"
         end.join
+      end
+
+      private
+
+      def hyphen_attr(name, escape, value)
+        if Hash === value
+          value.each do |n, v|
+            hyphen_attr("#{name}-#{n.to_s.gsub('_', '-')}", escape, v)
+          end
+        else
+          attr(name, escape ? Temple::Utils.escape_html(value) : value.to_s)
+        end
       end
     end
   end
