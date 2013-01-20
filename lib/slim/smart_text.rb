@@ -4,6 +4,8 @@ module Slim
   #
   # @api private
   class SmartText < Filter
+    define_options :smart_text_end_chars => '([{',
+                   :smart_text_begin_chars => ',.;:!?)]}'
   
     def initialize(opts = {})
       super
@@ -52,11 +54,11 @@ module Slim
     private
     
     def prepend?(string)
-      true
+      not options[:smart_text_begin_chars][string[0]]
     end
     
     def append?(string)
-      true
+      not options[:smart_text_end_chars][string[-1]]
     end
     
   end
