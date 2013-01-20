@@ -624,8 +624,8 @@ There are a lot of them but the good thing is, that Slim checks the configuratio
 <tr><td>String</td><td>:encoding</td><td>"utf-8"</td><td>Set encoding of template</td></tr>
 <tr><td>String</td><td>:default_tag</td><td>"div"</td><td>Default tag to be used if tag name is omitted</td></tr>
 <tr><td>Hash</td><td>:shortcut</td><td>\{'.' => {:attr => 'class'}, '#' => {:attr => 'id'}}</td><td>Attribute shortcuts</td></tr>
-<tr><td>Array<Symbol,String></td><td>:enable_engines</td><td>nil <i>(All enabled)</i></td><td>List of enabled embedded engines (whitelist)</td></tr>
-<tr><td>Array<Symbol,String></td><td>:disable_engines</td><td>nil <i>(None disabled)</i></td><td>List of disabled embedded engines (blacklist)</td></tr>
+<tr><td>Array&lt;Symbol,String&gt;</td><td>:enable_engines</td><td>nil <i>(All enabled)</i></td><td>List of enabled embedded engines (whitelist)</td></tr>
+<tr><td>Array&lt;Symbol,String&gt;</td><td>:disable_engines</td><td>nil <i>(None disabled)</i></td><td>List of disabled embedded engines (blacklist)</td></tr>
 <tr><td>Boolean</td><td>:disable_capture</td><td>false (true in Rails)</td><td>Disable capturing in blocks (blocks write to the default buffer </td></tr>
 <tr><td>Boolean</td><td>:disable_escape</td><td>false</td><td>Disable automatic escaping of strings</td></tr>
 <tr><td>Boolean</td><td>:escape_quoted_attrs</td><td>false</td><td>Escape quoted attributes</td></tr>
@@ -771,7 +771,7 @@ and activate logic less mode per render call in your application
 <tbody>
 <tr><td>Boolean</td><td>:logic_less</td><td>true</td><td>Enable logic less mode (Enabled if 'slim/logic_less' is required)</td></tr>
 <tr><td>String</td><td>:dictionary</td><td>"self"</td><td>Dictionary where variables are looked up</td></tr>
-<tr><td>Symbol/Array of Symbols</td><td>:dictionary_access</td><td>[:symbol, :string, :method, :instance_variable]</td><td>Dictionary access order (:symbol, :string, :method, :instance_variable)</td></tr>
+<tr><td>Symbol/Array&lt;Symbol&gt;</td><td>:dictionary_access</td><td>[:symbol, :string, :method, :instance_variable]</td><td>Dictionary access order (:symbol, :string, :method, :instance_variable)</td></tr>
 </tbody>
 </table>
 
