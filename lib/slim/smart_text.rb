@@ -16,16 +16,16 @@ module Slim
     
     def on_multi(*exps)
       block = [:multi]
-      last = nil
+      prev = nil
       last_exp = exps.reject{ |exp| exp.first == :newline }.last if @smart
       exps.each do |exp|
         @prepend = true unless @smart
-        @prepend = false if last && last.first == :slim && last[1] == :smart
+        @prepend = false if prev && prev.first == :slim && prev[1] == :smart
         @append = exp.equal? last_exp
         block << compile(exp)
         next if exp.first == :newline
         @prepend = false
-        last = exp
+        prev = exp
       end
       block
     end
