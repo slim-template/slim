@@ -265,7 +265,8 @@ module Slim
         @stacks.last << [:slim, :smart, parse_text_block($', @indents.last + $1.size + 1)]
       when @smart_text_re
         # Found implicit smart text block.
-        @stacks.last << [:slim, :smart, parse_text_block(@line)]
+        indent = get_indent(@lines.first) if @lines.first
+        @stacks.last << [:slim, :smart, parse_text_block(@line, indent)]
       when /\A(\w+):\s*\Z/
         # Embedded template detected. It is treated as block.
         @stacks.last << [:slim, :embedded, $1, parse_text_block]
