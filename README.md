@@ -42,9 +42,12 @@ by the logic less plugin and the translator plugin which provides I18n.
 
 Within the Rails community, _Erb_ and _Haml_ are without doubt the two most popular templating engines. However, _Erb_'s syntax is cumbersome and _Haml_'s syntax can be quite cryptic to the uninitiated.
 
+There is also some development in logic-less engines (e.g. [Mustache](https://github.com/defunkt/mustache) which requires you to write standard HTML). You can also use Slim in logic-less mode if you like the Slim syntax to build your HTML but don't want to write Ruby in your templates.
+
 Slim was born to bring a minimalist syntax approach with speed. If people chose not to use Slim, it would not be because of speed.
 
-___Yes, Slim is speedy!___ Benchmarks are provided at the end of this README file. Don't trust the numbers? That's as it should be. Therefore we provide a benchmark rake task so you could test it yourself (`rake bench`).
+___Yes, Slim is speedy!___ Benchmarks are done for every commit at {http://travis-ci.org/#!/slim-template/slim}.
+Don't trust the numbers? That's as it should be. Please try the benchmark rake task yourself!
 
 ### How to start?
 
