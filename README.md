@@ -952,12 +952,7 @@ Work your magic and then submit a pull request. We love pull requests!
 
 Please remember to test against Ruby versions 1.9.2 and 1.8.7.
 
-If you find the documentation lacking (and you probably will), help us out
-The docs are located in the gh-pages branch:
-
-    $ git checkout gh-pages
-
-If you don't have the time to work on Slim, but found something we should know about, please submit an issue.
+If you find the documentation lacking (and you probably will), help us out and update this README.md. If you don't have the time to work on Slim, but found something we should know about, please submit an issue.
 
 ## License
 
