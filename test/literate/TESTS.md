@@ -704,13 +704,7 @@ renders as
 <a href="http://slim-lang.com">Goto the slim-lang.com</a>
 ~~~
 
-The attribute value will be escaped if the option
-
-~~~ options
-:escape_quoted_attrs => true
-~~~
-
-is set. Use == if you want to disable escaping in the attribute.
+The attribute value will be escaped by default. Use == if you want to disable escaping in the attribute.
 
 ~~~ slim
 li
