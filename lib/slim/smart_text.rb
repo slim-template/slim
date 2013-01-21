@@ -19,19 +19,20 @@ module Slim
     def on_multi(*exps)
       block = [:multi]
       prev = nil
-      last_exp = exps.reject{ |exp| exp.first == :newline }.last if @smart
+      last_exp = exps.reject{ |exp| exp.first == :newline }.last unless @smart && @append
       exps.each do |exp|
-        @prepend = true unless @smart
-        @prepend = false if prev && prev.first == :slim && prev[1] == :smart
-        @append = exp.equal? last_exp
+        @append = exp.equal?(last_exp)
+        if @smart
+          @prepend = false if prev
+        else
+          @prepend = prev && ( prev.first != :slim || prev[1] != :smart )
+        end
         block << compile(exp)
-        next if exp.first == :newline
-        @prepend = false
-        prev = exp
+        prev = exp unless exp.first == :newline
       end
       block
     end
-  
+    
     def on_slim_smart(content)
       old = @smart
       @smart = true

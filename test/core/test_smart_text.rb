@@ -31,8 +31,7 @@ f
 i
 }
 
-    result = %q{
-a
+    result = %q{a
 b
 c
 d
@@ -66,20 +65,11 @@ p G
 I
 }
 
-    result = %q{<p>
-A
-</p><p>
-B
-</p><p>
-C
-</p><p>
-D
-</p><p>E</p>
+    result = %q{<p>A</p><p>B</p><p>C</p><p>D</p><p>E</p>
 F
 <p>G
 H</p>
-I
-}
+I}
 
     assert_html result, source
   end
@@ -95,14 +85,12 @@ p
   Fourth line.
 }
 
-    result = %q{<p>
-First line.
+    result = %q{<p>First line.
 Second line.
 Third line
 with a continuation
 and one more.
-Fourth line.
-</p>}
+Fourth line.</p>}
 
     assert_html result, source
   end
@@ -119,13 +107,11 @@ p
   Escaped &#xx; &#1f; &;.
 }
 
-    result = %q{<p>Not escaped <&>.</p>Not escaped <&>.<p>
-Escaped &lt;&amp;&gt;.
+    result = %q{<p>Not escaped <&>.</p>Not escaped <&>.<p>Escaped &lt;&amp;&gt;.
 Escaped &lt;&amp;&gt;.
 Protected &amp; &lt; &gt; &copy; &Aacute;.
 Protected &#0129; &#x00ff;.
-Escaped &amp;#xx; &amp;#1f; &amp;;.
-</p>}
+Escaped &amp;#xx; &amp;#1f; &amp;;.</p>}
 
     assert_html result, source
   end
@@ -158,8 +144,7 @@ p
   !
 }
 
-    result = %q{<p>
-Text
+    result = %q{<p>Text
 <br />
 is
 <strong>really</strong>
@@ -170,10 +155,7 @@ And
 <i>more</i>...
 <span>Really</span>?!?
 <div class="bold">Really</div>!!!
-<div id="id">
-Good
-</div>!
-</p>}
+<div id="id">Good</div>!</p>}
 
     assert_html result, source
   end
@@ -200,20 +182,16 @@ p
   )?
 }
 
-    result = %q{<p>
-Text with
+    result = %q{<p>Text with
 <a href="#1">link</a>.
 Text with
 <a href="#2">another
 link</a>
 to somewhere else.
-<a href="#3">
-This link
-</a>
+<a href="#3">This link</a>
 goes
 elsewhere.
-See (<a href="#4">link</a>)?
-</p>}
+See (<a href="#4">link</a>)?</p>}
 
     assert_html result, source
   end
@@ -231,16 +209,10 @@ p
   . Right?
 }
 
-    result = %q{<p>
-Try a list
-<ul><li>
-Item: 0
-</li><li>
-Item: 1
-</li></ul>
+    result = %q{<p>Try a list
+<ul><li>Item: 0</li><li>Item: 1</li></ul>
 which stops
-<b>here</b>. Right?
-</p>}
+<b>here</b>. Right?</p>}
 
     assert_html result, source
   end
@@ -263,8 +235,7 @@ p
       result = %q{<p><是></是><čip></čip>
 Čip
 Žůžo
-<šíp></šíp><div class="řek">.
-</div></p>}
+<šíp></šíp><div class="řek">.</div></p>}
 
       assert_html result, source
     end
@@ -285,14 +256,12 @@ p
     .
 }
 
-      result = %q{<p>
-是
+      result = %q{<p>是
 čip
 Čip
 Žůžo
 šíp
-<div class="řek">.
-</div></p>}
+<div class="řek">.</div></p>}
 
       assert_html result, source
     end
