@@ -6,7 +6,7 @@ module Slim
     define_options :file,
                    :default_tag,
                    :smart_text => false,
-                   :smart_text_chars => ',.;:!?()[]{}&$%^~|\'"#',   # not - = / < > *
+                   :smart_text_chars => ',.;:!?()[]{}@&$%^~"#',   # not - = / < > | ' *
                    :tabsize => 4,
                    :encoding => 'utf-8',
                    :shortcut => {
