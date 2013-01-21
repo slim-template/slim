@@ -87,7 +87,9 @@ body
 renders as
 
 ~~~ html
-<body>Text</body>
+<body>
+  Text
+</body>
 ~~~
 
 You can embed html code in the text which is not escaped.
@@ -211,7 +213,15 @@ HTML tags allow nested blocks inside.
 renders as
 
 ~~~ html
-<html><head><title>Example</title></head><body>yes</body></html>
+<html><head>
+<title>
+  Example
+</title>
+</head>
+<body>
+  yes
+</body>
+</html>
 ~~~
 
 ### Control code `-`
@@ -421,7 +431,9 @@ renders as
 
 ~~~ html
 <body>
-  <p>Hello!</p>
+  <p>
+    Hello!
+  </p>
 </body>
 ~~~
 
@@ -448,7 +460,9 @@ renders as
 <body>
   <!--Another comment
   with multiple lines-->
-  <p>Hello!</p>
+  <p>
+    Hello!
+  </p>
   <!--First line determines indentation
   
   of the comment-->
@@ -465,7 +479,11 @@ renders as
 renders as
 
 ~~~ html
-<!--[if IE]><p>Get a better browser.</p><![endif]-->
+<!--[if IE]>
+<p>
+  Get a better browser.
+</p>
+<![endif]-->
 ~~~
 
 ## HTML tags
@@ -959,7 +977,9 @@ h1 Welcome #{user}!
 renders as
 
 ~~~ html
-<h1>Welcome John Doe &lt;john@doe.net&gt;!</h1>
+<h1>
+  Welcome John Doe &lt;john@doe.net&gt;!
+</h1>
 ~~~
 
 ## Embedded engines
