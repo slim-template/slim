@@ -16,6 +16,7 @@ module Slim
     use Slim::SmartText, :smart_text_end_chars, :smart_text_begin_chars
     use Slim::EmbeddedEngine, :enable_engines, :disable_engines, :pretty
     use Slim::Interpolation
+    use Slim::SmartEscape
     use Slim::EndInserter
     use Slim::ControlStructures, :disable_capture
     use Slim::SplatAttributes, :attr_delimiter, :attr_wrapper, :sort_attrs, :default_tag

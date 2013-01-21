@@ -114,11 +114,17 @@ p Not escaped <&>.
 p
   Escaped <&>.
   > Escaped <&>.
+  Protected &amp; &lt; &gt; &copy; &Aacute;.
+  Protected &#0129; &#x00ff;.
+  Escaped &#xx; &#1f; &;.
 }
 
     result = %q{<p>Not escaped <&>.</p>Not escaped <&>.<p>
 Escaped &lt;&amp;&gt;.
 Escaped &lt;&amp;&gt;.
+Protected &amp; &lt; &gt; &copy; &Aacute;.
+Protected &#0129; &#x00ff;.
+Escaped &amp;#xx; &amp;#1f; &amp;;.
 </p>}
 
     assert_html result, source

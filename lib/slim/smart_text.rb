@@ -35,7 +35,7 @@ module Slim
     def on_slim_smart(content)
       old = @smart
       @smart = true
-      [ :escape, true, [ :slim, :text, compile(content) ] ]
+      [ :slim, :smart, compile(content) ]
     ensure
       @smart = old
     end
