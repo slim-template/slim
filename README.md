@@ -148,7 +148,7 @@ This way you can easily type text like this:
         > 'This is text, too'.
 
 Note that unlike verbatim text, smart text is automatically escaped for you.
-However, for your convenience, any HTML entities detected are used verbatim.
+However, for your convenience, any HTML entities detected are still used verbatim.
 
     h1
       Rise & shine
