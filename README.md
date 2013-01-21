@@ -34,6 +34,9 @@ Slim 2.0 removes deprecated features from the 1.3 series and cleans up some mino
 inconsistencies in the syntax (Attribute wrapper and quoted attribute escaping).
 Of course it also includes new features and bugfixes. See the CHANGES for details.
 
+In general don't be afraid of upgrading! We try to be backward compatible and follow [semantic versions](http://semver.org/)
+as good as possible.
+
 ## Introduction
 
 ### What is Slim?
