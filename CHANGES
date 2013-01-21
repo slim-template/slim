@@ -1,4 +1,4 @@
-2.0.0.pre.1
+2.0.0.pre.2
 
   * IMPORTANT: Backward incompatible syntax change: '{...}' and '[...]' are not
     allowed as ruby attribute wrappers anymore. Use parentheses '(...)'
