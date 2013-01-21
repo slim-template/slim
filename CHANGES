@@ -30,6 +30,8 @@
     - :attr_delimiter -> :merge_attrs
     Slim will raise an exception if you use the old unsupported name.
   * Improved pretty printing (Issue #202)
+  * Renamed Slim::EmbeddedEngine to Slim::Embedded
+  * Renamed Slim::ControlStructures to Slim::Controls
 
 1.3.6
 

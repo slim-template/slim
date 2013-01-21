@@ -60,7 +60,7 @@ module Slim
 
   # Temple filter which processes embedded engines
   # @api private
-  class EmbeddedEngine < Filter
+  class Embedded < Filter
     @engines = {}
 
     # Register embedded engine
