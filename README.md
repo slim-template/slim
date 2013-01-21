@@ -22,6 +22,18 @@ A short list of the features...
 * Supported by all major frameworks (Rails, Sinatra, ...)
 * Embedded engines like Markdown and Textile
 
+## Upgrade to version 2.0
+
+__NOTE:__ Slim 2.0 is not yet released, but you can try the preview versions.
+
+If you are already using Slim 1.3 or 1.2 and want to upgrade to the newest version 2.0, you should at first
+upgrade to Slim 1.3.7 which will emit warnings for deprecated features. This way you can easily
+see if your application is already Slim 2.0 compliant!
+
+Slim 2.0 removes deprecated features from the 1.3 series and cleans up some minor
+inconsistencies in the syntax (Attribute wrapper and quoted attribute escaping).
+Of course it also includes new features and bugfixes. See the CHANGES for details.
+
 ## Introduction
 
 ### What is Slim?
