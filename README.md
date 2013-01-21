@@ -147,6 +147,11 @@ This way you can easily type text like this:
           several lines.
         > 'This is text, too'.
 
+Note that unlike verbatim text, smart text is automatically escaped for you:
+
+    h1
+      Rise & shine.
+
 Another cool thing about smart text is that it mixes fairly well with markup.
 Smart text lines normally preserve newlines,
 however the leading newline is suppressed if the smart text block begins
