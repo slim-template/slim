@@ -147,10 +147,13 @@ This way you can easily type text like this:
           several lines.
         > 'This is text, too'.
 
-Note that unlike verbatim text, smart text is automatically escaped for you:
+Note that unlike verbatim text, smart text is automatically escaped for you.
+However, for your convenience, any HTML entities detected are used verbatim.
 
     h1
       Rise & shine
+    footer
+      Copyright &copy; #{Time.now.year}
 
 Another cool thing about smart text is that it mixes fairly well with markup.
 Smart text lines normally preserve newlines,
