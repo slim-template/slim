@@ -27,10 +27,10 @@ module Slim
     end
 
     use Slim::Parser, :file, :tabsize, :encoding, :shortcut, :default_tag, :escape_quoted_attrs
-    use Slim::EmbeddedEngine, :enable_engines, :disable_engines, :pretty
+    use Slim::Embedded, :enable_engines, :disable_engines, :pretty
     use Slim::Interpolation
     use Slim::EndInserter
-    use Slim::ControlStructures, :disable_capture
+    use Slim::Controls, :disable_capture
     use Slim::SplatAttributes, :merge_attrs, :attr_quote, :sort_attrs, :default_tag
     html :AttributeSorter, :sort_attrs
     html :AttributeMerger, :merge_attrs

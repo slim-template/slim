@@ -578,9 +578,9 @@ Supported engines:
 </tbody>
 </table>
 
-The embedded engines can be configured in Slim by setting the options directly on the `Slim::EmbeddedEngine` filter. Example:
+The embedded engines can be configured in Slim by setting the options directly on the `Slim::Embedded` filter. Example:
 
-    Slim::EmbeddedEngine.default_options[:markdown] = {:auto_ids => false}
+    Slim::Embedded.default_options[:markdown] = {:auto_ids => false}
 
 ## Configuring Slim
 

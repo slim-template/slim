@@ -60,7 +60,7 @@ module Slim
 
   # Temple filter which processes embedded engines
   # @api private
-  class EmbeddedEngine < Filter
+  class Embedded < Filter
     @engines = {}
 
     # Register embedded engine
@@ -254,5 +254,11 @@ module Slim
 
     # Embedded ruby code
     register :ruby,       RubyEngine
+  end
+
+  def self.const_missing(name)
+    super unless name == :EmbeddedEngine
+    warn 'Slim::EmbeddedEngine is deprecated, it is called Slim::Embedded in Slim 2.0'
+    Embedded
   end
 end
