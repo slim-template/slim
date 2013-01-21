@@ -4,10 +4,10 @@ module Slim
     define_options :sort_attrs, :default_tag, :merge_attrs, :attr_quote
 
     def call(exp)
-      @attr_delimiter, @splat_used = unique_name, false
+      @merge_attrs, @splat_used = unique_name, false
       exp = compile(exp)
       if @splat_used
-        [:multi, [:code, "#{@attr_delimiter} = #{@options[:attr_delimiter].inspect}"], exp]
+        [:multi, [:code, "#{@merge_attrs} = #{@options[:merge_attrs].inspect}"], exp]
       else
         exp
       end
@@ -82,14 +82,14 @@ module Slim
       merger << [:block, "#{hash}.keys.each do |#{name}|",
                  [:multi,
                   [:code, "#{value} = #{hash}[#{name}]"],
-                  [:if, "#{@attr_delimiter}[#{name}]",
+                  [:if, "#{@merge_attrs}[#{name}]",
                    [:multi,
                     [:code, "#{value}.flatten!"],
                     [:code, "#{value}.map!(&:to_s)"],
                     [:code, "#{value}.reject!(&:empty?)"],
                     [:if, "#{value}.empty?",
                      [:code, "#{hash}.delete(#{name})"],
-                     [:code, "#{hash}[#{name}] = #{value}.join(#{@attr_delimiter}[#{name}].to_s)"]]],
+                     [:code, "#{hash}[#{name}] = #{value}.join(#{@merge_attrs}[#{name}].to_s)"]]],
                    [:multi,
                     [:if, "#{value}.size > 1",
                      [:code, %{raise("Multiple #\{#{name}\} attributes specified")}]],
@@ -101,9 +101,9 @@ module Slim
       attr = [:multi,
               [:static, ' '],
               [:dynamic, name],
-              [:static, "=#{options[:attr_wrapper]}"],
+              [:static, "=#{options[:attr_quote]}"],
               [:escape, true, [:dynamic, value]],
-              [:static, options[:attr_wrapper]]]
+              [:static, options[:attr_quote]]]
       enumerator = options[:sort_attrs] ? "#{hash}.sort_by {|#{name},#{value}| #{name} }" : hash
       formatter = [:block, "#{enumerator}.each do |#{name},#{value}|", attr]
 
