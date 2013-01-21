@@ -30,7 +30,7 @@ module Slim
           # Entity.
           block << [ :escape, false, [:static, $&] ]
           string = $'
-        when /\A(&|[^&]*)/
+        when /\A&?[^&]*/
           # Other text.
           block << [:static, $&]
           string = $'
