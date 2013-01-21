@@ -46,8 +46,8 @@ module Slim
           raise ArgumentError, 'You can only use special characters for attribute shortcuts' if k =~ /(#{WORD_RE}|-)/
         end
       end
-      @attr_shortcut_re = /\A(#{shortcut_re @attr_shortcut})(#{WORD_RE}(?:#{WORD_RE}|-)*#{WORD_RE}|#{WORD_RE}+)/
-      @tag_re = /\A(?:#{shortcut_re @tag_shortcut}|\*(?=[^\s]+)|(#{WORD_RE}(?:#{WORD_RE}|:|-)*#{WORD_RE}|#{WORD_RE}+))/
+      @attr_shortcut_re = /\A(#{Regexp.union @attr_shortcut.keys})(#{WORD_RE}(?:#{WORD_RE}|-)*#{WORD_RE}|#{WORD_RE}+)/
+      @tag_re = /\A(?:#{Regexp.union @tag_shortcut.keys}|\*(?=[^\s]+)|(#{WORD_RE}(?:#{WORD_RE}|:|-)*#{WORD_RE}|#{WORD_RE}+))/
     end
 
     # Compile string to Temple expression
@@ -80,11 +80,6 @@ module Slim
     ATTR_NAME = "\\A\\s*(#{WORD_RE}(?:#{WORD_RE}|:|-)*)"
     QUOTED_ATTR_RE = /#{ATTR_NAME}=(=?)("|')/
     CODE_ATTR_RE = /#{ATTR_NAME}=(=?)/
-
-    # Compile shortcut regular expression
-    def shortcut_re(shortcut)
-      shortcut.map { |k,v| Regexp.escape(k) }.join('|')
-    end
 
     # Set string encoding if option is set
     def set_encoding(s)
