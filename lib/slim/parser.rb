@@ -59,8 +59,7 @@ module Slim
       @tag_re = /\A(?:#{shortcut_re @tag_shortcut}|\*(?=[^\s]+)|(#{WORD_RE}(?:#{WORD_RE}|:|-)*#{WORD_RE}|#{WORD_RE}+))/
 
       smart_text_chars = options[:smart_text_chars].split(//)
-      smart_text_chars_re = chars_re(smart_text_chars)
-      smart_text_re = /\A(?:#{SMART_TEXT_RE}|(?:#{smart_text_chars_re}(?:\s|\Z|#{smart_text_chars_re}))|#{chars_re(smart_text_chars - @tag_shortcut.keys)})/
+      smart_text_re = /\A(?:#{SMART_TEXT_RE}|(?:#{chars_re(smart_text_chars)}(?!#{WORD_RE}))|#{chars_re(smart_text_chars - @tag_shortcut.keys)})/
       @smart_text_re = options[:smart_text] ? smart_text_re : nil
     end
 
@@ -103,7 +102,7 @@ module Slim
 
     # Compile character set regular expression
     def chars_re(chars)
-      "[#{chars.map{ |c| Regexp.escape(c) }.join}]"
+      Regexp.union(chars)
     end
 
     # Set string encoding if option is set
