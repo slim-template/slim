@@ -406,7 +406,7 @@ module Slim
           quote = $3
           value = parse_quoted_attribute(quote)
           if escape && !options[:escape_quoted_attrs] && value =~ /&(amp|quot|gt|lt);/
-            warn "#{options[:file]}:#{@lineno} - quoted attribute value '#{value}' might be double escaped in Slim 2.0."
+            warn "#{options[:file]}:#{@lineno} - quoted attribute value '#{value}' might be double escaped in Slim 2.0. Remove manually escaped entities and set :escape_quoted_attrs => true! :escaped_quoted_attrs is activated on Slim 2.0 by default."
           end
           attributes << [:html, :attr, name,
                          [:escape, options[:escape_quoted_attrs] && escape,
