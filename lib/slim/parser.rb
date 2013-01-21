@@ -54,8 +54,8 @@ module Slim
           raise ArgumentError, 'You can only use special characters for attribute shortcuts' if k =~ /[\w-]/
         end
       end
-      @attr_shortcut_regex = /\A(#{shortcut_regex @attr_shortcut})(\w[\w-]*\w|\w+)/
-      @tag_regex = /\A(?:#{shortcut_regex @tag_shortcut}|\*(?=[^\s]+)|(\w[\w:-]*\w|\w+))/
+      @attr_shortcut_regex = /\A(#{Regexp.union @attr_shortcut.keys})(\w[\w-]*\w|\w+)/
+      @tag_regex = /\A(?:#{Regexp.union @tag_shortcut.keys}|\*(?=[^\s]+)|(\w[\w:-]*\w|\w+))/
     end
 
     # Compile string to Temple expression
@@ -95,11 +95,6 @@ module Slim
       else
         { :attr => v }
       end
-    end
-
-    # Compile shortcut regular expression
-    def shortcut_regex(shortcut)
-      shortcut.map { |k,v| Regexp.escape(k) }.join('|')
     end
 
     # Set string encoding if option is set
