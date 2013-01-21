@@ -183,6 +183,10 @@ so it will correctly deal even with cases like this:
         i text
         ...
 
+Of course, all this is is meant only to make working with short text snippets more convenient.
+For bulk text content, you are more than welcome to use one of the builtin embedded engines,
+such as Markdown or Textile.
+
 ### Inline html `<` (HTML style)
 
 You can write html tags directly in Slim which allows you to write your templates in a more html like style with closing tags or mix html and Slim style.
