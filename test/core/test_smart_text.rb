@@ -107,6 +107,23 @@ Fourth line.
     assert_html result, source
   end
 
+  def test_smart_text_escaping
+    source = %q{
+p Not escaped <&>.
+| Not escaped <&>.
+p
+  Escaped <&>.
+  > Escaped <&>.
+}
+
+    result = %q{<p>Not escaped <&>.</p>Not escaped <&>.<p>
+Escaped &lt;&amp;&gt;.
+Escaped &lt;&amp;&gt;.
+</p>}
+
+    assert_html result, source
+  end
+
   def test_smart_text_mixed_with_tags
     source = %q{
 p
