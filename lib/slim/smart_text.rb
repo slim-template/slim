@@ -12,6 +12,8 @@ module Slim
       @smart = false
       @prepend = false
       @append = false
+      @prepend_re = /\A(?:#{chars_re(options[:smart_text_begin_chars])})/
+      @append_re = /(?:#{chars_re(options[:smart_text_end_chars])})\Z/
     end
     
     def on_multi(*exps)
@@ -53,12 +55,16 @@ module Slim
     
     private
     
+    def chars_re(string)
+      Regexp.union(string.split(//))
+    end
+    
     def prepend?(string)
-      not options[:smart_text_begin_chars][string[0]]
+      string !~ @prepend_re
     end
     
     def append?(string)
-      not options[:smart_text_end_chars][string[-1]]
+      string !~ @append_re
     end
     
   end
