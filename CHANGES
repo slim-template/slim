@@ -5,12 +5,19 @@ branch 1.3
   * Deprecated :attr_wrapper (renamed to :attr_quote)
   * Deprecated :escape_quoted_attrs (done by default now)
   * Warn if you use curly braces or brackets for ruby attributes since
-    curly braces and brackets will be interpreted as Hash/Array
+    curly braces and brackets will be interpreted as Hash/Array in Slim 2.0.0
     Old syntax:
       div id={person && person.id}
       div id=[person && person.id]
-    New syntax:
+    New syntax in 2.0.0:
       div id=(person && person.id}
+  * Warn if quoted attributes might be double escaped in Slim 2.0.0
+    Old syntax:
+       a href='http://slim-lang.com/?a=1&amp;b=2'
+       a href=='http://slim-lang.com/?a=1&amp;b=2'
+    New syntax in 2.0.0:
+       a href='http://slim-lang.com/?a=1&b=2'
+       a href=='http://slim-lang.com/?a=1&amp;b=2'
 
 1.3.6
 

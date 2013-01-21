@@ -231,4 +231,12 @@ p(id="marvin" class=nil nonempty=("".to_s) data-info="Illudium Q-36")= output_nu
 
     assert_html '<p data-info="Illudium Q-36" id="marvin" nonempty="">1337</p>', source
   end
+
+  def test_double_escape_warning
+    source = %q{
+a href='http://slim-lang.com?a=1&amp;b=2'
+}
+
+    assert_html '<a href="http://slim-lang.com?a=1&amp;b=2"></a>', source
+  end
 end

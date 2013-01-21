@@ -82,7 +82,7 @@ module Slim
 
     # Convert deprecated string shortcut to hash
     def deprecated_shortcut(v)
-      warn "Slim :shortcut string values are deprecated, use hash like { '#' => { :tag => 'div', :attr => 'id' } }"
+      warn "Slim :shortcut string values are deprecated and unsupported in Slim 2.0, use hash like { '#' => { :tag => 'div', :attr => 'id' } }"
       if v =~ /\A([^\s]+)\s+([^\s]+)\Z/
         { :tag => $1, :attr => $2 }
       else
@@ -406,7 +406,7 @@ module Slim
           quote = $3
           value = parse_quoted_attribute(quote)
           if escape && !options[:escape_quoted_attrs] && value =~ /&(amp|quot|gt|lt);/
-            warn "#{options[:file]}:#{@lineno} - quoted attribute value '#{value}' might be double escaped in Slim 2.0.0."
+            warn "#{options[:file]}:#{@lineno} - quoted attribute value '#{value}' might be double escaped in Slim 2.0."
           end
           attributes << [:html, :attr, name,
                          [:escape, options[:escape_quoted_attrs] && escape,
@@ -420,7 +420,7 @@ module Slim
           # Remove attribute wrapper which doesn't belong to the ruby code
           # e.g id=[hash[:a] + hash[:b]]
           if value =~ /\A[\[\{]/ && DELIMITERS[$&] == value[-1, 1]
-            warn "#{options[:file]}:#{@lineno} - ruby attribute value #{value} with curly braces/brackets is deprecated. Use parentheses!"
+            warn "#{options[:file]}:#{@lineno} - ruby attribute value #{value} with curly braces/brackets is deprecated and unsupported in Slim 2.0. Use parentheses!"
             value = value[1..-2]
           end
           syntax_error!('Invalid empty attribute') if value.empty?
