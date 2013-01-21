@@ -41,7 +41,9 @@ html
     result = %q{<!DOCTYPE html>
 <html>
   <head>
-    <title>Hello World!</title>
+    <title>
+      Hello World!
+    </title>
     <!--Meta tags
     with long explanatory
     multiline comment-->
@@ -52,24 +54,51 @@ html
     <!--Javascripts-->
     <script src="jquery.js"></script>
     <script src="jquery.ui.js"></script>
-    <!--[if lt IE 9]><script src="old-ie1.js"></script>
-    <script src="old-ie2.js"></script><![endif]-->
+    <!--[if lt IE 9]>
+    <script src="old-ie1.js"></script>
+    <script src="old-ie2.js"></script>
+    <![endif]-->
     <style type="text/css">
       body {
         background-color: red;
       }
-      </style>
+    </style>
   </head>
   <body>
     <div id="container">
-      <p>Hello
-        World!</p>
-      <p>dynamic text with
-        newline</p>
+      <p>
+        Hello
+        World!
+      </p>
+      <p>
+        dynamic text with
+        newline
+      </p>
     </div>
   </body>
 </html>}
 
     assert_html result, source
+  end
+
+  def test_partials
+    body = %q{body
+  == render content}
+
+    content = %q{div
+  | content}
+
+    source = %q{html
+  == render body, :scope => self, :locals => { :content => content }}
+
+    result = %q{<html>
+  <body>
+    <div>
+      content
+    </div>
+  </body>
+</html>}
+
+    assert_html result, source, :scope => self, :locals => {:body => body, :content => content }
   end
 end

@@ -16,7 +16,8 @@ class TestSlim < MiniTest::Unit::TestCase
 
   def render(source, options = {}, &block)
     scope = options.delete(:scope)
-    Slim::Template.new(options[:file], options) { source }.render(scope || @env, &block)
+    locals = options.delete(:locals)
+    Slim::Template.new(options[:file], options) { source }.render(scope || @env, locals, &block)
   end
 
   def assert_html(expected, source, options = {}, &block)
