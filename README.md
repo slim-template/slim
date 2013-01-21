@@ -130,10 +130,10 @@ The single quote tells Slim to copy the line (similar to `|`), but makes sure th
 
 ### Smart text `>`
 
-The easiest way to combine text and markup is to use smart text mode.
+The easiest way to combine text and markup is to use the smart text mode.
 If you have the `:smart_text` option enabled, any text starting
 with uppercase letter, digit, or any of the characters specified
-in `:smart_text_characters` implies a smart text line.
+in `:smart_text_characters` implies a text line.
 You can also always explicitly mark the smart text with `>`,
 for example when it starts with lowercase letter or unusual character.
 If the text spans several lines, simply indent them.
@@ -147,12 +147,12 @@ This way you can easily type text like this:
           several lines.
         > 'This is text, too'.
 
-The coolest thing about smart text is that it mixes fairly well with markup.
+Another cool thing about smart text is that it mixes fairly well with markup.
 Smart text lines normally preserve newlines,
-however the leading newline is supressed if the smart text block begins
-with one character from the `:smart_text_begin_chars` set (`,.;:!?)]}` by default).
-Similarly, trailing newline is supressed if the smart text block ends
-with one character from the `:smart_text_end_chars` set (`([{` by default).
+however the leading newline is suppressed if the smart text block begins
+with a character from the `:smart_text_begin_chars` set (`,.;:!?)]}` by default).
+Similarly, trailing newline is suppressed if the smart text block ends
+with a character from the `:smart_text_end_chars` set (`([{` by default).
 This makes it very easy to mix normal text with links or spans,
 which happens extremely often, like this:
 
@@ -174,12 +174,12 @@ which happens extremely often, like this:
         a href="#3" more here
         ).
 
-Note that smart text is smart enough to know about tag shortcuts,
+Note that smart text is smart enough to know about tag shortcuts (explained later), too,
 so it will correctly deal even with cases like this:
 
     .class
       #id
-        #{1} more
+        #{'More'}
         i text
         ...
 
