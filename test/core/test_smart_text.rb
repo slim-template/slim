@@ -223,22 +223,55 @@ which stops
   end
 
   def test_unicode_smart_text
-    source = %q{
-čip
+
+    Slim::Engine.with_options( :smart_text_extended => false ) do
+
+      source = %q{
+p
+  是
+  čip
   Čip
   Žůžo
-  šek
   šíp
   .řek
     .
 }
 
-    result = %q{<čip>
+      result = %q{<p><是></是><čip></čip>
 Čip
 Žůžo
-<šek></šek><šíp></šíp><div class="řek">.
-</div></čip>}
+<šíp></šíp><div class="řek">.
+</div></p>}
 
-    assert_html result, source
+      assert_html result, source
+    end
+  end
+
+  def test_unicode_extended_smart_text
+    
+    Slim::Engine.with_options( :smart_text_extended => true ) do
+  
+      source = %q{
+p
+  是
+  čip
+  Čip
+  Žůžo
+  šíp
+  .řek
+    .
+}
+
+      result = %q{<p>
+是
+čip
+Čip
+Žůžo
+šíp
+<div class="řek">.
+</div></p>}
+
+      assert_html result, source
+    end
   end
 end

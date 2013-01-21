@@ -6,6 +6,7 @@ module Slim
     define_options :file,
                    :default_tag,
                    :smart_text => false,
+                   :smart_text_extended => true,
                    :smart_text_chars => ',.;:!?()[]{}@&$%^~"#',   # not - = / < > | ' *
                    :tabsize => 4,
                    :encoding => 'utf-8',
@@ -59,7 +60,8 @@ module Slim
       @tag_re = /\A(?:#{shortcut_re @tag_shortcut}|\*(?=[^\s]+)|(#{WORD_RE}(?:#{WORD_RE}|:|-)*#{WORD_RE}|#{WORD_RE}+))/
 
       smart_text_chars = options[:smart_text_chars].split(//)
-      smart_text_re = /\A(?:#{SMART_TEXT_RE}|(?:#{chars_re(smart_text_chars)}(?!#{WORD_RE}))|#{chars_re(smart_text_chars - @tag_shortcut.keys)})/
+      smart_text_re = options[:smart_text_extended] ? SMART_TEXT_EXTENDED_RE : SMART_TEXT_RE
+      smart_text_re = /\A(?:#{smart_text_re}|(?:#{chars_re(smart_text_chars)}(?!#{WORD_RE}))|#{chars_re(smart_text_chars - @tag_shortcut.keys)})/
       @smart_text_re = options[:smart_text] ? smart_text_re : nil
     end
 
@@ -90,6 +92,8 @@ module Slim
 
     WORD_RE = ''.respond_to?(:encoding) ? '\p{Word}' : '\w'
     SMART_TEXT_RE = ''.respond_to?(:encoding) ? '(?:\p{Upper}|\p{Digit})' : '[A-Z0-9]'
+    SMART_TEXT_EXTENDED_RE = ''.respond_to?(:encoding) ? '(?:(?![a-z_])\p{Word})' : '[A-Z0-9\x80-\xFF]'
+    
     DELIM_RE = /\A[#{Regexp.escape DELIMS.keys.join}]/
     ATTR_NAME = "\\A\\s*(#{WORD_RE}(?:#{WORD_RE}|:|-)*)"
     QUOTED_ATTR_RE = /#{ATTR_NAME}=(=?)("|')/
