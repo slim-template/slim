@@ -387,7 +387,7 @@ as booleans. If you use the attribut wrapper you can omit the attribute assigmen
 
 #### Attribute merging
 
-You can configure attributes to be merged if multiple are given (See option `:attr_delimiter`). In the default configuration
+You can configure attributes to be merged if multiple are given (See option `:merge_attrs`). In the default configuration
 this is done for class attributes with the white space as delimiter.
 
     a.menu class="highlight" href="http://slim-lang.com/" Slim-lang.com
@@ -416,7 +416,7 @@ You can also use methods or instance variables which return a hash as shown here
     .card *method_which_returns_hash = place.name
     .card *@hash_instance_variable = place.name
 
-The hash attributes which support attribute merging (see Slim option `:attr_delimiter`) can be given as an `Array`
+The hash attributes which support attribute merging (see Slim option `:merge_attrs`) can be given as an `Array`
 
     .first *{:class => [:second, :third]} Text
 
