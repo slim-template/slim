@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 require 'helper'
 
 class TestSlimSmartText < TestSlim
@@ -221,4 +222,23 @@ which stops
     assert_html result, source
   end
 
+  def test_unicode_smart_text
+    source = %q{
+čip
+  Čip
+  Žůžo
+  šek
+  šíp
+  .řek
+    .
+}
+
+    result = %q{<čip>
+Čip
+Žůžo
+<šek></šek><šíp></šíp><div class="řek">.
+</div></čip>}
+
+    assert_html result, source
+  end
 end
