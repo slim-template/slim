@@ -1,7 +1,7 @@
 module Slim
   # @api private
   class SplatAttributes < Filter
-    define_options :attr_delimiter, :attr_wrapper, :sort_attrs, :default_tag
+    define_options :sort_attrs, :default_tag, :merge_attrs, :attr_quote
 
     def call(exp)
       @attr_delimiter, @splat_used = unique_name, false

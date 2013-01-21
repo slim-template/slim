@@ -1,7 +1,7 @@
 module Slim
   # @api private
   class CodeAttributes < Filter
-    define_options :attr_delimiter
+    define_options :merge_attrs
 
     # Handle attributes expression `[:html, :attrs, *attrs]`
     #
@@ -17,7 +17,7 @@ module Slim
     # @param [Array] value Value expression
     # @return [Array] Compiled temple expression
     def on_html_attr(name, value)
-      unless value[0] == :slim && value[1] == :attrvalue && !options[:attr_delimiter][name]
+      unless value[0] == :slim && value[1] == :attrvalue && !options[:merge_attrs][name]
         # We perform merging on the attribute
         @attr = name
         return super
@@ -48,7 +48,7 @@ module Slim
     # @return [Array] Compiled temple expression
     def on_slim_attrvalue(escape, code)
       # We perform attribute merging on Array values
-      if delimiter = options[:attr_delimiter][@attr]
+      if delimiter = options[:merge_attrs][@attr]
         tmp = unique_name
         [:multi,
          [:code, "#{tmp} = #{code}"],

@@ -412,8 +412,10 @@ module Slim
           value = parse_ruby_code(delimiter)
           # Remove attribute wrapper which doesn't belong to the ruby code
           # e.g id=[hash[:a] + hash[:b]]
-          value = value[1..-2] if value =~ DELIMITER_REGEX &&
-            DELIMITERS[$&] == value[-1, 1]
+          if value =~ /\A[\[\{]/ && DELIMITERS[$&] == value[-1, 1]
+            warn "#{options[:file]}:#{@lineno} ruby attribute syntax with curly braces and brackets is deprecated!"
+            value = value[1..-2]
+          end
           syntax_error!('Invalid empty attribute') if value.empty?
           attributes << [:html, :attr, name, [:slim, :attrvalue, escape, value]]
         else
