@@ -85,7 +85,7 @@ Here's a quick example to demonstrate what a Slim template looks like:
                 td.price = item.price
         - else
           p No items found Please add some inventory.
-            Thank you!
+             Thank you!
 
         div id="footer"
           = render 'footer'
@@ -114,10 +114,10 @@ Each following line that is indented greater than the pipe is copied over.
 
     body
       p
-        |  This line is on the left margin.
-            This line will have one space in front of it.
-              This line will have two spaces in front of it.
-                And so on...
+        | This line is on the left margin.
+           This line will have one space in front of it.
+             This line will have two spaces in front of it.
+               And so on...
 
 You can also embed html in the text line
 
