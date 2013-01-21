@@ -4,7 +4,7 @@ module Slim
   class Parser < Temple::Parser
     define_options :file,
                    :default_tag,
-                   :escape_quoted_attrs => false,
+                   :escape_quoted_attrs,
                    :tabsize => 4,
                    :encoding => 'utf-8',
                    :shortcut => {
@@ -401,9 +401,16 @@ module Slim
         when QUOTED_ATTR_REGEX
           # Value is quoted (static)
           @line = $'
-          attributes << [:html, :attr, $1,
-                         [:escape, options[:escape_quoted_attrs] && $2.empty?,
-                          [:slim, :interpolate, parse_quoted_attribute($3)]]]
+          name = $1
+          escape = $2.empty?
+          quote = $3
+          value = parse_quoted_attribute(quote)
+          if escape && !options[:escape_quoted_attrs] && value =~ /&(amp|quot|gt|lt);/
+            warn "#{options[:file]}:#{@lineno} - attribute value '#{value}' might be double escaped in Slim 2.0.0"
+          end
+          attributes << [:html, :attr, name,
+                         [:escape, options[:escape_quoted_attrs] && escape,
+                          [:slim, :interpolate, value]]]
         when CODE_ATTR_REGEX
           # Value is ruby code
           @line = $'
@@ -413,7 +420,7 @@ module Slim
           # Remove attribute wrapper which doesn't belong to the ruby code
           # e.g id=[hash[:a] + hash[:b]]
           if value =~ /\A[\[\{]/ && DELIMITERS[$&] == value[-1, 1]
-            warn "#{options[:file]}:#{@lineno} ruby attribute syntax with curly braces and brackets is deprecated!"
+            warn "#{options[:file]}:#{@lineno} - ruby attribute syntax with curly braces and brackets is deprecated!"
             value = value[1..-2]
           end
           syntax_error!('Invalid empty attribute') if value.empty?

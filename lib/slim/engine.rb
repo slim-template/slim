@@ -15,6 +15,7 @@ module Slim
     # Removed in 2.0
     define_deprecated_options :remove_empty_attrs,
                               :chain,
+                              :escape_quoted_attrs => false,
                               :attr_wrapper => '"',
                               :attr_delimiter => {'class' => ' '}
 
