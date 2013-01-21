@@ -98,7 +98,7 @@ module Slim
 
     # Compile shortcut regular expression
     def shortcut_re(shortcut)
-      shortcut.map { |k,v| Regexp.escape(k) }.join('|')
+      Regexp.union(shortcut.keys)
     end
 
     # Compile character set regular expression
