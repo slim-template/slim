@@ -95,7 +95,7 @@ Indentation matters, but the indentation depth can be chosen as you like. If you
 
 ## Line indicators
 
-### Text `|`
+### Verbatim text `|`
 
 The pipe tells Slim to just copy the line. It essentially escapes any processing.
 Each following line that is indented greater than the pipe is copied over.
@@ -127,6 +127,61 @@ You can also embed html in the text line
 ### Text with trailing white space `'`
 
 The single quote tells Slim to copy the line (similar to `|`), but makes sure that a single trailing white space is appended.
+
+### Smart text `>`
+
+The easiest way to combine text and markup is to use smart text mode.
+If you have the `:smart_text` option enabled, any text starting
+with uppercase letter, digit, or any of the characters specified
+in `:smart_text_characters` implies a smart text line.
+You can also always explicitly mark the smart text with `>`,
+for example when it starts with lowercase letter or unusual character.
+If the text spans several lines, simply indent them.
+This way you can easily type text like this:
+
+    body
+      p
+        This is text.
+        So is this,
+          and it spans
+          several lines.
+        > 'This is text, too'.
+
+The coolest thing about smart text is that it mixes fairly well with markup.
+Smart text lines normally preserve newlines,
+however the leading newline is supressed if the smart text block begins
+with one character from the `:smart_text_begin_chars` set (`,.;:!?)]}` by default).
+Similarly, trailing newline is supressed if the smart text block ends
+with one character from the `:smart_text_end_chars` set (`([{` by default).
+This makes it very easy to mix normal text with links or spans,
+which happens extremely often, like this:
+
+    body
+      p
+        This text ends with a
+        a href="#1" link
+        .
+
+        This
+        a href="#2" link
+        > goes elsewhere.
+        
+        Adding some
+        strong emphasis
+        > is reasonably easy as well.
+        
+        That's it (
+        a href="#3" more here
+        ).
+
+Note that smart text is smart enough to know about tag shortcuts,
+so it will correctly deal even with cases like this:
+
+    .class
+      #id
+        #{1} more
+        i text
+        ...
 
 ### Inline html `<` (HTML style)
 
