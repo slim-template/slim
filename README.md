@@ -132,7 +132,7 @@ The single quote tells Slim to copy the line (similar to `|`), but makes sure th
 
 The easiest way to combine text and markup is to use the smart text mode.
 If you have the `:smart_text` option enabled, any line starting
-with uppercase letter, digit, non-ascii letter (see `:smart_text_extended` option),
+with uppercase letter, digit, non-ASCII letter (see `:smart_text_extended` option),
 or any of the characters specified in `:smart_text_characters` implies a text line.
 You can also always explicitly mark the smart text with `>`,
 for example when it starts with lowercase letter or unusual character.
@@ -684,7 +684,7 @@ There are a lot of them but the good thing is, that Slim checks the configuratio
 <tr><td>String</td><td>:default_tag</td><td>"div"</td><td>Default tag to be used if tag name is omitted</td></tr>
 <tr><td>Hash</td><td>:shortcut</td><td>\{'.' => {:attr => 'class'}, '#' => {:attr => 'id'}}</td><td>Attribute shortcuts</td></tr>
 <tr><td>Boolean</td><td>:smart_text</td><td>false</td><td>Enable smart text mode</td></tr>
-<tr><td>Boolean</td><td>:smart_text_extended</td><td>true</td><td>Controls if only ASCII a-z (set) or all lowercase letters (reset) imply tags in smart text</td></tr>
+<tr><td>Boolean</td><td>:smart_text_extended</td><td>true</td><td>When set, all non-ASCII letters (in addition to uppercase letters) imply smart text line</td></tr>
 <tr><td>String</td><td>:smart_text_chars</td><td>',.;:!?()[]{}@&$%^~"#'</td><td>Characters implying smart text line</td></tr>
 <tr><td>String</td><td>:smart_text_begin_chars</td><td>',.;:!?)]}'</td><td>Characters suppressing leading newline in smart text</td></tr>
 <tr><td>String</td><td>:smart_text_end_chars</td><td>'([{'</td><td>Characters suppressing trailing newline in smart text</td></tr>
