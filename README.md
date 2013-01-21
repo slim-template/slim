@@ -347,11 +347,17 @@ Either start on the same line as the tag
     body
       h1 id="headline" Welcome to my site.
 
-Or nest it.  You must use a pipe or a backtick to escape processing
+Or nest it.  You must use a pipe or an apostrophe to escape processing
 
     body
       h1 id="headline"
         | Welcome to my site.
+
+Or enable and rely on smart text instead
+
+    body
+      h1 id="headline"
+        Welcome to my site.
 
 ### Dynamic content (`=` and `==`)
 
@@ -677,6 +683,10 @@ There are a lot of them but the good thing is, that Slim checks the configuratio
 <tr><td>String</td><td>:encoding</td><td>"utf-8"</td><td>Set encoding of template</td></tr>
 <tr><td>String</td><td>:default_tag</td><td>"div"</td><td>Default tag to be used if tag name is omitted</td></tr>
 <tr><td>Hash</td><td>:shortcut</td><td>\{'.' => {:attr => 'class'}, '#' => {:attr => 'id'}}</td><td>Attribute shortcuts</td></tr>
+<tr><td>Boolean</td><td>:smart_text</td><td>false</td><td>Enable smart text mode</td></tr>
+<tr><td>String</td><td>:smart_text_chars</td><td>',.;:!?()[]{}@&$%^~"#'</td><td>Characters implying smart text line</td></tr>
+<tr><td>String</td><td>:smart_text_begin_chars</td><td>',.;:!?)]}'</td><td>Characters suppressing leading newline in smart text</td></tr>
+<tr><td>String</td><td>:smart_text_end_chars</td><td>'([{'</td><td>Characters suppressing trailing newline in smart text</td></tr>
 <tr><td>Symbol/String list</td><td>:enable_engines</td><td>nil <i>(All enabled)</i></td><td>List of enabled embedded engines (whitelist)</td></tr>
 <tr><td>Symbol/String list</td><td>:disable_engines</td><td>nil <i>(None disabled)</i></td><td>List of disabled embedded engines (blacklist)</td></tr>
 <tr><td>Boolean</td><td>:disable_capture</td><td>false (true in Rails)</td><td>Disable capturing in blocks (blocks write to the default buffer </td></tr>
