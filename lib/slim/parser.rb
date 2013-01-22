@@ -42,7 +42,7 @@ module Slim
       super
       tabsize = options[:tabsize]
       if tabsize > 1
-        @tab_re = /\G((?: {#{tabsize}})*+) {0,#{tabsize-1}}\t/
+        @tab_re = /\G((?: {#{tabsize}})*) {0,#{tabsize-1}}\t/
         @tab = '\1' + ' ' * tabsize
       else
         @tab_re = "\t"
