@@ -13,8 +13,8 @@ module Slim
         @smart = false
         @prepend = false
         @append = false
-        @prepend_re = /\A(?:#{chars_re(options[:smart_text_begin_chars])})/
-        @append_re = /(?:#{chars_re(options[:smart_text_end_chars])})\Z/
+        @prepend_re = /\A#{chars_re(options[:smart_text_begin_chars])}/
+        @append_re = /#{chars_re(options[:smart_text_end_chars])}\Z/
       end
       
       def on_multi(*exps)
