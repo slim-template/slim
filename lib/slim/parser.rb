@@ -61,7 +61,7 @@ module Slim
 
       smart_text_chars = options[:smart_text_chars].split(//)
       smart_text_re = options[:smart_text_extended] ? SMART_TEXT_EXTENDED_RE : SMART_TEXT_RE
-      smart_text_re = /\A(?:#{smart_text_re}|(?:#{chars_re(smart_text_chars)}(?!#{WORD_RE}))|#{chars_re(smart_text_chars - @tag_shortcut.keys)})/
+      smart_text_re = /\A(?:#{smart_text_re}|(?:#{Regexp.union(smart_text_chars)}(?!#{WORD_RE}))|#{Regexp.union(smart_text_chars - @tag_shortcut.keys)})/
       @smart_text_re = options[:smart_text] ? smart_text_re : nil
     end
 
@@ -98,11 +98,6 @@ module Slim
     ATTR_NAME = "\\A\\s*(#{WORD_RE}(?:#{WORD_RE}|:|-)*)"
     QUOTED_ATTR_RE = /#{ATTR_NAME}=(=?)("|')/
     CODE_ATTR_RE = /#{ATTR_NAME}=(=?)/
-
-    # Compile character set regular expression
-    def chars_re(chars)
-      Regexp.union(chars)
-    end
 
     # Set string encoding if option is set
     def set_encoding(s)
