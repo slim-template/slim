@@ -151,7 +151,7 @@ The single quote tells Slim to copy the line (similar to `|`), but makes sure th
 The easiest way to combine text and markup is to use the smart text mode.
 If you have the `:smart_text` option enabled, any line starting
 with uppercase letter, digit, non-ASCII letter (see `:smart_text_extended` option),
-or any of the characters specified in `:smart_text_characters` implies a text line.
+or any of the characters specified in `:smart_text_chars` implies a text line.
 You can also always explicitly mark the smart text with `>`,
 for example when it starts with lowercase letter or unusual character.
 If the text spans several lines, simply indent them.
