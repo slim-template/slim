@@ -62,7 +62,7 @@ module Slim
 
       smart_text_chars = options[:smart_text_chars].split(//)
       smart_text_re = options[:smart_text_extended] ? SMART_TEXT_EXTENDED_RE : SMART_TEXT_RE
-      smart_text_re = /\A(?:#{smart_text_re}|(?:#{Regexp.union(smart_text_chars)}(?!#{WORD_RE}))|#{Regexp.union(smart_text_chars - @tag_shortcut.keys)})/
+      smart_text_re = /\A(?:#{smart_text_re}|(?:#{Regexp.union(smart_text_chars)})(?!#{WORD_RE})|#{Regexp.union(smart_text_chars - @tag_shortcut.keys)})/
       @smart_text_re = options[:smart_text] ? smart_text_re : nil
     end
 
