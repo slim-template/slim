@@ -87,7 +87,9 @@ body
 renders as
 
 ~~~ html
-<body>Text</body>
+<body>
+  Text
+</body>
 ~~~
 
 You can embed html code in the text which is not escaped.
@@ -211,7 +213,15 @@ HTML tags allow nested blocks inside.
 renders as
 
 ~~~ html
-<html><head><title>Example</title></head><body>yes</body></html>
+<html><head>
+<title>
+  Example
+</title>
+</head>
+<body>
+  yes
+</body>
+</html>
 ~~~
 
 ### Control code `-`
@@ -421,7 +431,9 @@ renders as
 
 ~~~ html
 <body>
-  <p>Hello!</p>
+  <p>
+    Hello!
+  </p>
 </body>
 ~~~
 
@@ -448,7 +460,9 @@ renders as
 <body>
   <!--Another comment
   with multiple lines-->
-  <p>Hello!</p>
+  <p>
+    Hello!
+  </p>
   <!--First line determines indentation
   
   of the comment-->
@@ -465,7 +479,11 @@ renders as
 renders as
 
 ~~~ html
-<!--[if IE]><p>Get a better browser.</p><![endif]-->
+<!--[if IE]>
+<p>
+  Get a better browser.
+</p>
+<![endif]-->
 ~~~
 
 ## HTML tags
@@ -704,13 +722,7 @@ renders as
 <a href="http://slim-lang.com">Goto the slim-lang.com</a>
 ~~~
 
-The attribute value will be escaped if the option
-
-~~~ options
-:escape_quoted_attrs => true
-~~~
-
-is set. Use == if you want to disable escaping in the attribute.
+The attribute value will be escaped by default. Use == if you want to disable escaping in the attribute.
 
 ~~~ slim
 li
@@ -815,7 +827,7 @@ renders as
 
 #### Attribute merging
 
-You can configure attributes to be merged if multiple are given (See option `:attr_delimiter`). In the default configuration
+You can configure attributes to be merged if multiple are given (See option `:merge_attrs`). In the default configuration
 this is done for class attributes with the white space as delimiter.
 
 ~~~ slim
@@ -941,7 +953,9 @@ h1 Welcome #{user}!
 renders as
 
 ~~~ html
-<h1>Welcome John Doe &lt;john@doe.net&gt;!</h1>
+<h1>
+  Welcome John Doe &lt;john@doe.net&gt;!
+</h1>
 ~~~
 
 ## Embedded engines

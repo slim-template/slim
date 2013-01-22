@@ -23,6 +23,21 @@ A short list of the features...
 * Full Unicode support for tags and attributes on Ruby 1.9
 * Embedded engines like Markdown and Textile
 
+## Upgrade to version 2.0
+
+__NOTE:__ Slim 2.0 is not yet released, but you can try the preview versions.
+
+If you are already using Slim 1.3 or 1.2 and want to upgrade to the newest version 2.0, you should at first
+upgrade to Slim 1.3.7 which will emit warnings for deprecated features. This way you can easily
+see if your application is already Slim 2.0 compliant!
+
+Slim 2.0 removes deprecated features from the 1.3 series and cleans up some minor
+inconsistencies in the syntax (Attribute wrapper and quoted attribute escaping).
+Of course it also includes new features and bugfixes. See the CHANGES for details.
+
+In general don't be afraid of upgrading! We try to be backward compatible and follow [semantic versions](http://semver.org/)
+as good as possible.
+
 ## Introduction
 
 ### What is Slim?
@@ -43,9 +58,12 @@ by the logic less plugin and the translator plugin which provides I18n.
 
 Within the Rails community, _Erb_ and _Haml_ are without doubt the two most popular templating engines. However, _Erb_'s syntax is cumbersome and _Haml_'s syntax can be quite cryptic to the uninitiated.
 
+There is also some development in logic-less engines (e.g. [Mustache](https://github.com/defunkt/mustache) which requires you to write standard HTML). You can also use Slim in logic-less mode if you like the Slim syntax to build your HTML but don't want to write Ruby in your templates.
+
 Slim was born to bring a minimalist syntax approach with speed. If people chose not to use Slim, it would not be because of speed.
 
-___Yes, Slim is speedy!___ Benchmarks are provided at the end of this README file. Don't trust the numbers? That's as it should be. Therefore we provide a benchmark rake task so you could test it yourself (`rake bench`).
+___Yes, Slim is speedy!___ Benchmarks are done for every commit at {http://travis-ci.org/#!/slim-template/slim}.
+Don't trust the numbers? That's as it should be. Please try the benchmark rake task yourself!
 
 ### How to start?
 
@@ -458,7 +476,7 @@ as booleans. If you use the attribut wrapper you can omit the attribute assigmen
 
 #### Attribute merging
 
-You can configure attributes to be merged if multiple are given (See option `:attr_delimiter`). In the default configuration
+You can configure attributes to be merged if multiple are given (See option `:merge_attrs`). In the default configuration
 this is done for class attributes with the white space as delimiter.
 
     a.menu class="highlight" href="http://slim-lang.com/" Slim-lang.com
@@ -487,7 +505,7 @@ You can also use methods or instance variables which return a hash as shown here
     .card *method_which_returns_hash = place.name
     .card *@hash_instance_variable = place.name
 
-The hash attributes which support attribute merging (see Slim option `:attr_delimiter`) can be given as an `Array`
+The hash attributes which support attribute merging (see Slim option `:merge_attrs`) can be given as an `Array`
 
     .first *{:class => [:second, :third]} Text
 
@@ -634,9 +652,9 @@ Supported engines:
 </tbody>
 </table>
 
-The embedded engines can be configured in Slim by setting the options directly on the `Slim::EmbeddedEngine` filter. Example:
+The embedded engines can be configured in Slim by setting the options directly on the `Slim::Embedded` filter. Example:
 
-    Slim::EmbeddedEngine.default_options[:markdown] = {:auto_ids => false}
+    Slim::Embedded.default_options[:markdown] = {:auto_ids => false}
 
 ## Configuring Slim
 
@@ -700,14 +718,15 @@ There are a lot of them but the good thing is, that Slim checks the configuratio
 <tr><td>String</td><td>:smart_text_chars</td><td>',.;:!?()[]{}@&$%^~"#'</td><td>Characters implying smart text line</td></tr>
 <tr><td>String</td><td>:smart_text_begin_chars</td><td>',.;:!?)]}'</td><td>Characters suppressing leading newline in smart text</td></tr>
 <tr><td>String</td><td>:smart_text_end_chars</td><td>'([{'</td><td>Characters suppressing trailing newline in smart text</td></tr>
-<tr><td>Symbol/String list</td><td>:enable_engines</td><td>nil <i>(All enabled)</i></td><td>List of enabled embedded engines (whitelist)</td></tr>
-<tr><td>Symbol/String list</td><td>:disable_engines</td><td>nil <i>(None disabled)</i></td><td>List of disabled embedded engines (blacklist)</td></tr>
+<tr><td>Array&lt;Symbol,String&gt;</td><td>:enable_engines</td><td>nil <i>(All enabled)</i></td><td>List of enabled embedded engines (whitelist)</td></tr>
+<tr><td>Array&lt;Symbol,String&gt;</td><td>:disable_engines</td><td>nil <i>(None disabled)</i></td><td>List of disabled embedded engines (blacklist)</td></tr>
 <tr><td>Boolean</td><td>:disable_capture</td><td>false (true in Rails)</td><td>Disable capturing in blocks (blocks write to the default buffer </td></tr>
 <tr><td>Boolean</td><td>:disable_escape</td><td>false</td><td>Disable automatic escaping of strings</td></tr>
 <tr><td>Boolean</td><td>:use_html_safe</td><td>false (true in Rails)</td><td>Use String#html_safe? from ActiveSupport (Works together with :disable_escape)</td></tr>
 <tr><td>Symbol</td><td>:format</td><td>:xhtml</td><td>HTML output format (Possible formats :xhtml, :html4, :html5, :html)</td></tr>
-<tr><td>String</td><td>:attr_wrapper</td><td>'"'</td><td>Character to wrap attributes in html (can be ' or ")</td></tr>
-<tr><td>Hash</td><td>:attr_delimiter</td><td>\{'class' => ' '}</td><td>Joining character used if multiple html attributes are supplied (e.g. class="class1 class2")</td></tr>
+<tr><td>String</td><td>:attr_quote</td><td>'"'</td><td>Character to wrap attributes in html (can be ' or ")</td></tr>
+<tr><td>Hash</td><td>:merge_attrs</td><td>\{'class' => ' '}</td><td>Joining character used if multiple html attributes are supplied (e.g. class="class1 class2")</td></tr>
+<tr><td>Array&lt;String&gt;</td><td>:hyphen_attrs</td><td>%w(data)</td><td>Attributes which will be hyphenated if a Hash is given (e.g. data={a:1,b:2} will render as data-a="1" data-b="2")</td></tr>
 <tr><td>Boolean</td><td>:sort_attrs</td><td>true</td><td>Sort attributes by name</td></tr>
 <tr><td>Boolean</td><td>:pretty</td><td>false</td><td>Pretty html indenting <b>(This is slower!)</b></td></tr>
 <tr><td>String</td><td>:indent</td><td>'  '</td><td>Indentation string</td></tr>
@@ -846,7 +865,7 @@ and activate logic less mode per render call in your application
 <tbody>
 <tr><td>Boolean</td><td>:logic_less</td><td>true</td><td>Enable logic less mode (Enabled if 'slim/logic_less' is required)</td></tr>
 <tr><td>String</td><td>:dictionary</td><td>"self"</td><td>Dictionary where variables are looked up</td></tr>
-<tr><td>Symbol/Array of Symbols</td><td>:dictionary_access</td><td>[:symbol, :string, :method, :instance_variable]</td><td>Dictionary access order (:symbol, :string, :method, :instance_variable)</td></tr>
+<tr><td>Symbol/Array&lt;Symbol&gt;</td><td>:dictionary_access</td><td>[:symbol, :string, :method, :instance_variable]</td><td>Dictionary access order (:symbol, :string, :method, :instance_variable)</td></tr>
 </tbody>
 </table>
 
@@ -1026,12 +1045,7 @@ Work your magic and then submit a pull request. We love pull requests!
 
 Please remember to test against Ruby versions 1.9.2 and 1.8.7.
 
-If you find the documentation lacking (and you probably will), help us out
-The docs are located in the gh-pages branch:
-
-    $ git checkout gh-pages
-
-If you don't have the time to work on Slim, but found something we should know about, please submit an issue.
+If you find the documentation lacking (and you probably will), help us out and update this README.md. If you don't have the time to work on Slim, but found something we should know about, please submit an issue.
 
 ## License
 
