@@ -28,7 +28,7 @@ module Slim
       block = [:multi]
       begin
         case string
-        when /\A&(\w+|#x\h+|#\d+);/i
+        when /\A&(\w+|#x[0-9a-f]+|#\d+);/i
           # Entity.
           block << [ :escape, false, [:static, $&] ]
           string = $'
