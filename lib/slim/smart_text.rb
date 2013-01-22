@@ -17,6 +17,26 @@ module Slim
     end
     
     def on_multi(*exps)
+      # The [:multi] blocks serve two purposes.
+      # On outer level, they collect the building blocks like
+      # tags, verbatim text, or smart text.
+      # Within smart text block, they collect the individual
+      # lines in [:slim, :interpolate, string] blocks.
+      #
+      # Our goal here is to decide when we want to prepend and
+      # append newlines to those individual interpolated lines.
+      # 
+      # On outer level, we choose to prepend every time, except
+      # right after the opening tag or after other smart text block.
+      # We also use the append flag to recognize the last expression before the closing tag.
+      #
+      # Within smart text block, we prepend only before the first line unless
+      # the outer level tells us not to, and we append only after the last line,
+      # unless the outer level tells us it is the last line before the closing tag.
+      # Of course, this is later subject to the special begin/end characters
+      # which may further suppress the newline at the corresponding line boundary.
+      # Also note that the lines themselves are already correctly separated by newlines,
+      # so we don't have to worry about that at all.
       block = [:multi]
       prev = nil
       last_exp = exps.reject{ |exp| exp.first == :newline }.last unless @smart && @append
