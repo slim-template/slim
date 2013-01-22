@@ -8,6 +8,7 @@ module Slim
                    :smart_text => false,
                    :smart_text_extended => true,
                    :smart_text_chars => ',.;:!?()[]{}@&$%^~"#',   # not - = / < > | ' *
+                   :smart_text_in_tags => false,
                    :tabsize => 4,
                    :encoding => 'utf-8',
                    :shortcut => {
@@ -378,7 +379,12 @@ module Slim
         @stacks << content
       when /\A( ?)(.*)\Z/
         # Text content
-        tag << [:slim, :text, parse_text_block($2, @orig_line.size - @line.size + $1.size, true)]
+        text = parse_text_block($2, @orig_line.size - @line.size + $1.size, true)
+        if options[:smart_text_in_tags]
+          tag << [:multi, [:slim, :smart, text]]
+        else
+          tag << [:slim, :text, text]
+        end
       end
     end
 

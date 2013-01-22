@@ -116,6 +116,24 @@ Escaped &amp;#xx; &amp;#1f; &amp;;.</p>}
     assert_html result, source
   end
 
+  def test_smart_text_in_tag_escaping
+    Slim::Engine.with_options( :smart_text_in_tags => true ) do
+      source = %q{
+p Escaped <&>.
+  Protected &amp; &lt; &gt; &copy; &Aacute;.
+  Protected &#0129; &#x00ff;.
+  Escaped &#xx; &#1f; &;.
+}
+
+      result = %q{<p>Escaped &lt;&amp;&gt;.
+Protected &amp; &lt; &gt; &copy; &Aacute;.
+Protected &#0129; &#x00ff;.
+Escaped &amp;#xx; &amp;#1f; &amp;;.</p>}
+
+      assert_html result, source
+    end
+  end
+
   def test_smart_text_mixed_with_tags
     source = %q{
 p

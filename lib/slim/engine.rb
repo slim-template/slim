@@ -12,7 +12,8 @@ module Slim
                    :generator => Temple::Generators::ArrayBuffer,
                    :default_tag => 'div'
 
-    use Slim::Parser, :file, :tabsize, :encoding, :shortcut, :default_tag, :smart_text, :smart_text_extended, :smart_text_chars
+    use Slim::Parser, :file, :tabsize, :encoding, :shortcut, :default_tag,
+        :smart_text, :smart_text_extended, :smart_text_chars, :smart_text_in_tags
     use Slim::SmartText, :smart_text_end_chars, :smart_text_begin_chars
     use Slim::Embedded, :enable_engines, :disable_engines, :pretty
     use Slim::Interpolation
