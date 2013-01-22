@@ -22,6 +22,8 @@ module Slim
       return [:static, string] unless @smart
       
       # Prevent obvious &foo; and &#1234; and &#x00ff; entities from escaping.
+      # There is not much we can do about semicolon-less forms like &copy,
+      # but they always have the option of using the version with semicolon instead.
 
       block = [:multi]
       begin
