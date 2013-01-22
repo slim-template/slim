@@ -234,30 +234,9 @@ which stops
 
     assert_html result, source
   end
-
-  def test_unicode_smart_text
-
-    Slim::Engine.with_options( :smart_text_extended => false ) do
-
-      source = %q{
-p
-  是
-  čip
-  Čip
-  Žůžo
-  šíp
-  .řek
-    .
-}
-
-      result = %q{<p><是></是><čip></čip>
-Čip
-Žůžo
-<šíp></šíp><div class="řek">.</div></p>}
-
-      assert_html result, source
-    end
-  end
+  
+  # Without unicode support, we can't distinguish uppercase and lowercase
+  # unicode characters reliably. So we only test the basic stuff in extended mode.
 
   def test_unicode_extended_smart_text
     
@@ -270,18 +249,68 @@ p
   Čip
   Žůžo
   šíp
-  .řek
-    .
 }
 
       result = %q{<p>是
 čip
 Čip
 Žůžo
+šíp</p>}
+
+      assert_html result, source
+    end
+  end
+
+  if ''.respond_to?(:encoding)
+
+    def test_unicode_smart_text
+
+      Slim::Engine.with_options( :smart_text_extended => false ) do
+
+        source = %q{
+p
+  是
+  čip
+  Čip
+  Žůžo
+  šíp
+  .řek
+    .
+}
+
+        result = %q{<p><是></是><čip></čip>
+Čip
+Žůžo
+<šíp></šíp><div class="řek">.</div></p>}
+
+        assert_html result, source
+      end
+    end
+
+    def test_unicode_extended_smart_text
+    
+      Slim::Engine.with_options( :smart_text_extended => true ) do
+  
+        source = %q{
+p
+  是
+  čip
+  Čip
+  Žůžo
+  šíp
+  .řek
+    .
+}
+
+        result = %q{<p>是
+čip
+Čip
+Žůžo
 šíp
 <div class="řek">.</div></p>}
 
-      assert_html result, source
+        assert_html result, source
+      end
     end
   end
 end
