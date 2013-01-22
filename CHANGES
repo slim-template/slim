@@ -32,6 +32,7 @@
   * Improved pretty printing (Issue #202)
   * Renamed Slim::EmbeddedEngine to Slim::Embedded
   * Renamed Slim::ControlStructures to Slim::Controls
+  * Tab expansion improved (tab + space is interpreted as equivalent to tab)
 
 1.3.6
 
