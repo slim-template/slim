@@ -24,7 +24,7 @@ module Slim
       end
 
       def to_s
-        line = @line.strip
+        line = @line.lstrip
         column = @column + line.size - @line.size
         %{#{error}
   #{file}, Line #{lineno}, Column #{@column}
