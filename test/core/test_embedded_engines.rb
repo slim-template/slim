@@ -1,6 +1,15 @@
 require 'helper'
 
 class TestSlimEmbeddedEngines < TestSlim
+
+  def setup
+    Slim::Engine.set_default_options :js_comment => :none
+  end
+
+  def teardown
+    Slim::Engine.set_default_options :js_comment => nil
+  end
+
   def test_render_with_erb
     source = %q{
 p
@@ -88,6 +97,34 @@ javascript:
   $(function() { #{func} });
 }
     assert_html %q|<script type="text/javascript">$(function() { alert('hello'); });</script>|, source
+  end
+
+  def test_render_with_javascript_with_explicit_html_comment
+    Slim::Engine.with_options( :js_comment => :html ) do
+      source = "javascript:\n\t$(function() {});\n\talert('hello')\np Hi"
+      assert_html "<script type=\"text/javascript\">\n//<!--\n$(function() {});\nalert('hello')\n//-->\n</script><p>Hi</p>", source
+    end
+  end
+
+  def test_render_with_javascript_with_explicit_cdata_comment
+    Slim::Engine.with_options( :js_comment => :cdata ) do
+      source = "javascript:\n\t$(function() {});\n\talert('hello')\np Hi"
+      assert_html "<script type=\"text/javascript\">\n//<![CDATA[\n$(function() {});\nalert('hello')\n//]]>\n</script><p>Hi</p>", source
+    end
+  end
+
+  def test_render_with_javascript_with_format_xhtml_comment
+    Slim::Engine.with_options( :js_comment => nil, :format => :xhtml ) do
+      source = "javascript:\n\t$(function() {});\n\talert('hello')\np Hi"
+      assert_html "<script type=\"text/javascript\">\n//<![CDATA[\n$(function() {});\nalert('hello')\n//]]>\n</script><p>Hi</p>", source
+    end
+  end
+
+  def test_render_with_javascript_with_format_html_comment
+    Slim::Engine.with_options( :js_comment => nil, :format => :html ) do
+      source = "javascript:\n\t$(function() {});\n\talert('hello')\np Hi"
+      assert_html "<script type=\"text/javascript\">\n//<!--\n$(function() {});\nalert('hello')\n//-->\n</script><p>Hi</p>", source
+    end
   end
 
   def test_render_with_ruby
