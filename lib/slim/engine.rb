@@ -36,7 +36,7 @@ module Slim
     html :AttributeMerger, :merge_attrs
     use Slim::CodeAttributes, :merge_attrs
     use(:AttributeRemover) { Temple::HTML::AttributeRemover.new(:remove_empty_attrs => options[:merge_attrs].keys) }
-    html :Pretty, :format, :attr_quote, :pretty, :indent
+    html :Pretty, :format, :attr_quote, :pretty, :indent, :js_wrapper
     filter :Escapable, :use_html_safe, :disable_escape
     filter :ControlFlow
     filter :MultiFlattener

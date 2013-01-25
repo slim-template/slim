@@ -90,6 +90,34 @@ javascript:
     assert_html %q|<script type="text/javascript">$(function() { alert('hello'); });</script>|, source
   end
 
+  def test_render_with_javascript_with_explicit_html_comment
+    Slim::Engine.with_options(:js_wrapper => :comment) do
+      source = "javascript:\n\t$(function() {});\n\talert('hello')\np Hi"
+      assert_html "<script type=\"text/javascript\"><!--\n$(function() {});\nalert('hello')\n//--></script><p>Hi</p>", source
+    end
+  end
+
+  def test_render_with_javascript_with_explicit_cdata_comment
+    Slim::Engine.with_options(:js_wrapper => :cdata) do
+      source = "javascript:\n\t$(function() {});\n\talert('hello')\np Hi"
+      assert_html "<script type=\"text/javascript\">\n//<![CDATA[\n$(function() {});\nalert('hello')\n//]]>\n</script><p>Hi</p>", source
+    end
+  end
+
+  def test_render_with_javascript_with_format_xhtml_comment
+    Slim::Engine.with_options(:js_wrapper => :guess, :format => :xhtml) do
+      source = "javascript:\n\t$(function() {});\n\talert('hello')\np Hi"
+      assert_html "<script type=\"text/javascript\">\n//<![CDATA[\n$(function() {});\nalert('hello')\n//]]>\n</script><p>Hi</p>", source
+    end
+  end
+
+  def test_render_with_javascript_with_format_html_comment
+    Slim::Engine.with_options(:js_wrapper => :guess, :format => :html) do
+      source = "javascript:\n\t$(function() {});\n\talert('hello')\np Hi"
+      assert_html "<script type=\"text/javascript\"><!--\n$(function() {});\nalert('hello')\n//--></script><p>Hi</p>", source
+    end
+  end
+
   def test_render_with_ruby
     source = %q{
 ruby:
