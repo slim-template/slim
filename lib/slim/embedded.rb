@@ -226,23 +226,9 @@ module Slim
     class JSEngine < TagEngine
       disable_option_validator!
 
-      define_options :format, :js_comment
-      
-      COMMENTS = {
-        :html =>  [ "\n//<!--\n", "\n//-->\n" ],
-        :cdata => [ "\n//<![CDATA[\n", "\n//]]>\n" ],
-      }
-      
-      def initialize(opts={})
-        super
-        @comment = options[:js_comment] || ( options[:format] == :xhtml ? :cdata : :html )
-      end
-      
       def on_slim_embedded(engine, body)
-        prefix, suffix = COMMENTS[@comment]
         result = super(engine, body)
-        result << [:multi, [:static, prefix], result.pop, [:static, suffix]] if prefix
-        result
+        result << [:html, :js, nil, result.pop]
       end
     end
 
@@ -262,7 +248,7 @@ module Slim
     register :mediawiki,  InterpolateTiltEngine
 
     # These engines are executed at compile time
-    register :coffee,     JSEngine, :format, :js_comment, :tag => :script, :attributes => { :type => 'text/javascript' }, :engine => StaticTiltEngine
+    register :coffee,     JSEngine,  :tag => :script, :attributes => { :type => 'text/javascript' }, :engine => StaticTiltEngine
     register :less,       TagEngine, :tag => :style,  :attributes => { :type => 'text/css' },         :engine => StaticTiltEngine
     register :styl,       TagEngine, :tag => :style,  :attributes => { :type => 'text/css' },         :engine => StaticTiltEngine
     register :sass,       TagEngine, :pretty, :tag => :style, :attributes => { :type => 'text/css' }, :engine => SassEngine
@@ -274,7 +260,7 @@ module Slim
     register :builder,    PrecompiledTiltEngine
 
     # Embedded javascript/css
-    register :javascript, JSEngine, :format, :js_comment, :tag => :script, :attributes => { :type => 'text/javascript' }
+    register :javascript, JSEngine,  :tag => :script, :attributes => { :type => 'text/javascript' }
     register :css,        TagEngine, :tag => :style,  :attributes => { :type => 'text/css' }
 
     # Embedded ruby code
