@@ -102,7 +102,7 @@ javascript:
   def test_render_with_javascript_with_explicit_html_comment
     Slim::Engine.with_options( :js_comment => :html ) do
       source = "javascript:\n\t$(function() {});\n\talert('hello')\np Hi"
-      assert_html "<script type=\"text/javascript\">\n//<!--\n$(function() {});\nalert('hello')\n//-->\n</script><p>Hi</p>", source
+      assert_html "<script type=\"text/javascript\"><!--\n$(function() {});\nalert('hello')\n//--></script><p>Hi</p>", source
     end
   end
 
@@ -123,7 +123,7 @@ javascript:
   def test_render_with_javascript_with_format_html_comment
     Slim::Engine.with_options( :js_comment => nil, :format => :html ) do
       source = "javascript:\n\t$(function() {});\n\talert('hello')\np Hi"
-      assert_html "<script type=\"text/javascript\">\n//<!--\n$(function() {});\nalert('hello')\n//-->\n</script><p>Hi</p>", source
+      assert_html "<script type=\"text/javascript\"><!--\n$(function() {});\nalert('hello')\n//--></script><p>Hi</p>", source
     end
   end
 
