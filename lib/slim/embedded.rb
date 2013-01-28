@@ -228,7 +228,7 @@ module Slim
 
       def on_slim_embedded(engine, body)
         result = super(engine, body)
-        result << [:html, :js, nil, result.pop]
+        result << [:html, :js, result.pop]
       end
     end
 
@@ -248,7 +248,7 @@ module Slim
     register :mediawiki,  InterpolateTiltEngine
 
     # These engines are executed at compile time
-    register :coffee,     JSEngine,  :tag => :script, :attributes => { :type => 'text/javascript' }, :engine => StaticTiltEngine
+    register :coffee,     JSEngine,  :tag => :script, :attributes => { :type => 'text/javascript' },  :engine => StaticTiltEngine
     register :less,       TagEngine, :tag => :style,  :attributes => { :type => 'text/css' },         :engine => StaticTiltEngine
     register :styl,       TagEngine, :tag => :style,  :attributes => { :type => 'text/css' },         :engine => StaticTiltEngine
     register :sass,       TagEngine, :pretty, :tag => :style, :attributes => { :type => 'text/css' }, :engine => SassEngine
