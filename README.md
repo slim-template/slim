@@ -62,7 +62,7 @@ There is also some development in logic-less engines (e.g. [Mustache](https://gi
 
 Slim was born to bring a minimalist syntax approach with speed. If people chose not to use Slim, it would not be because of speed.
 
-___Yes, Slim is speedy!___ Benchmarks are done for every commit at {http://travis-ci.org/#!/slim-template/slim}.
+___Yes, Slim is speedy!___ Benchmarks are done for every commit at <http://travis-ci.org/#!/slim-template/slim>.
 Don't trust the numbers? That's as it should be. Please try the benchmark rake task yourself!
 
 ### How to start?
@@ -937,7 +937,7 @@ run the slow parsing benchmark which needs more time. You can also increase the 
 
     rake bench slow=1 iterations=1000
 
-We run the benchmarks for every commit on Travis-CI. Take a look at the newest benchmarking results: {http://travis-ci.org/#!/slim-template/slim}
+We run the benchmarks for every commit on Travis-CI. Take a look at the newest benchmarking results: <http://travis-ci.org/#!/slim-template/slim>
 
 ### Test suite and continous integration
 
@@ -946,7 +946,7 @@ with 'rake test' and the rails integration tests with 'rake test:rails'.
 
 We are currently experimenting with human-readable literate tests which are written as markdown files: {file:test/literate/TESTS.md TESTS.md}
 
-Travis-CI is used for continous integration testing: {http://travis-ci.org/#!/slim-template/slim}
+Travis-CI is used for continous integration testing: <http://travis-ci.org/#!/slim-template/slim>
 
 Slim is working well on all major Ruby implementations:
 
