@@ -149,4 +149,12 @@ html: body:/comment
 }
     assert_syntax_error "Expected tag\n  (__TEMPLATE__), Line 2, Column 11\n    html: body:/comment\n               ^\n", source
   end
+
+  def test_unexpected_text_after_closed
+    source = %{
+img / text
+}
+
+    assert_syntax_error "Unexpected text after closed tag\n  (__TEMPLATE__), Line 2, Column 6\n    img / text\n          ^\n", source
+  end
 end

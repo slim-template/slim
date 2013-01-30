@@ -41,6 +41,7 @@ class ParentsController < ApplicationController
   # POST /parents
   # POST /parents.xml
   def create
+    params.permit! if params.respond_to? :permit!
     @parent = Parent.new(params[:parent])
 
     respond_to do |format|

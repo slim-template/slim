@@ -4,7 +4,8 @@ class TestSlim < ActionDispatch::IntegrationTest
   test "normal view" do
     get "slim/normal"
     assert_response :success
-    assert_template ["slim/normal", "layouts/application"]
+    assert_template "slim/normal"
+    assert_template "layouts/application"
     assert_html "<h1>Hello Slim!</h1>"
   end
 
@@ -61,7 +62,10 @@ class TestSlim < ActionDispatch::IntegrationTest
     post "parents", 'parent[name]' => "p1", 'parent[children_attributes][0][name]' => "c1"
     get "parents/1/edit"
 
-    assert_match(%r{<div class="content"><h1>Edit</h1><h2>Form</h2><form accept-charset="UTF-8" action="/parents/1" class="edit_parent" enctype="multipart/form-data" id="edit_parent_1" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="&#x2713;" /><input name="_method" type="hidden" value="[^"]+" /></div><h1>Parent</h1><input id="parent_name" name="parent\[name\]" size="30" type="text" value="p1" /><h2>Children</h2><ul><li><input id="parent_children_attributes_0_name" name="parent\[children_attributes\]\[0\]\[name\]" size="30" type="text" value="c1" /></li><input id="parent_children_attributes_0_id" name="parent\[children_attributes\]\[0\]\[id\]" type="hidden" value="1" /></ul></form></div>}, @response.body)
+    assert_match %r{action="/parents/1"}, @response.body
+    assert_match %r{<input id="parent_name" name="parent\[name\]"}, @response.body
+    assert_match %r{<input id="parent_children_attributes_0_name" name="parent\[children_attributes\]\[0\]\[name\]"}, @response.body
+    assert_match %r{<input id="parent_children_attributes_0_id" name="parent\[children_attributes\]\[0\]\[id\]"}, @response.body
   end
 
   protected

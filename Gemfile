@@ -32,3 +32,15 @@ if ENV['SINATRA']
     gem 'sinatra', "= #{ENV['SINATRA']}"
   end
 end
+
+gem 'rake', '>= 0.8.7'
+gem 'sass', '>= 3.1.0'
+gem 'minitest'
+gem 'kramdown'
+gem 'creole'
+gem 'builder'
+
+if ENV['TASK'] == 'bench'
+  gem 'erubis'
+  gem 'haml'
+end

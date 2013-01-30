@@ -60,7 +60,7 @@ module Slim
 
   # Temple filter which processes embedded engines
   # @api private
-  class EmbeddedEngine < Filter
+  class Embedded < Filter
     @engines = {}
 
     # Register embedded engine
@@ -155,7 +155,7 @@ module Slim
           :style => options[:pretty] ? :expanded : :compressed,
           :cache => false)) { text }.render
         text.chomp!
-        [:static, options[:pretty] ? "\n#{text}\n" : text]
+        [:static, text]
       end
     end
 

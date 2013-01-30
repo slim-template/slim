@@ -87,7 +87,9 @@ body
 renders as
 
 ~~~ html
-<body>Text</body>
+<body>
+  Text
+</body>
 ~~~
 
 You can embed html code in the text which is not escaped.
@@ -211,7 +213,15 @@ HTML tags allow nested blocks inside.
 renders as
 
 ~~~ html
-<html><head><title>Example</title></head><body>yes</body></html>
+<html><head>
+<title>
+  Example
+</title>
+</head>
+<body>
+  yes
+</body>
+</html>
 ~~~
 
 ### Control code `-`
@@ -288,6 +298,24 @@ renders as
 
 ~~~ html
 1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024
+~~~
+
+You don't need the explicit `\` if the line ends with a comma `,`.
+
+~~~ slim
+ruby:
+  def test(*args)
+    args.join('-')
+  end
+= test('arg1',
+'arg2',
+'arg3')
+~~~
+
+renders as
+
+~~~ html
+arg1-arg2-arg3
 ~~~
 
 You can also disable HTML escaping globally by setting the option
@@ -403,7 +431,9 @@ renders as
 
 ~~~ html
 <body>
-  <p>Hello!</p>
+  <p>
+    Hello!
+  </p>
 </body>
 ~~~
 
@@ -430,7 +460,9 @@ renders as
 <body>
   <!--Another comment
   with multiple lines-->
-  <p>Hello!</p>
+  <p>
+    Hello!
+  </p>
   <!--First line determines indentation
   
   of the comment-->
@@ -447,7 +479,11 @@ renders as
 renders as
 
 ~~~ html
-<!--[if IE]><p>Get a better browser.</p><![endif]-->
+<!--[if IE]>
+<p>
+  Get a better browser.
+</p>
+<![endif]-->
 ~~~
 
 ## HTML tags
@@ -686,13 +722,7 @@ renders as
 <a href="http://slim-lang.com">Goto the slim-lang.com</a>
 ~~~
 
-The attribute value will be escaped if the option
-
-~~~ options
-:escape_quoted_attrs => true
-~~~
-
-is set. Use == if you want to disable escaping in the attribute.
+The attribute value will be escaped by default. Use == if you want to disable escaping in the attribute.
 
 ~~~ slim
 li
@@ -712,7 +742,51 @@ renders as
 </li>
 ~~~
 
+You can break quoted attributes with backslash `\`
+
+~~~ slim
+a data-title="help" data-content="extremely long help text that goes on\
+  and one and one and then starts over...." Link
+~~~
+
+renders as
+
+~~~ html
+<a data-content="extremely long help text that goes on and one and one and then starts over...." data-title="help">Link</a>
+~~~
+
 #### Ruby attributes
+
+Long ruby attributes can be broken with backslash `\`
+
+~~~ slim
+a href=1+\
+   1 Link
+~~~
+
+renders as
+
+~~~ html
+<a href="2">Link</a>
+~~~
+
+You don't need the explicit `\` if the line ends with a comma `,`.
+
+~~~ slim
+ruby:
+  def test(*args)
+    args.join('-')
+  end
+a href=test('arg1',
+'arg2',
+'arg3') Link
+~~~
+
+renders as
+
+~~~ html
+<a href="arg1-arg2-arg3">Link</a>
+~~~
 
 #### Boolean attributes
 
@@ -753,7 +827,7 @@ renders as
 
 #### Attribute merging
 
-You can configure attributes to be merged if multiple are given (See option `:attr_delimiter`). In the default configuration
+You can configure attributes to be merged if multiple are given (See option `:merge_attrs`). In the default configuration
 this is done for class attributes with the white space as delimiter.
 
 ~~~ slim
@@ -805,27 +879,67 @@ renders as
 <span>Link</span><a href="http://slim-lang.com/">Link</a>
 ~~~
 
-#### ID shortcut and class shortcut `.`
+### Shortcuts
+
+#### Tag shortcuts
+
+We add tag shortcuts by setting the option `:shortcut`.
+
+~~~ options
+:shortcut => {'c' => {:tag => 'container'}, 'sec' => {:tag =>'section'}, '#' => {:attr => 'id'}, '.' => {:attr => 'class'} }
+~~~
+
+~~~ slim
+sec: c.content Text
+~~~
+
+renders to
+
+~~~ html
+<section>
+  <container class="content">Text</container>
+</section>
+~~~
 
 #### Attribute shortcuts
 
 We add `&` to create a shortcut for the input elements with type attribute by setting the option `:shortcut`.
 
 ~~~ options
-:shortcut => {'&' => 'input type', '#' => 'id', '.' => 'class' }
+:shortcut => {'&' => {:tag => 'input', :attr => 'type'}, '#' => {:attr => 'id'}, '.' => {:attr => 'class'} }
 ~~~
 
 ~~~ slim
 &text name="user"
 &password name="pw"
-&submit
+&submit.CLASS#ID
 ~~~
 
 renders to
 
 ~~~ html
-<input name="user" type="text" /><input name="pw" type="password" /><input type="submit" />
+<input name="user" type="text" /><input name="pw" type="password" /><input class="CLASS" id="ID" type="submit" />
 ~~~
+
+This is stupid, but you can also use multiple character shortcuts.
+
+~~~ options
+:shortcut => {'&' => {:tag => 'input', :attr => 'type'}, '#<' => {:attr => 'id'}, '#>' => {:attr => 'class'} }
+~~~
+
+~~~ slim
+&text name="user"
+&password name="pw"
+&submit#>CLASS#<ID
+~~~
+
+renders to
+
+~~~ html
+<input name="user" type="text" /><input name="pw" type="password" /><input class="CLASS" id="ID" type="submit" />
+~~~
+
+#### ID shortcut and class shortcut `.`
 
 ## Text interpolation
 
@@ -839,7 +953,9 @@ h1 Welcome #{user}!
 renders as
 
 ~~~ html
-<h1>Welcome John Doe &lt;john@doe.net&gt;!</h1>
+<h1>
+  Welcome John Doe &lt;john@doe.net&gt;!
+</h1>
 ~~~
 
 ## Embedded engines

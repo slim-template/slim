@@ -6,8 +6,8 @@ Gem::Specification.new do |s|
   s.name              = 'slim'
   s.version           = Slim::VERSION
   s.date              = Date.today.to_s
-  s.authors           = ['Andrew Stone', 'Fred Wu', 'Daniel Mendler']
-  s.email             = ['andy@stonean.com', 'ifredwu@gmail.com', 'mail@daniel-mendler.de']
+  s.authors           = ['Daniel Mendler', 'Andrew Stone', 'Fred Wu']
+  s.email             = ['mail@daniel-mendler.de', 'andy@stonean.com', 'ifredwu@gmail.com']
   s.summary           = 'Slim is a template language.'
   s.description       = 'Slim is a template language whose goal is reduce the syntax to the essential parts without becoming cryptic.'
   s.homepage          = 'http://slim-lang.com/'
@@ -17,13 +17,6 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = %w(lib)
 
-  s.add_runtime_dependency('temple', ['~> 0.5.5'])
+  s.add_runtime_dependency('temple', ['~> 0.6.1'])
   s.add_runtime_dependency('tilt', ['~> 1.3.3'])
-
-  s.add_development_dependency('rake', ['>= 0.8.7'])
-  s.add_development_dependency('sass', ['>= 3.1.0'])
-  s.add_development_dependency('minitest', ['>= 0'])
-  s.add_development_dependency('kramdown', ['>= 0'])
-  s.add_development_dependency('creole', ['>= 0'])
-  s.add_development_dependency('builder', ['>= 0'])
 end

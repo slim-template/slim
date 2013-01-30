@@ -1,15 +1,15 @@
+# coding: utf-8
 module Slim
   # Parses Slim code and transforms it to a Temple expression
   # @api private
   class Parser < Temple::Parser
     define_options :file,
                    :default_tag,
-                   :escape_quoted_attrs => false,
                    :tabsize => 4,
                    :encoding => 'utf-8',
                    :shortcut => {
-                     '#' => 'id',
-                     '.' => 'class'
+                     '#' => { :attr => 'id' },
+                     '.' => { :attr => 'class' }
                    }
 
     class SyntaxError < StandardError
@@ -24,7 +24,7 @@ module Slim
       end
 
       def to_s
-        line = @line.strip
+        line = @line.lstrip
         column = @column + line.size - @line.size
         %{#{error}
   #{file}, Line #{lineno}, Column #{@column}
@@ -36,18 +36,25 @@ module Slim
 
     def initialize(opts = {})
       super
-      @tab = ' ' * options[:tabsize]
-      @shortcut = {}
-      options[:shortcut].each do |k,v|
-        @shortcut[k] = if v =~ /\A([^\s]+)\s+([^\s]+)\Z/
-                         [$1, $2]
-                       else
-                         [options[:default_tag], v]
-                       end
+      tabsize = options[:tabsize]
+      if tabsize > 1
+        @tab_re = /\G((?: {#{tabsize}})*) {0,#{tabsize-1}}\t/
+        @tab = '\1' + ' ' * tabsize
+      else
+        @tab_re = "\t"
+        @tab = ' '
       end
-      shortcut = "[#{Regexp.escape @shortcut.keys.join}]"
-      @shortcut_regex = /\A(#{shortcut})(\w[\w-]*\w|\w+)/
-      @tag_regex = /\A(?:#{shortcut}|\*(?=[^\s]+)|(\w[\w:-]*\w|\w+))/
+      @tag_shortcut, @attr_shortcut = {}, {}
+      options[:shortcut].each do |k,v|
+        raise ArgumentError, 'Shortcut requires :tag and/or :attr' unless (v[:attr] || v[:tag]) && (v.keys - [:attr, :tag]).empty?
+        @tag_shortcut[k] = v[:tag] || options[:default_tag]
+        if v.include?(:attr)
+          @attr_shortcut[k] = v[:attr]
+          raise ArgumentError, 'You can only use special characters for attribute shortcuts' if k =~ /(#{WORD_RE}|-)/
+        end
+      end
+      @attr_shortcut_re = /\A(#{Regexp.union @attr_shortcut.keys})(#{WORD_RE}(?:#{WORD_RE}|-)*#{WORD_RE}|#{WORD_RE}+)/
+      @tag_re = /\A(?:#{Regexp.union @tag_shortcut.keys}|\*(?=[^\s]+)|(#{WORD_RE}(?:#{WORD_RE}|:|-)*#{WORD_RE}|#{WORD_RE}+))/
     end
 
     # Compile string to Temple expression
@@ -68,16 +75,18 @@ module Slim
 
     protected
 
-    DELIMITERS = {
+
+    DELIMS = {
       '(' => ')',
       '[' => ']',
       '{' => '}',
     }.freeze
 
-    DELIMITER_REGEX = /\A[#{Regexp.escape DELIMITERS.keys.join}]/
-    ATTR_NAME = '\A\s*(\w[:\w-]*)'
-    QUOTED_ATTR_REGEX = /#{ATTR_NAME}=(=?)("|')/
-    CODE_ATTR_REGEX = /#{ATTR_NAME}=(=?)/
+    WORD_RE = ''.respond_to?(:encoding) ? '\p{Word}' : '\w'
+    DELIM_RE = /\A[#{Regexp.escape DELIMS.keys.join}]/
+    ATTR_NAME = "\\A\\s*(#{WORD_RE}(?:#{WORD_RE}|:|-)*)"
+    QUOTED_ATTR_RE = /#{ATTR_NAME}=(=?)("|')/
+    CODE_ATTR_RE = /#{ATTR_NAME}=(=?)/
 
     # Set string encoding if option is set
     def set_encoding(s)
@@ -144,7 +153,7 @@ module Slim
     def get_indent(line)
       # Figure out the indentation. Kinda ugly/slow way to support tabs,
       # but remember that this is only done at parsing time.
-      line[/\A[ \t]*/].gsub("\t", @tab).size
+      line[/\A[ \t]*/].gsub(@tab_re, @tab).size
     end
 
     def parse_line
@@ -245,7 +254,7 @@ module Slim
       when /\Adoctype\s+/i
         # Found doctype declaration
         @stacks.last << [:html, :doctype, $'.strip]
-      when @tag_regex
+      when @tag_re
         # Found a HTML tag.
         @line = $' if $1
         parse_tag($&)
@@ -310,21 +319,26 @@ module Slim
     def parse_broken_line
       broken_line = @line.strip
       while broken_line =~ /[,\\]\Z/
-        next_line || syntax_error!('Unexpected end of file')
-        broken_line << "\n" << @line.strip
+        expect_next_line
+        broken_line << "\n" << @line
       end
       broken_line
     end
 
     def parse_tag(tag)
-      tag = [:html, :tag, @shortcut[tag] ? @shortcut[tag][0] : tag, parse_attributes]
+      if @tag_shortcut[tag]
+        @line.slice!(0, tag.size) unless @attr_shortcut[tag]
+        tag = @tag_shortcut[tag]
+      end
+
+      tag = [:html, :tag, tag, parse_attributes]
       @stacks.last << tag
 
       case @line
       when /\A\s*:\s*/
         # Block expansion
         @line = $'
-        (@line =~ @tag_regex) || syntax_error!('Expected tag')
+        (@line =~ @tag_re) || syntax_error!('Expected tag')
         @line = $' if $1
         content = [:multi]
         tag << content
@@ -339,8 +353,10 @@ module Slim
         tag << [:slim, :output, $1 != '=', parse_broken_line, block]
         @stacks.last << [:static, ' '] unless $2.empty?
         @stacks << block
-      when /\A\s*\//
+      when /\A\s*\/\s*/
         # Closed tag. Do nothing
+        @line = $'
+        syntax_error!('Unexpected text after closed tag') unless @line.empty?
       when /\A\s*\Z/
         # Empty content
         content = [:multi]
@@ -356,23 +372,23 @@ module Slim
       attributes = [:html, :attrs]
 
       # Find any shortcut attributes
-      while @line =~ @shortcut_regex
+      while @line =~ @attr_shortcut_re
         # The class/id attribute is :static instead of :slim :interpolate,
         # because we don't want text interpolation in .class or #id shortcut
-        attributes << [:html, :attr, @shortcut[$1][1], [:static, $2]]
+        attributes << [:html, :attr, @attr_shortcut[$1], [:static, $2]]
         @line = $'
       end
 
       # Check to see if there is a delimiter right after the tag name
       delimiter = nil
-      if @line =~ DELIMITER_REGEX
-        delimiter = DELIMITERS[$&]
+      if @line =~ DELIM_RE
+        delimiter = DELIMS[$&]
         @line.slice!(0)
       end
 
       if delimiter
-        boolean_attr_regex = /#{ATTR_NAME}(?=(\s|#{Regexp.escape delimiter}|\Z))/
-        end_regex = /\A\s*#{Regexp.escape delimiter}/
+        boolean_attr_re = /#{ATTR_NAME}(?=(\s|#{Regexp.escape delimiter}|\Z))/
+        end_re = /\A\s*#{Regexp.escape delimiter}/
       end
 
       while true
@@ -386,33 +402,28 @@ module Slim
           # Splat attribute
           @line = $'
           attributes << [:slim, :splat, parse_ruby_code(delimiter)]
-        when QUOTED_ATTR_REGEX
+        when QUOTED_ATTR_RE
           # Value is quoted (static)
           @line = $'
           attributes << [:html, :attr, $1,
-                         [:escape, options[:escape_quoted_attrs] && $2.empty?,
-                          [:slim, :interpolate, parse_quoted_attribute($3)]]]
-        when CODE_ATTR_REGEX
+                         [:escape, $2.empty?, [:slim, :interpolate, parse_quoted_attribute($3)]]]
+        when CODE_ATTR_RE
           # Value is ruby code
           @line = $'
           name = $1
           escape = $2.empty?
           value = parse_ruby_code(delimiter)
-          # Remove attribute wrapper which doesn't belong to the ruby code
-          # e.g id=[hash[:a] + hash[:b]]
-          value = value[1..-2] if value =~ DELIMITER_REGEX &&
-            DELIMITERS[$&] == value[-1, 1]
           syntax_error!('Invalid empty attribute') if value.empty?
           attributes << [:html, :attr, name, [:slim, :attrvalue, escape, value]]
         else
           break unless delimiter
 
           case @line
-          when boolean_attr_regex
+          when boolean_attr_re
             # Boolean attribute
             @line = $'
             attributes << [:html, :attr, $1, [:slim, :attrvalue, false, 'true']]
-          when end_regex
+          when end_re
             # Find ending delimiter
             @line = $'
             break
@@ -436,20 +447,25 @@ module Slim
       code, count, delimiter, close_delimiter = '', 0, nil, nil
 
       # Attribute ends with space or attribute delimiter
-      end_regex = /\A[\s#{Regexp.escape outer_delimiter.to_s}]/
+      end_re = /\A[\s#{Regexp.escape outer_delimiter.to_s}]/
 
-      until @line.empty? || (count == 0 && @line =~ end_regex)
-        if count > 0
-          if @line[0] == delimiter[0]
-            count += 1
-          elsif @line[0] == close_delimiter[0]
-            count -= 1
+      until @line.empty? || (count == 0 && @line =~ end_re)
+        if @line =~ /\A[,\\]\Z/
+          code << @line << "\n"
+          expect_next_line
+        else
+          if count > 0
+            if @line[0] == delimiter[0]
+              count += 1
+            elsif @line[0] == close_delimiter[0]
+              count -= 1
+            end
+          elsif @line =~ DELIM_RE
+            count = 1
+            delimiter, close_delimiter = $&, DELIMS[$&]
           end
-        elsif @line =~ DELIMITER_REGEX
-          count = 1
-          delimiter, close_delimiter = $&, DELIMITERS[$&]
+          code << @line.slice!(0)
         end
-        code << @line.slice!(0)
       end
       syntax_error!("Expected closing delimiter #{close_delimiter}") if count != 0
       code
@@ -459,17 +475,22 @@ module Slim
       value, count = '', 0
 
       until @line.empty? || (count == 0 && @line[0] == quote[0])
-        if count > 0
-          if @line[0] == ?{
-            count += 1
-          elsif @line[0] == ?}
-            count -= 1
+        if @line =~ /\A\\\Z/
+          value << ' '
+          expect_next_line
+        else
+          if count > 0
+            if @line[0] == ?{
+              count += 1
+            elsif @line[0] == ?}
+              count -= 1
+            end
+          elsif @line =~ /\A#\{/
+            value << @line.slice!(0)
+            count = 1
           end
-        elsif @line =~ /\A#\{/
           value << @line.slice!(0)
-          count = 1
         end
-        value << @line.slice!(0)
       end
 
       syntax_error!("Expected closing brace }") if count != 0
@@ -483,6 +504,11 @@ module Slim
     def syntax_error!(message)
       raise SyntaxError.new(message, options[:file], @orig_line, @lineno,
                             @orig_line && @line ? @orig_line.size - @line.size : 0)
+    end
+
+    def expect_next_line
+      next_line || syntax_error!('Unexpected end of file')
+      @line.strip!
     end
   end
 end

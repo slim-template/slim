@@ -42,14 +42,14 @@ p id=(false ? 'notshown' : 'shown') = output_number
     source = %{
 #alpha id="beta" Test it
 }
-    assert_html '<div id="alpha_beta">Test it</div>', source, :attr_delimiter => {'class' => ' ', 'id' => '_' }
+    assert_html '<div id="alpha_beta">Test it</div>', source, :merge_attrs => {'class' => ' ', 'id' => '_' }
   end
 
   def test_id_attribute_merging2
     source = %{
 #alpha id="beta" Test it
 }
-    assert_html '<div id="alpha-beta">Test it</div>', source, :attr_delimiter => {'class' => ' ', 'id' => '-' }
+    assert_html '<div id="alpha-beta">Test it</div>', source, :merge_attrs => {'class' => ' ', 'id' => '-' }
   end
 
   def test_boolean_attribute_false
@@ -108,6 +108,14 @@ option(selected class="clazz") Text
     assert_html '<div class="alpha beta gamma delta true false"></div><div class="alpha beta gamma"></div>', source
   end
 
+  def test_hyphenated_attribute
+    source = %{
+.alpha data={:a => 'alpha', :b => 'beta', :c_d => 'gamma', :c => {:e => 'epsilon'}}
+}
+
+    assert_html '<div class="alpha" data-a="alpha" data-b="beta" data-c-d="gamma" data-c-e="epsilon"></div>', source
+  end
+
   def test_shortcut_splat
     source = %q{
 *hash This is my title
@@ -118,10 +126,18 @@ option(selected class="clazz") Text
 
   def test_splat
     source = %q{
-h1 *hash This is my title
+h1 *hash class=[] This is my title
 }
 
     assert_html '<h1 a="The letter a" b="The letter b">This is my title</h1>', source
+  end
+
+  def test_closed_splat
+    source = %q{
+*hash /
+}
+
+    assert_html '<div a="The letter a" b="The letter b" />', source
   end
 
   def test_splat_tag_name
@@ -143,10 +159,10 @@ h1 *hash This is my title
 
   def test_closed_splat_tag
     source = %q{
-*hash / This is my title
+*hash /
 }
 
-    assert_html '<div a="The letter a" b="The letter b"/>', source
+    assert_html '<div a="The letter a" b="The letter b" />', source
   end
 
   def test_splat_with_id_shortcut
