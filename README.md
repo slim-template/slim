@@ -944,7 +944,7 @@ We run the benchmarks for every commit on Travis-CI. Take a look at the newest b
 Slim provides an extensive test-suite based on minitest. You can run the tests
 with 'rake test' and the rails integration tests with 'rake test:rails'.
 
-We are currently experimenting with human-readable literate tests which are written as markdown files: {file:test/literate/TESTS.md TESTS.md}
+We are currently experimenting with human-readable literate tests which are written as markdown files: [TESTS.md](test/literate/TESTS.md)
 
 Travis-CI is used for continous integration testing: <http://travis-ci.org/#!/slim-template/slim>
 
