@@ -14,7 +14,7 @@ module Slim
 
     # Pass-through handler
     def on_slim_embedded(type, content)
-      [:slim, :embedded, code, compile(content)]
+      [:slim, :embedded, type, compile(content)]
     end
 
     # Pass-through handler
