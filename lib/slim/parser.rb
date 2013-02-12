@@ -82,10 +82,13 @@ module Slim
       '{' => '}',
     }.freeze
 
+    ATTR_DELIM_REGEX = /\A\s*[#{Regexp.escape DELIMITERS.keys.join}]/
     DELIMITER_REGEX = /\A[#{Regexp.escape DELIMITERS.keys.join}]/
     ATTR_NAME = '\A\s*(\w[:\w-]*)'
     QUOTED_ATTR_REGEX = /#{ATTR_NAME}=(=?)("|')/
     CODE_ATTR_REGEX = /#{ATTR_NAME}=(=?)/
+    QUOTED_ATTR_REGEX_20 = /#{ATTR_NAME}\s*=(=?)\s*("|')/
+    CODE_ATTR_REGEX_20 = /#{ATTR_NAME}\s*=(=?)\s*/
 
     # Convert deprecated string shortcut to hash
     def deprecated_shortcut(v)
@@ -384,9 +387,13 @@ module Slim
 
       # Check to see if there is a delimiter right after the tag name
       delimiter = nil
-      if @line =~ DELIMITER_REGEX
-        delimiter = DELIMITERS[$&]
-        @line.slice!(0)
+      if @line =~ ATTR_DELIM_REGEX
+        if $&.size > 1
+          warn "#{options[:file]}:#{@lineno} - spaces around attribute delimiters will be allowed in Slim 2.0. Your code is incompatible."
+        else
+          delimiter = DELIMITERS[$&]
+          @line.slice!(0)
+        end
       end
 
       if delimiter
@@ -428,6 +435,10 @@ module Slim
           syntax_error!('Invalid empty attribute') if value.empty?
           attributes << [:html, :attr, name, [:slim, :attrvalue, escape, value]]
         else
+          if @line =~ QUOTED_ATTR_REGEX_20 || @line =~ CODE_ATTR_REGEX_20
+            warn "#{options[:file]}:#{@lineno} - you have spaces around =, this will be interpreted as attribute in Slim 2.0."
+          end
+
           break unless delimiter
 
           case @line
