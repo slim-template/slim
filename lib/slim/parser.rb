@@ -83,10 +83,10 @@ module Slim
     }.freeze
 
     WORD_RE = ''.respond_to?(:encoding) ? '\p{Word}' : '\w'
-    DELIM_RE = /\A[#{Regexp.escape DELIMS.keys.join}]/
+    DELIM_RE = /\A\s*([#{Regexp.escape DELIMS.keys.join}])/
     ATTR_NAME = "\\A\\s*(#{WORD_RE}(?:#{WORD_RE}|:|-)*)"
-    QUOTED_ATTR_RE = /#{ATTR_NAME}=(=?)("|')/
-    CODE_ATTR_RE = /#{ATTR_NAME}=(=?)/
+    QUOTED_ATTR_RE = /#{ATTR_NAME}\s*=(=?)\s*("|')/
+    CODE_ATTR_RE = /#{ATTR_NAME}\s*=(=?)\s*/
 
     # Set string encoding if option is set
     def set_encoding(s)
@@ -376,8 +376,8 @@ module Slim
       # Check to see if there is a delimiter right after the tag name
       delimiter = nil
       if @line =~ DELIM_RE
-        delimiter = DELIMS[$&]
-        @line.slice!(0)
+        delimiter = DELIMS[$1]
+        @line = $'
       end
 
       if delimiter
@@ -451,7 +451,7 @@ module Slim
             end
           elsif @line =~ DELIM_RE
             count = 1
-            delimiter, close_delimiter = $&, DELIMS[$&]
+            delimiter, close_delimiter = $1, DELIMS[$1]
           end
           code << @line.slice!(0)
         end
