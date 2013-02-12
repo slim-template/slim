@@ -705,8 +705,12 @@ h2 [ id = "tagline" ] Tagline
 renders as
 
 ~~~ html
-<h1 id="logo">Logo</h1>
-<h2 id="tagline">Tagline</h2>
+<h1 id="logo">
+  Logo
+</h1>
+<h2 id="tagline">
+  Tagline
+</h2>
 ~~~
 
 #### Quoted attributes
