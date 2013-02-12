@@ -351,6 +351,11 @@ If you wrap the attributes, you can spread them across multiple lines:
     h2[id="tagline"
        class="small tagline"] = page_tagline
 
+You may use spaces around the wrappers and assignments:
+
+    h1 id = "logo" = page_logo
+    h2 [ id = "tagline" ] = page_tagline
+
 #### Quoted attributes
 
 Example:
