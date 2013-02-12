@@ -83,7 +83,8 @@ module Slim
     }.freeze
 
     WORD_RE = ''.respond_to?(:encoding) ? '\p{Word}' : '\w'
-    DELIM_RE = /\A\s*([#{Regexp.escape DELIMS.keys.join}])/
+    DELIM_RE = /\A[#{Regexp.escape DELIMS.keys.join}]/
+    ATTR_DELIM_RE = /\A\s*([#{Regexp.escape DELIMS.keys.join}])/
     ATTR_NAME = "\\A\\s*(#{WORD_RE}(?:#{WORD_RE}|:|-)*)"
     QUOTED_ATTR_RE = /#{ATTR_NAME}\s*=(=?)\s*("|')/
     CODE_ATTR_RE = /#{ATTR_NAME}\s*=(=?)\s*/
@@ -375,7 +376,7 @@ module Slim
 
       # Check to see if there is a delimiter right after the tag name
       delimiter = nil
-      if @line =~ DELIM_RE
+      if @line =~ ATTR_DELIM_RE
         delimiter = DELIMS[$1]
         @line = $'
       end
@@ -451,7 +452,7 @@ module Slim
             end
           elsif @line =~ DELIM_RE
             count = 1
-            delimiter, close_delimiter = $1, DELIMS[$1]
+            delimiter, close_delimiter = $&, DELIMS[$&]
           end
           code << @line.slice!(0)
         end
