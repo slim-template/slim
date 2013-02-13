@@ -28,7 +28,7 @@ module Slim
       end
 
       def to_s
-        line = @line.strip
+        line = @line.lstrip
         column = @column + line.size - @line.size
         %{#{error}
   #{file}, Line #{lineno}, Column #{@column}
@@ -96,9 +96,10 @@ module Slim
     SMART_TEXT_EXTENDED_RE = ''.respond_to?(:encoding) ? '(?:(?![a-z_])\p{Word})' : '[A-Z0-9\x80-\xFF]'
     
     DELIM_RE = /\A[#{Regexp.escape DELIMS.keys.join}]/
+    ATTR_DELIM_RE = /\A\s*([#{Regexp.escape DELIMS.keys.join}])/
     ATTR_NAME = "\\A\\s*(#{WORD_RE}(?:#{WORD_RE}|:|-)*)"
-    QUOTED_ATTR_RE = /#{ATTR_NAME}=(=?)("|')/
-    CODE_ATTR_RE = /#{ATTR_NAME}=(=?)/
+    QUOTED_ATTR_RE = /#{ATTR_NAME}\s*=(=?)\s*("|')/
+    CODE_ATTR_RE = /#{ATTR_NAME}\s*=(=?)\s*/
 
     # Set string encoding if option is set
     def set_encoding(s)
@@ -401,9 +402,9 @@ module Slim
 
       # Check to see if there is a delimiter right after the tag name
       delimiter = nil
-      if @line =~ DELIM_RE
-        delimiter = DELIMS[$&]
-        @line.slice!(0)
+      if @line =~ ATTR_DELIM_RE
+        delimiter = DELIMS[$1]
+        @line = $'
       end
 
       if delimiter

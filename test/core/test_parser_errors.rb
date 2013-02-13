@@ -109,7 +109,7 @@ p
   img{src= }
 }
 
-    assert_syntax_error "Invalid empty attribute\n  (__TEMPLATE__), Line 3, Column 10\n    img{src= }\n            ^\n", source
+    assert_syntax_error "Invalid empty attribute\n  (__TEMPLATE__), Line 3, Column 11\n    img{src= }\n             ^\n", source
   end
 
   def test_invalid_empty_attribute2

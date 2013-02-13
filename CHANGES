@@ -1,4 +1,4 @@
-2.0.0.pre.4
+2.0.0.pre.6
 
   * IMPORTANT: Backward incompatible syntax change: '{...}' and '[...]' are not
     allowed as ruby attribute wrappers anymore. Use parentheses '(...)'
@@ -33,6 +33,8 @@
   * Renamed Slim::EmbeddedEngine to Slim::Embedded
   * Renamed Slim::ControlStructures to Slim::Controls
   * Tab expansion improved (tab + space is interpreted as equivalent to tab)
+  * Support for wrapping javascript in HTML comments or CDATA (Issue #340)
+  * Allow spaces around attributes, e.g 'a [ href = url ] text' and 'a href = url text'
 
 1.3.6
 

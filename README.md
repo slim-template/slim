@@ -1,6 +1,6 @@
 # Slim
 
-[![Gem Version](https://badge.fury.io/rb/slim.png)](http://rubygems.org/gems/slim) [![Build Status](https://secure.travis-ci.org/slim-template/slim.png?branch=master)](http://travis-ci.org/slim-template/slim) [![Dependency Status](https://gemnasium.com/slim-template/slim.png?travis)](https://gemnasium.com/slim-template/slim) [![Code Climate](https://codeclimate.com/badge.png)](https://codeclimate.com/github/slim-template/slim)
+[![Gem Version](https://badge.fury.io/rb/slim.png)](http://rubygems.org/gems/slim) [![Build Status](https://secure.travis-ci.org/slim-template/slim.png?branch=master)](http://travis-ci.org/slim-template/slim) [![Dependency Status](https://gemnasium.com/slim-template/slim.png?travis)](https://gemnasium.com/slim-template/slim) [![Code Climate](https://codeclimate.com/github/slim-template/slim.png)](https://codeclimate.com/github/slim-template/slim)
 
 Slim is a template language whose goal is to reduce the view syntax to the essential parts without becoming cryptic. It started as an exercise to see how much could be removed from a standard html template (<, >, closing tags, etc...). As more people took an interest in Slim, the functionality grew and so did the flexibility of the syntax.
 
@@ -62,7 +62,7 @@ There is also some development in logic-less engines (e.g. [Mustache](https://gi
 
 Slim was born to bring a minimalist syntax approach with speed. If people chose not to use Slim, it would not be because of speed.
 
-___Yes, Slim is speedy!___ Benchmarks are done for every commit at {http://travis-ci.org/#!/slim-template/slim}.
+___Yes, Slim is speedy!___ Benchmarks are done for every commit at <http://travis-ci.org/#!/slim-template/slim>.
 Don't trust the numbers? That's as it should be. Please try the benchmark rake task yourself!
 
 ### How to start?
@@ -424,6 +424,11 @@ If you wrap the attributes, you can spread them across multiple lines:
     h2[id="tagline"
        class="small tagline"] = page_tagline
 
+You may use spaces around the wrappers and assignments:
+
+    h1 id = "logo" = page_logo
+    h2 [ id = "tagline" ] = page_tagline
+
 #### Quoted attributes
 
 Example:
@@ -729,6 +734,7 @@ There are a lot of them but the good thing is, that Slim checks the configuratio
 <tr><td>Hash</td><td>:merge_attrs</td><td>\{'class' => ' '}</td><td>Joining character used if multiple html attributes are supplied (e.g. class="class1 class2")</td></tr>
 <tr><td>Array&lt;String&gt;</td><td>:hyphen_attrs</td><td>%w(data)</td><td>Attributes which will be hyphenated if a Hash is given (e.g. data={a:1,b:2} will render as data-a="1" data-b="2")</td></tr>
 <tr><td>Boolean</td><td>:sort_attrs</td><td>true</td><td>Sort attributes by name</td></tr>
+<tr><td>Symbol</td><td>:js_wrapper</td><td>nil</td><td>Wrap javascript by :comment, :cdata or :both. You can also :guess the wrapper based on :format.</td></tr>
 <tr><td>Boolean</td><td>:pretty</td><td>false</td><td>Pretty html indenting <b>(This is slower!)</b></td></tr>
 <tr><td>String</td><td>:indent</td><td>'  '</td><td>Indentation string</td></tr>
 <tr><td>Boolean</td><td>:streaming</td><td>false (true in Rails > 3.1)</td><td>Enable output streaming</td></tr>
@@ -1016,16 +1022,16 @@ run the slow parsing benchmark which needs more time. You can also increase the 
 
     rake bench slow=1 iterations=1000
 
-We run the benchmarks for every commit on Travis-CI. Take a look at the newest benchmarking results: {http://travis-ci.org/#!/slim-template/slim}
+We run the benchmarks for every commit on Travis-CI. Take a look at the newest benchmarking results: <http://travis-ci.org/#!/slim-template/slim>
 
 ### Test suite and continous integration
 
 Slim provides an extensive test-suite based on minitest. You can run the tests
 with 'rake test' and the rails integration tests with 'rake test:rails'.
 
-We are currently experimenting with human-readable literate tests which are written as markdown files: {file:test/literate/TESTS.md TESTS.md}
+We are currently experimenting with human-readable literate tests which are written as markdown files: [TESTS.md](test/literate/TESTS.md)
 
-Travis-CI is used for continous integration testing: {http://travis-ci.org/#!/slim-template/slim}
+Travis-CI is used for continous integration testing: <http://travis-ci.org/#!/slim-template/slim>
 
 Slim is working well on all major Ruby implementations:
 

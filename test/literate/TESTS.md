@@ -695,6 +695,24 @@ renders as
 <dl itemprop="address" itemscope="itemscope" itemtype="http://schema.org/PostalAddress"></dl>
 ~~~
 
+You may use spaces around the wrappers and assignments:
+
+~~~ slim
+h1 id = "logo" Logo
+h2 [ id = "tagline" ] Tagline
+~~~
+
+renders as
+
+~~~ html
+<h1 id="logo">
+  Logo
+</h1>
+<h2 id="tagline">
+  Tagline
+</h2>
+~~~
+
 #### Quoted attributes
 
 You can use single or double quotes for simple text attributes.
