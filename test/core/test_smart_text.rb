@@ -116,6 +116,29 @@ Escaped &amp;#xx; &amp;#1f; &amp;;.</p>}
     assert_html result, source
   end
 
+  def test_smart_text_disabled_escaping
+    Slim::Engine.with_options( :smart_text_escaping => false ) do
+      source = %q{
+p Not escaped <&>.
+| Not escaped <&>.
+p
+  Not escaped <&>.
+  > Not escaped <&>.
+  Not escaped &amp; &lt; &gt; &copy; &Aacute;.
+  Not escaped &#0129; &#x00ff;.
+  Not escaped &#xx; &#1f; &;.
+}
+
+    result = %q{<p>Not escaped <&>.</p>Not escaped <&>.<p>Not escaped <&>.
+Not escaped <&>.
+Not escaped &amp; &lt; &gt; &copy; &Aacute;.
+Not escaped &#0129; &#x00ff;.
+Not escaped &#xx; &#1f; &;.</p>}
+
+      assert_html result, source
+    end
+  end
+
   def test_smart_text_in_tag_escaping
     Slim::Engine.with_options( :smart_text_in_tags => true ) do
       source = %q{

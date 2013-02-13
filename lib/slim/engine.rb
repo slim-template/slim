@@ -17,7 +17,7 @@ module Slim
     use Slim::Smart::Filter, :smart_text_end_chars, :smart_text_begin_chars
     use Slim::Embedded, :enable_engines, :disable_engines, :pretty
     use Slim::Interpolation
-    use Slim::Smart::Escaper
+    use Slim::Smart::Escaper, :smart_text_escaping
     use Slim::Splat::Filter, :merge_attrs, :attr_quote, :sort_attrs, :default_tag, :hyphen_attrs
     use Slim::EndInserter
     use Slim::Controls, :disable_capture

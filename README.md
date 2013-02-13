@@ -165,7 +165,8 @@ This way you can easily type text like this:
           several lines.
         > 'This is text, too'.
 
-Note that unlike verbatim text, smart text is automatically escaped for you.
+Note that unlike verbatim text, smart text is automatically escaped for you
+(as long as you leave `:smart_text_escaping` enabled).
 However, for your convenience, any HTML entities detected are still used verbatim.
 
     h1
@@ -723,6 +724,7 @@ There are a lot of them but the good thing is, that Slim checks the configuratio
 <tr><td>String</td><td>:smart_text_chars</td><td>',.;:!?()[]{}@&$%^~"#'</td><td>Characters implying smart text line</td></tr>
 <tr><td>String</td><td>:smart_text_begin_chars</td><td>',.;:!?)]}'</td><td>Characters suppressing leading newline in smart text</td></tr>
 <tr><td>String</td><td>:smart_text_end_chars</td><td>'([{'</td><td>Characters suppressing trailing newline in smart text</td></tr>
+<tr><td>Boolean</td><td>:smart_text_escaping</td><td>true</td><td>When set, HTML characters which need escaping are automatically escaped in smart text</td></tr>
 <tr><td>Boolean</td><td>:smart_text_in_tags</td><td>false</td><td>When set, text on the tag line is treated (and escaped) as smart text, rather than verbatim text</td></tr>
 <tr><td>Array&lt;Symbol,String&gt;</td><td>:enable_engines</td><td>nil <i>(All enabled)</i></td><td>List of enabled embedded engines (whitelist)</td></tr>
 <tr><td>Array&lt;Symbol,String&gt;</td><td>:disable_engines</td><td>nil <i>(None disabled)</i></td><td>List of disabled embedded engines (blacklist)</td></tr>

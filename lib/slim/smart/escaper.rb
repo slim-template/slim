@@ -5,15 +5,17 @@ module Slim
     #
     # @api private
     class Escaper < ::Slim::Filter
+      define_options :smart_text_escaping => true
     
       def initialize(opts = {})
         super
         @smart = false
+        @escape = options[:smart_text_escaping]
       end
       
       def on_slim_smart(content)
-        @smart = true
-        [ :escape, true, [ :slim, :text, compile(content) ] ]
+        @smart = @escape
+        [ :escape, @escape, [ :slim, :text, compile(content) ] ]
       ensure
         @smart = false
       end
