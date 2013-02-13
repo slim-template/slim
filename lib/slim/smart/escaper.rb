@@ -12,11 +12,10 @@ module Slim
       end
       
       def on_slim_smart(content)
-        old = @smart
         @smart = true
         [ :escape, true, [ :slim, :text, compile(content) ] ]
       ensure
-        @smart = old
+        @smart = false
       end
       
       def on_static(string)

@@ -55,11 +55,10 @@ module Slim
       end
       
       def on_slim_smart(content)
-        old = @smart
         @smart = true
         [ :slim, :smart, compile(content) ]
       ensure
-        @smart = old
+        @smart = false
       end
       
       def on_slim_interpolate(string)
