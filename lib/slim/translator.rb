@@ -6,13 +6,13 @@ module Slim
                    :tr_fn   => '_',
                    :tr      => false
 
-    if Object.const_defined?(:I18n)
+    if defined?(::I18n)
       set_default_options :tr_fn => '::Slim::Translator.i18n_text',
                           :tr => true
-    elsif Object.const_defined?(:GetText)
+    elsif defined?(::GetText)
       set_default_options :tr_fn => '::GetText._',
                           :tr => true
-    elsif Object.const_defined?(:FastGettext)
+    elsif defined?(::FastGettext)
       set_default_options :tr_fn => '::FastGettext::Translation._',
                           :tr => true
     end
