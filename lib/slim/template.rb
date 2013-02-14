@@ -3,7 +3,7 @@ module Slim
   # @api public
   Template = Temple::Templates::Tilt(Slim::Engine, :register_as => :slim)
 
-  if Object.const_defined?(:Rails)
+  if Object.const_defined?(:Rails) && Object.const_defined?(:ActionView)
     # Rails template implementation for Slim
     # @api public
     RailsTemplate = Temple::Templates::Rails(Slim::Engine,
