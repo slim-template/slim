@@ -223,7 +223,6 @@ module Slim
         @stacks.last << [:static, ' '] if trailing_ws
       when /\A</
         # Inline html
-        # @stacks.last << parse_text_block(@line, @indents.last + 1)
         block = [:multi]
         @stacks.last << [:multi, [:slim, :interpolate, @line], block]
         @stacks << block
