@@ -103,7 +103,7 @@ Here's a quick example to demonstrate what a Slim template looks like:
                 td.price = item.price
         - else
           p No items found Please add some inventory.
-            Thank you!
+             Thank you!
 
         div id="footer"
           = render 'footer'
@@ -113,7 +113,7 @@ Indentation matters, but the indentation depth can be chosen as you like. If you
 
 ## Line indicators
 
-### Text `|`
+### Verbatim text `|`
 
 The pipe tells Slim to just copy the line. It essentially escapes any processing.
 Each following line that is indented greater than the pipe is copied over.
@@ -132,10 +132,10 @@ Each following line that is indented greater than the pipe is copied over.
 
     body
       p
-        |  This line is on the left margin.
-            This line will have one space in front of it.
-              This line will have two spaces in front of it.
-                And so on...
+        | This line is on the left margin.
+           This line will have one space in front of it.
+             This line will have two spaces in front of it.
+               And so on...
 
 You can also embed html in the text line
 
@@ -145,6 +145,74 @@ You can also embed html in the text line
 ### Text with trailing white space `'`
 
 The single quote tells Slim to copy the line (similar to `|`), but makes sure that a single trailing white space is appended.
+
+### Smart text `>`
+
+The easiest way to combine text and markup is to use the smart text mode.
+If you have the `:smart_text` option enabled, any line starting
+with uppercase letter, digit, non-ASCII letter (see `:smart_text_extended` option),
+or any of the characters specified in `:smart_text_chars` implies a text line.
+You can also always explicitly mark the smart text with `>`,
+for example when it starts with lowercase letter or unusual character.
+If the text spans several lines, simply indent them.
+This way you can easily type text like this:
+
+    body
+      p
+        This is text.
+        So is this,
+          and it spans
+          several lines.
+        > 'This is text, too'.
+
+Note that unlike verbatim text, smart text is automatically escaped for you
+(as long as you leave `:smart_text_escaping` enabled).
+However, for your convenience, any HTML entities detected are still used verbatim.
+
+    h1
+      Rise & shine
+    footer
+      Copyright &copy; #{Time.now.year}
+
+Another cool thing about smart text is that it mixes fairly well with markup.
+Smart text lines normally preserve newlines,
+however the leading newline is suppressed if the smart text block begins
+with a character from the `:smart_text_begin_chars` set (`,.;:!?)]}` by default).
+Similarly, trailing newline is suppressed if the smart text block ends
+with a character from the `:smart_text_end_chars` set (`([{` by default).
+This makes it very easy to mix normal text with links or spans,
+which happens extremely often, like this:
+
+    body
+      p
+        This text ends with a
+        a href="#1" link
+        .
+
+        This
+        a href="#2" link
+        > goes elsewhere.
+
+        Adding some
+        strong emphasis
+        > is reasonably easy as well.
+
+        That's it (
+        a href="#3" more here
+        ).
+
+Note that smart text is smart enough to know about tag shortcuts (explained later), too,
+so it will correctly deal even with cases like this:
+
+    .class
+      #id
+        #{'More'}
+        i text
+        ...
+
+Of course, all this is is meant only to make working with short text snippets more convenient.
+For bulk text content, you are more than welcome to use one of the builtin embedded engines,
+such as Markdown or Textile.
 
 ### Inline html `<` (HTML style)
 
@@ -310,11 +378,17 @@ Either start on the same line as the tag
     body
       h1 id="headline" Welcome to my site.
 
-Or nest it.  You must use a pipe or a backtick to escape processing
+Or nest it.  You must use a pipe or an apostrophe to escape processing
 
     body
       h1 id="headline"
         | Welcome to my site.
+
+Or enable and rely on smart text instead
+
+    body
+      h1 id="headline"
+        Welcome to my site.
 
 ### Dynamic content (`=` and `==`)
 
@@ -645,6 +719,13 @@ There are a lot of them but the good thing is, that Slim checks the configuratio
 <tr><td>String</td><td>:encoding</td><td>"utf-8"</td><td>Set encoding of template</td></tr>
 <tr><td>String</td><td>:default_tag</td><td>"div"</td><td>Default tag to be used if tag name is omitted</td></tr>
 <tr><td>Hash</td><td>:shortcut</td><td>\{'.' => {:attr => 'class'}, '#' => {:attr => 'id'}}</td><td>Attribute shortcuts</td></tr>
+<tr><td>Boolean</td><td>:smart_text</td><td>false</td><td>Enable smart text mode</td></tr>
+<tr><td>Boolean</td><td>:smart_text_extended</td><td>true</td><td>When set, all non-ASCII letters (in addition to uppercase letters) imply smart text line</td></tr>
+<tr><td>String</td><td>:smart_text_chars</td><td>',.;:!?()[]{}@&$%^~"#'</td><td>Characters implying smart text line</td></tr>
+<tr><td>String</td><td>:smart_text_begin_chars</td><td>',.;:!?)]}'</td><td>Characters suppressing leading newline in smart text</td></tr>
+<tr><td>String</td><td>:smart_text_end_chars</td><td>'([{'</td><td>Characters suppressing trailing newline in smart text</td></tr>
+<tr><td>Boolean</td><td>:smart_text_escaping</td><td>true</td><td>When set, HTML characters which need escaping are automatically escaped in smart text</td></tr>
+<tr><td>Boolean</td><td>:smart_text_in_tags</td><td>false</td><td>When set, text on the tag line is treated (and escaped) as smart text, rather than verbatim text</td></tr>
 <tr><td>Array&lt;Symbol,String&gt;</td><td>:enable_engines</td><td>nil <i>(All enabled)</i></td><td>List of enabled embedded engines (whitelist)</td></tr>
 <tr><td>Array&lt;Symbol,String&gt;</td><td>:disable_engines</td><td>nil <i>(None disabled)</i></td><td>List of disabled embedded engines (blacklist)</td></tr>
 <tr><td>Boolean</td><td>:disable_capture</td><td>false (true in Rails)</td><td>Disable capturing in blocks (blocks write to the default buffer </td></tr>

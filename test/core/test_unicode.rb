@@ -4,14 +4,14 @@ if ''.respond_to?(:encoding)
 
   class TestSlimUnicode < TestSlim
     def test_unicode_tags
-      source = "Статья года"
-      result = "<Статья>года</Статья>"
+      source = "статья года"
+      result = "<статья>года</статья>"
       assert_html result, source
     end
 
     def test_unicode_attrs
-      source = "Статья года=123 content"
-      result = "<Статья года=\"123\">content</Статья>"
+      source = "статья года=123 content"
+      result = "<статья года=\"123\">content</статья>"
       assert_html result, source
     end
   end
