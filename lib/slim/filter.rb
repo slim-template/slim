@@ -13,6 +13,16 @@ module Slim
     end
 
     # Pass-through handler
+    def on_slim_smart(content)
+      [:slim, :smart, compile(content)]
+    end
+
+    # Pass-through handler
+    def on_slim_interpolate(string)
+      [:slim, :interpolate, string]
+    end
+
+    # Pass-through handler
     def on_slim_embedded(type, content)
       [:slim, :embedded, type, compile(content)]
     end

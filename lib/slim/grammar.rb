@@ -10,6 +10,7 @@ module Slim
       [:slim, :interpolate, String]                   |
       [:slim, :embedded, String, Expression]          |
       [:slim, :text, Expression]                      |
+      [:slim, :smart, Expression]                     |
       [:slim, :attrvalue, Bool, String]
 
     HTMLAttr <<
