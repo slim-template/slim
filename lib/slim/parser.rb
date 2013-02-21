@@ -236,11 +236,12 @@ module Slim
       when /\A=/
         # Found an output block.
         # We expect the line to be broken or the next line to be indented.
-        @line =~ /\A=(=?)('?)/
+        @line =~ /\A=(=?)(['|]?)/
         @line = $'
         block = [:multi]
         @stacks.last << [:slim, :output, $1.empty?, parse_broken_line, block]
-        @stacks.last << [:static, ' '] unless $2.empty?
+        @stacks.last << [:static, ' '] if $2 == "'"
+        @stacks.last << [:static,"\n"] if $2 == "|"
         @stacks << block
       when /\A(\w+):\s*\Z/
         # Embedded template detected. It is treated as block.
