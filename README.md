@@ -366,6 +366,11 @@ If you wrap the attributes, you can spread them across multiple lines:
     h2[id="tagline"
        class="small tagline"] = page_tagline
 
+You may use spaces around the wrappers and assignments:
+
+    h1 id = "logo" = page_logo
+    h2 [ id = "tagline" ] = page_tagline
+
 #### Quoted attributes
 
 Example:
@@ -665,6 +670,7 @@ There are a lot of them but the good thing is, that Slim checks the configuratio
 <tr><td>Hash</td><td>:merge_attrs</td><td>\{'class' => ' '}</td><td>Joining character used if multiple html attributes are supplied (e.g. class="class1 class2")</td></tr>
 <tr><td>Array&lt;String&gt;</td><td>:hyphen_attrs</td><td>%w(data)</td><td>Attributes which will be hyphenated if a Hash is given (e.g. data={a:1,b:2} will render as data-a="1" data-b="2")</td></tr>
 <tr><td>Boolean</td><td>:sort_attrs</td><td>true</td><td>Sort attributes by name</td></tr>
+<tr><td>Symbol</td><td>:js_wrapper</td><td>nil</td><td>Wrap javascript by :comment, :cdata or :both. You can also :guess the wrapper based on :format.</td></tr>
 <tr><td>Boolean</td><td>:pretty</td><td>false</td><td>Pretty html indenting <b>(This is slower!)</b></td></tr>
 <tr><td>String</td><td>:indent</td><td>'  '</td><td>Indentation string</td></tr>
 <tr><td>Boolean</td><td>:streaming</td><td>false (true in Rails > 3.1)</td><td>Enable output streaming</td></tr>
@@ -959,7 +965,7 @@ We run the benchmarks for every commit on Travis-CI. Take a look at the newest b
 Slim provides an extensive test-suite based on minitest. You can run the tests
 with 'rake test' and the rails integration tests with 'rake test:rails'.
 
-We are currently experimenting with human-readable literate tests which are written as markdown files: {file:test/literate/TESTS.md TESTS.md}
+We are currently experimenting with human-readable literate tests which are written as markdown files: [TESTS.md](test/literate/TESTS.md)
 
 Travis-CI is used for continous integration testing: <http://travis-ci.org/#!/slim-template/slim>
 
