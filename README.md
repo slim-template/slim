@@ -142,7 +142,7 @@ You can also embed html in the text line
     - articles.each do |a|
       | <tr><td>#{a.name}</td><td>#{a.description}</td></tr>
 
-### Text with trailing white space `'`
+### Verbatim text with trailing white space `'`
 
 The single quote tells Slim to copy the line (similar to `|`), but makes sure that a single trailing white space is appended.
 
@@ -164,7 +164,7 @@ or merely for aesthetic consistency,
 or if you want to use uppercase tag names
 and therefore need to keep the `:implicit` option disabled.
 
-    h1
+    p
       > 'This is text, too.'
 
 To get most out of these implicit and explicit text blocks,
@@ -674,6 +674,7 @@ There are a lot of them but the good thing is, that Slim checks the configuratio
 <tr><td>Integer</td><td>:tabsize</td><td>4</td><td>Number of white spaces per tab (used by the parser)</td></tr>
 <tr><td>String</td><td>:encoding</td><td>"utf-8"</td><td>Set encoding of template</td></tr>
 <tr><td>String</td><td>:default_tag</td><td>"div"</td><td>Default tag to be used if tag name is omitted</td></tr>
+<tr><td>Boolean</td><td>:implicit</td><td>false</td><td>Enable implicit text recognition</td></tr>
 <tr><td>Hash</td><td>:shortcut</td><td>\{'.' => {:attr => 'class'}, '#' => {:attr => 'id'}}</td><td>Attribute shortcuts</td></tr>
 <tr><td>Array&lt;Symbol,String&gt;</td><td>:enable_engines</td><td>nil <i>(All enabled)</i></td><td>List of enabled embedded engines (whitelist)</td></tr>
 <tr><td>Array&lt;Symbol,String&gt;</td><td>:disable_engines</td><td>nil <i>(None disabled)</i></td><td>List of disabled embedded engines (blacklist)</td></tr>
@@ -717,7 +718,7 @@ It is also possible to set options for superclasses like `Temple::Engine`. But t
 
 ### Smart text
 
-The easiest way to combine text and markup is to use the smart text mode.
+The easiest way to combine text and markup is to use the <a name="smarttext">smart text mode</a>.
 
 Enable the smart text plugin with
 
@@ -726,12 +727,11 @@ Enable the smart text plugin with
 This automatically enables the `:implicit` option as well,
 so you can easily type text like this:
 
-    body
-      p
-        This is text.
-        So is this,
-          and it spans
-          several lines.
+    p
+      This is text.
+      So is this,
+        and it spans
+        several lines.
 
 As long as you leave the `:smart_text_escaping` enabled,
 any non-verbatim text is automatically escaped for you.
