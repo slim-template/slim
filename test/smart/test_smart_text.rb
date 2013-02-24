@@ -1,19 +1,9 @@
 # -*- coding: utf-8 -*-
+
 require 'helper'
+require 'slim/smart'
 
 class TestSlimSmartText < TestSlim
-  def setup
-    Slim::Engine.set_default_options :implicit => true,
-                                     :smart_text => true,
-                                     :smart_text_escaping => true
-    
-  end
-
-  def teardown
-    Slim::Engine.set_default_options :implicit => false,
-                                     :smart_text => false,
-                                     :smart_text_escaping => false
-  end
 
   def test_explicit_smart_text_recognition
     source = %q{

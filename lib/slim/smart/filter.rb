@@ -5,7 +5,7 @@ module Slim
     #
     # @api private
     class Filter < ::Slim::Filter
-      define_options :smart_text => false,
+      define_options :smart_text => true,
                      :smart_text_end_chars => '([{',
                      :smart_text_begin_chars => ',.;:!?)]}'
     

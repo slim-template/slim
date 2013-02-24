@@ -5,7 +5,7 @@ module Slim
     #
     # @api private
     class Escaper < ::Slim::Filter
-      define_options :smart_text_escaping => false
+      define_options :smart_text_escaping => true
     
       def initialize(opts = {})
         super
