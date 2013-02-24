@@ -1,7 +1,7 @@
 module Slim
   module Smart
     # Perform newline processing in the
-    # expressions `[:slim, :smart, Expression]`.
+    # expressions `[:slim, :text, type, Expression]`.
     #
     # @api private
     class Filter < ::Slim::Filter
@@ -11,7 +11,7 @@ module Slim
     
       def initialize(opts = {})
         super
-        @smart = false
+        @active = false
         @prepend = false
         @append = false
         @prepend_re = /\A#{chars_re(options[:smart_text_begin_chars])}/
@@ -22,18 +22,21 @@ module Slim
       def on_multi(*exps)
         # The [:multi] blocks serve two purposes.
         # On outer level, they collect the building blocks like
-        # tags, verbatim text, or smart text.
-        # Within smart text block, they collect the individual
+        # tags, verbatim text, and implicit/explicit text.
+        # Within a text block, they collect the individual
         # lines in [:slim, :interpolate, string] blocks.
         #
         # Our goal here is to decide when we want to prepend and
         # append newlines to those individual interpolated lines.
+        # We basically want the text to come out as it was originally entered,
+        # while removing newlines next to the enclosing tags.
         # 
         # On outer level, we choose to prepend every time, except
-        # right after the opening tag or after other smart text block.
-        # We also use the append flag to recognize the last expression before the closing tag.
+        # right after the opening tag or after other text block.
+        # We also use the append flag to recognize the last expression
+        # before the closing tag, as we don't want to append newline there.
         #
-        # Within smart text block, we prepend only before the first line unless
+        # Within text block, we prepend only before the first line unless
         # the outer level tells us not to, and we append only after the last line,
         # unless the outer level tells us it is the last line before the closing tag.
         # Of course, this is later subject to the special begin/end characters
@@ -42,10 +45,10 @@ module Slim
         # so we don't have to worry about that at all.
         block = [:multi]
         prev = nil
-        last_exp = exps.reject{ |exp| exp.first == :newline }.last unless @smart && @append
+        last_exp = exps.reject{ |exp| exp.first == :newline }.last unless @active && @append
         exps.each do |exp|
           @append = exp.equal?(last_exp)
-          if @smart
+          if @active
             @prepend = false if prev
           else
             @prepend = prev && ( prev.first != :slim || prev[1] != :text )
@@ -57,10 +60,10 @@ module Slim
       end
       
       def on_slim_text(type, content)
-        @smart = @enabled && type != :verbatim
+        @active = @enabled && type != :verbatim
         [ :slim, :text, type, compile(content) ]
       ensure
-        @smart = false
+        @active = false
       end
       
       def on_slim_text_inline(content)
@@ -71,7 +74,7 @@ module Slim
       end
       
       def on_slim_interpolate(string)
-        return super unless @smart
+        return super unless @active
         
         if @prepend && prepend?(string)
           string = "\n" + string 

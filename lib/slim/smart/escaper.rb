@@ -1,7 +1,7 @@
 module Slim
   module Smart
     # Perform smart entity escaping in the
-    # expressions `[:slim, :smart, Expression]`.
+    # expressions `[:slim, :text, type, Expression]`.
     #
     # @api private
     class Escaper < ::Slim::Filter
