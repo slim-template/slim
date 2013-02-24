@@ -13,7 +13,7 @@ module Slim
                    :default_tag => 'div'
 
     use Slim::Parser, :file, :tabsize, :encoding, :shortcut, :default_tag, :implicit
-    use Slim::Smart::Filter, :smart_text_end_chars, :smart_text_begin_chars
+    use Slim::Smart::Filter, :smart_text, :smart_text_end_chars, :smart_text_begin_chars
     use Slim::Embedded, :enable_engines, :disable_engines, :pretty
     use Slim::Interpolation
     use Slim::Smart::Escaper, :smart_text_escaping

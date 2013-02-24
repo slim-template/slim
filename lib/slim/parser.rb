@@ -56,7 +56,7 @@ module Slim
       end
       word_re = options[:implicit] ? LC_WORD_RE : WORD_RE
       @attr_shortcut_re = /\A(#{Regexp.union @attr_shortcut.keys})(#{WORD_RE}(?:#{WORD_RE}|-)*#{WORD_RE}|#{WORD_RE}+)/
-      @tag_re = /\A(?:#{Regexp.union @tag_shortcut.keys}|\*(?=[^\s]+)|(#{word_re}(?:#{word_re}|:|-)*#{word_re}|#{word_re}+))/
+      @tag_re = /\A(?:#{Regexp.union @tag_shortcut.keys}(?=#{word_re})|\*(?=[^\s]+)|(#{word_re}(?:#{word_re}|:|-)*#{word_re}|#{word_re}+))/
     end
 
     # Compile string to Temple expression

@@ -5,7 +5,8 @@ module Slim
     #
     # @api private
     class Filter < ::Slim::Filter
-      define_options :smart_text_end_chars => '([{',
+      define_options :smart_text => false,
+                     :smart_text_end_chars => '([{',
                      :smart_text_begin_chars => ',.;:!?)]}'
     
       def initialize(opts = {})
@@ -15,6 +16,7 @@ module Slim
         @append = false
         @prepend_re = /\A#{chars_re(options[:smart_text_begin_chars])}/
         @append_re = /#{chars_re(options[:smart_text_end_chars])}\Z/
+        @enabled = options[:smart_text]
       end
       
       def on_multi(*exps)
@@ -46,7 +48,7 @@ module Slim
           if @smart
             @prepend = false if prev
           else
-            @prepend = prev && ( prev.first != :slim || prev[1] != :smart )
+            @prepend = prev && ( prev.first != :slim || prev[1] != :text )
           end
           block << compile(exp)
           prev = exp unless exp.first == :newline
@@ -54,11 +56,18 @@ module Slim
         block
       end
       
-      def on_slim_smart(content)
-        @smart = true
-        [ :slim, :smart, compile(content) ]
+      def on_slim_text(type, content)
+        @smart = @enabled && type != :verbatim
+        [ :slim, :text, type, compile(content) ]
       ensure
         @smart = false
+      end
+      
+      def on_slim_text_inline(content)
+        # Inline text is not wrapped in multi block, so set it up as if it was.
+        @prepend = false
+        @append = true
+        on_slim_text(:inline, content)
       end
       
       def on_slim_interpolate(string)

@@ -3,11 +3,16 @@ require 'helper'
 
 class TestSlimSmartText < TestSlim
   def setup
-    Slim::Engine.set_default_options :smart_text => true
+    Slim::Engine.set_default_options :implicit => true,
+                                     :smart_text => true,
+                                     :smart_text_escaping => true
+    
   end
 
   def teardown
-    Slim::Engine.set_default_options :smart_text => false
+    Slim::Engine.set_default_options :implicit => false,
+                                     :smart_text => false,
+                                     :smart_text_escaping => false
   end
 
   def test_explicit_smart_text_recognition
@@ -97,8 +102,8 @@ Fourth line.</p>}
 
   def test_smart_text_escaping
     source = %q{
-p Not escaped <&>.
 | Not escaped <&>.
+p Escaped <&>.
 p
   Escaped <&>.
   > Escaped <&>.
@@ -107,7 +112,7 @@ p
   Escaped &#xx; &#1f; &;.
 }
 
-    result = %q{<p>Not escaped <&>.</p>Not escaped <&>.<p>Escaped &lt;&amp;&gt;.
+    result = %q{Not escaped <&>.<p>Escaped &lt;&amp;&gt;.</p><p>Escaped &lt;&amp;&gt;.
 Escaped &lt;&amp;&gt;.
 Protected &amp; &lt; &gt; &copy; &Aacute;.
 Protected &#0129; &#x00ff;.
@@ -140,21 +145,19 @@ Not escaped &#xx; &#1f; &;.</p>}
   end
 
   def test_smart_text_in_tag_escaping
-    Slim::Engine.with_options( :smart_text_in_tags => true ) do
-      source = %q{
+    source = %q{
 p Escaped <&>.
   Protected &amp; &lt; &gt; &copy; &Aacute;.
   Protected &#0129; &#x00ff;.
   Escaped &#xx; &#1f; &;.
 }
 
-      result = %q{<p>Escaped &lt;&amp;&gt;.
+    result = %q{<p>Escaped &lt;&amp;&gt;.
 Protected &amp; &lt; &gt; &copy; &Aacute;.
 Protected &#0129; &#x00ff;.
 Escaped &amp;#xx; &amp;#1f; &amp;;.</p>}
 
-      assert_html result, source
-    end
+    assert_html result, source
   end
 
   def test_smart_text_mixed_with_tags
@@ -258,69 +261,17 @@ which stops
     assert_html result, source
   end
   
-  # Without unicode support, we can't distinguish uppercase and lowercase
-  # unicode characters reliably. So we only test the basic stuff in extended mode.
-
-  def test_unicode_extended_smart_text
+  def test_unicode_smart_text
     
-    Slim::Engine.with_options( :smart_text_extended => true ) do
-  
-      source = %q{
+    source = %q{
 p
   是
   čip
   Čip
   Žůžo
   šíp
-}
-
-      result = %q{<p>是
-čip
-Čip
-Žůžo
-šíp</p>}
-
-      assert_html result, source
-    end
-  end
-
-  if ''.respond_to?(:encoding)
-
-    def test_unicode_smart_text
-
-      Slim::Engine.with_options( :smart_text_extended => false ) do
-
-        source = %q{
-p
-  是
-  čip
-  Čip
-  Žůžo
-  šíp
-  .řek
+  .foo
     .
-}
-
-        result = %q{<p><是></是><čip></čip>
-Čip
-Žůžo
-<šíp></šíp><div class="řek">.</div></p>}
-
-        assert_html result, source
-      end
-    end
-
-    def test_unicode_extended_smart_text
-    
-      Slim::Engine.with_options( :smart_text_extended => true ) do
-  
-        source = %q{
-p
-  是
-  čip
-  Čip
-  Žůžo
-  šíp
   .řek
     .
 }
@@ -330,10 +281,9 @@ p
 Čip
 Žůžo
 šíp
-<div class="řek">.</div></p>}
+<div class="foo">.</div>.řek
+.</p>}
 
-        assert_html result, source
-      end
-    end
+    assert_html result, source
   end
 end
