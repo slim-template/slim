@@ -46,11 +46,12 @@ module Slim
       end
     end
 
-    # Handle text expression `[:slim, :text, content]`
+    # Handle text expression `[:slim, :text, type, content]`
     #
+    # @param [Symbol] type Text type
     # @param [Array] content Temple expression
     # @return [Array] Compiled temple expression
-    def on_slim_text(content)
+    def on_slim_text(type, content)
       compile(content)
     end
   end

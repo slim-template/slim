@@ -46,8 +46,8 @@ module Slim
       end
     end
 
-    def on_slim_text(exp)
-      [:slim, :text, @translator.call(exp)]
+    def on_slim_text(type, exp)
+      [:slim, :text, type, @translator.call(exp)]
     end
 
     private

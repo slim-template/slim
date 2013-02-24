@@ -8,13 +8,8 @@ module Slim
   # @api private
   class Filter < Temple::HTML::Filter
     # Pass-through handler
-    def on_slim_text(content)
-      [:slim, :text, compile(content)]
-    end
-
-    # Pass-through handler
-    def on_slim_smart(content)
-      [:slim, :smart, compile(content)]
+    def on_slim_text(type, content)
+      [:slim, :text, type, compile(content)]
     end
 
     # Pass-through handler
