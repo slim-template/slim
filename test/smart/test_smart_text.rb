@@ -260,8 +260,6 @@ p
   Čip
   Žůžo
   šíp
-  .foo
-    .
   .řek
     .
 }
@@ -271,8 +269,7 @@ p
 Čip
 Žůžo
 šíp
-<div class="foo">.</div>.řek
-.</p>}
+<div class="řek">.</div></p>}
 
     assert_html result, source
   end
