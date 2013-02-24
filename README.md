@@ -751,7 +751,7 @@ so it is easy to mix them with other tags, like emphasis or links:
       > Your credit card
       strong will not
       > be charged now.
-
+    p
       Check
       a href=r(:faq) our FAQ
       > for more info.
@@ -768,8 +768,8 @@ This makes it quite easy to mix normal text with links or spans like this:
       Please proceed to
       a href="/" our homepage
       .
-
-      That's all (
+    p
+      Status: failed (
       a href="#1" details
       ).
 
@@ -782,7 +782,7 @@ so it will correctly deal even with cases like this:
         i text
         ...
 
-Of course, all this is is meant only to make working with short text snippets more convenient.
+Of course, all this is meant only to make working with short text snippets more convenient.
 For bulk text content, you are more than welcome to use one of the builtin embedded engines,
 such as Markdown or Textile.
 
