@@ -54,8 +54,9 @@ module Slim
           raise ArgumentError, 'You can only use special characters for attribute shortcuts' if k =~ /(#{WORD_RE}|-)/
         end
       end
+      word_re = options[:implicit] ? LC_WORD_RE : WORD_RE
       @attr_shortcut_re = /\A(#{Regexp.union @attr_shortcut.keys})(#{WORD_RE}(?:#{WORD_RE}|-)*#{WORD_RE}|#{WORD_RE}+)/
-      @tag_re = /\A(?:#{Regexp.union @tag_shortcut.keys}|\*(?=[^\s]+)|(#{WORD_RE}(?:#{WORD_RE}|:|-)*#{WORD_RE}|#{WORD_RE}+))/
+      @tag_re = /\A(?:#{Regexp.union @tag_shortcut.keys}|\*(?=[^\s]+)|(#{word_re}(?:#{word_re}|:|-)*#{word_re}|#{word_re}+))/
     end
 
     # Compile string to Temple expression
@@ -84,8 +85,7 @@ module Slim
     }.freeze
 
     WORD_RE = ''.respond_to?(:encoding) ? '\p{Word}' : '\w'
-    SMART_TEXT_RE = ''.respond_to?(:encoding) ? '(?:\p{Upper}|\p{Digit})' : '[A-Z0-9]'
-    SMART_TEXT_EXTENDED_RE = ''.respond_to?(:encoding) ? '(?:(?![a-z_])\p{Word})' : '[A-Z0-9\x80-\xFF]'
+    LC_WORD_RE = '[_a-z0-9]'
     
     DELIM_RE = /\A[#{Regexp.escape DELIMS.keys.join}]/
     ATTR_DELIM_RE = /\A\s*([#{Regexp.escape DELIMS.keys.join}])/
