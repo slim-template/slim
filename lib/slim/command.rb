@@ -1,11 +1,13 @@
 require 'slim/logic_less'
 require 'slim/translator'
+require 'slim/handlebars'
 require 'optparse'
 
 module Slim
   Engine.set_default_options :logic_less => false,
                              :pretty => false,
-                             :tr => false
+                             :tr => false,
+                             :handlebars => false
 
   # Slim commandline interface
   # @api private
@@ -56,6 +58,10 @@ module Slim
 
       opts.on('-l', '--logic-less', 'Enable logic less plugin') do
         Engine.set_default_options :logic_less => true
+      end
+
+      opts.on('-m', '--handlebars', 'Enable handlebars/ember.js plugin') do
+        Engine.set_default_options :handlebars => true
       end
 
       opts.on('-p', '--pretty', 'Produce pretty html') do

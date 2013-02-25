@@ -45,7 +45,7 @@ module Slim
       # @param [Array] attrs Array of temple expressions
       # @return [Array] Compiled temple expression
       def on_html_attrs(*attrs)
-        if attrs.any? {|attr| splat?(attr) or handlebars?(attr)}
+        if attrs.any? {|attr| splat?(attr)}
           builder, block = make_builder(attrs)
           [:multi,
            block,
@@ -65,10 +65,6 @@ module Slim
            attr[3][0] == :slim && attr[3][1] == :attrvalue)
       end
 
-      def handlebars?(attr)
-        attr[0] == :slim and attr[1] == :handlebars
-      end
-
       def make_builder(attrs)
         @splat_options ||= unique_name
         builder = unique_name
@@ -86,8 +82,6 @@ module Slim
               end
             elsif attr[0] == :slim && attr[1] == :splat
               [:code, "#{builder}.splat_attrs((#{attr[2]}))"]
-            elsif attr[0] == :slim && attr[1] == :handlebars
-              [:static, attr[2]]
             else
               attr
             end

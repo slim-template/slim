@@ -1,4 +1,5 @@
 require 'helper'
+require 'slim/handlebars'
 
 class TestHandlebarsInSlim < TestSlim
   def test_skip_handlebars_partial
@@ -42,5 +43,13 @@ CODE
 {{! comment here }}
 CODE
     assert_html '{{! comment here }}', source
+  end
+
+  def test_handlebars_with_splat_attrs
+    source = <<CODE
+h1 *hash class=[] {{action "load"}} This is my title
+CODE
+
+    assert_html '<h1 {{action "load"}} a="The letter a" b="The letter b">This is my title</h1>', source
   end
 end
