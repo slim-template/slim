@@ -5,10 +5,7 @@ module Slim
   class Parser < Temple::Parser
     define_options :file,
                    :default_tag,
-                   :smart_text => false,
-                   :smart_text_extended => true,
-                   :smart_text_chars => ',.;:!?()[]{}@&$%^~"#',   # not - = / < > | ' *
-                   :smart_text_in_tags => false,
+                   :implicit => false,
                    :tabsize => 4,
                    :encoding => 'utf-8',
                    :shortcut => {
@@ -57,13 +54,9 @@ module Slim
           raise ArgumentError, 'You can only use special characters for attribute shortcuts' if k =~ /(#{WORD_RE}|-)/
         end
       end
+      word_re = options[:implicit] ? LC_WORD_RE : WORD_RE
       @attr_shortcut_re = /\A(#{Regexp.union @attr_shortcut.keys})(#{WORD_RE}(?:#{WORD_RE}|-)*#{WORD_RE}|#{WORD_RE}+)/
-      @tag_re = /\A(?:#{Regexp.union @tag_shortcut.keys}|\*(?=[^\s]+)|(#{WORD_RE}(?:#{WORD_RE}|:|-)*#{WORD_RE}|#{WORD_RE}+))/
-
-      smart_text_chars = options[:smart_text_chars].split(//)
-      smart_text_re = options[:smart_text_extended] ? SMART_TEXT_EXTENDED_RE : SMART_TEXT_RE
-      smart_text_re = /\A(?:#{smart_text_re}|#{Regexp.union(smart_text_chars)}(?!#{WORD_RE})|#{Regexp.union(smart_text_chars - @tag_shortcut.keys)})/
-      @smart_text_re = options[:smart_text] ? smart_text_re : nil
+      @tag_re = /\A(?:#{Regexp.union @attr_shortcut.keys}(?=#{WORD_RE})|#{Regexp.union(@tag_shortcut.keys - @attr_shortcut.keys)}|\*(?=[^\s]+)|(#{word_re}(?:#{word_re}|:|-)*#{word_re}|#{word_re}+))/
     end
 
     # Compile string to Temple expression
@@ -92,8 +85,7 @@ module Slim
     }.freeze
 
     WORD_RE = ''.respond_to?(:encoding) ? '\p{Word}' : '\w'
-    SMART_TEXT_RE = ''.respond_to?(:encoding) ? '(?:\p{Upper}|\p{Digit})' : '[A-Z0-9]'
-    SMART_TEXT_EXTENDED_RE = ''.respond_to?(:encoding) ? '(?:(?![a-z_])\p{Word})' : '[A-Z0-9\x80-\xFF]'
+    LC_WORD_RE = '[_a-z0-9]'
 
     DELIM_RE = /\A[#{Regexp.escape DELIMS.keys.join}]/
     ATTR_DELIM_RE = /\A\s*([#{Regexp.escape DELIMS.keys.join}])/
@@ -219,7 +211,7 @@ module Slim
       case @line
       when /\A\/!( ?)/
         # HTML comment
-        @stacks.last << [:html, :comment, [:slim, :text, parse_text_block($', @indents.last + $1.size + 2)]]
+        @stacks.last << [:html, :comment, [:slim, :text, :verbatim, parse_text_block($', @indents.last + $1.size + 2)]]
       when /\A\/\[\s*(.*?)\s*\]\s*\Z/
         # HTML conditional comment
         block = [:multi]
@@ -229,13 +221,15 @@ module Slim
         # Slim comment
         parse_comment_block
       when /\A([\|'])( ?)/
-        # Found a text block.
+        # Found verbatim text block.
         trailing_ws = $1 == "'"
-        @stacks.last << [:slim, :text, parse_text_block($', @indents.last + $2.size + 1)]
+        @stacks.last << [:slim, :text, :verbatim, parse_text_block($', @indents.last + $2.size + 1)]
         @stacks.last << [:static, ' '] if trailing_ws
+      when /\A>( ?)/
+        # Found explicit text block.
+        @stacks.last << [:slim, :text, :explicit, parse_text_block($', @indents.last + $1.size + 1)]
       when /\A</
         # Inline html
-        # @stacks.last << parse_text_block(@line, @indents.last + 1)
         block = [:multi]
         @stacks.last << [:multi, [:slim, :interpolate, @line], block]
         @stacks << block
@@ -255,19 +249,10 @@ module Slim
         @stacks.last << [:slim, :output, $1.empty?, parse_broken_line, block]
         @stacks.last << [:static, ' '] unless $2.empty?
         @stacks << block
-      when /\A>( ?)/
-        # Found explicit smart text block.
-        @stacks.last << [:slim, :smart, parse_text_block($', @indents.last + $1.size + 1)]
-      when @smart_text_re
-        # Found implicit smart text block.
-        if line = @lines.first
-          indent = ( line =~ /\A\s*\Z/ ? @indents.last + 1 : get_indent(line) )
-        end
-        @stacks.last << [:slim, :smart, parse_text_block(@line, indent)]
-      when /\A(\w+):\s*\Z/
+      when /\A([_a-z0-9]+):\s*\Z/
         # Embedded template detected. It is treated as block.
         @stacks.last << [:slim, :embedded, $1, parse_text_block]
-      when /\Adoctype\s+/i
+      when /\Adoctype\s+/
         # Found doctype declaration
         @stacks.last << [:html, :doctype, $'.strip]
       when @tag_re
@@ -275,7 +260,12 @@ module Slim
         @line = $' if $1
         parse_tag($&)
       else
-        syntax_error! 'Unknown line indicator'
+        syntax_error! 'Unknown line indicator' unless options[:implicit]
+        # Found implicit smart text block.
+        if line = @lines.first
+          indent = ( line =~ /\A\s*\Z/ ? @indents.last + 1 : get_indent(line) )
+        end
+        @stacks.last << [:slim, :text, :implicit, parse_text_block(@line, indent)]
       end
       @stacks.last << [:newline]
     end
@@ -380,12 +370,7 @@ module Slim
         @stacks << content
       when /\A( ?)(.*)\Z/
         # Text content
-        text = parse_text_block($2, @orig_line.size - @line.size + $1.size, true)
-        if options[:smart_text_in_tags]
-          tag << [:multi, [:slim, :smart, text]]
-        else
-          tag << [:slim, :text, text]
-        end
+        tag << [:slim, :text, :inline, parse_text_block($2, @orig_line.size - @line.size + $1.size, true)]
       end
     end
 

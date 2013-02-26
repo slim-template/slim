@@ -142,77 +142,33 @@ You can also embed html in the text line
     - articles.each do |a|
       | <tr><td>#{a.name}</td><td>#{a.description}</td></tr>
 
-### Text with trailing white space `'`
+### Verbatim text with trailing white space `'`
 
 The single quote tells Slim to copy the line (similar to `|`), but makes sure that a single trailing white space is appended.
 
-### Smart text `>`
+### Implicit and explicit text `>`
 
-The easiest way to combine text and markup is to use the smart text mode.
-If you have the `:smart_text` option enabled, any line starting
-with uppercase letter, digit, non-ASCII letter (see `:smart_text_extended` option),
-or any of the characters specified in `:smart_text_chars` implies a text line.
-You can also always explicitly mark the smart text with `>`,
-for example when it starts with lowercase letter or unusual character.
+By enabling the `:implicit` option,
+you can let Slim to automatically treat any line which doesn't start
+with a lowercase tag name or any of the special characters as an implicit text line.
 If the text spans several lines, simply indent them.
-This way you can easily type text like this:
 
-    body
-      p
-        This is text.
-        So is this,
-          and it spans
-          several lines.
-        > 'This is text, too'.
+    p
+      This is text,
+        and it spans
+        several lines.
 
-Note that unlike verbatim text, smart text is automatically escaped for you
-(as long as you leave `:smart_text_escaping` enabled).
-However, for your convenience, any HTML entities detected are still used verbatim.
+You can also mark the text explicitly with `>`,
+for example when it starts with lowercase letter or unusual character,
+or merely for aesthetic consistency,
+or if you want to use uppercase tag names
+and therefore need to keep the `:implicit` option disabled.
 
-    h1
-      Rise & shine
-    footer
-      Copyright &copy; #{Time.now.year}
+    p
+      > 'This is text, too.'
 
-Another cool thing about smart text is that it mixes fairly well with markup.
-Smart text lines normally preserve newlines,
-however the leading newline is suppressed if the smart text block begins
-with a character from the `:smart_text_begin_chars` set (`,.;:!?)]}` by default).
-Similarly, trailing newline is suppressed if the smart text block ends
-with a character from the `:smart_text_end_chars` set (`([{` by default).
-This makes it very easy to mix normal text with links or spans,
-which happens extremely often, like this:
-
-    body
-      p
-        This text ends with a
-        a href="#1" link
-        .
-
-        This
-        a href="#2" link
-        > goes elsewhere.
-
-        Adding some
-        strong emphasis
-        > is reasonably easy as well.
-
-        That's it (
-        a href="#3" more here
-        ).
-
-Note that smart text is smart enough to know about tag shortcuts (explained later), too,
-so it will correctly deal even with cases like this:
-
-    .class
-      #id
-        #{'More'}
-        i text
-        ...
-
-Of course, all this is is meant only to make working with short text snippets more convenient.
-For bulk text content, you are more than welcome to use one of the builtin embedded engines,
-such as Markdown or Textile.
+To get most out of these implicit and explicit text blocks,
+check the smart text plugin - otherwise such text will be treated as standard `|` verbatim text.
 
 ### Inline html `<` (HTML style)
 
@@ -718,14 +674,8 @@ There are a lot of them but the good thing is, that Slim checks the configuratio
 <tr><td>Integer</td><td>:tabsize</td><td>4</td><td>Number of white spaces per tab (used by the parser)</td></tr>
 <tr><td>String</td><td>:encoding</td><td>"utf-8"</td><td>Set encoding of template</td></tr>
 <tr><td>String</td><td>:default_tag</td><td>"div"</td><td>Default tag to be used if tag name is omitted</td></tr>
+<tr><td>Boolean</td><td>:implicit</td><td>false</td><td>Enable implicit text recognition</td></tr>
 <tr><td>Hash</td><td>:shortcut</td><td>\{'.' => {:attr => 'class'}, '#' => {:attr => 'id'}}</td><td>Attribute shortcuts</td></tr>
-<tr><td>Boolean</td><td>:smart_text</td><td>false</td><td>Enable smart text mode</td></tr>
-<tr><td>Boolean</td><td>:smart_text_extended</td><td>true</td><td>When set, all non-ASCII letters (in addition to uppercase letters) imply smart text line</td></tr>
-<tr><td>String</td><td>:smart_text_chars</td><td>',.;:!?()[]{}@&$%^~"#'</td><td>Characters implying smart text line</td></tr>
-<tr><td>String</td><td>:smart_text_begin_chars</td><td>',.;:!?)]}'</td><td>Characters suppressing leading newline in smart text</td></tr>
-<tr><td>String</td><td>:smart_text_end_chars</td><td>'([{'</td><td>Characters suppressing trailing newline in smart text</td></tr>
-<tr><td>Boolean</td><td>:smart_text_escaping</td><td>true</td><td>When set, HTML characters which need escaping are automatically escaped in smart text</td></tr>
-<tr><td>Boolean</td><td>:smart_text_in_tags</td><td>false</td><td>When set, text on the tag line is treated (and escaped) as smart text, rather than verbatim text</td></tr>
 <tr><td>Array&lt;Symbol,String&gt;</td><td>:enable_engines</td><td>nil <i>(All enabled)</i></td><td>List of enabled embedded engines (whitelist)</td></tr>
 <tr><td>Array&lt;Symbol,String&gt;</td><td>:disable_engines</td><td>nil <i>(None disabled)</i></td><td>List of disabled embedded engines (blacklist)</td></tr>
 <tr><td>Boolean</td><td>:disable_capture</td><td>false (true in Rails)</td><td>Disable capturing in blocks (blocks write to the default buffer </td></tr>
@@ -765,6 +715,88 @@ It is also possible to set options for superclasses like `Temple::Engine`. But t
     Slim::Compiler < Temple::Filter
 
 ## Plugins
+
+### Smart text
+
+The easiest way to combine text and markup is to use the <a name="smarttext">smart text mode</a>.
+
+Enable the smart text plugin with
+
+    require 'slim/smart'
+
+This automatically enables the `:implicit` option as well,
+so you can easily type text like this:
+
+    p
+      This is text.
+      So is this,
+        and it spans
+        several lines.
+
+As long as you leave the `:smart_text_escaping` enabled,
+any non-verbatim text is automatically escaped for you.
+However, for your convenience, any HTML entities detected are still used verbatim.
+This way you are most likely to get what you really wanted,
+without having to worry about HTML escaping all the time.
+
+    h1 Questions & Answers
+    footer
+      Copyright &copy; #{Time.now.year}
+
+Another cool thing about smart text is that it mixes fairly well with markup.
+Smart text lines normally preserve newlines,
+so it is easy to mix them with other tags, like emphasis or links:
+
+    p
+      > Your credit card
+      strong will not
+      > be charged now.
+    p
+      Check
+      a href=r(:faq) our FAQ
+      > for more info.
+
+However, sometimes you do not want the whitespace around the inline tag.
+Fortunately smart text takes care of the most common cases for you as well.
+The leading newline is suppressed if the smart text block begins
+with a character from the `:smart_text_begin_chars` set (`,.;:!?)]}` by default).
+Similarly, trailing newline is suppressed if the smart text block ends
+with a character from the `:smart_text_end_chars` set (`([{` by default).
+This makes it quite easy to mix normal text with links or spans like this:
+
+    p
+      Please proceed to
+      a href="/" our homepage
+      .
+    p
+      Status: failed (
+      a href="#1" details
+      ).
+
+Note that smart text is smart enough to know about tag shortcuts, too,
+so it will correctly deal even with cases like this:
+
+    .class
+      #id
+        #{'More'}
+        i text
+        ...
+
+Of course, all this is meant only to make working with short text snippets more convenient.
+For bulk text content, you are more than welcome to use one of the builtin embedded engines,
+such as Markdown or Textile.
+
+#### Options
+
+<table>
+<thead style="font-weight:bold"><tr><td>Type</td><td>Name</td><td>Default</td><td>Purpose</td></tr></thead>
+<tbody>
+<tr><td>Boolean</td><td>:smart_text</td><td>true</td><td>Enable smart text mode newline processing</td></tr>
+<tr><td>String</td><td>:smart_text_begin_chars</td><td>',.;:!?)]}'</td><td>Characters suppressing leading newline in smart text</td></tr>
+<tr><td>String</td><td>:smart_text_end_chars</td><td>'([{'</td><td>Characters suppressing trailing newline in smart text</td></tr>
+<tr><td>Boolean</td><td>:smart_text_escaping</td><td>true</td><td>When set, HTML characters which need escaping are automatically escaped in smart text</td></tr>
+</tbody>
+</table>
 
 ### Logic less mode
 

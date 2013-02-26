@@ -3,7 +3,7 @@ module Slim
   # @api public
   Template = Temple::Templates::Tilt(Slim::Engine, :register_as => :slim)
 
-  if Object.const_defined?(:Rails)
+  if defined?(::ActionView)
     # Rails template implementation for Slim
     # @api public
     RailsTemplate = Temple::Templates::Rails(Slim::Engine,
@@ -14,6 +14,6 @@ module Slim
                                              # Disable the internal slim capturing.
                                              # Rails takes care of the capturing by itself.
                                              :disable_capture => true,
-                                             :streaming => Object.const_defined?(:Fiber))
+                                             :streaming => defined?(::Fiber))
   end
 end

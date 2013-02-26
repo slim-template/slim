@@ -1,7 +1,7 @@
 module Slim
   module Smart
     # Perform smart entity escaping in the
-    # expressions `[:slim, :smart, Expression]`.
+    # expressions `[:slim, :text, type, Expression]`.
     #
     # @api private
     class Escaper < ::Slim::Filter
@@ -9,19 +9,19 @@ module Slim
 
       def initialize(opts = {})
         super
-        @smart = false
-        @escape = options[:smart_text_escaping]
+        @escape = false
+        @enabled = options[:smart_text_escaping]
       end
 
-      def on_slim_smart(content)
-        @smart = @escape
-        [ :escape, @escape, [ :slim, :text, compile(content) ] ]
+      def on_slim_text(type, content)
+        @escape = @enabled && type != :verbatim
+        [ :escape, @escape, [ :slim, :text, type, compile(content) ] ]
       ensure
-        @smart = false
+        @escape = false
       end
 
       def on_static(string)
-        return [:static, string] unless @smart
+        return [:static, string] unless @escape
 
         # Prevent obvious &foo; and &#1234; and &#x00ff; entities from escaping.
         # There is not much we can do about semicolon-less forms like &copy,
