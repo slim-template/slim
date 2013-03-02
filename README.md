@@ -589,10 +589,6 @@ The embedded engines can be configured in Slim by setting the options directly o
 
     Slim::Embedded.default_options[:markdown] = {:auto_ids => false}
 
-Similarly, you can configure the AsciiDoc engine as follows:
-
-    Slim::Embedded.default_options[:asciidoc] = {:header_footer => true, :attributes => {'sectids!' => ''}}
-
 ## Configuring Slim
 
 Slim and the underlying [Temple](https://github.com/judofyr/temple) framework are highly configurable.
