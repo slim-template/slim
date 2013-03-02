@@ -14,6 +14,57 @@ p
     assert_html "<p><b>Hello from BEFORE ERB BLOCK!</b>\nSecond Line!\ntrue</p>", source
   end
 
+  def test_wip_render_with_asciidoc
+    source = %q{
+asciidoc:
+  == Header
+  Hello from #{"AsciiDoc!"}
+
+  #{1+2}
+
+  * one
+  * two
+}
+
+    expected = <<-EOS
+<div class="sect1">
+<h2 id="_header">Header</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Hello from AsciiDoc!</p>
+</div>
+<div class="paragraph">
+<p>3</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>one</p>
+</li>
+<li>
+<p>two</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+    EOS
+    # render, then remove blank lines and unindent the remaining lines
+    output = render(source).gsub(/^ *(\n|(?=[^ ]))/, '')
+
+    assert_equal expected, output
+
+    Slim::Embedded.with_options(:asciidoc => {:compact => true, :attributes => {'sectids!' => ''}}) do
+      # render, then unindent lines
+      output = render(source).gsub(/^ *(?=[^ ])/, '')
+      assert_equal expected.gsub('<h2 id="_header">', '<h2>'), output
+    end
+
+    # render again, then remove blank lines and unindent the remaining lines
+    output = render(source).gsub(/^ *(\n|(?=[^ ]))/, '')
+    assert_equal expected, output
+  end
+
   def test_render_with_markdown
     source = %q{
 markdown:
