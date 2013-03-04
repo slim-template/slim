@@ -89,7 +89,7 @@ module Slim
       private
 
       def chars_re(string)
-        Regexp.union(string.split(//))
+        Regexp.union(*string.split(//))
       end
 
       def prepend?(string)

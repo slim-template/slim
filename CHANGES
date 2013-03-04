@@ -35,6 +35,7 @@
   * Tab expansion improved (tab + space is interpreted as equivalent to tab)
   * Support for wrapping javascript in HTML comments or CDATA (Issue #340)
   * Allow spaces around attributes, e.g 'a [ href = url ] text' and 'a href = url text'
+  * Asciidoc embedded engine added
 
 1.3.6
 
