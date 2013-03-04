@@ -721,6 +721,7 @@ Slim currently provides plugins for logic less mode and I18n. See the plugin doc
 
 * [Logic less mode](doc/logic_less.md)
 * [Translator/I18ne](doc/translator.md)
+* [Smart text mode](doc/smart.md)
 
 ## Framework support
 
