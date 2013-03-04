@@ -981,7 +981,3 @@ renders as
 ## Configuring Slim
 
 ## Plugins
-
-### Logic less mode
-
-### Translator
