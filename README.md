@@ -148,7 +148,7 @@ The single quote tells Slim to copy the line (similar to `|`), but makes sure th
 
 ### Implicit and explicit text `>`
 
-By enabling the `:implicit` option,
+By enabling the `:implicit_text` option,
 you can let Slim to automatically treat any line which doesn't start
 with a lowercase tag name or any of the special characters as an implicit text line.
 If the text spans several lines, simply indent them.
@@ -162,7 +162,7 @@ You can also mark the text explicitly with `>`,
 for example when it starts with lowercase letter or unusual character,
 or merely for aesthetic consistency,
 or if you want to use uppercase tag names
-and therefore need to keep the `:implicit` option disabled.
+and therefore need to keep the `:implicit_text` option disabled.
 
     p
       > 'This is text, too.'
@@ -675,7 +675,7 @@ There are a lot of them but the good thing is, that Slim checks the configuratio
 <tr><td>Integer</td><td>:tabsize</td><td>4</td><td>Number of white spaces per tab (used by the parser)</td></tr>
 <tr><td>String</td><td>:encoding</td><td>"utf-8"</td><td>Set encoding of template</td></tr>
 <tr><td>String</td><td>:default_tag</td><td>"div"</td><td>Default tag to be used if tag name is omitted</td></tr>
-<tr><td>Boolean</td><td>:implicit</td><td>false</td><td>Enable implicit text recognition</td></tr>
+<tr><td>Boolean</td><td>:implicit_text</td><td>false</td><td>Enable implicit text recognition</td></tr>
 <tr><td>Hash</td><td>:shortcut</td><td>\{'.' => {:attr => 'class'}, '#' => {:attr => 'id'}}</td><td>Attribute shortcuts</td></tr>
 <tr><td>Array&lt;Symbol,String&gt;</td><td>:enable_engines</td><td>nil <i>(All enabled)</i></td><td>List of enabled embedded engines (whitelist)</td></tr>
 <tr><td>Array&lt;Symbol,String&gt;</td><td>:disable_engines</td><td>nil <i>(None disabled)</i></td><td>List of disabled embedded engines (blacklist)</td></tr>

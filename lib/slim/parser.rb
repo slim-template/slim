@@ -5,7 +5,7 @@ module Slim
   class Parser < Temple::Parser
     define_options :file,
                    :default_tag,
-                   :implicit => false,
+                   :implicit_text => false,
                    :tabsize => 4,
                    :encoding => 'utf-8',
                    :shortcut => {
@@ -54,7 +54,7 @@ module Slim
           raise ArgumentError, 'You can only use special characters for attribute shortcuts' if k =~ /(#{WORD_RE}|-)/
         end
       end
-      word_re = options[:implicit] ? LC_WORD_RE : WORD_RE
+      word_re = options[:implicit_text] ? LC_WORD_RE : WORD_RE
       @attr_shortcut_re = /\A(#{Regexp.union *@attr_shortcut.keys})(#{WORD_RE}(?:#{WORD_RE}|-)*#{WORD_RE}|#{WORD_RE}+)/
       @tag_re = /\A(?:#{Regexp.union *@attr_shortcut.keys}(?=#{WORD_RE})|#{Regexp.union *(@tag_shortcut.keys - @attr_shortcut.keys)}|\*(?=[^\s]+)|(#{word_re}(?:#{word_re}|:|-)*#{word_re}|#{word_re}+))/
     end
@@ -260,7 +260,7 @@ module Slim
         @line = $' if $1
         parse_tag($&)
       else
-        syntax_error! 'Unknown line indicator' unless options[:implicit]
+        syntax_error! 'Unknown line indicator' unless options[:implicit_text]
         # Found implicit smart text block.
         if line = @lines.first
           indent = ( line =~ /\A\s*\Z/ ? @indents.last + 1 : get_indent(line) )
