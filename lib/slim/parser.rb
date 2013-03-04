@@ -84,7 +84,7 @@ module Slim
 
     WORD_RE = ''.respond_to?(:encoding) ? '\p{Word}' : '\w'
     DELIM_RE = /\A[#{Regexp.escape DELIMS.keys.join}]/
-    ATTR_DELIM_RE = /\A\s*([#{Regexp.escape DELIMS.keys.join}])/
+    ATTR_DELIM_RE = /\A\s*([#{Regexp.escape DELIMS.keys.join}])(?!{)/
     ATTR_NAME = "\\A\\s*(#{WORD_RE}(?:#{WORD_RE}|:|-)*)"
     QUOTED_ATTR_RE = /#{ATTR_NAME}\s*=(=?)\s*("|')/
     CODE_ATTR_RE = /#{ATTR_NAME}\s*=(=?)\s*/
@@ -242,6 +242,12 @@ module Slim
         @stacks.last << [:slim, :output, $1.empty?, parse_broken_line, block]
         @stacks.last << [:static, ' '] unless $2.empty?
         @stacks << block
+      when /\A(\{\{\s*((\/|\w|\.|#|!)+).+\}\})\Z/
+        # Handlebars template
+        # start with {{ {{! {{#
+        block = [:multi]
+        @stacks.last << [:multi, [:slim, :interpolate, @line], block]
+        @stacks << block
       when /\A(\w+):\s*\Z/
         # Embedded template detected. It is treated as block.
         @stacks.last << [:slim, :embedded, $1, parse_text_block]
@@ -387,6 +393,11 @@ module Slim
 
       while true
         case @line
+        when /(\{\{(\w+)\s+(.+)\}\})/
+          if %w(action bindAttr).include?($2)
+            @line = "#{$`.strip} #{$'.strip}"
+            attributes << [:slim, :handlebars, " #{$1}"]
+          end
         when /\A\s*\*(?=[^\s]+)/
           # Splat attribute
           @line = $'
