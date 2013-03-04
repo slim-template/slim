@@ -1,11 +1,8 @@
-require 'slim/logic_less'
-require 'slim/translator'
+require 'slim'
 require 'optparse'
 
 module Slim
-  Engine.set_default_options :logic_less => false,
-                             :pretty => false,
-                             :tr => false
+  Engine.set_default_options :pretty => false
 
   # Slim commandline interface
   # @api private
@@ -51,11 +48,11 @@ module Slim
       end
 
       opts.on('-t', '--translator', 'Enable translator plugin') do
-        Engine.set_default_options :tr => true
+        require 'slim/translator'
       end
 
       opts.on('-l', '--logic-less', 'Enable logic less plugin') do
-        Engine.set_default_options :logic_less => true
+        require 'slim/logic_less'
       end
 
       opts.on('-p', '--pretty', 'Produce pretty html') do
