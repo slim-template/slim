@@ -5,6 +5,7 @@ module Slim
   class Parser < Temple::Parser
     define_options :file,
                    :default_tag,
+                   :disable_escape,
                    :tabsize => 4,
                    :encoding => 'utf-8',
                    :shortcut => {
@@ -55,6 +56,7 @@ module Slim
       end
       @attr_shortcut_re = /\A(#{Regexp.union @attr_shortcut.keys})(#{WORD_RE}(?:#{WORD_RE}|-)*#{WORD_RE}|#{WORD_RE}+)/
       @tag_re = /\A(?:#{Regexp.union @tag_shortcut.keys}|\*(?=[^\s]+)|(#{WORD_RE}(?:#{WORD_RE}|:|-)*#{WORD_RE}|#{WORD_RE}+))/
+      @default_escape = !options[:disable_escape]
     end
 
     # Compile string to Temple expression
@@ -239,7 +241,8 @@ module Slim
         @line =~ /\A=(=?)('?)/
         @line = $'
         block = [:multi]
-        @stacks.last << [:slim, :output, $1.empty?, parse_broken_line, block]
+        escape = $1.empty? ? @default_escape : !@default_escape
+        @stacks.last << [:slim, :output, escape, parse_broken_line, block]
         @stacks.last << [:static, ' '] unless $2.empty?
         @stacks << block
       when /\A(\w+):\s*\Z/
@@ -344,7 +347,8 @@ module Slim
         # Handle output code
         @line = $'
         block = [:multi]
-        tag << [:slim, :output, $1 != '=', parse_broken_line, block]
+        escape = $1.empty? ? @default_escape : !@default_escape
+        tag << [:slim, :output, escape, parse_broken_line, block]
         @stacks.last << [:static, ' '] unless $2.empty?
         @stacks << block
       when /\A\s*\/\s*/
@@ -400,7 +404,7 @@ module Slim
           # Value is ruby code
           @line = $'
           name = $1
-          escape = $2.empty?
+          escape = $2.empty? ? @default_escape : !@default_escape
           value = parse_ruby_code(delimiter)
           syntax_error!('Invalid empty attribute') if value.empty?
           attributes << [:html, :attr, name, [:slim, :attrvalue, escape, value]]
