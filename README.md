@@ -189,6 +189,8 @@ Same as the single equal sign (`=`), except that it adds a trailing white space.
 
 Same as the single equal sign (`=`), but does not go through the `escape_html` method.
 
+If :disable\_escape is true, then the function of `==` and `=` are reversed.
+
 ### Output without HTML escaping and trailing ws `=='`
 
 Same as the double equal sign (`==`), except that it adds a trailing white space.

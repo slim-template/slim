@@ -12,7 +12,7 @@ module Slim
                    :generator => Temple::Generators::ArrayBuffer,
                    :default_tag => 'div'
 
-    use Slim::Parser, :file, :tabsize, :encoding, :shortcut, :default_tag
+    use Slim::Parser, :file, :tabsize, :encoding, :shortcut, :default_tag, :disable_escape
     use Slim::Embedded, :enable_engines, :disable_engines, :pretty
     use Slim::Interpolation
     use Slim::Splat::Filter, :merge_attrs, :attr_quote, :sort_attrs, :default_tag, :hyphen_attrs
@@ -23,7 +23,7 @@ module Slim
     use Slim::CodeAttributes, :merge_attrs
     use(:AttributeRemover) { Temple::HTML::AttributeRemover.new(:remove_empty_attrs => options[:merge_attrs].keys) }
     html :Pretty, :format, :attr_quote, :pretty, :indent, :js_wrapper
-    filter :Escapable, :use_html_safe, :disable_escape
+    filter :Escapable, :use_html_safe
     filter :ControlFlow
     filter :MultiFlattener
     use :Optimizer do
