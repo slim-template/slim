@@ -20,6 +20,25 @@ class TestSlim < MiniTest::Unit::TestCase
     Slim::Template.new(options[:file], options) { source }.render(scope || @env, locals, &block)
   end
 
+  class HtmlSafeString < String
+    def html_safe?
+      true
+    end
+
+    def to_s
+      self
+    end
+  end
+
+  def with_html_safe
+    String.send(:define_method, :html_safe?) { false }
+    String.send(:define_method, :html_safe) { HtmlSafeString.new(self) }
+    yield
+  ensure
+    String.send(:undef_method, :html_safe?) if String.method_defined?(:html_safe?)
+    String.send(:undef_method, :html_safe) if String.method_defined?(:html_safe)
+  end
+
   def assert_html(expected, source, options = {}, &block)
     assert_equal expected, render(source, options, &block)
   end
@@ -69,18 +88,6 @@ end
 
 class Env
   attr_reader :var, :x
-
-  class ::HtmlSafeString < String
-    def html_safe?
-      true
-    end
-  end
-
-  class ::HtmlUnsafeString < String
-    def html_safe?
-      false
-    end
-  end
 
   def initialize
     @var = 'instance'
