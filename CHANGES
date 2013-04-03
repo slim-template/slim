@@ -19,7 +19,7 @@
   * Added hyphenation support for data attributes (Option :hyphen_attrs)
     Example: div data={key1_key2: 2, key1: {key3: 3}} will render as '<div data-key1-key2="2" data-key1-key3="3"></div>'
   * Add unicode support for tags and attributes (Issue #212)
-  * Removed support for deprecated options:
+  * Removed deprecated options:
     - Slim::Engine :remove_empty_attrs, :chain
     - Slim::LogicLess :wrapped dictionary
     - Slim::Parser :shortcut string option
