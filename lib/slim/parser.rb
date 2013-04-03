@@ -107,7 +107,10 @@ module Slim
         s = s.dup if s.frozen?
         s.force_encoding(options[:encoding])
         # Fall back to old encoding if new encoding is invalid
-        s.force_encoding(old_enc) unless s.valid_encoding?
+        unless s.valid_encoding?
+          s.force_encoding(old_enc)
+          s.force_encoding(Encoding::BINARY) unless s.valid_encoding?
+        end
       end
       s
     end
