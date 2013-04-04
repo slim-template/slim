@@ -42,7 +42,7 @@ as good as possible.
 
 ### What is Slim?
 
-Slim is a fast, lightweight templating engine with support for __Rails 3__. It has been heavily tested on all major ruby implementations. We use
+Slim is a fast, lightweight templating engine with support for __Rails 3 and 4__. It has been heavily tested on all major ruby implementations. We use
 continous integration (travis-ci).
 
 Slim's core syntax is guided by one thought: "What's the minimum required to make this work".
@@ -891,7 +891,7 @@ Template compilation framework:
 
 Framework support:
 
-* [Rails 3 generators (slim-rails)](https://github.com/slim-template/slim-rails)
+* [Rails generators (slim-rails)](https://github.com/slim-template/slim-rails)
 
 Syntax highlighting:
 
