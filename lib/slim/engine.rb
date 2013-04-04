@@ -12,7 +12,7 @@ module Slim
                    :generator => Temple::Generators::ArrayBuffer,
                    :default_tag => 'div'
 
-    use Slim::Parser, :file, :tabsize, :encoding, :shortcut, :default_tag, :implicit
+    use Slim::Parser, :file, :tabsize, :encoding, :shortcut, :default_tag, :implicit_text
     use Slim::Embedded, :enable_engines, :disable_engines, :pretty
     use Slim::Interpolation
     use Slim::Splat::Filter, :merge_attrs, :attr_quote, :sort_attrs, :default_tag, :hyphen_attrs
