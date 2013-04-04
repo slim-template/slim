@@ -37,6 +37,7 @@ matrix:
       env: "TASK=test:rails RAILS=4.0.0.beta1"
   allow_failures:
     - env: "TASK=test:rails RAILS=master"
+    - env: "TASK=test:rails RAILS=4.0.0.beta1"
     - env: "TASK=test:sinatra SINATRA=master"
     - env: "TASK=test:rails RAILS=3.0.20"
       rvm: 2.0.0
