@@ -104,4 +104,46 @@ div
       'This is the menu'
     end
   end
+
+  def test_render_with_begin_rescue
+    source = %q{
+- begin
+  p Begin
+- rescue
+  p Rescue
+p After
+}
+
+    assert_html '<p>Begin</p><p>After</p>', source
+  end
+
+  def test_render_with_begin_rescue_exception
+    source = %q{
+- begin
+  p Begin
+  - raise 'Boom'
+  p After Boom
+- rescue => ex
+  p = ex.message
+p After
+}
+
+    assert_html '<p>Begin</p><p>Boom</p><p>After</p>', source
+  end
+
+  def test_render_with_begin_rescue_ensure
+    source = %q{
+- begin
+  p Begin
+  - raise 'Boom'
+  p After Boom
+- rescue => ex
+  p = ex.message
+- ensure
+  p Ensure
+p After
+}
+
+    assert_html '<p>Begin</p><p>Boom</p><p>Ensure</p><p>After</p>', source
+  end
 end
