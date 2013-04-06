@@ -1,5 +1,6 @@
 1.3.7.pre.1
 
+  * Fixed issue #374, rescue and ensure blocks
   * Fixed issue #333
   * Deprecated :attr_delimiter (renamed to :merge_attrs)
   * Deprecated :attr_wrapper (renamed to :attr_quote)
