@@ -1,5 +1,6 @@
 2.0.0.pre.7
 
+  * Fix rescue and ensure blocks (#374)
   * IMPORTANT: Backward incompatible syntax change: '{...}' and '[...]' are not
     allowed as ruby attribute wrappers anymore. Use parentheses '(...)'
     if you want to wrap code with spaces. This allows to write arrays and hashes
