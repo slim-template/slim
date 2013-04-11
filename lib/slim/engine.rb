@@ -10,20 +10,24 @@ module Slim
                    :pretty => false,
                    :sort_attrs => true,
                    :generator => Temple::Generators::ArrayBuffer,
-                   :default_tag => 'div'
+                   :default_tag => 'div',
+                   :attr_quote => '"',
+                   :merge_attrs => {'class' => ' '},
+                   :escape_quoted_attrs => false
 
     # Removed in 2.0
     define_deprecated_options :remove_empty_attrs,
                               :chain,
-                              :escape_quoted_attrs => false,
-                              :attr_wrapper => '"',
-                              :attr_delimiter => {'class' => ' '}
+                              :escape_quoted_attrs,
+                              :attr_wrapper,
+                              :attr_delimiter
 
     def initialize(opts = {})
       super
-      @options = Temple::ImmutableHash.new(@options,
-                                           :merge_attrs => options[:attr_delimiter],
-                                           :attr_quote => options[:attr_wrapper])
+      deprecated = {}
+      deprecated[:merge_attrs] = options[:attr_delimiter] if options.include? :attr_delimiter
+      deprecated[:attr_quote] = options[:attr_wrapper] if options.include? :attr_wrapper
+      @options = Temple::ImmutableHash.new(deprecated, @options) unless deprecated.empty?
     end
 
     use Slim::Parser, :file, :tabsize, :encoding, :shortcut, :default_tag, :escape_quoted_attrs
