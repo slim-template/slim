@@ -10,7 +10,7 @@
       div id={person && person.id}
       div id=[person && person.id]
     New syntax in 2.0.0:
-      div id=(person && person.id}
+      div id=(person && person.id)
   * Deprecated :escape_quoted_attrs (done by default in 2.0)
   * Warn if quoted attributes might be double escaped in Slim 2.0.0
     Old syntax:
