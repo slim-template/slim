@@ -76,10 +76,10 @@ markdown:
   * one
   * two
 }
-    if !Gem::Specification::find_all_by_name('redcarpet').empty?
+    if ::Tilt['md'].name =~ /Redcarpet/
       # redcarpet
       assert_html "<h1>Header</h1>\n\n<p>Hello from Markdown!</p>\n\n<p>3</p>\n\n<ul>\n<li>one</li>\n<li>two</li>\n</ul>\n", source
-    elsif !Gem::Specification::find_all_by_name('rdiscount').empty?
+    elsif ::Tilt['md'].name =~ /RDiscount/
       # rdiscount
       assert_html "<h1>Header</h1>\n\n<p>Hello from Markdown!</p>\n\n<p>3</p>\n\n<ul>\n<li>one</li>\n<li>two</li>\n</ul>\n\n", source
     else
