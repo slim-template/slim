@@ -185,7 +185,7 @@ If your ruby code needs to use multiple lines, append a backslash `\` at the end
 The equal sign tells Slim it's a Ruby call that produces output to add to the buffer. If your ruby code needs to use multiple lines, append a backslash `\` at the end of the lines, for example:
 
     = javascript_include_tag \
-       "jquery", \
+       "jquery",
        "application"
 
 If your line ends with comma `,` (e.g because of a method call) you don't need the additional backslash before the linebreak.
