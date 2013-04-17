@@ -1,3 +1,7 @@
+master
+
+  * Generate missing `do` keywords for code blocks (see #342)
+
 2.0.0.pre.7
 
   * Fix rescue and ensure blocks (#374)
