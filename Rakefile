@@ -69,19 +69,6 @@ namespace 'test' do
 end
 
 begin
-  require 'rcov/rcovtask'
-  Rcov::RcovTask.new do |t|
-    t.libs << 'lib' << 'test/slim'
-    t.test_files = FileList['test/slim/test_*.rb']
-    t.verbose = true
-  end
-rescue LoadError
-  task :rcov do
-    abort 'RCov is not available. In order to run rcov, you must: gem install rcov'
-  end
-end
-
-begin
   require 'yard'
   YARD::Rake::YardocTask.new do |t|
     t.files = %w(lib/**/*.rb)
