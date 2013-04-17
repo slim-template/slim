@@ -917,5 +917,6 @@ Language ports/Similar languages:
 * [Hamlet.rb (Similar template language)](https://github.com/gregwebs/hamlet.rb)
 * [Plim (Python port of Slim)](https://github.com/2nd/plim)
 * [Skim (Slim for Javascript)](https://github.com/jfirebaugh/skim)
+* [Emblem.js (Javascript, similar to Slim)](https://github.com/machty/emblem.js)
 * [Haml (Older engine which inspired Slim)](https://github.com/haml/haml)
 * [Jade (Similar engine for javascript)](https://github.com/visionmedia/jade)
