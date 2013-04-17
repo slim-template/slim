@@ -23,11 +23,20 @@ A short list of the features...
 * Full Unicode support for tags and attributes on Ruby 1.9
 * Embedded engines like Markdown and Textile
 
+## Links
+
+* Source: <http://github.com/slim-template/slim>
+* Bugs:   <http://github.com/slim-template/slim/issues>
+* List:   <http://groups.google.com/group/slim-template>
+* API documentation:
+    * Latest Gem: <http://rubydoc.info/gems/slim/frames>
+    * GitHub master: <http://rubydoc.info/github/slim-template/slim/master/frames>
+
 ## Upgrade to version 2.0
 
 __NOTE:__ Slim 2.0 is not yet released, but you can try the preview versions.
 
-If you are already using Slim 1.3 or 1.2 and want to upgrade to the newest version 2.0, you should at first
+If you are already using Slim 1.x and want to upgrade to the newest version 2.0, you should at first
 upgrade to at least Slim 1.3.8 which will emit warnings for deprecated features. This way you can easily
 see if your application is already Slim 2.0 compliant!
 
