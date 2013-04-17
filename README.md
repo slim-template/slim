@@ -825,7 +825,7 @@ There are plugins for various text editors (including the most important ones - 
 ### Template Converters (HAML, ERB, ...)
 
 * [Haml2Slim converter](https://github.com/slim-template/haml2slim)
-* [HTML2Slim converter](https://github.com/slim-template/html2slim)
+* [ERB2Slim, HTML2Slim converter](https://github.com/slim-template/html2slim)
 
 ## Testing
 
@@ -908,7 +908,7 @@ Syntax highlighting:
 Template Converters (HAML, ERB, ...):
 
 * [Haml2Slim converter](https://github.com/slim-template/haml2slim)
-* [HTML2Slim converter](https://github.com/slim-template/html2slim)
+* [ERB2Slim, HTML2Slim converter](https://github.com/slim-template/html2slim)
 
 Language ports/Similar languages:
 
