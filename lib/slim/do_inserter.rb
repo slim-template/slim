@@ -1,4 +1,11 @@
 module Slim
+  # In Slim you don't need the do keyword sometimes. This
+  # filter adds the missing keyword.
+  #
+  #   - 10.times
+  #     | Hello
+  #
+  # @api private
   class DoInserter < Filter
     BLOCK_REGEX = /(\A(if|unless|else|elsif|when|begin|rescue|ensure)\b)|do\s*(\|[^\|]*\|\s*)?\Z/
 
