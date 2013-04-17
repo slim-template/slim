@@ -106,7 +106,7 @@ Here's a quick example to demonstrate what a Slim template looks like:
 
         - if items.any?
           table#items
-            - for item in items do
+            - for item in items
               tr
                 td.name = item.name
                 td.price = item.price
@@ -391,7 +391,7 @@ the code into parentheses `(...)`. You can also directly write hashes `{...}` an
 
     body
       table
-        - for user in users do
+        - for user in users
           td id="user_#{user.id}" class=user.role
             a href=user_action(user, :edit) Edit #{user.name}
             a href=(path_to_user user) = user.name
@@ -541,6 +541,33 @@ This is the same as
         = page_tagline
       div class="content"
         = show_content
+
+## Helpers and capturing
+
+If you use Slim you might want to extend your template with some helpers. Assume that you have the following helper
+
+~~~ruby
+module Helpers
+  def headline
+    "<h1>#{yield}</h1>"
+  end
+end
+~~~
+
+which can be used in Slim as follows
+
+   p
+     = headline do
+       ' Hello
+       = user.name
+
+The content in the `do` block is then captured automatically and passed to the helper via `yield`. As a syntactic
+sugar you can omit the `do` keyword and write only
+
+   p
+     = headline
+       ' Hello
+       = user.name
 
 ## Text interpolation
 

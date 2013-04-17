@@ -260,6 +260,74 @@ renders as
 Hello, World!
 ~~~
 
+You can also write loops like this
+
+~~~ slim
+- items = [{:name => 'table', :price => 10}, {:name => 'chair', :price => 5}]
+table#items
+  - for item in items do
+    tr
+      td.name = item[:name]
+      td.price = item[:price]
+~~~
+
+which renders as
+
+~~~ html
+<table id="items">
+  <tr>
+    <td class="name">
+      table
+    </td>
+    <td class="price">
+      10
+    </td>
+  </tr>
+  <tr>
+    <td class="name">
+      chair
+    </td>
+    <td class="price">
+      5
+    </td>
+  </tr>
+</table>
+~~~
+
+The `do` keyword can be omitted.
+
+~~~ slim
+- items = [{:name => 'table', :price => 10}, {:name => 'chair', :price => 5}]
+table#items
+  - for item in items
+    tr
+      td.name = item[:name]
+      td.price = item[:price]
+~~~
+
+which renders as
+
+~~~ html
+<table id="items">
+  <tr>
+    <td class="name">
+      table
+    </td>
+    <td class="price">
+      10
+    </td>
+  </tr>
+  <tr>
+    <td class="name">
+      chair
+    </td>
+    <td class="price">
+      5
+    </td>
+  </tr>
+</table>
+~~~
+
 ### Output `=`
 
 The equal sign `=` produces dynamic output.
