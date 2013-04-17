@@ -1,45 +1,63 @@
-master
+2.0.0.pre.8
 
-  * Generate missing `do` keywords for code blocks (see #342)
-
-2.0.0.pre.7
-
-  * Fix rescue and ensure blocks (#374)
   * IMPORTANT: Backward incompatible syntax change: '{...}' and '[...]' are not
     allowed as ruby attribute wrappers anymore. Use parentheses '(...)'
-    if you want to wrap code with spaces. This allows to write arrays and hashes
-    directly.
+    if you want to wrap code with spaces. This allows to write arrays and hashes directly.
     Old:
        div id={'obj' + name} data=({:a => 1, :b => 2}) class=['alpha', 'beta']
     New:
        div id=('obj' + name) data={:a => 1, :b => 2} class=['alpha', 'beta']
-  * IMPORTANT: Escape quoted attributes by default (Option :escape_quoted_attrs removed)
+  * Quoted attributes are escaped by default
     Old:
        a href='http://slim-lang.com/?a=1&amp;b=2'
     New:
        a href='http://slim-lang.com/?a=1&b=2'
        a href=='http://slim-lang.com/?a=1&amp;b=2'
-    You can always disable escaping completly by using :disable_escape if you
-    don't want to write '=='.
+    You can always disable escaping completly by using :disable_escape if you don't want to write '=='.
   * Added hyphenation support for data attributes (Option :hyphen_attrs)
     Example: div data={key1_key2: 2, key1: {key3: 3}} will render as '<div data-key1-key2="2" data-key1-key3="3"></div>'
-  * Add unicode support for tags and attributes (Issue #212)
   * Removed deprecated options:
-    - Slim::Engine :remove_empty_attrs, :chain
+    - :escape_quoted_attrs
+    - :remove_empty_attrs
+    - :chain
+    - :attr_wrapper (renamed to :attr_quote)
+    - :attr_delimiter (renamed to :merge_attrs)
     - Slim::LogicLess :wrapped dictionary
     - Slim::Parser :shortcut string option
-    Slim will raise an exception if you use them!
-  * Fixed issue #333
-  * Renamed options:
-    - :attr_wrapper -> :attr_quote
-    - :attr_delimiter -> :merge_attrs
-    Slim will raise an exception if you use the old unsupported name.
+  * Allow spaces around attributes, e.g 'a [ href = url ] text' and 'a href = url text'
+  * Add unicode support for tags and attributes (Issue #212)
+  * Generate missing `do` keywords for code blocks (see #342)
+
+1.3.8
+
+  * Disable some superflous deprecation warnings
+
+1.3.7
+
+  * Fixed issue #374, rescue and ensure blocks
+  * Fixed issue #333 (Throw syntax error if you write text after closed tag)
+  * Deprecated :attr_delimiter (renamed to :merge_attrs)
+  * Deprecated :attr_wrapper (renamed to :attr_quote)
+  * Warn if you use curly braces or brackets for ruby attributes since
+    curly braces and brackets will be interpreted as Hash/Array in Slim 2.0.0
+    Old syntax:
+      div id={person && person.id}
+      div id=[person && person.id]
+    New syntax in 2.0.0:
+      div id=(person && person.id)
+  * Deprecated :escape_quoted_attrs (done by default in 2.0)
+  * Warn if quoted attributes might be double escaped in Slim 2.0.0
+    Old syntax:
+       a href='http://slim-lang.com/?a=1&amp;b=2'
+       a href=='http://slim-lang.com/?a=1&amp;b=2'
+    New syntax in 2.0.0:
+       a href='http://slim-lang.com/?a=1&b=2'
+       a href=='http://slim-lang.com/?a=1&amp;b=2'
   * Improved pretty printing (Issue #202)
-  * Renamed Slim::EmbeddedEngine to Slim::Embedded
+  * Renamed Slim::EmbeddedEngine to Slim::Embedded (Old constant still available until 2.0)
   * Renamed Slim::ControlStructures to Slim::Controls
   * Tab expansion improved (tab + space is interpreted as equivalent to tab)
   * Support for wrapping javascript in HTML comments or CDATA (Issue #340)
-  * Allow spaces around attributes, e.g 'a [ href = url ] text' and 'a href = url text'
   * Asciidoc embedded engine added
 
 1.3.6
