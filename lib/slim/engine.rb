@@ -16,6 +16,7 @@ module Slim
     use Slim::Embedded, :enable_engines, :disable_engines, :pretty
     use Slim::Interpolation
     use Slim::Splat::Filter, :merge_attrs, :attr_quote, :sort_attrs, :default_tag, :hyphen_attrs
+    use Slim::DoInserter
     use Slim::EndInserter
     use Slim::Controls, :disable_capture
     html :AttributeSorter, :sort_attrs
