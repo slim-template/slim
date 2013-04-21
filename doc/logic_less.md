@@ -57,6 +57,35 @@ If all the above fails, Slim will try to resolve the title reference in the same
 
 As you might have guessed, the article reference goes through the same steps against the dictionary. Instance variables are not allowed in the view code, but Slim will find and use them. Essentially, you're just using dropping the @ prefix in your template. Parameterized method calls are not allowed.
 
+
+## Strings
+
+If `:to_s` is specified in the `:dictionary_access`, then the `this` keyword will return the `.to_s` value for the element under consideration.
+
+Given
+
+    {
+      :article => [
+        'Article 1',
+        'Article 2'
+      ]
+    }
+
+And
+
+    - article
+      tr: td = this
+
+This will yield
+
+    <tr>
+      <td>Article 1</td>
+    </>
+    <tr>
+      <td>Article 2</td>
+    </tr>
+
+
 ## Logic less in Rails
 
 Install:
@@ -106,6 +135,6 @@ and activate logic less mode per render call in your application
 <tbody>
 <tr><td>Boolean</td><td>:logic_less</td><td>true</td><td>Enable logic less mode (Enabled if 'slim/logic_less' is required)</td></tr>
 <tr><td>String</td><td>:dictionary</td><td>"self"</td><td>Dictionary where variables are looked up</td></tr>
-<tr><td>Symbol/Array&lt;Symbol&gt;</td><td>:dictionary_access</td><td>[:symbol, :string, :method, :instance_variable]</td><td>Dictionary access order (:symbol, :string, :method, :instance_variable)</td></tr>
+<tr><td>Symbol/Array&lt;Symbol&gt;</td><td>:dictionary_access</td><td>[:symbol, :string, :method, :instance_variable, :to_s]</td><td>Dictionary access order (:symbol, :string, :method, :instance_variable, :to_s)</td></tr>
 </tbody>
 </table>

@@ -4,7 +4,7 @@ module Slim
   # @api private
   class LogicLess < Filter
     # Default dictionary access order, change it with the option :dictionary_access
-    DEFAULT_ACCESS_ORDER = [:symbol, :string, :method, :instance_variable].freeze
+    DEFAULT_ACCESS_ORDER = [:symbol, :string, :method, :instance_variable, :to_s].freeze
 
     define_options :logic_less => true,
                    :dictionary => 'self',

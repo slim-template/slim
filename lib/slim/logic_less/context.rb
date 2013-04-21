@@ -67,6 +67,8 @@ module Slim
             when :instance_variable
               var_name = "@#{name}"
               return @dict.instance_variable_get(var_name).call(&block) if instance_variable?(var_name)
+            when :to_s
+              return @dict.to_s if name == :this
             end
           end
           @parent.lambda(name) if @parent
@@ -84,6 +86,8 @@ module Slim
             when :instance_variable
               var_name = "@#{name}"
               return @dict.instance_variable_get(var_name) if instance_variable?(var_name)
+            when :to_s
+              return @dict.to_s if name == :this
             end
           end
           @parent[name] if @parent
