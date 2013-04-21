@@ -74,7 +74,7 @@ Given
 And
 
     - article
-      tr: td = this
+      tr: td = self
 
 This will yield
 
