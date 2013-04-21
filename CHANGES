@@ -1,3 +1,7 @@
+master
+
+  * Logic-less: Add keyword `self` for string access
+
 2.0.0.pre.8
 
   * IMPORTANT: Backward incompatible syntax change: '{...}' and '[...]' are not
