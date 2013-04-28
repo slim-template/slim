@@ -9,10 +9,13 @@ module Slim
                    :sort_attrs => true,
                    :attr_quote => '"',
                    :merge_attrs => {'class' => ' '},
+                   :encoding => 'utf-8',
                    :generator => Temple::Generators::ArrayBuffer,
                    :default_tag => 'div'
 
-    use Slim::Parser, :file, :tabsize, :encoding, :shortcut, :default_tag
+    filter :Encoding, :encoding
+    filter :RemoveBOM
+    use Slim::Parser, :file, :tabsize, :shortcut, :default_tag
     use Slim::Embedded, :enable_engines, :disable_engines, :pretty
     use Slim::Interpolation
     use Slim::Splat::Filter, :merge_attrs, :attr_quote, :sort_attrs, :default_tag, :hyphen_attrs
