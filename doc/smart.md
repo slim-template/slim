@@ -6,7 +6,7 @@ Enable the smart text plugin with
 
     require 'slim/smart'
 
-This automatically enables the `:implicit` option as well,
+This automatically enables the `:implicit_text` option as well,
 so you can easily type text like this:
 
     p
