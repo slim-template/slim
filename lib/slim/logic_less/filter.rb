@@ -67,7 +67,14 @@ module Slim
     private
 
     def access(name)
-      name == 'yield' ? name : "#{@context}[#{name.to_sym.inspect}]"
+      case name
+      when 'yield'
+        'yield'
+      when 'self'
+        "#{@context}.to_s"
+      else
+        "#{@context}[#{name.to_sym.inspect}]"
+      end
     end
   end
 end

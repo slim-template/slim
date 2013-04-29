@@ -57,6 +57,35 @@ If all the above fails, Slim will try to resolve the title reference in the same
 
 As you might have guessed, the article reference goes through the same steps against the dictionary. Instance variables are not allowed in the view code, but Slim will find and use them. Essentially, you're just using dropping the @ prefix in your template. Parameterized method calls are not allowed.
 
+
+## Strings
+
+The `self` keyword will return the `.to_s` value for the element under consideration.
+
+Given
+
+    {
+      :article => [
+        'Article 1',
+        'Article 2'
+      ]
+    }
+
+And
+
+    - article
+      tr: td = self
+
+This will yield
+
+    <tr>
+      <td>Article 1</td>
+    </>
+    <tr>
+      <td>Article 2</td>
+    </tr>
+
+
 ## Logic less in Rails
 
 Install:

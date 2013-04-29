@@ -25,44 +25,20 @@ asciidoc:
   * one
   * two
 }
+    expected1 = "<div class=\"sect1\">\n  <h2 id=\"_header\">Header</h2>\n  <div class=\"sectionbody\">\n<div class=\"paragraph\">  \n  <p>Hello from AsciiDoc!</p>\n</div><div class=\"paragraph\">  \n  <p>3</p>\n</div><div class=\"ulist\">\n  \n  <ul>\n  \n    <li>\n      <p>one</p>\n      \n    </li>\n  \n    <li>\n      <p>two</p>\n      \n    </li>\n  \n  </ul>\n</div>\n\n  </div>\n</div>\n\n"
 
-    expected = <<-EOS
-<div class="sect1">
-<h2 id="_header">Header</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Hello from AsciiDoc!</p>
-</div>
-<div class="paragraph">
-<p>3</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>one</p>
-</li>
-<li>
-<p>two</p>
-</li>
-</ul>
-</div>
-</div>
-</div>
-    EOS
-    # render, then remove blank lines and unindent the remaining lines
-    output = render(source).gsub(/^ *(\n|(?=[^ ]))/, '')
+    expected2 = "<div class=\"sect1\">\n  <h2>Header</h2>\n  <div class=\"sectionbody\">\n<div class=\"paragraph\">  \n  <p>Hello from AsciiDoc!</p>\n</div><div class=\"paragraph\">  \n  <p>3</p>\n</div><div class=\"ulist\">\n  <ul>\n    <li>\n      <p>one</p>\n    </li>\n    <li>\n      <p>two</p>\n    </li>\n  </ul>\n</div>\n  </div>\n</div>\n"
 
-    assert_equal expected, output
+    output = render(source)
+    assert_equal expected1, output
 
     Slim::Embedded.with_options(:asciidoc => {:compact => true, :attributes => {'sectids!' => ''}}) do
-      # render, then unindent lines
-      output = render(source).gsub(/^ *(?=[^ ])/, '')
-      assert_equal expected.gsub('<h2 id="_header">', '<h2>'), output
+      output = render(source)
+      assert_equal expected2, output
     end
 
-    # render again, then remove blank lines and unindent the remaining lines
-    output = render(source).gsub(/^ *(\n|(?=[^ ]))/, '')
-    assert_equal expected, output
+    output = render(source)
+    assert_equal expected1, output
   end
 
   def test_render_with_markdown
@@ -76,13 +52,22 @@ markdown:
   * one
   * two
 }
-    assert_html "<h1 id=\"header\">Header</h1>\n<p>Hello from Markdown!</p>\n\n<p>3</p>\n\n<ul>\n  <li>one</li>\n  <li>two</li>\n</ul>\n", source
+    if ::Tilt['md'].name =~ /Redcarpet/
+      # redcarpet
+      assert_html "<h1>Header</h1>\n\n<p>Hello from Markdown!</p>\n\n<p>3</p>\n\n<ul>\n<li>one</li>\n<li>two</li>\n</ul>\n", source
+    elsif ::Tilt['md'].name =~ /RDiscount/
+      # rdiscount
+      assert_html "<h1>Header</h1>\n\n<p>Hello from Markdown!</p>\n\n<p>3</p>\n\n<ul>\n<li>one</li>\n<li>two</li>\n</ul>\n\n", source
+    else
+      # kramdown, :auto_ids by default
+      assert_html "<h1 id=\"header\">Header</h1>\n<p>Hello from Markdown!</p>\n\n<p>3</p>\n\n<ul>\n  <li>one</li>\n  <li>two</li>\n</ul>\n", source
 
-    Slim::Embedded.with_options(:markdown => {:auto_ids => false}) do
-      assert_html "<h1>Header</h1>\n<p>Hello from Markdown!</p>\n\n<p>3</p>\n\n<ul>\n  <li>one</li>\n  <li>two</li>\n</ul>\n", source
+      Slim::Embedded.with_options(:markdown => {:auto_ids => false}) do
+        assert_html "<h1>Header</h1>\n<p>Hello from Markdown!</p>\n\n<p>3</p>\n\n<ul>\n  <li>one</li>\n  <li>two</li>\n</ul>\n", source
+      end
+
+      assert_html "<h1 id=\"header\">Header</h1>\n<p>Hello from Markdown!</p>\n\n<p>3</p>\n\n<ul>\n  <li>one</li>\n  <li>two</li>\n</ul>\n", source
     end
-
-    assert_html "<h1 id=\"header\">Header</h1>\n<p>Hello from Markdown!</p>\n\n<p>3</p>\n\n<ul>\n  <li>one</li>\n  <li>two</li>\n</ul>\n", source
   end
 
   def test_render_with_creole

@@ -133,6 +133,23 @@ p
     assert_html '<p><div class="name">Joe</div><div class="name">Jack</div></p>', source, :scope => object, :dictionary_access => :instance_variable
   end
 
+  def test_to_s_access
+    source = %q{
+p
+ - people
+  .name = self
+}
+
+    hash = {
+      :people => [
+        'Joe',
+        'Jack'
+      ]
+    }
+
+    assert_html '<p><div class="name">Joe</div><div class="name">Jack</div></p>', source, :scope => hash, :dictionary_access => :symbol
+  end
+
   def test_string_hash
     source = %q{
 p

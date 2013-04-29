@@ -23,12 +23,21 @@ A short list of the features...
 * Full Unicode support for tags and attributes on Ruby 1.9
 * Embedded engines like Markdown and Textile
 
+## Links
+
+* Source: <http://github.com/slim-template/slim>
+* Bugs:   <http://github.com/slim-template/slim/issues>
+* List:   <http://groups.google.com/group/slim-template>
+* API documentation:
+    * Latest Gem: <http://rubydoc.info/gems/slim/frames>
+    * GitHub master: <http://rubydoc.info/github/slim-template/slim/master/frames>
+
 ## Upgrade to version 2.0
 
 __NOTE:__ Slim 2.0 is not yet released, but you can try the preview versions.
 
-If you are already using Slim 1.3 or 1.2 and want to upgrade to the newest version 2.0, you should at first
-upgrade to Slim 1.3.7 which will emit warnings for deprecated features. This way you can easily
+If you are already using Slim 1.x and want to upgrade to the newest version 2.0, you should at first
+upgrade to at least Slim 1.3.8 which will emit warnings for deprecated features. This way you can easily
 see if your application is already Slim 2.0 compliant!
 
 Slim 2.0 removes deprecated features from the 1.3 series and cleans up some minor
@@ -97,7 +106,7 @@ Here's a quick example to demonstrate what a Slim template looks like:
 
         - if items.any?
           table#items
-            - for item in items do
+            - for item in items
               tr
                 td.name = item.name
                 td.price = item.price
@@ -200,7 +209,7 @@ If your ruby code needs to use multiple lines, append a backslash `\` at the end
 The equal sign tells Slim it's a Ruby call that produces output to add to the buffer. If your ruby code needs to use multiple lines, append a backslash `\` at the end of the lines, for example:
 
     = javascript_include_tag \
-       "jquery", \
+       "jquery",
        "application"
 
 If your line ends with comma `,` (e.g because of a method call) you don't need the additional backslash before the linebreak.
@@ -412,7 +421,7 @@ the code into parentheses `(...)`. You can also directly write hashes `{...}` an
 
     body
       table
-        - for user in users do
+        - for user in users
           td id="user_#{user.id}" class=user.role
             a href=user_action(user, :edit) Edit #{user.name}
             a href=(path_to_user user) = user.name
@@ -562,6 +571,33 @@ This is the same as
         = page_tagline
       div class="content"
         = show_content
+
+## Helpers and capturing
+
+If you use Slim you might want to extend your template with some helpers. Assume that you have the following helper
+
+~~~ruby
+module Helpers
+  def headline
+    "<h1>#{yield}</h1>"
+  end
+end
+~~~
+
+which can be used in Slim as follows
+
+   p
+     = headline do
+       ' Hello
+       = user.name
+
+The content in the `do` block is then captured automatically and passed to the helper via `yield`. As a syntactic
+sugar you can omit the `do` keyword and write only
+
+   p
+     = headline
+       ' Hello
+       = user.name
 
 ## Text interpolation
 
@@ -821,7 +857,7 @@ There are plugins for various text editors (including the most important ones - 
 ### Template Converters (HAML, ERB, ...)
 
 * [Haml2Slim converter](https://github.com/slim-template/haml2slim)
-* [HTML2Slim converter](https://github.com/slim-template/html2slim)
+* [ERB2Slim, HTML2Slim converter](https://github.com/slim-template/html2slim)
 
 ## Testing
 
@@ -904,7 +940,7 @@ Syntax highlighting:
 Template Converters (HAML, ERB, ...):
 
 * [Haml2Slim converter](https://github.com/slim-template/haml2slim)
-* [HTML2Slim converter](https://github.com/slim-template/html2slim)
+* [ERB2Slim, HTML2Slim converter](https://github.com/slim-template/html2slim)
 
 Language ports/Similar languages:
 
@@ -913,5 +949,6 @@ Language ports/Similar languages:
 * [Hamlet.rb (Similar template language)](https://github.com/gregwebs/hamlet.rb)
 * [Plim (Python port of Slim)](https://github.com/2nd/plim)
 * [Skim (Slim for Javascript)](https://github.com/jfirebaugh/skim)
+* [Emblem.js (Javascript, similar to Slim)](https://github.com/machty/emblem.js)
 * [Haml (Older engine which inspired Slim)](https://github.com/haml/haml)
 * [Jade (Similar engine for javascript)](https://github.com/visionmedia/jade)

@@ -1,6 +1,7 @@
 require 'temple'
 require 'slim/parser'
 require 'slim/filter'
+require 'slim/do_inserter'
 require 'slim/end_inserter'
 require 'slim/embedded'
 require 'slim/interpolation'

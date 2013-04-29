@@ -10,7 +10,7 @@ module Slim
   #
   # @api private
   class EndInserter < Filter
-    ELSE_REGEX = /\A(else|elsif|when|rescue|ensure)\b/
+    BLOCK_REGEX = /\A(else|elsif|when|rescue|ensure)\b/
     END_REGEX = /\Aend\b/
 
     # Handle multi expression `[:multi, *exps]`
@@ -28,7 +28,7 @@ module Slim
 
           # Two control code in a row. If this one is *not*
           # an else block, we should close the previous one.
-          append_end(result) if prev_indent && exp[2] !~ ELSE_REGEX
+          append_end(result) if prev_indent && exp[2] !~ BLOCK_REGEX
 
           # Indent if the control code contains something.
           prev_indent = !empty_exp?(exp[3])

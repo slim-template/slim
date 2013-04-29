@@ -7,7 +7,6 @@ module Slim
                    :default_tag,
                    :implicit_text => false,
                    :tabsize => 4,
-                   :encoding => 'utf-8',
                    :shortcut => {
                      '#' => { :attr => 'id' },
                      '.' => { :attr => 'class' }
@@ -64,8 +63,6 @@ module Slim
     # @param [String] str Slim code
     # @return [Array] Temple expression representing the code]]
     def call(str)
-      str = remove_bom(set_encoding(str))
-
       result = [:multi]
       reset(str.split(/\r?\n/), [result])
 
@@ -76,7 +73,6 @@ module Slim
     end
 
     protected
-
 
     DELIMS = {
       '(' => ')',
@@ -92,34 +88,6 @@ module Slim
     ATTR_NAME = "\\A\\s*(#{WORD_RE}(?:#{WORD_RE}|:|-)*)"
     QUOTED_ATTR_RE = /#{ATTR_NAME}\s*=(=?)\s*("|')/
     CODE_ATTR_RE = /#{ATTR_NAME}\s*=(=?)\s*/
-
-    # Set string encoding if option is set
-    def set_encoding(s)
-      if options[:encoding] && s.respond_to?(:encoding)
-        old_enc = s.encoding
-        s = s.dup if s.frozen?
-        s.force_encoding(options[:encoding])
-        # Fall back to old encoding if new encoding is invalid
-        unless s.valid_encoding?
-          s.force_encoding(old_enc)
-          s.force_encoding(Encoding::BINARY) unless s.valid_encoding?
-        end
-      end
-      s
-    end
-
-    # Remove unicode byte order mark from string
-    def remove_bom(s)
-      if s.respond_to?(:encoding)
-        if s.encoding.name =~ /^UTF-(8|16|32)(BE|LE)?/
-          s.gsub(Regexp.new("\\A\uFEFF".encode(s.encoding.name)), '')
-        else
-          s
-        end
-      else
-        s.gsub(/\A\xEF\xBB\xBF/, '')
-      end
-    end
 
     def reset(lines = nil, stacks = nil)
       # Since you can indent however you like in Slim, we need to keep a list

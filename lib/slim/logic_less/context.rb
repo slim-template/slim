@@ -45,6 +45,10 @@ module Slim
         yield if !value || (value.respond_to?(:empty?) && value.empty?)
       end
 
+      def to_s
+        scope.to_s
+      end
+
       private
 
       class Scope
@@ -87,6 +91,10 @@ module Slim
             end
           end
           @parent[name] if @parent
+        end
+
+        def to_s
+          @dict.to_s
         end
 
         private
