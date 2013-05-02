@@ -11,12 +11,17 @@ module Slim
 
       def initialize(opts = {})
         super
-        @active = false
-        @prepend = false
-        @append = false
+        @active = @prepend = @append = false
         @prepend_re = /\A#{chars_re(options[:smart_text_begin_chars])}/
         @append_re = /#{chars_re(options[:smart_text_end_chars])}\Z/
-        @enabled = options[:smart_text]
+      end
+
+      def call(exp)
+        if options[:smart_text]
+          super
+        else
+          exp
+        end
       end
 
       def on_multi(*exps)
@@ -60,8 +65,8 @@ module Slim
       end
 
       def on_slim_text(type, content)
-        @active = @enabled && type != :verbatim
-        [ :slim, :text, type, compile(content) ]
+        @active = type != :verbatim
+        [:slim, :text, type, compile(content)]
       ensure
         @active = false
       end
@@ -74,16 +79,11 @@ module Slim
       end
 
       def on_slim_interpolate(string)
-        return [:slim, :interpolate, string] unless @active
-
-        if @prepend && prepend?(string)
-          string = "\n" + string
+        if @active
+          string = "\n" + string if @prepend && string !~ @prepend_re
+          string += "\n" if @append && string !~ @append_re
         end
-        if @append && append?(string)
-          string += "\n"
-        end
-
-        [ :slim, :interpolate, string ]
+        [:slim, :interpolate, string]
       end
 
       private
@@ -91,15 +91,6 @@ module Slim
       def chars_re(string)
         Regexp.union(*string.split(//))
       end
-
-      def prepend?(string)
-        string !~ @prepend_re
-      end
-
-      def append?(string)
-        string !~ @append_re
-      end
-
     end
   end
 end
