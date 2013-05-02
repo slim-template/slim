@@ -7,39 +7,33 @@ module Slim
     class Escaper < ::Slim::Filter
       define_options :smart_text_escaping => true
 
-      def initialize(opts = {})
-        super
-        @escape = false
-        @enabled = options[:smart_text_escaping]
+      def call(exp)
+        if options[:smart_text_escaping]
+          super
+        else
+          exp
+        end
       end
 
       def on_slim_text(type, content)
-        @escape = @enabled && type != :verbatim
-        [ :escape, @escape, [ :slim, :text, type, compile(content) ] ]
-      ensure
-        @escape = false
+        [:escape, type != :verbatim, [:slim, :text, type, compile(content)]]
       end
 
       def on_static(string)
-        return [:static, string] unless @escape
-
         # Prevent obvious &foo; and &#1234; and &#x00ff; entities from escaping.
-        # There is not much we can do about semicolon-less forms like &copy,
-        # but they always have the option of using the version with semicolon instead.
-
         block = [:multi]
-        begin
+        until string.empty?
           case string
           when /\A&(\w+|#x[0-9a-f]+|#\d+);/i
             # Entity.
-            block << [ :escape, false, [:static, $&] ]
+            block << [:escape, false, [:static, $&]]
             string = $'
           when /\A&?[^&]*/
             # Other text.
             block << [:static, $&]
             string = $'
           end
-        end until string.empty?
+        end
         block
       end
 
