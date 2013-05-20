@@ -8,6 +8,14 @@ elsif ENV['TEMPLE_PATH']
   gem 'temple', :path => ENV['TEMPLE_PATH']
 end
 
+if ENV['TILT']
+  if ENV['TILT'] == 'master'
+    gem 'tilt', :github => 'rtomayko/tilt'
+  else
+    gem 'tilt', "= #{ENV['TILT']}"
+  end
+end
+
 if ENV['RAILS']
   if ENV['RAILS'] == 'master'
     gem 'rails', :github => 'rails/rails'
@@ -35,7 +43,7 @@ end
 
 gem 'rake', '>= 0.8.7'
 gem 'sass', '>= 3.1.0'
-gem 'minitest'
+gem 'minitest', '>= 5.0.0'
 gem 'kramdown'
 gem 'creole'
 gem 'builder'
