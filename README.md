@@ -788,6 +788,7 @@ Usage: slimrb [options]
     -s, --stdin                      Read input from standard input instead of an input file
         --trace                      Show a full traceback on error
     -c, --compile                    Compile only but do not run
+    -e, --erb                        Convert to ERB
     -r, --rails                      Generate rails compatible code (Implies --compile)
     -t, --translator                 Enable translator plugin
     -l, --logic-less                 Enable logic less plugin
@@ -834,6 +835,7 @@ There are plugins for various text editors (including the most important ones - 
 
 ### Template Converters (HAML, ERB, ...)
 
+* Slim can be converted to ERB using `slimrb` or `Slim::ERBConverter' which are both included in the Slim gem
 * [Haml2Slim converter](https://github.com/slim-template/haml2slim)
 * [ERB2Slim, HTML2Slim converter](https://github.com/slim-template/html2slim)
 
