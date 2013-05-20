@@ -296,8 +296,19 @@ module Slim
         tag = @tag_shortcut[tag]
       end
 
+      modifiers = {}
+      parse_modifiers(modifiers)
       tag = [:html, :tag, tag, parse_attributes]
+      parse_modifiers(modifiers)
+
       @stacks.last << tag
+      @stacks.last << [:static, ' '] if modifiers[:space]
+
+      if modifiers[:closed]
+        @line.lstrip!
+        syntax_error!('Unexpected text after closed tag') unless @line.empty?
+        return
+      end
 
       case @line
       when /\A\s*:\s*/
@@ -316,12 +327,8 @@ module Slim
         @line = $'
         block = [:multi]
         tag << [:slim, :output, $1 != '=', parse_broken_line, block]
-        @stacks.last << [:static, ' '] unless $2.empty?
+        @stacks.last << [:static, ' '] unless modifiers[:space] || $2.empty?
         @stacks << block
-      when /\A\s*\/\s*/
-        # Closed tag. Do nothing
-        @line = $'
-        syntax_error!('Unexpected text after closed tag') unless @line.empty?
       when /\A\s*\Z/
         # Empty content
         content = [:multi]
@@ -330,6 +337,14 @@ module Slim
       when /\A( ?)(.*)\Z/
         # Text content
         tag << [:slim, :text, parse_text_block($2, @orig_line.size - @line.size + $1.size, true)]
+      end
+    end
+
+    def parse_modifiers(modifiers)
+      if @line =~ /\A\s*[\/']{1,2}/
+        @line = $'
+        modifiers[:closed] = true if $&.include?('/')
+        modifiers[:space] = true if $&.include?('\'')
       end
     end
 
