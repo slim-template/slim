@@ -683,6 +683,22 @@ renders as
 <a class="test" id="closed" /> <a class="test" id="closed" /> <a class="test" id="closed" /> <a class="test" id="closed" /> <a href="url1">Link1</a> <a href="url2">Link2</a> <a href="url3">Link3</a> <a href="url4">Link4</a> 
 ~~~
 
+If you combine ' and =' only one trailing whitespace is added.
+
+~~~ slim
+a' =' 'Text1'
+a =' 'Text2'
+a' = 'Text3'
+a'= 'Text4'
+a '= 'Text5'
+~~~
+
+renders as
+
+~~~ html
+<a>Text1</a> <a>Text2</a> <a>Text3</a> <a>Text4</a> <a>Text5</a> 
+~~~
+
 ### Inline tags
 
 Sometimes you may want to be a little more compact and inline the tags.
