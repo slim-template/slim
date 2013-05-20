@@ -34,8 +34,6 @@ A short list of the features...
 
 ## Upgrade to version 2.0
 
-__NOTE:__ Slim 2.0 is not yet released, but you can try the preview versions.
-
 If you are already using Slim 1.x and want to upgrade to the newest version 2.0, you should at first
 upgrade to at least Slim 1.3.8 which will emit warnings for deprecated features. This way you can easily
 see if your application is already Slim 2.0 compliant!
