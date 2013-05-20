@@ -308,8 +308,29 @@ module Slim
         tag = @tag_shortcut[tag]
       end
 
-      tag = [:html, :tag, tag, parse_attributes]
-      @stacks.last << tag
+      attributes = [:html, :attrs]
+      modifiers = {}
+
+      # Find any shortcut attributes
+      while @line =~ @attr_shortcut_re
+        # The class/id attribute is :static instead of :slim :interpolate,
+        # because we don't want text interpolation in .class or #id shortcut
+        attributes << [:html, :attr, @attr_shortcut[$1], [:static, $2]]
+        @line = $'
+      end
+
+      parse_modifiers(modifiers)
+      parse_attributes(attributes)
+      parse_modifiers(modifiers)
+
+      @stacks.last << (tag = [:html, :tag, tag, attributes])
+      @stacks.last << [:static, ' '] if modifiers[:space]
+
+      if modifiers[:closed]
+        @line.lstrip!
+        syntax_error!('Unexpected text after closed tag') unless @line.empty?
+        return
+      end
 
       case @line
       when /\A\s*:\s*/
@@ -328,12 +349,8 @@ module Slim
         @line = $'
         block = [:multi]
         tag << [:slim, :output, $1 != '=', parse_broken_line, block]
-        @stacks.last << [:static, ' '] unless $2.empty?
+        @stacks.last << [:static, ' '] unless modifiers[:space] || $2.empty?
         @stacks << block
-      when /\A\s*\/\s*/
-        # Closed tag. Do nothing
-        @line = $'
-        syntax_error!('Unexpected text after closed tag') unless @line.empty?
       when /\A\s*\Z/
         # Empty content
         content = [:multi]
@@ -345,17 +362,15 @@ module Slim
       end
     end
 
-    def parse_attributes
-      attributes = [:html, :attrs]
-
-      # Find any shortcut attributes
-      while @line =~ @attr_shortcut_re
-        # The class/id attribute is :static instead of :slim :interpolate,
-        # because we don't want text interpolation in .class or #id shortcut
-        attributes << [:html, :attr, @attr_shortcut[$1], [:static, $2]]
+    def parse_modifiers(modifiers)
+      if @line =~ /\A\s*[\/']{1,2}/
         @line = $'
+        modifiers[:closed] = true if $&.include?('/')
+        modifiers[:space] = true if $&.include?('\'')
       end
+    end
 
+    def parse_attributes(attributes)
       # Check to see if there is a delimiter right after the tag name
       delimiter = nil
       if @line =~ ATTR_DELIM_RE
@@ -411,8 +426,6 @@ module Slim
           end
         end
       end
-
-      attributes
     end
 
     def parse_ruby_code(outer_delimiter)

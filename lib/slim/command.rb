@@ -42,6 +42,10 @@ module Slim
         @options[:compile] = true
       end
 
+      opts.on('-e', '--erb', 'Convert to ERB') do
+        @options[:erb] = true
+      end
+
       opts.on('-r', '--rails', 'Generate rails compatible code (Implies --compile)') do
         Engine.set_default_options :disable_capture => true, :generator => Temple::Generators::RailsOutputBuffer
         @options[:compile] = true
@@ -74,7 +78,7 @@ module Slim
       end
 
       opts.on_tail('-v', '--version', 'Print version') do
-        puts "Slim #{Slim::VERSION}"
+        puts "Slim #{VERSION}"
         exit
       end
     end
@@ -98,11 +102,17 @@ module Slim
         @options[:output] = file ? File.open(file, 'w') : $stdout
       end
 
-      if @options[:compile]
-        @options[:output].puts(Slim::Engine.new(:file => @options[:file]).call(@options[:input].read))
-      else
-        @options[:output].puts(Slim::Template.new(@options[:file]) { @options[:input].read }.render)
-      end
+      result =
+        if @options[:erb]
+          require 'slim/erb_converter'
+          ERBConverter.new(:file => @options[:file]).call(@options[:input].read)
+        elsif @options[:compile]
+          Engine.new(:file => @options[:file]).call(@options[:input].read)
+        else
+          Template.new(@options[:file]) { @options[:input].read }.render
+        end
+
+      @options[:output].puts(result)
     end
   end
 end
