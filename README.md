@@ -556,18 +556,18 @@ end
 
 which can be used in Slim as follows
 
-   p
-     = headline do
-       ' Hello
-       = user.name
+    p
+      = headline do
+        ' Hello
+        = user.name
 
 The content in the `do` block is then captured automatically and passed to the helper via `yield`. As a syntactic
 sugar you can omit the `do` keyword and write only
 
-   p
-     = headline
-       ' Hello
-       = user.name
+    p
+      = headline
+        ' Hello
+        = user.name
 
 ## Text interpolation
 
