@@ -1,6 +1,7 @@
 master
 
   * Logic-less: Add keyword `self` for string access
+  * Added Slim::ERBConverter, require 'slim/erb_converter'
   * Add syntax for trailing whitespace after tag, e.g. input'
 
 2.0.0.pre.8
