@@ -1,15 +1,13 @@
 # encoding: utf-8
 
-require 'minitest/unit'
+require 'minitest/autorun'
 require 'slim'
 require 'slim/grammar'
-
-MiniTest::Unit.autorun
 
 Slim::Engine.after  Slim::Parser, Temple::Filters::Validator, :grammar => Slim::Grammar
 Slim::Engine.before :Pretty, Temple::Filters::Validator
 
-class TestSlim < MiniTest::Unit::TestCase
+class TestSlim < Minitest::Test
   def setup
     @env = Env.new
   end

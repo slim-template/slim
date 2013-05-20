@@ -43,7 +43,7 @@ end
 
 gem 'rake', '>= 0.8.7'
 gem 'sass', '>= 3.1.0'
-gem 'minitest'
+gem 'minitest', '>= 5.0.0'
 gem 'kramdown'
 gem 'creole'
 gem 'builder'
