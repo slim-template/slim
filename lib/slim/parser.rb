@@ -296,12 +296,22 @@ module Slim
         tag = @tag_shortcut[tag]
       end
 
+      attributes = [:html, :attrs]
       modifiers = {}
+
+      # Find any shortcut attributes
+      while @line =~ @attr_shortcut_re
+        # The class/id attribute is :static instead of :slim :interpolate,
+        # because we don't want text interpolation in .class or #id shortcut
+        attributes << [:html, :attr, @attr_shortcut[$1], [:static, $2]]
+        @line = $'
+      end
+
       parse_modifiers(modifiers)
-      tag = [:html, :tag, tag, parse_attributes]
+      parse_attributes(attributes)
       parse_modifiers(modifiers)
 
-      @stacks.last << tag
+      @stacks.last << (tag = [:html, :tag, tag, attributes])
       @stacks.last << [:static, ' '] if modifiers[:space]
 
       if modifiers[:closed]
@@ -348,17 +358,7 @@ module Slim
       end
     end
 
-    def parse_attributes
-      attributes = [:html, :attrs]
-
-      # Find any shortcut attributes
-      while @line =~ @attr_shortcut_re
-        # The class/id attribute is :static instead of :slim :interpolate,
-        # because we don't want text interpolation in .class or #id shortcut
-        attributes << [:html, :attr, @attr_shortcut[$1], [:static, $2]]
-        @line = $'
-      end
-
+    def parse_attributes(attributes)
       # Check to see if there is a delimiter right after the tag name
       delimiter = nil
       if @line =~ ATTR_DELIM_RE
@@ -414,8 +414,6 @@ module Slim
           end
         end
       end
-
-      attributes
     end
 
     def parse_ruby_code(outer_delimiter)
