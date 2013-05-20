@@ -1,6 +1,7 @@
 master
 
   * Logic-less: Add keyword `self` for string access
+  * Add syntax for trailing whitespace after tag, e.g. input'
 
 2.0.0.pre.8
 
