@@ -402,8 +402,6 @@ renders as
 <script>evil();</script>
 ~~~
 
-### Output with trailing white space `=>`
-
 The equal sign with apostrophe `=>` produces dynamic output with a trailing white space.
 
 ~~~ slim
@@ -426,6 +424,30 @@ renders as
 
 ~~~ html
 49 
+~~~
+
+The equal sign with modifier `=<` produces dynamic output with a leading white space.
+
+~~~ slim
+=< 7*7
+~~~
+
+renders as
+
+~~~ html
+ 49
+~~~
+
+The equal sign with modifiers `=<>` produces dynamic output with a leading and trailing white space.
+
+~~~ slim
+=<> 7*7
+~~~
+
+renders as
+
+~~~ html
+ 49 
 ~~~
 
 ### Output without HTML escaping `==`
@@ -459,8 +481,6 @@ renders as
 ~~~ html
 <script>evil();</script>
 ~~~
-
-### Output without HTML escaping and trailing ws `==>`
 
 The double equal sign with apostrophe `==>` produces dynamic output without HTML escaping and trailing white space.
 
