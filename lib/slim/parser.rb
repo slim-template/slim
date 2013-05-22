@@ -332,7 +332,7 @@ module Slim
         @stacks << content
         parse_tag($&)
         @stacks.delete_at(i)
-      when /\A\s*=(=?)(['<>]?)/
+      when /\A\s*=(=?)(['<>]*)/
         # Handle output code
         @line = $'
         trailing_ws2 = $2.include?('\'') || $2.include?('>')
