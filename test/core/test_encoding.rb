@@ -10,7 +10,7 @@ class TestSlimEncoding < TestSlim
   def test_binary
     source = "| \xFF\xFF"
     result = "\xFF\xFF"
-    assert_html result, source
+    assert_html result, source, :default_encoding => 'binary'
   end
 
   def test_bom
