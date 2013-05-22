@@ -204,10 +204,9 @@ module Slim
         block = [:multi]
         @stacks.last << [:slim, :control, parse_broken_line, block]
         @stacks << block
-      when /\A=/
+      when /\A=(=?)('?)/
         # Found an output block.
         # We expect the line to be broken or the next line to be indented.
-        @line =~ /\A=(=?)('?)/
         @line = $'
         block = [:multi]
         @stacks.last << [:slim, :output, $1.empty?, parse_broken_line, block]
