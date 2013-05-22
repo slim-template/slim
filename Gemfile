@@ -47,11 +47,7 @@ gem 'kramdown'
 gem 'creole'
 gem 'builder'
 gem 'asciidoctor'
-
-unless ENV['SINATRA'] || ENV['RAILS']
-  # Require newest minitest only for non-rails tests
-  gem 'minitest', '>= 5.0.0'
-end
+gem 'minitest', '~> 4.3.2'
 
 if ENV['TASK'] == 'bench'
   gem 'erubis'
