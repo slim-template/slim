@@ -402,9 +402,21 @@ renders as
 <script>evil();</script>
 ~~~
 
-### Output with trailing white space `='`
+### Output with trailing white space `=>`
 
-The equal sign with apostrophe `='` produces dynamic output with a trailing white space.
+The equal sign with apostrophe `=>` produces dynamic output with a trailing white space.
+
+~~~ slim
+=> 7*7
+~~~
+
+renders as
+
+~~~ html
+49 
+~~~
+
+The legacy syntax `='` is also supported.
 
 ~~~ slim
 =' 7*7
@@ -448,10 +460,21 @@ renders as
 <script>evil();</script>
 ~~~
 
-### Output without HTML escaping and trailing ws `=='`
+### Output without HTML escaping and trailing ws `==>`
 
+The double equal sign with apostrophe `==>` produces dynamic output without HTML escaping and trailing white space.
 
-The double equal sign with apostrophe `=='` produces dynamic output without HTML escaping and trailing white space.
+~~~ slim
+==> '<script>evil();</script>'
+~~~
+
+renders as
+
+~~~ html
+<script>evil();</script> 
+~~~
+
+The legacy syntax `=='` is also supported.
 
 ~~~ slim
 ==' '<script>evil();</script>'
@@ -658,15 +681,15 @@ renders as
 <img src="image.png" />
 ~~~
 
-### Trailing whitespace
+### Trailing and leading whitespace
 
-You can force a trailing whitespace behind a tag by adding '.
+You can force a trailing whitespace behind a tag by adding >.
 
 ~~~ slim
-a#closed' class="test" /
-a#closed' class="test"/
-a' href='url1' Link1
-a' href='url2' Link2
+a#closed> class="test" /
+a#closed> class="test"/
+a> href='url1' Link1
+a> href='url2' Link2
 ~~~
 
 renders as
@@ -675,19 +698,45 @@ renders as
 <a class="test" id="closed" /> <a class="test" id="closed" /> <a href="url1">Link1</a> <a href="url2">Link2</a> 
 ~~~
 
-If you combine ' and =' only one trailing whitespace is added.
+If you combine > and =' only one trailing whitespace is added.
 
 ~~~ slim
-a' =' 'Text1'
+a> =' 'Text1'
 a =' 'Text2'
-a' = 'Text3'
-a'= 'Text4'
+a> = 'Text3'
+a>= 'Text4'
 ~~~
 
 renders as
 
 ~~~ html
 <a>Text1</a> <a>Text2</a> <a>Text3</a> <a>Text4</a> 
+~~~
+
+You can force a leading whitespace behind a tag by adding >.
+
+~~~ slim
+a#closed< class="test" /
+a#closed< class="test"/
+a< href='url1' Link1
+a< href='url2' Link2
+~~~
+
+~~~ html
+ <a class="test" id="closed" /> <a class="test" id="closed" /> <a href="url1">Link1</a> <a href="url2">Link2</a>
+~~~
+
+You can also combine both.
+
+~~~ slim
+a#closed<> class="test" /
+a#closed>< class="test"/
+a<> href='url1' Link1
+a<> href='url2' Link2
+~~~
+
+~~~ html
+ <a class="test" id="closed" />  <a class="test" id="closed" />  <a href="url1">Link1</a>  <a href="url2">Link2</a> 
 ~~~
 
 ### Inline tags

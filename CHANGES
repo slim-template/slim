@@ -30,7 +30,8 @@
   * Logic-less: Add keyword `self` for string access
   * Added Slim::ERBConverter, require 'slim/erb_converter'
   * Added option '-e' for ERB conversion to slimrb
-  * Add syntax for trailing whitespace after tag, e.g. input'
+  * Add syntax for trailing or leading whitespace after tag, e.g. input>, input<
+  * Add syntax for trailing or leading whitespace after output, e.g. =>, =<
 
 1.3.8
 

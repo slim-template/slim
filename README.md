@@ -188,17 +188,25 @@ The equal sign tells Slim it's a Ruby call that produces output to add to the bu
 
 If your line ends with comma `,` (e.g because of a method call) you don't need the additional backslash before the linebreak.
 
-### Output with trailing white space `='`
+### Output with trailing white space `=>`
 
-Same as the single equal sign (`=`), except that it adds a trailing white space.
+Same as the single equal sign (`=`), except that it adds a trailing white space. The legacy syntax `='` is also supported.
+
+### Output with leading white space `=<`
+
+Same as the single equal sign (`=`), except that it adds a leading white space.
 
 ### Output without HTML escaping `==`
 
 Same as the single equal sign (`=`), but does not go through the `escape_html` method.
 
-### Output without HTML escaping and trailing ws `=='`
+### Output without HTML escaping and trailing ws `==>`
 
-Same as the double equal sign (`==`), except that it adds a trailing white space.
+Same as the double equal sign (`==`), except that it adds a trailing white space. The legacy syntax `=='` is also supported.
+
+### Output without HTML escaping and leading ws `==<`
+
+Same as the double equal sign (`==`), except that it adds a leading white space.
 
 ### Code comment `/`
 
@@ -296,12 +304,21 @@ You can close tags explicitly by appending a trailing `/`.
 Note, that this is usually not necessary since the standard html
 tags (img, br, ...) are closed automatically.
 
-### Trailing whitespace (`'`)
+### Trailing and leading whitespace (`<`, `>`)
 
-You can force Slim to add a trailing whitespace after a tag by adding a '.
+You can force Slim to add a trailing whitespace after a tag by adding a >.
 
-    a' href='url1' Link1
-    a' href='url2' Link2
+    a> href='url1' Link1
+    a> href='url2' Link2
+
+You can add a leading whitespace by adding <.
+
+    a< href='url1' Link1
+    a< href='url2' Link2
+
+You can also combine both.
+
+    a<> href='url1' Link1
 
 ### Inline tags
 

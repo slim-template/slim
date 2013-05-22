@@ -204,12 +204,13 @@ module Slim
         block = [:multi]
         @stacks.last << [:slim, :control, parse_broken_line, block]
         @stacks << block
-      when /\A=(=?)('?)/
+      when /\A=(=?)(['<>]*)/
         # Found an output block.
         # We expect the line to be broken or the next line to be indented.
         @line = $'
-        trailing_ws = $2 == "'"
+        trailing_ws = $2.include?('\'') || $2.include?('>')
         block = [:multi]
+        @stacks.last << [:static, ' '] if $2.include?('<')
         @stacks.last << [:slim, :output, $1.empty?, parse_broken_line, block]
         @stacks.last << [:static, ' '] if trailing_ws
         @stacks << block
@@ -305,13 +306,17 @@ module Slim
         @line = $'
       end
 
-      if trailing_ws = @line =~ /\A'/
+      if @line =~ /\A[<>]*/
         @line = $'
       end
+      trailing_ws = $&.include?('>')
+      leading_ws = $&.include?('<')
 
       parse_attributes(attributes)
 
       tag = [:html, :tag, tag, attributes]
+
+      @stacks.last << [:static, ' '] if leading_ws
       @stacks.last << tag
       @stacks.last << [:static, ' '] if trailing_ws
 
@@ -327,11 +332,12 @@ module Slim
         @stacks << content
         parse_tag($&)
         @stacks.delete_at(i)
-      when /\A\s*=(=?)('?)/
+      when /\A\s*=(=?)(['<>]?)/
         # Handle output code
         @line = $'
-        trailing_ws2 = $2 == "'"
+        trailing_ws2 = $2.include?('\'') || $2.include?('>')
         block = [:multi]
+        @stacks.last << [:static, ' '] if !leading_ws && $2.include?('<')
         tag << [:slim, :output, $1 != '=', parse_broken_line, block]
         @stacks.last << [:static, ' '] if !trailing_ws && trailing_ws2
         @stacks << block
