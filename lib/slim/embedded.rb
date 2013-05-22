@@ -128,8 +128,12 @@ module Slim
 
     # Basic tilt engine
     class TiltEngine < Engine
+      def self.mapping
+        @mapping ||= Tilt.respond_to?(:default_mapping) ? Tilt.default_mapping.dup : Tilt
+      end
+
       def on_slim_embedded(engine, body)
-        tilt_engine = Tilt[engine] || raise(Temple::FilterError, "Tilt engine #{engine} is not available.")
+        tilt_engine = self.class.mapping[engine] || raise(Temple::FilterError, "Tilt engine #{engine} is not available.")
         tilt_options = options[engine.to_sym] || {}
         [:multi, tilt_render(tilt_engine, tilt_options, collect_text(body)), collect_newlines(body)]
       end
