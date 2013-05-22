@@ -47,7 +47,7 @@ gem 'kramdown'
 gem 'creole'
 gem 'builder'
 gem 'asciidoctor'
-gem 'minitest', '~> 4.3.2'
+gem 'minitest', '~> 4.7.4'
 
 if ENV['TASK'] == 'bench'
   gem 'erubis'
