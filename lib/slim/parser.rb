@@ -84,7 +84,6 @@ module Slim
     ATTR_NAME = "\\A\\s*(#{WORD_RE}(?:#{WORD_RE}|:|-)*)"
     QUOTED_ATTR_RE = /#{ATTR_NAME}\s*=(=?)\s*("|')/
     CODE_ATTR_RE = /#{ATTR_NAME}\s*=(=?)\s*/
-    MODIFIER_RE = /\A\s*([\/']{1,2})/
 
     def reset(lines = nil, stacks = nil)
       # Since you can indent however you like in Slim, we need to keep a list
@@ -297,10 +296,8 @@ module Slim
         tag = @tag_shortcut[tag]
       end
 
-      attributes = [:html, :attrs]
-      modifiers = ''
-
       # Find any shortcut attributes
+      attributes = [:html, :attrs]
       while @line =~ @attr_shortcut_re
         # The class/id attribute is :static instead of :slim :interpolate,
         # because we don't want text interpolation in .class or #id shortcut
@@ -308,18 +305,15 @@ module Slim
         @line = $'
       end
 
-      parse_modifiers(modifiers)
-      parse_attributes(attributes)
-      parse_modifiers(modifiers)
-
-      @stacks.last << (tag = [:html, :tag, tag, attributes])
-      @stacks.last << [:static, ' '] if modifiers.include?('\'')
-
-      if modifiers.include?('/')
-        @line.lstrip!
-        syntax_error!('Unexpected text after closed tag') unless @line.empty?
-        return
+      if trailing_ws = @line =~ /\A'/
+        @line = $'
       end
+
+      parse_attributes(attributes)
+
+      tag = [:html, :tag, tag, attributes]
+      @stacks.last << tag
+      @stacks.last << [:static, ' '] if trailing_ws
 
       case @line
       when /\A\s*:\s*/
@@ -336,11 +330,15 @@ module Slim
       when /\A\s*=(=?)('?)/
         # Handle output code
         @line = $'
-        trailing_ws = $2 == "'"
+        trailing_ws2 = $2 == "'"
         block = [:multi]
         tag << [:slim, :output, $1 != '=', parse_broken_line, block]
-        @stacks.last << [:static, ' '] if !modifiers.include?('\'') && trailing_ws
+        @stacks.last << [:static, ' '] if !trailing_ws && trailing_ws2
         @stacks << block
+      when /\A\s*\/\s*/
+        # Closed tag. Do nothing
+        @line = $'
+        syntax_error!('Unexpected text after closed tag') unless @line.empty?
       when /\A\s*\Z/
         # Empty content
         content = [:multi]
@@ -349,13 +347,6 @@ module Slim
       when /\A( ?)(.*)\Z/
         # Text content
         tag << [:slim, :text, parse_text_block($2, @orig_line.size - @line.size + $1.size, true)]
-      end
-    end
-
-    def parse_modifiers(modifiers)
-      if @line =~ MODIFIER_RE
-        @line = $'
-        modifiers << $1
       end
     end
 

@@ -626,9 +626,7 @@ renders as
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 ~~~
 
-### Tag modifiers
-
-#### Closed tags
+### Closed tags
 
 You can close tags explicitly by appending a trailing `/`.
 
@@ -637,7 +635,6 @@ div id="not-closed"
 .closed/
 #closed/
 div id="closed"/
-div/ id="closed"
 ~~~
 
 renders as
@@ -645,7 +642,6 @@ renders as
 ~~~ html
 <div id="not-closed"></div>
 <div class="closed" />
-<div id="closed" />
 <div id="closed" />
 <div id="closed" />
 ~~~
@@ -662,25 +658,21 @@ renders as
 <img src="image.png" />
 ~~~
 
-#### Trailing whitespace
+### Trailing whitespace
 
 You can force a trailing whitespace behind a tag by adding '.
 
 ~~~ slim
-a#closed class="test" /'
-a#closed class="test" '/
-a#closed/' class="test"
-a#closed'/ class="test"
+a#closed' class="test" /
+a#closed' class="test"/
 a' href='url1' Link1
 a' href='url2' Link2
-a href='url3' ' Link3
-a href='url4' ' Link4
 ~~~
 
 renders as
 
 ~~~ html
-<a class="test" id="closed" /> <a class="test" id="closed" /> <a class="test" id="closed" /> <a class="test" id="closed" /> <a href="url1">Link1</a> <a href="url2">Link2</a> <a href="url3">Link3</a> <a href="url4">Link4</a> 
+<a class="test" id="closed" /> <a class="test" id="closed" /> <a href="url1">Link1</a> <a href="url2">Link2</a> 
 ~~~
 
 If you combine ' and =' only one trailing whitespace is added.
@@ -690,13 +682,12 @@ a' =' 'Text1'
 a =' 'Text2'
 a' = 'Text3'
 a'= 'Text4'
-a '= 'Text5'
 ~~~
 
 renders as
 
 ~~~ html
-<a>Text1</a> <a>Text2</a> <a>Text3</a> <a>Text4</a> <a>Text5</a> 
+<a>Text1</a> <a>Text2</a> <a>Text3</a> <a>Text4</a> 
 ~~~
 
 ### Inline tags

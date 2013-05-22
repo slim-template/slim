@@ -287,19 +287,16 @@ HTML 4 DOCTYPES
       <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
         "http://www.w3.org/TR/html4/loose.dtd">
 
-### Tag modifiers
-
-#### Closed tags (`/`)
+### Closed tags (trailing `/`)
 
 You can close tags explicitly by appending a trailing `/`.
 
-    img/ src="image.png"
     img src="image.png"/
 
 Note, that this is usually not necessary since the standard html
 tags (img, br, ...) are closed automatically.
 
-#### Trailing whitespace (`'`)
+### Trailing whitespace (`'`)
 
 You can force Slim to add a trailing whitespace after a tag by adding a '.
 
