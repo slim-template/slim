@@ -30,6 +30,9 @@ if ENV['RAILS']
   else
     gem 'sqlite3'
   end
+else
+  # Require newest minitest only for non-rails tests
+  gem 'minitest', '>= 5.0.0'
 end
 
 if ENV['SINATRA']
@@ -43,7 +46,6 @@ end
 
 gem 'rake', '>= 0.8.7'
 gem 'sass', '>= 3.1.0'
-gem 'minitest', '>= 5.0.0'
 gem 'kramdown'
 gem 'creole'
 gem 'builder'
