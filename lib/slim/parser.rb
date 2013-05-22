@@ -84,6 +84,7 @@ module Slim
     ATTR_NAME = "\\A\\s*(#{WORD_RE}(?:#{WORD_RE}|:|-)*)"
     QUOTED_ATTR_RE = /#{ATTR_NAME}\s*=(=?)\s*("|')/
     CODE_ATTR_RE = /#{ATTR_NAME}\s*=(=?)\s*/
+    MODIFIER_RE = /\A\s*([\/']{1,2})/
 
     def reset(lines = nil, stacks = nil)
       # Since you can indent however you like in Slim, we need to keep a list
@@ -208,9 +209,10 @@ module Slim
         # Found an output block.
         # We expect the line to be broken or the next line to be indented.
         @line = $'
+        trailing_ws = $2 == "'"
         block = [:multi]
         @stacks.last << [:slim, :output, $1.empty?, parse_broken_line, block]
-        @stacks.last << [:static, ' '] unless $2.empty?
+        @stacks.last << [:static, ' '] if trailing_ws
         @stacks << block
       when /\A(\w+):\s*\Z/
         # Embedded template detected. It is treated as block.
@@ -296,7 +298,7 @@ module Slim
       end
 
       attributes = [:html, :attrs]
-      modifiers = {}
+      modifiers = ''
 
       # Find any shortcut attributes
       while @line =~ @attr_shortcut_re
@@ -311,9 +313,9 @@ module Slim
       parse_modifiers(modifiers)
 
       @stacks.last << (tag = [:html, :tag, tag, attributes])
-      @stacks.last << [:static, ' '] if modifiers[:space]
+      @stacks.last << [:static, ' '] if modifiers.include?('\'')
 
-      if modifiers[:closed]
+      if modifiers.include?('/')
         @line.lstrip!
         syntax_error!('Unexpected text after closed tag') unless @line.empty?
         return
@@ -334,9 +336,10 @@ module Slim
       when /\A\s*=(=?)('?)/
         # Handle output code
         @line = $'
+        trailing_ws = $2 == "'"
         block = [:multi]
         tag << [:slim, :output, $1 != '=', parse_broken_line, block]
-        @stacks.last << [:static, ' '] unless modifiers[:space] || $2.empty?
+        @stacks.last << [:static, ' '] if !modifiers.include?('\'') && trailing_ws
         @stacks << block
       when /\A\s*\Z/
         # Empty content
@@ -350,10 +353,9 @@ module Slim
     end
 
     def parse_modifiers(modifiers)
-      if @line =~ /\A\s*[\/']{1,2}/
+      if @line =~ MODIFIER_RE
         @line = $'
-        modifiers[:closed] = true if $&.include?('/')
-        modifiers[:space] = true if $&.include?('\'')
+        modifiers << $1
       end
     end
 
