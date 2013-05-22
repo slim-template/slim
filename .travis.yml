@@ -10,7 +10,7 @@ rvm:
   - rbx-19mode
 env:
   - "TASK=test:core_and_plugins TILT=master"
-  - "TASK=test:core_and_plugins TILT=1.3.3"
+  - "TASK=test:core_and_plugins TILT=1.3.4"
   - "TASK=test:core_and_plugins TILT=1.4.1"
   - "TASK=test:rails RAILS=master"
   - "TASK=test:rails RAILS=3.0.20"
