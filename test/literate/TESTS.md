@@ -482,7 +482,7 @@ renders as
 <script>evil();</script>
 ~~~
 
-The double equal sign with apostrophe `==>` produces dynamic output without HTML escaping and trailing white space.
+The double equal sign with modifier `==>` produces dynamic output without HTML escaping and trailing white space.
 
 ~~~ slim
 ==> '<script>evil();</script>'
@@ -703,13 +703,13 @@ renders as
 
 ### Trailing and leading whitespace
 
-You can force a trailing whitespace behind a tag by adding `>`.
+You can force a trailing whitespace behind a tag by adding `>`. The legacy syntax with `'` is also supported.
 
 ~~~ slim
 a#closed> class="test" /
 a#closed> class="test"/
 a> href='url1' Link1
-a> href='url2' Link2
+a' href='url2' Link2
 ~~~
 
 renders as

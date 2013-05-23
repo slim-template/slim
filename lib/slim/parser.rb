@@ -306,9 +306,9 @@ module Slim
         @line = $'
       end
 
-      @line =~ /\A[<>]*/
+      @line =~ /\A[<>']*/
       @line = $'
-      trailing_ws = $&.include?('>')
+      trailing_ws = $&.include?('\'') || $&.include?('>')
       leading_ws = $&.include?('<')
 
       parse_attributes(attributes)
