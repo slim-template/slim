@@ -306,9 +306,8 @@ module Slim
         @line = $'
       end
 
-      if @line =~ /\A[<>]*/
-        @line = $'
-      end
+      @line =~ /\A[<>]*/
+      @line = $'
       trailing_ws = $&.include?('>')
       leading_ws = $&.include?('<')
 

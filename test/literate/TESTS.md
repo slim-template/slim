@@ -402,7 +402,7 @@ renders as
 <script>evil();</script>
 ~~~
 
-The equal sign with apostrophe `=>` produces dynamic output with a trailing white space.
+The equal sign with modifier `=>` produces dynamic output with a trailing white space.
 
 ~~~ slim
 => 7*7
@@ -703,7 +703,7 @@ renders as
 
 ### Trailing and leading whitespace
 
-You can force a trailing whitespace behind a tag by adding >.
+You can force a trailing whitespace behind a tag by adding `>`.
 
 ~~~ slim
 a#closed> class="test" /
@@ -733,7 +733,7 @@ renders as
 <a>Text1</a> <a>Text2</a> <a>Text3</a> <a>Text4</a> 
 ~~~
 
-You can force a leading whitespace behind a tag by adding >.
+You can force a leading whitespace behind a tag by adding `<`.
 
 ~~~ slim
 a#closed< class="test" /
