@@ -7,7 +7,7 @@ require 'slim/grammar'
 Slim::Engine.after  Slim::Parser, Temple::Filters::Validator, :grammar => Slim::Grammar
 Slim::Engine.before :Pretty, Temple::Filters::Validator
 
-class TestSlim < Minitest::Test
+class TestSlim < MiniTest::Unit::TestCase
   def setup
     @env = Env.new
   end
