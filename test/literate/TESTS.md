@@ -733,7 +733,7 @@ renders as
 <a>Text1</a> <a>Text2</a> <a>Text3</a> <a>Text4</a> 
 ~~~
 
-You can force a leading whitespace behind a tag by adding `<`.
+You can force a leading whitespace before a tag by adding `<`.
 
 ~~~ slim
 a#closed< class="test" /
