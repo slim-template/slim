@@ -32,17 +32,15 @@ matrix:
     - rvm: rbx-18mode
       env: "TASK=test:rails RAILS=master"
     - rvm: 1.8.7
-      env: "TASK=test:rails RAILS=4.0.0.beta1"
+      env: "TASK=test:rails RAILS=4.0.0.rc1"
     - rvm: jruby-18mode
-      env: "TASK=test:rails RAILS=4.0.0.beta1"
+      env: "TASK=test:rails RAILS=4.0.0.rc1"
     - rvm: rbx-18mode
-      env: "TASK=test:rails RAILS=4.0.0.beta1"
+      env: "TASK=test:rails RAILS=4.0.0.rc1"
   allow_failures:
     - env: "TASK=test:core_and_plugins TILT=master"
     - env: "TASK=test:rails RAILS=master"
-    - env: "TASK=test:rails RAILS=4.0.0.beta1"
     - env: "TASK=test:sinatra SINATRA=master"
-    - env: "TASK=test:rails RAILS=3.0.20"
       rvm: 2.0.0
     - rvm: ruby-head
 # Rails master needs newest bundler
