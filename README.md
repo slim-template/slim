@@ -100,7 +100,7 @@ Here's a quick example to demonstrate what a Slim template looks like:
         #content
           p This example shows you how a basic Slim file looks like.
 
-        = yield
+        == yield
 
         - if items.any?
           table#items
@@ -113,7 +113,7 @@ Here's a quick example to demonstrate what a Slim template looks like:
             Thank you!
 
         div id="footer"
-          = render 'footer'
+          == render 'footer'
           | Copyright &copy; #{@year} #{@author}
 
 Indentation matters, but the indentation depth can be chosen as you like. If you want to first indent 2 spaces, then 5 spaces, it's your choice. To nest markup you only need to indent by one space, the rest is gravy.
@@ -139,10 +139,10 @@ Each following line that is indented greater than the pipe is copied over.
 
     body
       p
-        |  This line is on the left margin.
-            This line will have one space in front of it.
-              This line will have two spaces in front of it.
-                And so on...
+        | This line is on the left margin.
+           This line will have one space in front of it.
+             This line will have two spaces in front of it.
+               And so on...
 
 You can also embed html in the text line
 
@@ -331,7 +331,7 @@ Either start on the same line as the tag
     body
       h1 id="headline" Welcome to my site.
 
-Or nest it.  You must use a pipe or a backtick to escape processing
+Or nest it.  You must use a pipe or an apostrophe to escape processing
 
     body
       h1 id="headline"
