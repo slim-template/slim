@@ -9,6 +9,14 @@ class TestSlim < ActionDispatch::IntegrationTest
     assert_html "<h1>Hello Slim!</h1>"
   end
 
+  test "xml view" do
+    get "slim/xml"
+    assert_response :success
+    assert_template "slim/xml"
+    assert_template "layouts/application"
+    assert_html "<h1>Hello Slim!</h1>"
+  end
+
   test "normal erb view" do
     get "slim/erb"
     assert_html "<h1>Hello Erb!</h1>"
@@ -58,14 +66,11 @@ class TestSlim < ActionDispatch::IntegrationTest
     assert_html "<p>Page content</p><h1><p>Hello Slim!</p></h1><h2><p>Hello Slim!</p></h2>", :heading => 'Heading set from a view'
   end
 
-  test "nested_attributes_form" do
-    post "parents", 'parent[name]' => "p1", 'parent[children_attributes][0][name]' => "c1"
-    get "parents/1/edit"
-
-    assert_match %r{action="/parents/1"}, @response.body
-    assert_match %r{<input id="parent_name" name="parent\[name\]"}, @response.body
-    assert_match %r{<input id="parent_children_attributes_0_name" name="parent\[children_attributes\]\[0\]\[name\]"}, @response.body
-    assert_match %r{<input id="parent_children_attributes_0_id" name="parent\[children_attributes\]\[0\]\[id\]"}, @response.body
+  test "form_for" do
+    get "entries/edit/1"
+    assert_match %r{action="/entries"}, @response.body
+    assert_match %r{<label><b>Name</b></label>}, @response.body
+    assert_match %r{<input id="entry_name" name="entry\[name\]"}, @response.body
   end
 
   protected

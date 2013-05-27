@@ -402,9 +402,19 @@ renders as
 <script>evil();</script>
 ~~~
 
-### Output with trailing white space `='`
+The equal sign with modifier `=>` produces dynamic output with a trailing white space.
 
-The equal sign with apostrophe `='` produces dynamic output with a trailing white space.
+~~~ slim
+=> 7*7
+~~~
+
+renders as
+
+~~~ html
+49 
+~~~
+
+The legacy syntax `='` is also supported.
 
 ~~~ slim
 =' 7*7
@@ -414,6 +424,30 @@ renders as
 
 ~~~ html
 49 
+~~~
+
+The equal sign with modifier `=<` produces dynamic output with a leading white space.
+
+~~~ slim
+=< 7*7
+~~~
+
+renders as
+
+~~~ html
+ 49
+~~~
+
+The equal sign with modifiers `=<>` produces dynamic output with a leading and trailing white space.
+
+~~~ slim
+=<> 7*7
+~~~
+
+renders as
+
+~~~ html
+ 49 
 ~~~
 
 ### Output without HTML escaping `==`
@@ -448,10 +482,19 @@ renders as
 <script>evil();</script>
 ~~~
 
-### Output without HTML escaping and trailing ws `=='`
+The double equal sign with modifier `==>` produces dynamic output without HTML escaping and trailing white space.
 
+~~~ slim
+==> '<script>evil();</script>'
+~~~
 
-The double equal sign with apostrophe `=='` produces dynamic output without HTML escaping and trailing white space.
+renders as
+
+~~~ html
+<script>evil();</script> 
+~~~
+
+The legacy syntax `=='` is also supported.
 
 ~~~ slim
 ==' '<script>evil();</script>'
@@ -626,9 +669,7 @@ renders as
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 ~~~
 
-### Tag modifiers
-
-#### Closed tags
+### Closed tags
 
 You can close tags explicitly by appending a trailing `/`.
 
@@ -637,7 +678,6 @@ div id="not-closed"
 .closed/
 #closed/
 div id="closed"/
-div/ id="closed"
 ~~~
 
 renders as
@@ -645,7 +685,6 @@ renders as
 ~~~ html
 <div id="not-closed"></div>
 <div class="closed" />
-<div id="closed" />
 <div id="closed" />
 <div id="closed" />
 ~~~
@@ -662,41 +701,62 @@ renders as
 <img src="image.png" />
 ~~~
 
-#### Trailing whitespace
+### Trailing and leading whitespace
 
-You can force a trailing whitespace behind a tag by adding '.
+You can force a trailing whitespace behind a tag by adding `>`. The legacy syntax with `'` is also supported.
 
 ~~~ slim
-a#closed class="test" /'
-a#closed class="test" '/
-a#closed/' class="test"
-a#closed'/ class="test"
-a' href='url1' Link1
+a#closed> class="test" /
+a#closed> class="test"/
+a> href='url1' Link1
 a' href='url2' Link2
-a href='url3' ' Link3
-a href='url4' ' Link4
 ~~~
 
 renders as
 
 ~~~ html
-<a class="test" id="closed" /> <a class="test" id="closed" /> <a class="test" id="closed" /> <a class="test" id="closed" /> <a href="url1">Link1</a> <a href="url2">Link2</a> <a href="url3">Link3</a> <a href="url4">Link4</a> 
+<a class="test" id="closed" /> <a class="test" id="closed" /> <a href="url1">Link1</a> <a href="url2">Link2</a> 
 ~~~
 
-If you combine ' and =' only one trailing whitespace is added.
+If you combine > and =' only one trailing whitespace is added.
 
 ~~~ slim
-a' =' 'Text1'
+a> =' 'Text1'
 a =' 'Text2'
-a' = 'Text3'
-a'= 'Text4'
-a '= 'Text5'
+a> = 'Text3'
+a>= 'Text4'
 ~~~
 
 renders as
 
 ~~~ html
-<a>Text1</a> <a>Text2</a> <a>Text3</a> <a>Text4</a> <a>Text5</a> 
+<a>Text1</a> <a>Text2</a> <a>Text3</a> <a>Text4</a> 
+~~~
+
+You can force a leading whitespace before a tag by adding `<`.
+
+~~~ slim
+a#closed< class="test" /
+a#closed< class="test"/
+a< href='url1' Link1
+a< href='url2' Link2
+~~~
+
+~~~ html
+ <a class="test" id="closed" /> <a class="test" id="closed" /> <a href="url1">Link1</a> <a href="url2">Link2</a>
+~~~
+
+You can also combine both.
+
+~~~ slim
+a#closed<> class="test" /
+a#closed>< class="test"/
+a<> href='url1' Link1
+a<> href='url2' Link2
+~~~
+
+~~~ html
+ <a class="test" id="closed" />  <a class="test" id="closed" />  <a href="url1">Link1</a>  <a href="url2">Link2</a> 
 ~~~
 
 ### Inline tags

@@ -34,8 +34,6 @@ A short list of the features...
 
 ## Upgrade to version 2.0
 
-__NOTE:__ Slim 2.0 is not yet released, but you can try the preview versions.
-
 If you are already using Slim 1.x and want to upgrade to the newest version 2.0, you should at first
 upgrade to at least Slim 1.3.8 which will emit warnings for deprecated features. This way you can easily
 see if your application is already Slim 2.0 compliant!
@@ -102,7 +100,7 @@ Here's a quick example to demonstrate what a Slim template looks like:
         #content
           p This example shows you how a basic Slim file looks like.
 
-        = yield
+        == yield
 
         - if items.any?
           table#items
@@ -115,7 +113,7 @@ Here's a quick example to demonstrate what a Slim template looks like:
              Thank you!
 
         div id="footer"
-          = render 'footer'
+          == render 'footer'
           | Copyright &copy; #{@year} #{@author}
 
 Indentation matters, but the indentation depth can be chosen as you like. If you want to first indent 2 spaces, then 5 spaces, it's your choice. To nest markup you only need to indent by one space, the rest is gravy.
@@ -212,19 +210,17 @@ The equal sign tells Slim it's a Ruby call that produces output to add to the bu
        "jquery",
        "application"
 
-If your line ends with comma `,` (e.g because of a method call) you don't need the additional backslash before the linebreak.
+If your line ends with comma `,` (e.g because of a method call) you don't need the additional backslash before the linebreak. For trailing or leading whitespace the modifiers `>` and `<` are supported.
 
-### Output with trailing white space `='`
-
-Same as the single equal sign (`=`), except that it adds a trailing white space.
+* Output with trailing white space `=>`. Same as the single equal sign (`=`), except that it adds a trailing white space. The legacy syntax `='` is also supported.
+* Output with leading white space `=<`. Same as the single equal sign (`=`), except that it adds a leading white space.
 
 ### Output without HTML escaping `==`
 
-Same as the single equal sign (`=`), but does not go through the `escape_html` method.
+Same as the single equal sign (`=`), but does not go through the `escape_html` method. For trailing or leading whitespace the modifiers `>` and `<` are supported.
 
-### Output without HTML escaping and trailing ws `=='`
-
-Same as the double equal sign (`==`), except that it adds a trailing white space.
+* Output without HTML escaping and trailing white space `==>`. Same as the double equal sign (`==`), except that it adds a trailing white space. The legacy syntax `=='` is also supported.
+* Output without HTML escaping and leading white space `==<`. Same as the double equal sign (`==`), except that it adds a leading white space.
 
 ### Code comment `/`
 
@@ -313,24 +309,30 @@ HTML 4 DOCTYPES
       <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
         "http://www.w3.org/TR/html4/loose.dtd">
 
-### Tag modifiers
-
-#### Closed tags (`/`)
+### Closed tags (trailing `/`)
 
 You can close tags explicitly by appending a trailing `/`.
 
-    img/ src="image.png"
     img src="image.png"/
 
 Note, that this is usually not necessary since the standard html
 tags (img, br, ...) are closed automatically.
 
-#### Trailing whitespace (`'`)
+### Trailing and leading whitespace (`<`, `>`)
 
-You can force Slim to add a trailing whitespace after a tag by adding a '.
+You can force Slim to add a trailing whitespace after a tag by adding a >.
 
-    a' href='url1' Link1
-    a' href='url2' Link2
+    a> href='url1' Link1
+    a> href='url2' Link2
+
+You can add a leading whitespace by adding <.
+
+    a< href='url1' Link1
+    a< href='url2' Link2
+
+You can also combine both.
+
+    a<> href='url1' Link1
 
 ### Inline tags
 
@@ -820,6 +822,7 @@ Usage: slimrb [options]
     -s, --stdin                      Read input from standard input instead of an input file
         --trace                      Show a full traceback on error
     -c, --compile                    Compile only but do not run
+    -e, --erb                        Convert to ERB
     -r, --rails                      Generate rails compatible code (Implies --compile)
     -t, --translator                 Enable translator plugin
     -l, --logic-less                 Enable logic less plugin
@@ -866,6 +869,7 @@ There are plugins for various text editors (including the most important ones - 
 
 ### Template Converters (HAML, ERB, ...)
 
+* Slim can be converted to ERB using `slimrb` or `Slim::ERBConverter' which are both included in the Slim gem
 * [Haml2Slim converter](https://github.com/slim-template/haml2slim)
 * [ERB2Slim, HTML2Slim converter](https://github.com/slim-template/html2slim)
 

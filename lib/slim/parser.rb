@@ -211,14 +211,15 @@ module Slim
         block = [:multi]
         @stacks.last << [:slim, :control, parse_broken_line, block]
         @stacks << block
-      when /\A=/
+      when /\A=(=?)(['<>]*)/
         # Found an output block.
         # We expect the line to be broken or the next line to be indented.
-        @line =~ /\A=(=?)('?)/
         @line = $'
+        trailing_ws = $2.include?('\'') || $2.include?('>')
         block = [:multi]
+        @stacks.last << [:static, ' '] if $2.include?('<')
         @stacks.last << [:slim, :output, $1.empty?, parse_broken_line, block]
-        @stacks.last << [:static, ' '] unless $2.empty?
+        @stacks.last << [:static, ' '] if trailing_ws
         @stacks << block
       when /\A([_a-z0-9]+):\s*\Z/
         # Embedded template detected. It is treated as block.
@@ -308,10 +309,8 @@ module Slim
         tag = @tag_shortcut[tag]
       end
 
-      attributes = [:html, :attrs]
-      modifiers = {}
-
       # Find any shortcut attributes
+      attributes = [:html, :attrs]
       while @line =~ @attr_shortcut_re
         # The class/id attribute is :static instead of :slim :interpolate,
         # because we don't want text interpolation in .class or #id shortcut
@@ -319,18 +318,18 @@ module Slim
         @line = $'
       end
 
-      parse_modifiers(modifiers)
+      @line =~ /\A[<>']*/
+      @line = $'
+      trailing_ws = $&.include?('\'') || $&.include?('>')
+      leading_ws = $&.include?('<')
+
       parse_attributes(attributes)
-      parse_modifiers(modifiers)
 
-      @stacks.last << (tag = [:html, :tag, tag, attributes])
-      @stacks.last << [:static, ' '] if modifiers[:space]
+      tag = [:html, :tag, tag, attributes]
 
-      if modifiers[:closed]
-        @line.lstrip!
-        syntax_error!('Unexpected text after closed tag') unless @line.empty?
-        return
-      end
+      @stacks.last << [:static, ' '] if leading_ws
+      @stacks.last << tag
+      @stacks.last << [:static, ' '] if trailing_ws
 
       case @line
       when /\A\s*:\s*/
@@ -344,13 +343,19 @@ module Slim
         @stacks << content
         parse_tag($&)
         @stacks.delete_at(i)
-      when /\A\s*=(=?)('?)/
+      when /\A\s*=(=?)(['<>]*)/
         # Handle output code
         @line = $'
+        trailing_ws2 = $2.include?('\'') || $2.include?('>')
         block = [:multi]
+        @stacks.last << [:static, ' '] if !leading_ws && $2.include?('<')
         tag << [:slim, :output, $1 != '=', parse_broken_line, block]
-        @stacks.last << [:static, ' '] unless modifiers[:space] || $2.empty?
+        @stacks.last << [:static, ' '] if !trailing_ws && trailing_ws2
         @stacks << block
+      when /\A\s*\/\s*/
+        # Closed tag. Do nothing
+        @line = $'
+        syntax_error!('Unexpected text after closed tag') unless @line.empty?
       when /\A\s*\Z/
         # Empty content
         content = [:multi]
@@ -359,14 +364,6 @@ module Slim
       when /\A( ?)(.*)\Z/
         # Text content
         tag << [:slim, :text, :inline, parse_text_block($2, @orig_line.size - @line.size + $1.size, true)]
-      end
-    end
-
-    def parse_modifiers(modifiers)
-      if @line =~ /\A\s*[\/']{1,2}/
-        @line = $'
-        modifiers[:closed] = true if $&.include?('/')
-        modifiers[:space] = true if $&.include?('\'')
       end
     end
 

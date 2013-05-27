@@ -2,6 +2,9 @@ class SlimController < ApplicationController
   def normal
   end
 
+  def xml
+  end
+
   def no_layout
     render :layout => false
   end

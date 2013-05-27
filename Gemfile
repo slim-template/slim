@@ -22,14 +22,6 @@ if ENV['RAILS']
   else
     gem 'rails', "= #{ENV['RAILS']}"
   end
-
-  if defined?(JRUBY_VERSION)
-    gem 'jdbc-sqlite3'
-    gem 'activerecord-jdbc-adapter'
-    gem 'activerecord-jdbcsqlite3-adapter'
-  else
-    gem 'sqlite3'
-  end
 end
 
 if ENV['SINATRA']
@@ -43,11 +35,11 @@ end
 
 gem 'rake', '>= 0.8.7'
 gem 'sass', '>= 3.1.0'
-gem 'minitest', '>= 5.0.0'
 gem 'kramdown'
 gem 'creole'
 gem 'builder'
 gem 'asciidoctor'
+gem 'minitest', '~> 4.7.4'
 
 if ENV['TASK'] == 'bench'
   gem 'erubis'
