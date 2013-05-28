@@ -11,7 +11,7 @@ module Slim
       [:multi, *attrs.map {|a| compile(a) }]
     end
 
-    # Handle attribute expression `[:html, :attr, escape, code]`
+    # Handle attribute expression `[:html, :attr, name, value]`
     #
     # @param [String] name Attribute name
     # @param [Array] value Value expression
