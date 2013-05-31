@@ -610,28 +610,25 @@ Examples:
 
 Supported engines:
 
-<table>
-<thead style="font-weight:bold"><tr><td>Filter</td><td>Required gems</td><td>Type</td><td>Description</td></tr></thead>
-<tbody>
-<tr><td>ruby:</td><td>none</td><td>Shortcut</td><td>Shortcut to embed ruby code</td></tr>
-<tr><td>javascript:</td><td>none</td><td>Shortcut</td><td>Shortcut to embed javascript code and wrap in script tag</td></tr>
-<tr><td>css:</td><td>none</td><td>Shortcut</td><td>Shortcut to embed css code and wrap in style tag</td></tr>
-<tr><td>sass:</td><td>sass</td><td>Compile time</td><td>Embed sass code and wrap in style tag</td></tr>
-<tr><td>scss:</td><td>sass</td><td>Compile time</td><td>Embedd scss code and wrap in style tag</td></tr>
-<tr><td>less:</td><td>less</td><td>Compile time</td><td>Embed less css code and wrap in style tag</td></tr>
-<tr><td>styl:</td><td>styl</td><td>Compile time</td><td>Embed stylus css code and wrap in style tag</td></tr>
-<tr><td>coffee:</td><td>coffee-script</td><td>Compile time</td><td>Compile coffee script code and wrap in script tag</td></tr>
-<tr><td>asciidoc:</td><td>asciidoctor</td><td>Compile time + Interpolation</td><td>Compile AsciiDoc code and interpolate #\{variables} in text</td></tr>
-<tr><td>markdown:</td><td>redcarpet/rdiscount/kramdown</td><td>Compile time + Interpolation</td><td>Compile markdown code and interpolate #\{variables} in text</td></tr>
-<tr><td>textile:</td><td>redcloth</td><td>Compile time + Interpolation</td><td>Compile textile code and interpolate #\{variables} in text</td></tr>
-<tr><td>creole:</td><td>creole</td><td>Compile time + Interpolation</td><td>Compile creole code and interpolate #\{variables} in text</td></tr>
-<tr><td>wiki:, mediawiki:</td><td>wikicloth</td><td>Compile time + Interpolation</td><td>Compile wiki code and interpolate #\{variables} in text</td></tr>
-<tr><td>rdoc:</td><td>rdoc</td><td>Compile time + Interpolation</td><td>Compile rdoc code and interpolate #\{variables} in text</td></tr>
-<tr><td>builder:</td><td>builder</td><td>Precompiled</td><td>Embed builder code</td></tr>
-<tr><td>nokogiri:</td><td>nokogiri</td><td>Precompiled</td><td>Embed nokogiri builder code</td></tr>
-<tr><td>erb:</td><td>none</td><td>Precompiled</td><td>Embed erb code</td></tr>
-</tbody>
-</table>
+| Filter | Required gems | Type | Description |
+| ------ | ------------- | ---- | ----------- |
+| ruby: | none | Shortcut | Shortcut to embed ruby code |
+| javascript: | none | Shortcut | Shortcut to embed javascript code and wrap in script tag |
+| css: | none | Shortcut | Shortcut to embed css code and wrap in style tag |
+| sass: | sass | Compile time | Embed sass code and wrap in style tag |
+| scss: | sass | Compile time | Embedd scss code and wrap in style tag |
+| less: | less | Compile time | Embed less css code and wrap in style tag |
+| styl: | styl | Compile time | Embed stylus css code and wrap in style tag |
+| coffee: | coffee-script | Compile time | Compile coffee script code and wrap in script tag |
+| asciidoc: | asciidoctor | Compile time + Interpolation | Compile AsciiDoc code and interpolate #\{variables} in text |
+| markdown: | redcarpet/rdiscount/kramdown | Compile time + Interpolation | Compile markdown code and interpolate #\{variables} in text |
+| textile: | redcloth | Compile time + Interpolation | Compile textile code and interpolate #\{variables} in text |
+| creole: | creole | Compile time + Interpolation | Compile creole code and interpolate #\{variables} in text |
+| wiki:, mediawiki: | wikicloth | Compile time + Interpolation | Compile wiki code and interpolate #\{variables} in text |
+| rdoc: | rdoc | Compile time + Interpolation | Compile rdoc code and interpolate #\{variables} in text |
+| builder: | builder | Precompiled | Embed builder code |
+| nokogiri: | nokogiri | Precompiled | Embed nokogiri builder code |
+| erb: | none | Precompiled | Embed erb code |
 
 The embedded engines can be configured in Slim by setting the options directly on the `Slim::Embedded` filter. Example:
 
@@ -686,32 +683,31 @@ You have to be aware that the compiled engine code and the options are cached pe
 The following options are exposed by the `Slim::Engine` and can be set with `Slim::Engine.set_default_options`.
 There are a lot of them but the good thing is, that Slim checks the configuration keys and reports an error if you try to use an invalid configuration key.
 
-<table>
-<thead style="font-weight:bold"><tr><td>Type</td><td>Name</td><td>Default</td><td>Purpose</td></tr></thead>
-<tbody>
-<tr><td>String</td><td>:file</td><td>nil</td><td>Name of parsed file, set automatically by Slim::Template</td></tr>
-<tr><td>Integer</td><td>:tabsize</td><td>4</td><td>Number of white spaces per tab (used by the parser)</td></tr>
-<tr><td>String</td><td>:encoding</td><td>"utf-8"</td><td>Set encoding of template</td></tr>
-<tr><td>String</td><td>:default_tag</td><td>"div"</td><td>Default tag to be used if tag name is omitted</td></tr>
-<tr><td>Hash</td><td>:shortcut</td><td>\{'.' => {:attr => 'class'}, '#' => {:attr => 'id'}}</td><td>Attribute shortcuts</td></tr>
-<tr><td>Array&lt;Symbol,String&gt;</td><td>:enable_engines</td><td>nil <i>(All enabled)</i></td><td>List of enabled embedded engines (whitelist)</td></tr>
-<tr><td>Array&lt;Symbol,String&gt;</td><td>:disable_engines</td><td>nil <i>(None disabled)</i></td><td>List of disabled embedded engines (blacklist)</td></tr>
-<tr><td>Boolean</td><td>:disable_capture</td><td>false (true in Rails)</td><td>Disable capturing in blocks (blocks write to the default buffer </td></tr>
-<tr><td>Boolean</td><td>:disable_escape</td><td>false</td><td>Disable automatic escaping of strings</td></tr>
-<tr><td>Boolean</td><td>:use_html_safe</td><td>false (true in Rails)</td><td>Use String#html_safe? from ActiveSupport (Works together with :disable_escape)</td></tr>
-<tr><td>Symbol</td><td>:format</td><td>:xhtml</td><td>HTML output format (Possible formats :xhtml, :html4, :html5, :html)</td></tr>
-<tr><td>String</td><td>:attr_quote</td><td>'"'</td><td>Character to wrap attributes in html (can be ' or ")</td></tr>
-<tr><td>Hash</td><td>:merge_attrs</td><td>\{'class' => ' '}</td><td>Joining character used if multiple html attributes are supplied (e.g. class="class1 class2")</td></tr>
-<tr><td>Array&lt;String&gt;</td><td>:hyphen_attrs</td><td>%w(data)</td><td>Attributes which will be hyphenated if a Hash is given (e.g. data={a:1,b:2} will render as data-a="1" data-b="2")</td></tr>
-<tr><td>Boolean</td><td>:sort_attrs</td><td>true</td><td>Sort attributes by name</td></tr>
-<tr><td>Symbol</td><td>:js_wrapper</td><td>nil</td><td>Wrap javascript by :comment, :cdata or :both. You can also :guess the wrapper based on :format.</td></tr>
-<tr><td>Boolean</td><td>:pretty</td><td>false</td><td>Pretty HTML indenting, only block level tags are indented <b>(This is slower!)</b></td></tr>
-<tr><td>String</td><td>:indent</td><td>'  '</td><td>Indentation string</td></tr>
-<tr><td>Boolean</td><td>:streaming</td><td>false (true in Rails > 3.1)</td><td>Enable output streaming</td></tr>
-<tr><td>Class</td><td>:generator</td><td>Temple::Generators::ArrayBuffer/RailsOutputBuffer</td><td>Temple code generator (default generator generates array buffer)</td></tr>
-<tr><td>String</td><td>:buffer</td><td>'_buf' ('@output_buffer' in Rails)</td><td>Variable used for buffer</td></tr>
-</tbody>
-</table>
+
+| Type | Name | Default | Purpose |
+| ---- | ---- | ------- | ------- |
+| String | :file | nil | Name of parsed file, set automatically by Slim::Template |
+| Integer | :tabsize | 4 | Number of white spaces per tab (used by the parser) |
+| String | :encoding | "utf-8" | Set encoding of template |
+| String | :default_tag | "div" | Default tag to be used if tag name is omitted |
+| Hash | :shortcut | \{'.' => {:attr => 'class'}, '#' => {:attr => 'id'}} | Attribute shortcuts |
+| Array&lt;Symbol,String&gt; | :enable_engines | nil <i>(All enabled)</i> | List of enabled embedded engines (whitelist) |
+| Array&lt;Symbol,String&gt; | :disable_engines | nil <i>(None disabled)</i> | List of disabled embedded engines (blacklist) |
+| Boolean | :disable_capture | false (true in Rails) | Disable capturing in blocks (blocks write to the default buffer  |
+| Boolean | :disable_escape | false | Disable automatic escaping of strings |
+| Boolean | :use_html_safe | false (true in Rails) | Use String#html_safe? from ActiveSupport (Works together with :disable_escape) |
+| Symbol | :format | :xhtml | HTML output format (Possible formats :xhtml, :html4, :html5, :html) |
+| String | :attr_quote | '"' | Character to wrap attributes in html (can be ' or ") |
+| Hash | :merge_attrs | \{'class' => ' '} | Joining character used if multiple html attributes are supplied (e.g. class="class1 class2") |
+| Array&lt;String&gt; | :hyphen_attrs | %w(data) | Attributes which will be hyphenated if a Hash is given (e.g. data={a:1,b:2} will render as data-a="1" data-b="2") |
+| Boolean | :sort_attrs | true | Sort attributes by name |
+| Symbol | :js_wrapper | nil | Wrap javascript by :comment, :cdata or :both. You can also :guess the wrapper based on :format. |
+| Boolean | :pretty | false | Pretty HTML indenting, only block level tags are indented <b>(This is slower!)</b> |
+| String | :indent | '  ' | Indentation string |
+| Boolean | :streaming | false (true in Rails > 3.1) | Enable output streaming |
+| Class | :generator | Temple::Generators::ArrayBuffer/ RailsOutputBuffer | Temple code generator (default generator generates array buffer) |
+| String | :buffer | '_buf' ('@output_buffer' in Rails) | Variable used for buffer |
+
 
 There are more options which are supported by the Temple filters but which are not exposed and are not officially supported. You
 have to take a look at the Slim and Temple code for that.
