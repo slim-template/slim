@@ -21,11 +21,8 @@ Enable the translator plugin with
 
 # Options
 
-<table>
-<thead style="font-weight:bold"><tr><td>Type</td><td>Name</td><td>Default</td><td>Purpose</td></tr></thead>
-<tbody>
-<tr><td>Boolean</td><td>:tr</td><td>true</td><td>Enable translator (Enabled if 'slim/translator' is required)</td></tr>
-<tr><td>Symbol</td><td>:tr_mode</td><td>:dynamic</td><td>When to translate: :static = at compile time, :dynamic = at runtime</td></tr>
-<tr><td>String</td><td>:tr_fn</td><td>Depending on installed translation library</td><td>Translation function, could be '_' for gettext</td></tr>
-</tbody>
-</table>
+| Type | Name | Default | Purpose |
+| ---- | ---- | ------- | ------- |
+| Boolean | :tr | true | Enable translator (Enabled if 'slim/translator' is required) |
+| Symbol | :tr_mode | :dynamic | When to translate: :static = at compile time, :dynamic = at runtime |
+| String | :tr_fn | Depending on installed translation library | Translation function, could be '_' for gettext |
