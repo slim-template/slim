@@ -11,9 +11,6 @@ so you can easily type text like this:
 
     p
       This is text.
-      So is this,
-        and it spans
-        several lines.
 
 As long as you leave the `:smart_text_escaping` enabled,
 any non-verbatim text is automatically escaped for you.

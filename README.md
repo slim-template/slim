@@ -109,8 +109,8 @@ Here's a quick example to demonstrate what a Slim template looks like:
                 td.name = item.name
                 td.price = item.price
         - else
-          p No items found Please add some inventory.
-             Thank you!
+          p No items found. Please add some inventory.
+            Thank you!
 
         div id="footer"
           == render 'footer'
@@ -134,7 +134,7 @@ Each following line that is indented greater than the pipe is copied over.
 
     <body><p>This is a test of the text block.</p></body>
 
-  The left margin is set at the indent of the pipe + one space.
+  If the text starts on the same line, the left margin is set at the indent of the pipe + one space.
   Any additional spaces will be copied over.
 
     body
@@ -167,12 +167,19 @@ If the text spans several lines, simply indent them.
 
 You can also mark the text explicitly with `>`,
 for example when it starts with lowercase letter or unusual character,
+or when the text spans several lines,
 or merely for aesthetic consistency,
 or if you want to use uppercase tag names
 and therefore need to keep the `:implicit_text` option disabled.
 
     p
       > 'This is text, too.'
+    p
+      >
+        This is text
+        which spans
+        several lines.
+      
 
 To get most out of these implicit and explicit text blocks,
 check the smart text plugin - otherwise such text will be treated as standard `|` verbatim text.
@@ -180,6 +187,7 @@ check the smart text plugin - otherwise such text will be treated as standard `|
 ### Inline html `<` (HTML style)
 
 You can write html tags directly in Slim which allows you to write your templates in a more html like style with closing tags or mix html and Slim style.
+The leading `<` works like an implicit `|`:
 
     <html>
       head
@@ -320,12 +328,12 @@ tags (img, br, ...) are closed automatically.
 
 ### Trailing and leading whitespace (`<`, `>`)
 
-You can force Slim to add a trailing whitespace after a tag by adding a >.
+You can force Slim to add a trailing whitespace after a tag by adding a `>`.
 
     a> href='url1' Link1
     a> href='url2' Link2
 
-You can add a leading whitespace by adding <.
+You can add a leading whitespace by adding `<`.
 
     a< href='url1' Link1
     a< href='url2' Link2
