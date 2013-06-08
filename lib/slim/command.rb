@@ -65,7 +65,7 @@ module Slim
 
       opts.on('-o', '--option [NAME=CODE]', String, 'Set slim option') do |str|
         parts = str.split('=', 2)
-        Engine.default_options[parts.first.to_sym] = eval(parts.last)
+        Engine.default_options[parts.first.gsub(/\A:/, '').to_sym] = eval(parts.last)
       end
 
       opts.on_tail('-h', '--help', 'Show this message') do
