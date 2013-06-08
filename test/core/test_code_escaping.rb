@@ -37,6 +37,27 @@ p = "<strong>Hello World\\n, meet \\"Slim\\"</strong>.".html_safe
     end
   end
 
+  # splat ignores html_safe? for now
+  def test_render_splat_with_html_safe_true
+    source = %q{
+p *{ title: '&'.html_safe }
+}
+
+    with_html_safe do
+      assert_html "<p title=\"&amp;\"></p>", source, :use_html_safe => true
+    end
+  end
+
+  def test_render_attribute_with_html_safe_true
+    source = %q{
+p title=('&'.html_safe)
+}
+
+    with_html_safe do
+      assert_html "<p title=\"&\"></p>", source, :use_html_safe => true
+    end
+  end
+
   def test_render_with_disable_escape_false
     source = %q{
 = "<p>Hello</p>"
