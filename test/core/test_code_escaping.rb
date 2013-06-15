@@ -40,7 +40,7 @@ p = "<strong>Hello World\\n, meet \\"Slim\\"</strong>.".html_safe
   # splat ignores html_safe? for now
   def test_render_splat_with_html_safe_true
     source = %q{
-p *{ title: '&'.html_safe }
+p *{ :title => '&'.html_safe }
 }
 
     with_html_safe do
