@@ -1126,6 +1126,42 @@ renders to
 <input name="user" type="text" /><input name="pw" type="password" /><input class="CLASS" id="ID" type="submit" />
 ~~~
 
+You can also set multiple attributes per shortcut.
+
+~~~ options
+:shortcut => {'.' => {:attr => %w(id class)} }
+~~~
+
+~~~ slim
+.test
+~~~
+
+renders to
+
+~~~ html
+<div class="test" id="test"></div>
+~~~
+
+Shortcuts can also have multiple characters.
+
+~~~ options
+:shortcut => {'.' => {:attr => 'class'}, '#' => {:attr => 'id'}, '.#' => {:attr => %w(class id)} }
+~~~
+
+~~~ slim
+.#test
+.test
+#test
+~~~
+
+renders to
+
+~~~ html
+<div class="test" id="test"></div>
+<div class="test"></div>
+<div id="test"></div>
+~~~
+
 #### ID shortcut and class shortcut `.`
 
 ## Text interpolation

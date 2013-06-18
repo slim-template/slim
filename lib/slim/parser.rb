@@ -53,7 +53,7 @@ module Slim
         end
       end
       keys = Regexp.union @attr_shortcut.keys.sort_by {|k| -k.size }
-      @attr_shortcut_re = /\A(#{keys})(#{WORD_RE}(?:#{WORD_RE}|-)*#{WORD_RE}|#{WORD_RE}+)/
+      @attr_shortcut_re = /\A(#{keys}+)(#{WORD_RE}(?:#{WORD_RE}|-)*#{WORD_RE}|#{WORD_RE}+)/
       keys = Regexp.union @tag_shortcut.keys.sort_by {|k| -k.size }
       @tag_re = /\A(?:#{keys}|\*(?=[^\s]+)|(#{WORD_RE}(?:#{WORD_RE}|:|-)*#{WORD_RE}|#{WORD_RE}+))/
     end
@@ -304,7 +304,8 @@ module Slim
       while @line =~ @attr_shortcut_re
         # The class/id attribute is :static instead of :slim :interpolate,
         # because we don't want text interpolation in .class or #id shortcut
-        @attr_shortcut[$1].each {|a| attributes << [:html, :attr, a, [:static, $2]] }
+        syntax_error!('Illegal shortcut') unless shortcut = @attr_shortcut[$1]
+        shortcut.each {|a| attributes << [:html, :attr, a, [:static, $2]] }
         @line = $'
       end
 
