@@ -164,5 +164,11 @@ img / text
 }
 
     assert_syntax_error "Illegal shortcut\n  (__TEMPLATE__), Line 2, Column 0\n    .#test\n    ^\n", source
+
+    source = %{
+div.#test
+}
+
+    assert_syntax_error "Illegal shortcut\n  (__TEMPLATE__), Line 2, Column 3\n    div.#test\n       ^\n", source
   end
 end
