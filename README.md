@@ -532,6 +532,18 @@ which renders to
 
     <div class="person" role="admin">Daniel</div>
 
+You can also set multiple attributes at once using one shortcut.
+
+    Slim::Engine.set_default_options :shortcut => {'@' => {:attr => %w(data-role role)}}
+
+We can use it in Slim code like this
+
+    .person@admin = person.name
+
+which renders to
+
+    <div class="person" role="admin" data-role="admin">Daniel</div>
+
 #### ID shortcut `#` and class shortcut `.`
 
 Similarly to Haml, you can specify the `id` and `class` attributes in the following shortcut form

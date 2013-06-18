@@ -1,3 +1,7 @@
+master
+
+  * Supprt multiple attributes per shortcut (See issue #415)
+
 2.0.0
 
   * IMPORTANT: Backward incompatible syntax change: '{...}' and '[...]' are not
