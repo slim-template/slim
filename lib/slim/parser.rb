@@ -48,12 +48,14 @@ module Slim
         raise ArgumentError, 'Shortcut requires :tag and/or :attr' unless (v[:attr] || v[:tag]) && (v.keys - [:attr, :tag]).empty?
         @tag_shortcut[k] = v[:tag] || options[:default_tag]
         if v.include?(:attr)
-          @attr_shortcut[k] = v[:attr]
+          @attr_shortcut[k] = [v[:attr]].flatten
           raise ArgumentError, 'You can only use special characters for attribute shortcuts' if k =~ /(#{WORD_RE}|-)/
         end
       end
-      @attr_shortcut_re = /\A(#{Regexp.union @attr_shortcut.keys})(#{WORD_RE}(?:#{WORD_RE}|-)*#{WORD_RE}|#{WORD_RE}+)/
-      @tag_re = /\A(?:#{Regexp.union @tag_shortcut.keys}|\*(?=[^\s]+)|(#{WORD_RE}(?:#{WORD_RE}|:|-)*#{WORD_RE}|#{WORD_RE}+))/
+      keys = Regexp.union @attr_shortcut.keys.sort_by {|k| -k.size }
+      @attr_shortcut_re = /\A(#{keys})(#{WORD_RE}(?:#{WORD_RE}|-)*#{WORD_RE}|#{WORD_RE}+)/
+      keys = Regexp.union @tag_shortcut.keys.sort_by {|k| -k.size }
+      @tag_re = /\A(?:#{keys}|\*(?=[^\s]+)|(#{WORD_RE}(?:#{WORD_RE}|:|-)*#{WORD_RE}|#{WORD_RE}+))/
     end
 
     # Compile string to Temple expression
@@ -302,7 +304,7 @@ module Slim
       while @line =~ @attr_shortcut_re
         # The class/id attribute is :static instead of :slim :interpolate,
         # because we don't want text interpolation in .class or #id shortcut
-        attributes << [:html, :attr, @attr_shortcut[$1], [:static, $2]]
+        @attr_shortcut[$1].each {|a| attributes << [:html, :attr, a, [:static, $2]] }
         @line = $'
       end
 
