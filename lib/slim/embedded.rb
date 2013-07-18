@@ -248,6 +248,7 @@ module Slim
     register :creole,     InterpolateTiltEngine
     register :wiki,       InterpolateTiltEngine
     register :mediawiki,  InterpolateTiltEngine
+    register :org,        InterpolateTiltEngine
 
     # These engines are executed at compile time
     register :coffee,     JavaScriptEngine, :engine => StaticTiltEngine
