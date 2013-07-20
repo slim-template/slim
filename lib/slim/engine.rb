@@ -9,7 +9,6 @@ module Slim
                    :sort_attrs => true,
                    :attr_quote => '"',
                    :merge_attrs => {'class' => ' '},
-                   :encoding => 'utf-8',
                    :generator => Temple::Generators::ArrayBuffer,
                    :default_tag => 'div'
 

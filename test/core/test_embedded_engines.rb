@@ -124,7 +124,7 @@ p Hi
 javascript:   
   $(function() { #{func} });
 }
-    assert_html %q|<script type="text/javascript">$(function() { alert('hello'); });</script>|, source
+    assert_html %q|<script type="text/javascript">$(function() { alert(&#39;hello&#39;); });</script>|, source
   end
 
   def test_render_with_javascript_with_explicit_html_comment

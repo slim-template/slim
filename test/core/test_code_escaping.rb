@@ -17,6 +17,14 @@ p = "<strong>Hello World\\n, meet \\"Slim\\"</strong>."
     assert_html "<p>&lt;strong&gt;Hello World\n, meet \&quot;Slim\&quot;&lt;/strong&gt;.</p>", source
   end
 
+  def test_render_without_html_safe2
+    source = %q{
+p = "<strong>Hello World\\n, meet 'Slim'</strong>."
+}
+
+    assert_html "<p>&lt;strong&gt;Hello World\n, meet &#39;Slim&#39;&lt;/strong&gt;.</p>", source
+  end
+
   def test_render_with_html_safe_false
     source = %q{
 p = "<strong>Hello World\\n, meet \\"Slim\\"</strong>."
