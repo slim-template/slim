@@ -942,3 +942,4 @@ Language ports/Similar languages:
 * [Emblem.js (Javascript, similar to Slim)](https://github.com/machty/emblem.js)
 * [Haml (Older engine which inspired Slim)](https://github.com/haml/haml)
 * [Jade (Similar engine for javascript)](https://github.com/visionmedia/jade)
+* [Sweet (Similar engine which also allows to write classes and functions)](https://github.com/joaomdmoura/sweet)
