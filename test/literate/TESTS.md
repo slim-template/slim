@@ -861,7 +861,7 @@ dl(
 renders as
 
 ~~~ html
-<dl itemprop="address" itemscope="itemscope" itemtype="http://schema.org/PostalAddress"></dl>
+<dl itemprop="address" itemscope="" itemtype="http://schema.org/PostalAddress"></dl>
 ~~~
 
 You may use spaces around the wrappers and assignments:
@@ -993,7 +993,7 @@ input(type="text" disabled)
 renders as
 
 ~~~ html
-<input disabled="" type="text" /><input disabled="disabled" type="text" /><input disabled="disabled" type="text" /><input disabled="disabled" type="text" /><input disabled="disabled" type="text" />
+<input disabled="" type="text" /><input disabled="" type="text" /><input disabled="disabled" type="text" /><input disabled="" type="text" /><input disabled="" type="text" />
 ~~~
 
 ~~~ slim

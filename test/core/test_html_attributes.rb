@@ -69,7 +69,7 @@ option selected=true Text
 option selected=cond Text2
 }
 
-    assert_html '<option selected="selected">Text</option><option selected="selected">Text2</option>', source
+    assert_html '<option selected="">Text</option><option selected="">Text2</option>', source
   end
 
   def test_boolean_attribute_nil
@@ -96,7 +96,7 @@ option(class="clazz" selected) Text
 option(selected class="clazz") Text
 }
 
-    assert_html '<option class="clazz" selected="selected">Text</option><option class="clazz" selected="selected">Text</option>', source
+    assert_html '<option class="clazz" selected="">Text</option><option class="clazz" selected="">Text</option>', source
   end
 
   def test_array_attribute_merging
@@ -202,7 +202,7 @@ h1 *hash class=[] This is my title
 *{:disabled => true, :empty1 => false, :nonempty => '', :empty2 => nil} This is my title
 }
 
-    assert_html '<div disabled="disabled" nonempty="">This is my title</div>', source
+    assert_html '<div disabled="" nonempty="">This is my title</div>', source
   end
 
   def test_splat_merging_with_arrays

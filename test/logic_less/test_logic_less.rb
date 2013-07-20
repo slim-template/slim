@@ -242,7 +242,7 @@ p
    input checked=selected = name
 }
 
-    assert_html '<p><input checked="checked">Joe</input><input>Jack</input></p>', source, :scope => Scope.new, :dictionary => '@hash'
+    assert_html '<p><input checked="">Joe</input><input>Jack</input></p>', source, :scope => Scope.new, :dictionary => '@hash'
   end
 
   def test_sections
