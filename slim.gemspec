@@ -12,6 +12,7 @@ Gem::Specification.new do |s|
   s.description       = 'Slim is a template language whose goal is reduce the syntax to the essential parts without becoming cryptic.'
   s.homepage          = 'http://slim-lang.com/'
   s.rubyforge_project = s.name
+  s.license           = 'MIT'
 
   s.files         = `git ls-files`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
