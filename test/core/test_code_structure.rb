@@ -74,13 +74,32 @@ p = hello_world if true
 p
   - case 42
   - when 41
-    | 1
+    | 41
+  - when 42
+    | 42
+  |  is the answer
+p
+  - case 41
+  - when 41
+    | 41
+  - when 42
+    | 42
+  |  is the answer
+p
+  - case 42 when 41
+    | 41
+  - when 42
+    | 42
+  |  is the answer
+p
+  - case 41 when 41
+    | 41
   - when 42
     | 42
   |  is the answer
 }
 
-    assert_html '<p>42 is the answer</p>', source
+    assert_html '<p>42 is the answer</p><p>41 is the answer</p><p>42 is the answer</p><p>41 is the answer</p>', source
   end
 
   def test_render_with_slim_comments

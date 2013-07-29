@@ -3,6 +3,7 @@ master
   * Support multiple attributes per shortcut (See issue #415)
   * Add support for org-ruby embedded engine
   * Render true boolean attributes with empty value
+  * Support case-when statements
 
 2.0.0
 
