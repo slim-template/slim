@@ -59,11 +59,11 @@ class TestSlim < MiniTest::Unit::TestCase
     if defined?(RUBY_ENGINE) && RUBY_ENGINE == 'rbx'
       # HACK: Rubinius stack trace sometimes has one entry more
       if ex.backtrace[0] !~ /^#{Regexp.escape from}:/
-        ex.backtrace[1] =~ /^(.*?:\d+):/
+        ex.backtrace[1] =~ /^([^\s]+:\d+):/
         assert_equal from, $1
       end
     else
-      ex.backtrace[0] =~ /^(.*?:\d+):/
+      ex.backtrace[0] =~ /^([^\s]+:\d+):/
       assert_equal from, $1
     end
   end
@@ -72,7 +72,7 @@ class TestSlim < MiniTest::Unit::TestCase
     render(source, options)
     raise 'Ruby syntax error expected'
   rescue SyntaxError => ex
-    ex.message =~ /^(.*?:\d+):/
+    ex.message =~ /^([^\s]+:\d+):/
     assert_equal from, $1
   end
 
