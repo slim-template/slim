@@ -1,4 +1,4 @@
-master
+2.0.1
 
   * Support multiple attributes per shortcut (See issue #415)
   * Add support for org-ruby embedded engine
