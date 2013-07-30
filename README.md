@@ -876,6 +876,7 @@ Travis-CI is used for continuous integration testing: <http://travis-ci.org/#!/s
 
 Slim is working well on all major Ruby implementations:
 
+* Ruby 2.0.0
 * Ruby 1.8.7
 * Ruby 1.9.2
 * Ruby 1.9.3
@@ -891,7 +892,7 @@ If you'd like to help improve Slim, clone the project with Git by running:
 
 Work your magic and then submit a pull request. We love pull requests!
 
-Please remember to test against Ruby versions 1.9.2 and 1.8.7.
+Please remember to test against Ruby versions 2.0.0, 1.9.3 and 1.8.7.
 
 If you find the documentation lacking, help us out and update this README.md. If you don't have the time to work on Slim, but found something we should know about, please submit an issue.
 
