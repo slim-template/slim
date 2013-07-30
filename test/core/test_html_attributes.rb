@@ -116,6 +116,15 @@ option(selected class="clazz") Text
     assert_html '<div class="alpha" data-a="alpha" data-b="beta" data-c-d="gamma" data-c-e="epsilon"></div>', source
   end
 
+  def test_splat_without_content
+    source = %q{
+*hash
+p*hash
+}
+
+    assert_html '<div a="The letter a" b="The letter b"></div><p a="The letter a" b="The letter b"></p>', source
+  end
+
   def test_shortcut_splat
     source = %q{
 *hash This is my title
