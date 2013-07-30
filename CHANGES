@@ -5,6 +5,7 @@ master
   * Render true boolean attributes with empty value
   * Support case-when statements
   * Fix issue #431
+  * Also escape ' to &#39;
 
 2.0.0
 
