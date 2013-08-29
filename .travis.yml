@@ -46,6 +46,5 @@ matrix:
     - rvm: ruby-head
 # Rails master needs newest bundler
 before_install:
-  - ./kill-travis.sh
   - gem update bundler
 script: "bundle exec rake $TASK"
