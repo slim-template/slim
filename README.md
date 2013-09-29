@@ -32,19 +32,6 @@ A short list of the features...
     * Latest Gem: <http://rubydoc.info/gems/slim/frames>
     * GitHub master: <http://rubydoc.info/github/slim-template/slim/master/frames>
 
-## Upgrade to version 2.0
-
-If you are already using Slim 1.x and want to upgrade to the newest version 2.0, you should at first
-upgrade to at least Slim 1.3.8 which will emit warnings for deprecated features. This way you can easily
-see if your application is already Slim 2.0 compliant!
-
-Slim 2.0 removes deprecated features from the 1.3 series and cleans up some minor
-inconsistencies in the syntax (Attribute wrapper and quoted attribute escaping).
-Of course it also includes new features and bugfixes. See the CHANGES for details.
-
-In general don't be afraid of upgrading! We try to be backward compatible and follow [semantic versions](http://semver.org/)
-as good as possible.
-
 ## Introduction
 
 ### What is Slim?
