@@ -9,6 +9,11 @@ module Slim
                    :shortcut => {
                      '#' => { :attr => 'id' },
                      '.' => { :attr => 'class' }
+                   },
+                   :attr_delims => {
+                     '(' => ')',
+                     '[' => ']',
+                     '{' => '}',
                    }
 
     class SyntaxError < StandardError
@@ -56,6 +61,8 @@ module Slim
       @attr_shortcut_re = /\A(#{keys}+)(#{WORD_RE}(?:#{WORD_RE}|-)*#{WORD_RE}|#{WORD_RE}+)/
       keys = Regexp.union @tag_shortcut.keys.sort_by {|k| -k.size }
       @tag_re = /\A(?:#{keys}|\*(?=[^\s]+)|(#{WORD_RE}(?:#{WORD_RE}|:|-)*#{WORD_RE}|#{WORD_RE}+))/
+      @delim_re = /\A[#{Regexp.escape options[:attr_delims].keys.join}]/
+      @attr_delim_re = /\A\s*([#{Regexp.escape options[:attr_delims].keys.join}])/
     end
 
     # Compile string to Temple expression
@@ -74,15 +81,7 @@ module Slim
 
     protected
 
-    DELIMS = {
-      '(' => ')',
-      '[' => ']',
-      '{' => '}',
-    }.freeze
-
     WORD_RE = ''.respond_to?(:encoding) ? '\p{Word}' : '\w'
-    DELIM_RE = /\A[#{Regexp.escape DELIMS.keys.join}]/
-    ATTR_DELIM_RE = /\A\s*([#{Regexp.escape DELIMS.keys.join}])/
     ATTR_NAME = "\\A\\s*(#{WORD_RE}(?:#{WORD_RE}|:|-)*)"
     QUOTED_ATTR_RE = /#{ATTR_NAME}\s*=(=?)\s*("|')/
     CODE_ATTR_RE = /#{ATTR_NAME}\s*=(=?)\s*/
@@ -361,8 +360,8 @@ module Slim
     def parse_attributes(attributes)
       # Check to see if there is a delimiter right after the tag name
       delimiter = nil
-      if @line =~ ATTR_DELIM_RE
-        delimiter = DELIMS[$1]
+      if @line =~ @attr_delim_re
+        delimiter = options[:attr_delims][$1]
         @line = $'
       end
 
@@ -433,9 +432,9 @@ module Slim
             elsif @line[0] == close_delimiter[0]
               count -= 1
             end
-          elsif @line =~ DELIM_RE
+          elsif @line =~ @delim_re
             count = 1
-            delimiter, close_delimiter = $&, DELIMS[$&]
+            delimiter, close_delimiter = $&, options[:attr_delims][$&]
           end
           code << @line.slice!(0)
         end

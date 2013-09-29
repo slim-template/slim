@@ -14,7 +14,7 @@ module Slim
 
     filter :Encoding, :encoding
     filter :RemoveBOM
-    use Slim::Parser, :file, :tabsize, :shortcut, :default_tag
+    use Slim::Parser, :file, :tabsize, :shortcut, :default_tag, :attr_delims
     use Slim::Embedded, :enable_engines, :disable_engines, :pretty
     use Slim::Interpolation
     use Slim::Splat::Filter, :merge_attrs, :attr_quote, :sort_attrs, :default_tag, :hyphen_attrs
