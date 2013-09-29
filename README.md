@@ -56,7 +56,7 @@ There is also some development in logic-less engines (e.g. [Mustache](https://gi
 
 Slim was born to bring a minimalist syntax approach with speed. If people chose not to use Slim, it would not be because of speed.
 
-___Yes, Slim is speedy!___ Benchmarks are done for every commit at <http://travis-ci.org/#!/slim-template/slim>.
+___Yes, Slim is speedy!___ Benchmarks are done for every commit at <http://travis-ci.org/slim-template/slim>.
 Don't trust the numbers? That's as it should be. Please try the benchmark rake task yourself!
 
 ### How to start?
@@ -852,7 +852,7 @@ run the slow parsing benchmark which needs more time. You can also increase the 
 
     rake bench slow=1 iterations=1000
 
-We run the benchmarks for every commit on Travis-CI. Take a look at the newest benchmarking results: <http://travis-ci.org/#!/slim-template/slim>
+We run the benchmarks for every commit on Travis-CI. Take a look at the newest benchmarking results: <http://travis-ci.org/slim-template/slim>
 
 ### Test suite and continuous integration
 
@@ -861,7 +861,7 @@ with 'rake test' and the rails integration tests with 'rake test:rails'.
 
 We are currently experimenting with human-readable literate tests which are written as markdown files: [TESTS.md](test/literate/TESTS.md)
 
-Travis-CI is used for continuous integration testing: <http://travis-ci.org/#!/slim-template/slim>
+Travis-CI is used for continuous integration testing: <http://travis-ci.org/slim-template/slim>
 
 Slim is working well on all major Ruby implementations:
 
@@ -878,7 +878,7 @@ If you'd like to help improve Slim, clone the project with Git by running:
 
 Work your magic and then submit a pull request. We love pull requests!
 
-Please remember to test against Ruby versions 2.0.0, 1.9.3 and 1.8.7.
+Please remember to keep the compatibility with Ruby versions 1.8.7, 1.9.3 and 2.0.0.
 
 If you find the documentation lacking, help us out and update this README.md. If you don't have the time to work on Slim, but found something we should know about, please submit an issue.
 
