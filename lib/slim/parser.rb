@@ -61,8 +61,9 @@ module Slim
       @attr_shortcut_re = /\A(#{keys}+)(#{WORD_RE}(?:#{WORD_RE}|-)*#{WORD_RE}|#{WORD_RE}+)/
       keys = Regexp.union @tag_shortcut.keys.sort_by {|k| -k.size }
       @tag_re = /\A(?:#{keys}|\*(?=[^\s]+)|(#{WORD_RE}(?:#{WORD_RE}|:|-)*#{WORD_RE}|#{WORD_RE}+))/
-      @delim_re = /\A[#{Regexp.escape options[:attr_delims].keys.join}]/
-      @attr_delim_re = /\A\s*([#{Regexp.escape options[:attr_delims].keys.join}])/
+      keys = Regexp.escape options[:attr_delims].keys.join
+      @delim_re = /\A[#{keys}]/
+      @attr_delim_re = /\A\s*([#{keys}])/
     end
 
     # Compile string to Temple expression
