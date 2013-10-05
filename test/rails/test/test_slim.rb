@@ -17,6 +17,14 @@ class TestSlim < ActionDispatch::IntegrationTest
     assert_html "<h1>Hello Slim!</h1>"
   end
 
+  test "helper" do
+    get "slim/helper"
+    assert_response :success
+    assert_template "slim/helper"
+    assert_template "layouts/application"
+    assert_html "<p><h1>Hello User</h1></p>"
+  end
+
   test "normal erb view" do
     get "slim/erb"
     assert_html "<h1>Hello Erb!</h1>"
