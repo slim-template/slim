@@ -85,7 +85,7 @@ Here's a quick example to demonstrate what a Slim template looks like:
         h1 Markup examples
 
         #content
-          p This example shows you how a basic Slim file looks like.
+          p This example shows you how a basic Slim file looks.
 
         == yield
 
