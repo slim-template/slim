@@ -213,11 +213,7 @@ HTML tags allow nested blocks inside.
 renders as
 
 ~~~ html
-<html><head>
-<title>
-  Example
-</title>
-</head>
+<html><head><title>Example</title></head>
 <body>
   yes
 </body>

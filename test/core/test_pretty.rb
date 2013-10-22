@@ -41,10 +41,7 @@ html
     result = %q{<!DOCTYPE html>
 <html>
   <head>
-    <title>
-      Hello World!
-    </title>
-    <!--Meta tags
+    <title>Hello World!</title><!--Meta tags
     with long explanatory
     multiline comment-->
     <meta content="template language" name="description" />
