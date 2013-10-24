@@ -34,4 +34,7 @@ class SlimController < ApplicationController
   def content_for
     @hello = "Hello Slim!"
   end
+
+  def helper
+  end
 end

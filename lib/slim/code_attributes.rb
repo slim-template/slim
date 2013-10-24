@@ -11,7 +11,7 @@ module Slim
       [:multi, *attrs.map {|a| compile(a) }]
     end
 
-    # Handle attribute expression `[:html, :attr, escape, code]`
+    # Handle attribute expression `[:html, :attr, name, value]`
     #
     # @param [String] name Attribute name
     # @param [Array] value Value expression
@@ -22,7 +22,7 @@ module Slim
         escape, code = value[2], value[3]
         case code
         when 'true'
-          [:html, :attr, name, [:static, name]]
+          [:html, :attr, name, [:multi]]
         when 'false', 'nil'
           [:multi]
         else
@@ -30,7 +30,7 @@ module Slim
           [:multi,
            [:code, "#{tmp} = #{code}"],
            [:case, tmp,
-            ['true', [:html, :attr, name, [:static, name]]],
+            ['true', [:html, :attr, name, [:multi]]],
             ['false, nil', [:multi]],
             [:else, [:html, :attr, name, [:escape, escape, [:dynamic, tmp]]]]]]
         end

@@ -10,6 +10,11 @@ module Slim
                    :shortcut => {
                      '#' => { :attr => 'id' },
                      '.' => { :attr => 'class' }
+                   },
+                   :attr_delims => {
+                     '(' => ')',
+                     '[' => ']',
+                     '{' => '}',
                    }
 
     class SyntaxError < StandardError
@@ -49,13 +54,18 @@ module Slim
         raise ArgumentError, 'Shortcut requires :tag and/or :attr' unless (v[:attr] || v[:tag]) && (v.keys - [:attr, :tag]).empty?
         @tag_shortcut[k] = v[:tag] || options[:default_tag]
         if v.include?(:attr)
-          @attr_shortcut[k] = v[:attr]
+          @attr_shortcut[k] = [v[:attr]].flatten
           raise ArgumentError, 'You can only use special characters for attribute shortcuts' if k =~ /(#{WORD_RE}|-)/
         end
       end
       word_re = options[:implicit_text] ? LC_WORD_RE : WORD_RE
-      @attr_shortcut_re = /\A(#{Regexp.union *@attr_shortcut.keys})(#{WORD_RE}(?:#{WORD_RE}|-)*#{WORD_RE}|#{WORD_RE}+)/
-      @tag_re = /\A(?:#{Regexp.union *@attr_shortcut.keys}(?=#{WORD_RE})|#{Regexp.union *(@tag_shortcut.keys - @attr_shortcut.keys)}|\*(?=[^\s]+)|(#{word_re}(?:#{word_re}|:|-)*#{word_re}|#{word_re}+))/
+      attr_keys = Regexp.union( *@attr_shortcut.keys.sort_by {|k| -k.size } )
+      @attr_shortcut_re = /\A(#{attr_keys}+)(#{WORD_RE}(?:#{WORD_RE}|-)*#{WORD_RE}|#{WORD_RE}+)/
+      tag_keys = Regexp.union( *(@tag_shortcut.keys - @attr_shortcut.keys).sort_by {|k| -k.size } )
+      @tag_re = /\A(?:#{attr_keys}(?=#{WORD_RE})|#{tag_keys}|\*(?=[^\s]+)|(#{word_re}(?:#{word_re}|:|-)*#{word_re}|#{word_re}+))/
+      keys = Regexp.escape options[:attr_delims].keys.join
+      @delim_re = /\A[#{keys}]/
+      @attr_delim_re = /\A\s*([#{keys}])/
     end
 
     # Compile string to Temple expression
@@ -74,17 +84,8 @@ module Slim
 
     protected
 
-    DELIMS = {
-      '(' => ')',
-      '[' => ']',
-      '{' => '}',
-    }.freeze
-
     WORD_RE = ''.respond_to?(:encoding) ? '\p{Word}' : '\w'
     LC_WORD_RE = '[_a-z0-9]'
-
-    DELIM_RE = /\A[#{Regexp.escape DELIMS.keys.join}]/
-    ATTR_DELIM_RE = /\A\s*([#{Regexp.escape DELIMS.keys.join}])/
     ATTR_NAME = "\\A\\s*(#{WORD_RE}(?:#{WORD_RE}|:|-)*)"
     QUOTED_ATTR_RE = /#{ATTR_NAME}\s*=(=?)\s*("|')/
     CODE_ATTR_RE = /#{ATTR_NAME}\s*=(=?)\s*/
@@ -232,7 +233,10 @@ module Slim
         @line = $' if $1
         parse_tag($&)
       else
-        syntax_error! 'Unknown line indicator' unless options[:implicit_text]
+        unless options[:implicit_text]
+          syntax_error!('Illegal shortcut') if @line =~ @attr_shortcut_re
+          syntax_error! 'Unknown line indicator'
+        end
         # Found implicit smart text block.
         if line = @lines.first
           indent = ( line =~ /\A\s*\Z/ ? @indents.last + 1 : get_indent(line) )
@@ -314,7 +318,8 @@ module Slim
       while @line =~ @attr_shortcut_re
         # The class/id attribute is :static instead of :slim :interpolate,
         # because we don't want text interpolation in .class or #id shortcut
-        attributes << [:html, :attr, @attr_shortcut[$1], [:static, $2]]
+        syntax_error!('Illegal shortcut') unless shortcut = @attr_shortcut[$1]
+        shortcut.each {|a| attributes << [:html, :attr, a, [:static, $2]] }
         @line = $'
       end
 
@@ -370,8 +375,8 @@ module Slim
     def parse_attributes(attributes)
       # Check to see if there is a delimiter right after the tag name
       delimiter = nil
-      if @line =~ ATTR_DELIM_RE
-        delimiter = DELIMS[$1]
+      if @line =~ @attr_delim_re
+        delimiter = options[:attr_delims][$1]
         @line = $'
       end
 
@@ -442,9 +447,9 @@ module Slim
             elsif @line[0] == close_delimiter[0]
               count -= 1
             end
-          elsif @line =~ DELIM_RE
+          elsif @line =~ @delim_re
             count = 1
-            delimiter, close_delimiter = $&, DELIMS[$&]
+            delimiter, close_delimiter = $&, options[:attr_delims][$&]
           end
           code << @line.slice!(0)
         end

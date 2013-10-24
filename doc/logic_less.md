@@ -130,11 +130,8 @@ and activate logic less mode per render call in your application
 
 ## Options
 
-<table>
-<thead style="font-weight:bold"><tr><td>Type</td><td>Name</td><td>Default</td><td>Purpose</td></tr></thead>
-<tbody>
-<tr><td>Boolean</td><td>:logic_less</td><td>true</td><td>Enable logic less mode (Enabled if 'slim/logic_less' is required)</td></tr>
-<tr><td>String</td><td>:dictionary</td><td>"self"</td><td>Dictionary where variables are looked up</td></tr>
-<tr><td>Symbol/Array&lt;Symbol&gt;</td><td>:dictionary_access</td><td>[:symbol, :string, :method, :instance_variable]</td><td>Dictionary access order (:symbol, :string, :method, :instance_variable)</td></tr>
-</tbody>
-</table>
+| Type | Name | Default | Purpose |
+| ---- | ---- | ------- | ------- |
+| Boolean | :logic_less | true | Enable logic less mode (Enabled if 'slim/logic_less' is required) |
+| String | :dictionary | "self" | Dictionary where variables are looked up |
+| Symbol/Array&lt;Symbol&gt; | :dictionary_access | [:symbol, :string, :method, :instance_variable] | Dictionary access order (:symbol, :string, :method, :instance_variable) |

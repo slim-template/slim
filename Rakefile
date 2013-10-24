@@ -54,6 +54,7 @@ namespace 'test' do
   end
 
   begin
+    require 'rubygems'
     require 'sinatra'
     spec = Gem::Specification.find_by_name('sinatra')
     Rake::TestTask.new('sinatra') do |t|

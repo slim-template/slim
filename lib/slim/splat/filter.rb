@@ -24,16 +24,15 @@ module Slim
       # @param [Array] content Temple expression
       # @return [Array] Compiled temple expression
       def on_html_tag(name, attrs, content = nil)
-        if name != '*'
-          super
-        elsif content
-          builder, block = make_builder(attrs[2..-1])
+        return super if name != '*'
+        builder, block = make_builder(attrs[2..-1])
+        if content
           [:multi,
            block,
-           [:slim, :output, false, "#{builder}.build_tag do",
+           [:slim, :output, false,
+            "#{builder}.build_tag #{empty_exp?(content) ? '{}' : 'do'}",
             compile(content)]]
         else
-          builder, block = make_builder(attrs[2..-1])
           [:multi,
            block,
            [:dynamic, "#{builder}.build_tag"]]

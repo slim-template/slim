@@ -157,4 +157,18 @@ img / text
 
     assert_syntax_error "Unexpected text after closed tag\n  (__TEMPLATE__), Line 2, Column 6\n    img / text\n          ^\n", source
   end
+
+  def test_illegal_shortcuts
+    source = %{
+.#test
+}
+
+    assert_syntax_error "Illegal shortcut\n  (__TEMPLATE__), Line 2, Column 0\n    .#test\n    ^\n", source
+
+    source = %{
+div.#test
+}
+
+    assert_syntax_error "Illegal shortcut\n  (__TEMPLATE__), Line 2, Column 3\n    div.#test\n       ^\n", source
+  end
 end

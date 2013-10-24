@@ -213,11 +213,7 @@ HTML tags allow nested blocks inside.
 renders as
 
 ~~~ html
-<html><head>
-<title>
-  Example
-</title>
-</head>
+<html><head><title>Example</title></head>
 <body>
   yes
 </body>
@@ -861,7 +857,7 @@ dl(
 renders as
 
 ~~~ html
-<dl itemprop="address" itemscope="itemscope" itemtype="http://schema.org/PostalAddress"></dl>
+<dl itemprop="address" itemscope="" itemtype="http://schema.org/PostalAddress"></dl>
 ~~~
 
 You may use spaces around the wrappers and assignments:
@@ -993,7 +989,7 @@ input(type="text" disabled)
 renders as
 
 ~~~ html
-<input disabled="" type="text" /><input disabled="disabled" type="text" /><input disabled="disabled" type="text" /><input disabled="disabled" type="text" /><input disabled="disabled" type="text" />
+<input disabled="" type="text" /><input disabled="" type="text" /><input disabled="disabled" type="text" /><input disabled="" type="text" /><input disabled="" type="text" />
 ~~~
 
 ~~~ slim
@@ -1124,6 +1120,42 @@ renders to
 
 ~~~ html
 <input name="user" type="text" /><input name="pw" type="password" /><input class="CLASS" id="ID" type="submit" />
+~~~
+
+You can also set multiple attributes per shortcut.
+
+~~~ options
+:shortcut => {'.' => {:attr => %w(id class)} }
+~~~
+
+~~~ slim
+.test
+~~~
+
+renders to
+
+~~~ html
+<div class="test" id="test"></div>
+~~~
+
+Shortcuts can also have multiple characters.
+
+~~~ options
+:shortcut => {'.' => {:attr => 'class'}, '#' => {:attr => 'id'}, '.#' => {:attr => %w(class id)} }
+~~~
+
+~~~ slim
+.#test
+.test
+#test
+~~~
+
+renders to
+
+~~~ html
+<div class="test" id="test"></div>
+<div class="test"></div>
+<div id="test"></div>
 ~~~
 
 #### ID shortcut and class shortcut `.`

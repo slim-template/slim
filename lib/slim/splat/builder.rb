@@ -20,7 +20,7 @@ module Slim
             return
           when true
             # Boolean true attribute
-            value = name
+            value = ''
           else
             value = value.to_s
           end

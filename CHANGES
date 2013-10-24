@@ -1,3 +1,16 @@
+master
+
+  * Add option :attr_delims
+
+2.0.1
+
+  * Support multiple attributes per shortcut (See issue #415)
+  * Add support for org-ruby embedded engine
+  * Render true boolean attributes with empty value
+  * Support case-when statements
+  * Fix issue #431
+  * Also escape ' to &#39;
+
 2.0.0
 
   * IMPORTANT: Backward incompatible syntax change: '{...}' and '[...]' are not

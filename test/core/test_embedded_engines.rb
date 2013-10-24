@@ -68,6 +68,18 @@ creole:
     assert_html "<h1>head1</h1><h2>head2</h2>", source
   end
 
+  def test_render_with_org
+    # HACK: org-ruby registers itself in Tilt
+    require 'org-ruby'
+
+    source = %q{
+org:
+  * point1
+  * point2
+}
+    assert_html "<h1>point1</h1>\n<h1>point2</h1>\n", source
+  end
+
   def test_render_with_builder
     source = %q{
 builder:
@@ -112,7 +124,7 @@ p Hi
 javascript:   
   $(function() { #{func} });
 }
-    assert_html %q|<script type="text/javascript">$(function() { alert('hello'); });</script>|, source
+    assert_html %q|<script type="text/javascript">$(function() { alert(&#39;hello&#39;); });</script>|, source
   end
 
   def test_render_with_javascript_with_explicit_html_comment
