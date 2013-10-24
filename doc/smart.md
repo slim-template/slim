@@ -27,7 +27,7 @@ Smart text lines normally preserve newlines,
 so it is easy to mix them with other tags, like emphasis or links:
 
     p
-      > Your credit card
+      Your credit card
       strong will not
       > be charged now.
     p
@@ -67,12 +67,9 @@ such as Markdown or Textile.
 
 ## Options
 
-<table>
-<thead style="font-weight:bold"><tr><td>Type</td><td>Name</td><td>Default</td><td>Purpose</td></tr></thead>
-<tbody>
-<tr><td>Boolean</td><td>:smart_text</td><td>true</td><td>Enable smart text mode newline processing</td></tr>
-<tr><td>String</td><td>:smart_text_begin_chars</td><td>',.;:!?)]}'</td><td>Characters suppressing leading newline in smart text</td></tr>
-<tr><td>String</td><td>:smart_text_end_chars</td><td>'([{'</td><td>Characters suppressing trailing newline in smart text</td></tr>
-<tr><td>Boolean</td><td>:smart_text_escaping</td><td>true</td><td>When set, HTML characters which need escaping are automatically escaped in smart text</td></tr>
-</tbody>
-</table>
+| Type | Name | Default | Purpose |
+| ---- | ---- | ------- | ------- |
+| Boolean | :smart_text | true | Enable smart text mode newline processing |
+| String | :smart_text_begin_chars | ',.;:!?)]}' | Characters suppressing leading newline in smart text |
+| String | :smart_text_end_chars | '([{' | Characters suppressing trailing newline in smart text |
+| Boolean | :smart_text_escaping | true | When set, HTML characters which need escaping are automatically escaped in smart text |
