@@ -2,7 +2,7 @@ require 'slim'
 require 'optparse'
 
 module Slim
-  Engine.set_default_options :pretty => false
+  Engine.set_default_options :pretty => false, :unexception => false
 
   # Slim commandline interface
   # @api private
@@ -17,13 +17,6 @@ module Slim
       @opts = OptionParser.new(&method(:set_opts))
       @opts.parse!(@args)
       process
-      exit 0
-    rescue Exception => ex
-      raise ex if @options[:trace] || SystemExit === ex
-      $stderr.print "#{ex.class}: " if ex.class != RuntimeError
-      $stderr.puts ex.message
-      $stderr.puts '  Use --trace for backtrace.'
-      exit 1
     end
 
     private
@@ -62,6 +55,11 @@ module Slim
       opts.on('-p', '--pretty', 'Produce pretty html') do
         Engine.set_default_options :pretty => true
       end
+      
+      opts.on('-u', '--unexception', 'Don\'t update html on exceptions') do
+        Engine.set_default_options :unexception => true
+        @options[:unexception] = true
+      end
 
       opts.on('-o', '--option [NAME=CODE]', String, 'Set slim option') do |str|
         parts = str.split('=', 2)
@@ -92,10 +90,12 @@ module Slim
           @options[:input] = $stdin
         end
       end
-
-      unless @options[:output]
-        file = args.shift
-        @options[:output] = file ? File.open(file, 'w') : $stdout
+      
+      if @options[:unexception] != true
+        unless @options[:output]
+          file = args.shift
+          @options[:output] = file ? File.open(file, 'w') : $stdout
+        end
       end
 
       result =
@@ -108,7 +108,22 @@ module Slim
           Template.new(@options[:file]) { @options[:input].read }.render
         end
 
-      @options[:output].puts(result)
+      rescue Exception => ex
+        raise ex if @options[:trace] || SystemExit === ex
+        $stderr.print "#{ex.class}: " if ex.class != RuntimeError
+        $stderr.puts ex.message
+        $stderr.puts '  Use --trace for backtrace.'
+        exit 1
+      else
+        if @options[:unexception] == true
+          unless @options[:output]
+            file = args.shift
+            @options[:output] = file ? File.open(file, 'w') : $stdout
+          end
+        end
+
+        @options[:output].puts(result)
+        exit 0
     end
   end
 end
