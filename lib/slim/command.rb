@@ -17,13 +17,6 @@ module Slim
       @opts = OptionParser.new(&method(:set_opts))
       @opts.parse!(@args)
       process
-      exit 0
-    rescue Exception => ex
-      raise ex if @options[:trace] || SystemExit === ex
-      $stderr.print "#{ex.class}: " if ex.class != RuntimeError
-      $stderr.puts ex.message
-      $stderr.puts '  Use --trace for backtrace.'
-      exit 1
     end
 
     private
@@ -108,7 +101,19 @@ module Slim
           Template.new(@options[:file]) { @options[:input].read }.render
         end
 
-      @options[:output].puts(result)
+      rescue Exception => ex
+        raise ex if @options[:trace] || SystemExit === ex
+        $stderr.print "#{ex.class}: " if ex.class != RuntimeError
+        $stderr.puts ex.message
+        $stderr.puts '  Use --trace for backtrace.'
+        exit 1
+      else
+        unless @options[:output]
+          file = args.shift
+          @options[:output] = file ? File.open(file, 'w') : $stdout
+        end
+        @options[:output].puts(result)
+        exit 0
     end
   end
 end
