@@ -86,11 +86,6 @@ module Slim
         end
       end
 
-      unless @options[:output]
-        file = args.shift
-        @options[:output] = file ? File.open(file, 'w') : $stdout
-      end
-
       result =
         if @options[:erb]
           require 'slim/erb_converter'
