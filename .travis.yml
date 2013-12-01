@@ -12,7 +12,7 @@ env:
   - "TASK=test:core_and_plugins TILT=master"
   - "TASK=test:core_and_plugins TILT=1.3.4"
   - "TASK=test:core_and_plugins TILT=1.4.1"
-  - "TASK=test:core_and_plugins TILT=2.0.0.beta1"
+  - "TASK=test:core_and_plugins TILT=2.0.0"
   - "TASK=test:rails RAILS=master"
   - "TASK=test:rails RAILS=3.0.20"
   - "TASK=test:rails RAILS=3.1.12"
