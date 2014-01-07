@@ -555,7 +555,7 @@ This is the same as
       div class="content"
         = show_content
 
-## Helpers and capturing
+## Helpers, capturing and includes
 
 If you use Slim you might want to extend your template with some helpers. Assume that you have the following helper
 
@@ -574,7 +574,7 @@ module Helpers
 end
 ~~~
 
-which can be used in Slim as follows
+which is included in the scope that executes the Slim template code. The helper can then be used in the Slim template as follows
 
     p
       = headline do
@@ -588,6 +588,25 @@ sugar you can omit the `do` keyword and write only
       = headline
         ' Hello
         = user.name
+
+It has been requested many times to support includes of subtemplates in Slim. Up to now this has not been implemented as a core feature
+but you can easily get it by writing your own helper. The includes will be executed at runtime.
+
+~~~ruby
+module Helpers
+  def include_slim(name, options = {}, &block)
+    Slim::Template.new("#{name}.slim", options).render(self, &block)
+  end
+end
+~~~
+
+This helper can then be used as follows
+
+    nav= include_slim 'menu'
+    section= include_slim 'content'
+
+However this helper doesn't do any caching. You should therefore implement a more intelligent version of the helper which
+fits your purposes. You should also be aware that most frameworks already bring their own include helper, e.g. Rails has `render`.
 
 ## Text interpolation
 
@@ -754,7 +773,8 @@ Slim uses [Tilt](https://github.com/rtomayko/tilt) to compile the generated code
     Slim::Template.new('template.slim', optional_option_hash).render(scope)
     Slim::Template.new(optional_option_hash) { source }.render(scope)
 
-The optional option hash can have to options which were documented in the section above.
+The optional option hash can have to options which were documented in the section above. The scope is the object in which the template
+code is executed.
 
 ### Sinatra
 
