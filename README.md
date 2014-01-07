@@ -825,7 +825,7 @@ Usage: slimrb [options]
     -v, --version                    Print version
 </pre>
 
-Start 'slimrb', type your code and press Ctrl-d to send EOF. Example usage:
+Start 'slimrb', type your code and press Ctrl-d to send EOF. In Windows Command Prompt press Ctrl-z, Enter to send EOF.  Example usage:
 
 <pre>
 $ slimrb
