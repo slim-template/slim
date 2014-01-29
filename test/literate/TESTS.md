@@ -1160,6 +1160,28 @@ renders to
 
 #### ID shortcut and class shortcut `.`
 
+ID and class shortcuts can contain dashes.
+
+~~~ slim
+.-test text
+#test- text
+.-a#b- text
+~~~
+
+renders as
+
+~~~ html
+<div class="-test">
+  text
+</div>
+<div id="test-">
+  text
+</div>
+<div class="-a" id="b-">
+  text
+</div>
+~~~
+
 ## Text interpolation
 
 Use standard Ruby interpolation. The text will be html escaped by default.

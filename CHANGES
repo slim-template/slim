@@ -1,3 +1,8 @@
+master
+
+  * slimrb: Don't update HTML output on exceptions
+  * Allow dashes at the beginning of class names (#474)
+
 2.0.2
 
   * Add option :attr_delims
