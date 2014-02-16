@@ -13,18 +13,8 @@ module Slim
           attr(name, escape ? Temple::Utils.escape_html(value) : value) unless value.empty?
         elsif @options[:hyphen_attrs].include?(name) && Hash === value
           hyphen_attr(name, escape, value)
-        else
-          case value
-          when false, nil
-            # Boolean false attribute
-            return
-          when true
-            # Boolean true attribute
-            value = ''
-          else
-            value = value.to_s
-          end
-          attr(name, escape ? Temple::Utils.escape_html(value) : value)
+        elsif value != false && value != nil
+          attr(name, value != true && escape ? Temple::Utils.escape_html(value) : value)
         end
       end
 
@@ -37,7 +27,7 @@ module Slim
       def attr(name, value)
         if @attrs[name]
           if delim = @options[:merge_attrs][name]
-            @attrs[name] << delim << value
+            @attrs[name] << delim << value.to_s
           else
             raise("Multiple #{name} attributes specified")
           end
@@ -59,7 +49,15 @@ module Slim
       def build_attrs
         attrs = @options[:sort_attrs] ? @attrs.sort_by(&:first) : @attrs
         attrs.map do |k, v|
-          " #{k}=#{@options[:attr_quote]}#{v}#{@options[:attr_quote]}"
+          if v == true
+            if @options[:format] == :xhtml
+              " #{k}=#{@options[:attr_quote]}#{@options[:attr_quote]}"
+            else
+              " #{k}"
+            end
+          else
+            " #{k}=#{@options[:attr_quote]}#{v}#{@options[:attr_quote]}"
+          end
         end.join
       end
 
@@ -71,7 +69,7 @@ module Slim
             hyphen_attr("#{name}-#{n.to_s.gsub('_', '-')}", escape, v)
           end
         else
-          attr(name, escape ? Temple::Utils.escape_html(value) : value.to_s)
+          attr(name, value != true && escape ? Temple::Utils.escape_html(value) : value)
         end
       end
     end

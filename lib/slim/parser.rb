@@ -397,7 +397,7 @@ module Slim
           when boolean_attr_re
             # Boolean attribute
             @line = $'
-            attributes << [:html, :attr, $1, [:slim, :attrvalue, false, 'true']]
+            attributes << [:html, :attr, $1, [:multi]]
           when end_re
             # Find ending delimiter
             @line = $'

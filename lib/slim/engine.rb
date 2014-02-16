@@ -7,6 +7,7 @@ module Slim
     # `define_options` when you have to override some default settings.
     define_options :pretty => false,
                    :sort_attrs => true,
+                   :format => :xhtml,
                    :attr_quote => '"',
                    :merge_attrs => {'class' => ' '},
                    :generator => Temple::Generators::ArrayBuffer,
@@ -17,7 +18,7 @@ module Slim
     use Slim::Parser, :file, :tabsize, :shortcut, :default_tag, :attr_delims
     use Slim::Embedded, :enable_engines, :disable_engines, :pretty
     use Slim::Interpolation
-    use Slim::Splat::Filter, :merge_attrs, :attr_quote, :sort_attrs, :default_tag, :hyphen_attrs
+    use Slim::Splat::Filter, :merge_attrs, :attr_quote, :sort_attrs, :default_tag, :hyphen_attrs, :format
     use Slim::DoInserter
     use Slim::EndInserter
     use Slim::Controls, :disable_capture
