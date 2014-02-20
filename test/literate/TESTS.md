@@ -410,6 +410,16 @@ renders as
 49 
 ~~~
 
+~~~ slim
+=< 7*7
+~~~
+
+renders as
+
+~~~ html
+ 49
+~~~
+
 The legacy syntax `='` is also supported.
 
 ~~~ slim
@@ -705,13 +715,14 @@ You can force a trailing whitespace behind a tag by adding `>`. The legacy synta
 a#closed> class="test" /
 a#closed> class="test"/
 a> href='url1' Link1
+a< href='url1' Link1
 a' href='url2' Link2
 ~~~
 
 renders as
 
 ~~~ html
-<a class="test" id="closed" /> <a class="test" id="closed" /> <a href="url1">Link1</a> <a href="url2">Link2</a> 
+<a class="test" id="closed" /> <a class="test" id="closed" /> <a href="url1">Link1</a>  <a href="url1">Link1</a><a href="url2">Link2</a> 
 ~~~
 
 If you combine > and =' only one trailing whitespace is added.
@@ -721,12 +732,15 @@ a> =' 'Text1'
 a =' 'Text2'
 a> = 'Text3'
 a>= 'Text4'
+a=> 'Text5'
+a<= 'Text6'
+a=< 'Text7'
 ~~~
 
 renders as
 
 ~~~ html
-<a>Text1</a> <a>Text2</a> <a>Text3</a> <a>Text4</a> 
+<a>Text1</a> <a>Text2</a> <a>Text3</a> <a>Text4</a> <a>Text5</a>  <a>Text6</a> <a>Text7</a>
 ~~~
 
 You can force a leading whitespace before a tag by adding `<`.

@@ -338,8 +338,9 @@ module Slim
         # Handle output code
         @line = $'
         trailing_ws2 = $2.include?('\'') || $2.include?('>')
+        leading_ws2 = $2.include?('<')
         block = [:multi]
-        @stacks.last << [:static, ' '] if !leading_ws && $2.include?('<')
+        @stacks.last.insert(-2, [:static, ' ']) if !leading_ws && $2.include?('<')
         tag << [:slim, :output, $1 != '=', parse_broken_line, block]
         @stacks.last << [:static, ' '] if !trailing_ws && trailing_ws2
         @stacks << block
