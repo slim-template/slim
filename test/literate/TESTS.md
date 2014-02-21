@@ -1022,6 +1022,28 @@ renders as
 <input type="text" /><input type="text" /><input type="text" /><input type="text" /><input type="text" />
 ~~~
 
+If html5 is activated the attributes are written as standalone.
+
+~~~ options
+:format => :html
+~~~
+
+~~~ slim
+- true_value1 = ""
+- true_value2 = true
+input type="text" disabled=true_value1
+input type="text" disabled=true_value2
+input type="text" disabled="disabled"
+input type="text" disabled=true
+input(type="text" disabled)
+~~~
+
+renders as
+
+~~~ html
+<input disabled="" type="text"><input disabled type="text"><input disabled="disabled" type="text"><input disabled type="text"><input disabled type="text">
+~~~
+
 #### Attribute merging
 
 You can configure attributes to be merged if multiple are given (See option `:merge_attrs`). In the default configuration
