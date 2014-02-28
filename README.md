@@ -950,6 +950,7 @@ Syntax highlighting:
 * [Textmate / Sublime Text](https://github.com/slim-template/ruby-slim.tmbundle)
 * [Espresso text editor](https://github.com/slim-template/Slim-Sugar)
 * [Coda](https://github.com/slim-template/Coda-2-Slim.mode)
+* [Atom](https://github.com/slim-template/language-slim)
 
 Template Converters (HAML, ERB, ...):
 
