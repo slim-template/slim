@@ -116,4 +116,57 @@ p
 
     assert_html 'Hello Ruby! Hello from within a block! Hello Ruby!', source
   end
+
+  def test_if_without_content
+    source = %q{
+- if true
+}
+    assert_html '', source
+  end
+
+  def test_unless_without_content
+    source = %q{
+- unless true
+}
+    assert_html '', source
+  end
+
+  def test_if_with_comment
+    source = %q{
+- if true
+  / comment
+}
+    assert_html '', source
+  end
+
+  def test_control_do_with_comment
+    source = %q{
+- hello_world "Hello"
+  / comment
+}
+    assert_html '', source
+  end
+
+  def test_output_do_with_comment
+    source = %q{
+= hello_world "Hello"
+  / comment
+}
+    assert_html 'Hello', source
+  end
+
+  def test_output_if_without_content
+    source = %q{
+= if true
+}
+    assert_html '', source
+  end
+
+  def test_output_if_with_comment
+    source = %q{
+= if true
+  / comment
+}
+    assert_html '', source
+  end
 end

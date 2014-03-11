@@ -3,6 +3,8 @@ module Slim
   class Controls < Filter
     define_options :disable_capture
 
+    IF_RE = /\A(if|unless)\b|do\s*(\|[^\|]*\|)?\s*$/
+
     # Handle control expression `[:slim, :control, code, content]`
     #
     # @param [String] code Ruby code
@@ -21,9 +23,7 @@ module Slim
     # @param [Array] content Temple expression
     # @return [Array] Compiled temple expression
     def on_slim_output(escape, code, content)
-      if empty_exp?(content)
-        [:multi, [:escape, escape, [:dynamic, code]], content]
-      else
+      if code =~ IF_RE
         tmp = unique_name
 
         [:multi,
@@ -43,6 +43,8 @@ module Slim
 
          # Output the content.
          [:escape, escape, [:dynamic, tmp]]]
+      else
+        [:multi, [:escape, escape, [:dynamic, code]], content]
       end
     end
 
