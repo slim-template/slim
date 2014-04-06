@@ -14,6 +14,10 @@ module Slim
       block = [:multi]
       begin
         case string
+          when /\A\\\\/
+          # Escaped backslash
+          block << [:static, '\\']
+          string = $'
         when /\A\\#\{/
           # Escaped interpolation
           block << [:static, '#{']
