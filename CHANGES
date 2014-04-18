@@ -1,5 +1,13 @@
 master
 
+  * slimrb: Don't update HTML output on exceptions
+  * Allow dashes at the beginning of class names (#474)
+  * Render empty attributes as standalone in html mode (#480)
+  * Fix #482: problem with whitespace modifier `tag=<`
+  * Fix #485: missing end for empty `if` control blocks
+
+2.0.2
+
   * Add option :attr_delims
 
 2.0.1

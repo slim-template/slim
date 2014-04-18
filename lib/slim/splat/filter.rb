@@ -2,7 +2,7 @@ module Slim
   module Splat
     # @api private
     class Filter < ::Slim::Filter
-      OPTIONS = [:merge_attrs, :attr_quote, :sort_attrs, :default_tag, :hyphen_attrs]
+      OPTIONS = [:merge_attrs, :attr_quote, :sort_attrs, :default_tag, :hyphen_attrs, :format]
       define_options OPTIONS
       default_options[:hyphen_attrs] = %w(data aria)
 

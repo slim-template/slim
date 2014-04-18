@@ -3,6 +3,7 @@ rvm:
   - 1.8.7
   - 1.9.3
   - 2.0.0
+  - 2.1.0
   - ruby-head
   - jruby-18mode
   - jruby-19mode
@@ -12,15 +13,15 @@ env:
   - "TASK=test:core_and_plugins TILT=master"
   - "TASK=test:core_and_plugins TILT=1.3.4"
   - "TASK=test:core_and_plugins TILT=1.4.1"
-  - "TASK=test:core_and_plugins TILT=2.0.0.beta1"
+  - "TASK=test:core_and_plugins TILT=2.0.0"
   - "TASK=test:rails RAILS=master"
   - "TASK=test:rails RAILS=3.0.20"
-  - "TASK=test:rails RAILS=3.1.12"
-  - "TASK=test:rails RAILS=3.2.13"
-  - "TASK=test:rails RAILS=4.0.0"
+  - "TASK=test:rails RAILS=3.1.12 TILT=1.3.4"
+  - "TASK=test:rails RAILS=3.2.15 TILT=1.3.4"
+  - "TASK=test:rails RAILS=4.0.1"
   - "TASK=test:sinatra SINATRA=master"
   - "TASK=test:sinatra SINATRA=1.3.6"
-  - "TASK=test:sinatra SINATRA=1.4.2"
+  - "TASK=test:sinatra SINATRA=1.4.4"
   - "TASK=bench iterations=10000"
   - "TASK=bench slow=1 iterations=1000"
 matrix:
@@ -33,11 +34,11 @@ matrix:
     - rvm: rbx-18mode
       env: "TASK=test:rails RAILS=master"
     - rvm: 1.8.7
-      env: "TASK=test:rails RAILS=4.0.0"
+      env: "TASK=test:rails RAILS=4.0.1"
     - rvm: jruby-18mode
-      env: "TASK=test:rails RAILS=4.0.0"
+      env: "TASK=test:rails RAILS=4.0.1"
     - rvm: rbx-18mode
-      env: "TASK=test:rails RAILS=4.0.0"
+      env: "TASK=test:rails RAILS=4.0.1"
   allow_failures:
     - env: "TASK=test:core_and_plugins TILT=master"
     - env: "TASK=test:rails RAILS=master"

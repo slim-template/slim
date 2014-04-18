@@ -10,8 +10,9 @@ module Slim
   #
   # @api private
   class EndInserter < Filter
-    BLOCK_REGEX = /\A(else|elsif|when|rescue|ensure)\b/
-    END_REGEX = /\Aend\b/
+    IF_RE = /\A(if|unless|else|elsif|when|rescue|ensure)\b|do\s*(\|[^\|]*\|)?\s*$/
+    ELSE_RE = /\A(else|elsif|when|rescue|ensure)\b/
+    END_RE = /\Aend\b/
 
     # Handle multi expression `[:multi, *exps]`
     #
@@ -24,14 +25,14 @@ module Slim
 
       exps.each do |exp|
         if control?(exp)
-          raise(Temple::FilterError, 'Explicit end statements are forbidden') if exp[2] =~ END_REGEX
+          raise(Temple::FilterError, 'Explicit end statements are forbidden') if exp[2] =~ END_RE
 
           # Two control code in a row. If this one is *not*
           # an else block, we should close the previous one.
-          append_end(result) if prev_indent && exp[2] !~ BLOCK_REGEX
+          append_end(result) if prev_indent && exp[2] !~ ELSE_RE
 
-          # Indent if the control code contains something.
-          prev_indent = !empty_exp?(exp[3])
+          # Indent if the control code starts a block.
+          prev_indent = exp[2] =~ IF_RE
         elsif exp[0] != :newline && prev_indent
           # This is *not* a control code, so we should close the previous one.
           # Ignores newlines because they will be inserted after each line.

@@ -410,6 +410,16 @@ renders as
 49 
 ~~~
 
+~~~ slim
+=< 7*7
+~~~
+
+renders as
+
+~~~ html
+ 49
+~~~
+
 The legacy syntax `='` is also supported.
 
 ~~~ slim
@@ -705,13 +715,14 @@ You can force a trailing whitespace behind a tag by adding `>`. The legacy synta
 a#closed> class="test" /
 a#closed> class="test"/
 a> href='url1' Link1
+a< href='url1' Link1
 a' href='url2' Link2
 ~~~
 
 renders as
 
 ~~~ html
-<a class="test" id="closed" /> <a class="test" id="closed" /> <a href="url1">Link1</a> <a href="url2">Link2</a> 
+<a class="test" id="closed" /> <a class="test" id="closed" /> <a href="url1">Link1</a>  <a href="url1">Link1</a><a href="url2">Link2</a> 
 ~~~
 
 If you combine > and =' only one trailing whitespace is added.
@@ -721,12 +732,15 @@ a> =' 'Text1'
 a =' 'Text2'
 a> = 'Text3'
 a>= 'Text4'
+a=> 'Text5'
+a<= 'Text6'
+a=< 'Text7'
 ~~~
 
 renders as
 
 ~~~ html
-<a>Text1</a> <a>Text2</a> <a>Text3</a> <a>Text4</a> 
+<a>Text1</a> <a>Text2</a> <a>Text3</a> <a>Text4</a> <a>Text5</a>  <a>Text6</a> <a>Text7</a>
 ~~~
 
 You can force a leading whitespace before a tag by adding `<`.
@@ -1008,6 +1022,28 @@ renders as
 <input type="text" /><input type="text" /><input type="text" /><input type="text" /><input type="text" />
 ~~~
 
+If html5 is activated the attributes are written as standalone.
+
+~~~ options
+:format => :html
+~~~
+
+~~~ slim
+- true_value1 = ""
+- true_value2 = true
+input type="text" disabled=true_value1
+input type="text" disabled=true_value2
+input type="text" disabled="disabled"
+input type="text" disabled=true
+input(type="text" disabled)
+~~~
+
+renders as
+
+~~~ html
+<input disabled="" type="text"><input disabled type="text"><input disabled="disabled" type="text"><input disabled type="text"><input disabled type="text">
+~~~
+
 #### Attribute merging
 
 You can configure attributes to be merged if multiple are given (See option `:merge_attrs`). In the default configuration
@@ -1159,6 +1195,28 @@ renders to
 ~~~
 
 #### ID shortcut and class shortcut `.`
+
+ID and class shortcuts can contain dashes.
+
+~~~ slim
+.-test text
+#test- text
+.-a#b- text
+~~~
+
+renders as
+
+~~~ html
+<div class="-test">
+  text
+</div>
+<div id="test-">
+  text
+</div>
+<div class="-a" id="b-">
+  text
+</div>
+~~~
 
 ## Text interpolation
 

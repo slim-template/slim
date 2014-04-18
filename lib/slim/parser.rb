@@ -60,9 +60,9 @@ module Slim
       end
       word_re = options[:implicit_text] ? LC_WORD_RE : WORD_RE
       attr_keys = Regexp.union( *@attr_shortcut.keys.sort_by {|k| -k.size } )
-      @attr_shortcut_re = /\A(#{attr_keys}+)(#{WORD_RE}(?:#{WORD_RE}|-)*#{WORD_RE}|#{WORD_RE}+)/
+      @attr_shortcut_re = /\A(#{attr_keys}+)(-?(?:#{WORD_RE}+-)*(?:#{WORD_RE})*)/
       tag_keys = Regexp.union( *(@tag_shortcut.keys - @attr_shortcut.keys).sort_by {|k| -k.size } )
-      @tag_re = /\A(?:#{attr_keys}(?=#{WORD_RE})|#{tag_keys}|\*(?=[^\s]+)|(#{word_re}(?:#{word_re}|:|-)*#{word_re}|#{word_re}+))/
+      @tag_re = /\A(?:#{attr_keys}(?=-?#{WORD_RE})|#{tag_keys}|\*(?=[^\s]+)|(#{word_re}(?:#{word_re}|:|-)*#{word_re}|#{word_re}+))/
       keys = Regexp.escape options[:attr_delims].keys.join
       @delim_re = /\A[#{keys}]/
       @attr_delim_re = /\A\s*([#{keys}])/
@@ -352,8 +352,9 @@ module Slim
         # Handle output code
         @line = $'
         trailing_ws2 = $2.include?('\'') || $2.include?('>')
+        leading_ws2 = $2.include?('<')
         block = [:multi]
-        @stacks.last << [:static, ' '] if !leading_ws && $2.include?('<')
+        @stacks.last.insert(-2, [:static, ' ']) if !leading_ws && $2.include?('<')
         tag << [:slim, :output, $1 != '=', parse_broken_line, block]
         @stacks.last << [:static, ' '] if !trailing_ws && trailing_ws2
         @stacks << block
@@ -411,7 +412,7 @@ module Slim
           when boolean_attr_re
             # Boolean attribute
             @line = $'
-            attributes << [:html, :attr, $1, [:slim, :attrvalue, false, 'true']]
+            attributes << [:html, :attr, $1, [:multi]]
           when end_re
             # Find ending delimiter
             @line = $'
