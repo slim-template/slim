@@ -31,14 +31,16 @@ matrix:
       env: "TASK=test:rails RAILS=master"
     - rvm: jruby-18mode
       env: "TASK=test:rails RAILS=master"
-    - rvm: rbx-18mode
+    - rvm: rbx
       env: "TASK=test:rails RAILS=master"
     - rvm: 1.8.7
-      env: "TASK=test:rails RAILS=4.0.1"
+      env: "TASK=test:rails RAILS=4.0.4"
+    - rvm: 1.8.7
+      env: "TASK=test:rails RAILS=4.1.0"
     - rvm: jruby-18mode
-      env: "TASK=test:rails RAILS=4.0.1"
-    - rvm: rbx-18mode
-      env: "TASK=test:rails RAILS=4.0.1"
+      env: "TASK=test:rails RAILS=4.0.4"
+    - rvm: jruby-18mode
+      env: "TASK=test:rails RAILS=4.1.0"
   allow_failures:
     - env: "TASK=test:core_and_plugins TILT=master"
     - env: "TASK=test:rails RAILS=master"
