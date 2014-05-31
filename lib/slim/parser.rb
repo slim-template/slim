@@ -189,11 +189,12 @@ module Slim
       when /\A\//
         # Slim comment
         parse_comment_block
-      when /\A([\|'])( ?)/
+      when /\A([\|'"])( ?)/
         # Found a text block.
-        trailing_ws = $1 == "'"
+        trailing_ws = $1 == "'" || "\""
         @stacks.last << [:slim, :text, parse_text_block($', @indents.last + $2.size + 1)]
-        @stacks.last << [:static, ' '] if trailing_ws
+        @stacks.last << [:static, ' '] if trailing_ws == "'"
+        @stacks.last << [:static, "\n"] if trailing_ws == "\""
       when /\A</
         # Inline html
         block = [:multi]
