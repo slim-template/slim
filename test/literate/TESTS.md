@@ -1201,7 +1201,7 @@ ID and class shortcuts can contain dashes.
 ~~~ slim
 .-test text
 #test- text
-.-a#b- text
+.--a#b- text
 ~~~
 
 renders as
@@ -1213,7 +1213,7 @@ renders as
 <div id="test-">
   text
 </div>
-<div class="-a" id="b-">
+<div class="--a" id="b-">
   text
 </div>
 ~~~

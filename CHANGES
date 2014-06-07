@@ -5,6 +5,7 @@ master
   * Render empty attributes as standalone in html mode (#480)
   * Fix #482: problem with whitespace modifier `tag=<`
   * Fix #485: missing end for empty `if` control blocks
+  * Fix #510: double dash in class name
 
 2.0.2
 
