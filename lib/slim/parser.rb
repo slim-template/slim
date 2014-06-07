@@ -58,7 +58,7 @@ module Slim
         end
       end
       keys = Regexp.union @attr_shortcut.keys.sort_by {|k| -k.size }
-      @attr_shortcut_re = /\A(#{keys}+)(-*(?:#{WORD_RE}+-)*(?:#{WORD_RE})*)/
+      @attr_shortcut_re = /\A(#{keys}+)((?:#{WORD_RE}|-)*)/
       keys = Regexp.union @tag_shortcut.keys.sort_by {|k| -k.size }
       @tag_re = /\A(?:#{keys}|\*(?=[^\s]+)|(#{WORD_RE}(?:#{WORD_RE}|:|-)*#{WORD_RE}|#{WORD_RE}+))/
       keys = Regexp.escape options[:attr_delims].keys.join
