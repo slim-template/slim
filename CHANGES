@@ -1,4 +1,4 @@
-master
+2.0.3
 
   * slimrb: Don't update HTML output on exceptions
   * Allow dashes at the beginning of class names (#474)
