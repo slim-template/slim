@@ -1,4 +1,5 @@
 require 'helper'
+require 'erb' #asciidoctor fail to load it randomly
 
 class TestSlimEmbeddedEngines < TestSlim
   def test_render_with_erb
