@@ -227,9 +227,13 @@ module Slim
         @line = $' if $1
         parse_tag($&)
       else
-        syntax_error! 'Unknown line indicator'
+        unknown_line_indicator
       end
       @stacks.last << [:newline]
+    end
+
+    def unknown_line_indicator
+      syntax_error! 'Unknown line indicator'
     end
 
     def parse_comment_block
