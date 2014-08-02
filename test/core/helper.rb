@@ -46,6 +46,8 @@ class TestSlim < MiniTest::Unit::TestCase
     raise 'Syntax error expected'
   rescue Slim::Parser::SyntaxError => ex
     assert_equal message, ex.message
+    message =~ /([^\s]+), Line (\d+)/
+    assert_backtrace ex, "#{$1}:#{$2}"
   end
 
   def assert_ruby_error(error, from, source, options = {})
@@ -58,12 +60,12 @@ class TestSlim < MiniTest::Unit::TestCase
   def assert_backtrace(ex, from)
     if defined?(RUBY_ENGINE) && RUBY_ENGINE == 'rbx'
       # HACK: Rubinius stack trace sometimes has one entry more
-      if ex.backtrace[0] !~ /^#{Regexp.escape from}:/
-        ex.backtrace[1] =~ /([^\s]+:\d+):/
+      if ex.backtrace[0] !~ /^#{Regexp.escape from}/
+        ex.backtrace[1] =~ /([^\s]+:\d+)/
         assert_equal from, $1
       end
     else
-      ex.backtrace[0] =~ /([^\s]+:\d+):/
+      ex.backtrace[0] =~ /([^\s]+:\d+)/
       assert_equal from, $1
     end
   end
