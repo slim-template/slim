@@ -350,7 +350,7 @@ You can use text interpolation in the quoted attributes.
 
 If a delimiter makes the syntax more readable for you,
 you can use the characters `{...}`, `(...)`, `[...]` to wrap the attributes.
-You can configure these symbols (See option `:attr_delims`).
+You can configure these symbols (See option `:attr_list_delims`).
 
     body
       h1(id="logo") = page_logo
@@ -718,7 +718,8 @@ There are a lot of them but the good thing is, that Slim checks the configuratio
 | String | :encoding | "utf-8" | Set encoding of template |
 | String | :default_tag | "div" | Default tag to be used if tag name is omitted |
 | Hash | :shortcut | \{'.' => {:attr => 'class'}, '#' => {:attr => 'id'}} | Attribute shortcuts |
-| Hash | :attr_delims | \{'(' => ')', '[' => ']', '{' => '}'} | Attribute delimiters |
+| Hash | :code_attr_delims | \{'(' => ')', '[' => ']', '{' => '}'} | Attribute delimiters for Ruby code attributes |
+| Hash | :attr_list_delims | \{'(' => ')', '[' => ']', '{' => '}'} | Attribute list delimiter |
 | Array&lt;Symbol,String&gt; | :enable_engines | nil <i>(All enabled)</i> | List of enabled embedded engines (whitelist) |
 | Array&lt;Symbol,String&gt; | :disable_engines | nil <i>(None disabled)</i> | List of disabled embedded engines (blacklist) |
 | Boolean | :disable_capture | false (true in Rails) | Disable capturing in blocks (blocks write to the default buffer  |

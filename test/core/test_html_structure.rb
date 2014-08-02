@@ -311,6 +311,25 @@ closed/
     assert_html '<closed />', source, :format => :xhtml
   end
 
+  def test_custom_attr_list_delims_option
+    source = %q{
+p { foo="bar" x=(1+1) }
+p < x=(1+1) > Hello
+}
+
+    assert_html '<p foo="bar" x="2"></p><p>< x=(1+1) > Hello</p>', source
+    assert_html '<p foo="bar" x="2"></p><p>< x=(1+1) > Hello</p>', source, :attr_list_delims => {'{' => '}'}
+    assert_html '<p>{ foo="bar" x=(1+1) }</p><p x="2">Hello</p>', source, :attr_list_delims => {'<' => '>'}, :code_attr_delims => { '(' => ')' }
+  end
+
+  def test_closed_tag
+    source = %q{
+closed/
+}
+
+    assert_html '<closed />', source, :format => :xhtml
+  end
+
   def test_attributs_with_parens_and_spaces
     source = %q{label{ for='filter' }= hello_world}
     assert_html '<label for="filter">Hello World from @env</label>', source

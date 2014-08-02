@@ -3,17 +3,19 @@ module Slim
   # Parses Slim code and transforms it to a Temple expression
   # @api private
   class Parser < Temple::Parser
+    define_deprecated_options :attr_delims => {
+                                '(' => ')',
+                                '[' => ']',
+                                '{' => '}',
+                              }
     define_options :file,
                    :default_tag,
+                   :code_attr_delims,
+                   :attr_list_delims,
                    :tabsize => 4,
                    :shortcut => {
                      '#' => { :attr => 'id' },
                      '.' => { :attr => 'class' }
-                   },
-                   :attr_delims => {
-                     '(' => ')',
-                     '[' => ']',
-                     '{' => '}',
                    }
 
     class SyntaxError < StandardError
@@ -40,6 +42,8 @@ module Slim
 
     def initialize(opts = {})
       super
+      @attr_list_delims = options[:attr_list_delims] || options[:attr_delims]
+      @code_attr_delims = options[:code_attr_delims] || options[:attr_delims]
       tabsize = options[:tabsize]
       if tabsize > 1
         @tab_re = /\G((?: {#{tabsize}})*) {0,#{tabsize-1}}\t/
@@ -61,9 +65,10 @@ module Slim
       @attr_shortcut_re = /\A(#{keys}+)((?:#{WORD_RE}|-)*)/
       keys = Regexp.union @tag_shortcut.keys.sort_by {|k| -k.size }
       @tag_re = /\A(?:#{keys}|\*(?=[^\s]+)|(#{WORD_RE}(?:#{WORD_RE}|:|-)*#{WORD_RE}|#{WORD_RE}+))/
-      keys = Regexp.escape options[:attr_delims].keys.join
-      @delim_re = /\A[#{keys}]/
-      @attr_delim_re = /\A\s*([#{keys}])/
+      keys = Regexp.escape @code_attr_delims.keys.join
+      @code_attr_delims_re = /\A[#{keys}]/
+      keys = Regexp.escape @attr_list_delims.keys.join
+      @attr_list_delims_re = /\A\s*([#{keys}])/
     end
 
     # Compile string to Temple expression
@@ -365,8 +370,8 @@ module Slim
     def parse_attributes(attributes)
       # Check to see if there is a delimiter right after the tag name
       delimiter = nil
-      if @line =~ @attr_delim_re
-        delimiter = options[:attr_delims][$1]
+      if @line =~ @attr_list_delims_re
+        delimiter = @attr_list_delims[$1]
         @line = $'
       end
 
@@ -437,9 +442,9 @@ module Slim
             elsif @line[0] == close_delimiter[0]
               count -= 1
             end
-          elsif @line =~ @delim_re
+          elsif @line =~ @code_attr_delims_re
             count = 1
-            delimiter, close_delimiter = $&, options[:attr_delims][$&]
+            delimiter, close_delimiter = $&, @code_attr_delims[$&]
           end
           code << @line.slice!(0)
         end

@@ -1,3 +1,9 @@
+master
+
+  * Parser: Require pairwise braces in quoted attributes
+  * Parser: add :attr_list_delims and :code_attr_delims
+  * Parser: deprecate :attr_delims
+
 2.0.3
 
   * slimrb: Don't update HTML output on exceptions
