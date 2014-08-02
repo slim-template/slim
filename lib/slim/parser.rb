@@ -456,15 +456,10 @@ module Slim
           value << ' '
           expect_next_line
         else
-          if count > 0
-            if @line[0] == ?{
-              count += 1
-            elsif @line[0] == ?}
-              count -= 1
-            end
-          elsif @line =~ /\A#\{/
-            value << @line.slice!(0)
-            count = 1
+          if @line[0] == ?{
+            count += 1
+          elsif @line[0] == ?}
+            count -= 1
           end
           value << @line.slice!(0)
         end
