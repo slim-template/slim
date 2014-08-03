@@ -764,7 +764,7 @@ It is also possible to set options for superclasses like `Temple::Engine`. But t
 Slim currently provides plugins for logic less mode, includes and I18n. See the plugin documentation.
 
 * [Logic less mode](doc/logic_less.md)
-* [Translator/I18n](doc/include.md)
+* [Include partials](doc/include.md)
 * [Translator/I18n](doc/translator.md)
 
 ## Framework support
