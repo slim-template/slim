@@ -3,11 +3,6 @@ module Slim
   # Parses Slim code and transforms it to a Temple expression
   # @api private
   class Parser < Temple::Parser
-    define_deprecated_options :attr_delims => {
-                                '(' => ')',
-                                '[' => ']',
-                                '{' => '}',
-                              }
     define_options :file,
                    :default_tag,
                    :code_attr_delims,
@@ -16,7 +11,12 @@ module Slim
                    :shortcut => {
                      '#' => { :attr => 'id' },
                      '.' => { :attr => 'class' }
-                   }
+                   },
+                   :attr_delims => {
+                     '(' => ')',
+                     '[' => ']',
+                     '{' => '}',
+                    }
 
     class SyntaxError < StandardError
       attr_reader :error, :file, :line, :lineno, :column

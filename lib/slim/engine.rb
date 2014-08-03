@@ -12,6 +12,7 @@ module Slim
                    :merge_attrs => {'class' => ' '},
                    :generator => Temple::Generators::ArrayBuffer,
                    :default_tag => 'div'
+    define_deprecated_options :attr_delims
 
     filter :Encoding, :encoding
     filter :RemoveBOM
