@@ -1,10 +1,17 @@
 master
 
+  * Parser: Require pairwise braces in quoted attributes
+  * Parser: add :attr_list_delims and :code_attr_delims
+  * Parser: deprecate :attr_delims
+
+2.0.3
+
   * slimrb: Don't update HTML output on exceptions
   * Allow dashes at the beginning of class names (#474)
   * Render empty attributes as standalone in html mode (#480)
   * Fix #482: problem with whitespace modifier `tag=<`
   * Fix #485: missing end for empty `if` control blocks
+  * Fix #510: double dash in class name
 
 2.0.2
 

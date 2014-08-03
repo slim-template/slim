@@ -12,10 +12,11 @@ module Slim
                    :merge_attrs => {'class' => ' '},
                    :generator => Temple::Generators::ArrayBuffer,
                    :default_tag => 'div'
+    define_deprecated_options :attr_delims
 
     filter :Encoding, :encoding
     filter :RemoveBOM
-    use Slim::Parser, :file, :tabsize, :shortcut, :default_tag, :attr_delims, :implicit_text
+    use Slim::Parser, :file, :tabsize, :shortcut, :default_tag, :attr_delims, :attr_list_delims, :code_attr_delims, :implicit_text
     use Slim::Embedded, :enable_engines, :disable_engines, :pretty
     use Slim::Interpolation
     use Slim::Splat::Filter, :merge_attrs, :attr_quote, :sort_attrs, :default_tag, :hyphen_attrs, :format

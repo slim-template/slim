@@ -911,12 +911,13 @@ You can use text interpolation in the quoted attributes:
 ~~~ slim
 - url='slim-lang.com'
 a href="http://#{url}" Goto the #{url}
+a href="{"test"}" Test of quoted text in braces
 ~~~
 
 renders as
 
 ~~~ html
-<a href="http://slim-lang.com">Goto the slim-lang.com</a>
+<a href="http://slim-lang.com">Goto the slim-lang.com</a><a href="{&quot;test&quot;}">Test of quoted text in braces</a>
 ~~~
 
 The attribute value will be escaped by default. Use == if you want to disable escaping in the attribute.
@@ -1201,7 +1202,8 @@ ID and class shortcuts can contain dashes.
 ~~~ slim
 .-test text
 #test- text
-.-a#b- text
+.--a#b- text
+.a--test-123#--b text
 ~~~
 
 renders as
@@ -1213,7 +1215,10 @@ renders as
 <div id="test-">
   text
 </div>
-<div class="-a" id="b-">
+<div class="--a" id="b-">
+  text
+</div>
+<div class="a--test-123" id="--b">
   text
 </div>
 ~~~

@@ -24,6 +24,13 @@ if ENV['RAILS']
   end
 end
 
+#Choose minitest 4.7.x for sinatra or rails 3 and 4.0 otherwise go for newer version
+if ENV['SINATRA'] || (ENV['RAILS'] && !ENV['RAILS'].match(/4\.([1-9])(\..*)?/))
+  gem 'minitest', '~> 4.7.4'
+else
+  gem 'minitest', '~> 5.1'
+end
+
 if ENV['SINATRA']
   gem 'rack-test'
   if ENV['SINATRA'] == 'master'
@@ -40,7 +47,6 @@ gem 'creole'
 gem 'builder'
 gem 'asciidoctor'
 gem 'org-ruby'
-gem 'minitest', '~> 4.7.4'
 
 if ENV['TASK'] == 'bench'
   gem 'erubis'

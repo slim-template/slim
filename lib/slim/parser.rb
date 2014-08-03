@@ -5,6 +5,8 @@ module Slim
   class Parser < Temple::Parser
     define_options :file,
                    :default_tag,
+                   :code_attr_delims,
+                   :attr_list_delims,
                    :implicit_text => false,
                    :tabsize => 4,
                    :shortcut => {
@@ -15,7 +17,7 @@ module Slim
                      '(' => ')',
                      '[' => ']',
                      '{' => '}',
-                   }
+                    }
 
     class SyntaxError < StandardError
       attr_reader :error, :file, :line, :lineno, :column
@@ -41,6 +43,8 @@ module Slim
 
     def initialize(opts = {})
       super
+      @attr_list_delims = options[:attr_list_delims] || options[:attr_delims]
+      @code_attr_delims = options[:code_attr_delims] || options[:attr_delims]
       tabsize = options[:tabsize]
       if tabsize > 1
         @tab_re = /\G((?: {#{tabsize}})*) {0,#{tabsize-1}}\t/
@@ -60,12 +64,13 @@ module Slim
       end
       word_re = options[:implicit_text] ? LC_WORD_RE : WORD_RE
       attr_keys = Regexp.union( *@attr_shortcut.keys.sort_by {|k| -k.size } )
-      @attr_shortcut_re = /\A(#{attr_keys}+)(-?(?:#{WORD_RE}+-)*(?:#{WORD_RE})*)/
+      @attr_shortcut_re = /\A(#{attr_keys}+)((?:#{WORD_RE}|-)*)/
       tag_keys = Regexp.union( *(@tag_shortcut.keys - @attr_shortcut.keys).sort_by {|k| -k.size } )
-      @tag_re = /\A(?:#{attr_keys}(?=-?#{WORD_RE})|#{tag_keys}|\*(?=[^\s]+)|(#{word_re}(?:#{word_re}|:|-)*#{word_re}|#{word_re}+))/
-      keys = Regexp.escape options[:attr_delims].keys.join
-      @delim_re = /\A[#{keys}]/
-      @attr_delim_re = /\A\s*([#{keys}])/
+      @tag_re = /\A(?:#{attr_keys}(?=-*#{WORD_RE})|#{tag_keys}|\*(?=[^\s]+)|(#{word_re}(?:#{word_re}|:|-)*#{word_re}|#{word_re}+))/
+      keys = Regexp.escape @code_attr_delims.keys.join
+      @code_attr_delims_re = /\A[#{keys}]/
+      keys = Regexp.escape @attr_list_delims.keys.join
+      @attr_list_delims_re = /\A\s*([#{keys}])/
     end
 
     # Compile string to Temple expression
@@ -234,7 +239,8 @@ module Slim
         parse_tag($&)
       else
         unless options[:implicit_text]
-          syntax_error!('Illegal shortcut') if @line =~ @attr_shortcut_re
+          syntax_error! 'Illegal shortcut' if @line =~ @attr_shortcut_re
+          unknown_line_indicator
           syntax_error! 'Unknown line indicator'
         end
         # Found implicit smart text block.
@@ -244,6 +250,10 @@ module Slim
         @stacks.last << [:slim, :text, :implicit, parse_text_block(@line, indent)]
       end
       @stacks.last << [:newline]
+    end
+
+    def unknown_line_indicator
+      syntax_error! 'Unknown line indicator'
     end
 
     def parse_comment_block
@@ -352,7 +362,6 @@ module Slim
         # Handle output code
         @line = $'
         trailing_ws2 = $2.include?('\'') || $2.include?('>')
-        leading_ws2 = $2.include?('<')
         block = [:multi]
         @stacks.last.insert(-2, [:static, ' ']) if !leading_ws && $2.include?('<')
         tag << [:slim, :output, $1 != '=', parse_broken_line, block]
@@ -376,8 +385,8 @@ module Slim
     def parse_attributes(attributes)
       # Check to see if there is a delimiter right after the tag name
       delimiter = nil
-      if @line =~ @attr_delim_re
-        delimiter = options[:attr_delims][$1]
+      if @line =~ @attr_list_delims_re
+        delimiter = @attr_list_delims[$1]
         @line = $'
       end
 
@@ -448,9 +457,9 @@ module Slim
             elsif @line[0] == close_delimiter[0]
               count -= 1
             end
-          elsif @line =~ @delim_re
+          elsif @line =~ @code_attr_delims_re
             count = 1
-            delimiter, close_delimiter = $&, options[:attr_delims][$&]
+            delimiter, close_delimiter = $&, @code_attr_delims[$&]
           end
           code << @line.slice!(0)
         end
@@ -467,15 +476,10 @@ module Slim
           value << ' '
           expect_next_line
         else
-          if count > 0
-            if @line[0] == ?{
-              count += 1
-            elsif @line[0] == ?}
-              count -= 1
-            end
-          elsif @line =~ /\A#\{/
-            value << @line.slice!(0)
-            count = 1
+          if @line[0] == ?{
+            count += 1
+          elsif @line[0] == ?}
+            count -= 1
           end
           value << @line.slice!(0)
         end

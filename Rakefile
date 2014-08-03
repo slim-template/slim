@@ -14,7 +14,7 @@ end
 task 'test' => %w(test:core_and_plugins)
 
 namespace 'test' do
-  task 'core_and_plugins' => %w(core literate logic_less translator smart)
+  task 'core_and_plugins' => %w(core literate logic_less translator smart include)
 
   Rake::TestTask.new('core') do |t|
     t.libs << 'lib' << 'test/core'
@@ -44,6 +44,12 @@ namespace 'test' do
   Rake::TestTask.new('smart') do |t|
     t.libs << 'lib' << 'test/core'
     t.test_files = FileList['test/smart/test_*.rb']
+    t.verbose = true
+  end
+
+  Rake::TestTask.new('include') do |t|
+    t.libs << 'lib' << 'test/core'
+    t.test_files = FileList['test/include/test_*.rb']
     t.verbose = true
   end
 

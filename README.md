@@ -14,9 +14,11 @@ A short list of the features...
 * Safety
     * Automatic HTML escaping by default
     * Support for Rails' `html_safe?`
-* Highly configurable and extendable via plugins
-    * Logic less mode similar to Mustache, realized as plugin
-    * Translator/I18n, realized as plugin
+* Highly configurable
+* Extensible via the following plugins:
+    * Logic less mode similar to Mustache
+    * Includes
+    * Translator/I18n
 * High performance
     * Comparable speed to ERB/Erubis
     * Streaming support in Rails
@@ -388,7 +390,7 @@ You can use text interpolation in the quoted attributes.
 
 If a delimiter makes the syntax more readable for you,
 you can use the characters `{...}`, `(...)`, `[...]` to wrap the attributes.
-You can configure these symbols (See option `:attr_delims`).
+You can configure these symbols (See option `:attr_list_delims`).
 
     body
       h1(id="logo") = page_logo
@@ -757,7 +759,8 @@ There are a lot of them but the good thing is, that Slim checks the configuratio
 | String | :default_tag | "div" | Default tag to be used if tag name is omitted |
 | Boolean | :implicit_text | false | Enable implicit text recognition |
 | Hash | :shortcut | \{'.' => {:attr => 'class'}, '#' => {:attr => 'id'}} | Attribute shortcuts |
-| Hash | :attr_delims | \{'(' => ')', '[' => ']', '{' => '}'} | Attribute delimiters |
+| Hash | :code_attr_delims | \{'(' => ')', '[' => ']', '{' => '}'} | Attribute delimiters for Ruby code attributes |
+| Hash | :attr_list_delims | \{'(' => ')', '[' => ']', '{' => '}'} | Attribute list delimiter |
 | Array&lt;Symbol,String&gt; | :enable_engines | nil <i>(All enabled)</i> | List of enabled embedded engines (whitelist) |
 | Array&lt;Symbol,String&gt; | :disable_engines | nil <i>(None disabled)</i> | List of disabled embedded engines (blacklist) |
 | Boolean | :disable_capture | false (true in Rails) | Disable capturing in blocks (blocks write to the default buffer  |
@@ -797,9 +800,10 @@ It is also possible to set options for superclasses like `Temple::Engine`. But t
 
 ## Plugins
 
-Slim currently provides plugins for logic less mode and I18n. See the plugin documentation.
+Slim currently provides plugins for logic less mode, includes and I18n. See the plugin documentation.
 
 * [Logic less mode](doc/logic_less.md)
+* [Include partials](doc/include.md)
 * [Translator/I18n](doc/translator.md)
 * [Smart text mode](doc/smart.md)
 
@@ -856,11 +860,12 @@ Usage: slimrb [options]
         --trace                      Show a full traceback on error
     -c, --compile                    Compile only but do not run
     -e, --erb                        Convert to ERB
-    -r, --rails                      Generate rails compatible code (Implies --compile)
+        --rails                      Generate rails compatible code (Implies --compile)
+    -r library                       Load library or plugin with -r slim/plugin
     -t, --translator                 Enable translator plugin
     -l, --logic-less                 Enable logic less plugin
     -p, --pretty                     Produce pretty html
-    -o, --option [NAME=CODE]         Set slim option
+    -o, --option name=code           Set slim option
     -h, --help                       Show this message
     -v, --version                    Print version
 </pre>
@@ -999,6 +1004,7 @@ Template Converters (HAML, ERB, ...):
 
 Language ports/Similar languages:
 
+* [Slim/Liquid integration](https://github.com/slim-template/slim-liquid)
 * [Coffee script plugin for Slim](https://github.com/yury/coffee-views)
 * [Clojure port of Slim](https://github.com/chaslemley/slim.clj)
 * [Hamlet.rb (Similar template language)](https://github.com/gregwebs/hamlet.rb)
