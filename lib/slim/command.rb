@@ -39,16 +39,22 @@ module Slim
         @options[:erb] = true
       end
 
-      opts.on('-r', '--rails', 'Generate rails compatible code (Implies --compile)') do
+      opts.on('--rails', 'Generate rails compatible code (Implies --compile)') do
         Engine.set_default_options :disable_capture => true, :generator => Temple::Generators::RailsOutputBuffer
         @options[:compile] = true
       end
 
+      opts.on('-r library', "Load library or plugin with -r slim/plugin") do |lib|
+        require lib
+      end
+
       opts.on('-t', '--translator', 'Enable translator plugin') do
+        puts "Deprecated option: Use -r slim/translator"
         require 'slim/translator'
       end
 
       opts.on('-l', '--logic-less', 'Enable logic less plugin') do
+        puts "Deprecated option: Use -r slim/logic_less"
         require 'slim/logic_less'
       end
 
@@ -56,7 +62,7 @@ module Slim
         Engine.set_default_options :pretty => true
       end
 
-      opts.on('-o', '--option [NAME=CODE]', String, 'Set slim option') do |str|
+      opts.on('-o', '--option name=code', String, 'Set slim option') do |str|
         parts = str.split('=', 2)
         Engine.default_options[parts.first.gsub(/\A:/, '').to_sym] = eval(parts.last)
       end
