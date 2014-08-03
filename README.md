@@ -14,9 +14,11 @@ A short list of the features...
 * Safety
     * Automatic HTML escaping by default
     * Support for Rails' `html_safe?`
-* Highly configurable and extendable via plugins
-    * Logic less mode similar to Mustache, realized as plugin
-    * Translator/I18n, realized as plugin
+* Highly configurable
+* Extensible via the following plugins:
+    * Logic less mode similar to Mustache
+    * Includes
+    * Translator/I18n
 * High performance
     * Comparable speed to ERB/Erubis
     * Streaming support in Rails
@@ -759,9 +761,10 @@ It is also possible to set options for superclasses like `Temple::Engine`. But t
 
 ## Plugins
 
-Slim currently provides plugins for logic less mode and I18n. See the plugin documentation.
+Slim currently provides plugins for logic less mode, includes and I18n. See the plugin documentation.
 
 * [Logic less mode](doc/logic_less.md)
+* [Translator/I18n](doc/include.md)
 * [Translator/I18n](doc/translator.md)
 
 ## Framework support
@@ -817,11 +820,12 @@ Usage: slimrb [options]
         --trace                      Show a full traceback on error
     -c, --compile                    Compile only but do not run
     -e, --erb                        Convert to ERB
-    -r, --rails                      Generate rails compatible code (Implies --compile)
+        --rails                      Generate rails compatible code (Implies --compile)
+    -r library                       Load library or plugin with -r slim/plugin
     -t, --translator                 Enable translator plugin
     -l, --logic-less                 Enable logic less plugin
     -p, --pretty                     Produce pretty html
-    -o, --option [NAME=CODE]         Set slim option
+    -o, --option name=code           Set slim option
     -h, --help                       Show this message
     -v, --version                    Print version
 </pre>
@@ -960,6 +964,7 @@ Template Converters (HAML, ERB, ...):
 
 Language ports/Similar languages:
 
+* [Slim/Liquid integration](https://github.com/slim-template/slim-liquid)
 * [Coffee script plugin for Slim](https://github.com/yury/coffee-views)
 * [Clojure port of Slim](https://github.com/chaslemley/slim.clj)
 * [Hamlet.rb (Similar template language)](https://github.com/gregwebs/hamlet.rb)
