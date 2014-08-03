@@ -973,6 +973,7 @@ Template Converters (HAML, ERB, ...):
 Language ports/Similar languages:
 
 * [Slim/Liquid integration](https://github.com/slim-template/slim-liquid)
+* [Slm (Slim port to Javascript)](https://github.com/slm-lang/slm)
 * [Coffee script plugin for Slim](https://github.com/yury/coffee-views)
 * [Clojure port of Slim](https://github.com/chaslemley/slim.clj)
 * [Hamlet.rb (Similar template language)](https://github.com/gregwebs/hamlet.rb)
