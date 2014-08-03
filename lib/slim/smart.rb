@@ -1,10 +1,8 @@
 require 'slim'
 require 'slim/smart/filter'
 require 'slim/smart/escaper'
+require 'slim/smart/parser'
 
-# Enable implicit text recognition by default.
-Slim::Engine.set_default_options :implicit_text => true
-
-# Insert plugin filters into Slim engine chain
-Slim::Engine.after(Slim::Parser, Slim::Smart::Filter, :smart_text, :smart_text_end_chars, :smart_text_begin_chars)
+Slim::Engine.replace(Slim::Parser, Slim::Smart::Parser, :file, :tabsize, :shortcut, :default_tag, :attr_delims, :attr_list_delims, :code_attr_delims, :implicit_text)
+Slim::Engine.after(Slim::Smart::Parser, Slim::Smart::Filter, :smart_text, :smart_text_end_chars, :smart_text_begin_chars)
 Slim::Engine.after(Slim::Interpolation, Slim::Smart::Escaper, :smart_text_escaping)

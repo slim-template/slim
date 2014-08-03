@@ -58,10 +58,6 @@ module Slim
         require 'slim/logic_less'
       end
 
-      opts.on('-m', '--smart', 'Enable smart text mode plugin') do
-        require 'slim/smart'
-      end
-
       opts.on('-p', '--pretty', 'Produce pretty html') do
         Engine.set_default_options :pretty => true
       end

@@ -26,18 +26,19 @@ markdown:
   * one
   * two
 }
-    if !Gem::Specification::find_all_by_name('redcarpet').empty?
-      # redcarpet
+
+    case Tilt['md'].name.downcase
+    when /redcarpet/
       assert_html "<h1>Header</h1>\n\n<p>Hello from Markdown!</p>\n\n<p>3</p>\n\n<ul>\n<li>one</li>\n<li>two</li>\n</ul>\n", source, :tr_mode => :dynamic
       assert_html "<h1>Header</h1>\n\n<p>Hello from Markdown!</p>\n\n<p>3</p>\n\n<ul>\n<li>one</li>\n<li>two</li>\n</ul>\n", source, :tr_mode => :static
-    elsif !Gem::Specification::find_all_by_name('rdiscount').empty?
-      # rdiscount
+    when /rdiscount/
       assert_html "<h1>Header</h1>\n\n<p>Hello from Markdown!</p>\n\n<p>3</p>\n\n<ul>\n<li>one</li>\n<li>two</li>\n</ul>\n\n", source, :tr_mode => :dynamic
       assert_html "<h1>Header</h1>\n\n<p>Hello from Markdown!</p>\n\n<p>3</p>\n\n<ul>\n<li>one</li>\n<li>two</li>\n</ul>\n\n", source, :tr_mode => :static
-    else
-      # kramdown
+    when /kramdown/
       assert_html "<h1 id=\"header\">Header</h1>\n<p>Hello from Markdown!</p>\n\n<p>3</p>\n\n<ul>\n  <li>one</li>\n  <li>two</li>\n</ul>\n", source, :tr_mode => :dynamic
       assert_html "<h1 id=\"header\">Header</h1>\n<p>Hello from Markdown!</p>\n\n<p>3</p>\n\n<ul>\n  <li>one</li>\n  <li>two</li>\n</ul>\n", source, :tr_mode => :static
+    else
+      raise "Missing test for #{Tilt['md']}"
     end
   end
 

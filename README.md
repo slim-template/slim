@@ -143,38 +143,7 @@ You can also embed html in the text line
 
 The single quote tells Slim to copy the line (similar to `|`), but makes sure that a single trailing white space is appended.
 
-### Implicit and explicit text `>`
-
-By enabling the `:implicit_text` option,
-you can let Slim to automatically treat any line which doesn't start
-with a lowercase tag name or any of the special characters as an implicit text line.
-If the text spans several lines, simply indent them.
-
-    p
-      This is text,
-        and it spans
-        several lines.
-
-You can also mark the text explicitly with `>`,
-for example when it starts with lowercase letter or unusual character,
-or when the text spans several lines,
-or merely for aesthetic consistency,
-or if you want to use uppercase tag names
-and therefore need to keep the `:implicit_text` option disabled.
-
-    p
-      > 'This is text, too.'
-    p
-      >
-        This is text
-        which spans
-        several lines.
-      
-
-To get most out of these implicit and explicit text blocks,
-check the smart text plugin - otherwise such text will be treated as standard `|` verbatim text.
-
-### Inline html `<` (HTML style)
+### Inline html `<`
 
 You can write html tags directly in Slim which allows you to write your templates in a more html like style with closing tags or mix html and Slim style.
 The leading `<` works like an implicit `|`:
@@ -757,7 +726,6 @@ There are a lot of them but the good thing is, that Slim checks the configuratio
 | Integer | :tabsize | 4 | Number of white spaces per tab (used by the parser) |
 | String | :encoding | "utf-8" | Set encoding of template |
 | String | :default_tag | "div" | Default tag to be used if tag name is omitted |
-| Boolean | :implicit_text | false | Enable implicit text recognition |
 | Hash | :shortcut | \{'.' => {:attr => 'class'}, '#' => {:attr => 'id'}} | Attribute shortcuts |
 | Hash | :code_attr_delims | \{'(' => ')', '[' => ']', '{' => '}'} | Attribute delimiters for Ruby code attributes |
 | Hash | :attr_list_delims | \{'(' => ')', '[' => ']', '{' => '}'} | Attribute list delimiter |

@@ -7,7 +7,6 @@ module Slim
                    :default_tag,
                    :code_attr_delims,
                    :attr_list_delims,
-                   :implicit_text => false,
                    :tabsize => 4,
                    :shortcut => {
                      '#' => { :attr => 'id' },
@@ -62,11 +61,10 @@ module Slim
           raise ArgumentError, 'You can only use special characters for attribute shortcuts' if k =~ /(#{WORD_RE}|-)/
         end
       end
-      word_re = options[:implicit_text] ? LC_WORD_RE : WORD_RE
-      attr_keys = Regexp.union( *@attr_shortcut.keys.sort_by {|k| -k.size } )
-      @attr_shortcut_re = /\A(#{attr_keys}+)((?:#{WORD_RE}|-)*)/
-      tag_keys = Regexp.union( *(@tag_shortcut.keys - @attr_shortcut.keys).sort_by {|k| -k.size } )
-      @tag_re = /\A(?:#{attr_keys}(?=-*#{WORD_RE})|#{tag_keys}|\*(?=[^\s]+)|(#{word_re}(?:#{word_re}|:|-)*#{word_re}|#{word_re}+))/
+      keys = Regexp.union @attr_shortcut.keys.sort_by {|k| -k.size }
+      @attr_shortcut_re = /\A(#{keys}+)((?:#{WORD_RE}|-)*)/
+      keys = Regexp.union @tag_shortcut.keys.sort_by {|k| -k.size }
+      @tag_re = /\A(?:#{keys}|\*(?=[^\s]+)|(#{WORD_RE}(?:#{WORD_RE}|:|-)*#{WORD_RE}|#{WORD_RE}+))/
       keys = Regexp.escape @code_attr_delims.keys.join
       @code_attr_delims_re = /\A[#{keys}]/
       keys = Regexp.escape @attr_list_delims.keys.join
@@ -202,9 +200,6 @@ module Slim
         trailing_ws = $1 == "'"
         @stacks.last << [:slim, :text, :verbatim, parse_text_block($', @indents.last + $2.size + 1)]
         @stacks.last << [:static, ' '] if trailing_ws
-      when /\A>( ?)/
-        # Found explicit text block.
-        @stacks.last << [:slim, :text, :explicit, parse_text_block($', @indents.last + $1.size + 1)]
       when /\A</
         # Inline html
         block = [:multi]
@@ -227,7 +222,7 @@ module Slim
         @stacks.last << [:slim, :output, $1.empty?, parse_broken_line, block]
         @stacks.last << [:static, ' '] if trailing_ws
         @stacks << block
-      when /\A([_a-z0-9]+):\s*\Z/
+      when /\A(#{LC_WORD_RE}+):\s*\Z/
         # Embedded template detected. It is treated as block.
         @stacks.last << [:slim, :embedded, $1, parse_text_block]
       when /\Adoctype\s+/
@@ -238,16 +233,7 @@ module Slim
         @line = $' if $1
         parse_tag($&)
       else
-        unless options[:implicit_text]
-          syntax_error! 'Illegal shortcut' if @line =~ @attr_shortcut_re
-          unknown_line_indicator
-          syntax_error! 'Unknown line indicator'
-        end
-        # Found implicit smart text block.
-        if line = @lines.first
-          indent = ( line =~ /\A\s*\Z/ ? @indents.last + 1 : get_indent(line) )
-        end
-        @stacks.last << [:slim, :text, :implicit, parse_text_block(@line, indent)]
+        unknown_line_indicator
       end
       @stacks.last << [:newline]
     end
