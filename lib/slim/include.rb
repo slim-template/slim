@@ -2,6 +2,9 @@ require 'slim'
 
 module Slim
   # Handles inlined includes
+  #
+  # Slim files are compiled, non-Slim files are included as text with `#{interpolation}`
+  #
   # @api private
   class Include < Slim::Filter
     define_options :file, :include_dirs => [Dir.pwd, '.']
@@ -12,11 +15,24 @@ module Slim
       return super if tag != 'include'
       raise ArgumentError, 'Invalid include statement' unless attributes == [:html, :attrs] && CONTENT_RULE === content
       name = content[2][1][2]
-      name = "#{name}.slim" if name !~ /\.slim\Z/i
+      unless file = find_file(name)
+        name = "#{name}.slim" if name !~ /\.slim\Z/i
+        file = find_file(name)
+      end
+      raise "'#{name}' not found in #{options[:include_dirs].join(':')}" unless file
+      content = File.read(name)
+      if file =~ /\.slim\Z/i
+        Thread.current[:slim_include_engine].call(content)
+      else
+        [:slim, :interpolate, content]
+      end
+    end
+
+    protected
+
+    def find_file(name)
       current_dir = File.dirname(File.expand_path(options[:file]))
-      file = options[:include_dirs].map {|dir| File.expand_path(File.join(dir, name), current_dir) }.find {|file| File.exists?(file) }
-      raise "'#{name}' not found in #{options[:include_dirs].inspect}" unless file
-      Thread.current[:slim_include_engine].call(File.read(name))
+      options[:include_dirs].map {|dir| File.expand_path(File.join(dir, name), current_dir) }.find {|file| File.file?(file) }
     end
   end
 
