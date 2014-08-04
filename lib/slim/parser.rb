@@ -483,6 +483,8 @@ module Slim
       raise SyntaxError.new(message, options[:file], @orig_line, @lineno,
                             @orig_line && @line ? @orig_line.size - @line.size : 0)
     rescue SyntaxError => ex
+      # HACK: Manipulate stacktrace for Rails and other frameworks
+      # to find the right file.
       ex.backtrace.unshift "#{options[:file]}:#{@lineno}"
       raise
     end
