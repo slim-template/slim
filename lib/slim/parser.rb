@@ -33,7 +33,7 @@ module Slim
         line = @line.lstrip
         column = @column + line.size - @line.size
         %{#{error}
-  #{file}:#{lineno}, column #{@column}
+  #{file}, Line #{lineno}, Column #{@column}
     #{line}
     #{' ' * column}^
 }
