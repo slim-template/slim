@@ -13,7 +13,7 @@ module Slim
 
     def on_html_tag(tag, attributes, content)
       return super if tag != 'include'
-      raise ArgumentError, 'Invalid include statement' unless attributes == [:html, :attrs] && CONTENT_RULE =~ content
+      raise ArgumentError, 'Invalid include statement' unless attributes == [:html, :attrs] && CONTENT_RULE.match?(content)
       name = content[3][1][2]
       unless file = find_file(name)
         name = "#{name}.slim" if name !~ /\.slim\Z/i
