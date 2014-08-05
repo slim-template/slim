@@ -49,18 +49,19 @@ As more people have contributed to Slim, there have been syntax additions influe
 Slim uses [Temple](https://github.com/judofyr/temple) for parsing/compilation and is also integrated into [Tilt](https://github.com/rtomayko/tilt), so it can be used together with [Sinatra](https://github.com/sinatra/sinatra) or plain [Rack](https://github.com/rack/rack).
 
 The architecture of Temple is very flexible and allows the extension of the parsing and compilation process without monkey-patching. This is used
-by the logic less plugin and the translator plugin which provides I18n.
+by the logic less plugin and the translator plugin which provides I18n. In logic-less mode you can use Slim if you like the Slim syntax to build your HTML but don't want to write Ruby in your templates.
 
 ### Why use Slim?
 
-Within the Rails community, _Erb_ and _Haml_ are without doubt the two most popular templating engines. However, _Erb_'s syntax is cumbersome and _Haml_'s syntax can be quite cryptic to the uninitiated.
+* Slim allows you to write very minimal templates which are easy to maintain and pretty much guarantees that you write well-formed HTML and XML
+* We also think that the Slim syntax is also aesthetic and makes it much more fun to write templates. Since you can use Slim as a drop-in replacement in all the major framework you can start easily.
+* The Slim architecture is very flexible and allows you to write syntax extensions and plugins.
 
-There is also some development in logic-less engines (e.g. [Mustache](https://github.com/defunkt/mustache) which requires you to write standard HTML). You can also use Slim in logic-less mode if you like the Slim syntax to build your HTML but don't want to write Ruby in your templates.
-
-Slim was born to bring a minimalist syntax approach with speed. If people chose not to use Slim, it would not be because of speed.
-
-___Yes, Slim is speedy!___ Benchmarks are done for every commit at <http://travis-ci.org/slim-template/slim>.
+___Yes, Slim is speedy!___ Slim was developed right from the start with performance in mind.
+Benchmarks are done for every commit at <http://travis-ci.org/slim-template/slim>.
 Don't trust the numbers? That's as it should be. Please try the benchmark rake task yourself!
+
+However in our opionion you should use Slim because of its features and syntax. We just ensure that Slim doesn't have a negative impact on the performance of your application.
 
 ### How to start?
 
@@ -544,7 +545,7 @@ which renders to
 
 #### ID shortcut `#` and class shortcut `.`
 
-Similarly to Haml, you can specify the `id` and `class` attributes in the following shortcut form
+You can specify the `id` and `class` attributes in the following shortcut form
 
     body
       h1#headline
@@ -972,7 +973,7 @@ Template Converters (HAML, ERB, ...):
 
 Language ports/Similar languages:
 
-* [Slim/Liquid integration](https://github.com/slim-template/slim-liquid)
+* [Sliq (Slim/Liquid integration)](https://github.com/slim-template/sliq)
 * [Slm (Slim port to Javascript)](https://github.com/slm-lang/slm)
 * [Coffee script plugin for Slim](https://github.com/yury/coffee-views)
 * [Clojure port of Slim](https://github.com/chaslemley/slim.clj)
