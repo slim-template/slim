@@ -28,6 +28,7 @@ A short list of the features...
 
 ## Links
 
+* Homepage: <http://slim-lang.com>
 * Source: <http://github.com/slim-template/slim>
 * Bugs:   <http://github.com/slim-template/slim/issues>
 * List:   <http://groups.google.com/group/slim-template>
