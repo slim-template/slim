@@ -209,6 +209,17 @@ p#test class="paragraph" This is line one.
     assert_html "<p class=\"paragraph\" id=\"test\">This is line one.\nThis is line two.</p>", source
   end
 
+  def test_relaxed_text_indentation
+    source = %q{
+p
+  | text block
+   text
+    line3
+}
+
+    assert_html "<p>text block\ntext\n line3</p>", source
+  end
+
   def test_output_code_with_leading_spaces
     source = %q{
 p= hello_world

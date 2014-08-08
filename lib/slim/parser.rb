@@ -279,9 +279,8 @@ module Slim
           # as deep as the first line.
           offset = text_indent ? indent - text_indent : 0
           if offset < 0
-            syntax_error!("Text line not indented deep enough.\n" +
-                          "The first text line defines the necessary text indentation." +
-                          (in_tag ? "\nAre you trying to nest a child tag in a tag containing text? Use | for the text block!" : ''))
+            text_indent += offset
+            offset = 0
           end
 
           result << [:newline] << [:slim, :interpolate, (text_indent ? "\n" : '') + (' ' * offset) + @line]
