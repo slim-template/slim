@@ -19,7 +19,7 @@ module Slim
         name = "#{name}.slim" if name !~ /\.slim\Z/i
         file = find_file(name)
       end
-      raise "'#{name}' not found in #{options[:include_dirs].join(':')}" unless file
+      raise Temple::FilterError, "'#{name}' not found in #{options[:include_dirs].join(':')}" unless file
       content = File.read(file)
       if file =~ /\.slim\Z/i
         Thread.current[:slim_include_engine].call(content)
