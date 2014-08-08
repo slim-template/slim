@@ -69,6 +69,17 @@ creole:
     assert_html "<h1>head1</h1><h2>head2</h2>", source
   end
 
+  def test_render_with_creole_one_line
+    source = %q{
+creole: Hello **world**,
+  we can write one-line embedded markup now!
+  = Headline
+  Text
+.nested: creole: **Strong**
+}
+    assert_html '<p>Hello <strong>world</strong>, we can write one-line embedded markup now!</p><h1>Headline</h1><p>Text</p><div class="nested"><p><strong>Strong</strong></p></div>', source
+  end
+
   def test_render_with_org
     # HACK: org-ruby registers itself in Tilt
     require 'org-ruby'

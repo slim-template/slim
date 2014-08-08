@@ -69,6 +69,9 @@ module Slim
       @code_attr_delims_re = /\A[#{keys}]/
       keys = Regexp.escape @attr_list_delims.keys.join
       @attr_list_delims_re = /\A\s*([#{keys}])/
+      # Access available engine keys to allow nicer one-line syntax
+      keys = Embedded.engines.keys.map {|x| Regexp.escape(x) }.join('|')
+      @embedded_re = /\A(#{keys}):(\s*)/
     end
 
     # Compile string to Temple expression
@@ -222,9 +225,9 @@ module Slim
         @stacks.last << [:slim, :output, $1.empty?, parse_broken_line, block]
         @stacks.last << [:static, ' '] if trailing_ws
         @stacks << block
-      when /\A(#{LC_WORD_RE}+):\s*\Z/
+      when @embedded_re
         # Embedded template detected. It is treated as block.
-        @stacks.last << [:slim, :embedded, $1, parse_text_block]
+        @stacks.last << [:slim, :embedded, $1, parse_text_block($', @orig_line.size - $'.size + $2.size)]
       when /\Adoctype\s+/
         # Found doctype declaration
         @stacks.last << [:html, :doctype, $'.strip]
@@ -249,7 +252,7 @@ module Slim
       end
     end
 
-    def parse_text_block(first_line = nil, text_indent = nil, in_tag = false)
+    def parse_text_block(first_line = nil, text_indent = nil)
       result = [:multi]
       if !first_line || first_line.empty?
         text_indent = nil
@@ -282,7 +285,6 @@ module Slim
             text_indent += offset
             offset = 0
           end
-
           result << [:newline] << [:slim, :interpolate, (text_indent ? "\n" : '') + (' ' * offset) + @line]
 
           # The indentation of first line of the text block
@@ -335,14 +337,18 @@ module Slim
       when /\A\s*:\s*/
         # Block expansion
         @line = $'
-        (@line =~ @tag_re) || syntax_error!('Expected tag')
-        @line = $' if $1
-        content = [:multi]
-        tag << content
-        i = @stacks.size
-        @stacks << content
-        parse_tag($&)
-        @stacks.delete_at(i)
+        if @line =~ @embedded_re
+          tag << [:slim, :embedded, $1, parse_text_block($', @orig_line.size - @line.size + $2.size)]
+        else
+          (@line =~ @tag_re) || syntax_error!('Expected tag')
+          @line = $' if $1
+          content = [:multi]
+          tag << content
+          i = @stacks.size
+          @stacks << content
+          parse_tag($&)
+          @stacks.delete_at(i)
+        end
       when /\A\s*=(=?)(['<>]*)/
         # Handle output code
         @line = $'
@@ -361,9 +367,9 @@ module Slim
         content = [:multi]
         tag << content
         @stacks << content
-      when /\A( ?)(.*)\Z/
+      when /\A ?/
         # Text content
-        tag << [:slim, :text, :inline, parse_text_block($2, @orig_line.size - @line.size + $1.size, true)]
+        tag << [:slim, :text, :inline, parse_text_block($', @orig_line.size - $'.size)]
       end
     end
 

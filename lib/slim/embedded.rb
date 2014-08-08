@@ -62,25 +62,29 @@ module Slim
   class Embedded < Filter
     @engines = {}
 
-    # Register embedded engine
-    #
-    # @param [String] name Name of the engine
-    # @param [Class]  klass Engine class
-    # @param option_filter List of options to pass to engine.
-    #                      Last argument can be default option hash.
-    def self.register(name, klass, *option_filter)
-      name = name.to_sym
-      local_options = option_filter.last.respond_to?(:to_hash) ? option_filter.pop.to_hash : {}
-      define_options(name, *option_filter)
-      klass.define_options(name)
-      @engines[name.to_sym] = proc do |options|
-        klass.new({}.update(options).delete_if {|k,v| !option_filter.include?(k) && k != name }.update(local_options))
-      end
-    end
+    class << self
+      attr_reader :engines
 
-    def self.create(name, options)
-      constructor = @engines[name] || raise(Temple::FilterError, "Embedded engine #{name} not found")
-      constructor.call(options)
+      # Register embedded engine
+      #
+      # @param [String] name Name of the engine
+      # @param [Class]  klass Engine class
+      # @param option_filter List of options to pass to engine.
+      #                      Last argument can be default option hash.
+      def register(name, klass, *option_filter)
+        name = name.to_sym
+        local_options = option_filter.last.respond_to?(:to_hash) ? option_filter.pop.to_hash : {}
+        define_options(name, *option_filter)
+        klass.define_options(name)
+        engines[name.to_sym] = proc do |options|
+          klass.new({}.update(options).delete_if {|k,v| !option_filter.include?(k) && k != name }.update(local_options))
+        end
+      end
+
+      def create(name, options)
+        constructor = engines[name] || raise(Temple::FilterError, "Embedded engine #{name} not found")
+        constructor.call(options)
+      end
     end
 
     define_options :enable_engines, :disable_engines

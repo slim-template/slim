@@ -173,16 +173,6 @@ p
     assert_ruby_syntax_error "(__TEMPLATE__):3", source
   end
 
-  def test_invalid_embedded_engine
-    source = %q{
-p
-  embed_unknown:
-    1+1
-}
-
-    assert_runtime_error 'Embedded engine embed_unknown not found', source
-  end
-
   def test_explicit_end
     source = %q{
 div
