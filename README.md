@@ -68,7 +68,9 @@ However in our opionion you should use Slim because of its features and syntax. 
 
 Install Slim as a gem:
 
-    gem install slim
+~~~
+gem install slim
+~~~
 
 Include Slim in your Gemfile with `gem 'slim'` or require it with `require 'slim'`. That's it! Now, just use the .slim extension and you're good to go.
 
@@ -76,37 +78,39 @@ Include Slim in your Gemfile with `gem 'slim'` or require it with `require 'slim
 
 Here's a quick example to demonstrate what a Slim template looks like:
 
-    doctype html
-    html
-      head
-        title Slim Examples
-        meta name="keywords" content="template language"
-        meta name="author" content=author
-        link rel="icon" type="image/png" href=file_path("favicon.png")
-        javascript:
-          alert('Slim supports embedded javascript!')
+~~~ slim
+doctype html
+html
+  head
+    title Slim Examples
+    meta name="keywords" content="template language"
+    meta name="author" content=author
+    link rel="icon" type="image/png" href=file_path("favicon.png")
+    javascript:
+      alert('Slim supports embedded javascript!')
 
-      body
-        h1 Markup examples
+  body
+    h1 Markup examples
 
-        #content
-          p This example shows you how a basic Slim file looks.
+    #content
+      p This example shows you how a basic Slim file looks.
 
-        == yield
+    == yield
 
-        - if items.any?
-          table#items
-            - for item in items
-              tr
-                td.name = item.name
-                td.price = item.price
-        - else
-          p No items found. Please add some inventory.
-            Thank you!
+    - if items.any?
+      table#items
+        - for item in items
+          tr
+            td.name = item.name
+            td.price = item.price
+    - else
+      p No items found. Please add some inventory.
+        Thank you!
 
-        div id="footer"
-          == render 'footer'
-          | Copyright &copy; #{@year} #{@author}
+    div id="footer"
+      == render 'footer'
+      | Copyright &copy; #{@year} #{@author}
+~~~
 
 Indentation matters, but the indentation depth can be chosen as you like. If you want to first indent 2 spaces, then 5 spaces, it's your choice. To nest markup you only need to indent by one space, the rest is gravy.
 
@@ -117,29 +121,37 @@ Indentation matters, but the indentation depth can be chosen as you like. If you
 The pipe tells Slim to just copy the line. It essentially escapes any processing.
 Each following line that is indented greater than the pipe is copied over.
 
-    body
-      p
-        |
-          This is a test of the text block.
+~~~ slim
+body
+  p
+    |
+      This is a test of the text block.
+~~~
 
   The parsed result of the above:
 
-    <body><p>This is a test of the text block.</p></body>
+~~~ html
+<body><p>This is a test of the text block.</p></body>
+~~~
 
   If the text starts on the same line, the left margin is set at the indent of the pipe + one space.
   Any additional spaces will be copied over.
 
-    body
-      p
-        | This line is on the left margin.
-           This line will have one space in front of it.
-             This line will have two spaces in front of it.
-               And so on...
+~~~ slim
+body
+  p
+    | This line is on the left margin.
+       This line will have one space in front of it.
+         This line will have two spaces in front of it.
+           And so on...
+~~~
 
 You can also embed html in the text line
 
-    - articles.each do |a|
-      | <tr><td>#{a.name}</td><td>#{a.description}</td></tr>
+~~~ slim
+- articles.each do |a|
+  | <tr><td>#{a.name}</td><td>#{a.description}</td></tr>
+~~~
 
 ### Verbatim text with trailing white space `'`
 
@@ -150,34 +162,40 @@ The single quote tells Slim to copy the line (similar to `|`), but makes sure th
 You can write html tags directly in Slim which allows you to write your templates in a more html like style with closing tags or mix html and Slim style.
 The leading `<` works like an implicit `|`:
 
-    <html>
-      head
-        title Example
-      <body>
-        - if articles.empty?
-        - else
-          table
-            - articles.each do |a|
-              <tr><td>#{a.name}</td><td>#{a.description}</td></tr>
-      </body>
-    </html>
+~~~ slim
+<html>
+  head
+    title Example
+  <body>
+    - if articles.empty?
+    - else
+      table
+        - articles.each do |a|
+          <tr><td>#{a.name}</td><td>#{a.description}</td></tr>
+  </body>
+</html>
+~~~
 
 ### Control code `-`
 
 The dash denotes control code.  Examples of control code are loops and conditionals. `end` is forbidden behind `-`. Blocks are defined only by indentation.
 If your ruby code needs to use multiple lines, append a backslash `\` at the end of the lines. If your line ends with comma `,` (e.g because of a method call) you don't need the additional backslash before the linebreak.
 
-    body
-      - if articles.empty?
-        | No inventory
+~~~ slim
+body
+  - if articles.empty?
+    | No inventory
+~~~
 
 ### Output `=`
 
 The equal sign tells Slim it's a Ruby call that produces output to add to the buffer. If your ruby code needs to use multiple lines, append a backslash `\` at the end of the lines, for example:
 
-    = javascript_include_tag \
-       "jquery",
-       "application"
+~~~ slim
+= javascript_include_tag \
+   "jquery",
+   "application"
+~~~
 
 If your line ends with comma `,` (e.g because of a method call) you don't need the additional backslash before the linebreak. For trailing or leading whitespace the modifiers `>` and `<` are supported.
 
@@ -195,15 +213,19 @@ Same as the single equal sign (`=`), but does not go through the `escape_html` m
 
 Use the forward slash for code comments - anything after it won't get displayed in the final render. Use `/` for code comments and `/!` for html comments
 
-    body
-      p
-        / This line won't get displayed.
-          Neither does this line.
-        /! This will get displayed as html comments.
+~~~ slim
+body
+  p
+    / This line won't get displayed.
+      Neither does this line.
+    /! This will get displayed as html comments.
+~~~
 
   The parsed result of the above:
 
-    <body><p><!--This will get displayed as html comments.--></p></body>
+~~~ html
+<body><p><!--This will get displayed as html comments.--></p></body>
+~~~
 
 ### HTML comment `/!`
 
@@ -211,12 +233,16 @@ Use the forward slash immediately followed by an exclamation mark for html comme
 
 ### IE conditional comment `/[...]`
 
-    /[if IE]
-        p Get a better browser.
+~~~ slim
+/[if IE]
+    p Get a better browser.
+~~~
 
 renders as
 
-    <!--[if IE]><p>Get a better browser.</p><![endif]-->
+~~~ html
+<!--[if IE]><p>Get a better browser.</p><![endif]-->
+~~~
 
 ## HTML tags
 
@@ -226,63 +252,71 @@ The doctype tag is a special tag which can be used to generate the complex docty
 
 XML VERSION
 
-    doctype xml
-      <?xml version="1.0" encoding="utf-8" ?>
+~~~~ slim
+doctype xml
+  <?xml version="1.0" encoding="utf-8" ?>
 
-    doctype xml ISO-8859-1
-      <?xml version="1.0" encoding="iso-8859-1" ?>
+doctype xml ISO-8859-1
+  <?xml version="1.0" encoding="iso-8859-1" ?>
+~~~
 
 XHTML DOCTYPES
 
-    doctype html
-      <!DOCTYPE html>
+~~~ slim
+doctype html
+  <!DOCTYPE html>
 
-    doctype 5
-      <!DOCTYPE html>
+doctype 5
+  <!DOCTYPE html>
 
-    doctype 1.1
-      <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
-        "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+doctype 1.1
+  <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 
-    doctype strict
-      <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+doctype strict
+  <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
-    doctype frameset
-      <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+doctype frameset
+  <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
 
-    doctype mobile
-      <!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.2//EN"
-        "http://www.openmobilealliance.org/tech/DTD/xhtml-mobile12.dtd">
+doctype mobile
+  <!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.2//EN"
+    "http://www.openmobilealliance.org/tech/DTD/xhtml-mobile12.dtd">
 
-    doctype basic
-      <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN"
-        "http://www.w3.org/TR/xhtml-basic/xhtml-basic11.dtd">
+doctype basic
+  <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN"
+    "http://www.w3.org/TR/xhtml-basic/xhtml-basic11.dtd">
 
-    doctype transitional
-      <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+doctype transitional
+  <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+~~~
 
 HTML 4 DOCTYPES
 
-    doctype strict
-      <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
-        "http://www.w3.org/TR/html4/strict.dtd">
+~~~ slim
+doctype strict
+  <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+    "http://www.w3.org/TR/html4/strict.dtd">
 
-    doctype frameset
-      <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN"
-        "http://www.w3.org/TR/html4/frameset.dtd">
+doctype frameset
+  <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN"
+    "http://www.w3.org/TR/html4/frameset.dtd">
 
-    doctype transitional
-      <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-        "http://www.w3.org/TR/html4/loose.dtd">
+doctype transitional
+  <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
+~~~
 
 ### Closed tags (trailing `/`)
 
 You can close tags explicitly by appending a trailing `/`.
 
-    img src="image.png"/
+~~~ slim
+img src="image.png"/
+~~~
 
 Note, that this is usually not necessary since the standard html
 tags (img, br, ...) are closed automatically.
@@ -291,69 +325,92 @@ tags (img, br, ...) are closed automatically.
 
 You can force Slim to add a trailing whitespace after a tag by adding a `>`.
 
-    a> href='url1' Link1
-    a> href='url2' Link2
+~~~ slim
+a> href='url1' Link1
+a> href='url2' Link2
+~~~
 
 You can add a leading whitespace by adding `<`.
 
-    a< href='url1' Link1
-    a< href='url2' Link2
+~~~ slim
+a< href='url1' Link1
+a< href='url2' Link2
+~~~
 
 You can also combine both.
 
-    a<> href='url1' Link1
+~~~ slim
+a<> href='url1' Link1
+~~~
 
 ### Inline tags
 
 Sometimes you may want to be a little more compact and inline the tags.
 
-    ul
-      li.first: a href="/a" A link
-      li: a href="/b" B link
+~~~ slim
+ul
+  li.first: a href="/a" A link
+  li: a href="/b" B link
+~~~
 
 For readability, don't forget you can wrap the attributes.
 
-    ul
-      li.first: a[href="/a"] A link
-      li: a[href="/b"] B link
+~~~ slim
+ul
+  li.first: a[href="/a"] A link
+  li: a[href="/b"] B link
+~~~
 
 ### Text content
 
 Either start on the same line as the tag
 
-    body
-      h1 id="headline" Welcome to my site.
+~~~ slim
+body
+  h1 id="headline" Welcome to my site.
+~~~
 
 Or nest it.  You must use a pipe or an apostrophe to escape processing
 
-    body
-      h1 id="headline"
-        | Welcome to my site.
+
+~~~ slim
+body
+  h1 id="headline"
+    | Welcome to my site.
+~~~
 
 Or enable and rely on smart text instead
 
-    body
-      h1 id="headline"
-        Welcome to my site.
+~~~ slim
+body
+  h1 id="headline"
+    Welcome to my site.
+~~~
 
 ### Dynamic content (`=` and `==`)
 
 Can make the call on the same line
 
-    body
-      h1 id="headline" = page_headline
+~~~ slim
+body
+  h1 id="headline" = page_headline
+~~~
 
 Or nest it.
 
-    body
-      h1 id="headline"
-        = page_headline
+~~~ slim
+body
+  h1 id="headline"
+    = page_headline
+~~~
 
 ### Attributes
 
 You write attributes directly after the tag. For normal text attributes you must use double `"` or single quotes `'` (Quoted attributes).
 
-    a href="http://slim-lang.com" title='Slim Homepage' Goto the Slim homepage
+~~~ slim
+a href="http://slim-lang.com" title='Slim Homepage' Goto the Slim homepage
+~~~
 
 You can use text interpolation in the quoted attributes.
 
@@ -363,54 +420,72 @@ If a delimiter makes the syntax more readable for you,
 you can use the characters `{...}`, `(...)`, `[...]` to wrap the attributes.
 You can configure these symbols (See option `:attr_list_delims`).
 
-    body
-      h1(id="logo") = page_logo
-      h2[id="tagline" class="small tagline"] = page_tagline
+~~~ slim
+body
+  h1(id="logo") = page_logo
+  h2[id="tagline" class="small tagline"] = page_tagline
+~~~
 
 If you wrap the attributes, you can spread them across multiple lines:
 
-    h2[id="tagline"
-       class="small tagline"] = page_tagline
+~~~ slim
+h2[id="tagline"
+   class="small tagline"] = page_tagline
+~~~
 
 You may use spaces around the wrappers and assignments:
 
-    h1 id = "logo" = page_logo
-    h2 [ id = "tagline" ] = page_tagline
+~~~ slim
+h1 id = "logo" = page_logo
+h2 [ id = "tagline" ] = page_tagline
+~~~
 
 #### Quoted attributes
 
 Example:
 
-    a href="http://slim-lang.com" title='Slim Homepage' Goto the Slim homepage
+~~~ slim
+a href="http://slim-lang.com" title='Slim Homepage' Goto the Slim homepage
+~~~
 
 You can use text interpolation in the quoted attributes:
 
-    a href="http://#{url}" Goto the #{url}
+~~~ slim
+a href="http://#{url}" Goto the #{url}
+~~~
 
 The attribute value will be escaped by default. Use == if you want to disable escaping in the attribute.
 
-    a href=="&amp;"
+~~~ slim
+a href=="&amp;"
+~~~
 
 You can break quoted attributes with backslash `\`
 
-    a data-title="help" data-content="extremely long help text that goes on\
-      and one and one and then starts over...."
+~~~ slim
+a data-title="help" data-content="extremely long help text that goes on\
+  and one and one and then starts over...."
+~~~
 
 #### Ruby attributes
 
 Write the ruby code directly after the `=`. If the code contains spaces you have to wrap
 the code into parentheses `(...)`. You can also directly write hashes `{...}` and arrays `[...]`.
 
-    body
-      table
-        - for user in users
-          td id="user_#{user.id}" class=user.role
-            a href=user_action(user, :edit) Edit #{user.name}
-            a href=(path_to_user user) = user.name
+~~~ slim
+body
+  table
+    - for user in users
+      td id="user_#{user.id}" class=user.role
+        a href=user_action(user, :edit) Edit #{user.name}
+        a href=(path_to_user user) = user.name
+~~~
 
 The attribute value will be escaped by default. Use == if you want to disable escaping in the attribute.
 
-    a href==action_path(:start)
+~~~ slim
+a href==action_path(:start)
+~~~
 
 You can also break ruby attributes with backslash `\` or trailing `,` as describe for control sections.
 
@@ -419,70 +494,92 @@ You can also break ruby attributes with backslash `\` or trailing `,` as describ
 The attribute values `true`, `false` and `nil` are interpreted
 as booleans. If you use the attribute wrapper you can omit the attribute assigment.
 
-    input type="text" disabled="disabled"
-    input type="text" disabled=true
-    input(type="text" disabled)
+~~~ slim
+input type="text" disabled="disabled"
+input type="text" disabled=true
+input(type="text" disabled)
 
-    input type="text"
-    input type="text" disabled=false
-    input type="text" disabled=nil
+input type="text"
+input type="text" disabled=false
+input type="text" disabled=nil
+~~~
 
 #### Attribute merging
 
 You can configure attributes to be merged if multiple are given (See option `:merge_attrs`). In the default configuration
 this is done for class attributes with the white space as delimiter.
 
-    a.menu class="highlight" href="http://slim-lang.com/" Slim-lang.com
+~~~ slim
+a.menu class="highlight" href="http://slim-lang.com/" Slim-lang.com
+~~~
 
 This renders as
 
-    <a class="menu highlight" href="http://slim-lang.com/">Slim-lang.com</a>
+~~~ html
+<a class="menu highlight" href="http://slim-lang.com/">Slim-lang.com</a>
+~~~
 
 You can also use an `Array` as attribute value and the array elements will be merged using the delimiter.
 
-    a class=["menu","highlight"]
-    a class=:menu,:highlight
+~~~ slim
+a class=["menu","highlight"]
+a class=:menu,:highlight
+~~~
 
 #### Splat attributes `*`
 
 The splat shortcut allows you turn a hash in to attribute/value pairs
 
-    .card*{'data-url'=>place_path(place), 'data-id'=>place.id} = place.name
+~~~ slim
+.card*{'data-url'=>place_path(place), 'data-id'=>place.id} = place.name
+~~~
 
 renders as
 
-    <div class="card" data-id="1234" data-url="/place/1234">Slim's house</div>
+~~~ html
+<div class="card" data-id="1234" data-url="/place/1234">Slim's house</div>
+~~~
 
 You can also use methods or instance variables which return a hash as shown here:
 
-    .card *method_which_returns_hash = place.name
-    .card *@hash_instance_variable = place.name
+~~~ slim
+.card *method_which_returns_hash = place.name
+.card *@hash_instance_variable = place.name
+~~~
 
 The hash attributes which support attribute merging (see Slim option `:merge_attrs`) can be given as an `Array`
 
-    .first *{:class => [:second, :third]} Text
+~~~ slim
+.first *{:class => [:second, :third]} Text
+~~~
 
 renders as
 
-    div class="first second third"
+~~~ html
+div class="first second third"
+~~~
 
 #### Dynamic tags `*`
 
 You can create completely dynamic tags using the splat attributes. Just create a method which returns a hash
 with the :tag key.
 
-    ruby:
-      def a_unless_current
-        @page_current ? {:tag => 'span'} : {:tag => 'a', :href => 'http://slim-lang.com/'}
-      end
-    - @page_current = true
-    *a_unless_current Link
-    - @page_current = false
-    *a_unless_current Link
+~~~ slim
+ruby:
+  def a_unless_current
+    @page_current ? {:tag => 'span'} : {:tag => 'a', :href => 'http://slim-lang.com/'}
+  end
+- @page_current = true
+*a_unless_current Link
+- @page_current = false
+*a_unless_current Link
+~~~
 
 renders as
 
-    <span>Link</span><a href="http://slim-lang.com/">Link</a>
+~~~ html
+<span>Link</span><a href="http://slim-lang.com/">Link</a>
+~~~
 
 ### Shortcuts
 
@@ -490,15 +587,21 @@ renders as
 
 You can define custom tag shortcuts by setting the option `:shortcut`.
 
-    Slim::Engine.set_default_options :shortcut => {'c' => {:tag => 'container'}, '#' => {:attr => 'id'}, '.' => {:attr => 'class'} }
+~~~ ruby
+Slim::Engine.set_default_options :shortcut => {'c' => {:tag => 'container'}, '#' => {:attr => 'id'}, '.' => {:attr => 'class'} }
+~~~
 
 We can use it in Slim code like this
 
-    c.content Text
+~~~ slim
+c.content Text
+~~~
 
 which renders to
 
-    <container class="content">Text</container>
+~~~ html
+<container class="content">Text</container>
+~~~
 
 #### Attribute shortcuts
 
@@ -506,65 +609,87 @@ You can define custom shortcuts (Similar to `#` for id and `.` for class).
 
 In this example we add `&` to create a shortcut for the input elements with type attribute.
 
-    Slim::Engine.set_default_options :shortcut => {'&' => {:tag => 'input', :attr => 'type'}, '#' => {:attr => 'id'}, '.' => {:attr => 'class'}}
+~~~ ruby
+Slim::Engine.set_default_options :shortcut => {'&' => {:tag => 'input', :attr => 'type'}, '#' => {:attr => 'id'}, '.' => {:attr => 'class'}}
+~~~
 
 We can use it in Slim code like this
 
-    &text name="user"
-    &password name="pw"
-    &submit
+~~~ slim
+&text name="user"
+&password name="pw"
+&submit
+~~~
 
 which renders to
 
-    <input type="text" name="user" />
-    <input type="password" name="pw" />
-    <input type="submit" />
+~~~ html
+<input type="text" name="user" />
+<input type="password" name="pw" />
+<input type="submit" />
+~~~
 
 In another example we add `@` to create a shortcut for the role attribute.
 
-    Slim::Engine.set_default_options :shortcut => {'@' => {:attr => 'role'}, '#' => {:attr => 'id'}, '.' => {:attr => 'class'}}
+~~~ ruby
+Slim::Engine.set_default_options :shortcut => {'@' => {:attr => 'role'}, '#' => {:attr => 'id'}, '.' => {:attr => 'class'}}
+~~~
 
 We can use it in Slim code like this
 
-    .person@admin = person.name
+~~~ slim
+.person@admin = person.name
+~~~
 
 which renders to
 
-    <div class="person" role="admin">Daniel</div>
+~~~ html
+<div class="person" role="admin">Daniel</div>
+~~~
 
 You can also set multiple attributes at once using one shortcut.
 
-    Slim::Engine.set_default_options :shortcut => {'@' => {:attr => %w(data-role role)}}
+~~~ ruby
+Slim::Engine.set_default_options :shortcut => {'@' => {:attr => %w(data-role role)}}
+~~~
 
 We can use it in Slim code like this
 
-    .person@admin = person.name
+~~~ slim
+.person@admin = person.name
+~~~
 
 which renders to
 
-    <div class="person" role="admin" data-role="admin">Daniel</div>
+~~~ html
+<div class="person" role="admin" data-role="admin">Daniel</div>
+~~~
 
 #### ID shortcut `#` and class shortcut `.`
 
 You can specify the `id` and `class` attributes in the following shortcut form
 
-    body
-      h1#headline
-        = page_headline
-      h2#tagline.small.tagline
-        = page_tagline
-      .content
-        = show_content
+~~~ slim
+body
+  h1#headline
+    = page_headline
+  h2#tagline.small.tagline
+    = page_tagline
+  .content
+    = show_content
+~~~
 
 This is the same as
 
-    body
-      h1 id="headline"
-        = page_headline
-      h2 id="tagline" class="small tagline"
-        = page_tagline
-      div class="content"
-        = show_content
+~~~ slim
+body
+  h1 id="headline"
+    = page_headline
+  h2 id="tagline" class="small tagline"
+    = page_tagline
+  div class="content"
+    = show_content
+~~~
 
 ## Helpers, capturing and includes
 
@@ -587,23 +712,55 @@ end
 
 which is included in the scope that executes the Slim template code. The helper can then be used in the Slim template as follows
 
-    p
-      = headline do
-        ' Hello
-        = user.name
+~~~ slim
+p
+  = headline do
+    ' Hello
+    = user.name
+~~~
 
 The content in the `do` block is then captured automatically and passed to the helper via `yield`. As a syntactic
 sugar you can omit the `do` keyword and write only
 
-    p
-      = headline
-        ' Hello
-        = user.name
+~~~ slim
+p
+  = headline
+    ' Hello
+    = user.name
+~~~
 
-It has been requested many times to support includes of subtemplates in Slim. Up to now this has not been implemented as a core feature
-but you can easily get it by writing your own helper. The includes will be executed at runtime.
+### Capturing to local variables
+
+Using the `Binding` you can capture to local variables as follows:
 
 ~~~ruby
+module Helpers
+  def capture_to_local(var, &block)
+    set_var = block.binding.eval("lambda {|x| #{var} = x }")
+    # In Rails we have to use capture!
+    # If we are using Slim without a framework (Plain Tilt),
+    # you can just yield to get the captured block.
+    set_var.call(defined?(::Rails) ? capture(&block) : yield)
+  end
+end
+~~~
+
+The helper can then be used in the Slim template as follows
+
+~~~ slim
+/ The captured_content variable must be known by the Binding beforehand.
+- captured_content = nil;
+= capture_to_local :captured_content
+  p This will be captured in the variable captured_content
+= captured_content
+~~~
+
+### Include helper
+
+If you want includes which are processed at compile time, you can take a look at [Include partials](doc/include.md).
+However you can also execute subtemplates at runtime (similar to Rails' `#render`). You have to write your own include helper:
+
+~~~ ruby
 module Helpers
   def include_slim(name, options = {}, &block)
     Slim::Template.new("#{name}.slim", options).render(self, &block)
@@ -613,8 +770,10 @@ end
 
 This helper can then be used as follows
 
-    nav= include_slim 'menu'
-    section= include_slim 'content'
+~~~ slim
+nav= include_slim 'menu'
+section= include_slim 'content'
+~~~
 
 However this helper doesn't do any caching. You should therefore implement a more intelligent version of the helper which
 fits your purposes. You should also be aware that most frameworks already bring their own include helper, e.g. Rails has `render`.
@@ -623,14 +782,18 @@ fits your purposes. You should also be aware that most frameworks already bring 
 
 Use standard Ruby interpolation. The text will be html escaped by default.
 
-    body
-      h1 Welcome #{current_user.name} to the show.
-      | Unescaped #{{content}} is also possible.
+~~~ slim
+body
+  h1 Welcome #{current_user.name} to the show.
+  | Unescaped #{{content}} is also possible.
+~~~
 
 To escape the interpolation (i.e. render as is)
 
-    body
-      h1 Welcome \#{current_user.name} to the show.
+~~~ slim
+body
+  h1 Welcome \#{current_user.name} to the show.
+~~~
 
 ## Embedded engines (Markdown, ...)
 
@@ -638,13 +801,17 @@ Thanks to [Tilt](https://github.com/rtomayko/tilt), Slim has impressive support 
 
 Examples:
 
-    coffee:
-      square = (x) -> x * x
+~~~ slim
+coffee:
+  square = (x) -> x * x
 
-    markdown:
-      #Header
-        Hello from #{"Markdown!"}
-        Second Line!
+markdown:
+  #Header
+    Hello from #{"Markdown!"}
+    Second Line!
+
+p: markdown: Tag with **inline** markdown!
+~~~
 
 Supported engines:
 
@@ -670,7 +837,9 @@ Supported engines:
 
 The embedded engines can be configured in Slim by setting the options directly on the `Slim::Embedded` filter. Example:
 
-    Slim::Embedded.default_options[:markdown] = {:auto_ids => false}
+~~~ ruby
+Slim::Embedded.default_options[:markdown] = {:auto_ids => false}
+~~~
 
 ## Configuring Slim
 
@@ -679,42 +848,52 @@ The way how you configure Slim depends a bit on the compilation mechanism (Rails
 
 ### Default options
 
-    # Indent html for pretty debugging and do not sort attributes (Ruby 1.8)
-    Slim::Engine.set_default_options :pretty => true, :sort_attrs => false
+~~~ ruby
+# Indent html for pretty debugging and do not sort attributes (Ruby 1.8)
+Slim::Engine.set_default_options :pretty => true, :sort_attrs => false
 
-    # Indent html for pretty debugging and do not sort attributes (Ruby 1.9)
-    Slim::Engine.set_default_options pretty: true, sort_attrs: false
+# Indent html for pretty debugging and do not sort attributes (Ruby 1.9)
+Slim::Engine.set_default_options pretty: true, sort_attrs: false
+~~~
 
 You can also access the option hash directly:
 
-    Slim::Engine.default_options[:pretty] = true
+~~~ ruby
+Slim::Engine.default_options[:pretty] = true
+~~~
 
 ### Setting options at runtime
 
 There are two ways to set options at runtime. For Tilt templates (`Slim::Template`) you can set
 the options when you instatiate the template:
 
-    Slim::Template.new('template.slim', optional_option_hash).render(scope)
+~~~ ruby
+Slim::Template.new('template.slim', optional_option_hash).render(scope)
+~~~
 
 The other possibility is to set the options per thread which is interesting mostly for Rails:
 
-    Slim::Engine.with_options(option_hash) do
-       # Any Slim engines which are created here use the option_hash
-       # For example in Rails:
-       render :page, :layout => true
-    end
+~~~ ruby
+Slim::Engine.with_options(option_hash) do
+  # Any Slim engines which are created here use the option_hash
+  # For example in Rails:
+  render :page, :layout => true
+end
+~~~
 
 You have to be aware that the compiled engine code and the options are cached per template in Rails and you cannot change the option afterwards.
 
-    # First render call
-    Slim::Engine.with_options(:pretty => true) do
-       render :page, :layout => true
-    end
+~~~ ruby
+# First render call
+Slim::Engine.with_options(:pretty => true) do
+   render :page, :layout => true
+end
 
-    # Second render call
-    Slim::Engine.with_options(:pretty => false) do
-       render :page, :layout => true # :pretty is still true because it is cached
-    end
+# Second render call
+Slim::Engine.with_options(:pretty => false) do
+   render :page, :layout => true # :pretty is still true because it is cached
+end
+~~~
 
 ### Available options
 
@@ -765,8 +944,10 @@ options of the superclass. The option priorities are as follows:
 
 It is also possible to set options for superclasses like `Temple::Engine`. But this will affect all temple template engines then.
 
-    Slim::Engine < Temple::Engine
-    Slim::Compiler < Temple::Filter
+~~~ ruby
+Slim::Engine < Temple::Engine
+Slim::Compiler < Temple::Filter
+~~~
 
 ## Plugins
 
@@ -783,16 +964,19 @@ Slim currently provides plugins for logic less mode, includes and I18n. See the 
 
 Slim uses [Tilt](https://github.com/rtomayko/tilt) to compile the generated code. If you want to use the Slim template directly, you can use the Tilt interface.
 
-    Tilt.new['template.slim'].render(scope)
-    Slim::Template.new('template.slim', optional_option_hash).render(scope)
-    Slim::Template.new(optional_option_hash) { source }.render(scope)
+~~~ ruby
+Tilt.new['template.slim'].render(scope)
+Slim::Template.new('template.slim', optional_option_hash).render(scope)
+Slim::Template.new(optional_option_hash) { source }.render(scope)
+~~~
 
 The optional option hash can have to options which were documented in the section above. The scope is the object in which the template
 code is executed.
 
 ### Sinatra
 
-<pre>require 'sinatra'
+~~~ ruby
+require 'sinatra'
 require 'slim'
 
 get('/') { slim :index }
@@ -805,7 +989,7 @@ html
     title Sinatra With Slim
   body
     h1 Slim Is Fun!
-</pre>
+~~~
 
 ### Rails
 
@@ -893,7 +1077,9 @@ There are plugins for various text editors (including the most important ones - 
 Run the benchmarks with `rake bench`. You can add the option `slow` to
 run the slow parsing benchmark which needs more time. You can also increase the number of iterations.
 
-    rake bench slow=1 iterations=1000
+~~~
+$ rake bench slow=1 iterations=1000
+~~~
 
 We run the benchmarks for every commit on Travis-CI. Take a look at the newest benchmarking results: <http://travis-ci.org/slim-template/slim>
 
@@ -917,7 +1103,9 @@ Slim is working well on all major Ruby implementations:
 
 If you'd like to help improve Slim, clone the project with Git by running:
 
-    $ git clone git://github.com/slim-template/slim
+~~~
+$ git clone git://github.com/slim-template/slim
+~~~
 
 Work your magic and then submit a pull request. We love pull requests!
 
