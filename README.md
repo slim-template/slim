@@ -749,11 +749,32 @@ The helper can then be used in the Slim template as follows
 
 ~~~ slim
 / The captured_content variable must be known by the Binding beforehand.
-- captured_content = nil;
-= capture_to_local :captured_content
+= capture_to_local captured_content=:captured_content
   p This will be captured in the variable captured_content
 = captured_content
 ~~~
+
+Another interesting use case is to use an enumerable and capture for each element. The helper could look like this
+
+~~~ ruby
+module Capture
+  def capture(var, enumerable = nil, &block)
+    value = enumerable ? enumerable.map(&block) : yield
+    block.binding.eval("lambda {|x| #{var} = x }").call(value)
+    nil
+  end
+end
+~~~
+
+and it would be used as follows
+
+~~~ slim
+- links = { 'http://slim-lang.com' => 'The Slim Template Language' }
+= capture link_list=:link_list, links do |url, text|
+  a href=url = text
+~~~
+
+Afterwards, `link_list` contains the captured content.
 
 ### Include helper
 
