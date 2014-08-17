@@ -9,12 +9,10 @@ module Slim
   class Include < Slim::Filter
     define_options :file, :include_dirs => [Dir.pwd, '.']
 
-    CONTENT_RULE = Temple::Grammar::Rule [:slim, :text, :inline, [:multi, [:slim, :interpolate, String]]]
-
     def on_html_tag(tag, attributes, content)
       return super if tag != 'include'
-      raise ArgumentError, 'Invalid include statement' unless attributes == [:html, :attrs] && CONTENT_RULE.match?(content)
-      name = content[3][1][2]
+      name = content.flatten.select {|s| String === s }.join
+      raise ArgumentError, 'Invalid include statement' unless attributes == [:html, :attrs] && !name.empty?
       unless file = find_file(name)
         name = "#{name}.slim" if name !~ /\.slim\Z/i
         file = find_file(name)
