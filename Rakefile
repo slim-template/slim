@@ -1,5 +1,5 @@
 begin
-  require 'bundler'
+  require 'bundler/setup'
   Bundler::GemHelper.install_tasks
 rescue Exception
 end
