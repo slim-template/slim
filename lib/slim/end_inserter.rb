@@ -10,7 +10,7 @@ module Slim
   #
   # @api private
   class EndInserter < Filter
-    IF_RE = /\A(if|unless|else|elsif|when|rescue|ensure)\b|do\s*(\|[^\|]*\|)?\s*$/
+    IF_RE = /\A(if|unless|else|elsif|when|rescue|ensure)\b|\bdo\s*(\|[^\|]*\|)?\s*$/
     ELSE_RE = /\A(else|elsif|when|rescue|ensure)\b/
     END_RE = /\Aend\b/
 

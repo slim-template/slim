@@ -3,7 +3,7 @@ module Slim
   class Controls < Filter
     define_options :disable_capture
 
-    IF_RE = /\A(if|unless)\b|do\s*(\|[^\|]*\|)?\s*$/
+    IF_RE = /\A(if|unless)\b|\bdo\s*(\|[^\|]*\|)?\s*$/
 
     # Handle control expression `[:slim, :control, code, content]`
     #
