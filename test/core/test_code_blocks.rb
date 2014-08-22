@@ -21,6 +21,17 @@ p
     assert_html '<p>Hello Ruby! Hello from within a block! Hello Ruby!</p>', source
   end
 
+  def test_render_variable_ending_with_do
+    source = %q{
+- appelido=10
+p= appelido
+- appelido
+}
+
+    assert_html '<p>10</p>', source
+  end
+
+
   def test_render_with_output_code_within_block
     source = %q{
 p
