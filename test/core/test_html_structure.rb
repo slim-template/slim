@@ -14,6 +14,15 @@ html
     assert_html '<html><head><title>Simple Test Title</title></head><body><p>Hello World, meet Slim.</p></body></html>', source
   end
 
+  def test_relaxed_indentation_of_first_line
+    source = %q{
+  p
+    .content
+}
+
+    assert_html "<p><div class=\"content\"></div></p>", source
+  end
+
   def test_html_tag_with_text_and_empty_line
     source = %q{
 p Hello

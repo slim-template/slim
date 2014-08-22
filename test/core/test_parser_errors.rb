@@ -29,6 +29,15 @@ p
     assert_syntax_error "Malformed indentation\n  (__TEMPLATE__), Line 4, Column 1\n    div Invalid\n    ^\n", source
   end
 
+  def test_malformed_indentation2
+    source = %q{
+  div Valid
+ div Invalid
+}
+
+    assert_syntax_error "Malformed indentation\n  (__TEMPLATE__), Line 3, Column 1\n    div Invalid\n    ^\n", source
+  end
+
   def test_unknown_line_indicator
     source = %q{
 p

@@ -109,7 +109,7 @@ module Slim
       #
       # We uses this information to figure out how many steps we must "jump"
       # out when we see an de-indented line.
-      @indents = [0]
+      @indents = []
 
       # Whenever we want to output something, we'll *always* output it to the
       # last stack in this array. So when there's a line that expects
@@ -147,6 +147,9 @@ module Slim
 
       indent = get_indent(@line)
 
+      # Choose first indentation yourself
+      @indents << indent if @indents.empty?
+
       # Remove the indentation
       @line.lstrip!
 
@@ -168,7 +171,7 @@ module Slim
         # This line was deindented.
         # Now we're have to go through the all the indents and figure out
         # how many levels we've deindented.
-        while indent < @indents.last
+        while indent < @indents.last && @indents.size > 1
           @indents.pop
           @stacks.pop
         end

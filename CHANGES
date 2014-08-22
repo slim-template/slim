@@ -8,6 +8,7 @@ master
      next line
     tag some text
       more text
+  * Parser: allow first line to be indented
   * Parser: Allow inline embedded languages:
     .content: markdown: This is **important**
 
