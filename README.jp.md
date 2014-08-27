@@ -778,7 +778,7 @@ Afterwards, `link_list` contains the captured content.
 
 ###　インクルードヘルパ
 
-コンパイル時にインクルード機能を使いたい場合には, [パーシャルのインクルード](doc/include.md) を見てください。
+コンパイル時にインクルード機能を使いたい場合には, [パーシャルのインクルード](doc/jp/include.md) を見てください。
 実行時にサブテンプレートを実行すること ( Rails の `#render` のように) もできます。インクルードヘルパを自分で用意する必要があります:
 
 ~~~ ruby
@@ -974,10 +974,10 @@ Slim::Compiler < Temple::Filter
 
 Slim はロジックレスモードと I18n, インクルードプラグインを提供しています。プラグインのドキュメントを確認してください。
 
-* [ロジックレスモード](doc/logic_less.md)
-* [パーシャルのインクルード](doc/include.md)
-* [多言語化/I18n](doc/translator.md)
-* [スマートテキストモード](doc/smart.md)
+* [ロジックレスモード](doc/jp/logic_less.md)
+* [パーシャルのインクルード](doc/jp/include.md)
+* [多言語化/I18n](doc/jp/translator.md)
+* [スマートテキストモード](doc/jp/smart.md)
 
 ## フレームワークサポート
 
@@ -1117,7 +1117,7 @@ Slim はすべての主要な Ruby 実装で動作します:
 
 * Ruby 1.8.7, 1.9.3 および 2.0.0
 * Ruby EE
-* JRuby
+* JRuby 1.9 mode
 * Rubinius 2.0
 
 ## 貢献
@@ -1194,3 +1194,4 @@ Slim は [MIT license](http://www.opensource.org/licenses/MIT) に基づいて�
 * [Haml (Older engine which inspired Slim)](https://github.com/haml/haml)
 * [Jade (Similar engine for javascript)](https://github.com/visionmedia/jade)
 * [Sweet (Similar engine which also allows to write classes and functions)](https://github.com/joaomdmoura/sweet)
+* [Amber (Similar engine for Go)](https://github.com/eknkc/amber)
