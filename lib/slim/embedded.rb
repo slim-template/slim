@@ -255,6 +255,7 @@ module Slim
 
     # These engines are executed at compile time
     register :coffee,     JavaScriptEngine, :engine => StaticTiltEngine
+    register :opal,       JavaScriptEngine, :engine => StaticTiltEngine
     register :less,       TagEngine, :tag => :style,  :attributes => { :type => 'text/css' },         :engine => StaticTiltEngine
     register :styl,       TagEngine, :tag => :style,  :attributes => { :type => 'text/css' },         :engine => StaticTiltEngine
     register :sass,       TagEngine, :pretty, :tag => :style, :attributes => { :type => 'text/css' }, :engine => SassEngine
