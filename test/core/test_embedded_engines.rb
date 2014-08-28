@@ -124,6 +124,14 @@ p Hi
     assert_html %{<script type="text/javascript">$(function() {});\n\n\nalert('hello')</script><p>Hi</p>}, source
   end
 
+  def test_render_with_opal
+    source = %q{
+opal:
+  puts 'hello from opal'
+}
+    assert_match '$puts("hello from opal")', render(source)
+  end
+
   def test_render_with_javascript_with_tabs
     source = "javascript:\n\t$(function() {});\n\talert('hello')\np Hi"
     assert_html "<script type=\"text/javascript\">$(function() {});\nalert('hello')</script><p>Hi</p>", source
