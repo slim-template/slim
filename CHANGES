@@ -9,8 +9,9 @@ master
     tag some text
       more text
   * Parser: allow first line to be indented
-  * Parser: Allow inline embedded languages:
+  * Parser: allow inline embedded languages:
     .content: markdown: This is **important**
+  * Parser: allow line breaks in quoted attributes
 
 2.0.3
 

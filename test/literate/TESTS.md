@@ -940,7 +940,21 @@ renders as
 </li>
 ~~~
 
-You can break quoted attributes with backslash `\`
+You can use newlines in quoted attributes
+
+~~~ slim
+a data-title="help" data-content="extremely long help text that goes on
+  and one and one and then starts over...." Link
+~~~
+
+renders as
+
+~~~ html
+<a data-content="extremely long help text that goes on
+and one and one and then starts over...." data-title="help">Link</a>
+~~~
+
+You can break quoted attributes with an backslash `\`
 
 ~~~ slim
 a data-title="help" data-content="extremely long help text that goes on\

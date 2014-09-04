@@ -59,13 +59,13 @@ p
     assert_syntax_error "Expected closing delimiter )\n  (__TEMPLATE__), Line 3, Column 33\n    img(src=\"img.jpg\" title={title}\n                                   ^\n", source
   end
 
-  def test_expected_closing_quote
+  def test_missing_quote_unexpected_end
     source = %q{
 p
   img(src="img.jpg
 }
 
-    assert_syntax_error "Expected closing quote \"\n  (__TEMPLATE__), Line 3, Column 18\n    img(src=\"img.jpg\n                    ^\n", source
+assert_syntax_error "Unexpected end of file\n  (__TEMPLATE__), Line 3, Column 0\n    \n    ^\n", source
   end
 
   def test_expected_closing_attribute_delimiter

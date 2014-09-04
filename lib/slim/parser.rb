@@ -465,9 +465,9 @@ module Slim
     def parse_quoted_attribute(quote)
       value, count = '', 0
 
-      until @line.empty? || (count == 0 && @line[0] == quote[0])
-        if @line =~ /\A\\\Z/
-          value << ' '
+      until count == 0 && @line[0] == quote[0]
+        if @line =~ /\A(\\)?\Z/
+          value << ($1 ? ' ' : "\n")
           expect_next_line
         else
           if @line[0] == ?{
@@ -480,7 +480,6 @@ module Slim
       end
 
       syntax_error!("Expected closing brace }") if count != 0
-      syntax_error!("Expected closing quote #{quote}") if @line[0] != quote[0]
       @line.slice!(0)
 
       value
