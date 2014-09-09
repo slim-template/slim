@@ -125,6 +125,9 @@ p Hi
   end
 
   def test_render_with_opal
+    # HACK: org-ruby registers itself in Tilt
+    require 'opal'
+
     source = %q{
 opal:
   puts 'hello from opal'
