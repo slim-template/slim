@@ -12,7 +12,6 @@ master
   * Parser: allow inline embedded languages:
     .content: markdown: This is **important**
   * Parser: allow line breaks in quoted attributes
-  * Added Opal as embedded engine
 
 2.0.3
 

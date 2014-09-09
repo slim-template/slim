@@ -114,7 +114,7 @@ wiki:
   def test_render_with_javascript
     # Keep the trailing space behind "javascript:   "!
     source = %q{
-javascript:
+javascript:   
   $(function() {});
 
 
@@ -125,9 +125,6 @@ p Hi
   end
 
   def test_render_with_opal
-    # HACK: org-ruby registers itself in Tilt
-    require 'opal'
-
     source = %q{
 opal:
   puts 'hello from opal'
@@ -144,7 +141,7 @@ opal:
     # Keep the trailing space behind "javascript:   "!
     source = %q{
 - func = "alert('hello');"
-javascript:
+javascript:   
   $(function() { #{func} });
 }
     assert_html %q|<script type="text/javascript">$(function() { alert(&#39;hello&#39;); });</script>|, source
