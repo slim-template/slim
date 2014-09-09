@@ -98,4 +98,19 @@ html
 
     assert_html result, source, :scope => self, :locals => {:body => body, :content => content }
   end
+
+  def test_correct_line_number
+    source = %q{
+html
+  head
+  body
+    p Slim
+    = ''
+    = ''
+    = ''
+    = unknown_ruby_method
+}
+
+    assert_ruby_error NameError,"(__TEMPLATE__):9", source
+  end
 end
