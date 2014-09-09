@@ -40,6 +40,10 @@ if ENV['SINATRA']
   end
 end
 
+group :test do
+	gem 'opal', :github => 'opal/opal'
+end
+
 gem 'rake', '>= 0.8.7'
 gem 'sass', '>= 3.1.0'
 gem 'kramdown'
