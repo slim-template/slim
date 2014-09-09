@@ -125,8 +125,12 @@ p Hi
   end
 
   def test_render_with_opal
-    # HACK: org-ruby registers itself in Tilt
-    require 'opal'
+    begin
+      # HACK: org-ruby registers itself in Tilt
+      require 'opal'
+    rescue LoadError
+      return
+    end
 
     source = %q{
 opal:

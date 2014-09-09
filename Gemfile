@@ -4,6 +4,7 @@ gemspec
 
 if ENV['TRAVIS'] || ENV['TEMPLE'] == 'master'
   gem 'temple', :github => 'judofyr/temple'
+  gem 'opal', :github => 'opal/opal'
 elsif ENV['TEMPLE_PATH']
   gem 'temple', :path => ENV['TEMPLE_PATH']
 end
@@ -47,7 +48,6 @@ gem 'creole'
 gem 'builder'
 gem 'asciidoctor'
 gem 'org-ruby'
-gem 'opal', :github => 'opal/opal'
 
 if ENV['TASK'] == 'bench'
   gem 'erubis'
