@@ -70,8 +70,7 @@ module Slim
       keys = Regexp.escape @attr_list_delims.keys.join
       @attr_list_delims_re = /\A\s*([#{keys}])/
       # Access available engine keys to allow nicer one-line syntax
-      keys = Embedded.engines.keys.map {|x| Regexp.escape(x) }.join('|')
-      @embedded_re = /\A(#{keys}):(\s*)/
+      @embedded_re = /\A(#{Regexp.union(Embedded.engines.keys.map(&:to_s))}):(\s*)/
     end
 
     # Compile string to Temple expression
