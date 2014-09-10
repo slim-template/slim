@@ -4,7 +4,7 @@ gemspec
 
 if ENV['TRAVIS'] || ENV['TEMPLE'] == 'master'
   gem 'temple', :github => 'judofyr/temple'
-  gem 'opal', :github => 'opal/opal'
+  gem 'opal', :github => 'opal/opal' if RUBY_VERSION > '1.9'
 elsif ENV['TEMPLE_PATH']
   gem 'temple', :path => ENV['TEMPLE_PATH']
 end
