@@ -1117,7 +1117,7 @@ Slim is working well on all major Ruby implementations:
 
 * Ruby 1.8.7, 1.9.3 and 2.0.0
 * Ruby EE
-* JRuby
+* JRuby 1.9 mode
 * Rubinius 2.0
 
 ## Contributing
