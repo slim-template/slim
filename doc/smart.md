@@ -12,6 +12,30 @@ so you can easily type text like this:
     p
       This is text.
 
+Slim will automatically treat any line which doesn't start
+with a lowercase tag name or any of the special characters as an implicit text line.
+If the text spans several lines, simply indent them.
+
+    p
+      This is text,
+        and it spans
+        several lines.
+
+You can also mark the text explicitly with `>`,
+for example when it starts with lowercase letter or unusual character,
+or when the text spans several lines,
+or merely for aesthetic consistency,
+or if you want to use uppercase tag names
+and therefore need to keep the `:implicit_text` option disabled.
+
+    p
+      > 'This is text, too.'
+    p
+      >
+        This is text
+        which spans
+        several lines.
+
 As long as you leave the `:smart_text_escaping` enabled,
 any non-verbatim text is automatically escaped for you.
 However, for your convenience, any HTML entities detected are still used verbatim.
@@ -34,6 +58,8 @@ so it is easy to mix them with other tags, like emphasis or links:
       Check
       a href=r(:faq) our FAQ
       > for more info.
+
+(Note the use of the explicit text indicator `>` to distinguish lowercase text from tags).
 
 However, sometimes you do not want the whitespace around the inline tag.
 Fortunately smart text takes care of the most common cases for you as well.
@@ -65,42 +91,11 @@ Of course, all this is meant only to make working with short text snippets more 
 For bulk text content, you are more than welcome to use one of the builtin embedded engines,
 such as Markdown or Textile.
 
-### Implicit and explicit text `>`
-
-By enabling the `:implicit_text` option,
-you can let Slim to automatically treat any line which doesn't start
-with a lowercase tag name or any of the special characters as an implicit text line.
-If the text spans several lines, simply indent them.
-
-    p
-      This is text,
-        and it spans
-        several lines.
-
-You can also mark the text explicitly with `>`,
-for example when it starts with lowercase letter or unusual character,
-or when the text spans several lines,
-or merely for aesthetic consistency,
-or if you want to use uppercase tag names
-and therefore need to keep the `:implicit_text` option disabled.
-
-    p
-      > 'This is text, too.'
-    p
-      >
-        This is text
-        which spans
-        several lines.
-
-
-To get most out of these implicit and explicit text blocks,
-check the smart text plugin - otherwise such text will be treated as standard `|` verbatim text.
-
 ## Options
 
 | Type | Name | Default | Purpose |
 | ---- | ---- | ------- | ------- |
-| Boolean | :implicit_text | false | Enable implicit text recognition |
+| Boolean | :implicit_text | true | Enable implicit text recognition |
 | Boolean | :smart_text | true | Enable smart text mode newline processing |
 | String | :smart_text_begin_chars | ',.;:!?)]}' | Characters suppressing leading newline in smart text |
 | String | :smart_text_end_chars | '([{' | Characters suppressing trailing newline in smart text |
