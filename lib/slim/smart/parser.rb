@@ -19,7 +19,7 @@ module Slim
         else
           unless options[:implicit_text]
             syntax_error! 'Illegal shortcut' if @line =~ @attr_shortcut_re
-            unknown_line_indicator
+            super
           end
           # Found implicit smart text block.
           if line = @lines.first
