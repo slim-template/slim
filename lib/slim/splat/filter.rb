@@ -2,9 +2,9 @@ module Slim
   module Splat
     # @api private
     class Filter < ::Slim::Filter
-      OPTIONS = [:merge_attrs, :attr_quote, :sort_attrs, :default_tag, :hyphen_attrs, :format]
+      OPTIONS = [:merge_attrs, :attr_quote, :sort_attrs, :default_tag, :hyphen_attrs, :format, :use_html_safe]
       define_options OPTIONS
-      default_options[:hyphen_attrs] = %w(data aria)
+      set_default_options :hyphen_attrs => %w(data aria), :use_html_safe => ''.respond_to?(:html_safe?)
 
       def call(exp)
         @splat_options = nil

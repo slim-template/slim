@@ -10,11 +10,11 @@ module Slim
       def code_attr(name, escape, value)
         if delim = @options[:merge_attrs][name]
           value = Array === value ? value.join(delim) : value.to_s
-          attr(name, escape ? Temple::Utils.escape_html(value) : value) unless value.empty?
+          attr(name, escape ? Temple::Utils.escape_html_safe(value, @options[:use_html_safe]) : value) unless value.empty?
         elsif @options[:hyphen_attrs].include?(name) && Hash === value
           hyphen_attr(name, escape, value)
         elsif value != false && value != nil
-          attr(name, value != true && escape ? Temple::Utils.escape_html(value) : value)
+          attr(name, value != true && escape ? Temple::Utils.escape_html_safe(value, @options[:use_html_safe]) : value)
         end
       end
 
@@ -69,7 +69,7 @@ module Slim
             hyphen_attr("#{name}-#{n.to_s.gsub('_', '-')}", escape, v)
           end
         else
-          attr(name, value != true && escape ? Temple::Utils.escape_html(value) : value)
+          attr(name, value != true && escape ? Temple::Utils.escape_html_safe(value, @options[:use_html_safe]) : value)
         end
       end
     end

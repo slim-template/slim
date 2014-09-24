@@ -19,6 +19,7 @@ master
   * Add experimental 'slim/smart' plugin (Might change in the future)
   * Drop jruby18 support
   * Fix rails error reporting #587 (Manipulate stacktrace)
+  * Splat: handle html_safe
 
 2.0.3
 
