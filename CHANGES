@@ -1,4 +1,4 @@
-master
+2.1.0
 
   * Parser: Require pairwise braces in quoted attributes
   * Parser: add :attr_list_delims and :code_attr_delims
