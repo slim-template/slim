@@ -13,6 +13,12 @@ master
     .content: markdown: This is **important**
   * Parser: allow line breaks in quoted attributes
   * Added Opal as embedded engine
+  * slimrb: Change meaning of -r, deprecate -t and -l
+  * Fix issue with inserted end (#485)
+  * Add experimental 'slim/include' plugin (Might change in the future)
+  * Add experimental 'slim/smart' plugin (Might change in the future)
+  * Drop jruby18 support
+  * Fix rails error reporting #587 (Manipulate stacktrace)
 
 2.0.3
 
