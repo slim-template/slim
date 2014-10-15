@@ -67,7 +67,7 @@ module Slim
       def make_builder(attrs)
         @splat_options ||= unique_name
         builder = unique_name
-        result = [:multi, [:code, "#{builder} = ::Slim::Splat::Builder.new(#{@splat_options})"]]
+        result = [:multi, [:code, "#{builder} = ::Slim::Splat::Builder.new(#{@splat_options}, #{''.respond_to?(:html_safe)})"]]
         attrs.each do |attr|
           result <<
             if attr[0] == :html && attr[1] == :attr
