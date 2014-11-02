@@ -4,6 +4,7 @@ $:.unshift(File.join(File.dirname(__FILE__), '..', 'lib'), File.dirname(__FILE__
 
 require 'slim'
 require 'context'
+require 'mustache_context'
 
 require 'benchmark'
 require 'tilt'
@@ -53,6 +54,7 @@ class SlimBenchmarks
     bench('(1) slim ugly')   { context.run_slim_ugly }
     bench('(1) haml pretty') { context.run_haml_pretty }
     bench('(1) haml ugly')   { context.run_haml_ugly }
+    bench('(1) mustache')    { MustacheContext.render }
   end
 
   def init_tilt_benches

@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+
+<html>
+  <head>
+    <title>Simple Benchmark</title>
+  </head>
+  <body>
+    <h1>{{header}}</h1>
+    {{#item_present?}}
+      <ul>
+        {{#item}}
+          {{#current}}
+            <li><strong>{{current}}</strong></li>
+          {{/current}}
+          {{^current}}
+            <li><a href="{{url}}">{{name}}</a></li>
+          {{/current}}
+        {{/item}}
+      </ul>
+    {{/item_present?}}
+    {{^item_present?}}
+      <p>The list is empty.</p>
+    {{/item_present?}}
+  </body>
+</html>
