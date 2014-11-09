@@ -52,4 +52,5 @@ gem 'org-ruby'
 if ENV['TASK'] == 'bench'
   gem 'erubis'
   gem 'haml'
+  gem 'actionpack'
 end
