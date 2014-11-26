@@ -1115,7 +1115,7 @@ Travis-CI is used for continuous integration testing: <http://travis-ci.org/slim
 
 Slim is working well on all major Ruby implementations:
 
-* Ruby 1.8.7, 1.9.3 and 2.0.0
+* Ruby 1.8.7, 1.9.3, 2.0.0 and 2.1.0
 * Ruby EE
 * JRuby 1.9 mode
 * Rubinius 2.0
@@ -1130,7 +1130,7 @@ $ git clone git://github.com/slim-template/slim
 
 Work your magic and then submit a pull request. We love pull requests!
 
-Please remember to keep the compatibility with Ruby versions 1.8.7, 1.9.3 and 2.0.0.
+Please remember to keep the compatibility with Ruby versions 1.8.7, 1.9.3, 2.0.0 and 2.1.0.
 
 If you find the documentation lacking, help us out and update this README.md. If you don't have the time to work on Slim, but found something we should know about, please submit an issue.
 
