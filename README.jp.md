@@ -23,7 +23,7 @@ Slim は 不可解にならないように view の構文を本質的な部品�
     * ERB/Erubis に匹敵するスピード
     * Rails のストリーミングに対応
 * 全てのメジャーフレームワークが対応 (Rails, Sinatra, ...)
-* Ruby 1.9 では タグや属性の Unicode に完全対応
+* タグや属性の Unicode に完全対応
 * Markdown や Textile のような埋め込みエンジン
 
 ## リンク

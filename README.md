@@ -23,7 +23,7 @@ A short list of the features...
     * Comparable speed to ERB/Erubis
     * Streaming support in Rails
 * Supported by all major frameworks (Rails, Sinatra, ...)
-* Full Unicode support for tags and attributes on Ruby 1.9
+* Full Unicode support for tags and attributes
 * Embedded engines like Markdown and Textile
 
 ## Links
