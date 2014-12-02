@@ -936,7 +936,7 @@ end
 | 真偽値 | :disable_capture | false (Rails では true) | ブロック内キャプチャ無効 (ブロックはデフォルトのバッファに書き込む)  |
 | 真偽値 | :disable_escape | false | 文字列の自動エスケープ無効 |
 | 真偽値 | :use_html_safe | false (Rails では true) | ActiveSupport の String# html_safe? を使う (:disable_escape と一緒に機能する) |
-| シンボル | :format | :xhtml | html の出力フォーマット (対応フォーマット :xhtml, :html4, :html5, :html) |
+| シンボル | :format | :xhtml | html の出力フォーマット (対応フォーマット :html, :xhtml, :xml) |
 | 文字列 | :attr_quote |  '"'  | html の属性を囲む文字 (' または " が可能) |
 | ハッシュ | :merge_attrs | \{'class' => ' '} | 複数の html 属性が与えられた場合結合に使われる文字列 (例: class="class1 class2") |
 | 配列&lt;文字列&gt; | :hyphen_attrs | %w(data) | 属性にハッシュが与えられた場合ハイフンつなぎされます。(例: data={a:1, b:2} は data-a="1" data-b="2" のように) |

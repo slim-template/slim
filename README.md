@@ -936,7 +936,7 @@ There are a lot of them but the good thing is, that Slim checks the configuratio
 | Boolean | :disable_capture | false (true in Rails) | Disable capturing in blocks (blocks write to the default buffer  |
 | Boolean | :disable_escape | false | Disable automatic escaping of strings |
 | Boolean | :use_html_safe | false (true in Rails) | Use String#html_safe? from ActiveSupport (Works together with :disable_escape) |
-| Symbol | :format | :xhtml | HTML output format (Possible formats :xhtml, :html4, :html5, :html) |
+| Symbol | :format | :xhtml | HTML output format (Possible formats :html, :xhtml, :xml) |
 | String | :attr_quote | '"' | Character to wrap attributes in html (can be ' or ") |
 | Hash | :merge_attrs | \{'class' => ' '} | Joining character used if multiple html attributes are supplied (e.g. class="class1 class2") |
 | Array&lt;String&gt; | :hyphen_attrs | %w(data) | Attributes which will be hyphenated if a Hash is given (e.g. data={a:1,b:2} will render as data-a="1" data-b="2") |
