@@ -52,7 +52,7 @@ markdown:
       # kramdown, :auto_ids by default
       assert_html "<h1 id=\"header\">Header</h1>\n<p>Hello from Markdown!</p>\n\n<p>3</p>\n\n<ul>\n  <li>one</li>\n  <li>two</li>\n</ul>\n", source
 
-      Slim::Embedded.with_options(:markdown => {:auto_ids => false}) do
+      Slim::Embedded.with_options(markdown: {auto_ids: false}) do
         assert_html "<h1>Header</h1>\n<p>Hello from Markdown!</p>\n\n<p>3</p>\n\n<ul>\n  <li>one</li>\n  <li>two</li>\n</ul>\n", source
       end
 
@@ -95,7 +95,7 @@ org:
   def test_render_with_builder
     source = %q{
 builder:
-  xml.p(:id => 'test') {
+  xml.p(id: 'test') {
     xml.text!('Hello')
   }
 }
@@ -155,28 +155,28 @@ javascript:
   end
 
   def test_render_with_javascript_with_explicit_html_comment
-    Slim::Engine.with_options(:js_wrapper => :comment) do
+    Slim::Engine.with_options(js_wrapper: :comment) do
       source = "javascript:\n\t$(function() {});\n\talert('hello')\np Hi"
       assert_html "<script type=\"text/javascript\"><!--\n$(function() {});\nalert('hello')\n//--></script><p>Hi</p>", source
     end
   end
 
   def test_render_with_javascript_with_explicit_cdata_comment
-    Slim::Engine.with_options(:js_wrapper => :cdata) do
+    Slim::Engine.with_options(js_wrapper: :cdata) do
       source = "javascript:\n\t$(function() {});\n\talert('hello')\np Hi"
       assert_html "<script type=\"text/javascript\">\n//<![CDATA[\n$(function() {});\nalert('hello')\n//]]>\n</script><p>Hi</p>", source
     end
   end
 
   def test_render_with_javascript_with_format_xhtml_comment
-    Slim::Engine.with_options(:js_wrapper => :guess, :format => :xhtml) do
+    Slim::Engine.with_options(js_wrapper: :guess, format: :xhtml) do
       source = "javascript:\n\t$(function() {});\n\talert('hello')\np Hi"
       assert_html "<script type=\"text/javascript\">\n//<![CDATA[\n$(function() {});\nalert('hello')\n//]]>\n</script><p>Hi</p>", source
     end
   end
 
   def test_render_with_javascript_with_format_html_comment
-    Slim::Engine.with_options(:js_wrapper => :guess, :format => :html) do
+    Slim::Engine.with_options(js_wrapper: :guess, format: :html) do
       source = "javascript:\n\t$(function() {});\n\talert('hello')\np Hi"
       assert_html "<script type=\"text/javascript\"><!--\n$(function() {});\nalert('hello')\n//--></script><p>Hi</p>", source
     end
@@ -206,22 +206,22 @@ scss:
 ruby:
   Embedded Ruby
 }
-    assert_runtime_error 'Embedded engine ruby is disabled', source, :enable_engines => [:javascript]
-    assert_runtime_error 'Embedded engine ruby is disabled', source, :enable_engines => %w(javascript)
+    assert_runtime_error 'Embedded engine ruby is disabled', source, enable_engines: [:javascript]
+    assert_runtime_error 'Embedded engine ruby is disabled', source, enable_engines: %w(javascript)
 
     source = %{
 ruby:
   Embedded Ruby
 }
-    assert_runtime_error 'Embedded engine ruby is disabled', source, :enable_engines => [:javascript]
-    assert_runtime_error 'Embedded engine ruby is disabled', source, :enable_engines => %w(javascript)
+    assert_runtime_error 'Embedded engine ruby is disabled', source, enable_engines: [:javascript]
+    assert_runtime_error 'Embedded engine ruby is disabled', source, enable_engines: %w(javascript)
 
     source = %{
 ruby:
   Embedded Ruby
 }
-    assert_runtime_error 'Embedded engine ruby is disabled', source, :disable_engines => [:ruby]
-    assert_runtime_error 'Embedded engine ruby is disabled', source, :disable_engines => %w(ruby)
+    assert_runtime_error 'Embedded engine ruby is disabled', source, disable_engines: [:ruby]
+    assert_runtime_error 'Embedded engine ruby is disabled', source, disable_engines: %w(ruby)
   end
 
   def test_enabled_embedded_engine
@@ -229,14 +229,14 @@ ruby:
 javascript:
   $(function() {});
 }
-    assert_html '<script type="text/javascript">$(function() {});</script>', source, :disable_engines => [:ruby]
-    assert_html '<script type="text/javascript">$(function() {});</script>', source, :disable_engines => %w(ruby)
+    assert_html '<script type="text/javascript">$(function() {});</script>', source, disable_engines: [:ruby]
+    assert_html '<script type="text/javascript">$(function() {});</script>', source, disable_engines: %w(ruby)
 
     source = %q{
 javascript:
   $(function() {});
 }
-    assert_html '<script type="text/javascript">$(function() {});</script>', source, :enable_engines => [:javascript]
-    assert_html '<script type="text/javascript">$(function() {});</script>', source, :enable_engines => %w(javascript)
+    assert_html '<script type="text/javascript">$(function() {});</script>', source, enable_engines: [:javascript]
+    assert_html '<script type="text/javascript">$(function() {});</script>', source, enable_engines: %w(javascript)
   end
 end

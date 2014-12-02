@@ -47,7 +47,7 @@ class TestSlimTemplate < TestSlim
     fail unless data[0] == ?h
     template = Slim::Template.new('test.slim') { data }
     begin
-      res = template.render(Object.new, :name => 'Joe', :foo => 'bar')
+      res = template.render(Object.new, name: 'Joe', foo: 'bar')
     rescue => ex
       assert_kind_of MockError, ex
       assert_backtrace(ex, 'test.slim:5')
@@ -63,7 +63,7 @@ class TestSlimTemplate < TestSlim
 
   def test_passing_locals
     template = Slim::Template.new { "p = 'Hey ' + name + '!'\n" }
-    assert_equal "<p>Hey Joe!</p>", template.render(Object.new, :name => 'Joe')
+    assert_equal "<p>Hey Joe!</p>", template.render(Object.new, name: 'Joe')
   end
 end
 

@@ -14,7 +14,7 @@ class TestSlimEncoding < TestSlim
     result = "\xFF\xFF"
     result.force_encoding(Encoding::BINARY) if source.respond_to? :force_encoding
 
-    out = render(source, :default_encoding => 'binary')
+    out = render(source, default_encoding: 'binary')
     out.force_encoding(Encoding::BINARY) if source.respond_to? :force_encoding
 
     assert_equal result, out

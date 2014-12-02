@@ -7,12 +7,12 @@ module Slim
                    :default_tag,
                    :code_attr_delims,
                    :attr_list_delims,
-                   :tabsize => 4,
-                   :shortcut => {
-                     '#' => { :attr => 'id' },
-                     '.' => { :attr => 'class' }
+                   tabsize: 4,
+                   shortcut: {
+                     '#' => { attr: 'id' },
+                     '.' => { attr: 'class' }
                    },
-                   :attr_delims => {
+                   attr_delims: {
                      '(' => ')',
                      '[' => ']',
                      '{' => '}',

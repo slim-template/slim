@@ -2,19 +2,19 @@ require 'slim'
 
 module Slim
   class Translator < Filter
-    define_options :tr_mode => :dynamic,
-                   :tr_fn   => '_',
-                   :tr      => false
+    define_options tr_mode: :dynamic,
+                   tr_fn: '_',
+                   tr: false
 
     if defined?(::I18n)
-      set_options :tr_fn => '::Slim::Translator.i18n_text',
-                  :tr => true
+      set_options tr_fn: '::Slim::Translator.i18n_text',
+                  tr: true
     elsif defined?(::GetText)
-      set_options :tr_fn => '::GetText._',
-                  :tr => true
+      set_options tr_fn: '::GetText._',
+                  tr: true
     elsif defined?(::FastGettext)
-      set_options :tr_fn => '::FastGettext::Translation._',
-                  :tr => true
+      set_options tr_fn: '::FastGettext::Translation._',
+                  tr: true
     end
 
     def self.i18n_text(text)
@@ -38,9 +38,9 @@ module Slim
       super
       case options[:tr_mode]
       when :static
-        @translator = StaticTranslator.new(:tr_fn => options[:tr_fn])
+        @translator = StaticTranslator.new(tr_fn: options[:tr_fn])
       when :dynamic
-        @translator = DynamicTranslator.new(:tr_fn => options[:tr_fn])
+        @translator = DynamicTranslator.new(tr_fn: options[:tr_fn])
       else
         raise ArgumentError, "Invalid translator mode #{options[:tr_mode].inspect}"
       end

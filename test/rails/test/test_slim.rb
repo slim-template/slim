@@ -33,7 +33,7 @@ class TestSlim < ActionDispatch::IntegrationTest
   test "view without a layout" do
     get "slim/no_layout"
     assert_template "slim/no_layout"
-    assert_html "<h1>Hello Slim without a layout!</h1>", :skip_layout => true
+    assert_html "<h1>Hello Slim without a layout!</h1>", skip_layout: true
   end
 
   test "view with variables" do
@@ -65,15 +65,15 @@ class TestSlim < ActionDispatch::IntegrationTest
   end
 
   test "render thread_options" do
-    get "slim/thread_options", :attr => 'role'
+    get "slim/thread_options", attr: 'role'
     assert_html '<p role="empty">Test</p>'
-    get "slim/thread_options", :attr => 'id' # Overwriting doesn't work because of caching
+    get "slim/thread_options", attr: 'id' # Overwriting doesn't work because of caching
     assert_html '<p role="empty">Test</p>'
   end
 
   test "content_for" do
     get "slim/content_for"
-    assert_html "<p>Page content</p><h1><p>Hello Slim!</p></h1><h2><p>Hello Slim!</p></h2>", :heading => 'Heading set from a view'
+    assert_html "<p>Page content</p><h1><p>Hello Slim!</p></h1><h2><p>Hello Slim!</p></h2>", heading: 'Heading set from a view'
   end
 
   test "form_for" do

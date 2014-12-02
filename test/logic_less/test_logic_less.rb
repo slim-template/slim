@@ -5,9 +5,9 @@ class TestSlimLogicLess < TestSlim
   class Scope
     def initialize
       @hash = {
-        :person => [
-                    { :name => 'Joe', :age => 1, :selected => true },
-                    { :name => 'Jack', :age => 2 }
+        person: [
+                    { name: 'Joe', age: 1, selected: true },
+                    { name: 'Jack', age: 2 }
                    ]
       }
     end
@@ -25,22 +25,22 @@ p
 }
 
     hash = {
-      :hello => 'Hello!',
-      :person => lambda do |&block|
+      hello: 'Hello!',
+      person: lambda do |&block|
         %w(Joe Jack).map do |name|
-          "<b>#{block.call(:name => name)}</b>"
+          "<b>#{block.call(name: name)}</b>"
         end.join
       end,
-      :simple => lambda do |&block|
+      simple: lambda do |&block|
         "<div class=\"simple\">#{block.call}</div>"
       end,
-      :list => lambda do |&block|
-        list = [{:key => 'First'}, {:key => 'Second'}]
+      list: lambda do |&block|
+        list = [{key: 'First'}, {key: 'Second'}]
         "<ul>#{block.call(*list)}</ul>"
       end
     }
 
-    assert_html '<p><b><div class="name">Joe</div></b><b><div class="name">Jack</div></b><div class="simple"><div class="hello">Hello!</div></div><ul><li>First</li><li>Second</li></ul></p>', source, :scope => hash
+    assert_html '<p><b><div class="name">Joe</div></b><b><div class="name">Jack</div></b><div class="simple"><div class="hello">Hello!</div></div><ul><li>First</li><li>Second</li></ul></p>', source, scope: hash
   end
 
   def test_symbol_hash
@@ -51,13 +51,13 @@ p
 }
 
     hash = {
-      :person => [
-        { :name => 'Joe', },
-        { :name => 'Jack', }
+      person: [
+        { name: 'Joe', },
+        { name: 'Jack', }
       ]
     }
 
-    assert_html '<p><div class="name">Joe</div><div class="name">Jack</div></p>', source, :scope => hash
+    assert_html '<p><div class="name">Joe</div><div class="name">Jack</div></p>', source, scope: hash
   end
 
   def test_string_access
@@ -74,7 +74,7 @@ p
       ]
     }
 
-    assert_html '<p><div class="name">Joe</div><div class="name">Jack</div></p>', source, :scope => hash, :dictionary_access => :string
+    assert_html '<p><div class="name">Joe</div><div class="name">Jack</div></p>', source, scope: hash, dictionary_access: :string
   end
 
   def test_symbol_access
@@ -85,13 +85,13 @@ p
 }
 
     hash = {
-      :person => [
-        { :name => 'Joe', },
-        { :name => 'Jack', }
+      person: [
+        { name: 'Joe', },
+        { name: 'Jack', }
       ]
     }
 
-    assert_html '<p><div class="name">Joe</div><div class="name">Jack</div></p>', source, :scope => hash, :dictionary_access => :symbol
+    assert_html '<p><div class="name">Joe</div><div class="name">Jack</div></p>', source, scope: hash, dictionary_access: :symbol
   end
 
   def test_method_access
@@ -113,7 +113,7 @@ p
       end
     end
 
-    assert_html '<p><div class="name">Joe</div><div class="name">Jack</div></p>', source, :scope => object, :dictionary_access => :method
+    assert_html '<p><div class="name">Joe</div><div class="name">Jack</div></p>', source, scope: object, dictionary_access: :method
   end
 
   def test_instance_variable_access
@@ -130,7 +130,7 @@ p
                                    person
                                  end)
 
-    assert_html '<p><div class="name">Joe</div><div class="name">Jack</div></p>', source, :scope => object, :dictionary_access => :instance_variable
+    assert_html '<p><div class="name">Joe</div><div class="name">Jack</div></p>', source, scope: object, dictionary_access: :instance_variable
   end
 
   def test_to_s_access
@@ -141,13 +141,13 @@ p
 }
 
     hash = {
-      :people => [
+      people: [
         'Joe',
         'Jack'
       ]
     }
 
-    assert_html '<p><div class="name">Joe</div><div class="name">Jack</div></p>', source, :scope => hash, :dictionary_access => :symbol
+    assert_html '<p><div class="name">Joe</div><div class="name">Jack</div></p>', source, scope: hash, dictionary_access: :symbol
   end
 
   def test_string_hash
@@ -164,7 +164,7 @@ p
       ]
     }
 
-    assert_html '<p><div class="name">Joe</div><div class="name">Jack</div></p>', source, :scope => hash
+    assert_html '<p><div class="name">Joe</div><div class="name">Jack</div></p>', source, scope: hash
   end
 
   def test_dictionary_option
@@ -174,7 +174,7 @@ p
   .name = name
 }
 
-    assert_html '<p><div class="name">Joe</div><div class="name">Jack</div></p>', source, :scope => Scope.new, :dictionary => '@hash'
+    assert_html '<p><div class="name">Joe</div><div class="name">Jack</div></p>', source, scope: Scope.new, dictionary: '@hash'
   end
 
   def test_flag_section
@@ -188,14 +188,14 @@ p
 }
 
     hash = {
-      :show_person => true,
-      :person => [
-        { :name => 'Joe', },
-        { :name => 'Jack', }
+      show_person: true,
+      person: [
+        { name: 'Joe', },
+        { name: 'Jack', }
       ]
     }
 
-    assert_html '<p><div class="name">Joe</div><div class="name">Jack</div>shown</p>', source, :scope => hash
+    assert_html '<p><div class="name">Joe</div><div class="name">Jack</div>shown</p>', source, scope: hash
   end
 
   def test_inverted_section
@@ -211,7 +211,7 @@ p
 
     hash = {}
 
-    assert_html '<p>No person No person 2</p>', source, :scope => hash
+    assert_html '<p>No person No person 2</p>', source, scope: hash
   end
 
   def test_escaped_interpolation
@@ -232,7 +232,7 @@ p
     Person
 }
 
-    assert_html '<p><b name="Joe">Person</b><a id="Joe">1</a><span class="Joe"><Person></Person></span><b name="Jack">Person</b><a id="Jack">2</a><span class="Jack"><Person></Person></span></p>', source, :scope => Scope.new, :dictionary => '@hash'
+    assert_html '<p><b name="Joe">Person</b><a id="Joe">1</a><span class="Joe"><Person></Person></span><b name="Jack">Person</b><a id="Jack">2</a><span class="Jack"><Person></Person></span></p>', source, scope: Scope.new, dictionary: '@hash'
   end
 
   def test_boolean_attributes
@@ -242,7 +242,7 @@ p
    input checked=selected = name
 }
 
-    assert_html '<p><input checked="">Joe</input><input>Jack</input></p>', source, :scope => Scope.new, :dictionary => '@hash'
+    assert_html '<p><input checked="">Joe</input><input>Jack</input></p>', source, scope: Scope.new, dictionary: '@hash'
   end
 
   def test_sections
@@ -251,7 +251,7 @@ p
  - person
   .name = name
 }
-    assert_html '<p><div class="name">Joe</div><div class="name">Jack</div></p>', source, :dictionary => 'ViewEnv.new'
+    assert_html '<p><div class="name">Joe</div><div class="name">Jack</div></p>', source, dictionary: 'ViewEnv.new'
   end
 
   def test_with_array
@@ -261,14 +261,14 @@ ul
   li = name
   li = city
 }
-    assert_html '<ul><li>Andy</li><li>Atlanta</li><li>Fred</li><li>Melbourne</li><li>Daniel</li><li>Karlsruhe</li></ul>', source, :dictionary => 'ViewEnv.new'
+    assert_html '<ul><li>Andy</li><li>Atlanta</li><li>Fred</li><li>Melbourne</li><li>Daniel</li><li>Karlsruhe</li></ul>', source, dictionary: 'ViewEnv.new'
   end
 
   def test_method
     source = %q{
 a href=output_number Link
 }
-    assert_html '<a href="1337">Link</a>', source, :dictionary => 'ViewEnv.new'
+    assert_html '<a href="1337">Link</a>', source, dictionary: 'ViewEnv.new'
   end
 
   def test_conditional_parent
@@ -279,7 +279,7 @@ a href=output_number Link
 - next_page
   li.next
     a href=next_page Newer}
-    assert_html'<li class="previous"><a href="prev">Older</a></li><li class="next"><a href="next">Newer</a></li>', source, :scope => {:prev_page => 'prev', :next_page => 'next'}
+    assert_html'<li class="previous"><a href="prev">Older</a></li><li class="next"><a href="next">Newer</a></li>', source, scope: {prev_page: 'prev', next_page: 'next'}
   end
 
   def test_render_with_yield

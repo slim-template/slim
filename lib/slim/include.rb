@@ -7,7 +7,7 @@ module Slim
   #
   # @api private
   class Include < Slim::Filter
-    define_options :file, :include_dirs => [Dir.pwd, '.']
+    define_options :file, include_dirs: [Dir.pwd, '.']
 
     def on_html_tag(tag, attributes, content)
       return super if tag != 'include'

@@ -6,9 +6,9 @@ module Slim
     # Default dictionary access order, change it with the option :dictionary_access
     DEFAULT_ACCESS_ORDER = [:symbol, :string, :method, :instance_variable].freeze
 
-    define_options :logic_less => true,
-                   :dictionary => 'self',
-                   :dictionary_access => DEFAULT_ACCESS_ORDER
+    define_options logic_less: true,
+                   dictionary: 'self',
+                   dictionary_access: DEFAULT_ACCESS_ORDER
 
     def initialize(opts = {})
       super

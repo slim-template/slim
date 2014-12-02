@@ -2,11 +2,11 @@ require 'helper'
 
 class TestSlimPretty < TestSlim
   def setup
-    Slim::Engine.set_options :pretty => true
+    Slim::Engine.set_options pretty: true
   end
 
   def teardown
-    Slim::Engine.set_options :pretty => false
+    Slim::Engine.set_options pretty: false
   end
 
   def test_pretty
@@ -86,7 +86,7 @@ html
   | content}
 
     source = %q{html
-  == render body, :scope => self, :locals => { :content => content }}
+  == render body, scope: self, locals: { content: content }}
 
     result = %q{<html>
   <body>
@@ -96,7 +96,7 @@ html
   </body>
 </html>}
 
-    assert_html result, source, :scope => self, :locals => {:body => body, :content => content }
+    assert_html result, source, scope: self, locals: {body: body, content: content }
   end
 
   def test_correct_line_number

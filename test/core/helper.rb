@@ -4,7 +4,7 @@ require 'minitest/autorun'
 require 'slim'
 require 'slim/grammar'
 
-Slim::Engine.after  Slim::Parser, Temple::Filters::Validator, :grammar => Slim::Grammar
+Slim::Engine.after  Slim::Parser, Temple::Filters::Validator, grammar: Slim::Grammar
 Slim::Engine.before :Pretty, Temple::Filters::Validator
 
 class TestSlim < MiniTest::Unit::TestCase
@@ -99,7 +99,7 @@ class Env
   end
 
   def hash
-    {:a => 'The letter a', :b => 'The letter b'}
+    {a: 'The letter a', b: 'The letter b'}
   end
 
   def show_first?(show = false)
@@ -157,7 +157,7 @@ class ViewEnv
   end
 
   def person
-    [{:name => 'Joe'}, {:name => 'Jack'}]
+    [{name: 'Joe'}, {name: 'Jack'}]
   end
 
   def people

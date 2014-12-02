@@ -74,7 +74,7 @@ p
   def test_render_with_spaced_parameterized_call_2
     source = %q{
 p
-  = hello_world "Hello Ruby!", :dummy => "value"
+  = hello_world "Hello Ruby!", dummy: "value"
 }
 
     assert_html '<p>Hello Ruby!dummy value</p>', source

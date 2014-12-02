@@ -48,7 +48,7 @@ doctype 1.1
 html
 }
 
-    assert_html '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"><html></html>', source, :format => :xhtml
+    assert_html '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"><html></html>', source, format: :xhtml
   end
 
   def test_doctype_new_syntax
@@ -57,7 +57,7 @@ doctype 5
 html
 }
 
-    assert_html '<!DOCTYPE html><html></html>', source, :format => :xhtml
+    assert_html '<!DOCTYPE html><html></html>', source, format: :xhtml
   end
 
   def test_doctype_new_syntax_html5
@@ -66,7 +66,7 @@ doctype html
 html
 }
 
-    assert_html '<!DOCTYPE html><html></html>', source, :format => :xhtml
+    assert_html '<!DOCTYPE html><html></html>', source, format: :xhtml
   end
 
   def test_render_with_shortcut_attributes
@@ -85,7 +85,7 @@ h1#title This is my title
    = hello_world
  }
 
-    assert_html '<section class="hello world" id="notice">Hello World from @env</section>', source, :default_tag => 'section'
+    assert_html '<section class="hello world" id="notice">Hello World from @env</section>', source, default_tag: 'section'
   end
 
   def test_render_with_custom_shortcut
@@ -96,7 +96,7 @@ h1#title This is my title
   = hello_world
 }
 
-    assert_html '<div class="hello world" id="notice" role="test">Hello World from @env</div><section role="abc">Hello World from @env</section>', source, :shortcut => {'#' => {:attr => 'id'}, '.' => {:attr => 'class'}, '@' => {:tag => 'section', :attr => 'role'}}
+    assert_html '<div class="hello world" id="notice" role="test">Hello World from @env</div><section role="abc">Hello World from @env</section>', source, shortcut: {'#' => {attr: 'id'}, '.' => {attr: 'class'}, '@' => {tag: 'section', attr: 'role'}}
   end
 
   def test_render_with_text_block
@@ -319,8 +319,8 @@ p { foo="bar" }
 }
 
     assert_html '<p foo="bar"></p>', source
-    assert_html '<p foo="bar"></p>', source, :attr_delims => {'{' => '}'}
-    assert_html '<p>{ foo="bar" }</p>', source, :attr_delims => {'(' => ')', '[' => ']'}
+    assert_html '<p foo="bar"></p>', source, attr_delims: {'{' => '}'}
+    assert_html '<p>{ foo="bar" }</p>', source, attr_delims: {'(' => ')', '[' => ']'}
   end
 
   def test_closed_tag
@@ -328,7 +328,7 @@ p { foo="bar" }
 closed/
 }
 
-    assert_html '<closed />', source, :format => :xhtml
+    assert_html '<closed />', source, format: :xhtml
   end
 
   def test_custom_attr_list_delims_option
@@ -338,8 +338,8 @@ p < x=(1+1) > Hello
 }
 
     assert_html '<p foo="bar" x="2"></p><p>< x=(1+1) > Hello</p>', source
-    assert_html '<p foo="bar" x="2"></p><p>< x=(1+1) > Hello</p>', source, :attr_list_delims => {'{' => '}'}
-    assert_html '<p>{ foo="bar" x=(1+1) }</p><p x="2">Hello</p>', source, :attr_list_delims => {'<' => '>'}, :code_attr_delims => { '(' => ')' }
+    assert_html '<p foo="bar" x="2"></p><p>< x=(1+1) > Hello</p>', source, attr_list_delims: {'{' => '}'}
+    assert_html '<p>{ foo="bar" x=(1+1) }</p><p x="2">Hello</p>', source, attr_list_delims: {'<' => '>'}, code_attr_delims: { '(' => ')' }
   end
 
   def test_closed_tag
@@ -347,7 +347,7 @@ p < x=(1+1) > Hello
 closed/
 }
 
-    assert_html '<closed />', source, :format => :xhtml
+    assert_html '<closed />', source, format: :xhtml
   end
 
   def test_attributs_with_parens_and_spaces
@@ -370,7 +370,7 @@ closed/
 closed id="test" /
 }
 
-    assert_html '<closed id="test" />', source, :format => :xhtml
+    assert_html '<closed id="test" />', source, format: :xhtml
   end
 
   def test_closed_tag_with_attributes_and_parens
@@ -378,7 +378,7 @@ closed id="test" /
 closed(id="test")/
 }
 
-    assert_html '<closed id="test" />', source, :format => :xhtml
+    assert_html '<closed id="test" />', source, format: :xhtml
   end
 
   def test_render_with_html_comments

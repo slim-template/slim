@@ -5,13 +5,13 @@ module Slim
     # This overwrites some Temple default options or sets default options for Slim specific filters.
     # It is recommended to set the default settings only once in the code and avoid duplication. Only use
     # `define_options` when you have to override some default settings.
-    define_options :pretty => false,
-                   :sort_attrs => true,
-                   :format => :xhtml,
-                   :attr_quote => '"',
-                   :merge_attrs => {'class' => ' '},
-                   :generator => Temple::Generators::ArrayBuffer,
-                   :default_tag => 'div'
+    define_options pretty: false,
+                   sort_attrs: true,
+                   format: :xhtml,
+                   attr_quote: '"',
+                   merge_attrs: {'class' => ' '},
+                   generator: Temple::Generators::ArrayBuffer,
+                   default_tag: 'div'
     define_deprecated_options :attr_delims
 
     filter :Encoding
@@ -26,7 +26,7 @@ module Slim
     html :AttributeSorter
     html :AttributeMerger
     use Slim::CodeAttributes
-    use(:AttributeRemover) { Temple::HTML::AttributeRemover.new(:remove_empty_attrs => options[:merge_attrs].keys) }
+    use(:AttributeRemover) { Temple::HTML::AttributeRemover.new(remove_empty_attrs: options[:merge_attrs].keys) }
     html :Pretty
     filter :Escapable
     filter :ControlFlow

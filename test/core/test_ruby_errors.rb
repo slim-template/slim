@@ -9,7 +9,7 @@ data2-=1)
     = unknown_ruby_method
 }
 
-    assert_ruby_error NameError, "test.slim:5", source, :file => 'test.slim'
+    assert_ruby_error NameError, "test.slim:5", source, file: 'test.slim'
   end
 
   def test_broken_output_line
@@ -26,9 +26,9 @@ p = hello_world + \
     # test = 1+\
     #    unknown_variable
     if RUBY_PLATFORM == "java"
-      assert_ruby_error NameError, "test.slim:2", source, :file => 'test.slim'
+      assert_ruby_error NameError, "test.slim:2", source, file: 'test.slim'
     else
-      assert_ruby_error NameError, "test.slim:4", source, :file => 'test.slim'
+      assert_ruby_error NameError, "test.slim:4", source, file: 'test.slim'
     end
   end
 
@@ -193,13 +193,13 @@ div
 
   def test_splat_multiple_id_attribute
     source = %{
-#alpha *{:id =>"beta"} Test it
+#alpha *{id:"beta"} Test it
 }
     assert_runtime_error 'Multiple id attributes specified', source
   end
 
 #  def test_invalid_option
-#    render('', :foobar => 42)
+#    render('', foobar: 42)
 #    raise Exception, 'ArgumentError expected'
 #  rescue ArgumentError => ex
 #    assert_equal 'Option :foobar is not supported by Slim::Engine', ex.message

@@ -7,7 +7,7 @@ doctype 5
   div Invalid
 }
 
-    assert_syntax_error "Unexpected indentation\n  test.slim, Line 3, Column 2\n    div Invalid\n    ^\n", source, :file => 'test.slim'
+    assert_syntax_error "Unexpected indentation\n  test.slim, Line 3, Column 2\n    div Invalid\n    ^\n", source, file: 'test.slim'
   end
 
   def test_unexpected_indentation

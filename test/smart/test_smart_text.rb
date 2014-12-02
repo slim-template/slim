@@ -112,7 +112,7 @@ Escaped &amp;#xx; &amp;#1f; &amp;;.</p>}
   end
 
   def test_smart_text_disabled_escaping
-    Slim::Engine.with_options( :smart_text_escaping => false ) do
+    Slim::Engine.with_options( smart_text_escaping: false ) do
       source = %q{
 p Not escaped <&>.
 | Not escaped <&>.

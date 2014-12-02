@@ -1,7 +1,7 @@
 module Slim
   module Smart
     class Parser < ::Slim::Parser
-      define_options :implicit_text => true
+      define_options implicit_text: true
 
       def initialize(opts = {})
         super

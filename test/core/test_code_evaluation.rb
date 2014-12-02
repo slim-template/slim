@@ -44,7 +44,7 @@ p id="#{id_helper}" class="hello world" = hello_world "Hello Ruby!"
 
   def test_render_with_spaced_parameterized_call_to_set_attributes_and_call_to_set_content_2
     source = %q{
-p id="#{id_helper}" class="hello world" = hello_world "Hello Ruby!", :dummy => "value"
+p id="#{id_helper}" class="hello world" = hello_world "Hello Ruby!", dummy: "value"
 }
 
     assert_html '<p class="hello world" id="notice">Hello Ruby!dummy value</p>', source

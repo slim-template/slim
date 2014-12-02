@@ -2,7 +2,7 @@ require 'slim'
 require 'optparse'
 
 module Slim
-  Engine.set_options :pretty => false
+  Engine.set_options pretty: false
 
   # Slim commandline interface
   # @api private
@@ -40,7 +40,7 @@ module Slim
       end
 
       opts.on('--rails', 'Generate rails compatible code (Implies --compile)') do
-        Engine.set_options :disable_capture => true, :generator => Temple::Generators::RailsOutputBuffer
+        Engine.set_options disable_capture: true, generator: Temple::Generators::RailsOutputBuffer
         @options[:compile] = true
       end
 
@@ -59,7 +59,7 @@ module Slim
       end
 
       opts.on('-p', '--pretty', 'Produce pretty html') do
-        Engine.set_options :pretty => true
+        Engine.set_options pretty: true
       end
 
       opts.on('-o', '--option name=code', String, 'Set slim option') do |str|
@@ -95,9 +95,9 @@ module Slim
       result =
         if @options[:erb]
           require 'slim/erb_converter'
-          ERBConverter.new(:file => @options[:file]).call(@options[:input].read)
+          ERBConverter.new(file: @options[:file]).call(@options[:input].read)
         elsif @options[:compile]
-          Engine.new(:file => @options[:file]).call(@options[:input].read)
+          Engine.new(file: @options[:file]).call(@options[:input].read)
         else
           Template.new(@options[:file]) { @options[:input].read }.render
         end

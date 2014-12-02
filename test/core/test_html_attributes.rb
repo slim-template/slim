@@ -42,14 +42,14 @@ p id=(false ? 'notshown' : 'shown') = output_number
     source = %{
 #alpha id="beta" Test it
 }
-    assert_html '<div id="alpha_beta">Test it</div>', source, :merge_attrs => {'class' => ' ', 'id' => '_' }
+    assert_html '<div id="alpha_beta">Test it</div>', source, merge_attrs: {'class' => ' ', 'id' => '_' }
   end
 
   def test_id_attribute_merging2
     source = %{
 #alpha id="beta" Test it
 }
-    assert_html '<div id="alpha-beta">Test it</div>', source, :merge_attrs => {'class' => ' ', 'id' => '-' }
+    assert_html '<div id="alpha-beta">Test it</div>', source, merge_attrs: {'class' => ' ', 'id' => '-' }
   end
 
   def test_boolean_attribute_false
@@ -110,7 +110,7 @@ option(selected class="clazz") Text
 
   def test_hyphenated_attribute
     source = %{
-.alpha data={:a => 'alpha', :b => 'beta', :c_d => 'gamma', :c => {:e => 'epsilon'}}
+.alpha data={a: 'alpha', b: 'beta', c_d: 'gamma', c: {e: 'epsilon'}}
 }
 
     assert_html '<div class="alpha" data-a="alpha" data-b="beta" data-c-d="gamma" data-c-e="epsilon"></div>', source
@@ -151,7 +151,7 @@ h1 *hash class=[] This is my title
 
   def test_splat_tag_name
     source = %q{
-*{:tag => 'h1', :id => 'title'} This is my title
+*{tag: 'h1', id: 'title'} This is my title
 }
 
     assert_html '<h1 id="title">This is my title</h1>', source
@@ -160,7 +160,7 @@ h1 *hash class=[] This is my title
 
   def test_splat_empty_tag_name
     source = %q{
-*{:tag => '', :id => 'test'} This is my title
+*{tag: '', id: 'test'} This is my title
 }
 
     assert_html '<div id="test">This is my title</div>', source
@@ -200,7 +200,7 @@ h1 *hash class=[] This is my title
 
   def test_splat_with_class_merging
     source = %q{
-#myid.myclass *{:class => [:secondclass, %w(x y z)]} *hash This is my title
+#myid.myclass *{class: [:secondclass, %w(x y z)]} *hash This is my title
 }
 
     assert_html '<div a="The letter a" b="The letter b" class="myclass secondclass x y z" id="myid">This is my title</div>', source
@@ -208,7 +208,7 @@ h1 *hash class=[] This is my title
 
   def test_splat_with_boolean_attribute
     source = %q{
-*{:disabled => true, :empty1 => false, :nonempty => '', :empty2 => nil} This is my title
+*{disabled: true, empty1: false, nonempty: '', empty2: nil} This is my title
 }
 
     assert_html '<div disabled="" nonempty="">This is my title</div>', source
@@ -216,7 +216,7 @@ h1 *hash class=[] This is my title
 
   def test_splat_merging_with_arrays
     source = %q{
-*{:a => 1, :b => 2} *[[:c, 3], [:d, 4]] *[[:e, 5], [:f, 6]] This is my title
+*{a: 1, b: 2} *[[:c, 3], [:d, 4]] *[[:e, 5], [:f, 6]] This is my title
 }
 
     assert_html '<div a="1" b="2" c="3" d="4" e="5" f="6">This is my title</div>', source
@@ -233,7 +233,7 @@ h1 data-id="123" *hash This is my title
   def test_attribute_merging
     source = %q{
 a class=true class=false
-a class=false *{:class=>true}
+a class=false *{class:true}
 a class=true
 a class=false
 }
