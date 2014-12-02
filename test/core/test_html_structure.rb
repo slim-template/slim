@@ -307,7 +307,7 @@ p(id="marvin" class="martian" data-info="Illudium Q-36")= output_number
     source = %q{
 p<id="marvin" class="martian" data-info="Illudium Q-36">= output_number
 }
-    Slim::Parser.options[:attr_delims].each do |k,v|
+    Slim::Parser.options[:attr_list_delims].each do |k,v|
       str = source.sub('<',k).sub('>',v)
       assert_html '<p class="martian" data-info="Illudium Q-36" id="marvin">1337</p>', str
     end
@@ -319,8 +319,8 @@ p { foo="bar" }
 }
 
     assert_html '<p foo="bar"></p>', source
-    assert_html '<p foo="bar"></p>', source, attr_delims: {'{' => '}'}
-    assert_html '<p>{ foo="bar" }</p>', source, attr_delims: {'(' => ')', '[' => ']'}
+    assert_html '<p foo="bar"></p>', source, attr_list_delims: {'{' => '}'}
+    assert_html '<p>{ foo="bar" }</p>', source, attr_list_delims: {'(' => ')', '[' => ']'}
   end
 
   def test_closed_tag
@@ -417,7 +417,7 @@ p<id="marvin"
 class="martian"
  data-info="Illudium Q-36"> = output_number
 }
-    Slim::Parser.options[:attr_delims].each do |k,v|
+    Slim::Parser.options[:attr_list_delims].each do |k,v|
       str = source.sub('<',k).sub('>',v)
       assert_html '<p class="martian" data-info="Illudium Q-36" id="marvin">1337</p>', str
     end
@@ -429,7 +429,7 @@ p<id="marvin"
   class="martian"
  data-info="Illudium Q-36"> THE space modulator
 }
-    Slim::Parser.options[:attr_delims].each do |k,v|
+    Slim::Parser.options[:attr_list_delims].each do |k,v|
       str = source.sub('<',k).sub('>',v)
       assert_html '<p class="martian" data-info="Illudium Q-36" id="marvin">THE space modulator</p>', str
     end
@@ -442,7 +442,7 @@ p<id="marvin"
 data-info="Illudium Q-36">
   | THE space modulator
 }
-    Slim::Parser.options[:attr_delims].each do |k,v|
+    Slim::Parser.options[:attr_list_delims].each do |k,v|
       str = source.sub('<',k).sub('>',v)
       assert_html '<p class="martian" data-info="Illudium Q-36" id="marvin">THE space modulator</p>', str
     end
@@ -455,7 +455,7 @@ p<id=id_helper
   data-info="Illudium Q-36">
   | THE space modulator
 }
-    Slim::Parser.options[:attr_delims].each do |k,v|
+    Slim::Parser.options[:attr_list_delims].each do |k,v|
       str = source.sub('<',k).sub('>',v)
       assert_html '<p class="martian" data-info="Illudium Q-36" id="notice">THE space modulator</p>', str
     end
@@ -469,7 +469,7 @@ p<id=id_helper
   span.emphasis THE
   |  space modulator
 }
-    Slim::Parser.options[:attr_delims].each do |k,v|
+    Slim::Parser.options[:attr_list_delims].each do |k,v|
       str = source.sub('<',k).sub('>',v)
       assert_html '<p class="martian" data-info="Illudium Q-36" id="notice"><span class="emphasis">THE</span> space modulator</p>', str
     end
@@ -482,7 +482,7 @@ li< id="myid"
 data-info="myinfo">
   a href="link" My Link
 }
-    Slim::Parser.options[:attr_delims].each do |k,v|
+    Slim::Parser.options[:attr_list_delims].each do |k,v|
       str = source.sub('<',k).sub('>',v)
       assert_html '<li class="myclass" data-info="myinfo" id="myid"><a href="link">My Link</a></li>', str
     end

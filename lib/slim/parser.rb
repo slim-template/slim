@@ -5,18 +5,21 @@ module Slim
   class Parser < Temple::Parser
     define_options :file,
                    :default_tag,
-                   :code_attr_delims,
-                   :attr_list_delims,
                    tabsize: 4,
-                   shortcut: {
-                     '#' => { attr: 'id' },
-                     '.' => { attr: 'class' }
-                   },
-                   attr_delims: {
+                   code_attr_delims: {
                      '(' => ')',
                      '[' => ']',
                      '{' => '}',
-                    }
+                   },
+                   attr_list_delims: {
+                     '(' => ')',
+                     '[' => ']',
+                     '{' => '}',
+                   },
+                   shortcut: {
+                     '#' => { attr: 'id' },
+                     '.' => { attr: 'class' }
+                   }
 
     class SyntaxError < StandardError
       attr_reader :error, :file, :line, :lineno, :column
@@ -42,8 +45,8 @@ module Slim
 
     def initialize(opts = {})
       super
-      @attr_list_delims = options[:attr_list_delims] || options[:attr_delims]
-      @code_attr_delims = options[:code_attr_delims] || options[:attr_delims]
+      @attr_list_delims = options[:attr_list_delims]
+      @code_attr_delims = options[:code_attr_delims]
       tabsize = options[:tabsize]
       if tabsize > 1
         @tab_re = /\G((?: {#{tabsize}})*) {0,#{tabsize-1}}\t/
