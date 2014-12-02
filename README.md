@@ -944,7 +944,7 @@ There are a lot of them but the good thing is, that Slim checks the configuratio
 | Symbol | :js_wrapper | nil | Wrap javascript by :comment, :cdata or :both. You can also :guess the wrapper based on :format. |
 | Boolean | :pretty | false | Pretty HTML indenting, only block level tags are indented <b>(This is slower!)</b> |
 | String | :indent | '  ' | Indentation string |
-| Boolean | :streaming | false (true in Rails > 3.1) | Enable output streaming |
+| Boolean | :streaming | false (true in Rails) | Enable output streaming |
 | Class | :generator | Temple::Generators::ArrayBuffer/ RailsOutputBuffer | Temple code generator (default generator generates array buffer) |
 | String | :buffer | '_buf' ('@output_buffer' in Rails) | Variable used for buffer |
 

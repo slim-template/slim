@@ -134,7 +134,7 @@ body
 <body><p>これはテキストブロックのテストです。</p></body>
 ~~~
 
-  ブロックの左端はパイプ +1 スペースのインデントに設定されています。 
+  ブロックの左端はパイプ +1 スペースのインデントに設定されています。
   追加のスペースはコピーされます。
 
 ~~~ slim
@@ -470,7 +470,7 @@ a data-title="help" data-content="極めて長い長い長いヘルプテキス�
 #### Ruby コードを用いた属性
 
 `=` の後に直接 Ruby コードを書きます。コードにスペースが含まれる場合,
-`(...)` の括弧でコードを囲まなければなりません。ハッシュを `{...}` に, 配列を `[...]` に書くこともできます。 
+`(...)` の括弧でコードを囲まなければなりません。ハッシュを `{...}` に, 配列を `[...]` に書くこともできます。
 
 ~~~ slim
 body
@@ -702,7 +702,7 @@ module Helpers
       # Rails の場合には capture メソッドを使う
       "<h1>#{capture(&block)}</h1>"
     else
-      # フレームワークなしで Slim を使う場合(Tilt の場合), 
+      # フレームワークなしで Slim を使う場合(Tilt の場合),
       # ただ出力する
       "<h1>#{yield}</h1>"
     end
@@ -944,7 +944,7 @@ end
 | シンボル | :js_wrapper | nil | :comment,  :cdata や :both で JavaScript をラップします。:guess を指定することで :format オプションに基いて設定することもできます |
 | 真偽値 | :pretty | false | 綺麗な html インデント <b>(遅くなります!)</b> |
 | 文字列 | :indent | '  ' | インデントに使用される文字列 |
-| 真偽値 | :streaming | false (Rails > 3.1 では true) | ストリーミング出力の有効化 |
+| 真偽値 | :streaming | false (Rails では true) | ストリーミング出力の有効化 |
 | Class | :generator | Temple::Generators::ArrayBuffer/ RailsOutputBuffer | Temple コードジェネレータ (デフォルトのジェネレータは配列バッファを生成します) |
 | 文字列 | :buffer | '_buf' (Rails では '@output_buffer') | バッファに使用される変数 |
 
@@ -1045,7 +1045,7 @@ Usage: slimrb [options]
     -v, --version                    Print version
 </pre>
 
-'slimrb' で起動し, コードをタイプし Ctrl-d で EOF を送ります。Windows のコマンドプロンプトでは Ctrl-z で EOF を送ります。使い方例: 
+'slimrb' で起動し, コードをタイプし Ctrl-d で EOF を送ります。Windows のコマンドプロンプトでは Ctrl-z で EOF を送ります。使い方例:
 
 <pre>
 $ slimrb
