@@ -1254,6 +1254,35 @@ renders as
 </h1>
 ~~~
 
+## Pretty printing of XML
+
+We can enable XML mode with
+
+~~~ options
+:format => :xml
+~~~
+
+~~~ slim
+doctype xml
+document
+  closed-element/
+  element(boolean-attribute)
+    child attribute="value"
+      | content
+~~~
+
+~~~ html
+<?xml version="1.0" encoding="utf-8" ?>
+<document>
+  <closed-element />
+  <element boolean-attribute="">
+    <child attribute="value">
+      content
+    </child>
+  </element>
+</document>
+~~~
+
 ## Embedded engines
 
 ## Configuring Slim
