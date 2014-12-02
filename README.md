@@ -550,7 +550,7 @@ You can also use methods or instance variables which return a hash as shown here
 The hash attributes which support attribute merging (see Slim option `:merge_attrs`) can be given as an `Array`
 
 ~~~ slim
-.first *{:class => [:second, :third]} Text
+.first *{class: [:second, :third]} Text
 ~~~
 
 renders as
@@ -567,7 +567,7 @@ with the :tag key.
 ~~~ slim
 ruby:
   def a_unless_current
-    @page_current ? {:tag => 'span'} : {:tag => 'a', :href => 'http://slim-lang.com/'}
+    @page_current ? {tag: 'span'} : {tag: 'a', href: 'http://slim-lang.com/'}
   end
 - @page_current = true
 *a_unless_current Link
@@ -588,7 +588,7 @@ renders as
 You can define custom tag shortcuts by setting the option `:shortcut`.
 
 ~~~ ruby
-Slim::Engine.set_options :shortcut => {'c' => {:tag => 'container'}, '#' => {:attr => 'id'}, '.' => {:attr => 'class'} }
+Slim::Engine.set_options shortcut: {'c' => {tag: 'container'}, '#' => {attr: 'id'}, '.' => {attr: 'class'} }
 ~~~
 
 We can use it in Slim code like this
@@ -610,7 +610,7 @@ You can define custom shortcuts (Similar to `#` for id and `.` for class).
 In this example we add `&` to create a shortcut for the input elements with type attribute.
 
 ~~~ ruby
-Slim::Engine.set_options :shortcut => {'&' => {:tag => 'input', :attr => 'type'}, '#' => {:attr => 'id'}, '.' => {:attr => 'class'}}
+Slim::Engine.set_options shortcut: {'&' => {tag: 'input', attr: 'type'}, '#' => {attr: 'id'}, '.' => {attr: 'class'}}
 ~~~
 
 We can use it in Slim code like this
@@ -632,7 +632,7 @@ which renders to
 In another example we add `@` to create a shortcut for the role attribute.
 
 ~~~ ruby
-Slim::Engine.set_options :shortcut => {'@' => {:attr => 'role'}, '#' => {:attr => 'id'}, '.' => {:attr => 'class'}}
+Slim::Engine.set_options shortcut: {'@' => {attr: 'role'}, '#' => {attr: 'id'}, '.' => {attr: 'class'}}
 ~~~
 
 We can use it in Slim code like this
@@ -650,7 +650,7 @@ which renders to
 You can also set multiple attributes at once using one shortcut.
 
 ~~~ ruby
-Slim::Engine.set_options :shortcut => {'@' => {:attr => %w(data-role role)}}
+Slim::Engine.set_options shortcut: {'@' => {attr: %w(data-role role)}}
 ~~~
 
 We can use it in Slim code like this
@@ -859,7 +859,7 @@ Supported engines:
 The embedded engines can be configured in Slim by setting the options directly on the `Slim::Embedded` filter. Example:
 
 ~~~ ruby
-Slim::Embedded.options[:markdown] = {:auto_ids => false}
+Slim::Embedded.options[:markdown] = {auto_ids: false}
 ~~~
 
 ## Configuring Slim
@@ -870,10 +870,7 @@ The way how you configure Slim depends a bit on the compilation mechanism (Rails
 ### Default options
 
 ~~~ ruby
-# Indent html for pretty debugging and do not sort attributes (Ruby 1.8)
-Slim::Engine.set_options :pretty => true, :sort_attrs => false
-
-# Indent html for pretty debugging and do not sort attributes (Ruby 1.9)
+# Indent html for pretty debugging and do not sort attributes
 Slim::Engine.set_options pretty: true, sort_attrs: false
 ~~~
 
@@ -898,7 +895,7 @@ The other possibility is to set the options per thread which is interesting most
 Slim::Engine.with_options(option_hash) do
   # Any Slim engines which are created here use the option_hash
   # For example in Rails:
-  render :page, :layout => true
+  render :page, layout: true
 end
 ~~~
 
@@ -906,13 +903,13 @@ You have to be aware that the compiled engine code and the options are cached pe
 
 ~~~ ruby
 # First render call
-Slim::Engine.with_options(:pretty => true) do
-   render :page, :layout => true
+Slim::Engine.with_options(pretty: true) do
+   render :page, layout: true
 end
 
 # Second render call
-Slim::Engine.with_options(:pretty => false) do
-   render :page, :layout => true # :pretty is still true because it is cached
+Slim::Engine.with_options(pretty: false) do
+   render :page, layout: true # :pretty is still true because it is cached
 end
 ~~~
 
@@ -928,7 +925,7 @@ There are a lot of them but the good thing is, that Slim checks the configuratio
 | Integer | :tabsize | 4 | Number of white spaces per tab (used by the parser) |
 | String | :encoding | "utf-8" | Set encoding of template |
 | String | :default_tag | "div" | Default tag to be used if tag name is omitted |
-| Hash | :shortcut | \{'.' => {:attr => 'class'}, '#' => {:attr => 'id'}} | Attribute shortcuts |
+| Hash | :shortcut | \{'.' => {attr: 'class'}, '#' => {attr: 'id'}} | Attribute shortcuts |
 | Hash | :code_attr_delims | \{'(' => ')', '[' => ']', '{' => '}'} | Attribute delimiters for Ruby code attributes |
 | Hash | :attr_list_delims | \{'(' => ')', '[' => ']', '{' => '}'} | Attribute list delimiter |
 | Array&lt;Symbol,String&gt; | :enable_engines | nil <i>(All enabled)</i> | List of enabled embedded engines (whitelist) |
@@ -1115,7 +1112,7 @@ Travis-CI is used for continuous integration testing: <http://travis-ci.org/slim
 
 Slim is working well on all major Ruby implementations:
 
-* Ruby 1.8.7, 1.9.3, 2.0.0 and 2.1.0
+* Ruby 1.9.3, 2.0.0 and 2.1.0
 * Ruby EE
 * JRuby 1.9 mode
 * Rubinius 2.0
@@ -1130,7 +1127,7 @@ $ git clone git://github.com/slim-template/slim
 
 Work your magic and then submit a pull request. We love pull requests!
 
-Please remember to keep the compatibility with Ruby versions 1.8.7, 1.9.3, 2.0.0 and 2.1.0.
+Please remember to keep the compatibility with Ruby versions 1.9.3, 2.0.0 and 2.1.0.
 
 If you find the documentation lacking, help us out and update this README.md. If you don't have the time to work on Slim, but found something we should know about, please submit an issue.
 

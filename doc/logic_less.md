@@ -34,7 +34,7 @@ Like mustache, Slim supports lambdas.
 The lambda method could be defined like this
 
     def lambda_method
-      "<div class='person'>#{yield(:name => 'Andrew')}</div>"
+      "<div class='person'>#{yield(name: 'Andrew')}</div>"
     end
 
 You can optionally pass one or more hashes to `yield`. If you pass multiple hashes, the block will be iterated as described above.
@@ -65,7 +65,7 @@ The `self` keyword will return the `.to_s` value for the element under considera
 Given
 
     {
-      :article => [
+      article: [
         'Article 1',
         'Article 2'
       ]
@@ -94,17 +94,17 @@ Install:
 
 Require:
 
-    gem 'slim', :require => 'slim/logic_less'
+    gem 'slim', require: 'slim/logic_less'
 
 You might want to activate logic less mode only for a few actions, you should disable logic-less mode globally at first in the configuration
 
-    Slim::Engine.set_options :logic_less => false
+    Slim::Engine.set_options logic_less: false
 
 and activate logic less mode per render call in your action
 
     class Controller
       def action
-        Slim::Engine.with_options(:logic_less => true) do
+        Slim::Engine.with_options(logic_less: true) do
           render
         end
       end
@@ -120,12 +120,12 @@ You are then ready to rock!
 
 You might want to activate logic less mode only for a few actions, you should disable logic-less mode globally at first in the configuration
 
-    Slim::Engine.set_options :logic_less => false
+    Slim::Engine.set_options logic_less: false
 
 and activate logic less mode per render call in your application
 
     get '/page'
-      slim :page, :logic_less => true
+      slim :page, logic_less: true
     end
 
 ## Options

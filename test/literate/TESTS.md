@@ -259,7 +259,7 @@ Hello, World!
 You can also write loops like this
 
 ~~~ slim
-- items = [{:name => 'table', :price => 10}, {:name => 'chair', :price => 5}]
+- items = [{name: 'table', price: 10}, {name: 'chair', price: 5}]
 table#items
   - for item in items do
     tr
@@ -293,7 +293,7 @@ which renders as
 The `do` keyword can be omitted.
 
 ~~~ slim
-- items = [{:name => 'table', :price => 10}, {:name => 'chair', :price => 5}]
+- items = [{name: 'table', price: 10}, {name: 'chair', price: 5}]
 table#items
   - for item in items
     tr
@@ -1099,7 +1099,7 @@ with the :tag key.
 ~~~ slim
 ruby:
   def a_unless_current
-    @page_current ? {:tag => 'span'} : {:tag => 'a', :href => 'http://slim-lang.com/'}
+    @page_current ? {tag: 'span'} : {tag: 'a', href: 'http://slim-lang.com/'}
   end
 - @page_current = true
 *a_unless_current Link
@@ -1120,7 +1120,7 @@ renders as
 We add tag shortcuts by setting the option `:shortcut`.
 
 ~~~ options
-:shortcut => {'c' => {:tag => 'container'}, 'sec' => {:tag =>'section'}, '#' => {:attr => 'id'}, '.' => {:attr => 'class'} }
+:shortcut => {'c' => {tag: 'container'}, 'sec' => {tag:'section'}, '#' => {attr: 'id'}, '.' => {attr: 'class'} }
 ~~~
 
 ~~~ slim
@@ -1140,7 +1140,7 @@ renders to
 We add `&` to create a shortcut for the input elements with type attribute by setting the option `:shortcut`.
 
 ~~~ options
-:shortcut => {'&' => {:tag => 'input', :attr => 'type'}, '#' => {:attr => 'id'}, '.' => {:attr => 'class'} }
+:shortcut => {'&' => {tag: 'input', attr: 'type'}, '#' => {attr: 'id'}, '.' => {attr: 'class'} }
 ~~~
 
 ~~~ slim
@@ -1158,7 +1158,7 @@ renders to
 This is stupid, but you can also use multiple character shortcuts.
 
 ~~~ options
-:shortcut => {'&' => {:tag => 'input', :attr => 'type'}, '#<' => {:attr => 'id'}, '#>' => {:attr => 'class'} }
+:shortcut => {'&' => {tag: 'input', attr: 'type'}, '#<' => {attr: 'id'}, '#>' => {attr: 'class'} }
 ~~~
 
 ~~~ slim
@@ -1176,7 +1176,7 @@ renders to
 You can also set multiple attributes per shortcut.
 
 ~~~ options
-:shortcut => {'.' => {:attr => %w(id class)} }
+:shortcut => {'.' => {attr: %w(id class)} }
 ~~~
 
 ~~~ slim
@@ -1192,7 +1192,7 @@ renders to
 Shortcuts can also have multiple characters.
 
 ~~~ options
-:shortcut => {'.' => {:attr => 'class'}, '#' => {:attr => 'id'}, '.#' => {:attr => %w(class id)} }
+:shortcut => {'.' => {attr: 'class'}, '#' => {attr: 'id'}, '.#' => {attr: %w(class id)} }
 ~~~
 
 ~~~ slim

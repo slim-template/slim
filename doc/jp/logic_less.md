@@ -34,7 +34,7 @@ Mustache のように, Slim はラムダ式をサポートします。
 ラムダ式は次のように定義できます:
 
     def lambda_method
-      "<div class='person'>#{yield(:name => 'Andrew')}</div>"
+      "<div class='person'>#{yield(name: 'Andrew')}</div>"
     end
 
 任意に 1 つ以上のハッシュを `yield` に渡すことができます。複数のハッシュを渡した場合, 先述したようにブロックが繰り返されます。
@@ -65,7 +65,7 @@ Mustache のように, Slim はラムダ式をサポートします。
 辞書オブジェクトを与え,
 
     {
-      :article => [
+      article: [
         'Article 1',
         'Article 2'
       ]
@@ -94,17 +94,17 @@ Mustache のように, Slim はラムダ式をサポートします。
 
 require で指定:
 
-    gem 'slim', :require => 'slim/logic_less'
+    gem 'slim', require: 'slim/logic_less'
 
 特定のアクションでのみロジックレスモードを有効化したい場合, まず設定でロジックレスモードを global に無効化します。
 
-    Slim::Engine.set_options :logic_less => false
+    Slim::Engine.set_options logic_less: false
 
 さらに, アクションの中でレンダリングする度にロジックレスモードを有効化します。
 
     class Controller
       def action
-        Slim::Engine.with_options(:logic_less => true) do
+        Slim::Engine.with_options(logic_less: true) do
           render
         end
       end
@@ -120,12 +120,12 @@ Sinatra には Slim のビルトインサポートがあります。しなけれ
 
 特定のアクションでのみロジックレスモードを有効化したい場合, まず設定でロジックレスモードを global に無効化します。
 
-    Slim::Engine.set_options :logic_less => false
+    Slim::Engine.set_options logic_less: false
 
 さらに, アクションの中でレンダリングする度にロジックレスモードを有効化します。
 
     get '/page'
-      slim :page, :logic_less => true
+      slim :page, logic_less: true
     end
 
 ## オプション

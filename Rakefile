@@ -93,6 +93,6 @@ rescue LoadError
 end
 
 desc "Generate Documentation"
-task :doc => :yard
+task doc: :yard
 
-task :default => 'test'
+task default: 'test'

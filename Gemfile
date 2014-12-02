@@ -3,13 +3,13 @@ source 'https://rubygems.org/'
 gemspec
 
 if ENV['TRAVIS'] || ENV['TEMPLE'] == 'master'
-  gem 'temple', :github => 'judofyr/temple'
+  gem 'temple', github: 'judofyr/temple'
 end
 
 if ENV['TILT']
   if ENV['TILT'] == 'master'
-    gem 'opal', :github => 'opal/opal' if RUBY_VERSION > '1.9'
-    gem 'tilt', :github => 'rtomayko/tilt'
+    gem 'opal', github: 'opal/opal' if RUBY_VERSION > '1.9'
+    gem 'tilt', github: 'rtomayko/tilt'
   else
     gem 'tilt', "= #{ENV['TILT']}"
   end
@@ -17,7 +17,7 @@ end
 
 if ENV['RAILS']
   if ENV['RAILS'] == 'master'
-    gem 'rails', :github => 'rails/rails'
+    gem 'rails', github: 'rails/rails'
   else
     gem 'rails', "= #{ENV['RAILS']}"
   end
@@ -33,7 +33,7 @@ end
 if ENV['SINATRA']
   gem 'rack-test'
   if ENV['SINATRA'] == 'master'
-    gem 'sinatra', :github => 'sinatra/sinatra'
+    gem 'sinatra', github: 'sinatra/sinatra'
   else
     gem 'sinatra', "= #{ENV['SINATRA']}"
   end

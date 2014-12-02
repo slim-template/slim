@@ -550,7 +550,7 @@ a class=:menu,:highlight
 属性の結合 (Slim オプション `:merge_attrs` 参照) に対応するハッシュ属性には `Array` を与えることもできます。
 
 ~~~ slim
-.first *{:class => [:second, :third]} テキスト
+.first *{class: [:second, :third]} テキスト
 ~~~
 
 レンダリング結果
@@ -567,7 +567,7 @@ div class="first second third"
 ~~~ slim
 ruby:
   def a_unless_current
-    @page_current ? {:tag => 'span'} : {:tag => 'a', :href => 'http://slim-lang.com/'}
+    @page_current ? {tag: 'span'} : {tag: 'a', href: 'http://slim-lang.com/'}
   end
 - @page_current = true
 *a_unless_current リンク
@@ -588,7 +588,7 @@ ruby:
 `:shortcut` オプションを設定することで独自のタグショートカットを定義できます。
 
 ~~~ ruby
-Slim::Engine.set_options :shortcut => {'c' => {:tag => 'container'}, '#' => {:attr => 'id'}, '.' => {:attr => 'class'} }
+Slim::Engine.set_options shortcut: {'c' => {tag: 'container'}, '#' => {attr: 'id'}, '.' => {attr: 'class'} }
 ~~~
 
 Slim コードの中でこの様に使用できます。
@@ -610,7 +610,7 @@ c.content テキスト
 例として `&` で作った type 属性付きの input 要素のショートカットを作成し追加します。
 
 ~~~ ruby
-Slim::Engine.set_options :shortcut => {'&' => {:tag => 'input', :attr => 'type'}, '#' => {:attr => 'id'}, '.' => {:attr => 'class'}}
+Slim::Engine.set_options shortcut: {'&' => {tag: 'input', attr: 'type'}, '#' => {attr: 'id'}, '.' => {attr: 'class'}}
 ~~~
 
 Slim コードの中でこの様に使用できます。
@@ -632,7 +632,7 @@ Slim コードの中でこの様に使用できます。
 別の例として `@` で作った role 属性のショートカットを作成し追加します。
 
 ~~~ ruby
-Slim::Engine.set_options :shortcut => {'@' => 'role', '#' => 'id', '.' => 'class'}
+Slim::Engine.set_options shortcut: {'@' => 'role', '#' => 'id', '.' => 'class'}
 ~~~
 
 Slim コードの中でこの様に使用できます。
@@ -650,7 +650,7 @@ Slim コードの中でこの様に使用できます。
 1つのショートカットを使って複数の属性を設定することもできます。
 
 ~~~ ruby
-Slim::Engine.set_options :shortcut => {'@' => {:attr => %w(data-role role)}}
+Slim::Engine.set_options shortcut: {'@' => {attr: %w(data-role role)}}
 ~~~
 
 Slim の中で次のように使用し
@@ -859,7 +859,7 @@ p: markdown: Tag with **inline** markdown!
 埋め込みエンジンは Slim の `Slim::Embedded` フィルタのオプションで直接設定されます。例:
 
 ~~~ ruby
-Slim::Embedded.options[:markdown] = {:auto_ids => false}
+Slim::Embedded.options[:markdown] = {auto_ids: false}
 ~~~
 
 ## Slim の設定
@@ -871,7 +871,7 @@ Slim を設定する方法はコンパイル機構に少し依存します。(Ra
 
 ~~~ ruby
 # デバック用に html をきれいにインデントし属性をソートしない (Ruby 1.8)
-Slim::Engine.set_options :pretty => true. :sort_attrs => false
+Slim::Engine.set_options pretty: true. sort_attrs: false
 
 # デバック用に html をきれいにインデントし属性をソートしない (Ruby 1.9)
 Slim::Engine.set_options pretty: true, sort_attrs: false
@@ -898,7 +898,7 @@ Slim::Template.new('template.slim', optional_option_hash).render(scope)
 Slim::Engine.with_options(option_hash) do
    # ここで作成される Slim エンジンは option_hash を使用します
    # Rails での使用例:
-   render :page, :layout => true
+   render :page, layout: true
 end
 ~~~
 
@@ -906,13 +906,13 @@ Rails ではコンパイルされたテンプレートエンジンのコード�
 
 ~~~ slim
 # 最初のレンダリング呼び出し
-Slim::Engine.with_options(:pretty => true) do
-   render :page, :layout => true
+Slim::Engine.with_options(pretty: true) do
+   render :page, layout: true
 end
 
 # 2回目のレンダリング呼び出し
-Slim::Engine.with_options(:pretty => false) do
-   render :page, :layout => true # :pretty is still true because it is cached
+Slim::Engine.with_options(pretty: false) do
+   render :page, layout: true # :pretty is still true because it is cached
 end
 ~~~
 
@@ -928,7 +928,7 @@ end
 | 数値 | :tabsize | 4 | 1 タブあたりのスペース数 (構文解析で利用されます) |
 | 文字列 | :encoding | "utf-8" | テンプレートのエンコーディングを設定 |
 | 文字列 | :default_tag | "div" | タグ名が省略されている場合デフォルトのタグとして使用される |
-| ハッシュ | :shortcut | \{'.' => {:attr => 'class'}, '#' => {:attr => 'id'}} | 属性のショートカット |
+| ハッシュ | :shortcut | \{'.' => {attr: 'class'}, '#' => {attr: 'id'}} | 属性のショートカット |
 | ハッシュ | :code_attr_delims | \{'(' => ')', '[' => ']', '{' => '}'} | Ruby コードの属性区切り文字 |
 | ハッシュ | :attr_list_delims | \{'(' => ')', '[' => ']', '{' => '}'} | 属性リスト区切り文字 |
 | 配列&lt;シンボル,文字列&gt; | :enable_engines | nil <i>(すべて可)</i> | 有効な埋め込みエンジンリスト (ホワイトリスト) |
