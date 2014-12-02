@@ -98,7 +98,7 @@ require で指定:
 
 特定のアクションでのみロジックレスモードを有効化したい場合, まず設定でロジックレスモードを global に無効化します。
 
-    Slim::Engine.set_default_options :logic_less => false
+    Slim::Engine.set_options :logic_less => false
 
 さらに, アクションの中でレンダリングする度にロジックレスモードを有効化します。
 
@@ -120,7 +120,7 @@ Sinatra には Slim のビルトインサポートがあります。しなけれ
 
 特定のアクションでのみロジックレスモードを有効化したい場合, まず設定でロジックレスモードを global に無効化します。
 
-    Slim::Engine.set_default_options :logic_less => false
+    Slim::Engine.set_options :logic_less => false
 
 さらに, アクションの中でレンダリングする度にロジックレスモードを有効化します。
 

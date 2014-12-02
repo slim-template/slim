@@ -588,7 +588,7 @@ ruby:
 `:shortcut` オプションを設定することで独自のタグショートカットを定義できます。
 
 ~~~ ruby
-Slim::Engine.set_default_options :shortcut => {'c' => {:tag => 'container'}, '#' => {:attr => 'id'}, '.' => {:attr => 'class'} }
+Slim::Engine.set_options :shortcut => {'c' => {:tag => 'container'}, '#' => {:attr => 'id'}, '.' => {:attr => 'class'} }
 ~~~
 
 Slim コードの中でこの様に使用できます。
@@ -610,7 +610,7 @@ c.content テキスト
 例として `&` で作った type 属性付きの input 要素のショートカットを作成し追加します。
 
 ~~~ ruby
-Slim::Engine.set_default_options :shortcut => {'&' => {:tag => 'input', :attr => 'type'}, '#' => {:attr => 'id'}, '.' => {:attr => 'class'}}
+Slim::Engine.set_options :shortcut => {'&' => {:tag => 'input', :attr => 'type'}, '#' => {:attr => 'id'}, '.' => {:attr => 'class'}}
 ~~~
 
 Slim コードの中でこの様に使用できます。
@@ -632,7 +632,7 @@ Slim コードの中でこの様に使用できます。
 別の例として `@` で作った role 属性のショートカットを作成し追加します。
 
 ~~~ ruby
-Slim::Engine.set_default_options :shortcut => {'@' => 'role', '#' => 'id', '.' => 'class'}
+Slim::Engine.set_options :shortcut => {'@' => 'role', '#' => 'id', '.' => 'class'}
 ~~~
 
 Slim コードの中でこの様に使用できます。
@@ -650,7 +650,7 @@ Slim コードの中でこの様に使用できます。
 1つのショートカットを使って複数の属性を設定することもできます。
 
 ~~~ ruby
-Slim::Engine.set_default_options :shortcut => {'@' => {:attr => %w(data-role role)}}
+Slim::Engine.set_options :shortcut => {'@' => {:attr => %w(data-role role)}}
 ~~~
 
 Slim の中で次のように使用し
@@ -859,7 +859,7 @@ p: markdown: Tag with **inline** markdown!
 埋め込みエンジンは Slim の `Slim::Embedded` フィルタのオプションで直接設定されます。例:
 
 ~~~ ruby
-Slim::Embedded.default_options[:markdown] = {:auto_ids => false}
+Slim::Embedded.options[:markdown] = {:auto_ids => false}
 ~~~
 
 ## Slim の設定
@@ -871,16 +871,16 @@ Slim を設定する方法はコンパイル機構に少し依存します。(Ra
 
 ~~~ ruby
 # デバック用に html をきれいにインデントし属性をソートしない (Ruby 1.8)
-Slim::Engine.set_default_options :pretty => true. :sort_attrs => false
+Slim::Engine.set_options :pretty => true. :sort_attrs => false
 
 # デバック用に html をきれいにインデントし属性をソートしない (Ruby 1.9)
-Slim::Engine.set_default_options pretty: true, sort_attrs: false
+Slim::Engine.set_options pretty: true, sort_attrs: false
 ~~~
 
 ハッシュで直接オプションにアクセスすることもできます:
 
 ~~~ ruby
-Slim::Engine.default_options[:pretty] = true
+Slim::Engine.options[:pretty] = true
 ~~~
 
 ### 実行時のオプション設定
@@ -918,7 +918,7 @@ end
 
 ### 可能なオプション
 
-次のオプションが `Slim::Engine` によって用意され `Slim::Engine.set_default_options` で設定することができます。
+次のオプションが `Slim::Engine` によって用意され `Slim::Engine.set_options` で設定することができます。
 沢山ありますが良いことに, Slim はもし誤った設定キーを使用しようとした場合キーをチェックしエラーを報告します。
 
 
@@ -959,9 +959,9 @@ Slim や Temple のアーキテクチャについてよく知っている開発�
 継承メカニズムを採用しています。オプションの優先順位は次のとおりです:
 
 1. `Slim::Template` オプションはエンジン初期化時に適用されます
-2. `Slim::Template.default_options`
-3. `Slim::Engine.thread_options`, `Slim::Engine.default_options`
-5. パーサ/フィルタ/ジェネレータ `thread_options`, `default_options` (例: `Slim::Parser`, `Slim::Compiler`)
+2. `Slim::Template.options`
+3. `Slim::Engine.thread_options`, `Slim::Engine.options`
+5. パーサ/フィルタ/ジェネレータ `thread_options`, `options` (例: `Slim::Parser`, `Slim::Compiler`)
 
 `Temple::Engine` のようにスーパークラスのオプションを設定することも可能です。しかしこれはすべての Temple テンプレートエンジンに影響します。
 

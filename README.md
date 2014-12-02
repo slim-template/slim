@@ -588,7 +588,7 @@ renders as
 You can define custom tag shortcuts by setting the option `:shortcut`.
 
 ~~~ ruby
-Slim::Engine.set_default_options :shortcut => {'c' => {:tag => 'container'}, '#' => {:attr => 'id'}, '.' => {:attr => 'class'} }
+Slim::Engine.set_options :shortcut => {'c' => {:tag => 'container'}, '#' => {:attr => 'id'}, '.' => {:attr => 'class'} }
 ~~~
 
 We can use it in Slim code like this
@@ -610,7 +610,7 @@ You can define custom shortcuts (Similar to `#` for id and `.` for class).
 In this example we add `&` to create a shortcut for the input elements with type attribute.
 
 ~~~ ruby
-Slim::Engine.set_default_options :shortcut => {'&' => {:tag => 'input', :attr => 'type'}, '#' => {:attr => 'id'}, '.' => {:attr => 'class'}}
+Slim::Engine.set_options :shortcut => {'&' => {:tag => 'input', :attr => 'type'}, '#' => {:attr => 'id'}, '.' => {:attr => 'class'}}
 ~~~
 
 We can use it in Slim code like this
@@ -632,7 +632,7 @@ which renders to
 In another example we add `@` to create a shortcut for the role attribute.
 
 ~~~ ruby
-Slim::Engine.set_default_options :shortcut => {'@' => {:attr => 'role'}, '#' => {:attr => 'id'}, '.' => {:attr => 'class'}}
+Slim::Engine.set_options :shortcut => {'@' => {:attr => 'role'}, '#' => {:attr => 'id'}, '.' => {:attr => 'class'}}
 ~~~
 
 We can use it in Slim code like this
@@ -650,7 +650,7 @@ which renders to
 You can also set multiple attributes at once using one shortcut.
 
 ~~~ ruby
-Slim::Engine.set_default_options :shortcut => {'@' => {:attr => %w(data-role role)}}
+Slim::Engine.set_options :shortcut => {'@' => {:attr => %w(data-role role)}}
 ~~~
 
 We can use it in Slim code like this
@@ -859,7 +859,7 @@ Supported engines:
 The embedded engines can be configured in Slim by setting the options directly on the `Slim::Embedded` filter. Example:
 
 ~~~ ruby
-Slim::Embedded.default_options[:markdown] = {:auto_ids => false}
+Slim::Embedded.options[:markdown] = {:auto_ids => false}
 ~~~
 
 ## Configuring Slim
@@ -871,16 +871,16 @@ The way how you configure Slim depends a bit on the compilation mechanism (Rails
 
 ~~~ ruby
 # Indent html for pretty debugging and do not sort attributes (Ruby 1.8)
-Slim::Engine.set_default_options :pretty => true, :sort_attrs => false
+Slim::Engine.set_options :pretty => true, :sort_attrs => false
 
 # Indent html for pretty debugging and do not sort attributes (Ruby 1.9)
-Slim::Engine.set_default_options pretty: true, sort_attrs: false
+Slim::Engine.set_options pretty: true, sort_attrs: false
 ~~~
 
 You can also access the option hash directly:
 
 ~~~ ruby
-Slim::Engine.default_options[:pretty] = true
+Slim::Engine.options[:pretty] = true
 ~~~
 
 ### Setting options at runtime
@@ -918,7 +918,7 @@ end
 
 ### Available options
 
-The following options are exposed by the `Slim::Engine` and can be set with `Slim::Engine.set_default_options`.
+The following options are exposed by the `Slim::Engine` and can be set with `Slim::Engine.set_options`.
 There are a lot of them but the good thing is, that Slim checks the configuration keys and reports an error if you try to use an invalid configuration key.
 
 
@@ -959,9 +959,9 @@ options at different positions. Temple uses an inheritance mechanism to allow su
 options of the superclass. The option priorities are as follows:
 
 1. `Slim::Template` options passed at engine instatination
-2. `Slim::Template.default_options`
-3. `Slim::Engine.thread_options`, `Slim::Engine.default_options`
-5. Parser/Filter/Generator `thread_options`, `default_options` (e.g `Slim::Parser`, `Slim::Compiler`)
+2. `Slim::Template.options`
+3. `Slim::Engine.thread_options`, `Slim::Engine.options`
+5. Parser/Filter/Generator `thread_options`, `options` (e.g `Slim::Parser`, `Slim::Compiler`)
 
 It is also possible to set options for superclasses like `Temple::Engine`. But this will affect all temple template engines then.
 

@@ -98,7 +98,7 @@ Require:
 
 You might want to activate logic less mode only for a few actions, you should disable logic-less mode globally at first in the configuration
 
-    Slim::Engine.set_default_options :logic_less => false
+    Slim::Engine.set_options :logic_less => false
 
 and activate logic less mode per render call in your action
 
@@ -120,7 +120,7 @@ You are then ready to rock!
 
 You might want to activate logic less mode only for a few actions, you should disable logic-less mode globally at first in the configuration
 
-    Slim::Engine.set_default_options :logic_less => false
+    Slim::Engine.set_options :logic_less => false
 
 and activate logic less mode per render call in your application
 
