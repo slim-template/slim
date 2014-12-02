@@ -3,9 +3,7 @@ source 'https://rubygems.org/'
 gemspec
 
 if ENV['TRAVIS'] || ENV['TEMPLE'] == 'master'
-  gem 'temple', :github => 'judofyr/temple'
-elsif ENV['TEMPLE_PATH']
-  gem 'temple', :path => ENV['TEMPLE_PATH']
+  gem 'temple', :github => 'judofyr/temple', branch: 'master'
 end
 
 if ENV['TILT']

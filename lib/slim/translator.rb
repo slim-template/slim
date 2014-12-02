@@ -114,5 +114,4 @@ module Slim
   end
 end
 
-# Insert plugin filter into Slim engine chain
-Slim::Engine.before(Slim::EndInserter, Slim::Translator, :tr, :tr_fn, :tr_mode)
+Slim::Engine.before Slim::EndInserter, Slim::Translator

@@ -14,21 +14,21 @@ module Slim
                    :default_tag => 'div'
     define_deprecated_options :attr_delims
 
-    filter :Encoding, :encoding
+    filter :Encoding
     filter :RemoveBOM
-    use Slim::Parser, :file, :tabsize, :shortcut, :default_tag, :attr_delims, :attr_list_delims, :code_attr_delims
-    use Slim::Embedded, :enable_engines, :disable_engines, :pretty
+    use Slim::Parser
+    use Slim::Embedded
     use Slim::Interpolation
-    use Slim::Splat::Filter, :merge_attrs, :attr_quote, :sort_attrs, :default_tag, :hyphen_attrs, :format, :use_html_safe
+    use Slim::Splat::Filter
     use Slim::DoInserter
     use Slim::EndInserter
-    use Slim::Controls, :disable_capture
-    html :AttributeSorter, :sort_attrs
-    html :AttributeMerger, :merge_attrs
-    use Slim::CodeAttributes, :merge_attrs
+    use Slim::Controls
+    html :AttributeSorter
+    html :AttributeMerger
+    use Slim::CodeAttributes
     use(:AttributeRemover) { Temple::HTML::AttributeRemover.new(:remove_empty_attrs => options[:merge_attrs].keys) }
-    html :Pretty, :format, :attr_quote, :pretty, :indent, :js_wrapper
-    filter :Escapable, :use_html_safe, :disable_escape
+    html :Pretty
+    filter :Escapable
     filter :ControlFlow
     filter :MultiFlattener
     use :Optimizer do

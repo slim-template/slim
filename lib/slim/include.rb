@@ -35,7 +35,7 @@ module Slim
   end
 
   class Engine
-    after Slim::Parser, Slim::Include, :file, :include_dirs
+    after Slim::Parser, Slim::Include
     after Slim::Include, :stop do |exp|
       throw :stop, exp if Thread.current[:slim_include_level] > 1
       exp
