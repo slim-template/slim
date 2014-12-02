@@ -3,12 +3,12 @@ require 'helper'
 class TestSlimTabs < TestSlim
 
   def teardown
-    Slim::Engine.set_default_options :tabsize => 4
+    Slim::Engine.set_options :tabsize => 4
   end
 
   def test_single_tab1_expansion
 
-    Slim::Engine.set_default_options :tabsize => 1
+    Slim::Engine.set_options :tabsize => 1
 
     source = %Q{
 |
@@ -40,7 +40,7 @@ class TestSlimTabs < TestSlim
 
   def test_single_tab4_expansion
 
-    Slim::Engine.set_default_options :tabsize => 4
+    Slim::Engine.set_options :tabsize => 4
 
     source = %Q{
 |
@@ -72,7 +72,7 @@ class TestSlimTabs < TestSlim
 
   def test_multi_tab1_expansion
 
-    Slim::Engine.set_default_options :tabsize => 1
+    Slim::Engine.set_options :tabsize => 1
 
     source = %Q{
 |
@@ -120,7 +120,7 @@ class TestSlimTabs < TestSlim
 
   def test_multi_tab4_expansion
 
-    Slim::Engine.set_default_options :tabsize => 4
+    Slim::Engine.set_options :tabsize => 4
 
     source = %Q{
 |

@@ -2,7 +2,7 @@ require 'slim'
 require 'optparse'
 
 module Slim
-  Engine.set_default_options :pretty => false
+  Engine.set_options :pretty => false
 
   # Slim commandline interface
   # @api private
@@ -40,7 +40,7 @@ module Slim
       end
 
       opts.on('--rails', 'Generate rails compatible code (Implies --compile)') do
-        Engine.set_default_options :disable_capture => true, :generator => Temple::Generators::RailsOutputBuffer
+        Engine.set_options :disable_capture => true, :generator => Temple::Generators::RailsOutputBuffer
         @options[:compile] = true
       end
 
@@ -59,12 +59,12 @@ module Slim
       end
 
       opts.on('-p', '--pretty', 'Produce pretty html') do
-        Engine.set_default_options :pretty => true
+        Engine.set_options :pretty => true
       end
 
       opts.on('-o', '--option name=code', String, 'Set slim option') do |str|
         parts = str.split('=', 2)
-        Engine.default_options[parts.first.gsub(/\A:/, '').to_sym] = eval(parts.last)
+        Engine.options[parts.first.gsub(/\A:/, '').to_sym] = eval(parts.last)
       end
 
       opts.on_tail('-h', '--help', 'Show this message') do

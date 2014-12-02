@@ -2,11 +2,11 @@ require 'helper'
 
 class TestSlimPretty < TestSlim
   def setup
-    Slim::Engine.set_default_options :pretty => true
+    Slim::Engine.set_options :pretty => true
   end
 
   def teardown
-    Slim::Engine.set_default_options :pretty => false
+    Slim::Engine.set_options :pretty => false
   end
 
   def test_pretty

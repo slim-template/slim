@@ -4,7 +4,7 @@ require 'slim/translator'
 class TestSlimTranslator < TestSlim
   def setup
     super
-    Slim::Engine.set_default_options :tr => true, :tr_fn => 'TestSlimTranslator.tr'
+    Slim::Engine.set_options :tr => true, :tr_fn => 'TestSlimTranslator.tr'
   end
 
   def self.tr(s)

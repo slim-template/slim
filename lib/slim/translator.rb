@@ -7,14 +7,14 @@ module Slim
                    :tr      => false
 
     if defined?(::I18n)
-      set_default_options :tr_fn => '::Slim::Translator.i18n_text',
-                          :tr => true
+      set_options :tr_fn => '::Slim::Translator.i18n_text',
+                  :tr => true
     elsif defined?(::GetText)
-      set_default_options :tr_fn => '::GetText._',
-                          :tr => true
+      set_options :tr_fn => '::GetText._',
+                  :tr => true
     elsif defined?(::FastGettext)
-      set_default_options :tr_fn => '::FastGettext::Translation._',
-                          :tr => true
+      set_options :tr_fn => '::FastGettext::Translation._',
+                  :tr => true
     end
 
     def self.i18n_text(text)

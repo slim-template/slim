@@ -6,7 +6,7 @@ require 'minitest/autorun'
 
 Slim::Engine.after  Slim::Parser, Temple::Filters::Validator, :grammar => Slim::Grammar
 Slim::Engine.before :Pretty, Temple::Filters::Validator
-Slim::Engine.set_default_options :tr => false, :logic_less => false
+Slim::Engine.set_options :tr => false, :logic_less => false
 
 class MiniTest::Spec
   def render(source, options = {}, &block)
