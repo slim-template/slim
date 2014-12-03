@@ -1,3 +1,10 @@
+3.0.0
+
+  * Drop 1.8.7 support
+  * Deprecate default_options in favor of options
+  * Support xml pretty printing with format: :xml
+  * Deprecate `='`, `=='` and `tag'` syntax for trailing whitespace. Use `=<` etc. instead.
+
 2.1.0
 
   * Parser: Require pairwise braces in quoted attributes

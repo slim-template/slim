@@ -222,7 +222,11 @@ module Slim
         # Found an output block.
         # We expect the line to be broken or the next line to be indented.
         @line = $'
-        trailing_ws = $2.include?('\'') || $2.include?('>')
+        trailing_ws = $2.include?('>')
+        if $2.include?('\'')
+          deprecated_syntax '=\' for trailing whitespace is deprecated in favor of =>'
+          trailing_ws = true
+        end
         block = [:multi]
         @stacks.last << [:static, ' '] if $2.include?('<')
         @stacks.last << [:slim, :output, $1.empty?, parse_broken_line, block]
@@ -325,7 +329,12 @@ module Slim
 
       @line =~ /\A[<>']*/
       @line = $'
-      trailing_ws = $&.include?('\'') || $&.include?('>')
+      trailing_ws = $&.include?('>')
+      if $&.include?('\'')
+        deprecated_syntax 'tag\' for trailing whitespace is deprecated in favor of tag>'
+        trailing_ws = true
+      end
+
       leading_ws = $&.include?('<')
 
       parse_attributes(attributes)
@@ -355,7 +364,11 @@ module Slim
       when /\A\s*=(=?)(['<>]*)/
         # Handle output code
         @line = $'
-        trailing_ws2 = $2.include?('\'') || $2.include?('>')
+        trailing_ws2 = $2.include?('>')
+        if $2.include?('\'')
+          deprecated_syntax '=\' for trailing whitespace is deprecated in favor of =>'
+          trailing_ws2 = true
+        end
         block = [:multi]
         @stacks.last.insert(-2, [:static, ' ']) if !leading_ws && $2.include?('<')
         tag << [:slim, :output, $1 != '=', parse_broken_line, block]
@@ -494,6 +507,16 @@ module Slim
       # to find the right file.
       ex.backtrace.unshift "#{options[:file]}:#{@lineno}"
       raise
+    end
+
+    def deprecated_syntax(message)
+      line = @orig_line.lstrip
+      column = (@orig_line && @line ? @orig_line.size - @line.size : 0) + line.size - @orig_line.size
+      warn %{Deprecated syntax: #{message}
+  #{options[:file]}, Line #{@lineno}, Column #{@column}
+    #{line}
+    #{' ' * column}^
+}
     end
 
     def expect_next_line
