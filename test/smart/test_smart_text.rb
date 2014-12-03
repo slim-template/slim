@@ -250,7 +250,7 @@ which stops
 
     assert_html result, source
   end
-  
+
   # Without unicode support, we can't distinguish uppercase and lowercase
   # unicode characters reliably. So we only test the basic text, not tag names.
   def test_basic_unicode_smart_text
@@ -272,11 +272,8 @@ p
     assert_html result, source
   end
 
-  if ''.respond_to?(:encoding)
-
-    def test_unicode_smart_text
-    
-      source = %q{
+  def test_unicode_smart_text
+    source = %q{
 p
   是
   čip
@@ -294,7 +291,6 @@ p
 šíp
 <div class="řek">.</div></p>}
 
-      assert_html result, source
-    end
+    assert_html result, source
   end
 end

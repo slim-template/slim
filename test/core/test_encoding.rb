@@ -9,13 +9,13 @@ class TestSlimEncoding < TestSlim
 
   def test_binary
     source = "| \xFF\xFF"
-    source.force_encoding(Encoding::BINARY) if source.respond_to? :force_encoding
+    source.force_encoding(Encoding::BINARY)
 
     result = "\xFF\xFF"
-    result.force_encoding(Encoding::BINARY) if source.respond_to? :force_encoding
+    result.force_encoding(Encoding::BINARY)
 
     out = render(source, default_encoding: 'binary')
-    out.force_encoding(Encoding::BINARY) if source.respond_to? :force_encoding
+    out.force_encoding(Encoding::BINARY)
 
     assert_equal result, out
   end
