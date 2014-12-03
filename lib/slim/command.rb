@@ -48,16 +48,6 @@ module Slim
         require lib
       end
 
-      opts.on('-t', '--translator', 'Enable translator plugin') do
-        puts "Deprecated option: Use -r slim/translator"
-        require 'slim/translator'
-      end
-
-      opts.on('-l', '--logic-less', 'Enable logic less plugin') do
-        puts "Deprecated option: Use -r slim/logic_less"
-        require 'slim/logic_less'
-      end
-
       opts.on('-p', '--pretty', 'Produce pretty html') do
         Engine.set_options pretty: true
       end

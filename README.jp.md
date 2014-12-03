@@ -1037,8 +1037,6 @@ Usage: slimrb [options]
     -e, --erb                        Convert to ERB
         --rails                      Generate rails compatible code (Implies --compile)
     -r library                       Load library or plugin with -r slim/plugin
-    -t, --translator                 Enable translator plugin
-    -l, --logic-less                 Enable logic less plugin
     -p, --pretty                     Produce pretty html
     -o, --option name=code           Set slim option
     -h, --help                       Show this message

@@ -4,6 +4,7 @@
   * Deprecate default_options in favor of options
   * Support xml pretty printing with format: :xml
   * Deprecate `='`, `=='` and `tag'` syntax for trailing whitespace. Use `=<` etc. instead.
+  * slimrb: Remove deprecated plugin options -l and -t
 
 2.1.0
 
