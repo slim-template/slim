@@ -941,7 +941,7 @@ There are a lot of them but the good thing is, that Slim checks the configuratio
 | Symbol | :js_wrapper | nil | Wrap javascript by :comment, :cdata or :both. You can also :guess the wrapper based on :format. |
 | Boolean | :pretty | false | Pretty HTML indenting, only block level tags are indented <b>(This is slower!)</b> |
 | String | :indent | '  ' | Indentation string |
-| Boolean | :streaming | false (true in Rails) | Enable output streaming |
+| Boolean | :streaming | false (true in Rails, see below how to disable it!) | Enable output streaming, improves the perceived performance |
 | Class | :generator | Temple::Generators::ArrayBuffer/ RailsOutputBuffer | Temple code generator (default generator generates array buffer) |
 | String | :buffer | '_buf' ('@output_buffer' in Rails) | Variable used for buffer |
 
@@ -1017,7 +1017,12 @@ Then just use the .slim extension and you're good to go.
 
 #### Streaming
 
-HTTP streaming is enabled by default if you use a Rails version which supports it.
+HTTP streaming is enabled by default if you use a Rails version which supports it. However you have to be aware that streaming only improves the perceived
+performance. The rendering time in total will increase. If you want to disable it use:
+
+~~~ ruby
+Slim::RailsTemplate.set_options streaming: false
+~~~
 
 ## Tools
 
