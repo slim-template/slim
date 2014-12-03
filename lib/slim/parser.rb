@@ -61,13 +61,13 @@ module Slim
         @tag_shortcut[k] = v[:tag] || options[:default_tag]
         if v.include?(:attr)
           @attr_shortcut[k] = [v[:attr]].flatten
-          raise ArgumentError, 'You can only use special characters for attribute shortcuts' if k =~ /(#{WORD_RE}|-)/
+          raise ArgumentError, 'You can only use special characters for attribute shortcuts' if k =~ /(\p{Word}|-)/
         end
       end
       keys = Regexp.union @attr_shortcut.keys.sort_by {|k| -k.size }
-      @attr_shortcut_re = /\A(#{keys}+)((?:#{WORD_RE}|-)*)/
+      @attr_shortcut_re = /\A(#{keys}+)((?:\p{Word}|-)*)/
       keys = Regexp.union @tag_shortcut.keys.sort_by {|k| -k.size }
-      @tag_re = /\A(?:#{keys}|\*(?=[^\s]+)|(#{WORD_RE}(?:#{WORD_RE}|:|-)*#{WORD_RE}|#{WORD_RE}+))/
+      @tag_re = /\A(?:#{keys}|\*(?=[^\s]+)|(\p{Word}(?:\p{Word}|:|-)*\p{Word}|\p{Word}+))/
       keys = Regexp.escape @code_attr_delims.keys.join
       @code_attr_delims_re = /\A[#{keys}]/
       keys = Regexp.escape @attr_list_delims.keys.join
@@ -92,9 +92,7 @@ module Slim
 
     protected
 
-    WORD_RE = ''.respond_to?(:encoding) ? '\p{Word}' : '\w'
-    LC_WORD_RE = '[_a-z0-9]'
-    ATTR_NAME = "\\A\\s*(#{WORD_RE}(?:#{WORD_RE}|:|-)*)"
+    ATTR_NAME = '\\A\\s*(\p{Word}(?:\p{Word}|:|-)*)'
     QUOTED_ATTR_RE = /#{ATTR_NAME}\s*=(=?)\s*("|')/
     CODE_ATTR_RE = /#{ATTR_NAME}\s*=(=?)\s*/
 
