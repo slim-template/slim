@@ -136,10 +136,7 @@ module Slim
         tilt_options = options[engine.to_sym] || {}
         [:multi, tilt_render(tilt_engine, tilt_options, collect_text(body)), collect_newlines(body)]
       end
-    end
 
-    # Tilt-based static template (evaluated at compile-time)
-    class StaticTiltEngine < TiltEngine
       protected
 
       def tilt_render(tilt_engine, tilt_options, text)
@@ -254,10 +251,10 @@ module Slim
     register :org,        InterpolateTiltEngine
 
     # These engines are executed at compile time
-    register :coffee,     JavaScriptEngine, engine: StaticTiltEngine
-    register :opal,       JavaScriptEngine, engine: StaticTiltEngine
-    register :less,       TagEngine, tag: :style,  attributes: { type: 'text/css' },         engine: StaticTiltEngine
-    register :styl,       TagEngine, tag: :style,  attributes: { type: 'text/css' },         engine: StaticTiltEngine
+    register :coffee,     JavaScriptEngine, engine: TiltEngine
+    register :opal,       JavaScriptEngine, engine: TiltEngine
+    register :less,       TagEngine, tag: :style,  attributes: { type: 'text/css' },         engine: TiltEngine
+    register :styl,       TagEngine, tag: :style,  attributes: { type: 'text/css' },         engine: TiltEngine
     register :sass,       TagEngine, :pretty, tag: :style, attributes: { type: 'text/css' }, engine: SassEngine
     register :scss,       TagEngine, :pretty, tag: :style, attributes: { type: 'text/css' }, engine: SassEngine
 
