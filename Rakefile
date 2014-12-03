@@ -64,13 +64,8 @@ namespace 'test' do
     require 'sinatra'
     spec = Gem::Specification.find_by_name('sinatra')
     Rake::TestTask.new('sinatra') do |t|
-      # FIXME: Rename deprecated attribute
-      file = "#{spec.gem_dir}/test/slim_test.rb"
-      code = File.read(file)
-      code.gsub!('attr_wrapper', 'attr_quote')
-      File.open(file, 'w') {|out| out.write(code) }
-
       # Run Slim integration test in Sinatra
+      file = "#{spec.gem_dir}/test/slim_test.rb"
       t.test_files = FileList[file]
       t.verbose = true
     end
