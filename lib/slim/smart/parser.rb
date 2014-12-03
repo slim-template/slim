@@ -1,3 +1,5 @@
+# coding: utf-8
+
 module Slim
   module Smart
     class Parser < ::Slim::Parser
