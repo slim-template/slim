@@ -2,15 +2,14 @@ module Slim
   module Splat
     # @api private
     class Filter < ::Slim::Filter
-      OPTIONS = [:merge_attrs, :attr_quote, :sort_attrs, :default_tag, :hyphen_attrs, :format, :use_html_safe]
-      define_options OPTIONS
-      set_options hyphen_attrs: %w(data aria), use_html_safe: ''.respond_to?(:html_safe?)
+      define_options :merge_attrs, :attr_quote, :sort_attrs, :default_tag, :format,
+                     hyphen_attrs: %w(data aria), use_html_safe: ''.respond_to?(:html_safe?)
 
       def call(exp)
         @splat_options = nil
         exp = compile(exp)
         if @splat_options
-          opts = options.to_hash.reject {|k,v| !OPTIONS.include?(k) }.inspect
+          opts = options.to_hash.reject {|k,v| !Filter.options.valid_keys.include?(k) }.inspect
           [:multi, [:code, "#{@splat_options} = #{opts}"], exp]
         else
           exp
