@@ -27,7 +27,7 @@ module Slim
       def attr(name, value)
         if @attrs[name]
           if delim = @options[:merge_attrs][name]
-            @attrs[name] << delim << value.to_s
+            @attrs[name] += delim + value.to_s
           else
             raise("Multiple #{name} attributes specified")
           end

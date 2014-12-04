@@ -30,9 +30,8 @@ module Slim
     filter :Escapable
     filter :ControlFlow
     filter :MultiFlattener
-    use :Optimizer do
-      (options[:streaming] ? Temple::Filters::StaticMerger : Temple::Filters::DynamicInliner).new
-    end
+    filter :StaticMerger
+    filter :StaticFreezer
     use :Generator do
       options[:generator].new(options.to_hash.reject {|k,v| !options[:generator].options.valid_key?(k) })
     end
