@@ -1,4 +1,5 @@
 language: ruby
+
 rvm:
   - 1.9.3
   - 2.0.0
@@ -6,6 +7,11 @@ rvm:
   - ruby-head
   - jruby-19mode
   - rbx-2
+
+sudo: false
+
+script: "bundle exec rake $TASK"
+
 env:
   - "TASK=test:core_and_plugins TILT=master"
   - "TASK=test:core_and_plugins TILT=1.3.7"
@@ -21,6 +27,7 @@ env:
   - "TASK=test:sinatra SINATRA=1.4.5"
   - "TASK=bench iterations=10000"
   - "TASK=bench slow=1 iterations=1000"
+
 matrix:
   exclude:
     - rvm: rbx-2
@@ -29,7 +36,3 @@ matrix:
     - env: "TASK=test:core_and_plugins TILT=master"
     - env: "TASK=test:rails RAILS=master"
     - rvm: ruby-head
-# Rails master needs newest bundler
-before_install:
-  - gem update bundler
-script: "bundle exec rake $TASK"
