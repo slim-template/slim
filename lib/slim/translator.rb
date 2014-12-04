@@ -2,9 +2,9 @@ require 'slim'
 
 module Slim
   class Translator < Filter
-    define_options tr_mode: :dynamic,
-                   tr_fn: '_',
-                   tr: false
+    define_options :tr,
+                   tr_mode: :dynamic,
+                   tr_fn: '_'
 
     if defined?(::I18n)
       set_options tr_fn: '::Slim::Translator.i18n_text',

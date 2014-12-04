@@ -34,7 +34,7 @@ module Slim
       (options[:streaming] ? Temple::Filters::StaticMerger : Temple::Filters::DynamicInliner).new
     end
     use :Generator do
-      options[:generator].new(options.to_hash.reject {|k,v| !options[:generator].options.valid_keys.include?(k) })
+      options[:generator].new(options.to_hash.reject {|k,v| !options[:generator].options.valid_key?(k) })
     end
   end
 end

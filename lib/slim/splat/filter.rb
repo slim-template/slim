@@ -9,7 +9,7 @@ module Slim
         @splat_options = nil
         exp = compile(exp)
         if @splat_options
-          opts = options.to_hash.reject {|k,v| !Filter.options.valid_keys.include?(k) }.inspect
+          opts = options.to_hash.reject {|k,v| !Filter.options.valid_key?(k) }.inspect
           [:multi, [:code, "#{@splat_options} = #{opts}"], exp]
         else
           exp
