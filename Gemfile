@@ -48,6 +48,7 @@ gem 'asciidoctor'
 gem 'org-ruby'
 
 if ENV['TASK'] == 'bench'
+  gem 'benchmark-ips'
   gem 'erubis'
   gem 'haml'
 end

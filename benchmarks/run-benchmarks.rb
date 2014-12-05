@@ -5,15 +5,14 @@ $:.unshift(File.join(File.dirname(__FILE__), '..', 'lib'), File.dirname(__FILE__
 require 'slim'
 require 'context'
 
-require 'benchmark'
+require 'benchmark/ips'
 require 'tilt'
 require 'erubis'
 require 'erb'
 require 'haml'
 
 class SlimBenchmarks
-  def initialize(slow, iterations)
-    @iterations = (iterations || 1000).to_i
+  def initialize(slow)
     @benches    = []
 
     @erb_code  = File.read(File.dirname(__FILE__) + '/view.erb')
@@ -90,12 +89,9 @@ class SlimBenchmarks
   end
 
   def run
-    puts "#{@iterations} Iterations"
-    Benchmark.bmbm do |x|
+    Benchmark.ips do |x|
       @benches.each do |name, block|
-        x.report name.to_s do
-          @iterations.to_i.times { block.call }
-        end
+        x.report(name.to_s, &block)
       end
     end
     puts "
@@ -123,4 +119,4 @@ overhead added by the Temple framework compared to ERB.
   end
 end
 
-SlimBenchmarks.new(ENV['slow'], ENV['iterations']).run
+SlimBenchmarks.new(ENV['slow']).run
