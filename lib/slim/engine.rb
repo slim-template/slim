@@ -31,7 +31,6 @@ module Slim
     filter :ControlFlow
     filter :MultiFlattener
     filter :StaticMerger
-    filter :StaticFreezer
     use :Generator do
       options[:generator].new(options.to_hash.reject {|k,v| !options[:generator].options.valid_key?(k) })
     end

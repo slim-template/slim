@@ -8,8 +8,7 @@ module Slim
   #
   # @api public
   class ERBConverter < Engine
-    remove :StaticMerger
-    replace :StaticFreezer, Temple::Filters::CodeMerger
+    replace :StaticMerger, Temple::Filters::CodeMerger
     replace :Generator, Temple::Generators::ERB
   end
 end
