@@ -112,7 +112,7 @@ module Slim
 
     def normalize_engine_list(list)
       raise(ArgumentError, "Option :enable_engines/:disable_engines must be String or Symbol list") unless !list || Array === list
-      list ? list.map {|s| s.to_sym } : list
+      list && list.map(&:to_sym)
     end
 
     class Engine < Filter
