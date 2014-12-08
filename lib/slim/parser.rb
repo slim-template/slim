@@ -235,7 +235,7 @@ module Slim
       when @embedded_re
         # Embedded template detected. It is treated as block.
         @stacks.last << [:slim, :embedded, $1, parse_text_block($', @orig_line.size - $'.size + $2.size)]
-      when /\Adoctype\s+/
+      when /\Adoctype\b/
         # Found doctype declaration
         @stacks.last << [:html, :doctype, $'.strip]
       when @tag_re
