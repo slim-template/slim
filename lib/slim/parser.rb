@@ -492,9 +492,7 @@ module Slim
         end
       end
 
-      syntax_error!("Expected closing brace }") if count != 0
       @line.slice!(0)
-
       value
     end
 
