@@ -256,4 +256,12 @@ p(id="marvin" class=nil nonempty=("".to_s) data-info="Illudium Q-36")= output_nu
 
     assert_html '<p data-info="Illudium Q-36" id="marvin" nonempty="">1337</p>', source
   end
+
+  def test_weird_attribute
+    source = %q{
+p
+  img(src='img.png' whatsthis?!)
+}
+    assert_html '<p><img src="img.png" whatsthis?!="" /></p>', source
+  end
 end

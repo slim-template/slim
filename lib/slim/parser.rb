@@ -72,8 +72,10 @@ module Slim
       @code_attr_delims_re = /\A[#{keys}]/
       keys = Regexp.escape @attr_list_delims.keys.join
       @attr_list_delims_re = /\A\s*([#{keys}])/
-      # Access available engine keys to allow nicer one-line syntax
       @embedded_re = /\A(#{Regexp.union(Embedded.engines.keys.map(&:to_s))}):(\s*)/
+      @attr_name = "\\A\\s*([^\0\"'><\/=\s#{(@attr_list_delims.flatten + @code_attr_delims.flatten).map {|x| Regexp.escape(x) }.join}]+)"
+      @quoted_attr_re = /#{@attr_name}\s*=(=?)\s*("|')/
+      @code_attr_re = /#{@attr_name}\s*=(=?)\s*/
     end
 
     # Compile string to Temple expression
@@ -91,10 +93,6 @@ module Slim
     end
 
     protected
-
-    ATTR_NAME = '\\A\\s*(\p{Word}(?:\p{Word}|:|-)*)'
-    QUOTED_ATTR_RE = /#{ATTR_NAME}\s*=(=?)\s*("|')/
-    CODE_ATTR_RE = /#{ATTR_NAME}\s*=(=?)\s*/
 
     def reset(lines = nil, stacks = nil)
       # Since you can indent however you like in Slim, we need to keep a list
@@ -398,7 +396,7 @@ module Slim
       end
 
       if delimiter
-        boolean_attr_re = /#{ATTR_NAME}(?=(\s|#{Regexp.escape delimiter}|\Z))/
+        boolean_attr_re = /#{@attr_name}(?=(\s|#{Regexp.escape delimiter}|\Z))/
         end_re = /\A\s*#{Regexp.escape delimiter}/
       end
 
@@ -408,12 +406,12 @@ module Slim
           # Splat attribute
           @line = $'
           attributes << [:slim, :splat, parse_ruby_code(delimiter)]
-        when QUOTED_ATTR_RE
+        when @quoted_attr_re
           # Value is quoted (static)
           @line = $'
           attributes << [:html, :attr, $1,
                          [:escape, $2.empty?, [:slim, :interpolate, parse_quoted_attribute($3)]]]
-        when CODE_ATTR_RE
+        when @code_attr_re
           # Value is ruby code
           @line = $'
           name = $1

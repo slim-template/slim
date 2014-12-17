@@ -1,3 +1,7 @@
+master
+
+  * Allow more special characters in html attribute names (See https://html.spec.whatwg.org/multipage/syntax.html#attributes-2), #567
+
 3.0.0
 
   * Drop 1.8.7 support
