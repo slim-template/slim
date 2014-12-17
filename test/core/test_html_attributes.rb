@@ -261,7 +261,8 @@ p(id="marvin" class=nil nonempty=("".to_s) data-info="Illudium Q-36")= output_nu
     source = %q{
 p
   img(src='img.png' whatsthis?!)
+  img src='img.png' whatsthis?!="wtf"
 }
-    assert_html '<p><img src="img.png" whatsthis?!="" /></p>', source
+    assert_html '<p><img src="img.png" whatsthis?!="" /><img src="img.png" whatsthis?!="wtf" /></p>', source
   end
 end
