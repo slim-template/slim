@@ -54,7 +54,7 @@ module Slim
          [:code, "#{tmp} = #{code}"],
          [:if, "Array === #{tmp}",
           [:multi,
-           [:code, "#{tmp}.flatten!"],
+           [:code, "#{tmp} = #{tmp}.flatten"],
            [:code, "#{tmp}.map!(&:to_s)"],
            [:code, "#{tmp}.reject!(&:empty?)"],
            [:escape, escape, [:dynamic, "#{tmp}.join(#{delimiter.inspect})"]]],

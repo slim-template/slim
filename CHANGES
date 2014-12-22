@@ -1,6 +1,7 @@
 master
 
   * Allow more special characters in html attribute names (See https://html.spec.whatwg.org/multipage/syntax.html#attributes-2), #567
+  * Fix: Code attributes mutate their argument (#571)
 
 3.0.0
 

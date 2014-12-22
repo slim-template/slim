@@ -162,6 +162,14 @@ p id=(1 + 1)*5 Test it
     assert_html '<p id="10">Test it</p>', source
   end
 
+  def test_code_attribute_does_not_modify_argument
+    template = 'span class=attribute'
+    model = OpenStruct.new(attribute: [:a, :b, [:c, :d]])
+    output = Slim::Template.new { template }.render(model)
+    assert_equal('<span class="a b c d"></span>', output)
+    assert_equal([:a, :b, [:c, :d]], model.attribute)
+  end
+
   def test_number_type_interpolation
     source = %q{
 p = output_number
