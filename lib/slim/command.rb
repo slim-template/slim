@@ -57,6 +57,16 @@ module Slim
         Engine.options[parts.first.gsub(/\A:/, '').to_sym] = eval(parts.last)
       end
 
+      opts.on('-l', '--locals Hash|YAML|JSON', String, 'Set local variables') do |locals|
+        @options[:locals] =
+          if locals =~ /\A\s*\{\s*\w+:/
+            eval(locals)
+          else
+            require 'yaml'
+            YAML.load(locals)
+          end
+      end
+
       opts.on_tail('-h', '--help', 'Show this message') do
         puts opts
         exit
@@ -82,6 +92,7 @@ module Slim
         end
       end
 
+      locals = @options.delete(:locals) || {}
       result =
         if @options[:erb]
           require 'slim/erb_converter'
@@ -89,7 +100,7 @@ module Slim
         elsif @options[:compile]
           Engine.new(file: @options[:file]).call(@options[:input].read)
         else
-          Template.new(@options[:file]) { @options[:input].read }.render
+          Template.new(@options[:file]) { @options[:input].read }.render(nil, locals)
         end
 
       rescue Exception => ex

@@ -1,3 +1,7 @@
+master
+
+  * slimrb: Add option --locals
+
 3.0.1
 
   * Allow more special characters in html attribute names (See https://html.spec.whatwg.org/multipage/syntax.html#attributes-2), #567
