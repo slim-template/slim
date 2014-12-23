@@ -1,5 +1,6 @@
 require 'slim'
 require 'optparse'
+require 'json'
 
 module Slim
   Engine.set_options pretty: false
@@ -57,6 +58,10 @@ module Slim
         Engine.options[parts.first.gsub(/\A:/, '').to_sym] = eval(parts.last)
       end
 
+      opts.on('-d', '--data JSON', String, 'Use JSON data as locals') do |json|
+        @options[:data] = JSON.parse json
+      end
+
       opts.on_tail('-h', '--help', 'Show this message') do
         puts opts
         exit
@@ -82,6 +87,7 @@ module Slim
         end
       end
 
+      data = @options.delete(:data) || {}
       result =
         if @options[:erb]
           require 'slim/erb_converter'
@@ -89,7 +95,7 @@ module Slim
         elsif @options[:compile]
           Engine.new(file: @options[:file]).call(@options[:input].read)
         else
-          Template.new(@options[:file]) { @options[:input].read }.render
+          Template.new(@options[:file]) { @options[:input].read }.render(nil, data)
         end
 
       rescue Exception => ex
