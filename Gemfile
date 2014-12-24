@@ -16,6 +16,9 @@ if ENV['TILT']
 end
 
 if ENV['RAILS']
+  # we need some smarter test logic for the different Rails versions
+  gem 'nokogiri'
+  
   if ENV['RAILS'] == 'master'
     gem 'rails', github: 'rails/rails'
   else
@@ -24,7 +27,7 @@ if ENV['RAILS']
 end
 
 #Choose minitest 4.7.x for sinatra or rails 3 and 4.0 otherwise go for newer version
-if ENV['SINATRA'] || (ENV['RAILS'] && !ENV['RAILS'].match(/4\.([1-9])(\..*)?/))
+if ENV['SINATRA'] || (ENV['RAILS'] && ENV['RAILS'].match(/^(3|4\.0)/))
   gem 'minitest', '~> 4.7.4'
 else
   gem 'minitest', '~> 5.1'

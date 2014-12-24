@@ -33,6 +33,10 @@ matrix:
   exclude:
     - rvm: rbx-2
       env: "TASK=test:rails RAILS=master"
+    - rvm: 1.9.3
+      env: "TASK=test:rails RAILS=master"
+    - rvm: 2.0.0
+      env: "TASK=test:rails RAILS=master"
   allow_failures:
     - env: "TASK=test:core_and_plugins TILT=master"
     - env: "TASK=test:rails RAILS=master"
