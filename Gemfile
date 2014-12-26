@@ -18,7 +18,7 @@ end
 if ENV['RAILS']
   # we need some smarter test logic for the different Rails versions
   gem 'nokogiri'
-  
+
   if ENV['RAILS'] == 'master'
     gem 'rails', github: 'rails/rails'
   else
@@ -31,6 +31,11 @@ if ENV['SINATRA'] || (ENV['RAILS'] && ENV['RAILS'].match(/^(3|4\.0)/))
   gem 'minitest', '~> 4.7.4'
 else
   gem 'minitest', '~> 5.1'
+end
+
+#Ruby >= 2.2.0 has removed test/unit from Stdlib
+if RUBY_VERSION >= '2.2.0'
+  gem 'test-unit', platforms: :mri
 end
 
 if ENV['SINATRA']
