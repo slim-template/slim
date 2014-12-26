@@ -1167,6 +1167,7 @@ Template compilation framework:
 Framework support:
 
 * [Rails generators (slim-rails)](https://github.com/slim-template/slim-rails)
+** [slimkeyfy - Translation string extraction](https://github.com/phrase/slimkeyfy)
 
 Syntax highlighting:
 
