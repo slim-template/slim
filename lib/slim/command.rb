@@ -45,7 +45,7 @@ module Slim
       end
 
       opts.on('-r library', "Load library or plugin with -r slim/plugin") do |lib|
-        require lib
+        require lib.strip
       end
 
       opts.on('-p', '--pretty', 'Produce pretty html') do
