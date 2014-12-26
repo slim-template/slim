@@ -1041,6 +1041,7 @@ Usage: slimrb [options]
     -r library                       Load library or plugin with -r slim/plugin
     -p, --pretty                     Produce pretty html
     -o, --option name=code           Set slim option
+    -l, --locals Hash|YAML|JSON      Set local variables
     -h, --help                       Show this message
     -v, --version                    Print version
 </pre>
