@@ -32,9 +32,7 @@ module Slim
     filter :MultiFlattener
     filter :StaticMerger
     use :Generator do
-      # If the outvar option is present, we use the stringbuffer generator for ERB compatibility
-      generator = options[:outvar] ? Temple::Generators::StringBuffer : options[:generator]
-      generator.new(options.to_hash.reject {|k,v| !options[:generator].options.valid_key?(k) })
+      options[:generator].new(options.to_hash.reject {|k,v| !options[:generator].options.valid_key?(k) })
     end
   end
 end
