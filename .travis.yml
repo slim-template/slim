@@ -1,13 +1,14 @@
 language: ruby
 
 rvm:
-  - 1.9.3
-  - 2.0.0
-  - 2.1.0
   - ruby-head
-  - jruby-19mode
-  - jruby-head
+  - 2.2.0
+  - 2.1.5
+  - 2.0.0
   - rbx-2
+  - 1.9.3
+  - jruby-head
+  - jruby-19mode
 
 sudo: false
 
@@ -43,3 +44,5 @@ matrix:
     - env: "TASK=test:rails RAILS=master"
     - rvm: ruby-head
     - rvm: jruby-19mode
+    - rvm: rbx-2
+      env: "TASK=test:rails RAILS=4.1.8"

@@ -63,6 +63,13 @@ module Slim
             eval(locals)
           else
             require 'yaml'
+            if RUBY_ENGINE == 'rbx'
+              begin
+                require 'psych'
+              rescue LoadError
+                $stderr.puts 'Please install psych gem as Rubunius ships with an old YAML engine.'
+              end
+            end
             YAML.load(locals)
           end
       end
