@@ -113,4 +113,53 @@ html
 
     assert_ruby_error NameError,"(__TEMPLATE__):9", source
   end
+
+  def test_unindenting
+    source = %q{
+span before
+span = " middle "
+span after
+}
+
+    result = %q{<span>before</span><span> middle </span><span>after</span>}
+
+    assert_html result, source
+
+    source = %q{
+html
+  body == "  <div>\n    <a>link</a>\n  </div>"
+}
+
+    result = %q{<html>
+  <body>
+    <div>
+      <a>link</a>
+    </div>
+  </body>
+</html>}
+    assert_html result, source
+  end
+
+  def test_helper_unindent
+    source = %q{
+ruby:
+  def capture
+    yield
+  end
+html
+  body == capture
+    div
+      a link
+}
+
+    result = %q{<html>
+  <body>
+    <div>
+      <a>link</a>
+    </div>
+  </body>
+</html>}
+
+    assert_html result, source
+  end
 end
