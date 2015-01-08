@@ -2,6 +2,7 @@ require 'helper'
 
 class TestSlimPretty < TestSlim
   def setup
+    super
     Slim::Engine.set_options pretty: true
   end
 
@@ -142,17 +143,17 @@ html
 
   def test_helper_unindent
     source = %q{
-ruby:
-  def capture
-    yield
-  end
-html
-  body == capture
-    div
+= define_macro :content
+     div
       a link
+html
+  body
+   == call_macro :content
 }
 
-    result = %q{<html>
+    result = %q{
+
+<html>
   <body>
     <div>
       <a>link</a>
