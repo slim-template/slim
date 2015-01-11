@@ -1,6 +1,6 @@
 # Slim
 
-[![Gem Version](https://badge.fury.io/rb/slim.png)](http://rubygems.org/gems/slim) [![Build Status](https://secure.travis-ci.org/slim-template/slim.png?branch=master)](http://travis-ci.org/slim-template/slim) [![Dependency Status](https://gemnasium.com/slim-template/slim.png?travis)](https://gemnasium.com/slim-template/slim) [![Code Climate](https://codeclimate.com/github/slim-template/slim.png)](https://codeclimate.com/github/slim-template/slim) [![Gittip donate button](http://img.shields.io/gittip/bevry.png)](https://www.gittip.com/min4d/ "Donate weekly to this project using Gittip")
+[![Gem Version](https://img.shields.io/gem/v/slim.svg)](http://rubygems.org/gems/slim) [![Build Status](https://img.shields.io/travis/slim-template/slim.svg?branch=master)](http://travis-ci.org/slim-template/slim) [![Dependency Status](https://img.shields.io/gemnasium/slim-template/slim.svg?travis)](https://gemnasium.com/slim-template/slim) [![Code Climate](https://img.shields.io/codeclimate/github/slim-template/slim.svg)](https://codeclimate.com/github/slim-template/slim) [![Gittip donate button](https://img.shields.io/gratipay/bevry.svg)](https://www.gittip.com/min4d/ "Donate weekly to this project using Gittip")
 [![Flattr donate button](https://raw.github.com/balupton/flattr-buttons/master/badge-89x18.gif)](https://flattr.com/submit/auto?user_id=min4d&url=http%3A%2F%2Fslim-lang.org%2F "Donate monthly to this project using Flattr")
 
 Slim は 不可解にならないように view の構文を本質的な部品まで減らすことを目指したテンプレート言語です。標準的な HTML テンプレートからどれだけのものが削除できるか確かめるところから始まりました。(<, >, 閉じタグなど) 多くの人が Slim に興味を持ったことで, 機能性は発展し, 柔軟な構文をもたらしました。
@@ -1041,6 +1041,7 @@ Usage: slimrb [options]
     -r library                       Load library or plugin with -r slim/plugin
     -p, --pretty                     Produce pretty html
     -o, --option name=code           Set slim option
+    -l, --locals Hash|YAML|JSON      Set local variables
     -h, --help                       Show this message
     -v, --version                    Print version
 </pre>
@@ -1166,6 +1167,7 @@ Slim は [MIT license](http://www.opensource.org/licenses/MIT) に基づいて�
 フレームワークサポート:
 
 * [Rails generators (slim-rails)](https://github.com/slim-template/slim-rails)
+  * [slimkeyfy - Translation string extraction](https://github.com/phrase/slimkeyfy)
 
 構文ハイライト:
 
