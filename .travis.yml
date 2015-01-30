@@ -42,7 +42,9 @@ matrix:
   allow_failures:
     - env: "TASK=test:core_and_plugins TILT=master"
     - env: "TASK=test:rails RAILS=master"
+    - env: "TASK=test:sinatra SINATRA=master"
     - rvm: ruby-head
     - rvm: jruby-19mode
+    - rvm: jruby-head
     - rvm: rbx-2
       env: "TASK=test:rails RAILS=4.1.8"
