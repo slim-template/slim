@@ -8,7 +8,6 @@ end
 
 if ENV['TILT']
   if ENV['TILT'] == 'master'
-    gem 'opal', github: 'opal/opal' if RUBY_VERSION > '1.9'
     gem 'tilt', github: 'rtomayko/tilt'
   else
     gem 'tilt', "= #{ENV['TILT']}"
