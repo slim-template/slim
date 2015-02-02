@@ -1,6 +1,7 @@
-master
+3.0.2
 
   * slimrb: Add option --locals
+  * Fix issues in the test suite (#576), thanks @dmke!
 
 3.0.1
 
