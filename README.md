@@ -1177,7 +1177,6 @@ Syntax highlighting:
 * [Espresso text editor](https://github.com/slim-template/Slim-Sugar)
 * [Coda](https://github.com/slim-template/Coda-2-Slim.mode)
 * [Atom](https://github.com/slim-template/language-slim)
-* [Brackets] (https://github.com/lchamb/brackets-slim)
 
 Template Converters (HAML, ERB, ...):
 
