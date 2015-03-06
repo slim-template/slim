@@ -2,7 +2,7 @@ module Slim
   module Splat
     # @api private
     class Filter < ::Slim::Filter
-      define_options :merge_attrs, :attr_quote, :sort_attrs, :default_tag, :format,
+      define_options :merge_attrs, :attr_quote, :sort_attrs, :default_tag, :format, :disable_capture,
                      hyphen_attrs: %w(data aria), use_html_safe: ''.respond_to?(:html_safe?)
 
       def call(exp)
