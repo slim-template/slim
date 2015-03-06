@@ -1,3 +1,7 @@
+3.0.3
+
+  * Fix #392, capturing for splat attributes didn't work correctly under Rails
+
 3.0.2
 
   * slimrb: Add option --locals
