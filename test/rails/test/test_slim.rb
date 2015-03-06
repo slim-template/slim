@@ -82,4 +82,9 @@ class TestSlim < ActionDispatch::IntegrationTest
     assert_match %r{<label><b>Name</b></label>}, @response.body
     assert_xpath '//input[@id="entry_name" and @name="entry[name]" and @type="text"]'
   end
+
+  test "splat" do
+    get "/slim/splat"
+    assert_html "<div id=\"splat\"><splat>Hello</splat></div>"
+  end
 end
