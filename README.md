@@ -883,7 +883,7 @@ Slim::Engine.options[:pretty] = true
 ### Setting options at runtime
 
 There are two ways to set options at runtime. For Tilt templates (`Slim::Template`) you can set
-the options when you instatiate the template:
+the options when you instantiate the template:
 
 ~~~ ruby
 Slim::Template.new('template.slim', optional_option_hash).render(scope)
@@ -955,7 +955,7 @@ For developers who know more about Slim and Temple architecture it is possible t
 options at different positions. Temple uses an inheritance mechanism to allow subclasses to override
 options of the superclass. The option priorities are as follows:
 
-1. `Slim::Template` options passed at engine instatination
+1. `Slim::Template` options passed at engine instantination
 2. `Slim::Template.options`
 3. `Slim::Engine.thread_options`, `Slim::Engine.options`
 5. Parser/Filter/Generator `thread_options`, `options` (e.g `Slim::Parser`, `Slim::Compiler`)
