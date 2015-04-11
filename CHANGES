@@ -1,18 +1,18 @@
-3.0.3
+3.0.3 (2015-03-06)
 
   * Fix #392, capturing for splat attributes didn't work correctly under Rails
 
-3.0.2
+3.0.2 (2015-02-02)
 
   * slimrb: Add option --locals
   * Fix issues in the test suite (#576), thanks @dmke!
 
-3.0.1
+3.0.1 (2014-12-22)
 
   * Allow more special characters in html attribute names (See https://html.spec.whatwg.org/multipage/syntax.html#attributes-2), #567
   * Fix: Code attributes mutate their argument (#571)
 
-3.0.0
+3.0.0 (2014-12-07)
 
   * Drop 1.8.7 support
   * Deprecate default_options in favor of options
@@ -20,7 +20,7 @@
   * Deprecate `='`, `=='` and `tag'` syntax for trailing whitespace. Use `=<` etc. instead.
   * slimrb: Remove deprecated plugin options -l and -t
 
-2.1.0
+2.1.0 (2014-10-15)
 
   * Parser: Require pairwise braces in quoted attributes
   * Parser: add :attr_list_delims and :code_attr_delims
@@ -43,7 +43,7 @@
   * Fix rails error reporting #587 (Manipulate stacktrace)
   * Splat: handle html_safe
 
-2.0.3
+2.0.3 (2014-07-04)
 
   * slimrb: Don't update HTML output on exceptions
   * Allow dashes at the beginning of class names (#474)
@@ -52,11 +52,11 @@
   * Fix #485: missing end for empty `if` control blocks
   * Fix #510: double dash in class name
 
-2.0.2
+2.0.2 (2013-10-27)
 
   * Add option :attr_delims
 
-2.0.1
+2.0.1 (2013-07-31)
 
   * Support multiple attributes per shortcut (See issue #415)
   * Add support for org-ruby embedded engine
@@ -65,7 +65,7 @@
   * Fix issue #431
   * Also escape ' to &#39;
 
-2.0.0
+2.0.0 (2013-05-27)
 
   * IMPORTANT: Backward incompatible syntax change: '{...}' and '[...]' are not
     allowed as ruby attribute wrappers anymore. Use parentheses '(...)'
@@ -100,11 +100,11 @@
   * Add syntax for trailing or leading whitespace after tag, e.g. input>, input<
   * Add syntax for trailing or leading whitespace after output, e.g. =>, =<
 
-1.3.8
+1.3.8 (2013-04-11)
 
   * Disable some superflous deprecation warnings
 
-1.3.7
+1.3.7 (2013-04-10)
 
   * Fixed issue #374, rescue and ensure blocks
   * Fixed issue #333 (Throw syntax error if you write text after closed tag)
@@ -132,25 +132,25 @@
   * Support for wrapping javascript in HTML comments or CDATA (Issue #340)
   * Asciidoc embedded engine added
 
-1.3.6
+1.3.6 (2013-01-06)
 
   * Allow attribute values to be broken with `\` (Issue #331)
   * Tag shortcuts implemented (Issue #306)
   * Hash format of Slim::Parser option :shortcut changed, old configuration deprecated but still supported
 
-1.3.5
+1.3.5 (2012-12-19)
 
   * Logic-less:
     - Rewrote logic-less mode (Issue #326, #327)
     - Logic-less mode supports lambdas
     - Option :dictionary_access made more powerful, value :wrapped deprecated
 
-1.3.4
+1.3.4 (2012-11-15)
 
   * Fixed #314
   * Logic-less test cases added
 
-1.3.3
+1.3.3 (2012-10-16)
 
   * Attribute handling made consistent:
     - Splat attributes, static and dynamic attributes are now all handled the same
@@ -162,11 +162,11 @@
   * Remove UTF BOM when parsing Slim code
   * Fixed issue #303
 
-1.3.2
+1.3.2 (2012-09-26)
 
   * Fix boolean attributes #299
 
-1.3.1
+1.3.1 (2012-09-23)
 
   * Support inline html at the beginning of a line (New line indicator <). No pipe symbol is | necessary.
     It is even possible to wrap other Slim syntax in such a html block.
@@ -185,22 +185,22 @@
   * Support thread options Slim::Engine.with_options which especially useful for Rails
   * Add explicit column number to SyntaxError.to_s
 
-1.3.0
+1.3.0 (2012-09-04)
 
   * Parser wraps text blocks in [:slim, :text, ...] (Used by Translator/I18n plugin)
   * Added Translator/I18n plugin which uses GetText or FastGettext (require 'slim/translator')
   * Moved logic less mode out of the core to plugin (require 'slim/logic_less')
 
-1.2.2
+1.2.2 (2012-06-21)
 
   * Fix issue #264
 
-1.2.1
+1.2.1 (2012-05-22)
 
   * Support stylus as embedded engine
   * Fix issue #257
 
-1.2.0
+1.2.0 (2012-03-30)
 
   * Add option :shortcut which configures attribute shortcuts
     Default setting:
@@ -212,14 +212,14 @@
   * Add syntax for splat attributes (#109)
   * Support for dynamic tags, e.g. *{:tag => 'img', :src => 'image.jpg'}
 
-1.1.1
+1.1.1 (2012-02-29)
 
   * Evaluating a html attribute now happens only once (#219)
   * Code with trailing comma is treated as broken line (#226)
   * Support option :remove_empty_attrs (default true)
   * Require temple 0.4.0
 
-1.1.0
+1.1.0 (2012-01-06)
 
   * Support for special characters in class/id shortcut removed
   * Do not allow : in class/id shortcut
@@ -227,14 +227,14 @@
   * Support options :indent, :sort_attrs
   * Require temple 0.3.5
 
-1.0.4
+1.0.4 (2011-11-03)
 
   * Pass options to embedded Tilt engine
     Slim::EmbeddedEngine.set_default_options :markdown => {...}
   * Add test case for precompiled embedded engine 'builder'
   * Bug #204 fixed, tabs were not parsed correctly
 
-1.0.3
+1.0.3 (2011-10-08)
 
   * Fix rubinius test cases
   * Fix line numbers for embedded engines
@@ -245,20 +245,20 @@
   * Empty static attributes are not removed anymore
   * Line indicator =' is supported in tags
 
-1.0.2
+1.0.2 (2011-08-26)
 
   * Support for Rails 3.1 streaming (Temple > 0.3.2 required)
   * Switch to default format xhtml (supports all doctypes, including html5)
   * Improve parsing of #{interpolation} in quoted attributes (issue #159)
   * Use travis-ci for continous integration testing
 
-1.0.1
+1.0.1 (2011-08-07)
 
   * Only delimiting brackets must be balanced in ruby attributes
     e.g this is possible now `a href=(ruby_code "{")
   * Skip empty lines in text block (#156)
 
-1.0.0
+1.0.0 (2011-07-24)
 
   * Fixed html attribute issue in sections mode (#127)
   * Obsolete directive syntax removed
@@ -269,7 +269,7 @@
   * Dynamic attributes with value true/false are interpreted as boolean
   * Support boolean attributes without value e.g. option(selected id="abc")
 
-0.9.3
+0.9.3 (2011-05-15)
 
   * Allow for bypassing escaping in attributes
   * check if string encoding is valid
@@ -285,7 +285,7 @@
   * Option :auto_escape replaced with inverse option :disable_escape
   * Require temple 0.3.0
 
-0.9.2
+0.9.2 (2011-03-30)
 
   * add SassEngine which respects :pretty
   * embedded engine code refactored
@@ -295,64 +295,64 @@
   * add encoding option to Slim::Parser/Slim::Engine to enforce template encoding
   * vim support is now an external project
 
-0.9.1
+0.9.1 (2011-03-10)
 
   * add new doctype syntax without !
   * slim directive expression has type and args
 
-0.9.0
+0.9.0 (2011-01-30)
 
   * slim should not be registered as the default template handler.
   * add support for unescaped text interpolation
 
-0.8.4
+0.8.4 (2011-01-26)
 
   * Added the option to turn off automatic HTML escaping.
   * update to tilt 1.2.2
   * allow call to yield in logic less mode
   * allow doctype declaration to be capitalized
 
-0.8.3
+0.8.3 (2010-12-23)
 
   * Added support for html comments. The parser uses the :static filter instead of the :comment filter due to the way the parser is constructed.
 
-0.8.2
+0.8.2 (2010-12-22)
 
   * fix issue #96
   * Added the Temple Debugger filter.
   * Rails problems fixed
 
-0.8.1
+0.8.1 (2010-12-17)
 
   * remove backtick slim syntax -- no longer supported
   * slim executable conflict. issue #91
   * vim syntax support improved
 
-0.8.0
+0.8.0 (2010-11-29)
 
   * rails logic less support
 
-0.7.4
+0.7.4 (2010-11-22)
 
   * use ' for text block with trailing whitespace
   * allow to disable/enable embedded engines
 
-0.7.3
+0.7.3 (2010-11-16)
 
   * fix #82
   * basic rails test added
 
-0.7.2
+0.7.2 (2010-11-09)
 
   * get rid of rails deprecation warning
   * use_html_safe is activated automatically by temple
 
-0.7.1
+0.7.1 (2010-11-03)
 
   * logic less mode
   * add syntax for explicitly closed tags
 
-0.7.0
+0.7.0 (2010-10-25)
 
   * slim-mode.el for emacs added (modified haml-mode.el, needs some work to be fully functional for slim)
   * embedded engines
@@ -365,21 +365,21 @@
   * Slim now uses Temple and Tilt.
   * Choose your own attribute delimiter!
 
-0.6.1
+0.6.1 (2010-10-17)
 
   * can wrap parens around attributes if you so desire
   * added erubis to the benchmarks
 
-0.6.0
+0.6.0 (2010-10-17)
 
   * Added slim itself, haml and mustache to the development env for easier benchmarking.
   * added escape_html functionality.  need to tweak for speed
 
-0.5.1
+0.5.1 (2010-10-08)
 
   * Consecutive condition statements now working as expected.
 
-0.5.0
+0.5.0 (2010-10-07)
 
   * Added 'unless' to the list of control words.
   * Fixes for inline conditions. There must be a better way of doing this??
@@ -388,29 +388,29 @@
   * Output code (start with '=') can now accept code blocks.
   * Method calls no longer need parenthesis. We need more tests to ensure the implementation's robustness.
 
-0.4.1
+0.4.1 (2010-10-03)
 
   * Added '|' as an alias of '`' for parsing plain text. This simulates the syntax of the Jade template engine.
   * Added instructions of how to use the gem.
 
-0.4.0
+0.4.0 (2010-09-21)
 
   * support for nesting lines under backtick
   * make it so that one space is the left margin. any additional spaces will be copied over
   * support for using indentation after backtick to denote paragraphs. useful for script tags and paragraphs
 
-0.3.1
+0.3.1 (2010-09-17)
 
   * fix bug with adding end to nesting ruby code
 
-0.3.0
+0.3.0 (2010-09-17)
 
   * Optimize compiled string to reduce number of concatentations to the buffer
 
-0.2.0
+0.2.0 (2010-09-17)
 
   * can now make code call on same line as tag
 
-0.1.0
+0.1.0 (2010-09-15)
 
   * Initial release
