@@ -103,7 +103,7 @@ class TestSlimCommands < Minitest::Test
 
   def test_require
     with_tempfile 'puts "Not in slim"', 'rb' do |lib|
-      prepare_common_test STATIC_TEMPLATE, '-r', lib, stdin_file: false, file_file: false do |out, err|
+      prepare_common_test STATIC_TEMPLATE, '--require', lib, stdin_file: false, file_file: false do |out, err|
         assert err.empty?
         assert_equal "Not in slim\n<p>Hello World!</p>\n", out
       end
