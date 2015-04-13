@@ -44,7 +44,7 @@ module Slim
         @options[:compile] = true
       end
 
-      opts.on('-r library', "Load library or plugin with -r slim/plugin") do |lib|
+      opts.on('-r', '--require library', "Load library or plugin with -r slim/plugin") do |lib|
         require lib.strip
       end
 
