@@ -11,6 +11,7 @@ so you can easily type text like this:
 
     p
       This is text.
+      This is text, too.
 
 Slim will automatically treat any line which doesn't start
 with a lowercase tag name or any of the special characters as an implicit text line.
