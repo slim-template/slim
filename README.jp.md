@@ -1038,7 +1038,7 @@ Usage: slimrb [options]
     -c, --compile                    Compile only but do not run
     -e, --erb                        Convert to ERB
         --rails                      Generate rails compatible code (Implies --compile)
-    -r library                       Load library or plugin with -r slim/plugin
+    -r, --require library            Load library or plugin with -r slim/plugin
     -p, --pretty                     Produce pretty html
     -o, --option name=code           Set slim option
     -l, --locals Hash|YAML|JSON      Set local variables
