@@ -754,7 +754,7 @@ end
 = captured_content
 ~~~
 
-Another interesting use case is to use an enumerable and capture for each element. The helper could look like this
+別の興味深いユースケースは、enumerableを使いそれぞれの要素をキャプチャすることです。ヘルパは、このようになります。
 
 ~~~ ruby
 module Capture
@@ -766,7 +766,7 @@ module Capture
 end
 ~~~
 
-and it would be used as follows
+そして、次のように使用出来ます。
 
 ~~~ slim
 - links = { 'http://slim-lang.com' => 'The Slim Template Language' }
@@ -774,7 +774,7 @@ and it would be used as follows
   a href=url = text
 ~~~
 
-Afterwards, `link_list` contains the captured content.
+その後は、`link_list`はキャプチャしたコンテンツを含みます。
 
 ###　インクルードヘルパ
 
