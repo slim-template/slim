@@ -1178,6 +1178,10 @@ Syntax highlighting:
 * [Coda](https://github.com/slim-template/Coda-2-Slim.mode)
 * [Atom](https://github.com/slim-template/language-slim)
 
+Static code analysis:
+
+* [Slim-Lint](https://github.com/sds/slim-lint)
+
 Template Converters (HAML, ERB, ...):
 
 * [Haml2Slim converter](https://github.com/slim-template/haml2slim)
