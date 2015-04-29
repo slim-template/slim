@@ -792,8 +792,8 @@ end
 This helper can then be used as follows
 
 ~~~ slim
-nav= include_slim 'menu'
-section= include_slim 'content'
+nav = include_slim 'menu'
+section = include_slim 'content'
 ~~~
 
 However this helper doesn't do any caching. You should therefore implement a more intelligent version of the helper which

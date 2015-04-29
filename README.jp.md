@@ -792,8 +792,8 @@ end
 このヘルパは次のように使用できます
 
 ~~~ slim
-nav= include_slim 'menu'
-section= include_slim 'content'
+nav = include_slim 'menu'
+section = include_slim 'content'
 ~~~
 
 しかし, このヘルパはキャッシュを行いません。その為, 目的にあったよりインテリジェントなバージョンを
