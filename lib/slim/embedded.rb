@@ -226,7 +226,7 @@ module Slim
     class JavaScriptEngine < TagEngine
       disable_option_validator!
 
-      set_options tag: :script, attributes: { type: 'text/javascript' }
+      set_options tag: :script, attributes: {}
 
       def on_slim_embedded(engine, body)
         super(engine, [:html, :js, body])
