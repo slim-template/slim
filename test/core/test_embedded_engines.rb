@@ -121,7 +121,7 @@ javascript:
   alert('hello')
 p Hi
 }
-    assert_html %{<script type="text/javascript">$(function() {});\n\n\nalert('hello')</script><p>Hi</p>}, source
+    assert_html %{<script>$(function() {});\n\n\nalert('hello')</script><p>Hi</p>}, source
   end
 
   def test_render_with_opal
@@ -141,7 +141,7 @@ opal:
 
   def test_render_with_javascript_with_tabs
     source = "javascript:\n\t$(function() {});\n\talert('hello')\np Hi"
-    assert_html "<script type=\"text/javascript\">$(function() {});\nalert('hello')</script><p>Hi</p>", source
+    assert_html "<script>$(function() {});\nalert('hello')</script><p>Hi</p>", source
   end
 
   def test_render_with_javascript_including_variable
@@ -151,34 +151,34 @@ opal:
 javascript:   
   $(function() { #{func} });
 }
-    assert_html %q|<script type="text/javascript">$(function() { alert(&#39;hello&#39;); });</script>|, source
+    assert_html %q|<script>$(function() { alert(&#39;hello&#39;); });</script>|, source
   end
 
   def test_render_with_javascript_with_explicit_html_comment
     Slim::Engine.with_options(js_wrapper: :comment) do
       source = "javascript:\n\t$(function() {});\n\talert('hello')\np Hi"
-      assert_html "<script type=\"text/javascript\"><!--\n$(function() {});\nalert('hello')\n//--></script><p>Hi</p>", source
+      assert_html "<script><!--\n$(function() {});\nalert('hello')\n//--></script><p>Hi</p>", source
     end
   end
 
   def test_render_with_javascript_with_explicit_cdata_comment
     Slim::Engine.with_options(js_wrapper: :cdata) do
       source = "javascript:\n\t$(function() {});\n\talert('hello')\np Hi"
-      assert_html "<script type=\"text/javascript\">\n//<![CDATA[\n$(function() {});\nalert('hello')\n//]]>\n</script><p>Hi</p>", source
+      assert_html "<script>\n//<![CDATA[\n$(function() {});\nalert('hello')\n//]]>\n</script><p>Hi</p>", source
     end
   end
 
   def test_render_with_javascript_with_format_xhtml_comment
     Slim::Engine.with_options(js_wrapper: :guess, format: :xhtml) do
       source = "javascript:\n\t$(function() {});\n\talert('hello')\np Hi"
-      assert_html "<script type=\"text/javascript\">\n//<![CDATA[\n$(function() {});\nalert('hello')\n//]]>\n</script><p>Hi</p>", source
+      assert_html "<script>\n//<![CDATA[\n$(function() {});\nalert('hello')\n//]]>\n</script><p>Hi</p>", source
     end
   end
 
   def test_render_with_javascript_with_format_html_comment
     Slim::Engine.with_options(js_wrapper: :guess, format: :html) do
       source = "javascript:\n\t$(function() {});\n\talert('hello')\np Hi"
-      assert_html "<script type=\"text/javascript\"><!--\n$(function() {});\nalert('hello')\n//--></script><p>Hi</p>", source
+      assert_html "<script><!--\n$(function() {});\nalert('hello')\n//--></script><p>Hi</p>", source
     end
   end
 
@@ -229,14 +229,14 @@ ruby:
 javascript:
   $(function() {});
 }
-    assert_html '<script type="text/javascript">$(function() {});</script>', source, disable_engines: [:ruby]
-    assert_html '<script type="text/javascript">$(function() {});</script>', source, disable_engines: %w(ruby)
+    assert_html '<script>$(function() {});</script>', source, disable_engines: [:ruby]
+    assert_html '<script>$(function() {});</script>', source, disable_engines: %w(ruby)
 
     source = %q{
 javascript:
   $(function() {});
 }
-    assert_html '<script type="text/javascript">$(function() {});</script>', source, enable_engines: [:javascript]
-    assert_html '<script type="text/javascript">$(function() {});</script>', source, enable_engines: %w(javascript)
+    assert_html '<script>$(function() {});</script>', source, enable_engines: [:javascript]
+    assert_html '<script>$(function() {});</script>', source, enable_engines: %w(javascript)
   end
 end
