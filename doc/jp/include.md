@@ -9,7 +9,7 @@
     include partial
     include partial.txt
 
-インクルードプラグンを有効化
+インクルードプラグインを有効化
 
     require 'slim/include'
 
