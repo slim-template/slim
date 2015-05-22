@@ -1198,6 +1198,7 @@ Language ports/Similar languages:
 * [Skim (Slim for Javascript)](https://github.com/jfirebaugh/skim)
 * [Emblem.js (Javascript, similar to Slim)](https://github.com/machty/emblem.js)
 * [Hamlit (High performance Haml implementation, based on Temple like Slim)](https://github.com/k0kubun/hamlit)
+* [Faml (Faster Haml implementation, also using Temple like Slim)](https://github.com/eagletmt/faml)
 * [Haml (Older engine which inspired Slim)](https://github.com/haml/haml)
 * [Jade (Similar engine for javascript)](https://github.com/visionmedia/jade)
 * [Sweet (Similar engine which also allows to write classes and functions)](https://github.com/joaomdmoura/sweet)
