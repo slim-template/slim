@@ -25,9 +25,6 @@ class SlimBenchmarks
   end
 
   def init_compiled_benches
-    erb         = ERB.new(@erb_code)
-    erubis      = Erubis::Eruby.new(@erb_code)
-    fast_erubis = Erubis::FastEruby.new(@erb_code)
     haml_pretty = Haml::Engine.new(@haml_code, format: :html5)
     haml_ugly   = Haml::Engine.new(@haml_code, format: :html5, ugly: true)
 
@@ -36,10 +33,10 @@ class SlimBenchmarks
     haml_pretty.def_method(context, :run_haml_pretty)
     haml_ugly.def_method(context, :run_haml_ugly)
     context.instance_eval %{
-      def run_erb; #{erb.src}; end
-      def run_erubis; #{erubis.src}; end
+      def run_erb; #{ERB.new(@erb_code).src}; end
+      def run_erubis; #{Erubis::Eruby.new(@erb_code).src}; end
       def run_temple_erb; #{Temple::ERB::Engine.new.call @erb_code}; end
-      def run_fast_erubis; #{fast_erubis.src}; end
+      def run_fast_erubis; #{Erubis::FastEruby.new(@erb_code).src}; end
       def run_slim_pretty; #{Slim::Engine.new(pretty: true).call @slim_code}; end
       def run_slim_ugly; #{Slim::Engine.new.call @slim_code}; end
     }
@@ -55,13 +52,13 @@ class SlimBenchmarks
   end
 
   def init_tilt_benches
-    tilt_erb        = Tilt::ERBTemplate.new { @erb_code }
-    tilt_erubis     = Tilt::ErubisTemplate.new { @erb_code }
-    tilt_temple_erb = Temple::ERB::Template.new { @erb_code }
-    tilt_haml_pretty= Tilt::HamlTemplate.new(format: :html5){ @haml_code }
-    tilt_haml_ugly  = Tilt::HamlTemplate.new(format: :html5, ugly: true){ @haml_code }
-    tilt_slim_pretty= Slim::Template.new(pretty: true) { @slim_code }
-    tilt_slim_ugly  = Slim::Template.new { @slim_code }
+    tilt_erb         = Tilt::ERBTemplate.new { @erb_code }
+    tilt_erubis      = Tilt::ErubisTemplate.new { @erb_code }
+    tilt_temple_erb  = Temple::ERB::Template.new { @erb_code }
+    tilt_haml_pretty = Tilt::HamlTemplate.new(format: :html5) { @haml_code }
+    tilt_haml_ugly   = Tilt::HamlTemplate.new(format: :html5, ugly: true) { @haml_code }
+    tilt_slim_pretty = Slim::Template.new(pretty: true) { @slim_code }
+    tilt_slim_ugly   = Slim::Template.new { @slim_code }
 
     context  = Context.new
 
