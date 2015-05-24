@@ -2,6 +2,7 @@
 
 module Slim
   module Smart
+    # @api private
     class Parser < ::Slim::Parser
       define_options implicit_text: true
 

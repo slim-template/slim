@@ -41,7 +41,10 @@ module Slim
       exp
     end
 
+    # @api private
     alias call_without_include call
+
+    # @api private
     def call(input)
       Thread.current[:slim_include_engine] = self
       Thread.current[:slim_include_level] ||= 0

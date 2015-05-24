@@ -246,6 +246,9 @@ module Slim
       @stacks.last << [:newline]
     end
 
+    # Unknown line indicator found. Overwrite this method if
+    # you want to add line indicators to the Slim parser.
+    # The default implementation throws a syntax error.
     def unknown_line_indicator
       syntax_error! 'Unknown line indicator'
     end

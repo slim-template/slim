@@ -1,6 +1,7 @@
 require 'slim'
 
 module Slim
+  # @api private
   class Translator < Filter
     define_options :tr,
                    tr_mode: :dynamic,
