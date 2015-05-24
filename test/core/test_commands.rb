@@ -1,5 +1,5 @@
+# coding: utf-8
 require 'helper'
-require 'slim/command'
 require 'open3'
 require 'tempfile'
 
