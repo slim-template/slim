@@ -1,5 +1,11 @@
 # encoding: utf-8
 
+begin
+  require 'codeclimate-test-reporter'
+  CodeClimate::TestReporter.start
+rescue LoadError
+end
+
 require 'minitest/autorun'
 require 'slim'
 require 'slim/grammar'

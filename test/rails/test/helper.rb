@@ -1,3 +1,9 @@
+begin
+  require 'codeclimate-test-reporter'
+  CodeClimate::TestReporter.start
+rescue LoadError
+end
+
 # Configure Rails Envinronment
 ENV["RAILS_ENV"] = "test"
 
@@ -13,7 +19,7 @@ protected
 
   def assert_xpath(xpath, message="Unable to find '#{xpath}' in response body.")
     assert_response :success, "Response type is not :success (code 200..299)."
-    
+
     body = @response.body
     assert !body.empty?, "No response body found."
 

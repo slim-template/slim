@@ -1,3 +1,9 @@
+begin
+  require 'codeclimate-test-reporter'
+  CodeClimate::TestReporter.start
+rescue LoadError
+end
+
 require 'slim'
 require 'slim/logic_less'
 require 'slim/translator'

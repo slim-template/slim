@@ -37,7 +37,7 @@ if RUBY_VERSION >= '2.2.0'
   gem 'test-unit', platforms: :mri
 end
 
-if RUBY_ENGINE == 'rbx' && !ENV.key?('TRAVIS')
+if RUBY_ENGINE == 'rbx' && !ENV['TRAVIS']
   gem 'psych'
 end
 
@@ -62,4 +62,8 @@ if ENV['TASK'] == 'bench'
   gem 'benchmark-ips'
   gem 'erubis'
   gem 'haml'
+end
+
+if ENV['CODECLIMATE_REPO_TOKEN']
+  gem 'codeclimate-test-reporter'
 end
