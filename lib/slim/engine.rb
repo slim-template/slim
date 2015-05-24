@@ -1,3 +1,6 @@
+# The Slim module contains all Slim related classes (e.g. Engine, Parser).
+# Plugins might also reside within the Slim module (e.g. Include, Smart).
+# @api public
 module Slim
   # Slim engine which transforms slim code to executable ruby code
   # @api public
