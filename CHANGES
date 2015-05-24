@@ -1,3 +1,8 @@
+master
+
+  * javascript: doesn't add type='text/javascript' anymore
+  * slimrb: --require added
+
 3.0.3 (2015-03-06)
 
   * Fix #392, capturing for splat attributes didn't work correctly under Rails
