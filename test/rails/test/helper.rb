@@ -1,9 +1,3 @@
-begin
-  require 'codeclimate-test-reporter'
-  CodeClimate::TestReporter.start
-rescue LoadError
-end
-
 # Configure Rails Envinronment
 ENV["RAILS_ENV"] = "test"
 
