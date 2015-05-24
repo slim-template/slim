@@ -27,12 +27,10 @@ module Slim
           [:multi]
         else
           tmp = unique_name
-          [:multi,
-           [:code, "#{tmp} = #{code}"],
-           [:case, tmp,
-            ['true', [:html, :attr, name, [:multi]]],
-            ['false, nil', [:multi]],
-            [:else, [:html, :attr, name, [:escape, escape, [:dynamic, tmp]]]]]]
+          [:if, "#{tmp} = #{code}",
+           [:if, "#{tmp} == true",
+            [:html, :attr, name, [:multi]],
+            [:html, :attr, name, [:escape, escape, [:dynamic, tmp]]]]]
         end
       else
         # Attribute with merging
