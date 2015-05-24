@@ -1178,6 +1178,10 @@ Slim は [MIT license](http://www.opensource.org/licenses/MIT) に基づいて�
 * [Coda](https://github.com/slim-template/Coda-2-Slim.mode)
 * [Atom](https://github.com/slim-template/language-slim)
 
+静的コード解析:
+
+* [Slim-Lint](https://github.com/sds/slim-lint)
+
 テンプレート変換 (HAML, ERB, ...):
 
 * [Haml2Slim converter](https://github.com/slim-template/haml2slim)
@@ -1193,6 +1197,8 @@ Slim は [MIT license](http://www.opensource.org/licenses/MIT) に基づいて�
 * [Plim (Python port of Slim)](https://github.com/2nd/plim)
 * [Skim (Slim for Javascript)](https://github.com/jfirebaugh/skim)
 * [Emblem.js (Javascript, similar to Slim)](https://github.com/machty/emblem.js)
+* [Hamlit (High performance Haml implementation, based on Temple like Slim)](https://github.com/k0kubun/hamlit)
+* [Faml (Faster Haml implementation, also using Temple like Slim)](https://github.com/eagletmt/faml)
 * [Haml (Older engine which inspired Slim)](https://github.com/haml/haml)
 * [Jade (Similar engine for javascript)](https://github.com/visionmedia/jade)
 * [Sweet (Similar engine which also allows to write classes and functions)](https://github.com/joaomdmoura/sweet)
