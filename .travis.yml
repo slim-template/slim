@@ -50,3 +50,6 @@ matrix:
     - rvm: ruby-head
     - rvm: jruby-19mode
     - rvm: jruby-head
+
+notifications:
+  irc: "chat.freenode.net#slim-lang"
