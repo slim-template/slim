@@ -1,4 +1,4 @@
-master
+3.0.4 (2015-06-02)
 
   * javascript: doesn't add type='text/javascript' anymore
   * slimrb: --require added
