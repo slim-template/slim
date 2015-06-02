@@ -9,9 +9,9 @@ module Slim
   class Include < Slim::Filter
     define_options :file, include_dirs: [Dir.pwd, '.']
 
-    def on_html_tag(tag, attributes, content)
+    def on_html_tag(tag, attributes, content = nil)
       return super if tag != 'include'
-      name = content.flatten.select {|s| String === s }.join
+      name = content.to_a.flatten.select {|s| String === s }.join
       raise ArgumentError, 'Invalid include statement' unless attributes == [:html, :attrs] && !name.empty?
       unless file = find_file(name)
         name = "#{name}.slim" if name !~ /\.slim\Z/i
