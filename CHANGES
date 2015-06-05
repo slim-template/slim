@@ -1,3 +1,7 @@
+3.0.5 (2015-06-05)
+
+  * Fix warnings #625
+
 3.0.4 (2015-06-02)
 
   * javascript: doesn't add type='text/javascript' anymore
