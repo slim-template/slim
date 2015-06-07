@@ -19,6 +19,6 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = '>=1.9.2'
 
-  s.add_runtime_dependency('temple', ['~> 0.7.3'])
+  s.add_runtime_dependency('temple', ['~> 0.7.6'])
   s.add_runtime_dependency('tilt', ['>= 1.3.3', '< 2.1'])
 end
