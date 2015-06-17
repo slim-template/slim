@@ -15,9 +15,10 @@ module Slim
 			
 			alias_method :orginal_on_slim_interpolate, :on_slim_interpolate
 			def on_slim_interpolate(string)
-				if match = string.match(/\A~([>!])?([^ ]+)(.*)/)
+				if match = string.match(/\A~([>!])?(["'\(]([^\)"']+)[\)"']|([^ ]+))(.*)/)
 					prefix = match[1] ? "#{match[1]} " : ""
-					[:multi, [:static, "{{#{prefix}#{match[2]}}}"], [:slim, :interpolate, match[3]]]
+					text = match[3] || match[2]
+					[:multi, [:static, "{{#{prefix}#{text}}}"], [:slim, :interpolate, match[5]]]
 				else
 					orginal_on_slim_interpolate(string)
 				end

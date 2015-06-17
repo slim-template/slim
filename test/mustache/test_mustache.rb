@@ -10,6 +10,28 @@ class TestMustache < TestSlim
 			assert_html '{{foo}} bar baz', source
 		end
 
+	def test_line_quoted
+				source = %q{
+	~"foo bar".baz
+	}
+				assert_html '{{foo bar}}.baz', source
+			end
+
+	def test_line_braced
+				source = %q{
+p ~(foo.bar). baz
+	}
+				assert_html '<p>{{foo.bar}}. baz</p>', source
+			end
+		
+		def test_line_single_quote
+				source = %q{
+p ~'foo bar.bar'. baz
+	}
+				assert_html '<p>{{foo bar.bar}}. baz</p>', source
+			end
+
+
 	def test_section
 		source = %q{
 ~#foo
