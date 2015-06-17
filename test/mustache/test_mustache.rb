@@ -1,0 +1,86 @@
+require 'helper'
+require 'slim/mustache'
+
+class TestMustache < TestSlim
+
+	def test_line
+			source = %q{
+~foo bar baz
+}
+			assert_html '{{foo}} bar baz', source
+		end
+
+	def test_section
+		source = %q{
+~#foo
+	p bar
+}
+		assert_html '{{#foo}}<p>bar</p>{{/foo}}', source
+	end
+	
+  def test_each
+    source = %q{
+~#each products
+  h1 product
+  | nice
+}
+    assert_html '{{#each products}}<h1>product</h1>nice{{/each}}', source
+  end
+  
+  def test_if
+  		source = %q{
+~#if foo
+  	'bar
+  }
+  		assert_html '{{#if foo}}bar {{/if}}', source
+  	end
+  	
+  	def test_not
+  				source = %q{
+  	~^bar
+  			| foo
+  		}
+  				assert_html '{{^bar}}foo{{/bar}}', source
+  	end
+
+	def test_ignore
+  			source = %q{
+~#bar
+	~!ignore
+ 	}
+  			assert_html '{{#bar}}{{! ignore}}{{/bar}}', source
+  	end
+  	
+  	def test_include
+  	  				source = %q{
+~>bar
+  	   	}
+  	  				assert_html '{{> bar}}', source
+  	  		end
+  
+  def test_inline
+  		source = %q{
+h1 ~title here
+  }
+  		assert_html '<h1>{{title}} here</h1>', source
+  	end
+  
+  def test_attribute
+  			source = %q{
+  a href="~link.url" ~link.text
+  	}
+  			assert_html '<a href="{{link.url}}">{{link.text}}</a>', source
+  		end
+  		
+  		def test_all
+  				source = %q{
+ul
+  	~#each objects
+  		li
+  			a href="~link" ~name
+  	}
+  			assert_html '<ul>{{#each objects}}<li><a href="{{link}}">{{name}}</a></li>{{/each}}</ul>', source
+  	end
+		
+
+end

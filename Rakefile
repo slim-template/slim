@@ -58,6 +58,12 @@ namespace 'test' do
     t.test_files = FileList['test/rails/test/test_*.rb']
     t.verbose = true
   end
+  
+  Rake::TestTask.new('mustache') do |t|
+    t.libs << 'lib' << 'test/core'
+    t.test_files = FileList['test/mustache/test_*.rb']
+    t.verbose = true
+  end
 
   begin
     require 'sinatra'
