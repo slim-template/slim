@@ -14,7 +14,7 @@ end
 task 'test' => %w(test:core_and_plugins)
 
 namespace 'test' do
-  task 'core_and_plugins' => %w(core literate logic_less translator smart include)
+  task 'core_and_plugins' => %w(core literate logic_less translator smart include mustache)
 
   Rake::TestTask.new('core') do |t|
     t.libs << 'lib' << 'test/core'
