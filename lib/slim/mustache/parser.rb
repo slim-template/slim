@@ -1,24 +1,27 @@
 module Slim
+	
+	module Mustache
 
-	class Parser
-
-		alias_method :original_unknown_line_indicator, :unknown_line_indicator
-		def unknown_line_indicator
-			case @line
-			when /\A~/
-					# Mustache block
-					@line = $' if $1
-					parse_mustache
-			else
-				original_unknown_line_indicator
+		class Parser < ::Slim::Parser
+	
+			def parse_line_indicators
+				case @line
+				when /\A~/
+						# Mustache block
+						@line = $' if $1
+						parse_mustache
+				else
+					super
+				end
 			end
-		end
-
-		def parse_mustache
-			@line.slice!(0)
-			block = [:multi]
-			@stacks.last << [:slim, :mustache, @line, block]
-			@stacks << block
+	
+			def parse_mustache
+				@line.slice!(0)
+				block = [:multi]
+				@stacks.last << [:slim, :mustache, @line, block]
+				@stacks << block
+			end
+			
 		end
 
 	end

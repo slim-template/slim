@@ -1,7 +1,7 @@
 require 'helper'
 require 'slim/mustache'
 
-class TestMustache < TestSlim
+class TestSlimMustache < TestSlim
 
 	def test_line
 			source = %q{
@@ -10,12 +10,7 @@ class TestMustache < TestSlim
 			assert_html '{{foo}} bar baz', source
 		end
 
-	def test_line_quoted
-				source = %q{
-	~"foo bar".baz
-	}
-				assert_html '{{foo bar}}.baz', source
-			end
+
 
 	def test_line_braced
 				source = %q{
@@ -23,14 +18,19 @@ p ~(foo.bar). baz
 	}
 				assert_html '<p>{{foo.bar}}. baz</p>', source
 			end
-		
-		def test_line_single_quote
-				source = %q{
-p ~'foo bar.bar'. baz
-	}
-				assert_html '<p>{{foo bar.bar}}. baz</p>', source
-			end
-
+#     def test_line_quoted
+#           source = %q{
+#     ~"foo bar".baz
+#     }
+#           assert_html '{{foo bar}}.baz', source
+#         end
+#     def test_line_single_quote
+#         source = %q{
+# p ~'foo bar.bar'. baz
+#   }
+#         assert_html '<p>{{foo bar.bar}}. baz</p>', source
+#       end
+#
 
 	def test_section
 		source = %q{
@@ -88,20 +88,35 @@ h1 ~title here
   	end
   
   def test_attribute
-  			source = %q{
-  a href="~link.url" ~link.text
+  		source = %q{
+a href="~link.url" ~link.text
   	}
-  			assert_html '<a href="{{link.url}}">{{link.text}}</a>', source
-  		end
-  		
-  		def test_all
+  		assert_html '<a href="{{link.url}}">{{link.text}}</a>', source
+  	end
+	
+  	
+  	def test_interpolate_simple
   				source = %q{
+  	p ~#{hello_world}
+  			}
+  				assert_html '<p>{{Hello World from @env}}</p>', source
+  	end
+
+	def test_interpolate_complex
+				source = %q{
+	~(#{'foo' + ' bar'}) baz
+			}
+				assert_html '{{foo bar}} baz', source
+	end
+
+  	def test_all
+  		source = %q{
 ul
   	~#each objects
   		li
-  			a href="~link" ~name
+  			a href="~link" ~name #{hello_world}
   	}
-  			assert_html '<ul>{{#each objects}}<li><a href="{{link}}">{{name}}</a></li>{{/each}}</ul>', source
+  		assert_html '<ul>{{#each objects}}<li><a href="{{link}}">{{name}} Hello World from @env</a></li>{{/each}}</ul>', source
   	end
 		
 

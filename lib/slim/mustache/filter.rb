@@ -2,7 +2,7 @@
 module Slim
 	module Mustache
 		# Handle ~mustache syntax
-		class Filter < ::Slim::Interpolation
+		class Filter < ::Slim::Filter
 			
 			def on_slim_mustache(line, content)
 				if match = line.match(/\A[#\^]([^ ]*)/)
@@ -13,14 +13,13 @@ module Slim
 				end
 			end
 			
-			alias_method :orginal_on_slim_interpolate, :on_slim_interpolate
 			def on_slim_interpolate(string)
-				if match = string.match(/\A~([>!])?(["'\(]([^\)"']+)[\)"']|([^ ]+))(.*)/)
+				if match = string.match(/\A~([>!])?([\(]([^\)]+)[\)]|([^ ]+))(.*)/)
 					prefix = match[1] ? "#{match[1]} " : ""
 					text = match[3] || match[2]
-					[:multi, [:static, "{{#{prefix}#{text}}}"], [:slim, :interpolate, match[5]]]
+					[:multi, [:static, "{{#{prefix}"], [:slim, :interpolate, text], [:static, "}}"], [:slim, :interpolate, match[5]]]
 				else
-					orginal_on_slim_interpolate(string)
+					[:slim, :interpolate, string]
 				end
 			end
 		end
