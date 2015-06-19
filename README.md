@@ -1181,6 +1181,7 @@ Syntax highlighting:
 Static code analysis:
 
 * [Slim-Lint](https://github.com/sds/slim-lint)
+* [SublimeLinter-slim-lint](https://github.com/elstgav/SublimeLinter-slim-lint)
 
 Template Converters (HAML, ERB, ...):
 
