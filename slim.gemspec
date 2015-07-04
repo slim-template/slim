@@ -23,4 +23,6 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency('tilt', ['>= 1.3.3', '< 2.1'])
   s.add_development_dependency('yard')
   s.add_development_dependency('redcarpet')
+  s.add_development_dependency('sinatra')
+  s.add_development_dependency('rack-test')
 end
