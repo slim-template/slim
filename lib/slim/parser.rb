@@ -221,13 +221,13 @@ module Slim
         # Found an output block.
         # We expect the line to be broken or the next line to be indented.
         @line = $'
-        trailing_ws = $2.include?('>')
-        if $2.include?('\'')
+        trailing_ws = $2.include?('>'.freeze)
+        if $2.include?('\''.freeze)
           deprecated_syntax '=\' for trailing whitespace is deprecated in favor of =>'
           trailing_ws = true
         end
         block = [:multi]
-        @stacks.last << [:static, ' '] if $2.include?('<')
+        @stacks.last << [:static, ' '] if $2.include?('<'.freeze)
         @stacks.last << [:slim, :output, $1.empty?, parse_broken_line, block]
         @stacks.last << [:static, ' '] if trailing_ws
         @stacks << block
@@ -331,13 +331,13 @@ module Slim
 
       @line =~ /\A[<>']*/
       @line = $'
-      trailing_ws = $&.include?('>')
-      if $&.include?('\'')
+      trailing_ws = $&.include?('>'.freeze)
+      if $&.include?('\''.freeze)
         deprecated_syntax 'tag\' for trailing whitespace is deprecated in favor of tag>'
         trailing_ws = true
       end
 
-      leading_ws = $&.include?('<')
+      leading_ws = $&.include?('<'.freeze)
 
       parse_attributes(attributes)
 
@@ -366,13 +366,13 @@ module Slim
       when /\A\s*=(=?)(['<>]*)/
         # Handle output code
         @line = $'
-        trailing_ws2 = $2.include?('>')
-        if $2.include?('\'')
+        trailing_ws2 = $2.include?('>'.freeze)
+        if $2.include?('\''.freeze)
           deprecated_syntax '=\' for trailing whitespace is deprecated in favor of =>'
           trailing_ws2 = true
         end
         block = [:multi]
-        @stacks.last.insert(-2, [:static, ' ']) if !leading_ws && $2.include?('<')
+        @stacks.last.insert(-2, [:static, ' ']) if !leading_ws && $2.include?('<'.freeze)
         tag << [:slim, :output, $1 != '=', parse_broken_line, block]
         @stacks.last << [:static, ' '] if !trailing_ws && trailing_ws2
         @stacks << block
