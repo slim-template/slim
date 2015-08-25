@@ -24,7 +24,7 @@ module Slim
         block = [:multi]
         until string.empty?
           case string
-          when /\A&(\w+|#x[0-9a-f]+|#\d+);/i
+          when /\A&([a-z][a-z0-9]*|#x[0-9a-f]+|#\d+);/i
             # Entity.
             block << [:escape, false, [:static, $&]]
             string = $'
