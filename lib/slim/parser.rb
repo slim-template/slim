@@ -55,13 +55,18 @@ module Slim
         @tab_re = "\t"
         @tab = ' '
       end
-      @tag_shortcut, @attr_shortcut = {}, {}
+      @tag_shortcut, @attr_shortcut, @attr_additional = {}, {}, {}
       options[:shortcut].each do |k,v|
-        raise ArgumentError, 'Shortcut requires :tag and/or :attr' unless (v[:attr] || v[:tag]) && (v.keys - [:attr, :tag]).empty?
+        raise ArgumentError, 'Shortcut requires :tag and/or :attr' unless (v[:attr] || v[:tag] || v[:attrs]) && (v.keys - [:attr, :tag, :attrs]).empty?
         @tag_shortcut[k] = v[:tag] || options[:default_tag]
+        if v.include?(:attr) || v.include?(:attrs)
+          raise ArgumentError, 'You can only use special characters for attribute shortcuts' if k =~ /(\p{Word}|-)/
+        end
         if v.include?(:attr)
           @attr_shortcut[k] = [v[:attr]].flatten
-          raise ArgumentError, 'You can only use special characters for attribute shortcuts' if k =~ /(\p{Word}|-)/
+        end
+        if v.include?(:attrs)
+          @attr_additional[k] = v[:attrs]
         end
       end
       keys = Regexp.union @attr_shortcut.keys.sort_by {|k| -k.size }
@@ -326,6 +331,11 @@ module Slim
         # because we don't want text interpolation in .class or #id shortcut
         syntax_error!('Illegal shortcut') unless shortcut = @attr_shortcut[$1]
         shortcut.each {|a| attributes << [:html, :attr, a, [:static, $2]] }
+        if additional_attr_pairs = @attr_additional[$1]
+          additional_attr_pairs.each do |k,v|
+            attributes << [:html, :attr, k.to_s, [:static, v]]
+          end
+        end
         @line = $'
       end
 
