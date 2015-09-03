@@ -647,7 +647,7 @@ which renders to
 <div class="person" role="admin">Daniel</div>
 ~~~
 
-You can also set multiple attributes at once using one shortcut.
+You can also set multiple attributes with same value at once using one shortcut.
 
 ~~~ ruby
 Slim::Engine.set_options shortcut: {'@' => {attr: %w(data-role role)}}
@@ -663,6 +663,29 @@ which renders to
 
 ~~~ html
 <div class="person" role="admin" data-role="admin">Daniel</div>
+~~~
+
+You can also set additional fixed value attributes to a shortcut.
+
+~~~ ruby
+Slim::Engine.set_options shortcut: {'^' => {tag: 'script', attr: 'data-binding',
+  additional_attrs: { type: "text/javascript" }}}
+~~~
+
+Then
+
+~~~ slim
+^products
+  == @products.to_json
+~~~
+
+which renders to
+
+~~~ html
+<script data-binding="products" type="text/javascript">
+[{"name": "product1", "price": "$100"},
+ {"name": "prodcut2", "price": "$200"}]
+</script>
 ~~~
 
 #### ID shortcut `#` and class shortcut `.`
