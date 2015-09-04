@@ -99,6 +99,13 @@ h1#title This is my title
     assert_html '<div class="hello world" id="notice" role="test">Hello World from @env</div><section role="abc">Hello World from @env</section>', source, shortcut: {'#' => {attr: 'id'}, '.' => {attr: 'class'}, '@' => {tag: 'section', attr: 'role'}}
   end
 
+  def test_render_with_custom_array_shortcut
+    source = %q{
+#user@.admin Daniel
+}
+    assert_html '<div class="admin" id="user" role="admin">Daniel</div>', source, shortcut: {'#' => {attr: 'id'}, '.' => {attr: 'class'}, '@' => {attr: 'role'}, '@.' => {attr: ['class', 'role']}}
+  end
+
   def test_render_with_custom_shortcut_and_additional_attrs
     source = %q{
 ^items
