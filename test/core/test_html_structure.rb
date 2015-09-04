@@ -99,6 +99,22 @@ h1#title This is my title
     assert_html '<div class="hello world" id="notice" role="test">Hello World from @env</div><section role="abc">Hello World from @env</section>', source, shortcut: {'#' => {attr: 'id'}, '.' => {attr: 'class'}, '@' => {tag: 'section', attr: 'role'}}
   end
 
+  def test_render_with_custom_array_shortcut
+    source = %q{
+#user@.admin Daniel
+}
+    assert_html '<div class="admin" id="user" role="admin">Daniel</div>', source, shortcut: {'#' => {attr: 'id'}, '.' => {attr: 'class'}, '@' => {attr: 'role'}, '@.' => {attr: ['class', 'role']}}
+  end
+
+  def test_render_with_custom_shortcut_and_additional_attrs
+    source = %q{
+^items
+  == "[{'title':'item0'},{'title':'item1'},{'title':'item2'},{'title':'item3'},{'title':'item4'}]"
+}
+    assert_html '<script data-binding="items" type="application/json">[{\'title\':\'item0\'},{\'title\':\'item1\'},{\'title\':\'item2\'},{\'title\':\'item3\'},{\'title\':\'item4\'}]</script>',
+                source, shortcut: {'^' => {tag: 'script', attr: 'data-binding', additional_attrs: { type: "application/json" }}}
+  end
+
   def test_render_with_text_block
     source = %q{
 p
