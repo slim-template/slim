@@ -7,7 +7,7 @@ class TestSlimHtmlStructure < TestSlim
 html
   head
     title Simple Test Title
-  body
+  body 
     p Hello World, meet Slim.
 }
 
