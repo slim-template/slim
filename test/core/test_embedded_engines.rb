@@ -69,16 +69,16 @@ creole:
     assert_html "<h1>head1</h1><h2>head2</h2>", source
   end
 
-  def test_render_with_creole_one_line
-    source = %q{
-creole: Hello **world**,
-  we can write one-line embedded markup now!
-  = Headline
-  Text
-.nested: creole: **Strong**
-}
-    assert_html '<p>Hello <strong>world</strong>, we can write one-line embedded markup now!</p><h1>Headline</h1><p>Text</p><div class="nested"><p><strong>Strong</strong></p></div>', source
-  end
+  #def test_render_with_creole_one_line
+    #source = %q{
+#creole: Hello **world**,
+  #we can write one-line embedded markup now!
+  #= Headline
+  #Text
+#.nested: creole: **Strong**
+#}
+    #assert_html '<p>Hello <strong>world</strong>, we can write one-line embedded markup now!</p><h1>Headline</h1><p>Text</p><div class="nested"><p><strong>Strong</strong></p></div>', source
+  #end
 
   def test_render_with_org
     # HACK: org-ruby registers itself in Tilt
@@ -111,6 +111,38 @@ wiki:
     assert_html "<h1>head1</h1><h2>head2</h2>", source
   end
 
+  def test_render_with_css
+    source = %q{
+css:
+  h1 { color: blue }
+}
+  assert_html "<style type=\"text/css\">h1 { color: blue }</style>", source
+  end
+
+  def test_render_with_css_empty_attributes
+    source = %q{
+css []:
+  h1 { color: blue }
+}
+  assert_html "<style type=\"text/css\">h1 { color: blue }</style>", source
+  end
+
+  def test_render_with_css_single_attribute
+    source = %q{
+css [scoped = "true"]:
+  h1 { color: blue }
+}
+  assert_html "<style scoped=\"true\" type=\"text/css\">h1 { color: blue }</style>", source
+  end
+
+  def test_render_with_css_multiple_attributes
+    source = %q{
+css [class="myClass" scoped="true"]:
+  h1 { color: blue }
+}
+  assert_html "<style class=\"myClass\" scoped=\"true\" type=\"text/css\">h1 { color: blue }</style>", source
+  end
+
   def test_render_with_javascript
     # Keep the trailing space behind "javascript:   "!
     source = %q{
@@ -122,6 +154,30 @@ javascript:
 p Hi
 }
     assert_html %{<script>$(function() {});\n\n\nalert('hello')</script><p>Hi</p>}, source
+  end
+
+  def test_render_with_javascript_empty_attributes
+    source = %q{
+javascript []:    
+  alert('hello')
+}
+    assert_html %{<script>alert('hello')</script>}, source
+  end
+
+  def test_render_with_javascript_one_attribute
+    source = %q{
+javascript [class = "myClass"]:
+  alert('hello')
+}
+    assert_html %{<script class=\"myClass\">alert('hello')</script>}, source
+  end
+
+  def test_render_with_javascript_multiple_attributes
+    source = %q{
+javascript [class = "myClass" id="myId" other-attribute = 'myOtherAttribute']:
+  alert('hello')
+}
+    assert_html %{<script class=\"myClass\" id=\"myId\" other-attribute=\"myOtherAttribute\">alert('hello')</script>}, source
   end
 
   def test_render_with_opal

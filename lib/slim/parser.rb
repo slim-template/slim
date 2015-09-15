@@ -77,7 +77,7 @@ module Slim
       @code_attr_delims_re = /\A[#{keys}]/
       keys = Regexp.escape @attr_list_delims.keys.join
       @attr_list_delims_re = /\A\s*([#{keys}])/
-      @embedded_re = /\A(#{Regexp.union(Embedded.engines.keys.map(&:to_s))}):(\s*)/
+      @embedded_re = /\A(#{Regexp.union(Embedded.engines.keys.map(&:to_s))})(?:\s*(?:\[(.*)\]))?:(\s*)/
       keys = Regexp.escape ('"\'></='.split(//) + @attr_list_delims.flatten + @code_attr_delims.flatten).uniq.join
       @attr_name = "\\A\\s*([^\0\s#{keys}]+)"
       @quoted_attr_re = /#{@attr_name}\s*=(=?)\s*("|')/
@@ -238,7 +238,17 @@ module Slim
         @stacks << block
       when @embedded_re
         # Embedded template detected. It is treated as block.
-        @stacks.last << [:slim, :embedded, $1, parse_text_block($', @orig_line.size - $'.size + $2.size)]
+
+        # Process html attrs if found
+        attrs = [:html, :attrs]
+        if $2
+          attr_length = $2.size
+          process_embedded_attrs(attrs, $2)
+        else
+          attr_length = 0
+        end
+
+        @stacks.last << [:slim, :embedded, $1, parse_text_block($', @orig_line.size - $'.size + attr_length), attrs]
       when /\Adoctype\b/
         # Found doctype declaration
         @stacks.last << [:html, :doctype, $'.strip]
@@ -362,7 +372,7 @@ module Slim
         # Block expansion
         @line = $'
         if @line =~ @embedded_re
-          tag << [:slim, :embedded, $1, parse_text_block($', @orig_line.size - @line.size + $2.size)]
+          tag << [:slim, :embedded, $1, parse_text_block($', @orig_line.size - @line.size + $3.size)]
         else
           (@line =~ @tag_re) || syntax_error!('Expected tag')
           @line = $' if $1
@@ -536,6 +546,12 @@ module Slim
     def expect_next_line
       next_line || syntax_error!('Unexpected end of file')
       @line.strip!
+    end
+
+    def process_embedded_attrs(attrs, line)
+      @line = line
+      parse_attributes(attrs)
+      @line = @orig_line
     end
   end
 end

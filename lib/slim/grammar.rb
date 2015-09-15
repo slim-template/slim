@@ -10,7 +10,7 @@ module Slim
       [:slim, :control, String, Expression]           |
       [:slim, :output, Bool, String, Expression]      |
       [:slim, :interpolate, String]                   |
-      [:slim, :embedded, String, Expression]          |
+      [:slim, :embedded, String, Expression, Expression]          |
       [:slim, :text, TextTypes, Expression]           |
       [:slim, :attrvalue, Bool, String]
 
