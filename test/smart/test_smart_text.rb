@@ -99,14 +99,14 @@ p
   > Escaped <&>.
   Protected &amp; &lt; &gt; &copy; &Aacute;.
   Protected &#0129; &#x00ff;.
-  Escaped &#xx; &#1f; &;.
+  Escaped &#xx; &#1f; &9; &_; &;.
 }
 
     result = %q{Not escaped <&>.<p>Escaped &lt;&amp;&gt;.</p><p>Escaped &lt;&amp;&gt;.
 Escaped &lt;&amp;&gt;.
 Protected &amp; &lt; &gt; &copy; &Aacute;.
 Protected &#0129; &#x00ff;.
-Escaped &amp;#xx; &amp;#1f; &amp;;.</p>}
+Escaped &amp;#xx; &amp;#1f; &amp;9; &amp;_; &amp;;.</p>}
 
     assert_html result, source
   end
@@ -121,14 +121,14 @@ p
   > Not escaped <&>.
   Not escaped &amp; &lt; &gt; &copy; &Aacute;.
   Not escaped &#0129; &#x00ff;.
-  Not escaped &#xx; &#1f; &;.
+  Not escaped &#xx; &#1f; &9; &_; &;.
 }
 
     result = %q{<p>Not escaped <&>.</p>Not escaped <&>.<p>Not escaped <&>.
 Not escaped <&>.
 Not escaped &amp; &lt; &gt; &copy; &Aacute;.
 Not escaped &#0129; &#x00ff;.
-Not escaped &#xx; &#1f; &;.</p>}
+Not escaped &#xx; &#1f; &9; &_; &;.</p>}
 
       assert_html result, source
     end
@@ -139,13 +139,13 @@ Not escaped &#xx; &#1f; &;.</p>}
 p Escaped <&>.
   Protected &amp; &lt; &gt; &copy; &Aacute;.
   Protected &#0129; &#x00ff;.
-  Escaped &#xx; &#1f; &;.
+  Escaped &#xx; &#1f; &9; &_; &;.
 }
 
     result = %q{<p>Escaped &lt;&amp;&gt;.
 Protected &amp; &lt; &gt; &copy; &Aacute;.
 Protected &#0129; &#x00ff;.
-Escaped &amp;#xx; &amp;#1f; &amp;;.</p>}
+Escaped &amp;#xx; &amp;#1f; &amp;9; &amp;_; &amp;;.</p>}
 
     assert_html result, source
   end
