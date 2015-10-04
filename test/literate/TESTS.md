@@ -1237,6 +1237,26 @@ renders as
 </div>
 ~~~
 
+#### Ignored attribute shortcuts
+
+Sometimes you need to disable rendering an attribute with a shortcut but still allow it to present in the template.
+
+~~~ options
+:shortcut => {'@' => {attr: false}, '#' => {attr: 'id'}}
+~~~
+
+~~~ slim
+#test@ignored
+#test
+~~~
+
+renders to
+
+~~~ html
+<div id="test"></div>
+<div id="test"></div>
+~~~
+
 ## Text interpolation
 
 Use standard Ruby interpolation. The text will be html escaped by default.

@@ -106,6 +106,13 @@ h1#title This is my title
     assert_html '<div class="admin" id="user" role="admin">Daniel</div>', source, shortcut: {'#' => {attr: 'id'}, '.' => {attr: 'class'}, '@' => {attr: 'role'}, '@.' => {attr: ['class', 'role']}}
   end
 
+  def test_render_with_ignored_shortcut
+    source = %q{
+#user@admin Daniel
+}
+    assert_html '<div id="user">Daniel</div>', source, shortcut: {'#' => {attr: 'id'}, '@' => {attr: false}}
+  end
+
   def test_render_with_custom_shortcut_and_additional_attrs
     source = %q{
 ^items
