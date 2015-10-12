@@ -665,6 +665,29 @@ Slim の中で次のように使用し
 <div class="person" role="admin" data-role="admin">Daniel</div>
 ~~~
 
+次のように追加の属性固定値を設定することもできます。
+
+~~~ ruby
+Slim::Engine.set_options shortcut: {'^' => {tag: 'script', attr: 'data-binding',
+  additional_attrs: { type: "text/javascript" }}}
+~~~
+
+このように使用します。
+
+~~~ slim
+^products
+  == @products.to_json
+~~~
+
+レンダリング結果です。
+
+~~~ html
+<script data-binding="products" type="text/javascript">
+[{"name": "product1", "price": "$100"},
+ {"name": "prodcut2", "price": "$200"}]
+</script>
+~~~
+
 #### ID ショートカット `#` と class ショートカット `.`
 
 `id` と `class` の属性を次のショートカットで指定できます。
