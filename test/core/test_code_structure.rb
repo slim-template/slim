@@ -13,6 +13,24 @@ div
     assert_html '<div><p>The second paragraph</p></div>', source
   end
 
+  def test_render_with_begin
+    source = %q{
+- if true
+  - begin
+    p A
+- if true
+  - begin
+    p B
+- if true
+  - begin
+    p C
+  - rescue
+    p D
+}
+
+    assert_html '<p>A</p><p>B</p><p>C</p>', source
+  end
+
   def test_render_with_consecutive_conditionals
     source = %q{
 div
