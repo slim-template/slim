@@ -97,6 +97,7 @@ module Slim
     end
 
     def on_slim_embedded(name, body, attrs = nil)
+      attrs = nil if attrs == [:html, :attrs]
       name = name.to_sym
       raise(Temple::FilterError, "Embedded engine #{name} is disabled") unless enabled?(name)
       @engines[name] ||= self.class.create(name, options)
@@ -135,7 +136,7 @@ module Slim
 
     # Basic tilt engine
     class TiltEngine < Engine
-      def on_slim_embedded(engine, body, attrs = nil)
+      def on_slim_embedded(engine, body)
         tilt_engine = Tilt[engine] || raise(Temple::FilterError, "Tilt engine #{engine} is not available.")
         tilt_options = options[engine.to_sym] || {}
         [:multi, tilt_render(tilt_engine, tilt_options, collect_text(body)), collect_newlines(body)]
@@ -196,7 +197,7 @@ module Slim
 
     # ERB engine (uses the Temple ERB implementation)
     class ERBEngine < Engine
-      def on_slim_embedded(engine, body, attrs = nil)
+      def on_slim_embedded(engine, body)
         [:multi, [:newline], erb_parser.call(collect_text(body))]
       end
 
@@ -250,7 +251,7 @@ module Slim
 
     # Embeds ruby code
     class RubyEngine < Engine
-      def on_slim_embedded(engine, body, attrs = nil)
+      def on_slim_embedded(engine, body)
         [:multi, [:newline], [:code, collect_text(body)]]
       end
     end

@@ -61,8 +61,6 @@ gem 'creole'
 gem 'builder'
 gem 'asciidoctor'
 gem 'org-ruby'
-gem 'pry'
-gem 'pry-byebug'
 
 if ENV['TASK'] == 'bench'
   gem 'benchmark-ips'

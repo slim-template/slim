@@ -1,3 +1,7 @@
+2017-11-15
+
+  * Add ability to specify attributes for embedded engines using TagEngine
+
 3.0.9 (2017-11-09)
 
   * Fixed Cross-site Scripting in splat attributes names (See #767)

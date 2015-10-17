@@ -11,4 +11,3 @@ test/rails/log
 test/rails/tmp
 /.ruby-gemset
 /.ruby-version
-/vendor

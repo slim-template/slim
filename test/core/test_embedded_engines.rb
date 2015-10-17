@@ -69,16 +69,16 @@ creole:
     assert_html "<h1>head1</h1><h2>head2</h2>", source
   end
 
-  #def test_render_with_creole_one_line
-    #source = %q{
-#creole: Hello **world**,
-  #we can write one-line embedded markup now!
-  #= Headline
-  #Text
-#.nested: creole: **Strong**
-#}
-    #assert_html '<p>Hello <strong>world</strong>, we can write one-line embedded markup now!</p><h1>Headline</h1><p>Text</p><div class="nested"><p><strong>Strong</strong></p></div>', source
-  #end
+  def test_render_with_creole_one_line
+    source = %q{
+creole: Hello **world**,
+  we can write one-line embedded markup now!
+  = Headline
+  Text
+.nested: creole: **Strong**
+}
+    assert_html '<p>Hello <strong>world</strong>, we can write one-line embedded markup now!</p><h1>Headline</h1><p>Text</p><div class="nested"><p><strong>Strong</strong></p></div>', source
+  end
 
   def test_render_with_org
     # HACK: org-ruby registers itself in Tilt
@@ -127,7 +127,7 @@ css []:
   assert_html "<style type=\"text/css\">h1 { color: blue }</style>", source
   end
 
-  def test_render_with_css_single_attribute
+  def test_render_with_css_attribute
     source = %q{
 css [scoped = "true"]:
   h1 { color: blue }
@@ -164,7 +164,7 @@ javascript []:
     assert_html %{<script>alert('hello')</script>}, source
   end
 
-  def test_render_with_javascript_one_attribute
+  def test_render_with_javascript_attribute
     source = %q{
 javascript [class = "myClass"]:
   alert('hello')
@@ -256,6 +256,36 @@ scss:
 }
     assert_html "<style type=\"text/css\">body{color:red}</style>", source
   end
+
+  def test_render_with_scss_attribute
+    source = %q{
+scss [class="myClass"]:
+  $color: #f00;
+  body { color: $color; }
+}
+    assert_html "<style class=\"myClass\" type=\"text/css\">body{color:red}</style>", source
+  end
+
+  def test_render_with_sass
+    source = %q{
+sass:
+  $color: #f00
+  body
+    color: $color
+}
+    assert_html "<style type=\"text/css\">body{color:red}</style>", source
+  end
+
+  def test_render_with_sass_attribute
+    source = %q{
+sass [class="myClass"]:
+  $color: #f00
+  body
+    color: $color
+}
+    assert_html "<style class=\"myClass\" type=\"text/css\">body{color:red}</style>", source
+  end
+
 
   def test_disabled_embedded_engine
     source = %{
