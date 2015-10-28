@@ -97,14 +97,13 @@ module Slim
     end
 
     def on_slim_embedded(name, body, attrs = nil)
-      attrs = nil if attrs == [:html, :attrs]
       name = name.to_sym
       raise(Temple::FilterError, "Embedded engine #{name} is disabled") unless enabled?(name)
       @engines[name] ||= self.class.create(name, options)
-      if attrs
-        @engines[name].on_slim_embedded(name, body, attrs)
-      else
+      if attrs.nil? || attrs  == [:html, :attrs]
         @engines[name].on_slim_embedded(name, body)
+      else
+        @engines[name].on_slim_embedded(name, body, attrs)
       end
     end
 

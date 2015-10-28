@@ -238,14 +238,10 @@ module Slim
         @stacks << block
       when @embedded_re
         # Embedded template detected. It is treated as block.
+
         # Process html attrs if found
-        attrs = [:html, :attrs]
-        if $2
-          attr_length = $2.size
-          process_embedded_attrs(attrs, $2)
-        else
-          attr_length = 0
-        end
+        attr_length = $2 ? $2.size : 0
+        attrs = process_embedded_attrs($2)
 
         @stacks.last << [:slim, :embedded, $1, parse_text_block($', @orig_line.size - $'.size + attr_length), attrs]
       when /\Adoctype\b/
@@ -371,13 +367,11 @@ module Slim
         # Block expansion
         @line = $'
         if @line =~ @embedded_re
-          attrs = [:html, :attrs]
-          if $2
-            attr_length = $2.size
-            process_embedded_attrs(attrs, $2)
-          else
-            attr_length = 0
-          end
+
+          # Parse attributes
+          attr_length = $2 ? $2.size : 0
+          attrs = process_embedded_attrs($2)
+
           tag << [:slim, :embedded, $1, parse_text_block($', @orig_line.size - $'.size + attr_length), attrs]
 
           [:slim, :embedded, $1, parse_text_block($', @orig_line.size - $'.size + attr_length), attrs]
@@ -556,10 +550,12 @@ module Slim
       @line.strip!
     end
 
-    def process_embedded_attrs(attrs, line)
-      @line = line
+    def process_embedded_attrs(attr_string)
+      attrs = [:html, :attrs]
+      @line = attr_string
       parse_attributes(attrs)
       @line = @orig_line
+      attrs
     end
   end
 end

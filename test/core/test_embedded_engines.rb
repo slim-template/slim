@@ -129,7 +129,7 @@ css []:
 
   def test_render_with_css_attribute
     source = %q{
-css [scoped = "true"]:
+css scoped = "true":
   h1 { color: blue }
 }
   assert_html "<style scoped=\"true\" type=\"text/css\">h1 { color: blue }</style>", source
@@ -137,7 +137,7 @@ css [scoped = "true"]:
 
   def test_render_with_css_multiple_attributes
     source = %q{
-css [class="myClass" scoped="true"]:
+css class="myClass" scoped = "true" :
   h1 { color: blue }
 }
   assert_html "<style class=\"myClass\" scoped=\"true\" type=\"text/css\">h1 { color: blue }</style>", source
@@ -158,7 +158,7 @@ p Hi
 
   def test_render_with_javascript_empty_attributes
     source = %q{
-javascript []:    
+javascript ():    
   alert('hello')
 }
     assert_html %{<script>alert('hello')</script>}, source
@@ -174,10 +174,10 @@ javascript [class = "myClass"]:
 
   def test_render_with_javascript_multiple_attributes
     source = %q{
-javascript [class = "myClass" id="myId" other-attribute = 'myOtherAttribute']:
+javascript { class = "myClass" id="myId" other-attribute = 'my_other_attribute' }  :     
   alert('hello')
 }
-    assert_html %{<script class=\"myClass\" id=\"myId\" other-attribute=\"myOtherAttribute\">alert('hello')</script>}, source
+    assert_html %{<script class=\"myClass\" id=\"myId\" other-attribute=\"my_other_attribute\">alert('hello')</script>}, source
   end
 
   def test_render_with_opal
