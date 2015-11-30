@@ -25,8 +25,8 @@ class SlimBenchmarks
   end
 
   def init_compiled_benches
-    haml_pretty = Haml::Engine.new(@haml_code, format: :html5)
-    haml_ugly   = Haml::Engine.new(@haml_code, format: :html5, ugly: true)
+    haml_pretty = Haml::Engine.new(@haml_code, format: :html5, escape_attrs: false)
+    haml_ugly   = Haml::Engine.new(@haml_code, format: :html5, escape_attrs: false, ugly: true)
 
     context  = Context.new
 
@@ -55,8 +55,8 @@ class SlimBenchmarks
     tilt_erb         = Tilt::ERBTemplate.new { @erb_code }
     tilt_erubis      = Tilt::ErubisTemplate.new { @erb_code }
     tilt_temple_erb  = Temple::ERB::Template.new { @erb_code }
-    tilt_haml_pretty = Tilt::HamlTemplate.new(format: :html5) { @haml_code }
-    tilt_haml_ugly   = Tilt::HamlTemplate.new(format: :html5, ugly: true) { @haml_code }
+    tilt_haml_pretty = Tilt::HamlTemplate.new(format: :html5, escape_attrs: false) { @haml_code }
+    tilt_haml_ugly   = Tilt::HamlTemplate.new(format: :html5, escape_attrs: false, ugly: true) { @haml_code }
     tilt_slim_pretty = Slim::Template.new(pretty: true) { @slim_code }
     tilt_slim_ugly   = Slim::Template.new { @slim_code }
 
@@ -81,8 +81,8 @@ class SlimBenchmarks
     bench('(3) temple erb')  { Temple::ERB::Template.new { @erb_code }.render(context) }
     bench('(3) slim pretty') { Slim::Template.new(pretty: true) { @slim_code }.render(context) }
     bench('(3) slim ugly')   { Slim::Template.new { @slim_code }.render(context) }
-    bench('(3) haml pretty') { Haml::Engine.new(@haml_code, format: :html5).render(context) }
-    bench('(3) haml ugly')   { Haml::Engine.new(@haml_code, format: :html5, ugly: true).render(context) }
+    bench('(3) haml pretty') { Haml::Engine.new(@haml_code, format: :html5, escape_attrs: false).render(context) }
+    bench('(3) haml ugly')   { Haml::Engine.new(@haml_code, format: :html5, escape_attrs: false, ugly: true).render(context) }
   end
 
   def run
