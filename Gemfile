@@ -62,6 +62,7 @@ if ENV['TASK'] == 'bench'
   gem 'benchmark-ips'
   gem 'erubis'
   gem 'haml'
+  gem 'hamlit'
 end
 
 if ENV['CODECLIMATE_REPO_TOKEN']
