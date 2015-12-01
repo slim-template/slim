@@ -25,8 +25,8 @@ class SlimBenchmarks
   end
 
   def init_compiled_benches
-    haml_pretty = Haml::Engine.new(@haml_code, format: :html5)
-    haml_ugly   = Haml::Engine.new(@haml_code, format: :html5, ugly: true)
+    haml_pretty = Haml::Engine.new(@haml_code, format: :html5, escape_attrs: false)
+    haml_ugly   = Haml::Engine.new(@haml_code, format: :html5, ugly: true, escape_attrs: false)
 
     context  = Context.new
 
