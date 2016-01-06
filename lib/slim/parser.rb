@@ -238,12 +238,9 @@ module Slim
         @stacks << block
       when @embedded_re
         # Embedded template detected. It is treated as block.
-
-        # Process html attrs if found
-        attr_length = $2 ? $2.size : 0
-        attrs = process_embedded_attrs($2)
-
-        @stacks.last << [:slim, :embedded, $1, parse_text_block($', @orig_line.size - $'.size + attr_length), attrs]
+        @line = $2
+        attrs = parse_attributes
+        @stacks.last << [:slim, :embedded, $1, parse_text_block($', @orig_line.size - $'.size + $2.size), attrs]
       when /\Adoctype\b/
         # Found doctype declaration
         @stacks.last << [:html, :doctype, $'.strip]
@@ -369,12 +366,9 @@ module Slim
         if @line =~ @embedded_re
 
           # Parse attributes
-          attr_length = $2 ? $2.size : 0
-          attrs = process_embedded_attrs($2)
-
-          tag << [:slim, :embedded, $1, parse_text_block($', @orig_line.size - $'.size + attr_length), attrs]
-
-          [:slim, :embedded, $1, parse_text_block($', @orig_line.size - $'.size + attr_length), attrs]
+          @line = $2
+          attrs = parse_attributes
+          tag << [:slim, :embedded, $1, parse_text_block($', @orig_line.size - $'.size + $2.size), attrs]
         else
           (@line =~ @tag_re) || syntax_error!('Expected tag')
           @line = $' if $1
@@ -413,7 +407,7 @@ module Slim
       end
     end
 
-    def parse_attributes(attributes)
+    def parse_attributes(attributes = [:html, :attrs])
       # Check to see if there is a delimiter right after the tag name
       delimiter = nil
       if @line =~ @attr_list_delims_re
@@ -473,6 +467,7 @@ module Slim
           end
         end
       end
+      attributes || [:html, :attrs]
     end
 
     def parse_ruby_code(outer_delimiter)
@@ -548,14 +543,6 @@ module Slim
     def expect_next_line
       next_line || syntax_error!('Unexpected end of file')
       @line.strip!
-    end
-
-    def process_embedded_attrs(attr_string)
-      attrs = [:html, :attrs]
-      @line = attr_string
-      parse_attributes(attrs)
-      @line = @orig_line
-      attrs
     end
   end
 end

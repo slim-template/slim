@@ -96,15 +96,11 @@ module Slim
       @disabled = normalize_engine_list(options[:disable_engines])
     end
 
-    def on_slim_embedded(name, body, attrs = nil)
+    def on_slim_embedded(name, body, attrs)
       name = name.to_sym
       raise(Temple::FilterError, "Embedded engine #{name} is disabled") unless enabled?(name)
       @engines[name] ||= self.class.create(name, options)
-      if attrs.nil? || attrs  == [:html, :attrs]
-        @engines[name].on_slim_embedded(name, body)
-      else
-        @engines[name].on_slim_embedded(name, body, attrs)
-      end
+      @engines[name].on_slim_embedded(name, body, attrs)
     end
 
     def enabled?(name)
@@ -135,7 +131,7 @@ module Slim
 
     # Basic tilt engine
     class TiltEngine < Engine
-      def on_slim_embedded(engine, body)
+      def on_slim_embedded(engine, body, attrs)
         tilt_engine = Tilt[engine] || raise(Temple::FilterError, "Tilt engine #{engine} is not available.")
         tilt_options = options[engine.to_sym] || {}
         [:multi, tilt_render(tilt_engine, tilt_options, collect_text(body)), collect_newlines(body)]
@@ -196,7 +192,7 @@ module Slim
 
     # ERB engine (uses the Temple ERB implementation)
     class ERBEngine < Engine
-      def on_slim_embedded(engine, body)
+      def on_slim_embedded(engine, body, attrs)
         [:multi, [:newline], erb_parser.call(collect_text(body))]
       end
 
@@ -212,9 +208,7 @@ module Slim
     class TagEngine < Engine
       disable_option_validator!
 
-      def on_slim_embedded(engine, body, attrs = nil)
-
-        attrs ||= [:html, :attrs]
+      def on_slim_embedded(engine, body, attrs)
 
         unless options[:attributes].empty?
           options[:attributes].map do|k, v|
@@ -228,7 +222,7 @@ module Slim
           opts.delete(:tag)
           opts.delete(:attributes)
           @engine ||= options[:engine].new(opts)
-          body = @engine.on_slim_embedded(engine, body)
+          body = @engine.on_slim_embedded(engine, body, attrs)
         end
 
         [:html, :tag, options[:tag], attrs, body]
@@ -243,14 +237,14 @@ module Slim
 
       set_options tag: :script, attributes: {}
 
-      def on_slim_embedded(engine, body, attrs = nil)
+      def on_slim_embedded(engine, body, attrs)
         super(engine, [:html, :js, body], attrs)
       end
     end
 
     # Embeds ruby code
     class RubyEngine < Engine
-      def on_slim_embedded(engine, body)
+      def on_slim_embedded(engine, body, attrs)
         [:multi, [:newline], [:code, collect_text(body)]]
       end
     end
