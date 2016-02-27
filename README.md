@@ -585,7 +585,7 @@ renders as
 
 #### Tag shortcuts
 
-You can define custom tag shortcuts by setting the option `:shortcut`.
+You can define custom tag shortcuts by setting the option `:shortcut`. In Rails apps, you need to put this code for your shortcuts into an initializer like `config/initializers/slim.rb`. In Sinatra, you simply add the same configuration anywhere below the line where you `require 'slim'`.
 
 ~~~ ruby
 Slim::Engine.set_options shortcut: {'c' => {tag: 'container'}, '#' => {attr: 'id'}, '.' => {attr: 'class'} }
