@@ -189,7 +189,7 @@ body
 
 ### Output `=`
 
-The equal sign tells Slim it's a Ruby call that produces output to add to the buffer. If your ruby code needs to use multiple lines, append a backslash `\` at the end of the lines, for example:
+The equals sign tells Slim it's a Ruby call that produces output to add to the buffer. If your ruby code needs to use multiple lines, append a backslash `\` at the end of the lines. For example:
 
 ~~~ slim
 = javascript_include_tag \
