@@ -199,15 +199,15 @@ The equals sign tells Slim it's a Ruby call that produces output to add to the b
 
 If your line ends with comma `,` (e.g because of a method call) you don't need the additional backslash before the linebreak. For trailing or leading whitespace the modifiers `>` and `<` are supported.
 
-* Output with trailing white space `=>`. Same as the single equal sign (`=`), except that it adds a trailing white space.
-* Output with leading white space `=<`. Same as the single equal sign (`=`), except that it adds a leading white space.
+* Output with trailing white space `=>`. Same as the single equals sign (`=`), except that it adds a trailing white space.
+* Output with leading white space `=<`. Same as the single equals sign (`=`), except that it adds a leading white space.
 
 ### Output without HTML escaping `==`
 
-Same as the single equal sign (`=`), but does not go through the `escape_html` method. For trailing or leading whitespace the modifiers `>` and `<` are supported.
+Same as the single equals sign (`=`), but does not go through the `escape_html` method. For trailing or leading whitespace the modifiers `>` and `<` are supported.
 
-* Output without HTML escaping and trailing white space `==>`. Same as the double equal sign (`==`), except that it adds a trailing white space.
-* Output without HTML escaping and leading white space `==<`. Same as the double equal sign (`==`), except that it adds a leading white space.
+* Output without HTML escaping and trailing white space `==>`. Same as the double equals sign (`==`), except that it adds a trailing white space.
+* Output without HTML escaping and leading white space `==<`. Same as the double equals sign (`==`), except that it adds a leading white space.
 
 ### Code comment `/`
 
