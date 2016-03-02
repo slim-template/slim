@@ -841,7 +841,7 @@ body
 
 ## Embedded engines (Markdown, ...)
 
-Thanks to [Tilt](https://github.com/rtomayko/tilt), Slim has impressive support for embedding other template engines.
+Thanks to [Tilt](https://github.com/rtomayko/tilt), Slim has extensive support for embedding other template engines.
 
 Examples:
 
