@@ -246,9 +246,9 @@ renders as
 
 ## HTML tags
 
-### Doctype tag
+### <!DOCTYPE> declaration
 
-The doctype tag is a special tag which can be used to generate the complex doctypes in a very simple way.
+The doctype keyword can be used to generate the complex doctypes in a very simple manner.
 
 XML VERSION
 
