@@ -528,7 +528,7 @@ a class=:menu,:highlight
 
 #### Splat attributes `*`
 
-The splat shortcut allows you turn a hash in to attribute/value pairs
+The splat shortcut allows you to turn a hash into attribute/value pairs.
 
 ~~~ slim
 .card*{'data-url'=>place_path(place), 'data-id'=>place.id} = place.name
