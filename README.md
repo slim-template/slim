@@ -238,7 +238,7 @@ Use the forward slash immediately followed by an exclamation mark for html comme
     p Get a better browser.
 ~~~
 
-renders as
+This renders as:
 
 ~~~ html
 <!--[if IE]><p>Get a better browser.</p><![endif]-->
@@ -513,7 +513,7 @@ this is done for class attributes with the white space as delimiter.
 a.menu class="highlight" href="http://slim-lang.com/" Slim-lang.com
 ~~~
 
-This renders as
+This renders as:
 
 ~~~ html
 <a class="menu highlight" href="http://slim-lang.com/">Slim-lang.com</a>
@@ -534,7 +534,7 @@ The splat shortcut allows you to turn a hash into attribute/value pairs.
 .card*{'data-url'=>place_path(place), 'data-id'=>place.id} = place.name
 ~~~
 
-renders as
+This renders as:
 
 ~~~ html
 <div class="card" data-id="1234" data-url="/place/1234">Slim's house</div>
@@ -553,7 +553,7 @@ The hash attributes which support attribute merging (see Slim option `:merge_att
 .first *{class: [:second, :third]} Text
 ~~~
 
-renders as
+This renders as:
 
 ~~~ html
 div class="first second third"
@@ -575,7 +575,7 @@ ruby:
 *a_unless_current Link
 ~~~
 
-renders as
+This renders as:
 
 ~~~ html
 <span>Link</span><a href="http://slim-lang.com/">Link</a>
