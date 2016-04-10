@@ -1,6 +1,6 @@
 # Slim
 
-[![Gem Version](https://img.shields.io/gem/v/slim.svg)](http://rubygems.org/gems/slim) [![Build Status](https://img.shields.io/travis/slim-template/slim.svg?branch=master)](http://travis-ci.org/slim-template/slim) [![Dependency Status](https://img.shields.io/gemnasium/slim-template/slim.svg?travis)](https://gemnasium.com/slim-template/slim) [![Code Climate](https://img.shields.io/codeclimate/github/slim-template/slim.svg)](https://codeclimate.com/github/slim-template/slim) [![Gittip donate button](https://img.shields.io/gratipay/bevry.svg)](https://www.gittip.com/min4d/ "Donate weekly to this project using Gittip")
+[![Gem Version](https://img.shields.io/gem/v/slim.svg)](http://rubygems.org/gems/slim) [![Build Status](https://img.shields.io/travis/slim-template/slim.svg?branch=master)](http://travis-ci.org/slim-template/slim) [![Dependency Status](https://img.shields.io/gemnasium/slim-template/slim.svg?travis)](https://gemnasium.com/slim-template/slim) [![Code Climate](https://codeclimate.com/github/slim-template/slim/badges/gpa.svg)](https://codeclimate.com/github/slim-template/slim) [![Test Coverage](https://codeclimate.com/github/slim-template/slim/badges/coverage.svg)](https://codeclimate.com/github/slim-template/slim/coverage) [![Gittip donate button](https://img.shields.io/gratipay/bevry.svg)](https://www.gittip.com/min4d/ "Donate weekly to this project using Gittip")
 [![Flattr donate button](https://raw.github.com/balupton/flattr-buttons/master/badge-89x18.gif)](https://flattr.com/submit/auto?user_id=min4d&url=http%3A%2F%2Fslim-lang.org%2F "Donate monthly to this project using Flattr")
 
 Slim は 不可解にならないように view の構文を本質的な部品まで減らすことを目指したテンプレート言語です。標準的な HTML テンプレートからどれだけのものが削除できるか確かめるところから始まりました。(<, >, 閉じタグなど) 多くの人が Slim に興味を持ったことで, 機能性は発展し, 柔軟な構文をもたらしました。
@@ -238,7 +238,7 @@ html コメントにはスラッシュの直後にエクスクラメーション
     p もっといいブラウザを使ってください。
 ~~~
 
-レンダリング結果
+レンダリング結果:
 
 ~~~ html
 <!--[if IE]><p>もっといいブラウザを使ってください。</p><![endif]-->
@@ -246,9 +246,9 @@ html コメントにはスラッシュの直後にエクスクラメーション
 
 ## HTML タグ
 
-### ドキュメントタイプタグ
+# <!DOCTYPE> 宣言
 
-ドキュメントタイプタグはとても簡単な方法で複雑なドキュメントタイプを生成するために使われる特別なタグです。
+doctype はとても簡単な方法で複雑なドキュメントタイプを生成するために使われる特別なキーワードです。
 
 XML 宣言
 
@@ -513,7 +513,7 @@ input type="text" disabled=nil
 a.menu class="highlight" href="http://slim-lang.com/" Slim-lang.com
 ~~~
 
-レンダリング結果
+レンダリング結果:
 
 ~~~ html
 <a class="menu highlight" href="http://slim-lang.com/">Slim-lang.com</a>
@@ -534,7 +534,7 @@ a class=:menu,:highlight
 .card*{'data-url'=>place_path(place), 'data-id'=>place.id} = place.name
 ~~~
 
-レンダリング結果
+レンダリング結果:
 
 ~~~ html
 <div class="card" data-id="1234" data-url="/place/1234">Slim の家</div>
@@ -575,7 +575,7 @@ ruby:
 *a_unless_current リンク
 ~~~
 
-レンダリング結果
+レンダリング結果:
 
 ~~~ html
 <span>リンク</span><a href="http://slim-lang.com/">リンク</a>
@@ -585,7 +585,7 @@ ruby:
 
 #### タグショートカット
 
-`:shortcut` オプションを設定することで独自のタグショートカットを定義できます。
+`:shortcut` オプションを設定することで独自のタグショートカットを定義できます。Rails アプリケーションでは, `config/initializers/slim.rb` のようにイニシャライザに定義します。Sinatra アプリでは, `require 'slim'` が書かれた下であればどこにでも設定を定義することができます。
 
 ~~~ ruby
 Slim::Engine.set_options shortcut: {'c' => {tag: 'container'}, '#' => {attr: 'id'}, '.' => {attr: 'class'} }
@@ -777,7 +777,7 @@ end
 = captured_content
 ~~~
 
-別の興味深いユースケースは、enumerableを使いそれぞれの要素をキャプチャすることです。ヘルパは、このようになります。
+別の興味深いユースケースは, enumerableを使いそれぞれの要素をキャプチャすることです。ヘルパは, このようになります。
 
 ~~~ ruby
 module Capture
@@ -789,7 +789,7 @@ module Capture
 end
 ~~~
 
-そして、次のように使用出来ます。
+そして, 次のように使用出来ます。
 
 ~~~ slim
 - links = { 'http://slim-lang.com' => 'The Slim Template Language' }
@@ -797,7 +797,7 @@ end
   a href=url = text
 ~~~
 
-その後は、`link_list`はキャプチャしたコンテンツを含みます。
+その後は, `link_list`はキャプチャしたコンテンツを含みます。
 
 ###　インクルードヘルパ
 
