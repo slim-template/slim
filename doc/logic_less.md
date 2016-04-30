@@ -55,7 +55,7 @@ The dictionary object is accessed in the order given by the `:dictionary_access`
 
 If all the above fails, Slim will try to resolve the title reference in the same order against the parent object. In this example, the parent would be the dictionary object you are rendering the template against.
 
-As you might have guessed, the article reference goes through the same steps against the dictionary. Instance variables are not allowed in the view code, but Slim will find and use them. Essentially, you're just using dropping the @ prefix in your template. Parameterized method calls are not allowed.
+As you might have guessed, the article reference goes through the same steps against the dictionary. Instance variables are not allowed in the view code, but Slim will find and use them. Essentially, you're just dropping the @ prefix in your template. Parameterized method calls are not allowed.
 
 
 ## Strings
