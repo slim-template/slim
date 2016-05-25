@@ -1,44 +1,60 @@
 # Smart text
 
-The easiest way to combine text and markup is to use the <a name="smarttext">smart text mode</a>.
+The <a name="smarttext">smart text plugin</a> was created to simplify the typing and combining of text and markup in Slim templates.
+Using the plugin gives you:
 
-Enable the smart text plugin with
+* More convenient ways to type text in Slim templates.
+* Smarter and more consistent HTML escaping of typed text.
+* Easier combining of the text with inline HTML tags with smart handling of whitespace on the boundaries.
+
+To get started, enable the smart text plugin with
 
     require 'slim/smart'
 
-This automatically enables the `:implicit_text` option as well,
-so you can easily type text like this:
-
-    p
-      This is text.
-      This is text, too.
-
-Slim will automatically treat any line which doesn't start
+First of all, this automatically enables the `:implicit_text` option.
+When enabled, Slim will treat any line which doesn't start
 with a lowercase tag name or any of the special characters as an implicit text line.
-If the text spans several lines, simply indent them.
+If the text needs to span several lines, indent them as usual.
 
-    p
-      This is text,
-        and it spans
-        several lines.
+This allows you to easily type text like this, without any leading indicator:
 
-You can also mark the text explicitly with `>`,
-for example when it starts with lowercase letter or unusual character,
-or when the text spans several lines,
-or merely for aesthetic consistency,
-or if you want to use uppercase tag names
+    This is an implicit text.
+    This is a text
+      which spans
+      several lines.
+    This is yet another text.
+
+This works in addition to ways already available in stock Slim:
+
+    p This is an inline text.
+    p This is an inline text
+      which spans multiple lines.
+    | This is a verbatim text.
+    | This is a verbatim text
+      which spans multiple lines.
+    <p>This is in fact a verbatim text as well.</p>
+
+You can also mark the text explicitly with a leading `>`.
+This is used for example when the text starts with a lowercase letter or an unusual character,
+or merely for aesthetic consistency when it spans several lines.
+It may be also needed if you want to use uppercase tag names
 and therefore need to keep the `:implicit_text` option disabled.
 
-    p
-      > 'This is text, too.'
-    p
-      >
-        This is text
-        which spans
-        several lines.
+    > This is an explicit text.
+    > This is an explicit text
+      which spans
+      several lines.
+    > 'This is a text, too.'
 
+    > This is another way
+    > of typing text which spans
+    > several lines, if you prefer that.
+
+BTW, all these examples can be pasted to `slimrb -r slim/smart` to see how the generated output looks like.
+
+The plugin also improves upon Slim's automatic HTML escaping.
 As long as you leave the `:smart_text_escaping` enabled,
-any non-verbatim text is automatically escaped for you.
+any non-verbatim text (i.e., any implicit, explicit, and inline text) is automatically escaped for you.
 However, for your convenience, any HTML entities detected are still used verbatim.
 This way you are most likely to get what you really wanted,
 without having to worry about HTML escaping all the time.
@@ -47,8 +63,8 @@ without having to worry about HTML escaping all the time.
     footer
       Copyright &copy; #{Time.now.year}
 
-Another cool thing about smart text is that it mixes fairly well with markup.
-Smart text lines normally preserve newlines,
+Another cool thing about the plugin is that it makes text mix fairly well with markup.
+The text lines are made to preserve newlines as needed,
 so it is easy to mix them with other tags, like emphasis or links:
 
     p
@@ -57,18 +73,18 @@ so it is easy to mix them with other tags, like emphasis or links:
       > be charged now.
     p
       Check
-      a href=r(:faq) our FAQ
+      a href='/faq' our FAQ
       > for more info.
 
 (Note the use of the explicit text indicator `>` to distinguish lowercase text from tags).
 
-However, sometimes you do not want the whitespace around the inline tag.
-Fortunately smart text takes care of the most common cases for you as well.
-The leading newline is suppressed if the smart text block begins
-with a character from the `:smart_text_begin_chars` set (`,.;:!?)]}` by default).
-Similarly, trailing newline is suppressed if the smart text block ends
+However, sometimes you do not want any whitespace around the inline tag at all.
+Fortunately the plugin takes care of the most common cases for you as well.
+The newline before the tag is suppressed if the preceding line ends
 with a character from the `:smart_text_end_chars` set (`([{` by default).
-This makes it quite easy to mix normal text with links or spans like this:
+Similarly, the newline after the tag is suppressed if the following line begins
+with a character from the `:smart_text_begin_chars` set (`,.;:!?)]}` by default).
+This makes it quite easy to naturally mix normal text with links or spans like this:
 
     p
       Please proceed to
@@ -76,10 +92,10 @@ This makes it quite easy to mix normal text with links or spans like this:
       .
     p
       Status: failed (
-      a href="#1" details
+      a href="#1" see details
       ).
 
-Note that smart text is smart enough to know about tag shortcuts, too,
+Note that the plugin is smart enough to know about tag shortcuts, too,
 so it will correctly deal even with cases like this:
 
     .class
@@ -88,6 +104,7 @@ so it will correctly deal even with cases like this:
         i text
         ...
 
+And that's it.
 Of course, all this is meant only to make working with short text snippets more convenient.
 For bulk text content, you are more than welcome to use one of the builtin embedded engines,
 such as Markdown or Textile.
