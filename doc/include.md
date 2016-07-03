@@ -17,4 +17,4 @@ Enable the include plugin with
 
 | Type | Name | Default | Purpose |
 | ---- | ---- | ------- | ------- |
-| Boolean | :include_dirs | [Dir.pwd, '.'] | Directories where to look for the files |
+| Array | :include_dirs | [Dir.pwd, '.'] | Directories where to look for the files |
