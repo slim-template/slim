@@ -416,7 +416,7 @@ module Slim
 
       while true
         case @line
-        when /\A\s*\*(?=[^\s]+)/
+        when /\A\s*\*(?=\{)/
           # Splat attribute
           @line = $'
           attributes << [:slim, :splat, parse_ruby_code(delimiter)]
