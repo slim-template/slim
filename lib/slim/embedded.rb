@@ -1,3 +1,5 @@
+require 'slim/filter'
+
 module Slim
   # @api private
   class TextCollector < Filter
