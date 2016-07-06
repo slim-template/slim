@@ -23,14 +23,14 @@ class TestSlimCommands < Minitest::Test
     out, err = exec_slimrb '--help'
 
     assert err.empty?
-    assert_match /Show this message/, out
+    assert_match %r{Show this message}, out
   end
 
   def test_option_version
     out, err = exec_slimrb '--version'
 
     assert err.empty?
-    assert_match /\ASlim #{Regexp.escape Slim::VERSION}$/, out
+    assert_match %r{\ASlim #{Regexp.escape Slim::VERSION}$}, out
   end
 
   def test_render
@@ -113,15 +113,15 @@ class TestSlimCommands < Minitest::Test
   def test_error
     prepare_common_test EXCEPTION_TEMPLATE, stdin_file: false do |out, err|
       assert out.empty?
-      assert_match /NotImplementedError: NotImplementedError/, err
-      assert_match /Use --trace for backtrace/, err
+      assert_match %r{NotImplementedError: NotImplementedError}, err
+      assert_match %r{Use --trace for backtrace}, err
     end
   end
 
   def test_trace_error
     prepare_common_test EXCEPTION_TEMPLATE, '--trace', stdin_file: false do |out, err|
       assert out.empty?
-      assert_match /bin\/slimrb/, err
+      assert_match %r{bin\/slimrb}, err
     end
   end
 
