@@ -1140,8 +1140,7 @@ Travis-CI is used for continuous integration testing: <http://travis-ci.org/slim
 
 Slim is working well on all major Ruby implementations:
 
-* Ruby 1.9.3, 2.0.0, 2.1.0 and 2.2.0
-* Ruby EE
+* Ruby 2.0, 2.1, 2.2 and 2.3
 * JRuby 1.9 mode
 * Rubinius 2.0
 
