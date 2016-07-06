@@ -55,7 +55,7 @@ by the logic less plugin and the translator plugin which provides I18n. In logic
 ### Why use Slim?
 
 * Slim allows you to write very minimal templates which are easy to maintain and pretty much guarantees that you write well-formed HTML and XML
-* We also think that the Slim syntax is also aesthetic and makes it much more fun to write templates. Since you can use Slim as a drop-in replacement in all the major framework you can start easily.
+* The Slim syntax is aesthetic and makes it more fun to write templates. Since you can use Slim as a drop-in replacement in all the major frameworks it is easy to adopt.
 * The Slim architecture is very flexible and allows you to write syntax extensions and plugins.
 
 ___Yes, Slim is speedy!___ Slim was developed right from the start with performance in mind.
