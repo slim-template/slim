@@ -39,8 +39,6 @@ matrix:
   exclude:
     - rvm: rbx-2
       env: "TASK=test:rails RAILS=master"
-    - rvm: 1.9.3
-      env: "TASK=test:rails RAILS=master"
     - rvm: 2.0.0
       env: "TASK=test:rails RAILS=master"
     - rvm: 2.3.1
