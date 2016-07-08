@@ -48,6 +48,7 @@ class TestSlimTemplate < TestSlim
     template = Slim::Template.new('test.slim') { data }
     begin
       template.render(Object.new, name: 'Joe', foo: 'bar')
+      fail 'should have raised an exception'
     rescue => ex
       assert_kind_of MockError, ex
       assert_backtrace(ex, 'test.slim:5')
