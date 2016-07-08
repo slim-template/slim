@@ -47,7 +47,7 @@ class TestSlimTemplate < TestSlim
     fail unless data[0] == ?h
     template = Slim::Template.new('test.slim') { data }
     begin
-      res = template.render(Object.new, name: 'Joe', foo: 'bar')
+      template.render(Object.new, name: 'Joe', foo: 'bar')
     rescue => ex
       assert_kind_of MockError, ex
       assert_backtrace(ex, 'test.slim:5')
