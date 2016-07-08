@@ -523,7 +523,7 @@ module Slim
       line = @orig_line.lstrip
       column = (@orig_line && @line ? @orig_line.size - @line.size : 0) + line.size - @orig_line.size
       warn %{Deprecated syntax: #{message}
-  #{options[:file]}, Line #{@lineno}, Column #{@column}
+  #{options[:file]}, Line #{@lineno}, Column #{column + 1}
     #{line}
     #{' ' * column}^
 }
