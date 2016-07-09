@@ -1,4 +1,3 @@
-# coding: utf-8
 module Slim
   # Parses Slim code and transforms it to a Temple expression
   # @api private

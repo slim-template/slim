@@ -1,4 +1,3 @@
-# coding: utf-8
 require 'helper'
 require 'open3'
 require 'tempfile'
