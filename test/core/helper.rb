@@ -1,5 +1,3 @@
-# encoding: utf-8
-
 begin
   require 'codeclimate-test-reporter'
   CodeClimate::TestReporter.start

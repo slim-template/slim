@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 require 'helper'
 
 class TestSlimUnicode < TestSlim

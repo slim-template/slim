@@ -1,5 +1,3 @@
-# coding: utf-8
-
 module Slim
   module Smart
     # @api private
