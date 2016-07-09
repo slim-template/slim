@@ -65,7 +65,7 @@ p
   img(src="img.jpg
 }
 
-assert_syntax_error "Unexpected end of file\n  (__TEMPLATE__), Line 3, Column 0\n    \n    ^\n", source
+    assert_syntax_error "Unexpected end of file\n  (__TEMPLATE__), Line 3, Column 0\n    \n    ^\n", source
   end
 
   def test_expected_closing_attribute_delimiter
