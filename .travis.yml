@@ -3,8 +3,8 @@ language: ruby
 rvm:
   - ruby-head
   - 2.3.1
-  - 2.2.2
-  - 2.1.6
+  - 2.2.5
+  - 2.1.10
   - 2.0.0
   - rbx-2
   - jruby-head
