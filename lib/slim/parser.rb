@@ -86,7 +86,7 @@ module Slim
     # Compile string to Temple expression
     #
     # @param [String] str Slim code
-    # @return [Array] Temple expression representing the code]]
+    # @return [Array] Temple expression representing the code
     def call(str)
       result = [:multi]
       reset(str.split(/\r?\n/), [result])
