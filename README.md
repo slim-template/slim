@@ -965,7 +965,7 @@ There are a lot of them but the good thing is, that Slim checks the configuratio
 | Boolean | :pretty | false | Pretty HTML indenting, only block level tags are indented <b>(This is slower!)</b> |
 | String | :indent | '  ' | Indentation string |
 | Boolean | :streaming | false (true in Rails, see below how to disable it!) | Enable output streaming, improves the perceived performance |
-| Class | :generator | Temple::Generators::ArrayBuffer/ RailsOutputBuffer | Temple code generator (default generator generates array buffer) |
+| Class | :generator | Temple::Generators::StringBuffer/ RailsOutputBuffer | Temple code generator (default generator generates string buffer) |
 | String | :buffer | '_buf' ('@output_buffer' in Rails) | Variable used for buffer |
 
 
