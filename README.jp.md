@@ -965,7 +965,7 @@ end
 | 真偽値 | :pretty | false | 綺麗な html インデント <b>(遅くなります!)</b> |
 | 文字列 | :indent | '  ' | インデントに使用される文字列 |
 | 真偽値 | :streaming | false (Rails では true, 無効化するにはストリーミングを参照) | ストリーミング出力の有効化, 体感的なパフォーマンスの向上 |
-| Class | :generator | Temple::Generators::StringBuffer/ RailsOutputBuffer | Temple コードジェネレータ (デフォルトのジェネレータは配列バッファを生成します) |
+| Class | :generator | Temple::Generators::StringBuffer/ RailsOutputBuffer | Temple コードジェネレータ (デフォルトのジェネレータは文字列バッファを生成します) |
 | 文字列 | :buffer | '_buf' (Rails では '@output_buffer') | バッファに使用される変数 |
 
 
