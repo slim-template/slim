@@ -491,7 +491,7 @@ module Slim
 
       until count == 0 && @line[0] == quote[0]
         if @line =~ /\A(\\)?\Z/
-          value << ($1 ? ' ' : "\n")
+          value << ($1 ? '' : "\n")
           expect_next_line
         else
           if @line[0] == ?{

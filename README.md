@@ -463,8 +463,8 @@ a href=="&amp;"
 You can break quoted attributes with backslash `\`
 
 ~~~ slim
-a data-title="help" data-content="extremely long help text that goes on\
-  and one and one and then starts over...."
+a data-title="help" data-content="extremely long help text that goes on \
+  and on and on and then starts over...."
 ~~~
 
 #### Ruby attributes
