@@ -487,7 +487,7 @@ The attribute value will be escaped by default. Use == if you want to disable es
 a href==action_path(:start)
 ~~~
 
-You can also break ruby attributes with backslash `\` or trailing `,` as describe for control sections.
+You can also break ruby attributes with backslash `\` or trailing `,` as described for control sections.
 
 #### Boolean attributes
 
