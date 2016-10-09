@@ -18,7 +18,8 @@ module Slim
                    shortcut: {
                      '#' => { attr: 'id' },
                      '.' => { attr: 'class' }
-                   }
+                   },
+                   splat_prefix: '*'
 
     class SyntaxError < StandardError
       attr_reader :error, :file, :line, :lineno, :column
@@ -413,9 +414,13 @@ module Slim
         end_re = /\A\s*#{Regexp.escape delimiter}/
       end
 
+      splat_prefix        = Regexp.escape(options[:splat_prefix])
+      splat_regexp_source = '\A\s*' << splat_prefix << '(?=[^\s]+)'
+      @splat_attrs_regexp = Regexp.new(splat_regexp_source)
+
       while true
         case @line
-        when /\A\s*\*(?=[^\s]+)/
+        when @splat_attrs_regexp
           # Splat attribute
           @line = $'
           attributes << [:slim, :splat, parse_ruby_code(delimiter)]

@@ -559,6 +559,8 @@ This renders as:
 div class="first second third"
 ~~~
 
+Splat attributes prefix may be configured via `splat_prefix` option. Default value is `'*'`
+
 #### Dynamic tags `*`
 
 You can create completely dynamic tags using the splat attributes. Just create a method which returns a hash
@@ -967,7 +969,7 @@ There are a lot of them but the good thing is, that Slim checks the configuratio
 | Boolean | :streaming | false (true in Rails, see below how to disable it!) | Enable output streaming, improves the perceived performance |
 | Class | :generator | Temple::Generators::StringBuffer/ RailsOutputBuffer | Temple code generator (default generator generates string buffer) |
 | String | :buffer | '_buf' ('@output_buffer' in Rails) | Variable used for buffer |
-
+| String | :splat_prefix | '*' | Prefix used for splat attributes |
 
 There are more options which are supported by the Temple filters but which are not exposed and are not officially supported. You
 have to take a look at the Slim and Temple code for that.
@@ -1046,6 +1048,47 @@ performance. The rendering time in total will increase. If you want to disable i
 ~~~ ruby
 Slim::RailsTemplate.set_options streaming: false
 ~~~
+
+### Angular2
+
+Slim now supports Angular2 syntax. But you need to set some configuration options:
+
+#### `splat_prefix` option
+
+This option tells parser what syntax to use for splat attributes.
+Default value is asterisk: `splat_prefix: '*'`
+Asterisk is also used in Angular2 for structural directives such as `*ngIf` and others, so default configuration causes a conflict between slim and angular2 syntax.
+
+There are two ways to resolve it:
+
+* Set `splat_prefix` to any custom value, double asterisk, for example: `splat_prefix: '**'`. Now structural directives should work as expected. Remember that now splat attributes should be written with new custom prefix before them.
+* Use alternative directive syntax without asterisk.
+
+#### Attribute delimeters
+
+Angular and slim both uses brackets in their syntax. So there are also two ways:
+* Use alternative syntax for binding (`bind-...` and so on)
+* Limit attribute delimeters to curly braces only:
+```
+code_attr_delims: {
+ '{' => '}',
+},
+attr_list_delims: {
+ '{' => '}',
+},
+```
+
+Now you can use something like this:
+```
+h1{ #var (bind1)="test" [bind2]="ok" [(bind3)]="works?" *ngIf="expr" *ngFor="expression" } {{it works}}
+```
+
+Will be compiled to:
+```
+<h1 #var="" (bind1)="test" [bind2]="ok" [(bind3)]="works?" *ngIf="expr" *ngFor="expression">
+  {{it works}}
+</h1>
+```
 
 ## Tools
 
