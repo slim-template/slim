@@ -1035,7 +1035,7 @@ html
 ### Rails
 
 Rails generators are provided by [slim-rails](https://github.com/slim-template/slim-rails). slim-rails
-is not necessary to use Slim in Rails though. Just install Slim and add it to your Gemfile with `gem 'slim-rails'`.
+is not necessary to use Slim in Rails though. Just install Slim and add it to your Gemfile with `gem 'slim'`.
 Then just use the .slim extension and you're good to go.
 
 #### Streaming
