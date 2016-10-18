@@ -1035,7 +1035,7 @@ html
 ### Rails
 
 Rails のジェネレータは [slim-rails](https://github.com/slim-template/slim-rails) によって提供されます。
-slim-rails は Rails で Slim を使用する場合に必須ではありません。Slim をインストールし Gemfile に `gem 'slim-rails'` を追加するだけです。
+slim-rails は Rails で Slim を使用する場合に必須ではありません。Slim をインストールし Gemfile に `gem 'slim'` を追加するだけです。
 後は .slim 拡張子を使えば Rails で使用できます。
 
 #### ストリーミング
