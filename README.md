@@ -45,7 +45,7 @@ continuous integration (travis-ci).
 
 Slim's core syntax is guided by one thought: "What's the minimum required to make this work".
 
-As more people have contributed to Slim, there have been syntax additions influenced from their use of [Haml](https://github.com/haml/haml) and [Jade](https://github.com/visionmedia/jade).  The Slim team is open to these additions because we know beauty is in the eye of the beholder.
+As more people have contributed to Slim, there have been syntax additions influenced from their use of [Haml](https://github.com/haml/haml) and [Pug](https://github.com/pugjs/pug) (formerly [Jade](https://github.com/visionmedia/jade)).  The Slim team is open to these additions because we know beauty is in the eye of the beholder.
 
 Slim uses [Temple](https://github.com/judofyr/temple) for parsing/compilation and is also integrated into [Tilt](https://github.com/rtomayko/tilt), so it can be used together with [Sinatra](https://github.com/sinatra/sinatra) or plain [Rack](https://github.com/rack/rack).
 
@@ -1267,6 +1267,6 @@ Language ports/Similar languages:
 * [Hamlit (High performance Haml implementation, based on Temple like Slim)](https://github.com/k0kubun/hamlit)
 * [Faml (Faster Haml implementation, also using Temple like Slim)](https://github.com/eagletmt/faml)
 * [Haml (Older engine which inspired Slim)](https://github.com/haml/haml)
-* [Jade (Similar engine for javascript)](https://github.com/visionmedia/jade)
+* [Pug (Similar engine for javascript)](https://github.com/pugjs/pug)
 * [Sweet (Similar engine which also allows to write classes and functions)](https://github.com/joaomdmoura/sweet)
 * [Amber (Similar engine for Go)](https://github.com/eknkc/amber)

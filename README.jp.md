@@ -45,7 +45,7 @@ Slim は __Rails3 および 4__ に対応した高速, 軽量なテンプレー�
 
 Slim の核となる構文は1つの考えによって導かれます: "この動作を行うために最低限必要なものは何か"。
 
-多くの人々の Slim への貢献によって, 彼らが使う [Haml](https://github.com/haml/haml) や [Jade](https://github.com/visionmedia/jade) の影響を受け構文の追加が行われています。 Slim の開発チームは美は見る人の目の中にあることを分っているのでこういった追加にオープンです。
+多くの人々の Slim への貢献によって, 彼らが使う [Haml](https://github.com/haml/haml) や [Pug](https://github.com/pugjs/pug) (以前は [Jade](https://github.com/visionmedia/jade)) の影響を受け構文の追加が行われています。 Slim の開発チームは美は見る人の目の中にあることを分っているのでこういった追加にオープンです。
 
 Slim は 構文解析/コンパイルに [Temple](https://github.com/judofyr/temple) を使い [Tilt](https://github.com/rtomayko/tilt) に組み込まれます。これにより [Sinatra](https://github.com/sinatra/sinatra) やプレーンな [Rack](https://github.com/rack/rack) とも一緒に使えます。
 
@@ -1224,6 +1224,6 @@ Slim は [MIT license](http://www.opensource.org/licenses/MIT) に基づいて�
 * [Hamlit (High performance Haml implementation, based on Temple like Slim)](https://github.com/k0kubun/hamlit)
 * [Faml (Faster Haml implementation, also using Temple like Slim)](https://github.com/eagletmt/faml)
 * [Haml (Older engine which inspired Slim)](https://github.com/haml/haml)
-* [Jade (Similar engine for javascript)](https://github.com/visionmedia/jade)
+* [Pug (Similar engine for javascript)](https://github.com/pugjs/pug)
 * [Sweet (Similar engine which also allows to write classes and functions)](https://github.com/joaomdmoura/sweet)
 * [Amber (Similar engine for Go)](https://github.com/eknkc/amber)
