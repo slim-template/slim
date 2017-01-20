@@ -45,7 +45,7 @@ Slim は __Rails3 および 4__ に対応した高速, 軽量なテンプレー�
 
 Slim の核となる構文は1つの考えによって導かれます: "この動作を行うために最低限必要なものは何か"。
 
-多くの人々の Slim への貢献によって, 彼らが使う [Haml](https://github.com/haml/haml) や [Jade](https://github.com/visionmedia/jade) の影響を受け構文の追加が行われています。 Slim の開発チームは美は見る人の目の中にあることを分っているのでこういった追加にオープンです。
+多くの人々の Slim への貢献によって, 彼らが使う [Haml](https://github.com/haml/haml) や [Pug](https://github.com/pugjs/pug) (以前は [Jade](https://github.com/visionmedia/jade)) の影響を受け構文の追加が行われています。 Slim の開発チームは美は見る人の目の中にあることを分っているのでこういった追加にオープンです。
 
 Slim は 構文解析/コンパイルに [Temple](https://github.com/judofyr/temple) を使い [Tilt](https://github.com/rtomayko/tilt) に組み込まれます。これにより [Sinatra](https://github.com/sinatra/sinatra) やプレーンな [Rack](https://github.com/rack/rack) とも一緒に使えます。
 
@@ -864,7 +864,7 @@ p: markdown: Tag with **inline** markdown!
 | フィルタ | 必要な gems | 種類 | 説明 |
 | -------- | ----------- | ---- | ----------- |
 | ruby: | なし | ショートカット | Ruby コードを埋め込むショートカット |
-| javascript: | なし | ショートカット | javascript コードを埋め込むショートカットで script タグで囲む |
+| javascript: | なし | ショートカット | JavaScript コードを埋め込むショートカットで script タグで囲む |
 | css: | なし | ショートカット | css コードを埋め込むショートカットで style タグで囲む |
 | sass: | sass | コンパイル時 | sass コードを埋め込むショートカットで style タグで囲む |
 | scss: | sass | コンパイル時 | scss コードを埋め込むショートカットで style タグで囲む |
@@ -1257,16 +1257,16 @@ Slim は [MIT license](http://www.opensource.org/licenses/MIT) に基づいて�
 移植言語/同様の言語:
 
 * [Sliq (Slim/Liquid integration)](https://github.com/slim-template/sliq)
-* [Slm (Slim port to Javascript)](https://github.com/slm-lang/slm)
+* [Slm (Slim port to JavaScript)](https://github.com/slm-lang/slm)
 * [Coffee script plugin for Slim](https://github.com/yury/coffee-views)
 * [Clojure port of Slim](https://github.com/chaslemley/slim.clj)
 * [Hamlet.rb (Similar template language)](https://github.com/gregwebs/hamlet.rb)
 * [Plim (Python port of Slim)](https://github.com/2nd/plim)
-* [Skim (Slim for Javascript)](https://github.com/jfirebaugh/skim)
-* [Emblem.js (Javascript, similar to Slim)](https://github.com/machty/emblem.js)
+* [Skim (Slim for JavaScript)](https://github.com/jfirebaugh/skim)
+* [Emblem.js (JavaScript, similar to Slim)](https://github.com/machty/emblem.js)
 * [Hamlit (High performance Haml implementation, based on Temple like Slim)](https://github.com/k0kubun/hamlit)
 * [Faml (Faster Haml implementation, also using Temple like Slim)](https://github.com/eagletmt/faml)
 * [Haml (Older engine which inspired Slim)](https://github.com/haml/haml)
-* [Jade (Similar engine for javascript)](https://github.com/visionmedia/jade)
+* [Pug (Similar engine for JavaScript)](https://github.com/pugjs/pug)
 * [Sweet (Similar engine which also allows to write classes and functions)](https://github.com/joaomdmoura/sweet)
 * [Amber (Similar engine for Go)](https://github.com/eknkc/amber)

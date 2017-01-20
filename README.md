@@ -45,7 +45,7 @@ continuous integration (travis-ci).
 
 Slim's core syntax is guided by one thought: "What's the minimum required to make this work".
 
-As more people have contributed to Slim, there have been syntax additions influenced from their use of [Haml](https://github.com/haml/haml) and [Jade](https://github.com/visionmedia/jade).  The Slim team is open to these additions because we know beauty is in the eye of the beholder.
+As more people have contributed to Slim, there have been syntax additions influenced from their use of [Haml](https://github.com/haml/haml) and [Pug](https://github.com/pugjs/pug) (formerly [Jade](https://github.com/visionmedia/jade)).  The Slim team is open to these additions because we know beauty is in the eye of the beholder.
 
 Slim uses [Temple](https://github.com/judofyr/temple) for parsing/compilation and is also integrated into [Tilt](https://github.com/rtomayko/tilt), so it can be used together with [Sinatra](https://github.com/sinatra/sinatra) or plain [Rack](https://github.com/rack/rack).
 
@@ -864,7 +864,7 @@ Supported engines:
 | Filter | Required gems | Type | Description |
 | ------ | ------------- | ---- | ----------- |
 | ruby: | none | Shortcut | Shortcut to embed ruby code |
-| javascript: | none | Shortcut | Shortcut to embed javascript code and wrap in script tag |
+| javascript: | none | Shortcut | Shortcut to embed JavaScript code and wrap in script tag |
 | css: | none | Shortcut | Shortcut to embed css code and wrap in style tag |
 | sass: | sass | Compile time | Embed sass code and wrap in style tag |
 | scss: | sass | Compile time | Embed scss code and wrap in style tag |
@@ -963,7 +963,7 @@ There are a lot of them but the good thing is, that Slim checks the configuratio
 | Hash | :merge_attrs | \{'class' => ' '} | Joining character used if multiple html attributes are supplied (e.g. class="class1 class2") |
 | Array&lt;String&gt; | :hyphen_attrs | %w(data) | Attributes which will be hyphenated if a Hash is given (e.g. data={a:1,b:2} will render as data-a="1" data-b="2") |
 | Boolean | :sort_attrs | true | Sort attributes by name |
-| Symbol | :js_wrapper | nil | Wrap javascript by :comment, :cdata or :both. You can also :guess the wrapper based on :format. |
+| Symbol | :js_wrapper | nil | Wrap JavaScript by :comment, :cdata or :both. You can also :guess the wrapper based on :format. |
 | Boolean | :pretty | false | Pretty HTML indenting, only block level tags are indented <b>(This is slower!)</b> |
 | String | :indent | '  ' | Indentation string |
 | Boolean | :streaming | false (true in Rails, see below how to disable it!) | Enable output streaming, improves the perceived performance |
@@ -1257,16 +1257,16 @@ Template Converters (HAML, ERB, ...):
 Language ports/Similar languages:
 
 * [Sliq (Slim/Liquid integration)](https://github.com/slim-template/sliq)
-* [Slm (Slim port to Javascript)](https://github.com/slm-lang/slm)
+* [Slm (Slim port to JavaScript)](https://github.com/slm-lang/slm)
 * [Coffee script plugin for Slim](https://github.com/yury/coffee-views)
 * [Clojure port of Slim](https://github.com/chaslemley/slim.clj)
 * [Hamlet.rb (Similar template language)](https://github.com/gregwebs/hamlet.rb)
 * [Plim (Python port of Slim)](https://github.com/2nd/plim)
-* [Skim (Slim for Javascript)](https://github.com/jfirebaugh/skim)
-* [Emblem.js (Javascript, similar to Slim)](https://github.com/machty/emblem.js)
+* [Skim (Slim for JavaScript)](https://github.com/jfirebaugh/skim)
+* [Emblem.js (JavaScript, similar to Slim)](https://github.com/machty/emblem.js)
 * [Hamlit (High performance Haml implementation, based on Temple like Slim)](https://github.com/k0kubun/hamlit)
 * [Faml (Faster Haml implementation, also using Temple like Slim)](https://github.com/eagletmt/faml)
 * [Haml (Older engine which inspired Slim)](https://github.com/haml/haml)
-* [Jade (Similar engine for javascript)](https://github.com/visionmedia/jade)
+* [Pug (Similar engine for JavaScript)](https://github.com/pugjs/pug)
 * [Sweet (Similar engine which also allows to write classes and functions)](https://github.com/joaomdmoura/sweet)
 * [Amber (Similar engine for Go)](https://github.com/eknkc/amber)
