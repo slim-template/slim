@@ -1268,5 +1268,6 @@ Slim は [MIT license](http://www.opensource.org/licenses/MIT) に基づいて�
 * [Faml (Faster Haml implementation, also using Temple like Slim)](https://github.com/eagletmt/faml)
 * [Haml (Older engine which inspired Slim)](https://github.com/haml/haml)
 * [Jade (Similar engine for javascript)](https://github.com/visionmedia/jade)
+* [Pug (Successor of Jade, Similar engine for javascript)](https://github.com/pugjs/pug)
 * [Sweet (Similar engine which also allows to write classes and functions)](https://github.com/joaomdmoura/sweet)
 * [Amber (Similar engine for Go)](https://github.com/eknkc/amber)
