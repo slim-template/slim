@@ -583,6 +583,34 @@ This renders as:
 <span>Link</span><a href="http://slim-lang.com/">Link</a>
 ~~~
 
+#### Rack
+
+You can create a simple response like this:
+
+~~~ ruby
+response = Rack::Response.new
+response.body = [Slim::Template.new {"h1 Example Template"}.render(self)]
+response.finish
+~~~
+
+You can create a template with given paremeters like this:
+
+hello.html.slim
+~~~ ruby
+"h1 #{message}"
+~~~
+
+hello.rb
+~~~ ruby
+message = "Hello!"
+
+response = Rack::Response.new
+response.body = [Slim::Template.new {File.read(hello.html.slim)}.render(self, :message => message)]
+response.finish
+~~~
+
+
+
 ### Shortcuts
 
 #### Tag shortcuts
