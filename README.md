@@ -585,7 +585,7 @@ This renders as:
 
 #### Rack
 
-You can create a simple response like this:
+You can create a simple response like so:
 
 ~~~ ruby
 response = Rack::Response.new
@@ -593,9 +593,9 @@ response.body = [Slim::Template.new {"h1 Example Template"}.render(self)]
 response.finish
 ~~~
 
-You can create a template with given paremeters like this:
+You can create a template from a Slim file and pass it paremeters like so:
 
-hello.html.slim
+hello.slim
 ~~~ ruby
 "h1 #{message}"
 ~~~
@@ -605,7 +605,7 @@ hello.rb
 message = "Hello!"
 
 response = Rack::Response.new
-response.body = [Slim::Template.new {File.read(hello.html.slim)}.render(self, :message => message)]
+response.body = [Slim::Template.new {File.read(hello.slim)}.render(self, :message => message)]
 response.finish
 ~~~
 
