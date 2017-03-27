@@ -252,7 +252,7 @@ The doctype keyword can be used to generate the complex doctypes in a very simpl
 
 XML VERSION
 
-~~~~ slim
+~~~ slim
 doctype xml
   <?xml version="1.0" encoding="utf-8" ?>
 
