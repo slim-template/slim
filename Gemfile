@@ -16,7 +16,11 @@ end
 
 if ENV['RAILS']
   # we need some smarter test logic for the different Rails versions
-  gem 'nokogiri'
+  if RUBY_VERSION >= '2.1.0'
+    gem 'nokogiri'
+  else
+    gem 'nokogiri', '~> 1.6.8'
+  end
 
   if ENV['RAILS'] == 'master'
     gem 'rails', github: 'rails/rails'
