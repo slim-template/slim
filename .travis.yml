@@ -6,13 +6,17 @@ rvm:
   - 2.2.6
   - 2.1.10
   - 2.0.0
-  - rbx-2
+  - rbx-3
   - jruby-head
   - jruby-19mode
 
 sudo: false
+dist: trusty
 
 script: "bundle exec rake $TASK"
+
+after_success:
+  - bundle exec codeclimate-test-reporter
 
 env:
   global:
@@ -37,7 +41,7 @@ env:
 
 matrix:
   exclude:
-    - rvm: rbx-2
+    - rvm: rbx-3
       env: "TASK=test:rails RAILS=master"
     - rvm: 2.0.0
       env: "TASK=test:rails RAILS=master"
