@@ -1,3 +1,9 @@
+3.0.8 (2017-05-06)
+
+  * Added splat_prefix configuration option for Angular2 syntax support
+  * Require Ruby >= 2.0.0
+  * Relax temple dependency
+
 3.0.7 (2016-05-22)
 
   * Add additional attributes feature to shortcuts
