@@ -1,5 +1,3 @@
-require 'temple/generators/string_buffer'
-
 # The Slim module contains all Slim related classes (e.g. Engine, Parser).
 # Plugins might also reside within the Slim module (e.g. Include, Smart).
 # @api public
