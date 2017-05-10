@@ -1090,6 +1090,32 @@ Will be compiled to:
 </h1>
 ```
 
+### Rack
+
+You can create a simple response like so:
+
+~~~ ruby
+response = Rack::Response.new
+response.body = [Slim::Template.new {"h1 Example Template"}.render(self)]
+response.finish
+~~~
+
+You can create a template from a Slim file and pass it paremeters like so:
+
+hello.slim
+~~~ ruby
+"h1 #{message}"
+~~~
+
+hello.rb
+~~~ ruby
+message = "Hello!"
+
+response = Rack::Response.new
+response.body = [Slim::Template.new {File.read(hello.slim)}.render(self, :message => message)]
+response.finish
+~~~
+
 ## Tools
 
 ### Slim Command 'slimrb'
