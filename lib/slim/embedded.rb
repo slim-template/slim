@@ -151,6 +151,7 @@ module Slim
       protected
 
       def tilt_render(tilt_engine, tilt_options, text)
+        tilt_options[:load_paths] = [ File.join(Rails.root, 'app', 'assets', 'stylesheets') ] if defined?(Rails)
         text = tilt_engine.new(tilt_options.merge(
           style: options[:pretty] ? :expanded : :compressed,
           cache: false)) { text }.render
