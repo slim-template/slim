@@ -25,14 +25,15 @@ module Slim
       end
 
       def attr(name, value)
-        if @attrs[name]
-          if delim = @options[:merge_attrs][name]
-            @attrs[name] += delim + value.to_s
+        attr_name = escape_html(true, name)
+        if @attrs[attr_name]
+          if delim = @options[:merge_attrs][attr_name]
+            @attrs[attr_name] += delim + value.to_s
           else
-            raise("Multiple #{name} attributes specified")
+            raise("Multiple #{attr_name} attributes specified")
           end
         else
-          @attrs[name] = value
+          @attrs[attr_name] = value
         end
       end
 
