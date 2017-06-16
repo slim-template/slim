@@ -236,7 +236,7 @@ module Slim
     # Embeds ruby code
     class RubyEngine < Engine
       def on_slim_embedded(engine, body)
-        [:multi, [:newline], [:code, collect_text(body)]]
+        [:multi, [:newline], [:code, "#{collect_text(body)}\n"]]
       end
     end
 

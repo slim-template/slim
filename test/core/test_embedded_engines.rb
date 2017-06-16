@@ -192,6 +192,17 @@ ruby:
     assert_html '3', source
   end
 
+  def test_render_with_ruby_heredoc
+    source = %q{
+ruby:
+  variable = <<-MSG
+  foobar
+  MSG
+= variable
+}
+    assert_html "foobar\n", source
+  end
+
   def test_render_with_scss
     source = %q{
 scss:
