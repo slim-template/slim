@@ -826,7 +826,7 @@ fits your purposes. You should also be aware that most frameworks already bring 
 
 ## Text interpolation
 
-Use standard Ruby interpolation. The text will be html escaped by default.
+Use standard Ruby interpolation. The text will be html escaped by default, but you can avoid escaping by using double braces.
 
 ~~~ slim
 body
@@ -839,13 +839,6 @@ To escape the interpolation (i.e. render as is)
 ~~~ slim
 body
   h1 Welcome \#{current_user.name} to the show.
-~~~
-
-To avoid escaping the interpolated content use double braces
-
-~~~ slim
-body
-  h1 Welcome #{{current_user.name}} to the show.
 ~~~
 
 ## Embedded engines (Markdown, ...)
