@@ -826,7 +826,7 @@ fits your purposes. You should also be aware that most frameworks already bring 
 
 ## Text interpolation
 
-Use standard Ruby interpolation. The text will be html escaped by default.
+Use standard Ruby interpolation. The text will be html escaped by default, but you can avoid escaping by using double braces.
 
 ~~~ slim
 body
