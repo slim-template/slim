@@ -841,6 +841,13 @@ body
   h1 Welcome \#{current_user.name} to the show.
 ~~~
 
+To avoid escaping the interpolated content use double braces
+
+~~~ slim
+body
+  h1 Welcome #{{current_user.name}} to the show.
+~~~
+
 ## Embedded engines (Markdown, ...)
 
 Thanks to [Tilt](https://github.com/rtomayko/tilt), Slim has extensive support for embedding other template engines.
