@@ -1,7 +1,10 @@
 module Slim
+  class InvalidAttributeNameError < StandardError; end
   module Splat
     # @api private
     class Builder
+     # https://html.spec.whatwg.org/multipage/syntax.html#attributes-2
+     INVALID_ATTRIBUTE_NAME_REGEX = /[ \0"'>\/=]/
       def initialize(options)
         @options = options
         @attrs = {}
@@ -25,15 +28,17 @@ module Slim
       end
 
       def attr(name, value)
-        attr_name = escape_html(true, name)
-        if @attrs[attr_name]
-          if delim = @options[:merge_attrs][attr_name]
-            @attrs[attr_name] += delim + value.to_s
+        if name =~ INVALID_ATTRIBUTE_NAME_REGEX
+          raise InvalidAttributeNameError, "Invalid attribute name '#{name}' was rendered"
+        end
+        if @attrs[name]
+          if delim = @options[:merge_attrs][name]
+            @attrs[name] += delim + value.to_s
           else
-            raise("Multiple #{attr_name} attributes specified")
+            raise("Multiple #{name} attributes specified")
           end
         else
-          @attrs[attr_name] = value
+          @attrs[name] = value
         end
       end
 

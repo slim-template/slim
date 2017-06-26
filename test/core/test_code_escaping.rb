@@ -71,7 +71,9 @@ p *{ "><script>alert(1)</script><p title" => 'test' }
 }
 
     with_html_safe do
-      assert_html "<p &gt;&lt;script&gt;alert(1)&lt;/script&gt;&lt;p title=\"test\"></p>", source, use_html_safe: true
+      assert_raises Slim::InvalidAttributeNameError do
+        render(source, use_html_safe: true)
+      end
     end
   end
 
