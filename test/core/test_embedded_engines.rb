@@ -39,24 +39,26 @@ markdown:
 
   #{1+2}
 
+  [#{1}](#{"#2"})
+
   * one
   * two
 }
     if ::Tilt['md'].name =~ /Redcarpet/
       # redcarpet
-      assert_html "<h1>Header</h1>\n\n<p>Hello from Markdown!</p>\n\n<p>3</p>\n\n<ul>\n<li>one</li>\n<li>two</li>\n</ul>\n", source
+      assert_html "<h1>Header</h1>\n\n<p>Hello from Markdown!</p>\n\n<p>3</p>\n\n<p><a href=\"#2\">1</a></p>\n\n<ul>\n<li>one</li>\n<li>two</li>\n</ul>\n", source
     elsif ::Tilt['md'].name =~ /RDiscount/
       # rdiscount
-      assert_html "<h1>Header</h1>\n\n<p>Hello from Markdown!</p>\n\n<p>3</p>\n\n<ul>\n<li>one</li>\n<li>two</li>\n</ul>\n\n", source
+      assert_html "<h1>Header</h1>\n\n<p>Hello from Markdown!</p>\n\n<p>3</p>\n\n<p><a href=\"#2\">1</a></p>\n\n<ul>\n<li>one</li>\n<li>two</li>\n</ul>\n\n", source
     else
       # kramdown, :auto_ids by default
-      assert_html "<h1 id=\"header\">Header</h1>\n<p>Hello from Markdown!</p>\n\n<p>3</p>\n\n<ul>\n  <li>one</li>\n  <li>two</li>\n</ul>\n", source
+      assert_html "<h1 id=\"header\">Header</h1>\n<p>Hello from Markdown!</p>\n\n<p>3</p>\n\n<p><a href=\"#2\">1</a></p>\n\n<ul>\n  <li>one</li>\n  <li>two</li>\n</ul>\n", source
 
       Slim::Embedded.with_options(markdown: {auto_ids: false}) do
-        assert_html "<h1>Header</h1>\n<p>Hello from Markdown!</p>\n\n<p>3</p>\n\n<ul>\n  <li>one</li>\n  <li>two</li>\n</ul>\n", source
+        assert_html "<h1>Header</h1>\n<p>Hello from Markdown!</p>\n\n<p>3</p>\n\n<p><a href=\"#2\">1</a></p>\n\n<ul>\n  <li>one</li>\n  <li>two</li>\n</ul>\n", source
       end
 
-      assert_html "<h1 id=\"header\">Header</h1>\n<p>Hello from Markdown!</p>\n\n<p>3</p>\n\n<ul>\n  <li>one</li>\n  <li>two</li>\n</ul>\n", source
+      assert_html "<h1 id=\"header\">Header</h1>\n<p>Hello from Markdown!</p>\n\n<p>3</p>\n\n<p><a href=\"#2\">1</a></p>\n\n<ul>\n  <li>one</li>\n  <li>two</li>\n</ul>\n", source
     end
   end
 
