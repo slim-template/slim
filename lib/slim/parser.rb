@@ -72,7 +72,20 @@ module Slim
       keys = Regexp.union @attr_shortcut.keys.sort_by {|k| -k.size }
       @attr_shortcut_re = /\A(#{keys}+)((?:\p{Word}|-)*)/
       keys = Regexp.union @tag_shortcut.keys.sort_by {|k| -k.size }
-      @tag_re = /\A(?:#{keys}|\*(?=[^\s]+)|(\p{Word}(?:\p{Word}|:|-)*\p{Word}|\p{Word}+))/
+      @tag_re = /
+        \A                                    # at the start of the string ..
+        (?:                                   # a non-capturing group (for performance)
+          #{keys}                             # "shortcuts" defined above, like the "ID Shortcut"
+          |                                   # or
+          \*(?=[^\s]+)                        # "Dynamic tags" begin with an asterix
+          |                                   # or
+          (
+            \p{Word}(?:\p{Word}|:|-)*\p{Word} # a tag name containing colons or hyphens
+            |                                 # or
+            \p{Word}+                         # a plain, simple tag name
+          )
+        )
+      /x
       keys = Regexp.escape @code_attr_delims.keys.join
       @code_attr_delims_re = /\A[#{keys}]/
       keys = Regexp.escape @attr_list_delims.keys.join
