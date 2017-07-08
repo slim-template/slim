@@ -65,6 +65,18 @@ p *{ title: '&' }
     end
   end
 
+  def test_render_splat_injecting_evil_attr_name
+    source = %q{
+p *{ "><script>alert(1)</script><p title" => 'test' }
+}
+
+    with_html_safe do
+      assert_raises Slim::InvalidAttributeNameError do
+        render(source, use_html_safe: true)
+      end
+    end
+  end
+
 
   def test_render_attribute_with_html_safe_true
     source = %q{
