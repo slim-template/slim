@@ -116,6 +116,26 @@ p
     assert_html '<p><div class="name">Joe</div><div class="name">Jack</div></p>', source, scope: object, dictionary_access: :method
   end
 
+  def test_method_access_without_private
+    source = %q{
+p
+ - person
+  .age = age
+}
+
+    object = Object.new
+    def object.person
+      person = Object.new
+      def person.age
+        42
+      end
+      person.singleton_class.class_eval { private :age }
+      person
+    end
+
+    assert_html '<p><div class="age"></div></p>', source, scope: object, dictionary_access: :method
+  end
+
   def test_instance_variable_access
     source = %q{
 p

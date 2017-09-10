@@ -63,7 +63,7 @@ module Slim
           @lookup.each do |lookup|
             case lookup
             when :method
-              return @dict.send(name, &block) if @dict.respond_to?(name)
+              return @dict.public_send(name, &block) if @dict.respond_to?(name, false)
             when :symbol
               return @dict[name].call(&block) if has_key?(name)
             when :string
@@ -80,7 +80,7 @@ module Slim
           @lookup.each do |lookup|
             case lookup
             when :method
-              return @dict.send(name) if @dict.respond_to?(name)
+              return @dict.public_send(name) if @dict.respond_to?(name, false)
             when :symbol
               return @dict[name] if has_key?(name)
             when :string
