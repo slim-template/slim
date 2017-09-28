@@ -112,7 +112,7 @@ and activate logic less mode per render call in your action
 
 ## Logic less in Sinatra
 
-Sinata has built-in support for Slim. All you have to do is require the logic less Slim plugin. This can be done in your config.ru:
+Sinatra has built-in support for Slim. All you have to do is require the logic less Slim plugin. This can be done in your config.ru:
 
     require 'slim/logic_less'
 
