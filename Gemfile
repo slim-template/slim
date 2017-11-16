@@ -8,7 +8,7 @@ end
 
 if ENV['TILT']
   if ENV['TILT'] == 'master'
-    gem 'tilt', github: 'rtomayko/tilt'
+    gem 'tilt', github: 'Announcement/tilt'
   else
     gem 'tilt', "= #{ENV['TILT']}"
   end
