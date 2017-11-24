@@ -114,7 +114,7 @@ wiki:
   def test_render_with_javascript
     # Keep the trailing space behind "javascript:   "!
     source = %q{
-javascript:   
+javascript:
   $(function() {});
 
 
@@ -139,6 +139,24 @@ opal:
     assert_match '$puts("hello from opal")', render(source)
   end
 
+  def test_render_with_babel
+    begin
+      # HACK: babel-transpiler registers itself in Tilt
+      require 'babel-transpiler'
+    rescue LoadError
+      return
+    end
+
+    source = %q{
+babel:
+  const str = 'World'
+  alert(`Hello ${str}`)
+p Hi
+}
+    assert_html %{<script>'use strict';\n\nvar str = 'World';\nalert('Hello ' + str);</script><p>Hi</p>}, source
+  end
+
+
   def test_render_with_javascript_with_tabs
     source = "javascript:\n\t$(function() {});\n\talert('hello')\np Hi"
     assert_html "<script>$(function() {});\nalert('hello')</script><p>Hi</p>", source
@@ -148,7 +166,7 @@ opal:
     # Keep the trailing space behind "javascript:   "!
     source = %q{
 - func = "alert('hello');"
-javascript:   
+javascript:
   $(function() { #{func} });
 }
     assert_html %q|<script>$(function() { alert(&#39;hello&#39;); });</script>|, source
