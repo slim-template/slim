@@ -871,6 +871,7 @@ Supported engines:
 | less: | less | Compile time | Embed less css code and wrap in style tag |
 | styl: | styl | Compile time | Embed stylus css code and wrap in style tag |
 | coffee: | coffee-script | Compile time | Compile coffee script code and wrap in script tag |
+| babel: | babel-transpiler | Compile time | Transpile ES6 code and wrap in script tag. **Requires Tilt >= 2.0.2** |
 | asciidoc: | asciidoctor | Compile time + Interpolation | Compile AsciiDoc code and interpolate #\{variables} in text |
 | markdown: | redcarpet/rdiscount/kramdown | Compile time + Interpolation | Compile markdown code and interpolate #\{variables} in text |
 | textile: | redcloth | Compile time + Interpolation | Compile textile code and interpolate #\{variables} in text |
