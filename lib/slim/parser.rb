@@ -180,7 +180,7 @@ module Slim
           @stacks.pop
         end
 
-        # This line's indentation happens lie "between" two other line's
+        # This line's indentation happens to lie "between" two other line's
         # indentation:
         #
         #   hello
