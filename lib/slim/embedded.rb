@@ -134,6 +134,7 @@ module Slim
       def on_slim_embedded(engine, body)
         tilt_engine = Tilt[engine] || raise(Temple::FilterError, "Tilt engine #{engine} is not available.")
         tilt_options = options[engine.to_sym] || {}
+        tilt_options[:default_encoding] ||= 'utf-8'
         [:multi, tilt_render(tilt_engine, tilt_options, collect_text(body)), collect_newlines(body)]
       end
 
