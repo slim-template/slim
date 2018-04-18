@@ -132,7 +132,15 @@ module Slim
     # Basic tilt engine
     class TiltEngine < Engine
       def on_slim_embedded(engine, body)
-        tilt_engine = Tilt[engine] || raise(Temple::FilterError, "Tilt engine #{engine} is not available.")
+        begin
+          tilt_engine = Tilt[engine]
+        rescue
+          if engine == :babel
+            raise(Temple::FilterError, "babel engine is available for Tilt version 2.0.2 or above.")
+          else
+            raise(Temple::FilterError, "Tilt engine #{engine} is not available.")
+          end
+        end
         tilt_options = options[engine.to_sym] || {}
         [:multi, tilt_render(tilt_engine, tilt_options, collect_text(body)), collect_newlines(body)]
       end
@@ -252,6 +260,7 @@ module Slim
 
     # These engines are executed at compile time
     register :coffee,     JavaScriptEngine, engine: TiltEngine
+    register :babel,      JavaScriptEngine, engine: TiltEngine
     register :opal,       JavaScriptEngine, engine: TiltEngine
     register :less,       TagEngine, tag: :style,  attributes: { type: 'text/css' },         engine: TiltEngine
     register :styl,       TagEngine, tag: :style,  attributes: { type: 'text/css' },         engine: TiltEngine

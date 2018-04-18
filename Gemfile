@@ -61,6 +61,7 @@ gem 'creole'
 gem 'builder'
 gem 'asciidoctor'
 gem 'org-ruby'
+gem 'babel-transpiler'
 
 if ENV['TASK'] == 'bench'
   gem 'benchmark-ips'

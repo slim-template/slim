@@ -124,6 +124,21 @@ p Hi
     assert_html %{<script>$(function() {});\n\n\nalert('hello')</script><p>Hi</p>}, source
   end
 
+  def test_render_with_babel
+    source = %q{
+  babel:
+  () => {};
+
+  alert('hello');
+
+  let array1 = [1, 4, 9, 16];
+
+  const map1 = array1.map(x => x * 2);
+  p Hi
+  }
+    assert_html %{<script>'use strict';\n\n(function () {});\n\nalert('hello');\n\nvar array1 = [1, 4, 9, 16];\n\nvar map1 = array1.map(function (x) {\n  return x * 2;\n});</script><p>Hi</p>}, source
+  end
+
   def test_render_with_opal
     begin
       # HACK: org-ruby registers itself in Tilt
