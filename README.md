@@ -40,7 +40,7 @@ A short list of the features...
 
 ### What is Slim?
 
-Slim is a fast, lightweight templating engine with support for **Rails 3 and 4**. It has been heavily tested on all major ruby implementations. We use
+Slim is a fast, lightweight templating engine with support for **Rails 3 and later**. It has been heavily tested on all major ruby implementations. We use
 continuous integration (travis-ci).
 
 Slim's core syntax is guided by one thought: "What's the minimum required to make this work".
@@ -1263,3 +1263,4 @@ Language ports/Similar languages:
 -   [Pug (Successor of Jade, Similar engine for javascript)](https://github.com/pugjs/pug)
 -   [Sweet (Similar engine which also allows to write classes and functions)](https://github.com/joaomdmoura/sweet)
 -   [Amber (Similar engine for Go)](https://github.com/eknkc/amber)
+-   [Slang (Slim-inspired templating language for Crystal)](https://github.com/jeromegn/slang)
