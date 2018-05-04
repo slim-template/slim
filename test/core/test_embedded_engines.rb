@@ -114,7 +114,7 @@ wiki:
   def test_render_with_javascript
     # Keep the trailing space behind "javascript:   "!
     source = %q{
-javascript:   
+javascript:
   $(function() {});
 
 
@@ -122,6 +122,21 @@ javascript:
 p Hi
 }
     assert_html %{<script>$(function() {});\n\n\nalert('hello')</script><p>Hi</p>}, source
+  end
+
+  def test_render_with_babel
+    source = %q{
+babel:
+  () => {};
+
+  alert('hello');
+
+  let array1 = [1, 4, 9, 16];
+
+  const map1 = array1.map(x => x * 2);
+p Hi
+}
+    assert_html %{<script>'use strict';\n\n(function () {});\n\nalert('hello');\n\nvar array1 = [1, 4, 9, 16];\n\nvar map1 = array1.map(function (x) {\n  return x * 2;\n});</script><p>Hi</p>}, source
   end
 
   def test_render_with_opal
@@ -148,7 +163,7 @@ opal:
     # Keep the trailing space behind "javascript:   "!
     source = %q{
 - func = "alert('hello');"
-javascript:   
+javascript:
   $(function() { #{func} });
 }
     assert_html %q|<script>$(function() { alert(&#39;hello&#39;); });</script>|, source
