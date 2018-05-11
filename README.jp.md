@@ -40,7 +40,7 @@ Slim は 不可解にならない程度に view の構文を本質的な部品�
 
 ### Slim とは?
 
-Slim は __Rails3 および 4__ に対応した高速, 軽量なテンプレートエンジンです。主要な Ruby の実装全てでしっかりテストされています。
+Slim は __Rails3 以降__ に対応した高速, 軽量なテンプレートエンジンです。主要な Ruby の実装全てでしっかりテストされています。
 私たちは継続的インテグレーションを採用しています。(travis-ci)
 
 Slim の核となる構文は1つの考えによって導かれています: "この動作を行うために最低限必要なものは何か。"
@@ -1271,3 +1271,4 @@ Slim は [MIT license](http://www.opensource.org/licenses/MIT) に基づいて�
 * [Pug (Successor of Jade, Similar engine for javascript)](https://github.com/pugjs/pug)
 * [Sweet (Similar engine which also allows to write classes and functions)](https://github.com/joaomdmoura/sweet)
 * [Amber (Similar engine for Go)](https://github.com/eknkc/amber)
+* [Slang (Slim-inspired templating language for Crystal)](https://github.com/jeromegn/slang)
