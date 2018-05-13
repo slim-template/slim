@@ -80,7 +80,15 @@ module Slim
       end
 
       opts.on_tail('-v', '--version', 'Print version') do
-        puts "Slim #{VERSION}"
+        puts "Slim #{VERSION} Announcement"
+        exit
+      end
+
+      opts.on_tail('--versions', 'Print version') do
+        dependencies = Gem::DependencyList.from_specs
+        dependencies.each { |it|
+          puts "#{it.name} #{it.version}"
+        }
         exit
       end
     end
