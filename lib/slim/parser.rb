@@ -77,7 +77,7 @@ module Slim
       @code_attr_delims_re = /\A[#{keys}]/
       keys = Regexp.escape @attr_list_delims.keys.join
       @attr_list_delims_re = /\A\s*([#{keys}])/
-      @embedded_re = /\A(#{Regexp.union(Embedded.engines.keys.map(&:to_s))}):(\s*)/
+      @embedded_re = /\A(#{Regexp.union(Embedded.engines.keys.map(&:to_s))})(?:\s*(?:(.*)))?:(\s*)/
       keys = Regexp.escape ('"\'></='.split(//) + @attr_list_delims.flatten + @code_attr_delims.flatten).uniq.join
       @attr_name = "\\A\\s*([^\0\s#{keys}]+)"
       @quoted_attr_re = /#{@attr_name}\s*=(=?)\s*("|')/
@@ -242,7 +242,9 @@ module Slim
         @stacks << block
       when @embedded_re
         # Embedded template detected. It is treated as block.
-        @stacks.last << [:slim, :embedded, $1, parse_text_block($', @orig_line.size - $'.size + $2.size)]
+        @line = $2
+        attrs = parse_attributes
+        @stacks.last << [:slim, :embedded, $1, parse_text_block($', @orig_line.size - $'.size + $2.size), attrs]
       when /\Adoctype\b/
         # Found doctype declaration
         @stacks.last << [:html, :doctype, $'.strip]
@@ -366,7 +368,11 @@ module Slim
         # Block expansion
         @line = $'
         if @line =~ @embedded_re
-          tag << [:slim, :embedded, $1, parse_text_block($', @orig_line.size - @line.size + $2.size)]
+
+          # Parse attributes
+          @line = $2
+          attrs = parse_attributes
+          tag << [:slim, :embedded, $1, parse_text_block($', @orig_line.size - $'.size + $2.size), attrs]
         else
           (@line =~ @tag_re) || syntax_error!('Expected tag')
           @line = $' if $1
@@ -405,7 +411,7 @@ module Slim
       end
     end
 
-    def parse_attributes(attributes)
+    def parse_attributes(attributes = [:html, :attrs])
       # Check to see if there is a delimiter right after the tag name
       delimiter = nil
       if @line =~ @attr_list_delims_re
@@ -461,6 +467,7 @@ module Slim
           end
         end
       end
+      attributes || [:html, :attrs]
     end
 
     def parse_ruby_code(outer_delimiter)

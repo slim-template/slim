@@ -111,6 +111,38 @@ wiki:
     assert_html "<h1>head1</h1><h2>head2</h2>", source
   end
 
+  def test_render_with_css
+    source = %q{
+css:
+  h1 { color: blue }
+}
+  assert_html "<style type=\"text/css\">h1 { color: blue }</style>", source
+  end
+
+  def test_render_with_css_empty_attributes
+    source = %q{
+css []:
+  h1 { color: blue }
+}
+  assert_html "<style type=\"text/css\">h1 { color: blue }</style>", source
+  end
+
+  def test_render_with_css_attribute
+    source = %q{
+css scoped = "true":
+  h1 { color: blue }
+}
+  assert_html "<style scoped=\"true\" type=\"text/css\">h1 { color: blue }</style>", source
+  end
+
+  def test_render_with_css_multiple_attributes
+    source = %q{
+css class="myClass" scoped = "true" :
+  h1 { color: blue }
+}
+  assert_html "<style class=\"myClass\" scoped=\"true\" type=\"text/css\">h1 { color: blue }</style>", source
+  end
+
   def test_render_with_javascript
     # Keep the trailing space behind "javascript:   "!
     source = %q{
@@ -122,6 +154,30 @@ javascript:
 p Hi
 }
     assert_html %{<script>$(function() {});\n\n\nalert('hello')</script><p>Hi</p>}, source
+  end
+
+  def test_render_with_javascript_empty_attributes
+    source = %q{
+javascript ():    
+  alert('hello')
+}
+    assert_html %{<script>alert('hello')</script>}, source
+  end
+
+  def test_render_with_javascript_attribute
+    source = %q{
+javascript [class = "myClass"]:
+  alert('hello')
+}
+    assert_html %{<script class=\"myClass\">alert('hello')</script>}, source
+  end
+
+  def test_render_with_javascript_multiple_attributes
+    source = %q{
+javascript { class = "myClass" id="myId" other-attribute = 'my_other_attribute' }  :     
+  alert('hello')
+}
+    assert_html %{<script class=\"myClass\" id=\"myId\" other-attribute=\"my_other_attribute\">alert('hello')</script>}, source
   end
 
   def test_render_with_opal
@@ -200,6 +256,36 @@ scss:
 }
     assert_html "<style type=\"text/css\">body{color:red}</style>", source
   end
+
+  def test_render_with_scss_attribute
+    source = %q{
+scss [class="myClass"]:
+  $color: #f00;
+  body { color: $color; }
+}
+    assert_html "<style class=\"myClass\" type=\"text/css\">body{color:red}</style>", source
+  end
+
+  def test_render_with_sass
+    source = %q{
+sass:
+  $color: #f00
+  body
+    color: $color
+}
+    assert_html "<style type=\"text/css\">body{color:red}</style>", source
+  end
+
+  def test_render_with_sass_attribute
+    source = %q{
+sass [class="myClass"]:
+  $color: #f00
+  body
+    color: $color
+}
+    assert_html "<style class=\"myClass\" type=\"text/css\">body{color:red}</style>", source
+  end
+
 
   def test_disabled_embedded_engine
     source = %{
