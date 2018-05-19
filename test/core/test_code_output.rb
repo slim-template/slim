@@ -13,7 +13,7 @@ p
   def test_render_with_trailing_whitespace
     source = %q{
 p
-  =' hello_world
+  => hello_world
 }
 
     assert_html '<p>Hello World from @env </p>', source
@@ -21,7 +21,7 @@ p
 
   def test_render_with_trailing_whitespace_after_tag
     source = %q{
-p=' hello_world
+p=> hello_world
 }
 
     assert_html '<p>Hello World from @env</p> ', source
@@ -30,7 +30,7 @@ p=' hello_world
   def test_no_escape_render_with_trailing_whitespace
     source = %q{
 p
-  ==' hello_world
+  ==> hello_world
 }
 
     assert_html '<p>Hello World from @env </p>', source
@@ -38,7 +38,7 @@ p
 
   def test_no_escape_render_with_trailing_whitespace_after_tag
     source = %q{
-p==' hello_world
+p==> hello_world
 }
 
     assert_html '<p>Hello World from @env</p> ', source
