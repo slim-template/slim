@@ -146,7 +146,7 @@ private
 
     # case 1. $stdin → $stdout
     unless options[:stdin_stdout] == false
-      out, err = exec_slimrb *args, '--stdin' do |i|
+      out, err = exec_slimrb(*args, '--stdin') do |i|
         i.write content
       end
       yield out, err
@@ -155,7 +155,7 @@ private
     # case 2. file → $stdout
     unless options[:file_stdout] == false
       with_tempfile content do |in_file|
-        out, err = exec_slimrb *args, in_file
+        out, err = exec_slimrb(*args, in_file)
         yield out, err
       end
     end
@@ -163,7 +163,7 @@ private
     # case 3. $stdin → file
     unless options[:stdin_file] == false
       with_tempfile content do |out_file|
-        _, err = exec_slimrb *args, '--stdin', out_file do |i|
+        _, err = exec_slimrb(*args, '--stdin', out_file) do |i|
           i.write content
         end
         yield File.read(out_file), err
@@ -174,7 +174,7 @@ private
     unless options[:file_file] == false
       with_tempfile '' do |out_file|
         with_tempfile content do |in_file|
-          _, err = exec_slimrb *args, in_file, out_file do |i|
+          _, err = exec_slimrb(*args, in_file, out_file) do |i|
             i.write content
           end
           yield File.read(out_file), err
