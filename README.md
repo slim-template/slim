@@ -875,7 +875,6 @@ Supported engines:
 | markdown: | redcarpet/rdiscount/kramdown | Compile time + Interpolation | Compile markdown code and interpolate #\{variables} in text |
 | textile: | redcloth | Compile time + Interpolation | Compile textile code and interpolate #\{variables} in text |
 | rdoc: | rdoc | Compile time + Interpolation | Compile rdoc code and interpolate #\{variables} in text |
-| nokogiri: | nokogiri | Precompiled | Embed nokogiri builder code |
 | erb: | none | Precompiled | Embed erb code |
 
 The embedded engines can be configured in Slim by setting the options directly on the `Slim::Embedded` filter. Example:

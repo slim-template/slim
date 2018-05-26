@@ -875,7 +875,6 @@ p: markdown: Tag with **inline** markdown!
 | markdown: | redcarpet/rdiscount/kramdown | コンパイル時 + 展開 | Markdown をコンパイルし、テキスト中の # \{variables} を展開 |
 | textile: | redcloth | コンパイル時 + 展開 | textile をコンパイルし、テキスト中の # \{variables} を展開 |
 | rdoc: | rdoc | コンパイル時 + 展開 | RDoc をコンパイルし、テキスト中の # \{variables} を展開 |
-| nokogiri: | nokogiri | プレコンパイル | nokogiri コードの埋め込み |
 | erb: | なし | プレコンパイル | erb コードの埋め込み |
 
 埋め込みエンジンは Slim の `Slim::Embedded` フィルタのオプションで直接設定されます。例:

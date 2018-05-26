@@ -159,16 +159,6 @@ module Slim
       end
     end
 
-    # Tilt-based engine which is precompiled
-    class PrecompiledTiltEngine < TiltEngine
-      protected
-
-      def tilt_render(tilt_engine, tilt_options, text)
-        # HACK: Tilt::Engine#precompiled is protected
-        [:dynamic, tilt_engine.new(tilt_options) { text }.send(:precompiled, {}).first]
-      end
-    end
-
     # Static template with interpolated ruby code
     class InterpolateTiltEngine < TiltEngine
       def collect_text(body)
@@ -257,7 +247,6 @@ module Slim
 
     # These engines are precompiled, code is embedded
     register :erb,        ERBEngine
-    register :nokogiri,   PrecompiledTiltEngine
 
     # Embedded javascript/css
     register :javascript, JavaScriptEngine
