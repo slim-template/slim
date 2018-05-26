@@ -72,16 +72,6 @@ org:
     assert_html "<h1>point1</h1>\n<h1>point2</h1>\n", source
   end
 
-  def test_render_with_builder
-    source = %q{
-builder:
-  xml.p(id: 'test') {
-    xml.text!('Hello')
-  }
-}
-    assert_html "<p id=\"test\">\nHello</p>\n", source
-  end
-
   def test_render_with_javascript
     source = %q{
 javascript:

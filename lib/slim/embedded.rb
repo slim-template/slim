@@ -258,7 +258,6 @@ module Slim
     # These engines are precompiled, code is embedded
     register :erb,        ERBEngine
     register :nokogiri,   PrecompiledTiltEngine
-    register :builder,    PrecompiledTiltEngine
 
     # Embedded javascript/css
     register :javascript, JavaScriptEngine
