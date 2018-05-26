@@ -871,7 +871,6 @@ p: markdown: Tag with **inline** markdown!
 | less: | less | コンパイル時 | less コードを埋め込み、style タグで囲む |
 | styl: | styl | コンパイル時 | stylus コードを埋め込み、 style タグで囲む |
 | coffee: | coffee-script | コンパイル時 | CoffeeScript をコンパイルし、 script タグで囲む |
-| asciidoc: | asciidoctor | コンパイル時 + 展開 | AsciiDoc をコンパイルし、テキスト中の # \{variables} を展開 |
 | markdown: | redcarpet/rdiscount/kramdown | コンパイル時 + 展開 | Markdown をコンパイルし、テキスト中の # \{variables} を展開 |
 | textile: | redcloth | コンパイル時 + 展開 | textile をコンパイルし、テキスト中の # \{variables} を展開 |
 | rdoc: | rdoc | コンパイル時 + 展開 | RDoc をコンパイルし、テキスト中の # \{variables} を展開 |

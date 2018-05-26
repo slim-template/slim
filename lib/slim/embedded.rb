@@ -231,7 +231,6 @@ module Slim
     end
 
     # These engines are executed at compile time, embedded ruby is interpolated
-    register :asciidoc,   InterpolateTiltEngine
     register :markdown,   InterpolateTiltEngine
     register :textile,    InterpolateTiltEngine
     register :rdoc,       InterpolateTiltEngine

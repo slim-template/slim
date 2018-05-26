@@ -1,5 +1,5 @@
 require 'helper'
-require 'erb' #asciidoctor fail to load it randomly
+require 'erb'
 
 class TestSlimEmbeddedEngines < TestSlim
   def test_render_with_erb
@@ -13,22 +13,6 @@ p
 }
 
     assert_html "<p><b>Hello from BEFORE ERB BLOCK!</b>\nSecond Line!\ntrue</p>", source
-  end
-
-  def test_wip_render_with_asciidoc
-    source = %q{
-asciidoc:
-  == Header
-  Hello from #{"AsciiDoc!"}
-
-  #{1+2}
-
-  * one
-  * two
-}
-    output = render(source)
-    assert_match 'sect1', output
-    assert_match 'Hello from AsciiDoc!', output
   end
 
   def test_render_with_markdown
