@@ -44,18 +44,6 @@ markdown:
     end
   end
 
-  def test_render_with_org
-    # HACK: org-ruby registers itself in Tilt
-    require 'org-ruby'
-
-    source = %q{
-org:
-  * point1
-  * point2
-}
-    assert_html "<h1>point1</h1>\n<h1>point2</h1>\n", source
-  end
-
   def test_render_with_javascript
     source = %q{
 javascript:
@@ -70,7 +58,6 @@ p Hi
 
   def test_render_with_opal
     begin
-      # HACK: org-ruby registers itself in Tilt
       require 'opal'
     rescue LoadError
       return

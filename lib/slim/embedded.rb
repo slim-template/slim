@@ -234,7 +234,6 @@ module Slim
     register :markdown,   InterpolateTiltEngine
     register :textile,    InterpolateTiltEngine
     register :rdoc,       InterpolateTiltEngine
-    register :org,        InterpolateTiltEngine
 
     # These engines are executed at compile time
     register :coffee,     JavaScriptEngine, engine: TiltEngine
