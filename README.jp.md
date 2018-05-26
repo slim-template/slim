@@ -874,8 +874,6 @@ p: markdown: Tag with **inline** markdown!
 | asciidoc: | asciidoctor | コンパイル時 + 展開 | AsciiDoc をコンパイルし、テキスト中の # \{variables} を展開 |
 | markdown: | redcarpet/rdiscount/kramdown | コンパイル時 + 展開 | Markdown をコンパイルし、テキスト中の # \{variables} を展開 |
 | textile: | redcloth | コンパイル時 + 展開 | textile をコンパイルし、テキスト中の # \{variables} を展開 |
-| creole: | creole | コンパイル時 + 展開 | cleole をコンパイルし、テキスト中の # \{variables} を展開 |
-| wiki:, mediawiki: | wikicloth | コンパイル時 + 展開 | wiki をコンパイルし、テキスト中の # \{variables} を展開 |
 | rdoc: | rdoc | コンパイル時 + 展開 | RDoc をコンパイルし、テキスト中の # \{variables} を展開 |
 | builder: | builder | プレコンパイル | builder コードの埋め込み |
 | nokogiri: | nokogiri | プレコンパイル | nokogiri コードの埋め込み |

@@ -60,26 +60,6 @@ markdown:
     end
   end
 
-  def test_render_with_creole
-    source = %q{
-creole:
-  = head1
-  == head2
-}
-    assert_html "<h1>head1</h1><h2>head2</h2>", source
-  end
-
-  def test_render_with_creole_one_line
-    source = %q{
-creole: Hello **world**,
-  we can write one-line embedded markup now!
-  = Headline
-  Text
-.nested: creole: **Strong**
-}
-    assert_html '<p>Hello <strong>world</strong>, we can write one-line embedded markup now!</p><h1>Headline</h1><p>Text</p><div class="nested"><p><strong>Strong</strong></p></div>', source
-  end
-
   def test_render_with_org
     # HACK: org-ruby registers itself in Tilt
     require 'org-ruby'
@@ -102,19 +82,9 @@ builder:
     assert_html "<p id=\"test\">\nHello</p>\n", source
   end
 
-  def test_render_with_wiki
-    source = %q{
-wiki:
-  = head1
-  == head2
-}
-    assert_html "<h1>head1</h1><h2>head2</h2>", source
-  end
-
   def test_render_with_javascript
-    # Keep the trailing space behind "javascript:   "!
     source = %q{
-javascript:   
+javascript:
   $(function() {});
 
 
@@ -145,10 +115,9 @@ opal:
   end
 
   def test_render_with_javascript_including_variable
-    # Keep the trailing space behind "javascript:   "!
     source = %q{
 - func = "alert('hello');"
-javascript:   
+javascript:
   $(function() { #{func} });
 }
     assert_html %q|<script>$(function() { alert(&#39;hello&#39;); });</script>|, source

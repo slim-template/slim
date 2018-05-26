@@ -874,8 +874,6 @@ Supported engines:
 | asciidoc: | asciidoctor | Compile time + Interpolation | Compile AsciiDoc code and interpolate #\{variables} in text |
 | markdown: | redcarpet/rdiscount/kramdown | Compile time + Interpolation | Compile markdown code and interpolate #\{variables} in text |
 | textile: | redcloth | Compile time + Interpolation | Compile textile code and interpolate #\{variables} in text |
-| creole: | creole | Compile time + Interpolation | Compile creole code and interpolate #\{variables} in text |
-| wiki:, mediawiki: | wikicloth | Compile time + Interpolation | Compile wiki code and interpolate #\{variables} in text |
 | rdoc: | rdoc | Compile time + Interpolation | Compile rdoc code and interpolate #\{variables} in text |
 | builder: | builder | Precompiled | Embed builder code |
 | nokogiri: | nokogiri | Precompiled | Embed nokogiri builder code |
