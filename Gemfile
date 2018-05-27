@@ -2,6 +2,9 @@ source 'https://rubygems.org/'
 
 gemspec
 
+puts "*"*20 + "\n"
+puts ENV.inspect
+puts "*"*20 + "\n"
 if ENV['TRAVIS']
   gem 'rails-controller-testing'
 end
