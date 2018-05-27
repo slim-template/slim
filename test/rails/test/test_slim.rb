@@ -65,9 +65,9 @@ class TestSlim < ActionDispatch::IntegrationTest
   end
 
   test "render thread_options" do
-    get "/slim/thread_options", attr: 'role'
+    get "/slim/thread_options", params: { attr: 'role'}
     assert_html '<p role="empty">Test</p>'
-    get "/slim/thread_options", attr: 'id' # Overwriting doesn't work because of caching
+    get "/slim/thread_options", params: { attr: 'id'} # Overwriting doesn't work because of caching
     assert_html '<p role="empty">Test</p>'
   end
 
