@@ -26,6 +26,7 @@ env:
     - "TASK=test:core_and_plugins"
     - "TASK=test:rails RAILS=5.2.0"
     - "TASK=test:rails RAILS=5.1.6"
+    - "TASK=test:rails RAILS=5.0.7"
     - "TASK=test:sinatra SINATRA=2.0.1"
     - "TASK=test:sinatra SINATRA=1.4.8"
     - "TASK=bench"
