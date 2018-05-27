@@ -2,9 +2,12 @@ source 'https://rubygems.org/'
 
 gemspec
 
-if ENV['TRAVIS'] || ENV['TEMPLE'] == 'master'
-  gem 'temple', github: 'judofyr/temple'
+if ENV['TRAVIS']
   gem 'rails-controller-testing'
+end
+
+if  ENV['TEMPLE'] == 'master'
+  gem 'temple', github: 'judofyr/temple'
 end
 
 if ENV['TILT']
