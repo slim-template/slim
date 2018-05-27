@@ -1,10 +1,9 @@
 language: ruby
 
+# https://www.ruby-lang.org/en/downloads/releases/
 rvm:
-  - ruby-head
-  - 2.5
-  - 2.4
-  - 2.3
+  - 2.5.1
+  - 2.4.4
   - rbx
   - jruby
 
@@ -21,27 +20,16 @@ env:
     # travis encrypt CODECLIMATE_REPO_TOKEN=???
     - secure: "a7sD9iwPJJn3Fj+mn62GAmy/PEguh3elrilsp1KS+WfDiCiIKD8Q5KG2Jv67DGcQAGI3dPWeh7+ZhZ/W7nEipwWUBmSvGYVeoF63y8j6mNRLeekqspj94l47hXyFePj9bCadY1b1/xY4lE1pMEU8eA8AOUHUqCSuH+Kk/MuvyLM="
   matrix:
-    - "TASK=test:core_and_plugins TILT=master"
-    - "TASK=test:rails RAILS=master"
+    - "TASK=test:core_and_plugins"
     - "TASK=test:rails RAILS=5.2.0"
     - "TASK=test:rails RAILS=5.1.6"
-    - "TASK=test:sinatra SINATRA=master"
     - "TASK=test:sinatra SINATRA=2.0.1"
     - "TASK=test:sinatra SINATRA=1.4.8"
     - "TASK=bench"
     - "TASK=bench slow=1"
 
 matrix:
-  exclude:
-    - rvm: rbx
-      env: "TASK=test:rails RAILS=master"
-    - rvm: jruby
-      env: "TASK=test:rails RAILS=master"
   allow_failures:
-    - env: "TASK=test:core_and_plugins TILT=master"
-    - env: "TASK=test:rails RAILS=master"
-    - env: "TASK=test:sinatra SINATRA=master"
-    - rvm: ruby-head
     - rvm: jruby
     - rvm: rbx
 
