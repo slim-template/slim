@@ -5,6 +5,9 @@ require File.expand_path("../../config/environment.rb", __FILE__)
 require "rails/test_help"
 require "nokogiri"
 
+require 'rails-controller-testing'
+Rails::Controller::Testing.install
+
 Rails.backtrace_cleaner.remove_silencers!
 
 class ActionDispatch::IntegrationTest
