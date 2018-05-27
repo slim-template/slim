@@ -7,12 +7,12 @@ if ENV['TRAVIS']
 end
 
 if  ENV['TEMPLE'] == 'master'
-  gem 'temple', github: 'judofyr/temple'
+  gem 'temple', :github => 'judofyr/temple'
 end
 
 if ENV['TILT']
   if ENV['TILT'] == 'master'
-    gem 'tilt', github: 'rtomayko/tilt'
+    gem 'tilt', :github => 'rtomayko/tilt'
   else
     gem 'tilt', "= #{ENV['TILT']}"
   end
@@ -21,7 +21,7 @@ end
 if ENV['RAILS']
   # we need some smarter test logic for the different Rails versions
   if ENV['RAILS'] == 'master'
-    gem 'rails', github: 'rails/rails'
+    gem 'rails', :github => 'rails/rails'
   else
     gem 'rails', "= #{ENV['RAILS']}"
   end
@@ -46,9 +46,10 @@ end
 if ENV['SINATRA']
   gem 'rack-test'
   if ENV['SINATRA'] == 'master'
-    gem 'sinatra', github: 'sinatra/sinatra'
+    gem 'sinatra', :github => 'sinatra/sinatra'
   else
-    gem 'sinatra', "= #{ENV['SINATRA']}"
+    # Need the slim_test.rb file not included in the Sinatra gem.
+    gem 'sinatra', :github => 'sinatra/sinatra', :tag => "v#{ENV['SINATRA']}"
   end
 end
 
