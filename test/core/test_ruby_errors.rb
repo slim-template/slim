@@ -19,17 +19,7 @@ p = hello_world + \
   unknown_ruby_method
 }
 
-    # FIXME: Remove this hack!
-    # This is actually a jruby issue. Jruby reports a wrong
-    # line number 1 in this case:
-    #
-    # test = 1+\
-    #    unknown_variable
-    if RUBY_PLATFORM == "java"
-      assert_ruby_error NameError, "test.slim:2", source, file: 'test.slim'
-    else
-      assert_ruby_error NameError, "test.slim:4", source, file: 'test.slim'
-    end
+    assert_ruby_error NameError, "test.slim:4", source, file: 'test.slim'
   end
 
   def test_broken_output_line2
