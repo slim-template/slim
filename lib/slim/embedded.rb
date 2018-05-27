@@ -180,19 +180,6 @@ module Slim
       end
     end
 
-    # ERB engine (uses the Temple ERB implementation)
-    class ERBEngine < Engine
-      def on_slim_embedded(engine, body)
-        [:multi, [:newline], erb_parser.call(collect_text(body))]
-      end
-
-      protected
-
-      def erb_parser
-        @erb_parser ||= Temple::ERB::Parser.new
-      end
-    end
-
     # Tag wrapper engine
     # Generates a html tag and wraps another engine (specified via :engine option)
     class TagEngine < Engine
@@ -242,9 +229,6 @@ module Slim
     register :styl,       TagEngine, tag: :style,  attributes: { type: 'text/css' },         engine: TiltEngine
     register :sass,       TagEngine, :pretty, tag: :style, attributes: { type: 'text/css' }, engine: SassEngine
     register :scss,       TagEngine, :pretty, tag: :style, attributes: { type: 'text/css' }, engine: SassEngine
-
-    # These engines are precompiled, code is embedded
-    register :erb,        ERBEngine
 
     # Embedded javascript/css
     register :javascript, JavaScriptEngine

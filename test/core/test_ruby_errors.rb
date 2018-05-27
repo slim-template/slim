@@ -84,22 +84,6 @@ p Text line 1
     assert_ruby_error NameError,"(__TEMPLATE__):4", source
   end
 
-  def test_embedded_erb
-    source = %q{
-erb:
-  <%= 123 %>
-  Hello from ERB!
-  <%#
-    comment block
-  %>
-  <% if true %>
-  Text
-  <% end %>
-= unknown_ruby_method
-}
-    assert_ruby_error NameError,"(__TEMPLATE__):11", source
-  end
-
   def test_embedded_ruby1
     source = %q{
 ruby:

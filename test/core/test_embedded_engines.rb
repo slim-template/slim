@@ -2,18 +2,6 @@ require 'helper'
 require 'erb'
 
 class TestSlimEmbeddedEngines < TestSlim
-  def test_render_with_erb
-    source = %q{
-p
-  - text = 'before erb block'
-  erb:
-    <b>Hello from <%= text.upcase %>!</b>
-    Second Line!
-    <% if true %><%= true %><% end %>
-}
-
-    assert_html "<p><b>Hello from BEFORE ERB BLOCK!</b>\nSecond Line!\ntrue</p>", source
-  end
 
   def test_render_with_markdown
     source = %q{
