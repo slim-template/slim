@@ -226,7 +226,6 @@ module Slim
     register :coffee,     JavaScriptEngine, engine: TiltEngine
     register :opal,       JavaScriptEngine, engine: TiltEngine
     register :less,       TagEngine, tag: :style,  attributes: { type: 'text/css' },         engine: TiltEngine
-    register :styl,       TagEngine, tag: :style,  attributes: { type: 'text/css' },         engine: TiltEngine
     register :sass,       TagEngine, :pretty, tag: :style, attributes: { type: 'text/css' }, engine: SassEngine
     register :scss,       TagEngine, :pretty, tag: :style, attributes: { type: 'text/css' }, engine: SassEngine
 

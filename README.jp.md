@@ -869,12 +869,10 @@ p: markdown: Tag with **inline** markdown!
 | sass: | sass | コンパイル時 | sass コードを埋め込み、style タグで囲む |
 | scss: | sass | コンパイル時 | scss コードを埋め込み、style タグで囲む |
 | less: | less | コンパイル時 | less コードを埋め込み、style タグで囲む |
-| styl: | styl | コンパイル時 | stylus コードを埋め込み、 style タグで囲む |
 | coffee: | coffee-script | コンパイル時 | CoffeeScript をコンパイルし、 script タグで囲む |
 | markdown: | redcarpet/rdiscount/kramdown | コンパイル時 + 展開 | Markdown をコンパイルし、テキスト中の # \{variables} を展開 |
 | textile: | redcloth | コンパイル時 + 展開 | textile をコンパイルし、テキスト中の # \{variables} を展開 |
 | rdoc: | rdoc | コンパイル時 + 展開 | RDoc をコンパイルし、テキスト中の # \{variables} を展開 |
-| erb: | なし | プレコンパイル | erb コードの埋め込み |
 
 埋め込みエンジンは Slim の `Slim::Embedded` フィルタのオプションで直接設定されます。例:
 
