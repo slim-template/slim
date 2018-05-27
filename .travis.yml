@@ -1,13 +1,14 @@
-language: ruby
-
 # https://www.ruby-lang.org/en/downloads/releases/
+language: ruby
 rvm:
   - 2.5.1
   - 2.4.4
   - rbx
   - jruby
 
-sudo: false
+# Recommend sudo required when using trusty dist
+# https://docs.travis-ci.com/user/reference/trusty/
+sudo: required
 dist: trusty
 
 script: "bundle exec rake $TASK"
