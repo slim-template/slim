@@ -4,6 +4,7 @@ gemspec
 
 if ENV['TRAVIS'] || ENV['TEMPLE'] == 'master'
   gem 'temple', github: 'judofyr/temple'
+  gem 'rails-controller-testing'
 end
 
 if ENV['TILT']
