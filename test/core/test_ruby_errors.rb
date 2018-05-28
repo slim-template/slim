@@ -93,7 +93,7 @@ ruby:
 = unknown_ruby_method
 }
 
-    assert_ruby_error NameError,"(__TEMPLATE__):6", source
+    assert_ruby_error NameError,"(__TEMPLATE__):7", source
   end
 
   def test_embedded_ruby2
