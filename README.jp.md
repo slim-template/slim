@@ -879,6 +879,31 @@ p: markdown: Tag with **inline** markdown!
 Slim::Embedded.options[:markdown] = {auto_ids: false}
 ~~~
 
+以下埋め込みエンジンの場合はHTMLのattributeも指定できます：
+
+* Javascript
+* CSS
+* CoffeeScript
+* Opal
+* LESS
+* SASS
+* SCSS
+* Styl
+
+例：
+
+~~~ scss
+scss class="myClass":
+  $color: #f00;
+  body { color: $color; }
+~~~
+
+レンダリング結果：
+
+~~~ html
+<style class="myClass" type="text/css">body{color:red}</style>
+~~~
+
 ## Slim の設定
 
 Slim とその基礎となる [Temple](https://github.com/judofyr/temple) は非常に柔軟に設定可能です。

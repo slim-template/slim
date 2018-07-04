@@ -880,6 +880,30 @@ The embedded engines can be configured in Slim by setting the options directly o
 Slim::Embedded.options[:markdown] = {auto_ids: false}
 ~~~
 
+You can also specify HTML attributes for the following embedded engines:
+* Javascript
+* CSS
+* CoffeeScript
+* Opal
+* LESS
+* SASS
+* SCSS
+* Styl
+
+Example:
+
+~~~ scss
+scss class="myClass":
+  $color: #f00;
+  body { color: $color; }
+~~~
+
+This will generate the following HTML:
+
+~~~ html
+<style class="myClass" type="text/css">body{color:red}</style>
+~~~
+
 ## Configuring Slim
 
 Slim and the underlying [Temple](https://github.com/judofyr/temple) framework are highly configurable.

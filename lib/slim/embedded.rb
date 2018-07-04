@@ -96,11 +96,11 @@ module Slim
       @disabled = normalize_engine_list(options[:disable_engines])
     end
 
-    def on_slim_embedded(name, body)
+    def on_slim_embedded(name, body, attrs)
       name = name.to_sym
       raise(Temple::FilterError, "Embedded engine #{name} is disabled") unless enabled?(name)
       @engines[name] ||= self.class.create(name, options)
-      @engines[name].on_slim_embedded(name, body)
+      @engines[name].on_slim_embedded(name, body, attrs)
     end
 
     def enabled?(name)
@@ -131,7 +131,7 @@ module Slim
 
     # Basic tilt engine
     class TiltEngine < Engine
-      def on_slim_embedded(engine, body)
+      def on_slim_embedded(engine, body, attrs)
         tilt_engine = Tilt[engine] || raise(Temple::FilterError, "Tilt engine #{engine} is not available.")
         tilt_options = options[engine.to_sym] || {}
         tilt_options[:default_encoding] ||= 'utf-8'
@@ -186,17 +186,26 @@ module Slim
     class TagEngine < Engine
       disable_option_validator!
 
-      def on_slim_embedded(engine, body)
+      def on_slim_embedded(engine, body, attrs)
+
+        unless options[:attributes].empty?
+          options[:attributes].map do|k, v|
+            attrs << [:html, :attr, k, [:static, v]]
+          end
+        end
+
         if options[:engine]
           opts = {}.update(options)
           opts.delete(:engine)
           opts.delete(:tag)
           opts.delete(:attributes)
           @engine ||= options[:engine].new(opts)
-          body = @engine.on_slim_embedded(engine, body)
+          body = @engine.on_slim_embedded(engine, body, attrs)
         end
-        [:html, :tag, options[:tag], [:html, :attrs, *options[:attributes].map {|k, v| [:html, :attr, k, [:static, v]] }], body]
+
+        [:html, :tag, options[:tag], attrs, body]
       end
+
     end
 
     # Javascript wrapper engine.
@@ -206,14 +215,14 @@ module Slim
 
       set_options tag: :script, attributes: {}
 
-      def on_slim_embedded(engine, body)
-        super(engine, [:html, :js, body])
+      def on_slim_embedded(engine, body, attrs)
+        super(engine, [:html, :js, body], attrs)
       end
     end
 
     # Embeds ruby code
     class RubyEngine < Engine
-      def on_slim_embedded(engine, body)
+      def on_slim_embedded(engine, body, attrs)
         [:multi, [:newline], [:code, "#{collect_text(body)}\n"]]
       end
     end
