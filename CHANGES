@@ -1,5 +1,10 @@
-2017-11-15
-  * Add ability to specify attributes for embedded engines using TagEngine
+3.1.0 (2018-07-??)
+  * Add ability to specify attributes for embedded engines using TagEngine - #653
+  * Set Tilt's default encoding to utf-8 - #800
+  * Prevent generation of invalid Ruby code in heredoc - #770
+  * Update description in README.jp.md - #795
+  * Removed support for embedded engines: Asciidoc, Builder, Creole, Erb, Nokogiri, Opal, Org-Ruby, Styl, Wikicloth
+  * Fix tests
 
 3.0.9 (2017-11-09)
 
