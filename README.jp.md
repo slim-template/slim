@@ -884,11 +884,9 @@ Slim::Embedded.options[:markdown] = {auto_ids: false}
 * Javascript
 * CSS
 * CoffeeScript
-* Opal
 * LESS
 * SASS
 * SCSS
-* Styl
 
 例：
 

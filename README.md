@@ -884,11 +884,9 @@ You can also specify HTML attributes for the following embedded engines:
 * Javascript
 * CSS
 * CoffeeScript
-* Opal
 * LESS
 * SASS
 * SCSS
-* Styl
 
 Example:
 
