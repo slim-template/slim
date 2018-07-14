@@ -180,4 +180,15 @@ p
 }
     assert_html '', source
   end
+
+  def test_output_format_with_if
+    source = %q{
+h3.subtitle
+  - if true
+    a href="#" Title true
+  - else
+    a href="#" Title false
+}
+    assert_html '<h3 class="subtitle"><a href="#">Title true</a></h3>', source
+  end
 end
