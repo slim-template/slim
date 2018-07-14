@@ -113,7 +113,7 @@ option(selected class="clazz") Text
 .alpha data={a: 'alpha', b: 'beta', c_d: 'gamma', c: {e: 'epsilon'}}
 }
 
-    assert_html '<div class="alpha" data-a="alpha" data-b="beta" data-c-d="gamma" data-c-e="epsilon"></div>', source
+    assert_html '<div class="alpha" data-a="alpha" data-b="beta" data-c-e="epsilon" data-c_d="gamma"></div>', source
   end
 
   def test_splat_without_content

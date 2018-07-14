@@ -91,7 +91,7 @@ module Slim
       def hyphen_attr(name, escape, value)
         if Hash === value
           value.each do |n, v|
-            hyphen_attr("#{name}-#{n.to_s.gsub('_', '-')}", escape, v)
+            hyphen_attr("#{name}-#{n}", escape, v)
           end
         else
           attr(name, escape_html(value != true && escape, value))
