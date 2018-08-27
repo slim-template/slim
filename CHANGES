@@ -1,8 +1,8 @@
-3.1.0 (2018-08-26)
+4.0.0 (2018-08-26)
   * Add ability to specify attributes for embedded engines using TagEngine - #653
   * Set Tilt's default encoding to utf-8 - #800
   * Prevent generation of invalid Ruby code in heredoc - #770
-  * Don't convert underscores to dashes on data attributes - #807
+  * Don't convert underscores to dashes on data attributes - #807 [Backward incompatible]
   * Update description in README.jp.md - #795
   * Removed support for embedded engines: Asciidoc, Builder, Creole, Erb, Nokogiri, Opal, Org-Ruby, Styl, Wikicloth
   * Fix tests
