@@ -48,8 +48,7 @@ if ENV['SINATRA']
   if ENV['SINATRA'] == 'master'
     gem 'sinatra', :github => 'sinatra/sinatra'
   else
-    # Need the slim_test.rb file not included in the Sinatra gem.
-    gem 'sinatra', :github => 'sinatra/sinatra', :tag => "v#{ENV['SINATRA']}"
+    gem 'sinatra', :tag => "v#{ENV['SINATRA']}"
   end
 end
 

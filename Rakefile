@@ -59,27 +59,14 @@ namespace 'test' do
     t.verbose = true
   end
 
-  begin
-    require 'sinatra'
-    spec = Gem::Specification.find_by_name('sinatra')
-    Rake::TestTask.new('sinatra') do |t|
-      file = "#{spec.gem_dir}/test/slim_test.rb"
+  Rake::TestTask.new('sinatra') do |t|
+    t.libs << 'lib'
+    t.test_files = FileList['test/sinatra/test_*.rb']
 
-      if Sinatra::VERSION =~ /\A1\.3/
-        # FIXME: Rename deprecated attribute
-        code = File.read(file)
-        code.gsub!('attr_wrapper', 'attr_quote')
-        File.open(file, 'w') {|out| out.write(code) }
-      end
-
-      # Run Slim integration test in Sinatra
-      t.test_files = FileList[file]
-      t.verbose = true
-    end
-  rescue LoadError
-    task :sinatra do
-      abort 'Sinatra is not available'
-    end
+    # Copied from test task in Sinatra project to mimic their approach
+    t.ruby_opts = ['-r rubygems'] if defined? Gem
+    t.ruby_opts << '-I.'
+    t.warning = true
   end
 end
 
