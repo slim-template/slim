@@ -420,18 +420,6 @@ renders as
  49
 ~~~
 
-The legacy syntax `='` is also supported.
-
-~~~ slim
-=' 7*7
-~~~
-
-renders as
-
-~~~ html
-49 
-~~~
-
 The equal sign with modifier `=<` produces dynamic output with a leading white space.
 
 ~~~ slim
@@ -500,18 +488,6 @@ renders as
 <script>evil();</script> 
 ~~~
 
-The legacy syntax `=='` is also supported.
-
-~~~ slim
-==' '<script>evil();</script>'
-~~~
-
-renders as
-
-~~~ html
-<script>evil();</script> 
-~~~
-
 The option option
 
 ~~~ options
@@ -521,7 +497,7 @@ The option option
 doesn't affect the output of `==`.
 
 ~~~ slim
-==' '<script>evil();</script>'
+==> '<script>evil();</script>'
 ~~~
 
 renders as
@@ -709,27 +685,26 @@ renders as
 
 ### Trailing and leading whitespace
 
-You can force a trailing whitespace behind a tag by adding `>`. The legacy syntax with `'` is also supported.
+You can force a trailing whitespace behind a tag by adding `>`. 
 
 ~~~ slim
 a#closed> class="test" /
 a#closed> class="test"/
 a> href='url1' Link1
 a< href='url1' Link1
-a' href='url2' Link2
 ~~~
 
 renders as
 
 ~~~ html
-<a class="test" id="closed" /> <a class="test" id="closed" /> <a href="url1">Link1</a>  <a href="url1">Link1</a><a href="url2">Link2</a> 
+<a class="test" id="closed" /> <a class="test" id="closed" /> <a href="url1">Link1</a>  <a href="url1">Link1</a>
 ~~~
 
-If you combine > and =' only one trailing whitespace is added.
+If you combine > and => only one trailing whitespace is added.
 
 ~~~ slim
-a> =' 'Text1'
-a =' 'Text2'
+a> => 'Text1'
+a => 'Text2'
 a> = 'Text3'
 a>= 'Text4'
 a=> 'Text5'
