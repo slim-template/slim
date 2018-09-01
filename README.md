@@ -1120,7 +1120,7 @@ Usage: slimrb [options]
     -e, --erb                        Convert to ERB
         --rails                      Generate rails compatible code (Implies --compile)
     -r, --require library            Load library or plugin with -r slim/plugin
-    -p, --pretty                     Produce pretty html
+    -p, --pretty                     Produce pretty html for debugging purposes
     -o, --option name=code           Set slim option
     -l, --locals Hash|YAML|JSON      Set local variables
     -h, --help                       Show this message
