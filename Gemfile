@@ -2,6 +2,11 @@ source 'https://rubygems.org/'
 
 gemspec
 
+group :test do
+  gem 'sinatra'
+  gem 'rack-test'
+end
+
 if ENV['TRAVIS']
   gem 'rails-controller-testing'
 end
@@ -44,7 +49,6 @@ if RUBY_ENGINE == 'rbx' && !ENV['TRAVIS']
 end
 
 if ENV['SINATRA']
-  gem 'rack-test'
   if ENV['SINATRA'] == 'master'
     gem 'sinatra', :github => 'sinatra/sinatra'
   else

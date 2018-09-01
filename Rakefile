@@ -19,44 +19,44 @@ namespace 'test' do
   Rake::TestTask.new('core') do |t|
     t.libs << 'lib' << 'test/core'
     t.test_files = FileList['test/core/test_*.rb']
-    t.verbose = true
+    t.warning = true
     #t.ruby_opts << '-w' << '-v'
   end
 
   Rake::TestTask.new('literate') do |t|
     t.libs << 'lib' << 'test/literate'
     t.test_files = FileList['test/literate/run.rb']
-    t.verbose = true
+    t.warning = true
   end
 
   Rake::TestTask.new('logic_less') do |t|
     t.libs << 'lib' << 'test/core'
     t.test_files = FileList['test/logic_less/test_*.rb']
-    t.verbose = true
+    t.warning = true
   end
 
   Rake::TestTask.new('translator') do |t|
     t.libs << 'lib' << 'test/core'
     t.test_files = FileList['test/translator/test_*.rb']
-    t.verbose = true
+    t.warning = true
   end
 
   Rake::TestTask.new('smart') do |t|
     t.libs << 'lib' << 'test/core'
     t.test_files = FileList['test/smart/test_*.rb']
-    t.verbose = true
+    t.warning = true
   end
 
   Rake::TestTask.new('include') do |t|
     t.libs << 'lib' << 'test/core'
     t.test_files = FileList['test/include/test_*.rb']
-    t.verbose = true
+    t.warning = true
   end
 
   Rake::TestTask.new('rails') do |t|
     t.libs << 'lib'
     t.test_files = FileList['test/rails/test/test_*.rb']
-    t.verbose = true
+    t.warning = true
   end
 
   Rake::TestTask.new('sinatra') do |t|

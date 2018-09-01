@@ -75,6 +75,14 @@ class Minitest::Test
     Rack::Lint.new(@app)
   end
 
+  def slim_app(&block)
+    mock_app do
+      set :views, File.dirname(__FILE__) + '/views'
+      get('/', &block)
+    end
+    get '/'
+  end
+
   def body
     response.body.to_s
   end
