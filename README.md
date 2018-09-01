@@ -1266,6 +1266,7 @@ Static code analysis:
 
 Template Converters (HAML, ERB, ...):
 
+* [ERB 2 Slim](http://erb2slim.com/)
 * [Haml2Slim converter](https://github.com/slim-template/haml2slim)
 * [ERB2Slim, HTML2Slim converter](https://github.com/slim-template/html2slim)
 
