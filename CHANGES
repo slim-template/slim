@@ -1,4 +1,9 @@
+4.0.1 (2018-09-02)
+
+  * Fix incompatibility issue with Slim Include plugin and new ability to specifiy attributes for embedded engines #819
+
 4.0.0 (2018-08-26)
+
   * Add ability to specify attributes for embedded engines using TagEngine - #653
   * Set Tilt's default encoding to utf-8 - #800
   * Prevent generation of invalid Ruby code in heredoc - #770
