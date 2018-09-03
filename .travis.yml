@@ -28,8 +28,6 @@ env:
     - "TASK=test:rails RAILS=5.1.6"
     - "TASK=test:sinatra SINATRA=2.0.1"
     - "TASK=test:sinatra SINATRA=1.4.8"
-    - "TASK=bench"
-    - "TASK=bench slow=1"
 
 notifications:
   irc: "chat.freenode.net#slim-lang"
