@@ -7,6 +7,12 @@ group :test do
   gem 'rack-test'
 end
 
+group :perf do
+  gem 'benchmark-ips'
+  gem 'erubis'
+  gem 'haml'
+end
+
 if ENV['TRAVIS']
   gem 'rails-controller-testing'
 end
