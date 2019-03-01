@@ -1,11 +1,10 @@
 # https://www.ruby-lang.org/en/downloads/releases/
 language: ruby
 rvm:
-  - 2.5.1
-  - 2.5.0
-  - 2.4.4
-  - 2.4.3
-  - jruby-9.2.0.0
+  - 2.6.1
+  - 2.5.3
+  - 2.4.5
+  - jruby-9.2.6.0
   - jruby-9.1.17.0
 
 # Recommend sudo required when using trusty dist
@@ -20,14 +19,13 @@ after_success:
 
 env:
   global:
-    # travis encrypt CODECLIMATE_REPO_TOKEN=???
     - secure: "a7sD9iwPJJn3Fj+mn62GAmy/PEguh3elrilsp1KS+WfDiCiIKD8Q5KG2Jv67DGcQAGI3dPWeh7+ZhZ/W7nEipwWUBmSvGYVeoF63y8j6mNRLeekqspj94l47hXyFePj9bCadY1b1/xY4lE1pMEU8eA8AOUHUqCSuH+Kk/MuvyLM="
   matrix:
     - "TASK=test:core_and_plugins"
-    - "TASK=test:rails RAILS=5.2.0"
-    - "TASK=test:rails RAILS=5.1.6"
-    - "TASK=test:sinatra SINATRA=2.0.1"
-    - "TASK=test:sinatra SINATRA=1.4.8"
-
-notifications:
-  irc: "chat.freenode.net#slim-lang"
+    - "TASK=test:rails RAILS=6.0.0.beta2"
+    - "TASK=test:rails RAILS=5.2.2"
+    - "TASK=test:rails RAILS=5.2.1.1"
+    - "TASK=test:rails RAILS=5.2.1"
+    - "TASK=test:sinatra SINATRA=2.0.5"
+    - "TASK=test:sinatra SINATRA=2.0.4"
+    - "TASK=test:sinatra SINATRA=2.0.3"
