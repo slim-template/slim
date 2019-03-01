@@ -29,3 +29,6 @@ env:
     - "TASK=test:sinatra SINATRA=2.0.5"
     - "TASK=test:sinatra SINATRA=2.0.4"
     - "TASK=test:sinatra SINATRA=2.0.3"
+    exclude:
+      - rvm: 2.4.5
+        - "TASK=test:rails RAILS=6.0.0.beta2"
