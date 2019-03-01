@@ -32,3 +32,5 @@ env:
     exclude:
       - rvm: 2.4.5
         - "TASK=test:rails RAILS=6.0.0.beta2"
+      - rvm: jruby-9.1.17.0
+        - "TASK=test:rails RAILS=6.0.0.beta2"
