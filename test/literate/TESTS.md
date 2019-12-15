@@ -368,7 +368,7 @@ You don't need the explicit `\` if the line ends with a comma `,`.
 
 ~~~ slim
 ruby:
-  def test(*args)
+  def self.test(*args)
     args.join('-')
   end
 = test('arg1',
@@ -961,7 +961,7 @@ You don't need the explicit `\` if the line ends with a comma `,`.
 
 ~~~ slim
 ruby:
-  def test(*args)
+  def self.test(*args)
     args.join('-')
   end
 a href=test('arg1',
@@ -1073,7 +1073,7 @@ with the :tag key.
 
 ~~~ slim
 ruby:
-  def a_unless_current
+  def self.a_unless_current
     @page_current ? {tag: 'span'} : {tag: 'a', href: 'http://slim-lang.com/'}
   end
 - @page_current = true
