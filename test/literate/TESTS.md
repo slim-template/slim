@@ -1186,13 +1186,15 @@ renders to
 
 #### ID shortcut and class shortcut `.`
 
-ID and class shortcuts can contain dashes.
+ID and class shortcuts can contain dashes, slashes with digits, and colons.
 
 ~~~ slim
 .-test text
 #test- text
 .--a#b- text
 .a--test-123#--b text
+.a-1/2#b-1/2 text
+.ab:c-test#d:e text
 ~~~
 
 renders as
@@ -1208,6 +1210,12 @@ renders as
   text
 </div>
 <div class="a--test-123" id="--b">
+  text
+</div>
+<div class="a-1/2" id="b-1/2">
+  text
+</div>
+<div class="ab:c-test" id="d:e">
   text
 </div>
 ~~~
