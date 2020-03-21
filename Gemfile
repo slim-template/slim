@@ -40,17 +40,8 @@ if ENV['RAILS']
   gem 'slim-rails', require: false
 end
 
-#Choose minitest 4.7.x for sinatra < 1.4.6 or rails 3 and 4.0 otherwise go for newer version
-if (ENV['SINATRA'] && ENV['SINATRA'] < '1.4.6') || (ENV['RAILS'] && ENV['RAILS'].match(/^(3|4\.0)/))
-  gem 'minitest', '~> 4.7.4'
-else
-  gem 'minitest', '~> 5.1'
-end
-
-#Ruby >= 2.2.0 has removed test/unit from Stdlib
-if RUBY_VERSION >= '2.2.0'
-  gem 'test-unit', platforms: :mri
-end
+gem 'test-unit', '~> 3.3', '>= 3.3.5'
+gem 'minitest', '~> 5.14'
 
 if RUBY_ENGINE == 'rbx' && !ENV['TRAVIS']
   gem 'psych'
@@ -64,9 +55,9 @@ if ENV['SINATRA']
   end
 end
 
-gem 'rake', '>= 0.8.7'
-gem 'sass', '>= 3.1.0'
-gem 'kramdown'
+gem 'rake', '~> 13.0', '>= 13.0.1'
+gem 'sassc', '~> 2.2', '>= 2.2.1'
+gem 'kramdown', '~> 2.1'
 
 if ENV['TASK'] == 'bench'
   gem 'benchmark-ips'
