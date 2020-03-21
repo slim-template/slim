@@ -36,6 +36,8 @@ if ENV['RAILS']
   else
     gem 'rails', "= #{ENV['RAILS']}"
   end
+
+  gem 'slim-rails', require: false
 end
 
 #Choose minitest 4.7.x for sinatra < 1.4.6 or rails 3 and 4.0 otherwise go for newer version

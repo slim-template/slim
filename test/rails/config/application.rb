@@ -5,9 +5,10 @@ require 'action_controller/railtie'
 require 'action_view/railtie'
 #require 'active_record/railtie'
 #require 'action_mailer/railtie'
-require "sprockets/railtie"
+require 'sprockets/railtie'
 
 require 'slim'
+require 'slim-rails/register_engine'
 
 module Dummy
   class Application < Rails::Application
@@ -48,7 +49,7 @@ module Dummy
       config.assets.configure do |env|
         if env.respond_to?(:register_transformer) && Sprockets::VERSION.to_i > 3
           env.register_mime_type 'text/slim', extensions: ['.slim', '.slim.html']
-          env.register_transformer 'text/slim', 'text/html', RegisterEngine::Transformer
+          env.register_transformer 'text/slim', 'text/html', Slim::Rails::RegisterEngine::Transformer
         elsif env.respond_to?(:register_engine)
           args = ['.slim', Slim::Template]
           args << { silence_deprecation: true } if Sprockets::VERSION.start_with?('3')
