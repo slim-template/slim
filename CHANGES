@@ -1,3 +1,7 @@
+4.1.0 (2020-05-07)
+  * Add support for Tailwind CSS - #841
+  * Update dependencies and testing
+  
 4.0.1 (2018-09-02)
 
   * Fix incompatibility issue with Slim Include plugin and new ability to specifiy attributes for embedded engines #819
