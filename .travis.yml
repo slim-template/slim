@@ -14,7 +14,7 @@ dist: trusty
 
 script: "bundle exec rake $TASK"
 
-# "Warning: the --client flag is deprecated and has no effect most JVMs
+# Avoid "Warning: the --client flag is deprecated and has no effect most JVMs"
 before_install:
   - unset _JAVA_OPTIONS
 
