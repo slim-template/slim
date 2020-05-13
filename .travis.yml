@@ -22,7 +22,7 @@ env:
     - secure: "a7sD9iwPJJn3Fj+mn62GAmy/PEguh3elrilsp1KS+WfDiCiIKD8Q5KG2Jv67DGcQAGI3dPWeh7+ZhZ/W7nEipwWUBmSvGYVeoF63y8j6mNRLeekqspj94l47hXyFePj9bCadY1b1/xY4lE1pMEU8eA8AOUHUqCSuH+Kk/MuvyLM="
   matrix:
     - "TASK=test:core_and_plugins"
-    - "TASK=test:rails RAILS=6.0.0.beta2"
+    - "TASK=test:rails RAILS=6.0.3"
     - "TASK=test:rails RAILS=5.2.2"
     - "TASK=test:rails RAILS=5.2.1.1"
     - "TASK=test:rails RAILS=5.2.1"
@@ -33,6 +33,6 @@ env:
 matrix:
   exclude:
     - rvm: 2.4.5
-      env: "TASK=test:rails RAILS=6.0.0.beta2"
+      env: "TASK=test:rails RAILS=6.0.3"
     - rvm: jruby-9.2.11.1
-      env: "TASK=test:rails RAILS=6.0.0.beta2"
+      env: "TASK=test:rails RAILS=6.0.3"
