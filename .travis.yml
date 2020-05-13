@@ -14,12 +14,17 @@ dist: trusty
 
 script: "bundle exec rake $TASK"
 
+# "Warning: the --client flag is deprecated and has no effect most JVMs
+before_install:
+  - unset _JAVA_OPTIONS
+
 after_success:
   - bundle exec codeclimate-test-reporter
 
 env:
   global:
     - secure: "a7sD9iwPJJn3Fj+mn62GAmy/PEguh3elrilsp1KS+WfDiCiIKD8Q5KG2Jv67DGcQAGI3dPWeh7+ZhZ/W7nEipwWUBmSvGYVeoF63y8j6mNRLeekqspj94l47hXyFePj9bCadY1b1/xY4lE1pMEU8eA8AOUHUqCSuH+Kk/MuvyLM="
+    - JAVA_OPTS: "-XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Xms60M -Xmx720M -XX:InitialCodeCacheSize=40M -XX:ReservedCodeCacheSize=120M"
   matrix:
     - "TASK=test:core_and_plugins"
     - "TASK=test:rails RAILS=6.0.3"
@@ -33,6 +38,8 @@ env:
 matrix:
   exclude:
     - rvm: 2.4.5
+      env: "TASK=test:rails RAILS=6.0.3"
+    - rvm: jruby-9.1.17.0
       env: "TASK=test:rails RAILS=6.0.3"
     - rvm: jruby-9.2.11.1
       env: "TASK=test:rails RAILS=6.0.3"
