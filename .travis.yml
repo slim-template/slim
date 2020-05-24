@@ -25,7 +25,7 @@ env:
   global:
     - secure: "a7sD9iwPJJn3Fj+mn62GAmy/PEguh3elrilsp1KS+WfDiCiIKD8Q5KG2Jv67DGcQAGI3dPWeh7+ZhZ/W7nEipwWUBmSvGYVeoF63y8j6mNRLeekqspj94l47hXyFePj9bCadY1b1/xY4lE1pMEU8eA8AOUHUqCSuH+Kk/MuvyLM="
     - JAVA_OPTS: "-XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Xms60M -Xmx720M -XX:InitialCodeCacheSize=40M -XX:ReservedCodeCacheSize=120M"
-    - JRUBY_OPTS: "-Xcext.enabled=true --debug"
+    - JRUBY_OPTS: "--debug"
   matrix:
     - "TASK=test:core_and_plugins"
     - "TASK=test:rails RAILS=6.0.3"
