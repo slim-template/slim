@@ -12,3 +12,4 @@ require 'slim/code_attributes'
 require 'slim/engine'
 require 'slim/template'
 require 'slim/version'
+require 'slim/railtie' if defined?(Rails::Railtie)
