@@ -90,8 +90,14 @@ module Slim
 
       def hyphen_attr(name, escape, value)
         if Hash === value
-          value.each do |n, v|
-            hyphen_attr("#{name}-#{n}", escape, v)
+          if @options[:hyphen_underscore_attrs] 
+            value.each do |n, v|
+              hyphen_attr("#{name}-#{n.to_s.gsub('_', '-')}", escape, v)
+            end
+          else
+            value.each do |n, v|
+              hyphen_attr("#{name}-#{n}", escape, v)
+            end
           end
         else
           attr(name, escape_html(value != true && escape, value))

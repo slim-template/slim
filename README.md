@@ -976,7 +976,8 @@ There are a lot of them but the good thing is, that Slim checks the configuratio
 | Symbol | :format | :xhtml | HTML output format (Possible formats :html, :xhtml, :xml) |
 | String | :attr_quote | '"' | Character to wrap attributes in html (can be ' or ") |
 | Hash | :merge_attrs | \{'class' => ' '} | Joining character used if multiple html attributes are supplied (e.g. class="class1 class2") |
-| Array&lt;String&gt; | :hyphen_attrs | %w(data) | Attributes which will be hyphenated if a Hash is given (e.g. data={a:1,b:2} will render as data-a="1" data-b="2") |
+| Array&lt;String&gt; | :hyphen_attrs | %w(data) | Attributes which will be hyphenated if a Hash is given (e.g. data={a_foo:1,b:2} will render as data-a_foo="1" data-b="2") |
+| Boolean | :hyphen_underscore_attrs | false | Attributes that have underscores in their names will be hyphenated (e.g. data={a_foo:1,b_bar:2} will render as data-a-foo="1" data-b-bar="2") |
 | Boolean | :sort_attrs | true | Sort attributes by name |
 | Symbol | :js_wrapper | nil | Wrap javascript by :comment, :cdata or :both. You can also :guess the wrapper based on :format. |
 | Boolean | :pretty | false | Pretty HTML indenting, only block level tags are indented <b>(This is slower!)</b> |
