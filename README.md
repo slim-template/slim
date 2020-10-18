@@ -1230,7 +1230,6 @@ Slim is released under the [MIT license](http://www.opensource.org/licenses/MIT)
 
 If you want to support this project please visit the Gittip and Flattr pages.
 
-[![Gittip donate button](https://img.shields.io/gratipay/bevry.svg)](https://www.gittip.com/min4d/ "Donate weekly to this project using Gittip")
 [![Flattr donate button](https://raw.github.com/balupton/flattr-buttons/master/badge-89x18.gif)](https://flattr.com/submit/auto?user_id=min4d&url=http%3A%2F%2Fslim-lang.org%2F "Donate monthly to this project using Flattr")
 
 Currently the donations will be used to cover the hosting costs (domain name etc).
@@ -1283,8 +1282,7 @@ Language ports/Similar languages:
 * [Hamlit (High performance Haml implementation, based on Temple like Slim)](https://github.com/k0kubun/hamlit)
 * [Faml (Faster Haml implementation, also using Temple like Slim)](https://github.com/eagletmt/faml)
 * [Haml (Older engine which inspired Slim)](https://github.com/haml/haml)
-* [Jade (Similar engine for javascript)](https://github.com/visionmedia/jade)
-* [Pug (Successor of Jade, Similar engine for javascript)](https://github.com/pugjs/pug)
+* [Pug (Similar engine for javascript)](https://github.com/pugjs/pug)
 * [Sweet (Similar engine which also allows to write classes and functions)](https://github.com/joaomdmoura/sweet)
 * [Amber (Similar engine for Go)](https://github.com/eknkc/amber)
 * [Slang (Slim-inspired templating language for Crystal)](https://github.com/jeromegn/slang)
