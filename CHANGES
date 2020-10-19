@@ -1,3 +1,7 @@
+4.2.0 (2020-10-??)
+  * Add option to hyphenate underscore attributes - #852
+  * Update CI/CD testing and dependencies
+  
 4.1.0 (2020-05-07)
   * Add support for Tailwind CSS - #841
   * Update dependencies and testing

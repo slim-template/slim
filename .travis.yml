@@ -1,17 +1,11 @@
 # https://www.ruby-lang.org/en/downloads/releases/
 language: ruby
 rvm:
-  - 2.6.1
-  - 2.5.3
-  - 2.4.5
-  - jruby-9.2.11.1
-  - jruby-9.1.17.0
+  - 2.7.2
+  - 2.6.6
+  - jruby-9.2.13.0
 
-# Recommend sudo required when using trusty dist
-# https://docs.travis-ci.com/user/reference/trusty/
-sudo: required
-dist: trusty
-
+dist: focal
 script: "bundle exec rake $TASK"
 
 # Avoid "Warning: the --client flag is deprecated and has no effect most JVMs"
@@ -28,19 +22,7 @@ env:
     - JRUBY_OPTS: "--debug"
   matrix:
     - "TASK=test:core_and_plugins"
-    - "TASK=test:rails RAILS=6.0.3"
-    - "TASK=test:rails RAILS=5.2.2"
-    - "TASK=test:rails RAILS=5.2.1.1"
-    - "TASK=test:rails RAILS=5.2.1"
-    - "TASK=test:sinatra SINATRA=2.0.5"
-    - "TASK=test:sinatra SINATRA=2.0.4"
-    - "TASK=test:sinatra SINATRA=2.0.3"
-
-matrix:
-  exclude:
-    - rvm: 2.4.5
-      env: "TASK=test:rails RAILS=6.0.3"
-    - rvm: jruby-9.1.17.0
-      env: "TASK=test:rails RAILS=6.0.3"
-    - rvm: jruby-9.2.11.1
-      env: "TASK=test:rails RAILS=6.0.3"
+    - "TASK=test:rails RAILS=6.0.3.4"
+    - "TASK=test:rails RAILS=5.2.4.4"
+    - "TASK=test:sinatra SINATRA=2.1.0"
+    - "TASK=test:sinatra SINATRA=2.0.8.1"
