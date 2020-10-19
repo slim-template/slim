@@ -40,8 +40,8 @@ if ENV['RAILS']
   gem 'slim-rails', require: false
 end
 
-gem 'test-unit', '~> 3.3', '>= 3.3.5'
-gem 'minitest', '~> 5.14'
+gem 'test-unit', '~> 3.3', '>= 3.3.6'
+gem 'minitest', '~> 5.14', '>= 5.14.2'
 
 if RUBY_ENGINE == 'rbx' && !ENV['TRAVIS']
   gem 'psych'
@@ -56,8 +56,8 @@ if ENV['SINATRA']
 end
 
 gem 'rake', '~> 13.0', '>= 13.0.1'
-gem 'sassc', '~> 2.2', '>= 2.2.1'
-gem 'kramdown', '~> 2.1'
+gem 'sassc', '~> 2.4'
+gem 'kramdown', '~> 2.3'
 
 if ENV['TASK'] == 'bench'
   gem 'benchmark-ips'
