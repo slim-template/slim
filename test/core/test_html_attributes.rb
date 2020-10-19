@@ -116,6 +116,14 @@ option(selected class="clazz") Text
     assert_html '<div class="alpha" data-a="alpha" data-b="beta" data-c-e="epsilon" data-c_d="gamma"></div>', source
   end
 
+  def test_hyphenated_underscore_attribute
+    source = %{
+.alpha data={a: 'alpha', b: 'beta', c_d: 'gamma', c: {e: 'epsilon'}}
+}
+
+    assert_html '<div class="alpha" data-a="alpha" data-b="beta" data-c-d="gamma" data-c-e="epsilon"></div>', source, hyphen_underscore_attrs: true 
+  end
+
   def test_splat_without_content
     source = %q{
 *hash
