@@ -59,7 +59,6 @@ by the logic less plugin and the translator plugin which provides I18n. In logic
 * The Slim architecture is very flexible and allows you to write syntax extensions and plugins.
 
 ___Yes, Slim is speedy!___ Slim was developed right from the start with performance in mind.
-Benchmarks are done for every commit at <http://travis-ci.org/slim-template/slim>.
 Don't trust the numbers? That's as it should be. Please try the benchmark rake task yourself!
 
 However in our opinion you should use Slim because of its features and syntax. We just ensure that Slim doesn't have a negative impact on the performance of your application.
