@@ -83,9 +83,14 @@ module Slim
       @quoted_attr_re = /#{@attr_name}\s*=(=?)\s*("|')/
       @code_attr_re = /#{@attr_name}\s*=(=?)\s*/
 
-      splat_prefix = Regexp.escape(options[:splat_prefix])
-      splat_regexp_source = '\A\s*' << splat_prefix << '(?=[^\s]+)'
-      @splat_attrs_regexp = Regexp.new(splat_regexp_source)
+      @splat_attrs_regexp =
+        if options[:splat_prefix]
+          splat_prefix = Regexp.escape(options[:splat_prefix])
+          splat_regexp_source = '\A\s*' << splat_prefix << '(?=[^\s]+)'
+          Regexp.new(splat_regexp_source)
+        else
+          false
+        end
     end
 
     # Compile string to Temple expression

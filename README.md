@@ -559,7 +559,7 @@ This renders as:
 div class="first second third"
 ~~~
 
-Splat attributes prefix may be configured via `splat_prefix` option. Default value is `'*'`
+Splat attributes prefix may be configured via `splat_prefix` option. Default value is `'*'`. `nil` disables splat attributes.
 
 #### Dynamic tags `*`
 
