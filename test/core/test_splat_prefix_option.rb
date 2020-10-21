@@ -152,4 +152,10 @@ h1 data-id="123" #{prefix}hash This is my title
     end
   end
 
+  def test_disabled_splat
+    source =%Q{
+h1 data-id="123" *hash This is my title
+}
+    assert_html '<h1 data-id="123">*hash This is my title</h1>', source, options(nil)
+  end
 end
