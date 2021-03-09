@@ -1,5 +1,6 @@
 # https://www.ruby-lang.org/en/downloads/releases/
 language: ruby
+cache: bundler
 rvm:
   - 2.7.2
   - 2.6.6
