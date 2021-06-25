@@ -31,8 +31,8 @@ end
 
 if ENV['RAILS']
   # we need some smarter test logic for the different Rails versions
-  if ENV['RAILS'] == 'master'
-    gem 'rails', :github => 'rails/rails'
+  if ENV['RAILS'] == 'main'
+    gem 'rails', :github => 'rails/rails', branch: 'main'
   else
     gem 'rails', "= #{ENV['RAILS']}"
   end
