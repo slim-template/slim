@@ -1,5 +1,5 @@
-require "temple"
-require "slim/engine"
+require 'temple'
+require 'slim/engine'
 
 module Slim
   class RailsTemplate
