@@ -8,8 +8,7 @@ module Slim
         @options ||= {
           generator: Temple::Generators::RailsOutputBuffer,
           use_html_safe: true,
-          streaming: true,
-          buffer_class: "ActionView::OutputBuffer"
+          streaming: true
         }
       end
 
