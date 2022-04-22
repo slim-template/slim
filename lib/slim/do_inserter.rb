@@ -7,7 +7,7 @@ module Slim
   #
   # @api private
   class DoInserter < Filter
-    BLOCK_REGEX = /(\A(if|unless|else|elsif|when|begin|rescue|ensure|case)\b)|\bdo\s*(\|[^\|]*\|\s*)?\Z/
+    BLOCK_REGEX = /(\A(if|unless|else|elsif|when|in|begin|rescue|ensure|case)\b)|\bdo\s*(\|[^\|]*\|\s*)?\Z/
 
     # Handle control expression `[:slim, :control, code, content]`
     #
