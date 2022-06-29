@@ -7,6 +7,7 @@ end
 require 'minitest/autorun'
 require 'slim'
 require 'slim/grammar'
+require 'ostruct'
 
 Slim::Engine.after  Slim::Parser, Temple::Filters::Validator, grammar: Slim::Grammar
 Slim::Engine.before :Pretty, Temple::Filters::Validator

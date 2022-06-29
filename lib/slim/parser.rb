@@ -499,22 +499,40 @@ module Slim
     end
 
     def parse_quoted_attribute(quote)
-      value, count = '', 0
+      value = ''
+      count = 0
+      cursor = 0
 
-      until count == 0 && @line[0] == quote[0]
-        if @line =~ /\A(\\)?\Z/
-          value << ($1 ? ' ' : "\n")
+      until count.zero? && @line[cursor] == quote[0]
+        # we've reached the end of the line
+        if cursor == @line.size
+          # we've reached the end and there was no newline, add it manually
+          value << @line
+          value << "\n"
+          cursor = 0
+          expect_next_line
+        elsif @line[cursor] == "\n"
+          # if the line ends with a newline, we simply keep it
+          value << @line
+          cursor = 0
+          expect_next_line
+        elsif @line[cursor] == "\\" && (cursor + 1 == @line.size || @line[cursor + 1] == "\n")
+          # if the line ends with a backslash followed by a newline, we drop the newline and the backslash
+          value << @line[0...cursor]
+          value << " "
+          cursor = 0
           expect_next_line
         else
-          if @line[0] == ?{
+          if @line[cursor] == ?{
             count += 1
-          elsif @line[0] == ?}
+          elsif @line[cursor] == ?}
             count -= 1
           end
-          value << @line.slice!(0)
+          cursor += 1
         end
       end
 
+      value << @line.slice!(0...cursor)
       @line.slice!(0)
       value
     end
