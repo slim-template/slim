@@ -155,7 +155,7 @@ module Slim
         text = tilt_engine.new(tilt_options.merge(
           style: options[:pretty] ? :expanded : :compressed,
           cache: false)) { text }.render
-        text = text.chomp
+        text = text.chomp unless text.frozen?
         [:static, text]
       end
     end
