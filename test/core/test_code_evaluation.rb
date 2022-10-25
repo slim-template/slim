@@ -163,6 +163,7 @@ p id=(1 + 1)*5 Test it
   end
 
   def test_code_attribute_does_not_modify_argument
+    require 'ostruct'
     template = 'span class=attribute'
     model = OpenStruct.new(attribute: [:a, :b, [:c, :d]])
     output = Slim::Template.new { template }.render(model)
