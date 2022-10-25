@@ -58,7 +58,11 @@ class TestSlimCommands < Minitest::Test
     prepare_common_test DYNAMIC_TEMPLATE, '--rails' do |out, err|
       assert err.empty?
 
-      assert out.include? %Q{@output_buffer = ActiveSupport::SafeBuffer.new;}
+      if Gem::Version.new(Temple::VERSION) >= Gem::Version.new('0.9')
+        assert out.include? %Q{@output_buffer = output_buffer || ActionView::OutputBuffer.new;}
+      else
+        assert out.include? %Q{@output_buffer = ActiveSupport::SafeBuffer.new;}
+      end
       assert out.include? %Q{@output_buffer.safe_concat(("<p>Hello "#{STRING_FREEZER}));}
       assert out.include? %Q{@output_buffer.safe_concat(((::Temple::Utils.escape_html((name))).to_s));}
       assert out.include? %Q{@output_buffer.safe_concat(("!</p>"#{STRING_FREEZER}));}
