@@ -1,4 +1,4 @@
 --markup-provider redcarpet
 --markup markdown
-- README.md CHANGES LICENSE test/literate/TESTS.md doc/logic_less.md  doc/translator.md doc/smart.md
+- README.md CHANGES LICENSE test/literate/TESTS.md doc/logic_less.md  doc/translator.md doc/smart.md doc/include.md
 
