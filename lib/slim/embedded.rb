@@ -154,8 +154,11 @@ module Slim
       def tilt_render(tilt_engine, tilt_options, text)
         text = tilt_engine.new(tilt_options.merge(
           style: options[:pretty] ? :expanded : :compressed,
-          cache: false)) { text }.render
-        text = text.chomp
+          charset: false
+        ).merge!(
+          tilt_engine <= ::Tilt::SassTemplate && tilt_engine::Engine ? { cache: false } : {}
+        )) { text }.render
+        text = text.chomp unless text.frozen?
         [:static, text]
       end
     end

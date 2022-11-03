@@ -865,8 +865,8 @@ p: markdown: Tag with **inline** markdown!
 | ruby: | なし | ショートカット | Ruby コードを埋め込むショートカット |
 | javascript: | なし | ショートカット | javascript コードを埋め込み、script タグで囲む |
 | css: | なし | ショートカット | css コードを埋め込み、style タグで囲む |
-| sass: | sass | コンパイル時 | sass コードを埋め込み、style タグで囲む |
-| scss: | sass | コンパイル時 | scss コードを埋め込み、style タグで囲む |
+| sass: | sass-embedded または sassc または sass | コンパイル時 | sass コードを埋め込み、style タグで囲む |
+| scss: | sass-embedded または sassc または sass | コンパイル時 | scss コードを埋め込み、style タグで囲む |
 | less: | less | コンパイル時 | less コードを埋め込み、style タグで囲む |
 | coffee: | coffee-script | コンパイル時 | CoffeeScript をコンパイルし、 script タグで囲む |
 | markdown: | redcarpet/rdiscount/kramdown | コンパイル時 + 展開 | Markdown をコンパイルし、テキスト中の # \{variables} を展開 |
