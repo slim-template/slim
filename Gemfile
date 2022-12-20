@@ -56,7 +56,16 @@ if ENV['SINATRA']
 end
 
 gem 'rake', '~> 13.0', '>= 13.0.1'
-gem 'sassc', '~> 2.4'
+
+case ENV['SASS_IMPLEMENTATION']
+when 'sass'
+  gem 'sass', '~> 3.7'
+when 'sassc'
+  gem 'sassc', '~> 2.4'
+else
+  gem 'sass-embedded', '~> 1.54'
+end
+
 gem 'kramdown', '~> 2.3'
 
 if ENV['TASK'] == 'bench'
