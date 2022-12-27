@@ -1230,7 +1230,7 @@ Slim は [MIT license](http://www.opensource.org/licenses/MIT) に基づいて�
 
 このプロジェクトをサポートしたい場合, GitHub sponsors のページを見てください。
 
-![GitHub Sponsors](https://img.shields.io/github/sponsors/slim-template)](https://github.com/sponsors/slim-template)
+[![GitHub Sponsors](https://img.shields.io/github/sponsors/slim-template)](https://github.com/sponsors/slim-template)
 
 ## 議論
 
