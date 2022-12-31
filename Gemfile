@@ -13,10 +13,6 @@ group :perf do
   gem 'haml'
 end
 
-if ENV['TRAVIS']
-  gem 'rails-controller-testing'
-end
-
 if  ENV['TEMPLE'] == 'master'
   gem 'temple', :github => 'judofyr/temple'
 end
@@ -40,12 +36,8 @@ if ENV['RAILS']
   gem 'slim-rails', require: false
 end
 
-gem 'test-unit', '~> 3.3', '>= 3.3.6'
-gem 'minitest', '~> 5.14', '>= 5.14.2'
-
-if RUBY_ENGINE == 'rbx' && !ENV['TRAVIS']
-  gem 'psych'
-end
+gem 'test-unit', '~> 3.5'
+gem 'minitest', '~> 5.15'
 
 if ENV['SINATRA']
   if ENV['SINATRA'] == 'master'
@@ -55,8 +47,8 @@ if ENV['SINATRA']
   end
 end
 
-gem 'rake', '~> 13.0', '>= 13.0.1'
-gem 'kramdown', '~> 2.3'
+gem 'rake', '~> 13.0'
+gem 'kramdown', '~> 2.4'
 
 if ENV['TASK'] == 'bench'
   gem 'benchmark-ips'
