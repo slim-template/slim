@@ -11,7 +11,7 @@ on:
   schedule:
     - cron: "00 15 * * *"
 jobs:
-  test:
+  basic:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -30,24 +30,22 @@ jobs:
       - run: bundle install && bundle exec rake test:sinatra
         env:
           SINATRA: 3.0.5
-      #- run: bundle install && bundle exec rake test:rails
-      #  env:
-      #    RAILS: 7.0.4
-      #- run: bundle install && bundle exec rake test:rails
-      #  env:
-      #    RAILS: 6.1.7
-      #- run: bundle install && bundle exec rake test:rails
-      #  env:
-      #    RAILS: 6.0.6
-      # - run: bundle install && bundle exec rake test:rails
-      #   env:
-      #     RAILS: 5.2.8
-      # - run: bundle install && bundle exec rake test:rails
-      #   env:
-      #     RAILS: 5.1.7
-      # - run: bundle install && bundle exec rake test:rails
-      #   env:
-      #     RAILS: 5.0.7
-      # - run: bundle install && bundle exec rake test:rails
-      #   env:
-      #     RAILS: 4.2.11
+  rails:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7
+      - run: bundle install && bundle exec rake test:rails
+        env:
+          RAILS: 5.2.8
+      - run: bundle install && bundle exec rake test:rails
+        env:
+          RAILS: 6.0.6
+      - run: bundle install && bundle exec rake test:rails
+        env:
+          RAILS: 6.1.7

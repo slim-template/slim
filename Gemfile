@@ -29,8 +29,6 @@ if ENV['RAILS']
   else
     gem 'rails', "= #{ENV['RAILS']}"
   end
-
-  gem 'slim-rails', require: false
 end
 
 gem 'test-unit', '~> 3.5'
