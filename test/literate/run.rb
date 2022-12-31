@@ -65,9 +65,9 @@ class LiterateTest < Temple::Engine
       @in_testcase = false
       result =  "  html = #{code.inspect}\n"
       if @opts.empty?
-        result << "  render(slim).must_equal html\nend\n"
+        result << "  _(render(slim)).must_equal html\nend\n"
       else
-        result << "  options = #{@opts.inspect}\n  render(slim, options).must_equal html\nend\n"
+        result << "  options = #{@opts.inspect}\n  _(render(slim, options)).must_equal html\nend\n"
       end
     end
 
