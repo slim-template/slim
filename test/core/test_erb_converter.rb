@@ -21,9 +21,8 @@ html
     /[if lt IE 9]
       script src="old-ie1.js"
       script src="old-ie2.js"
-    sass:
-      body
-        background-color: red
+    css:
+      body { background-color: red; }
   body
     #container
       p Hello
@@ -51,9 +50,8 @@ multiline comment-->
 </script><!--[if lt IE 9]>
 <script src="old-ie1.js">
 </script><script src="old-ie2.js">
-</script><![endif]--><style type="text/css">body{background-color:red}
-
-</style>
+</script><![endif]--><style type="text/css">
+body { background-color: red; }</style>
 </head><body>
 <div id="container">
 <p>Hello

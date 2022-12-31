@@ -56,7 +56,6 @@ if ENV['SINATRA']
 end
 
 gem 'rake', '~> 13.0', '>= 13.0.1'
-gem 'sassc', '~> 2.4'
 gem 'kramdown', '~> 2.3'
 
 if ENV['TASK'] == 'bench'
