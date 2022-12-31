@@ -120,6 +120,23 @@ p
     assert_html '<p>42 is the answer</p><p>41 is the answer</p><p>42 is the answer</p><p>41 is the answer</p>', source
   end
 
+  if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new("2.7")
+    def test_render_with_case_in
+      source = %q{
+  p
+    - case [:greet, "world"]
+    - in :greet, value if false
+      = "Goodbye #{value}"
+    - in :greet, value unless true
+      = "Top of the morning to you, #{value}"
+    - in :greet, value
+      = "Hello #{value}"
+  }
+
+      assert_html '<p>Hello world</p>', source
+    end
+  end
+
   def test_render_with_slim_comments
     source = %q{
 p Hello

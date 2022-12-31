@@ -10,8 +10,8 @@ module Slim
   #
   # @api private
   class EndInserter < Filter
-    IF_RE = /\A(if|begin|unless|else|elsif|when|rescue|ensure)\b|\bdo\s*(\|[^\|]*\|)?\s*$/
-    ELSE_RE = /\A(else|elsif|when|rescue|ensure)\b/
+    IF_RE = /\A(if|begin|unless|else|elsif|when|in|rescue|ensure)\b|\bdo\s*(\|[^\|]*\|)?\s*$/
+    ELSE_RE = /\A(else|elsif|when|in|rescue|ensure)\b/
     END_RE = /\Aend\b/
 
     # Handle multi expression `[:multi, *exps]`
