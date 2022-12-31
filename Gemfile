@@ -2,11 +2,6 @@ source 'https://rubygems.org/'
 
 gemspec
 
-group :test do
-  gem 'sinatra'
-  gem 'rack-test'
-end
-
 group :perf do
   gem 'benchmark-ips'
   gem 'erubi'

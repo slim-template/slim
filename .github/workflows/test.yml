@@ -30,3 +30,5 @@ jobs:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
       - run: bundle exec rake test
+      - run: SINATRA=2.2.4 bundle exec rake test:sinatra
+      - run: SINATRA=3.0.5 bundle exec rake test:sinatra
