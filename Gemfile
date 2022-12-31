@@ -9,7 +9,7 @@ end
 
 group :perf do
   gem 'benchmark-ips'
-  gem 'erubis'
+  gem 'erubi'
   gem 'haml'
 end
 
@@ -60,7 +60,7 @@ gem 'kramdown', '~> 2.3'
 
 if ENV['TASK'] == 'bench'
   gem 'benchmark-ips'
-  gem 'erubis'
+  gem 'erubi'
   gem 'haml'
 end
 

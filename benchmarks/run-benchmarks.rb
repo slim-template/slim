@@ -7,7 +7,7 @@ require 'context'
 
 require 'benchmark/ips'
 require 'tilt'
-require 'erubis'
+require 'erubi'
 require 'erb'
 require 'haml'
 
@@ -32,16 +32,14 @@ class SlimBenchmarks
     haml.def_method(context, :run_haml)
     context.instance_eval %{
       def run_erb; #{ERB.new(@erb_code).src}; end
-      def run_erubis; #{Erubis::Eruby.new(@erb_code).src}; end
+      def run_erubi; #{Erubi::Engine.new(@erb_code).src}; end
       def run_temple_erb; #{Temple::ERB::Engine.new.call @erb_code}; end
-      def run_fast_erubis; #{Erubis::FastEruby.new(@erb_code).src}; end
       def run_slim_pretty; #{Slim::Engine.new(pretty: true).call @slim_code}; end
       def run_slim_ugly; #{Slim::Engine.new.call @slim_code}; end
     }
 
     bench(:compiled, 'erb')         { context.run_erb }
-    bench(:compiled, 'erubis')      { context.run_erubis }
-    bench(:compiled, 'fast erubis') { context.run_fast_erubis }
+    bench(:compiled, 'erubi')       { context.run_erubi }
     bench(:compiled, 'temple erb')  { context.run_temple_erb }
     bench(:compiled, 'slim pretty') { context.run_slim_pretty }
     bench(:compiled, 'slim ugly')   { context.run_slim_ugly }
@@ -50,7 +48,7 @@ class SlimBenchmarks
 
   def init_tilt_benches
     tilt_erb         = Tilt::ERBTemplate.new { @erb_code }
-    tilt_erubis      = Tilt::ErubisTemplate.new { @erb_code }
+    tilt_erubi       = Tilt::ErubiTemplate.new { @erb_code }
     tilt_temple_erb  = Temple::ERB::Template.new { @erb_code }
     tilt_haml        = Tilt::HamlTemplate.new(format: :html5) { @haml_code }
     tilt_slim_pretty = Slim::Template.new(pretty: true) { @slim_code }
@@ -59,7 +57,7 @@ class SlimBenchmarks
     context  = Context.new
 
     bench(:tilt, 'erb')         { tilt_erb.render(context) }
-    bench(:tilt, 'erubis')      { tilt_erubis.render(context) }
+    bench(:tilt, 'erubi')       { tilt_erubi.render(context) }
     bench(:tilt, 'temple erb')  { tilt_temple_erb.render(context) }
     bench(:tilt, 'slim pretty') { tilt_slim_pretty.render(context) }
     bench(:tilt, 'slim ugly')   { tilt_slim_ugly.render(context) }
@@ -71,8 +69,7 @@ class SlimBenchmarks
     context_binding = context.instance_eval { binding }
 
     bench(:parsing, 'erb')         { ERB.new(@erb_code).result(context_binding) }
-    bench(:parsing, 'erubis')      { Erubis::Eruby.new(@erb_code).result(context_binding) }
-    bench(:parsing, 'fast erubis') { Erubis::FastEruby.new(@erb_code).result(context_binding) }
+    bench(:parsing, 'erubi')       { Erubi::Engine.new(@erb_code).result(context_binding) }
     bench(:parsing, 'temple erb')  { Temple::ERB::Template.new { @erb_code }.render(context) }
     bench(:parsing, 'slim pretty') { Slim::Template.new(pretty: true) { @slim_code }.render(context) }
     bench(:parsing, 'slim ugly')   { Slim::Template.new { @slim_code }.render(context) }
