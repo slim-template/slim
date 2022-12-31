@@ -8,8 +8,6 @@ if ENV['COVERAGE']
 end
 
 ENV['APP_ENV'] = 'test'
-Encoding.default_external = "UTF-8" if defined? Encoding
-
 RUBY_ENGINE = 'ruby' unless defined? RUBY_ENGINE
 
 require 'rack'

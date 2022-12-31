@@ -11,11 +11,9 @@ task :bench, :slow do
   ruby('benchmarks/run-benchmarks.rb')
 end
 
-task 'test' => %w(test:core_and_plugins)
+task 'test' => %w(test:core test:literate test:logic_less test:translator test:smart test:include)
 
 namespace 'test' do
-  task 'core_and_plugins' => %w(core literate logic_less translator smart include)
-
   Rake::TestTask.new('core') do |t|
     t.libs << 'lib' << 'test/core'
     t.test_files = FileList['test/core/test_*.rb']
