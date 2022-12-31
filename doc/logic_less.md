@@ -80,7 +80,7 @@ This will yield
 
     <tr>
       <td>Article 1</td>
-    </>
+    </tr>
     <tr>
       <td>Article 2</td>
     </tr>
