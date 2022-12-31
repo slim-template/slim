@@ -21,6 +21,8 @@ if ENV['TILT']
 end
 
 if ENV['RAILS']
+  gem 'rails-controller-testing'
+
   # we need some smarter test logic for the different Rails versions
   if ENV['RAILS'] == 'main'
     gem 'rails', :github => 'rails/rails', branch: 'main'
@@ -33,17 +35,18 @@ end
 
 gem 'test-unit', '~> 3.5'
 gem 'minitest', '~> 5.15'
+gem 'rake', '~> 13.0'
+gem 'kramdown', '~> 2.4'
 
 if ENV['SINATRA']
+  gem 'rack-test'
+
   if ENV['SINATRA'] == 'master'
     gem 'sinatra', :github => 'sinatra/sinatra'
   else
     gem 'sinatra', :tag => "v#{ENV['SINATRA']}"
   end
 end
-
-gem 'rake', '~> 13.0'
-gem 'kramdown', '~> 2.4'
 
 if ENV['TASK'] == 'bench'
   gem 'benchmark-ips'
