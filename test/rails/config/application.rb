@@ -6,9 +6,8 @@ require 'action_view/railtie'
 #require 'active_record/railtie'
 #require 'action_mailer/railtie'
 require 'sprockets/railtie'
-
+require 'slim/railtie'
 require 'slim'
-require 'slim-rails/register_engine'
 
 module Dummy
   class Application < Rails::Application
@@ -42,20 +41,5 @@ module Dummy
 
     # Configure sensitive parameters which will be filtered from the log file.
     config.filter_parameters += [:password]
-
-    # From slim-rails fix for "ActionView::Template::Error: Unknown line indicator"
-    # https://github.com/slim-template/slim-rails/blob/991589ea5648e5e896781e68912bc51beaf4102a/lib/slim-rails/register_engine.rb
-    if config.respond_to?(:assets)
-      config.assets.configure do |env|
-        if env.respond_to?(:register_transformer) && Sprockets::VERSION.to_i > 3
-          env.register_mime_type 'text/slim', extensions: ['.slim', '.slim.html']
-          env.register_transformer 'text/slim', 'text/html', Slim::Rails::RegisterEngine::Transformer
-        elsif env.respond_to?(:register_engine)
-          args = ['.slim', Slim::Template]
-          args << { silence_deprecation: true } if Sprockets::VERSION.start_with?('3')
-          env.register_engine(*args)
-        end
-      end
-    end
   end
 end
