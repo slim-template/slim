@@ -23,14 +23,16 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
+      - run: bundle install && bundle exec rake test
         env:
           TEMPLE: master
-      - run: bundle install && bundle exec rake test
       - run: bundle install && bundle exec rake test:sinatra
         env:
+          TEMPLE: master
           SINATRA: 2.2.4
       - run: bundle install && bundle exec rake test:sinatra
         env:
+          TEMPLE: master
           SINATRA: 3.0.5
   rails:
     runs-on: ubuntu-latest
@@ -42,14 +44,15 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.7
-        env:
-          TEMPLE: master
       - run: bundle install && bundle exec rake test:rails
         env:
+          TEMPLE: master
           RAILS: 5.2.8
       - run: bundle install && bundle exec rake test:rails
         env:
+          TEMPLE: master
           RAILS: 6.0.6
       - run: bundle install && bundle exec rake test:rails
         env:
+          TEMPLE: master
           RAILS: 6.1.7
