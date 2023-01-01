@@ -39,7 +39,7 @@ markdown:
 css:
   h1 { color: blue }
 }
-  assert_html "<style type=\"text/css\">h1 { color: blue }</style>", source
+  assert_html "<style>h1 { color: blue }</style>", source
   end
 
   def test_render_with_css_empty_attributes
@@ -47,7 +47,7 @@ css:
 css []:
   h1 { color: blue }
 }
-  assert_html "<style type=\"text/css\">h1 { color: blue }</style>", source
+  assert_html "<style>h1 { color: blue }</style>", source
   end
 
   def test_render_with_css_attribute
@@ -55,7 +55,7 @@ css []:
 css scoped = "true":
   h1 { color: blue }
 }
-  assert_html "<style scoped=\"true\" type=\"text/css\">h1 { color: blue }</style>", source
+  assert_html "<style scoped=\"true\">h1 { color: blue }</style>", source
   end
 
   def test_render_with_css_multiple_attributes
@@ -63,7 +63,7 @@ css scoped = "true":
 css class="myClass" scoped = "true" :
   h1 { color: blue }
 }
-  assert_html "<style class=\"myClass\" scoped=\"true\" type=\"text/css\">h1 { color: blue }</style>", source
+  assert_html "<style class=\"myClass\" scoped=\"true\">h1 { color: blue }</style>", source
   end
 
   def test_render_with_javascript
@@ -173,7 +173,7 @@ scss:
   $color: #f00;
   body { color: $color; }
 }
-    assert_html "<style type=\"text/css\">body{color:red}</style>", source
+    assert_html "<style>body{color:red}</style>", source
   end
 
   def test_render_with_scss_attribute
@@ -182,7 +182,7 @@ scss [class="myClass"]:
   $color: #f00;
   body { color: $color; }
 }
-    assert_html "<style class=\"myClass\" type=\"text/css\">body{color:red}</style>", source
+    assert_html "<style class=\"myClass\">body{color:red}</style>", source
   end
 
   def test_render_with_sass
@@ -192,7 +192,7 @@ sass:
   body
     color: $color
 }
-    assert_html "<style type=\"text/css\">body{color:red}</style>", source
+    assert_html "<style>body{color:red}</style>", source
   end
 
   def test_render_with_sass_attribute
@@ -202,7 +202,7 @@ sass [class="myClass"]:
   body
     color: $color
 }
-    assert_html "<style class=\"myClass\" type=\"text/css\">body{color:red}</style>", source
+    assert_html "<style class=\"myClass\">body{color:red}</style>", source
   end
 end
 

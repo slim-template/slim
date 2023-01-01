@@ -185,6 +185,7 @@ module Slim
     # Generates a html tag and wraps another engine (specified via :engine option)
     class TagEngine < Engine
       disable_option_validator!
+      set_options attributes: {}
 
       def on_slim_embedded(engine, body, attrs)
 
@@ -213,7 +214,7 @@ module Slim
     class JavaScriptEngine < TagEngine
       disable_option_validator!
 
-      set_options tag: :script, attributes: {}
+      set_options tag: :script
 
       def on_slim_embedded(engine, body, attrs)
         super(engine, [:html, :js, body], attrs)
@@ -233,14 +234,14 @@ module Slim
     register :rdoc,       InterpolateTiltEngine
 
     # These engines are executed at compile time
-    register :coffee,     JavaScriptEngine, engine: TiltEngine
-    register :less,       TagEngine, tag: :style,  attributes: { type: 'text/css' },         engine: TiltEngine
-    register :sass,       TagEngine, :pretty, tag: :style, attributes: { type: 'text/css' }, engine: SassEngine
-    register :scss,       TagEngine, :pretty, tag: :style, attributes: { type: 'text/css' }, engine: SassEngine
+    register :coffee,     JavaScriptEngine,                engine: TiltEngine
+    register :less,       TagEngine,          tag: :style, engine: TiltEngine
+    register :sass,       TagEngine, :pretty, tag: :style, engine: SassEngine
+    register :scss,       TagEngine, :pretty, tag: :style, engine: SassEngine
 
     # Embedded javascript/css
     register :javascript, JavaScriptEngine
-    register :css,        TagEngine, tag: :style,  attributes: { type: 'text/css' }
+    register :css,        TagEngine, tag: :style
 
     # Embedded ruby code
     register :ruby,       RubyEngine

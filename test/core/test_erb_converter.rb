@@ -50,7 +50,7 @@ multiline comment-->
 </script><!--[if lt IE 9]>
 <script src="old-ie1.js">
 </script><script src="old-ie2.js">
-</script><![endif]--><style type="text/css">
+</script><![endif]--><style>
 body { background-color: red; }</style>
 </head><body>
 <div id="container">
