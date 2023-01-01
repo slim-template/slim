@@ -30,7 +30,7 @@ module Slim
   # @api private
   class OutputProtector < Filter
     def call(exp)
-      @protect, @collected, @tag = [], '', "%#{object_id.abs.to_s(36)}%"
+      @protect, @collected, @tag = [], '', object_id.abs.to_s(36)
       super(exp)
       @collected
     end
@@ -41,16 +41,16 @@ module Slim
     end
 
     def on_slim_output(escape, text, content)
-      @collected << @tag
+      @collected << "%#{@tag}%#{@protect.length}%"
       @protect << [:slim, :output, escape, text, content]
       nil
     end
 
     def unprotect(text)
       block = [:multi]
-      while text =~ /#{@tag}/
+      while text =~ /%#{@tag}%(\d+)%/
         block << [:static, $`]
-        block << @protect.shift
+        block << @protect[$1.to_i]
         text = $'
       end
       block << [:static, text]
