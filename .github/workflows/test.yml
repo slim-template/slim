@@ -23,6 +23,8 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
+        env:
+          TEMPLE: master
       - run: bundle install && bundle exec rake test
       - run: bundle install && bundle exec rake test:sinatra
         env:
@@ -40,6 +42,8 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.7
+        env:
+          TEMPLE: master
       - run: bundle install && bundle exec rake test:rails
         env:
           RAILS: 5.2.8
