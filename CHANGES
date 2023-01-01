@@ -1,3 +1,8 @@
+Development
+  * Fix markdown interpolation #773
+  * Support case/in #884
+  * Extract slim/railtie #850
+
 4.2.0 (2020-10-??)
   * Add option to hyphenate underscore attributes - #852
   * Update CI/CD testing and dependencies
