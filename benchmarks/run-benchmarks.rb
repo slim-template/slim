@@ -25,17 +25,15 @@ class SlimBenchmarks
   end
 
   def init_compiled_benches
-    haml = Haml::Engine.new(@haml_code, format: :html5, escape_attrs: false)
-
     context  = Context.new
 
-    haml.def_method(context, :run_haml)
     context.instance_eval %{
       def run_erb; #{ERB.new(@erb_code).src}; end
       def run_erubi; #{Erubi::Engine.new(@erb_code).src}; end
       def run_temple_erb; #{Temple::ERB::Engine.new.call @erb_code}; end
       def run_slim_pretty; #{Slim::Engine.new(pretty: true).call @slim_code}; end
       def run_slim_ugly; #{Slim::Engine.new.call @slim_code}; end
+      def run_haml; #{Haml::Engine.new.call @haml_code}; end
     }
 
     bench(:compiled, 'erb')         { context.run_erb }
