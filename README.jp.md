@@ -1198,9 +1198,8 @@ Travis-CI は継続的インテグレーションテストに利用されてい�
 
 Slim は主要な Ruby 実装全てで動作します:
 
-* Ruby 2.0, 2.1, 2.2 および 2.3
-* JRuby 1.9 mode
-* Rubinius 2.0
+* Ruby 2.5
+* JRuby
 
 ## 貢献
 
