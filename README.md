@@ -40,7 +40,7 @@ A short list of the features...
 
 ### What is Slim?
 
-Slim is a fast, lightweight templating engine with support for __Rails 3 and later__. It has been heavily tested on all major ruby implementations. We use
+Slim is a fast, lightweight templating engine with support for __Rails 5 and later__. It has been heavily tested on all major ruby implementations. We use
 continuous integration (travis-ci).
 
 Slim's core syntax is guided by one thought: "What's the minimum required to make this work".
