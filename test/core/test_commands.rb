@@ -15,9 +15,6 @@ class TestSlimCommands < Minitest::Test
   # exception raising example
   EXCEPTION_TEMPLATE = '- raise NotImplementedError'
 
-  # Temple has this feature...
-  STRING_FREEZER = RUBY_VERSION >= '2.1' ? '.freeze' : ''
-
   def test_option_help
     out, err = exec_slimrb '--help'
 
@@ -43,7 +40,7 @@ class TestSlimCommands < Minitest::Test
   def test_compile
     prepare_common_test STATIC_TEMPLATE, '--compile' do |out, err|
       assert err.empty?
-      assert_match %r{\"<p>Hello World!<\/p>\"#{STRING_FREEZER}}, out
+      assert_match %r{\"<p>Hello World!<\/p>\".freeze}, out
     end
   end
 
@@ -63,9 +60,9 @@ class TestSlimCommands < Minitest::Test
       else
         assert out.include? %Q{@output_buffer = ActiveSupport::SafeBuffer.new;}
       end
-      assert out.include? %Q{@output_buffer.safe_concat(("<p>Hello "#{STRING_FREEZER}));}
+      assert out.include? %Q{@output_buffer.safe_concat(("<p>Hello ".freeze));}
       assert out.include? %Q{@output_buffer.safe_concat(((::Temple::Utils.escape_html((name))).to_s));}
-      assert out.include? %Q{@output_buffer.safe_concat(("!</p>"#{STRING_FREEZER}));}
+      assert out.include? %Q{@output_buffer.safe_concat(("!</p>".freeze));}
     end
   end
 
