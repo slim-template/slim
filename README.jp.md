@@ -1,6 +1,9 @@
 # Slim
 
-[![Gem Version](https://img.shields.io/gem/v/slim.svg)](http://rubygems.org/gems/slim) [![Build Status](https://img.shields.io/travis/slim-template/slim.svg?branch=master)](http://travis-ci.org/slim-template/slim) [![Code Climate](https://codeclimate.com/github/slim-template/slim/badges/gpa.svg)](https://codeclimate.com/github/slim-template/slim) [![Test Coverage](https://codeclimate.com/github/slim-template/slim/badges/coverage.svg)](https://codeclimate.com/github/slim-template/slim/coverage)
+[![Gem Version](https://img.shields.io/gem/v/slim.svg)](http://rubygems.org/gems/slim)
+![Build Status](https://github.com/slim-template/slim/actions/workflows/test.yml/badge.svg)
+[![Code Climate](https://codeclimate.com/github/slim-template/slim/badges/gpa.svg)](https://codeclimate.com/github/slim-template/slim)
+[![Test Coverage](https://codeclimate.com/github/slim-template/slim/badges/coverage.svg)](https://codeclimate.com/github/slim-template/slim/coverage)
 [![GitHub Sponsors](https://img.shields.io/github/sponsors/slim-template)](https://github.com/sponsors/slim-template)
 
 Slim は 不可解にならない程度に view の構文を本質的な部品まで減らすことを目指したテンプレート言語です。標準的な HTML テンプレートからどれだけのものを減らせるか、検証するところから始まりました。(<, >, 閉じタグなど) 多くの人が Slim に興味を持ったことで, 機能的で柔軟な構文に成長しました。
