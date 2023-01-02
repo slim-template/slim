@@ -24,7 +24,6 @@ jobs:
         with:
           ruby-version: ${{ matrix.ruby }}
       - run: bundle install && bundle exec rake test
-        env:
       - run: bundle install && bundle exec rake test:sinatra
         env:
           SINATRA: 2.2.4
