@@ -16,8 +16,8 @@ Gem::Specification.new do |s|
   s.executables       = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths     = %w(lib)
 
-  s.required_ruby_version = '>=2.0.0'
+  s.required_ruby_version = '>= 2.5.0'
 
-  s.add_runtime_dependency('temple', ['>= 0.7.6', '!= 0.9.0'])
+  s.add_runtime_dependency('temple', ['>= 0.9.1'])
   s.add_runtime_dependency('tilt', ['>= 2.0.6', '< 2.1'])
 end
