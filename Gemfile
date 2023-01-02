@@ -8,7 +8,10 @@ group :perf do
   gem 'haml'
 end
 
-if  ENV['TEMPLE'] == 'master'
+if ENV['TEMPLE'] && ENV['TEMPLE'] != 'master'
+  gem 'temple', "= #{ENV['TEMPLE']}"
+else
+  # Test against temple master by default
   gem 'temple', :github => 'judofyr/temple'
 end
 
