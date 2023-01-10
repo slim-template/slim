@@ -95,13 +95,13 @@ renders as
 You can embed html code in the text which is not escaped.
 
 ~~~ slim
-| <a href="http://slim-lang.com">slim-lang.com</a>
+| <a href="http://github.com/slim-template/slim">github.com/slim-template/slim</a>
 ~~~
 
 renders as
 
 ~~~ html
-<a href="http://slim-lang.com">slim-lang.com</a>
+<a href="http://github.com/slim-template/slim">github.com/slim-template/slim</a>
 ~~~
 
 ### Text with trailing white space `'`
@@ -122,13 +122,13 @@ This is especially useful if you use tags behind a text block.
 
 ~~~ slim
 ' Link to
-a href="http://slim-lang.com" slim-lang.com
+a href="http://github.com/slim-template/slim" github.com/slim-template/slim
 ~~~
 
 renders as
 
 ~~~ html
-Link to <a href="http://slim-lang.com">slim-lang.com</a>
+Link to <a href="http://github.com/slim-template/slim">github.com/slim-template/slim</a>
 ~~~
 
 Multiple lines can be indented beneath the first text line.
@@ -186,13 +186,13 @@ lines
 HTML can be written directly.
 
 ~~~ slim
-<a href="http://slim-lang.com">slim-lang.com</a>
+<a href="http://github.com/slim-template/slim">github.com/slim-template/slim</a>
 ~~~
 
 renders as
 
 ~~~ html
-<a href="http://slim-lang.com">slim-lang.com</a>
+<a href="http://github.com/slim-template/slim">github.com/slim-template/slim</a>
 ~~~
 
 HTML tags allow nested blocks inside.
@@ -800,31 +800,31 @@ If a delimiter makes the syntax more readable for you, you can use the character
 
 ~~~ slim
 li
-  a(href="http://slim-lang.com" class="important") Link
+  a(href="http://github.com/slim-template/slim" class="important") Link
 li
-  a[href="http://slim-lang.com" class="important"] Link
+  a[href="http://github.com/slim-template/slim" class="important"] Link
 li
-  a{href="http://slim-lang.com" class="important"} Link
+  a{href="http://github.com/slim-template/slim" class="important"} Link
 ~~~
 
 renders as
 
 ~~~ html
 <li>
-  <a class="important" href="http://slim-lang.com">Link</a>
+  <a class="important" href="http://github.com/slim-template/slim">Link</a>
 </li>
 <li>
-  <a class="important" href="http://slim-lang.com">Link</a>
+  <a class="important" href="http://github.com/slim-template/slim">Link</a>
 </li>
 <li>
-  <a class="important" href="http://slim-lang.com">Link</a>
+  <a class="important" href="http://github.com/slim-template/slim">Link</a>
 </li>
 ~~~
 
 If you wrap the attributes, you can spread them across multiple lines:
 
 ~~~ slim
-a(href="http://slim-lang.com"
+a(href="http://github.com/slim-template/slim"
 
      class="important") Link
 ~~~
@@ -832,7 +832,7 @@ a(href="http://slim-lang.com"
 renders as
 
 ~~~ html
-<a class="important" href="http://slim-lang.com">Link</a>
+<a class="important" href="http://github.com/slim-template/slim">Link</a>
 ~~~
 
 ~~~ slim
@@ -872,19 +872,19 @@ renders as
 You can use single or double quotes for simple text attributes.
 
 ~~~ slim
-a href="http://slim-lang.com" title='Slim Homepage' Goto the Slim homepage
+a href="http://github.com/slim-template/slim" title='Slim Homepage' Goto the Slim homepage
 ~~~
 
 renders as
 
 ~~~ html
-<a href="http://slim-lang.com" title="Slim Homepage">Goto the Slim homepage</a>
+<a href="http://github.com/slim-template/slim" title="Slim Homepage">Goto the Slim homepage</a>
 ~~~
 
 You can use text interpolation in the quoted attributes:
 
 ~~~ slim
-- url='slim-lang.com'
+- url='github.com/slim-template/slim'
 a href="http://#{url}" Goto the #{url}
 a href="{"test"}" Test of quoted text in braces
 ~~~
@@ -892,7 +892,7 @@ a href="{"test"}" Test of quoted text in braces
 renders as
 
 ~~~ html
-<a href="http://slim-lang.com">Goto the slim-lang.com</a><a href="{&quot;test&quot;}">Test of quoted text in braces</a>
+<a href="http://github.com/slim-template/slim">Goto the github.com/slim-template/slim</a><a href="{&quot;test&quot;}">Test of quoted text in braces</a>
 ~~~
 
 The attribute value will be escaped by default. Use == if you want to disable escaping in the attribute.
@@ -1040,13 +1040,13 @@ You can configure attributes to be merged if multiple are given (See option `:me
 this is done for class attributes with the white space as delimiter.
 
 ~~~ slim
-a.menu class="highlight" href="http://slim-lang.com/" Slim-lang.com
+a.menu class="highlight" href="http://github.com/slim-template/slim/" github.com/slim-template/slim
 ~~~
 
 renders as
 
 ~~~ html
-<a class="menu highlight" href="http://slim-lang.com/">Slim-lang.com</a>
+<a class="menu highlight" href="http://github.com/slim-template/slim/">github.com/slim-template/slim</a>
 ~~~
 
 You can also use an `Array` as attribute value and the array elements will be merged using the delimiter.
@@ -1074,7 +1074,7 @@ with the :tag key.
 ~~~ slim
 ruby:
   def self.a_unless_current
-    @page_current ? {tag: 'span'} : {tag: 'a', href: 'http://slim-lang.com/'}
+    @page_current ? {tag: 'span'} : {tag: 'a', href: 'http://github.com/slim-template/slim/'}
   end
 - @page_current = true
 *a_unless_current Link
@@ -1085,7 +1085,7 @@ ruby:
 renders as
 
 ~~~ html
-<span>Link</span><a href="http://slim-lang.com/">Link</a>
+<span>Link</span><a href="http://github.com/slim-template/slim/">Link</a>
 ~~~
 
 ### Shortcuts

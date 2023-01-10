@@ -13,7 +13,7 @@ Gettext translates the string from english to german where interpolations are re
 
 and renders as
 
-    <h1>Willkommen auf slim-lang.com!</h1>
+    <h1>Willkommen auf github.com/slim-template/slim!</h1>
 
 Enable the translator plugin with
 

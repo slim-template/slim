@@ -31,7 +31,7 @@ A short list of the features...
 
 ## Links
 
-* Homepage: <http://slim-lang.com>
+* Homepage: <http://github.com/slim-template/slim>
 * Source: <http://github.com/slim-template/slim>
 * Bugs:   <http://github.com/slim-template/slim/issues>
 * List:   <http://groups.google.com/group/slim-template>
@@ -411,7 +411,7 @@ body
 You write attributes directly after the tag. For normal text attributes you must use double `"` or single quotes `'` (Quoted attributes).
 
 ~~~ slim
-a href="http://slim-lang.com" title='Slim Homepage' Goto the Slim homepage
+a href="http://github.com/slim-template/slim" title='Slim Homepage' Goto the Slim homepage
 ~~~
 
 You can use text interpolation in the quoted attributes.
@@ -447,7 +447,7 @@ h2 [ id = "tagline" ] = page_tagline
 Example:
 
 ~~~ slim
-a href="http://slim-lang.com" title='Slim Homepage' Goto the Slim homepage
+a href="http://github.com/slim-template/slim" title='Slim Homepage' Goto the Slim homepage
 ~~~
 
 You can use text interpolation in the quoted attributes:
@@ -512,13 +512,13 @@ You can configure attributes to be merged if multiple are given (See option `:me
 this is done for class attributes with the white space as delimiter.
 
 ~~~ slim
-a.menu class="highlight" href="http://slim-lang.com/" Slim-lang.com
+a.menu class="highlight" href="http://github.com/slim-template/slim/" github.com/slim-template/slim
 ~~~
 
 This renders as:
 
 ~~~ html
-<a class="menu highlight" href="http://slim-lang.com/">Slim-lang.com</a>
+<a class="menu highlight" href="http://github.com/slim-template/slim/">github.com/slim-template/slim</a>
 ~~~
 
 You can also use an `Array` as attribute value and the array elements will be merged using the delimiter.
@@ -571,7 +571,7 @@ with the :tag key.
 ~~~ slim
 ruby:
   def a_unless_current
-    @page_current ? {tag: 'span'} : {tag: 'a', href: 'http://slim-lang.com/'}
+    @page_current ? {tag: 'span'} : {tag: 'a', href: 'http://github.com/slim-template/slim/'}
   end
 - @page_current = true
 *a_unless_current Link
@@ -582,7 +582,7 @@ ruby:
 This renders as:
 
 ~~~ html
-<span>Link</span><a href="http://slim-lang.com/">Link</a>
+<span>Link</span><a href="http://github.com/slim-template/slim/">Link</a>
 ~~~
 
 ### Shortcuts
@@ -796,7 +796,7 @@ end
 and it would be used as follows
 
 ~~~ slim
-- links = { 'http://slim-lang.com' => 'The Slim Template Language' }
+- links = { 'http://github.com/slim-template/slim' => 'The Slim Template Language' }
 = capture link_list=:link_list, links do |url, text|
   a href=url = text
 ~~~

@@ -31,7 +31,7 @@ Slim は 不可解にならない程度に view の構文を本質的な部品�
 
 ## リンク
 
-* ホームページ: <http://slim-lang.com>
+* ホームページ: <http://github.com/slim-template/slim>
 * ソース: <http://github.com/slim-template/slim>
 * バグ:   <http://github.com/slim-template/slim/issues>
 * リスト:   <http://groups.google.com/group/slim-template>
@@ -411,7 +411,7 @@ body
 タグの後に直接属性を書きます。通常の属性記述にはダブルクォート `"` か シングルクォート `'` を使わなければなりません (引用符で囲まれた属性)。
 
 ~~~ slim
-a href="http://slim-lang.com" title='Slim のホームページ' Slim のホームページへ
+a href="http://github.com/slim-template/slim" title='Slim のホームページ' Slim のホームページへ
 ~~~
 
 引用符で囲まれたテキストを属性として使えます。
@@ -447,7 +447,7 @@ h2 [ id = "tagline" ] = page_tagline
 例:
 
 ~~~ slim
-a href="http://slim-lang.com" title='Slim のホームページ' Slim のホームページへ
+a href="http://github.com/slim-template/slim" title='Slim のホームページ' Slim のホームページへ
 ~~~
 
 引用符で囲まれたテキストを属性として使えます:
@@ -512,13 +512,13 @@ input type="text" disabled=nil
  class 属性はスペース区切りで結合されます。
 
 ~~~ slim
-a.menu class="highlight" href="http://slim-lang.com/" Slim-lang.com
+a.menu class="highlight" href="http://github.com/slim-template/slim/" github.com/slim-template/slim
 ~~~
 
 レンダリング結果:
 
 ~~~ html
-<a class="menu highlight" href="http://slim-lang.com/">Slim-lang.com</a>
+<a class="menu highlight" href="http://github.com/slim-template/slim/">github.com/slim-template/slim</a>
 ~~~
 
 また, `Array` を属性値として使うと、配列要素が区切り文字で結合されます。
@@ -571,7 +571,7 @@ div class="first second third"
 ~~~ slim
 ruby:
   def a_unless_current
-    @page_current ? {tag: 'span'} : {tag: 'a', href: 'http://slim-lang.com/'}
+    @page_current ? {tag: 'span'} : {tag: 'a', href: 'http://github.com/slim-template/slim/'}
   end
 - @page_current = true
 *a_unless_current リンク
@@ -582,7 +582,7 @@ ruby:
 レンダリング結果:
 
 ~~~ html
-<span>リンク</span><a href="http://slim-lang.com/">リンク</a>
+<span>リンク</span><a href="http://github.com/slim-template/slim/">リンク</a>
 ~~~
 
 ### ショートカット
@@ -796,7 +796,7 @@ end
 そして, 次のように使用出来ます。
 
 ~~~ slim
-- links = { 'http://slim-lang.com' => 'The Slim Template Language' }
+- links = { 'http://github.com/slim-template/slim' => 'The Slim Template Language' }
 = capture link_list=:link_list, links do |url, text|
   a href=url = text
 ~~~

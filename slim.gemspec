@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.email             = ['mail@daniel-mendler.de', 'andy@stonean.com', 'ifredwu@gmail.com']
   s.summary           = 'Slim is a template language.'
   s.description       = 'Slim is a template language whose goal is reduce the syntax to the essential parts without becoming cryptic.'
-  s.homepage          = 'http://slim-lang.com/'
+  s.homepage          = 'http://github.com/slim-template/slim/'
   s.license           = 'MIT'
 
   s.files             = `git ls-files`.split("\n")

@@ -131,10 +131,10 @@ Development
        div id=('obj' + name) data={:a => 1, :b => 2} class=['alpha', 'beta']
   * Quoted attributes are escaped by default
     Old:
-       a href='http://slim-lang.com/?a=1&amp;b=2'
+       a href='http://github.com/slim-template/slim/?a=1&amp;b=2'
     New:
-       a href='http://slim-lang.com/?a=1&b=2'
-       a href=='http://slim-lang.com/?a=1&amp;b=2'
+       a href='http://github.com/slim-template/slim/?a=1&b=2'
+       a href=='http://github.com/slim-template/slim/?a=1&amp;b=2'
     You can always disable escaping completly by using :disable_escape if you don't want to write '=='.
   * Added hyphenation support for data attributes (Option :hyphen_attrs)
     Example: div data={key1_key2: 2, key1: {key3: 3}} will render as '<div data-key1-key2="2" data-key1-key3="3"></div>'
@@ -175,11 +175,11 @@ Development
   * Deprecated :escape_quoted_attrs (done by default in 2.0)
   * Warn if quoted attributes might be double escaped in Slim 2.0.0
     Old syntax:
-       a href='http://slim-lang.com/?a=1&amp;b=2'
-       a href=='http://slim-lang.com/?a=1&amp;b=2'
+       a href='http://github.com/slim-template/slim/?a=1&amp;b=2'
+       a href=='http://github.com/slim-template/slim/?a=1&amp;b=2'
     New syntax in 2.0.0:
-       a href='http://slim-lang.com/?a=1&b=2'
-       a href=='http://slim-lang.com/?a=1&amp;b=2'
+       a href='http://github.com/slim-template/slim/?a=1&b=2'
+       a href=='http://github.com/slim-template/slim/?a=1&amp;b=2'
   * Improved pretty printing (Issue #202)
   * Renamed Slim::EmbeddedEngine to Slim::Embedded (Old constant still available until 2.0)
   * Renamed Slim::ControlStructures to Slim::Controls
