@@ -30,6 +30,7 @@ module Slim
     use Slim::CodeAttributes
     use(:AttributeRemover) { Temple::HTML::AttributeRemover.new(remove_empty_attrs: options[:merge_attrs].keys) }
     html :Pretty
+    filter :Ambles
     filter :Escapable
     filter :StaticAnalyzer
     filter :ControlFlow
