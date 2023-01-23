@@ -2,12 +2,6 @@ source 'https://rubygems.org/'
 
 gemspec
 
-group :perf do
-  gem 'benchmark-ips'
-  gem 'erubi'
-  gem 'haml'
-end
-
 if ENV['TEMPLE'] && ENV['TEMPLE'] != 'master'
   gem 'temple', "= #{ENV['TEMPLE']}"
 else
