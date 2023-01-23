@@ -1,11 +1,12 @@
 Development
+
   * Fix markdown interpolation #773
   * Support case/in #884
   * Extract slim/railtie #850
   * css: doesn't add type='text/css' anymore #828
   * Remove deprecated whitespace syntax =' etc
-
-4.2.0 (2020-10-??)
+  * Add support for annotate_rendered_view_with_filenames #867, #878, #901
+  * Remove deprecated syntax
   * Add option to hyphenate underscore attributes - #852
   * Update CI/CD testing and dependencies
   
