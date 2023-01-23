@@ -79,7 +79,7 @@ module Slim
       @attr_list_delims_re = /\A\s*([#{keys}])/
       @embedded_re = /\A(#{Regexp.union(Embedded.engines.keys.map(&:to_s))})(?:\s*(?:(.*)))?:(\s*)/
       keys = Regexp.escape ('"\'></='.split(//) + @attr_list_delims.flatten + @code_attr_delims.flatten).uniq.join
-      @attr_name = "\\A\\s*([^\0\s#{keys}]+)"
+      @attr_name = "\\A\\s*([^\\0\\s#{keys}]+)"
       @quoted_attr_re = /#{@attr_name}\s*=(=?)\s*("|')/
       @code_attr_re = /#{@attr_name}\s*=(=?)\s*/
 
