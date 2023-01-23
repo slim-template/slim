@@ -2,7 +2,7 @@ source 'https://rubygems.org/'
 
 gemspec
 
-group :perf do
+group :bench do
   gem 'benchmark-ips'
   gem 'erubi'
   gem 'haml'
