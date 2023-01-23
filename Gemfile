@@ -2,6 +2,17 @@ source 'https://rubygems.org/'
 
 gemspec
 
+group :perf do
+  gem 'benchmark-ips'
+  gem 'erubi'
+  gem 'haml'
+end
+
+gem 'test-unit', '~> 3.5'
+gem 'minitest', '~> 5.15'
+gem 'rake', '~> 13.0'
+gem 'kramdown', '~> 2.4'
+
 if ENV['TEMPLE'] && ENV['TEMPLE'] != 'master'
   gem 'temple', "= #{ENV['TEMPLE']}"
 else
@@ -28,11 +39,6 @@ if ENV['RAILS']
   end
 end
 
-gem 'test-unit', '~> 3.5'
-gem 'minitest', '~> 5.15'
-gem 'rake', '~> 13.0'
-gem 'kramdown', '~> 2.4'
-
 if ENV['SINATRA']
   gem 'rack-test'
 
@@ -41,14 +47,4 @@ if ENV['SINATRA']
   else
     gem 'sinatra', :tag => "v#{ENV['SINATRA']}"
   end
-end
-
-if ENV['TASK'] == 'bench'
-  gem 'benchmark-ips'
-  gem 'erubi'
-  gem 'haml'
-end
-
-if ENV['CODECLIMATE_REPO_TOKEN']
-  gem 'codeclimate-test-reporter'
 end
