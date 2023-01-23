@@ -55,21 +55,22 @@ module Slim
         @tab_re = "\t"
         @tab = ' '
       end
-      @tag_shortcut, @attr_shortcut, @additional_attrs, @attr_value = {}, {}, {}, {}
+      @tag_shortcut, @attr_shortcut, @additional_attrs = {}, {}, {}
       options[:shortcut].each do |k,v|
-        raise ArgumentError, 'Shortcut requires :tag and/or :attr' unless (v[:attr] || v[:tag]) && (v.keys - [:attr, :tag, :additional_attrs, :attr_value]).empty?
+        raise ArgumentError, 'Shortcut requires :tag and/or :attr' unless (v[:attr] || v[:tag]) && (v.keys - [:attr, :tag, :additional_attrs]).empty?
         @tag_shortcut[k] = v[:tag] || options[:default_tag]
         if v.include?(:attr) || v.include?(:additional_attrs)
           raise ArgumentError, 'You can only use special characters for attribute shortcuts' if k =~ /(\p{Word}|-)/
         end
         if v.include?(:attr)
-          @attr_shortcut[k] = [v[:attr]].flatten
+          if v[:attr].is_a?(Proc)
+            @attr_shortcut[k] = v[:attr]
+          else
+            @attr_shortcut[k] = [v[:attr]].flatten
+          end
         end
         if v.include?(:additional_attrs)
           @additional_attrs[k] = v[:additional_attrs]
-        end
-        if v.include?(:attr_value)
-          @attr_value[k] = v[:attr_value]
         end
       end
       keys = Regexp.union @attr_shortcut.keys.sort_by {|k| -k.size }
@@ -336,13 +337,14 @@ module Slim
         # because we don't want text interpolation in .class or #id shortcut
         syntax_error!('Illegal shortcut') unless shortcut = @attr_shortcut[$1]
 
-        if @attr_value[$1]
-          value = [:dynamic, @attr_value[$1].call($2)]
+        if shortcut.is_a?(Proc)
+          value = shortcut.call($2)
+          attributes << [:html, :attr, value[0], [:dynamic, value[1]]]
         else
           value = [:static, $2]
+          shortcut.each {|a| attributes << [:html, :attr, a, value] }
         end
 
-        shortcut.each {|a| attributes << [:html, :attr, a, value] }
         if additional_attr_pairs = @additional_attrs[$1]
           additional_attr_pairs.each do |k,v|
             attributes << [:html, :attr, k.to_s, [:static, v]]

@@ -115,6 +115,30 @@ h1#title This is my title
                 source, shortcut: {'^' => {tag: 'script', attr: 'data-binding', additional_attrs: { type: "application/json" }}}
   end
 
+  def test_render_with_custom_lambda_shortcut
+    source = %q{
+~foo Hello
+}
+    assert_html '<div class="styled-foo">Hello</div>',
+                source, shortcut: {'~' => {attr: ->(v) {["class", "\"styled-#{v}\""]}}}
+  end
+
+  def test_render_with_custom_lambda_shortcut_and_multiple_values
+    source = %q{
+~foo~bar Hello
+}
+    assert_html '<div class="styled-foo styled-bar">Hello</div>',
+                source, shortcut: {'~' => {attr: ->(v) {["class", "\"styled-#{v}\""]}}}
+  end
+
+#   def test_render_with_custom_lambda_shortcut_and_existing_class
+#     source = %q{
+# ~foo.baz Hello
+# }
+#     assert_html '<div class="styled-foo baz">Hello</div>',
+#                 source, shortcut: {'~' => {attr: ->(v) {["class", "\"styled-#{v}\""]}}}
+#   end
+
   def test_render_with_text_block
     source = %q{
 p

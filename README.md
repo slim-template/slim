@@ -692,6 +692,30 @@ which renders to
 </script>
 ~~~
 
+#### Lambda shortcuts
+
+You can define custom shortcuts using lambdas.
+
+In this example we add `~` to create a shortcut with a special processing (adding a prefix) for the class attribute.
+
+~~~ ruby
+Slim::Engine.set_options shortcut: {'~' => {attr: ->(v) {["class", "\"styled-#{v}\""]}}}
+~~~
+
+We can use it in Slim code like this
+
+~~~ slim
+h1~title Hello
+~text~question How are you?
+~~~
+
+which renders to
+
+~~~ html
+<h1 class="styled-title">Hello</h1>
+<div class="styled-text styled-question">How are you?</div>
+~~~
+
 #### ID shortcut `#` and class shortcut `.`
 
 You can specify the `id` and `class` attributes in the following shortcut form
