@@ -338,11 +338,10 @@ module Slim
         syntax_error!('Illegal shortcut') unless shortcut = @attr_shortcut[$1]
 
         if shortcut.is_a?(Proc)
-          value = shortcut.call($2)
-          attributes << [:html, :attr, value[0], [:dynamic, value[1]]]
+          values = shortcut.call($2)
+          values.each {|a, v| attributes << [:html, :attr, a, [:static, v]] }
         else
-          value = [:static, $2]
-          shortcut.each {|a| attributes << [:html, :attr, a, value] }
+          shortcut.each {|a| attributes << [:html, :attr, a, [:static, $2]] }
         end
 
         if additional_attr_pairs = @additional_attrs[$1]
