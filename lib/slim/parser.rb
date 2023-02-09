@@ -57,6 +57,7 @@ module Slim
       end
       @tag_shortcut, @attr_shortcut, @additional_attrs = {}, {}, {}
       options[:shortcut].each do |k,v|
+        next if v[:ignore]
         raise ArgumentError, 'Shortcut requires :tag and/or :attr' unless (v[:attr] || v[:tag]) && (v.keys - [:attr, :tag, :additional_attrs]).empty?
         @tag_shortcut[k] = v[:tag] || options[:default_tag]
         if v.include?(:attr) || v.include?(:additional_attrs)

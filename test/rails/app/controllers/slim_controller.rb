@@ -31,6 +31,12 @@ class SlimController < ApplicationController
     end
   end
 
+  def ignore_shortcut
+    Slim::Engine.with_options(shortcut: {'%' => { attr: 'dev', ignore: params[:ignore] }}) do
+      render
+    end
+  end
+
   def content_for
     @hello = "Hello Slim!"
   end
