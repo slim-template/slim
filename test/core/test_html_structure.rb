@@ -117,11 +117,10 @@ h1#title This is my title
 
   def test_render_with_shortcut_ignored
     source = %q{
-p%test-id Lorem ipsum dolor sit amet
-
+h1.size1%title The Title
 %test-id.name Some more markup
 }
-    assert_html '<p>Lorem ipsum dolor sit amet</p><div class="name">Some more markup</div>',
+    assert_html '<h1 class="size1">The Title</h1><div class="name">Some more markup</div>',
                 source, shortcut: {'#' => {attr: 'id'}, '.' => {attr: 'class'}, '%' => {attr: 'dev', ignore: true}}
   end
 

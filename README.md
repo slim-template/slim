@@ -692,6 +692,24 @@ which renders to
 </script>
 ~~~
 
+You can prevent the attribute rending by setting the option `ignore` to `true`.
+
+~~~ ruby
+Slim::Engine.set_options shortcut: {'%' => {attr: 'dev-id', ignore: true}}
+~~~
+
+Then
+
+~~~ slim
+h1.size1%title The Title
+~~~
+
+which renders to
+
+~~~ html
+<h1 class="size1">The Title</h1>
+~~~
+
 #### ID shortcut `#` and class shortcut `.`
 
 You can specify the `id` and `class` attributes in the following shortcut form
