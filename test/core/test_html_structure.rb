@@ -7,7 +7,7 @@ class TestSlimHtmlStructure < TestSlim
 html
   head
     title Simple Test Title
-  body 
+  body
     p Hello World, meet Slim.
 }
 
@@ -113,6 +113,16 @@ h1#title This is my title
 }
     assert_html '<script data-binding="items" type="application/json">[{\'title\':\'item0\'},{\'title\':\'item1\'},{\'title\':\'item2\'},{\'title\':\'item3\'},{\'title\':\'item4\'}]</script>',
                 source, shortcut: {'^' => {tag: 'script', attr: 'data-binding', additional_attrs: { type: "application/json" }}}
+  end
+
+  def test_render_with_shortcut_ignored
+    source = %q{
+p%test-id Lorem ipsum dolor sit amet
+
+%test-id.name Some more markup
+}
+    assert_html '<p>Lorem ipsum dolor sit amet</p><div class="name">Some more markup</div>',
+                source, shortcut: {'#' => {attr: 'id'}, '.' => {attr: 'class'}, '%' => {attr: 'dev', ignore: true}}
   end
 
   def test_render_with_text_block
