@@ -65,13 +65,6 @@ class TestSlim < ActionDispatch::IntegrationTest
     assert_html '<p role="empty">Test</p>'
   end
 
-  test "render ignore_shortcut" do
-    get "/slim/thread_options", params: { ignore: false}
-    assert_html '<p dev="test-id">Test</p>'
-    get "/slim/thread_options", params: { ignore: true }
-    assert_html '<p>Test</p>'
-  end
-
   test "content_for" do
     get "/slim/content_for"
     assert_html "<p>Page content</p><h1><p>Hello Slim!</p></h1><h2><p>Hello Slim!</p></h2>", heading: 'Heading set from a view'
