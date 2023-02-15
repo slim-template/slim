@@ -6,11 +6,6 @@ end
 
 require 'rake/testtask'
 
-desc 'Run Slim benchmarks! (default parameters slow=false)'
-task :bench, :slow do
-  ruby('benchmarks/run-benchmarks.rb')
-end
-
 task 'test' => %w(test:core test:literate test:logic_less test:translator test:smart test:include)
 
 namespace 'test' do

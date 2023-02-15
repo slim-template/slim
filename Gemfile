@@ -2,12 +2,6 @@ source 'https://rubygems.org/'
 
 gemspec
 
-group :bench do
-  gem 'benchmark-ips'
-  gem 'erubi'
-  gem 'haml'
-end
-
 gem 'test-unit', '~> 3.5'
 gem 'minitest', '~> 5.15'
 gem 'rake', '~> 13.0'
