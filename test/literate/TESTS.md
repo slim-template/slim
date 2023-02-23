@@ -93,6 +93,30 @@ Text
 lines
 ~~~
 
+~~~ slim
+|<>
+
+   Text
+    block
+
+     with
+
+    multiple
+   lines
+~~~
+
+renders as
+
+~~~ html
+ Text
+ block
+
+  with
+
+ multiple
+lines 
+~~~
+
 You can nest text blocks beneath tags.
 
 ~~~ slim
