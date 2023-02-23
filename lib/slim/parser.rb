@@ -230,10 +230,12 @@ module Slim
         # Found an output block.
         # We expect the line to be broken or the next line to be indented.
         @line = $'
+        leading_ws = $2.include?('<'.freeze)
+        trailing_ws = $2.include?('>'.freeze)
         block = [:multi]
-        @stacks.last << [:static, ' '] if $2.include?('<'.freeze)
+        @stacks.last << [:static, ' '] if leading_ws
         @stacks.last << [:slim, :output, $1.empty?, parse_broken_line, block]
-        @stacks.last << [:static, ' '] if $2.include?('>'.freeze)
+        @stacks.last << [:static, ' '] if trailing_ws
         @stacks << block
       when @embedded_re
         # Embedded template detected. It is treated as block.
