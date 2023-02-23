@@ -157,7 +157,7 @@ You can also embed html in the text line
 
 #### Verbatim text with leading and/or treailing white space `|<` `|>` `|<>`
 
-You can add white space around verbatim text in the same as for `=`:
+You can add white space around verbatim text in the same way as for `=` output:
 ~~~ slim
 | This line will not have any extra white space.
 |  This line will have a leading space, but it is difficult to see.
