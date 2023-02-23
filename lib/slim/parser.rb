@@ -226,13 +226,14 @@ module Slim
         block = [:multi]
         @stacks.last << [:slim, :control, parse_broken_line, block]
         @stacks << block
-      when /\A=(=?)(['<>]*)/
+      when /\A=(=?)([<>]*)/
         # Found an output block.
         # We expect the line to be broken or the next line to be indented.
         @line = $'
+        leading_ws = $2.include?('<'.freeze)
         trailing_ws = $2.include?('>'.freeze)
         block = [:multi]
-        @stacks.last << [:static, ' '] if $2.include?('<'.freeze)
+        @stacks.last << [:static, ' '] if leading_ws
         @stacks.last << [:slim, :output, $1.empty?, parse_broken_line, block]
         @stacks.last << [:static, ' '] if trailing_ws
         @stacks << block
