@@ -27,6 +27,22 @@ renders as
 Text block
 ~~~
 
+You can add leading or trailing white space with the `<` and `>` markers:
+
+~~~ slim
+|< Text with leading whitespace.
+|  Text with leading whitespace.
+|> Text with trailing whitespace.
+|<> Text with both leading and trailing whitespace.
+~~~
+
+renders as
+
+~~~ html
+ Text with leading whitespace. Text with leading whitespace.Text with trailing whitespace.  Text with both leading and trailing whitespace. 
+~~~
+
+
 Multiple lines can be indented beneath the first text line.
 
 ~~~ slim

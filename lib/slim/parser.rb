@@ -209,10 +209,12 @@ module Slim
       when /\A\//
         # Slim comment
         parse_comment_block
-      when /\A([\|'])( ?)/
+      when /\A([\|'])([<>]*)( ?)/
         # Found verbatim text block.
-        trailing_ws = $1 == "'"
-        @stacks.last << [:slim, :text, :verbatim, parse_text_block($', @indents.last + $2.size + 1)]
+        leading_ws = $2.include?('<'.freeze)
+        trailing_ws = ($1 == "'") || ($2.include?('>'.freeze))
+        @stacks.last << [:static, ' '] if leading_ws
+        @stacks.last << [:slim, :text, :verbatim, parse_text_block($', @indents.last + $3.size + 1)]
         @stacks.last << [:static, ' '] if trailing_ws
       when /\A</
         # Inline html
