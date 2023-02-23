@@ -94,7 +94,7 @@ lines
 ~~~
 
 ~~~ slim
-|<>
+|><
 
    Text
     block
