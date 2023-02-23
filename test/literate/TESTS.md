@@ -120,6 +120,16 @@ renders as
 <a href="http://github.com/slim-template/slim">github.com/slim-template/slim</a>
 ~~~
 
+~~~ slim
+|<a href="http://github.com/slim-template/slim">github.com/slim-template/slim</a>
+~~~
+
+renders as
+
+~~~ html
+<a href="http://github.com/slim-template/slim">github.com/slim-template/slim</a>
+~~~
+
 ### Text with trailing white space `'`
 
 A text blocks with trailing white space starts with the `'` as line indicator.
