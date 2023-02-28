@@ -153,6 +153,17 @@ You can also embed html in the text line
   | <tr><td>#{a.name}</td><td>#{a.description}</td></tr>
 ~~~
 
+#### Verbatim text with leading and/or treailing white space `|<` `|>` `|<>`
+
+You can add white space around verbatim text in the same way as for `=` output:
+~~~ slim
+| This line will not have any extra white space.
+|  This line will have a leading space, but it is difficult to see.
+|< This line will have a leading white space.
+|> This line will have a trailing white space.
+|<> This line will have both leading and trailing white space.
+~~~
+
 ### Verbatim text with trailing white space `'`
 
 The single quote tells Slim to copy the line (similar to `|`), but makes sure that a single trailing white space is appended.

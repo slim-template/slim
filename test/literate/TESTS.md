@@ -27,6 +27,22 @@ renders as
 Text block
 ~~~
 
+You can add leading or trailing white space with the `<` and `>` markers:
+
+~~~ slim
+|< Text with leading whitespace.
+|  Text with leading whitespace.
+|> Text with trailing whitespace.
+|<> Text with both leading and trailing whitespace.
+~~~
+
+renders as
+
+~~~ html
+ Text with leading whitespace. Text with leading whitespace.Text with trailing whitespace.  Text with both leading and trailing whitespace. 
+~~~
+
+
 Multiple lines can be indented beneath the first text line.
 
 ~~~ slim
@@ -77,6 +93,30 @@ Text
 lines
 ~~~
 
+~~~ slim
+|><
+
+   Text
+    block
+
+     with
+
+    multiple
+   lines
+~~~
+
+renders as
+
+~~~ html
+ Text
+ block
+
+  with
+
+ multiple
+lines 
+~~~
+
 You can nest text blocks beneath tags.
 
 ~~~ slim
@@ -96,6 +136,16 @@ You can embed html code in the text which is not escaped.
 
 ~~~ slim
 | <a href="http://github.com/slim-template/slim">github.com/slim-template/slim</a>
+~~~
+
+renders as
+
+~~~ html
+<a href="http://github.com/slim-template/slim">github.com/slim-template/slim</a>
+~~~
+
+~~~ slim
+|<a href="http://github.com/slim-template/slim">github.com/slim-template/slim</a>
 ~~~
 
 renders as
