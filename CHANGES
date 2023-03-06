@@ -1,3 +1,11 @@
+Development
+
+  * Allow whitespace markers for verbatim text: `|<`, `|>`, and `|<>` - #912
+  * Do not swallow single quote after output line indicator - #911
+  * Support Tilt 2.1.0 - #910
+  * Fix Railtie load error - #904
+  * Fix attribute parsing with square brackets - #796
+
 5.0.0 (2023-01-23)
 
   * Fix markdown interpolation #773
