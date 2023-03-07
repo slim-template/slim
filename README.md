@@ -153,7 +153,7 @@ You can also embed html in the text line
   | <tr><td>#{a.name}</td><td>#{a.description}</td></tr>
 ~~~
 
-#### Verbatim text with leading and/or treailing white space `|<` `|>` `|<>`
+#### Verbatim text with leading and/or trailing white space `|<` `|>` `|<>`
 
 You can add white space around verbatim text in the same way as for `=` output:
 ~~~ slim
