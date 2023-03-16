@@ -115,6 +115,38 @@ h1#title This is my title
                 source, shortcut: {'^' => {tag: 'script', attr: 'data-binding', additional_attrs: { type: "application/json" }}}
   end
 
+  def test_render_with_custom_lambda_shortcut
+    Slim::Parser.options[:shortcut].update({'~' => {attr: ->(v) {{class: "styled-#{v}"}}}})
+    source = %q{
+~foo Hello
+}
+    assert_html '<div class="styled-foo">Hello</div>', source
+  end
+
+  def test_render_with_custom_lambda_shortcut_and_multiple_values
+    Slim::Parser.options[:shortcut].update({'~' => {attr: ->(v) {{class: "styled-#{v}"}}}})
+    source = %q{
+~foo~bar Hello
+}
+    assert_html '<div class="styled-foo styled-bar">Hello</div>', source
+  end
+
+  def test_render_with_custom_lambda_shortcut_and_existing_class
+    Slim::Parser.options[:shortcut].update({'~' => {attr: ->(v) {{class: "styled-#{v}"}}}})
+    source = %q{
+~foo.baz Hello
+}
+    assert_html '<div class="styled-foo baz">Hello</div>', source
+  end
+
+  def test_render_with_existing_class_and_custom_lambda_shortcut
+    Slim::Parser.options[:shortcut].update({'~' => {attr: ->(v) {{class: "styled-#{v}"}}}})
+    source = %q{
+.baz~foo Hello
+}
+    assert_html '<div class="baz styled-foo">Hello</div>', source
+  end
+
   def test_render_with_text_block
     source = %q{
 p

@@ -63,7 +63,11 @@ module Slim
           raise ArgumentError, 'You can only use special characters for attribute shortcuts' if k =~ /(\p{Word}|-)/
         end
         if v.include?(:attr)
-          @attr_shortcut[k] = [v[:attr]].flatten
+          if v[:attr].is_a?(Proc)
+            @attr_shortcut[k] = v[:attr]
+          else
+            @attr_shortcut[k] = [v[:attr]].flatten
+          end
         end
         if v.include?(:additional_attrs)
           @additional_attrs[k] = v[:additional_attrs]
@@ -335,7 +339,14 @@ module Slim
         # The class/id attribute is :static instead of :slim :interpolate,
         # because we don't want text interpolation in .class or #id shortcut
         syntax_error!('Illegal shortcut') unless shortcut = @attr_shortcut[$1]
-        shortcut.each {|a| attributes << [:html, :attr, a, [:static, $2]] }
+
+        if shortcut.is_a?(Proc)
+          values = shortcut.call($2)
+          values.each {|a, v| attributes << [:html, :attr, a, [:static, v]] }
+        else
+          shortcut.each {|a| attributes << [:html, :attr, a, [:static, $2]] }
+        end
+
         if additional_attr_pairs = @additional_attrs[$1]
           additional_attr_pairs.each do |k,v|
             attributes << [:html, :attr, k.to_s, [:static, v]]
