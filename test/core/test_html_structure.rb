@@ -116,35 +116,51 @@ h1#title This is my title
   end
 
   def test_render_with_custom_lambda_shortcut
-    Slim::Parser.options[:shortcut].update({'~' => {attr: ->(v) {{class: "styled-#{v}"}}}})
-    source = %q{
+    begin
+      Slim::Parser.options[:shortcut]['~'] = {attr: ->(v) {{class: "styled-#{v}", id: "id-#{v}"}}}
+      source = %q{
 ~foo Hello
 }
-    assert_html '<div class="styled-foo">Hello</div>', source
+      assert_html '<div class="styled-foo" id="id-foo">Hello</div>', source
+    ensure
+      Slim::Parser.options[:shortcut].delete('~')
+    end
   end
 
   def test_render_with_custom_lambda_shortcut_and_multiple_values
-    Slim::Parser.options[:shortcut].update({'~' => {attr: ->(v) {{class: "styled-#{v}"}}}})
-    source = %q{
+    begin
+      Slim::Parser.options[:shortcut]['~'] = {attr: ->(v) {{class: "styled-#{v}"}}}
+      source = %q{
 ~foo~bar Hello
 }
-    assert_html '<div class="styled-foo styled-bar">Hello</div>', source
+      assert_html '<div class="styled-foo styled-bar">Hello</div>', source
+    ensure
+      Slim::Parser.options[:shortcut].delete('~')
+    end
   end
 
   def test_render_with_custom_lambda_shortcut_and_existing_class
-    Slim::Parser.options[:shortcut].update({'~' => {attr: ->(v) {{class: "styled-#{v}"}}}})
-    source = %q{
+    begin
+      Slim::Parser.options[:shortcut]['~'] = {attr: ->(v) {{class: "styled-#{v}"}}}
+      source = %q{
 ~foo.baz Hello
 }
-    assert_html '<div class="styled-foo baz">Hello</div>', source
+      assert_html '<div class="styled-foo baz">Hello</div>', source
+    ensure
+      Slim::Parser.options[:shortcut].delete('~')
+    end
   end
 
   def test_render_with_existing_class_and_custom_lambda_shortcut
-    Slim::Parser.options[:shortcut].update({'~' => {attr: ->(v) {{class: "styled-#{v}"}}}})
-    source = %q{
+    begin
+      Slim::Parser.options[:shortcut]['~'] = {attr: ->(v) {{class: "styled-#{v}"}}}
+      source = %q{
 .baz~foo Hello
 }
-    assert_html '<div class="baz styled-foo">Hello</div>', source
+      assert_html '<div class="baz styled-foo">Hello</div>', source
+    ensure
+      Slim::Parser.options[:shortcut].delete('~')
+    end
   end
 
   def test_render_with_text_block
