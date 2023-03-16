@@ -1,3 +1,7 @@
+Development
+
+  * Support lambda functions as shortcuts - #677 #813 #903
+
 5.1.0 (2023-03-06)
 
   * Allow whitespace markers for verbatim text: `|<`, `|>`, and `|<>` - #912
