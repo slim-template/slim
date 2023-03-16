@@ -63,11 +63,7 @@ module Slim
           raise ArgumentError, 'You can only use special characters for attribute shortcuts' if k =~ /(\p{Word}|-)/
         end
         if v.include?(:attr)
-          if v[:attr].is_a?(Proc)
-            @attr_shortcut[k] = v[:attr]
-          else
-            @attr_shortcut[k] = [v[:attr]].flatten
-          end
+          @attr_shortcut[k] = v[:attr].is_a?(Proc) ? v[:attr] : [v[:attr]].flatten
         end
         if v.include?(:additional_attrs)
           @additional_attrs[k] = v[:additional_attrs]
