@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'slim'
 require 'slim/smart/filter'
 require 'slim/smart/escaper'

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Slim
   # In Slim you don't need to close any blocks:
   #

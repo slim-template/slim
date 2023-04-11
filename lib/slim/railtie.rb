@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Slim
   class Railtie < ::Rails::Railtie
     initializer "initialize slim template handler" do

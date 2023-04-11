@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Slim
   # Base class for Temple filters used in Slim
   #

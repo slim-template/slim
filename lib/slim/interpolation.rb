@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Slim
   # Perform interpolation of #{var_name} in the
   # expressions `[:slim, :interpolate, string]`.

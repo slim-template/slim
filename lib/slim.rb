@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'temple'
 require 'slim/parser'
 require 'slim/filter'

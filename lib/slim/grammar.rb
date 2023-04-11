@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Slim
   # Slim expression grammar
   # @api private

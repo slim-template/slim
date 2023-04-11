@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Slim
   module Smart
     # Perform smart entity escaping in the

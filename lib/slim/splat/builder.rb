@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Slim
   class InvalidAttributeNameError < StandardError; end
   module Splat
@@ -90,7 +91,7 @@ module Slim
 
       def hyphen_attr(name, escape, value)
         if Hash === value
-          if @options[:hyphen_underscore_attrs] 
+          if @options[:hyphen_underscore_attrs]
             value.each do |n, v|
               hyphen_attr("#{name}-#{n.to_s.gsub('_', '-')}", escape, v)
             end
