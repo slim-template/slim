@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Slim
   # Handle logic less mode
   # This filter can be activated with the option "logic_less"
