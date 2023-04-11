@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Slim
   # Parses Slim code and transforms it to a Temple expression
   # @api private
@@ -84,7 +85,7 @@ module Slim
       @code_attr_re = /#{@attr_name}\s*=(=?)\s*/
 
       splat_prefix = Regexp.escape(options[:splat_prefix])
-      splat_regexp_source = '\A\s*' << splat_prefix << '(?=[^\s]+)'
+      splat_regexp_source = '\A\s*' + splat_prefix + '(?=[^\s]+)'
       @splat_attrs_regexp = Regexp.new(splat_regexp_source)
     end
 
@@ -467,7 +468,7 @@ module Slim
     end
 
     def parse_ruby_code(outer_delimiter)
-      code, count, delimiter, close_delimiter = '', 0, nil, nil
+      code, count, delimiter, close_delimiter = ''.dup, 0, nil, nil
 
       # Attribute ends with space or attribute delimiter
       end_re = /\A[\s#{Regexp.escape outer_delimiter.to_s}]/
@@ -495,7 +496,7 @@ module Slim
     end
 
     def parse_quoted_attribute(quote)
-      value, count = '', 0
+      value, count = ''.dup, 0
 
       until count == 0 && @line[0] == quote[0]
         if @line =~ /\A(\\)?\Z/
