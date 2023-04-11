@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'slim'
 
 module Slim
@@ -62,7 +63,7 @@ module Slim
       end
 
       def call(exp)
-        @text, @captures = '', []
+        @text, @captures = ''.dup, []
         result = compile(exp)
 
         text = @translate.call(@text)
@@ -89,7 +90,7 @@ module Slim
       define_options :tr_fn
 
       def call(exp)
-        @captures_count, @captures_var, @text = 0, unique_name, ''
+        @captures_count, @captures_var, @text = 0, unique_name, ''.dup
 
         result = compile(exp)
 
