@@ -77,6 +77,11 @@ class TestSlim < ActionDispatch::IntegrationTest
     assert_xpath '//input[@id="entry_name" and @name="entry[name]" and @type="text"]'
   end
 
+  test "attributes" do
+    get "/slim/attributes"
+    assert_html "<div class=\"static dynamic\"></div>"
+  end
+
   test "splat" do
     get "/slim/splat"
     assert_html "<div id=\"splat\"><splat>Hello</splat></div>"
