@@ -79,7 +79,7 @@ class TestSlim < ActionDispatch::IntegrationTest
 
   test "attributes" do
     get "/slim/attributes"
-    assert_html "<div class=\"static dynamic\"></div>"
+    assert_html "<div class=\"static a-b\"></div>"
   end
 
   test "splat" do
