@@ -1,6 +1,7 @@
 Development
 
   * Support lambda functions as shortcuts - #677 #813 #903
+  * Support --enable-frozen-string-literal - #851
 
 5.1.0 (2023-03-06)
 
