@@ -63,7 +63,7 @@ class LiterateTest < Temple::Engine
     def on_html(code)
       raise Temple::FilterError, 'Html block must be preceded by slim block' unless @in_testcase
       @in_testcase = false
-      result =  "  html = #{code.inspect}\n"
+      result =  "  html = #{code.inspect}\n".dup
       if @opts.empty?
         result << "  _(render(slim)).must_equal html\nend\n"
       else

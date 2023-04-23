@@ -8,10 +8,10 @@ class TestSlimEncoding < TestSlim
   end
 
   def test_binary
-    source = "| \xFF\xFF"
+    source = "| \xFF\xFF".dup
     source.force_encoding(Encoding::BINARY)
 
-    result = "\xFF\xFF"
+    result = "\xFF\xFF".dup
     result.force_encoding(Encoding::BINARY)
 
     out = render(source, default_encoding: 'binary')
