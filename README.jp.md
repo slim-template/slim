@@ -1024,7 +1024,6 @@ Slim はロジックレスモードと I18n, インクルードプラグイン�
 Slim は生成されたコードをコンパイルするために [Tilt](https://github.com/rtomayko/tilt) を使用します。Slim テンプレートを直接使いたい場合, Tilt インターフェイスが使用できます。
 
 ~~~ ruby
-require 'slim'
 Tilt.new['template.slim'].render(scope)
 Slim::Template.new('template.slim', optional_option_hash).render(scope)
 Slim::Template.new(optional_option_hash) { source }.render(scope)

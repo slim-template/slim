@@ -1056,12 +1056,9 @@ Slim currently provides plugins for logic less mode, includes and I18n. See the 
 
 ### Tilt
 
-Slim uses [Tilt](https://github.com/rtomayko/tilt) to compile the generated code. If you want to use the Slim
-template directly, you can use the Tilt interface. Note that Slim must be loaded
-to ensure registration in Tilt.
+Slim uses [Tilt](https://github.com/rtomayko/tilt) to compile the generated code. If you want to use the Slim template directly, you can use the Tilt interface.
 
 ~~~ ruby
-require 'slim'
 Tilt.new['template.slim'].render(scope)
 Slim::Template.new('template.slim', optional_option_hash).render(scope)
 Slim::Template.new(optional_option_hash) { source }.render(scope)
