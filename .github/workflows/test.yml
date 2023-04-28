@@ -8,8 +8,8 @@ on:
       - opened
       - synchronize
       - reopened
-  schedule:
-    - cron: "00 15 * * *"
+  #schedule:
+  #  - cron: "00 15 * * *"
 jobs:
   basic:
     runs-on: ubuntu-latest
