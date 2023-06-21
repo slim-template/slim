@@ -110,7 +110,7 @@ module Slim
       def on_slim_output(escape, code, content)
         @captures_count += 1
         @text << "%#{@captures_count}"
-        [:capture, "#{@captures_var}[#{@captures_count-1}]", [:slim, :output, escape, code, content]]
+        [:capture, "#{@captures_var}[#{@captures_count - 1}]", [:slim, :output, escape, code, content]]
       end
     end
   end

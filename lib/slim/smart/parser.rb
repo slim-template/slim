@@ -25,7 +25,7 @@ module Slim
           end
           # Found implicit smart text block.
           if line = @lines.first
-            indent = ( line =~ /\A\s*\Z/ ? @indents.last + 1 : get_indent(line) )
+            indent = (line =~ /\A\s*\Z/ ? @indents.last + 1 : get_indent(line))
           end
           @stacks.last << [:slim, :text, :implicit, parse_text_block(@line, indent)]
         end

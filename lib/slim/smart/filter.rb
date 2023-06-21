@@ -51,13 +51,13 @@ module Slim
         # so we don't have to worry about that at all.
         block = [:multi]
         prev = nil
-        last_exp = exps.reject{ |exp| exp.first == :newline }.last unless @active && @append
+        last_exp = exps.reject { |exp| exp.first == :newline }.last unless @active && @append
         exps.each do |exp|
           @append = exp.equal?(last_exp)
           if @active
             @prepend = false if prev
           else
-            @prepend = prev && ( prev.first != :slim || prev[1] != :text )
+            @prepend = prev && (prev.first != :slim || prev[1] != :text)
           end
           block << compile(exp)
           prev = exp unless exp.first == :newline
