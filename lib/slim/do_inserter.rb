@@ -16,7 +16,7 @@ module Slim
     # @param [Array] content Temple expression
     # @return [Array] Compiled temple expression
     def on_slim_control(code, content)
-      code = code + ' do' unless code =~ BLOCK_REGEX || empty_exp?(content)
+      code += ' do' unless code =~ BLOCK_REGEX || empty_exp?(content)
       [:slim, :control, code, compile(content)]
     end
 
@@ -27,7 +27,7 @@ module Slim
     # @param [Array] content Temple expression
     # @return [Array] Compiled temple expression
     def on_slim_output(escape, code, content)
-      code = code + ' do' unless code =~ BLOCK_REGEX || empty_exp?(content)
+      code += ' do' unless code =~ BLOCK_REGEX || empty_exp?(content)
       [:slim, :output, escape, code, compile(content)]
     end
   end

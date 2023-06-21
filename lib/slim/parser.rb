@@ -50,7 +50,7 @@ module Slim
       @code_attr_delims = options[:code_attr_delims]
       tabsize = options[:tabsize]
       if tabsize > 1
-        @tab_re = /\G((?: {#{tabsize}})*) {0,#{tabsize-1}}\t/
+        @tab_re = /\G((?: {#{tabsize}})*) {0,#{tabsize - 1}}\t/
         @tab = '\1' + ' ' * tabsize
       else
         @tab_re = "\t"
@@ -70,9 +70,9 @@ module Slim
           @additional_attrs[k] = v[:additional_attrs]
         end
       end
-      keys = Regexp.union @attr_shortcut.keys.sort_by {|k| -k.size }
+      keys = Regexp.union @attr_shortcut.keys.sort_by { |k| -k.size }
       @attr_shortcut_re = /\A(#{keys}+)((?:\p{Word}|-|\/\d+|:(\w|-)+)*)/
-      keys = Regexp.union @tag_shortcut.keys.sort_by {|k| -k.size }
+      keys = Regexp.union @tag_shortcut.keys.sort_by { |k| -k.size }
       @tag_re = /\A(?:#{keys}|\*(?=[^\s]+)|(\p{Word}(?:\p{Word}|:|-)*\p{Word}|\p{Word}+))/
       keys = Regexp.escape @code_attr_delims.keys.join
       @code_attr_delims_re = /\A[#{keys}]/
@@ -338,7 +338,7 @@ module Slim
         syntax_error!('Illegal shortcut') unless shortcut = @attr_shortcut[$1]
 
         if shortcut.is_a?(Proc)
-          shortcut.call($2).each {|a, v| attributes << [:html, :attr, a, [:static, v]] }
+          shortcut.call($2).each { |a, v| attributes << [:html, :attr, a, [:static, v]] }
         else
           shortcut.each {|a| attributes << [:html, :attr, a, [:static, $2]] }
         end
@@ -503,9 +503,9 @@ module Slim
           value << ($1 ? ' ' : "\n")
           expect_next_line
         else
-          if @line[0] == ?{
+          if @line[0] == '{'
             count += 1
-          elsif @line[0] == ?}
+          elsif @line[0] == '}'
             count -= 1
           end
           value << @line.slice!(0)

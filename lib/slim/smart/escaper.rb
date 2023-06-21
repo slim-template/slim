@@ -37,7 +37,6 @@ module Slim
         end
         block
       end
-
     end
   end
 end

@@ -74,7 +74,7 @@ rescue LoadError
   end
 end
 
-desc "Generate Documentation"
+desc 'Generate Documentation'
 task doc: :yard
 
 task default: 'test'

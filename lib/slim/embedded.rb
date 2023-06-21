@@ -189,9 +189,8 @@ module Slim
       set_options attributes: {}
 
       def on_slim_embedded(engine, body, attrs)
-
         unless options[:attributes].empty?
-          options[:attributes].map do|k, v|
+          options[:attributes].map do |k, v|
             attrs << [:html, :attr, k, [:static, v]]
           end
         end
@@ -207,7 +206,6 @@ module Slim
 
         [:html, :tag, options[:tag], attrs, body]
       end
-
     end
 
     # Javascript wrapper engine.

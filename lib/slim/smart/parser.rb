@@ -8,9 +8,9 @@ module Slim
       def initialize(opts = {})
         super
         word_re = options[:implicit_text] ? '[_a-z0-9]' : '\p{Word}'
-        attr_keys = Regexp.union(@attr_shortcut.keys.sort_by {|k| -k.size } )
+        attr_keys = Regexp.union(@attr_shortcut.keys.sort_by { |k| -k.size })
         @attr_shortcut_re = /\A(#{attr_keys}+)((?:\p{Word}|-)*)/
-        tag_keys = Regexp.union((@tag_shortcut.keys - @attr_shortcut.keys).sort_by {|k| -k.size } )
+        tag_keys = Regexp.union((@tag_shortcut.keys - @attr_shortcut.keys).sort_by { |k| -k.size })
         @tag_re = /\A(?:#{attr_keys}(?=-*\p{Word})|#{tag_keys}|\*(?=[^\s]+)|(#{word_re}(?:#{word_re}|:|-)*#{word_re}|#{word_re}+))/
       end
 
@@ -25,7 +25,7 @@ module Slim
           end
           # Found implicit smart text block.
           if line = @lines.first
-            indent = ( line =~ /\A\s*\Z/ ? @indents.last + 1 : get_indent(line) )
+            indent = (line =~ /\A\s*\Z/ ? @indents.last + 1 : get_indent(line))
           end
           @stacks.last << [:slim, :text, :implicit, parse_text_block(@line, indent)]
         end
