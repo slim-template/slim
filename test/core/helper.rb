@@ -1,14 +1,14 @@
 begin
-  require 'simplecov'
+  require "simplecov"
   SimpleCov.start
 rescue LoadError
 end
 
-require 'minitest/autorun'
-require 'slim'
-require 'slim/grammar'
+require "minitest/autorun"
+require "slim"
+require "slim/grammar"
 
-Slim::Engine.after  Slim::Parser, Temple::Filters::Validator, grammar: Slim::Grammar
+Slim::Engine.after Slim::Parser, Temple::Filters::Validator, grammar: Slim::Grammar
 Slim::Engine.before :Pretty, Temple::Filters::Validator
 
 class TestSlim < Minitest::Test
@@ -47,7 +47,7 @@ class TestSlim < Minitest::Test
 
   def assert_syntax_error(message, source, options = {})
     render(source, options)
-    raise 'Syntax error expected'
+    raise "Syntax error expected"
   rescue Slim::Parser::SyntaxError => ex
     assert_equal message, ex.message
     message =~ /([^\s]+), Line (\d+)/
@@ -56,15 +56,15 @@ class TestSlim < Minitest::Test
 
   def assert_ruby_error(error, from, source, options = {})
     render(source, options)
-    raise 'Ruby error expected'
+    raise "Ruby error expected"
   rescue error => ex
     assert_backtrace(ex, from)
   end
 
   def assert_backtrace(ex, from)
-    if defined?(RUBY_ENGINE) && RUBY_ENGINE == 'rbx'
+    if defined?(RUBY_ENGINE) && RUBY_ENGINE == "rbx"
       # HACK: Rubinius stack trace sometimes has one entry more
-      if ex.backtrace[0] !~ /^#{Regexp.escape from}/
+      if !/^#{Regexp.escape from}/.match?(ex.backtrace[0])
         ex.backtrace[1] =~ /([^\s]+:\d+)/
         assert_equal from, $1
       end
@@ -76,7 +76,7 @@ class TestSlim < Minitest::Test
 
   def assert_ruby_syntax_error(from, source, options = {})
     render(source, options)
-    raise 'Ruby syntax error expected'
+    raise "Ruby syntax error expected"
   rescue SyntaxError => ex
     ex.message =~ /([^\s]+:\d+):/
     assert_equal from, $1
@@ -84,7 +84,7 @@ class TestSlim < Minitest::Test
 
   def assert_runtime_error(message, source, options = {})
     render(source, options)
-    raise Exception, 'Runtime error expected'
+    raise Exception, "Runtime error expected"
   rescue RuntimeError => ex
     assert_equal message, ex.message
   end
@@ -94,7 +94,7 @@ class Env
   attr_reader :var, :x
 
   def initialize
-    @var = 'instance'
+    @var = "instance"
     @x = 0
   end
 
@@ -103,7 +103,7 @@ class Env
   end
 
   def hash
-    {a: 'The letter a', b: 'The letter b'}
+    {a: "The letter a", b: "The letter b"}
   end
 
   def show_first?(show = false)
@@ -113,7 +113,7 @@ class Env
   def define_macro(name, &block)
     @macro ||= {}
     @macro[name.to_s] = block
-    ''
+    ""
   end
 
   def call_macro(name, *args)
@@ -121,7 +121,7 @@ class Env
   end
 
   def hello_world(text = "Hello World from @env", opts = {})
-    text = text + (opts.to_a * " ") if opts.any?
+    text += (opts.to_a * " ") if opts.any?
     if block_given?
       "#{text} #{yield} #{text}"
     else
@@ -130,11 +130,11 @@ class Env
   end
 
   def message(*args)
-    args.join(' ')
+    args.join(" ")
   end
 
   def action_path(*args)
-    "/action-#{args.join('-')}"
+    "/action-#{args.join("-")}"
   end
 
   def in_keyword
@@ -152,29 +152,28 @@ class Env
   def succ_x
     @x = @x.succ
   end
-
 end
 
 class ViewEnv
   def output_number
-     1337
+    1337
   end
 
   def person
-    [{name: 'Joe'}, {name: 'Jack'}]
+    [{name: "Joe"}, {name: "Jack"}]
   end
 
   def people
-    %w(Andy Fred Daniel).collect{|n| Person.new(n)}
+    %w[Andy Fred Daniel].collect { |n| Person.new(n) }
   end
 
   def cities
-    %w{Atlanta Melbourne Karlsruhe}
+    %w[Atlanta Melbourne Karlsruhe]
   end
 
   def people_with_locations
     array = []
-    people.each_with_index do |p,i|
+    people.each_with_index do |p, i|
       p.location = Location.new cities[i]
       array << p
     end
@@ -182,7 +181,7 @@ class ViewEnv
   end
 end
 
-require 'forwardable'
+require "forwardable"
 
 class Person
   extend Forwardable
@@ -193,9 +192,7 @@ class Person
     @name = name
   end
 
-  def location=(location)
-    @location = location
-  end
+  attr_writer :location
 
   def_delegators :@location, :city
 end
@@ -204,6 +201,6 @@ class Location
   attr_accessor :city
 
   def initialize(city)
-    @city   = city
+    @city = city
   end
 end

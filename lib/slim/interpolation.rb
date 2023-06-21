@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Slim
   # Perform interpolation of #{var_name} in the
   # expressions `[:slim, :interpolate, string]`.
@@ -24,7 +25,7 @@ module Slim
           string, code = $', $1
           escape = code !~ /\A\{.*\}\Z/
           block << [:slim, :output, escape, escape ? code : code[1..-2], [:multi]]
-        when /\A([#\\]?[^#\\]*([#\\][^\\#\{][^#\\]*)*)/
+        when /\A([#\\]?[^#\\]*([#\\][^\\#{][^#\\]*)*)/
           # Static text
           block << [:static, $&]
           string = $'

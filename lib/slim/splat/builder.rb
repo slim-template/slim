@@ -1,11 +1,13 @@
 # frozen_string_literal: true
+
 module Slim
   class InvalidAttributeNameError < StandardError; end
+
   module Splat
     # @api private
     class Builder
-     # https://html.spec.whatwg.org/multipage/syntax.html#attributes-2
-     INVALID_ATTRIBUTE_NAME_REGEX = /[ \0"'>\/=]/
+      # https://html.spec.whatwg.org/multipage/syntax.html#attributes-2
+      INVALID_ATTRIBUTE_NAME_REGEX = /[ \0"'>\/=]/
       def initialize(options)
         @options = options
         @attrs = {}
@@ -13,11 +15,11 @@ module Slim
 
       def code_attr(name, escape, value)
         if delim = @options[:merge_attrs][name]
-          value = Array === value ? value.join(delim) : value.to_s
+          value = (Array === value) ? value.join(delim) : value.to_s
           attr(name, escape_html(escape, value)) unless value.empty?
         elsif @options[:hyphen_attrs].include?(name) && Hash === value
           hyphen_attr(name, escape, value)
-        elsif value != false && value != nil
+        elsif value != false && !value.nil?
           attr(name, escape_html(value != true && escape, value))
         end
       end
@@ -29,7 +31,7 @@ module Slim
       end
 
       def attr(name, value)
-        if name =~ INVALID_ATTRIBUTE_NAME_REGEX
+        if INVALID_ATTRIBUTE_NAME_REGEX.match?(name)
           raise InvalidAttributeNameError, "Invalid attribute name '#{name}' was rendered"
         end
         if @attrs[name]
@@ -44,7 +46,7 @@ module Slim
       end
 
       def build_tag(&block)
-        tag = @attrs.delete('tag').to_s
+        tag = @attrs.delete("tag").to_s
         tag = @options[:default_tag] if tag.empty?
         if block
           # This is a bit of a hack to get a universal capturing.
@@ -61,7 +63,7 @@ module Slim
           #     https://github.com/slim-template/slim#helpers-capturing-and-includes
           #
           content =
-            if @options[:disable_capture] && (scope = block.binding.eval('self')).respond_to?(:capture)
+            if @options[:disable_capture] && (scope = block.binding.eval("self")).respond_to?(:capture)
               scope.capture(&block)
             else
               yield
@@ -93,7 +95,7 @@ module Slim
         if Hash === value
           if @options[:hyphen_underscore_attrs]
             value.each do |n, v|
-              hyphen_attr("#{name}-#{n.to_s.gsub('_', '-')}", escape, v)
+              hyphen_attr("#{name}-#{n.to_s.tr("_", "-")}", escape, v)
             end
           else
             value.each do |n, v|

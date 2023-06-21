@@ -1,16 +1,14 @@
-require 'helper'
+require "helper"
 
 class TestSlimTabs < TestSlim
-
   def teardown
     Slim::Engine.set_options tabsize: 4
   end
 
   def test_single_tab1_expansion
-
     Slim::Engine.set_options tabsize: 1
 
-    source = %Q{
+    source = %(
 |
 \t0
  \t1
@@ -21,9 +19,9 @@ class TestSlimTabs < TestSlim
       \t6
        \t7
         \t8
-}
+)
 
-    result = %q{
+    result = '
 0
  1
   2
@@ -33,16 +31,15 @@ class TestSlimTabs < TestSlim
       6
        7
         8
-}.strip
+'.strip
 
     assert_html result, source
   end
 
   def test_single_tab4_expansion
-
     Slim::Engine.set_options tabsize: 4
 
-    source = %Q{
+    source = %(
 |
 \t0
  \t1
@@ -53,9 +50,9 @@ class TestSlimTabs < TestSlim
       \t6
        \t7
         \t8
-}
+)
 
-    result = %q{
+    result = '
 0
 1
 2
@@ -65,16 +62,15 @@ class TestSlimTabs < TestSlim
     6
     7
         8
-}.strip
+'.strip
 
     assert_html result, source
   end
 
   def test_multi_tab1_expansion
-
     Slim::Engine.set_options tabsize: 1
 
-    source = %Q{
+    source = %(
 |
 \t0
  \t\t1
@@ -93,9 +89,9 @@ class TestSlimTabs < TestSlim
     \t \t2
     \t  \t3
     \t   \t4
-}
+)
 
-    result = %q{
+    result = '
 0
   1
    2
@@ -113,16 +109,15 @@ class TestSlimTabs < TestSlim
       2
        3
         4
-}.strip
+'.strip
 
     assert_html result, source
   end
 
   def test_multi_tab4_expansion
-
     Slim::Engine.set_options tabsize: 4
 
-    source = %Q{
+    source = %(
 |
 \t0
  \t\t1
@@ -141,9 +136,9 @@ class TestSlimTabs < TestSlim
     \t \t2
     \t  \t3
     \t   \t4
-}
+)
 
-    result = %q{
+    result = '
 0
     1
     2
@@ -161,9 +156,8 @@ class TestSlimTabs < TestSlim
         2
         3
         4
-}.strip
+'.strip
 
     assert_html result, source
   end
-
 end

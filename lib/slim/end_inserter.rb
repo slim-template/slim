@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Slim
   # In Slim you don't need to close any blocks:
   #
@@ -11,7 +12,7 @@ module Slim
   #
   # @api private
   class EndInserter < Filter
-    IF_RE = /\A(if|begin|unless|else|elsif|when|in|rescue|ensure)\b|\bdo\s*(\|[^\|]*\|)?\s*$/
+    IF_RE = /\A(if|begin|unless|else|elsif|when|in|rescue|ensure)\b|\bdo\s*(\|[^|]*\|)?\s*$/
     ELSE_RE = /\A(else|elsif|when|in|rescue|ensure)\b/
     END_RE = /\Aend\b/
 
@@ -26,7 +27,7 @@ module Slim
 
       exps.each do |exp|
         if control?(exp)
-          raise(Temple::FilterError, 'Explicit end statements are forbidden') if exp[2] =~ END_RE
+          raise(Temple::FilterError, "Explicit end statements are forbidden") if END_RE.match?(exp[2])
 
           # Two control code in a row. If this one is *not*
           # an else block, we should close the previous one.
@@ -52,7 +53,7 @@ module Slim
 
     # Appends an end
     def append_end(result)
-      result << [:code, 'end']
+      result << [:code, "end"]
     end
 
     # Checks if an expression is a Slim control code

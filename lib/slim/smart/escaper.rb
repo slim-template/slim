@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Slim
   module Smart
     # Perform smart entity escaping in the
@@ -37,7 +38,6 @@ module Slim
         end
         block
       end
-
     end
   end
 end

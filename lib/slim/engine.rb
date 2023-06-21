@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # The Slim module contains all Slim related classes (e.g. Engine, Parser).
 # Plugins might also reside within the Slim module (e.g. Include, Smart).
 # @api public
@@ -10,12 +11,12 @@ module Slim
     # It is recommended to set the default settings only once in the code and avoid duplication. Only use
     # `define_options` when you have to override some default settings.
     define_options pretty: false,
-                   sort_attrs: true,
-                   format: :xhtml,
-                   attr_quote: '"',
-                   merge_attrs: {'class' => ' '},
-                   generator: Temple::Generators::StringBuffer,
-                   default_tag: 'div'
+      sort_attrs: true,
+      format: :xhtml,
+      attr_quote: '"',
+      merge_attrs: {"class" => " "},
+      generator: Temple::Generators::StringBuffer,
+      default_tag: "div"
 
     filter :Encoding
     filter :RemoveBOM

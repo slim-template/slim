@@ -1,4 +1,4 @@
-require 'helper'
+require "helper"
 
 class TestSlimUnicode < TestSlim
   def test_unicode_tags

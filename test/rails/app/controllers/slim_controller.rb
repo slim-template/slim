@@ -26,8 +26,8 @@ class SlimController < ApplicationController
   end
 
   def thread_options
-    default_shortcut = {'#' => {attr: 'id'}, '.' => {attr: 'class'} }
-    Slim::Engine.with_options(shortcut: default_shortcut.merge({'@' => { attr: params[:attr] }})) do
+    default_shortcut = {"#" => {attr: "id"}, "." => {attr: "class"}}
+    Slim::Engine.with_options(shortcut: default_shortcut.merge({"@" => {attr: params[:attr]}})) do
       render
     end
   end

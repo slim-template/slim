@@ -1,10 +1,9 @@
-require 'helper'
-require 'slim/smart'
+require "helper"
+require "slim/smart"
 
 class TestSlimSmartText < TestSlim
-
   def test_explicit_smart_text_recognition
-    source = %q{
+    source = '
 >
   a
 >
@@ -22,9 +21,9 @@ f
 > g
   h
 i
-}
+'
 
-    result = %q{a
+    result = 'a
 b
 c
 d
@@ -32,13 +31,13 @@ e
 <f></f>
 g
 h
-<i></i>}
+<i></i>'
 
     assert_html result, source
   end
 
   def test_implicit_smart_text_recognition
-    source = %q{
+    source = '
 p
   A
 p
@@ -56,19 +55,19 @@ F
 p G
   H
 I
-}
+'
 
-    result = %q{<p>A</p><p>B</p><p>C</p><p>D</p><p>E</p>
+    result = '<p>A</p><p>B</p><p>C</p><p>D</p><p>E</p>
 F
 <p>G
 H</p>
-I}
+I'
 
     assert_html result, source
   end
 
   def test_multi_line_smart_text
-    source = %q{
+    source = '
 p
   First line.
   Second line.
@@ -76,20 +75,20 @@ p
    with a continuation
    and one more.
   Fourth line.
-}
+'
 
-    result = %q{<p>First line.
+    result = '<p>First line.
 Second line.
 Third line
 with a continuation
 and one more.
-Fourth line.</p>}
+Fourth line.</p>'
 
     assert_html result, source
   end
 
   def test_smart_text_escaping
-    source = %q{
+    source = '
 | Not escaped <&>.
 p Escaped <&>.
 p
@@ -98,20 +97,20 @@ p
   Protected &amp; &lt; &gt; &copy; &Aacute;.
   Protected &#0129; &#x00ff;.
   Escaped &#xx; &#1f; &9; &_; &;.
-}
+'
 
-    result = %q{Not escaped <&>.<p>Escaped &lt;&amp;&gt;.</p><p>Escaped &lt;&amp;&gt;.
+    result = 'Not escaped <&>.<p>Escaped &lt;&amp;&gt;.</p><p>Escaped &lt;&amp;&gt;.
 Escaped &lt;&amp;&gt;.
 Protected &amp; &lt; &gt; &copy; &Aacute;.
 Protected &#0129; &#x00ff;.
-Escaped &amp;#xx; &amp;#1f; &amp;9; &amp;_; &amp;;.</p>}
+Escaped &amp;#xx; &amp;#1f; &amp;9; &amp;_; &amp;;.</p>'
 
     assert_html result, source
   end
 
   def test_smart_text_disabled_escaping
-    Slim::Engine.with_options( smart_text_escaping: false ) do
-      source = %q{
+    Slim::Engine.with_options(smart_text_escaping: false) do
+      source = '
 p Not escaped <&>.
 | Not escaped <&>.
 p
@@ -120,36 +119,36 @@ p
   Not escaped &amp; &lt; &gt; &copy; &Aacute;.
   Not escaped &#0129; &#x00ff;.
   Not escaped &#xx; &#1f; &9; &_; &;.
-}
+'
 
-    result = %q{<p>Not escaped <&>.</p>Not escaped <&>.<p>Not escaped <&>.
+      result = '<p>Not escaped <&>.</p>Not escaped <&>.<p>Not escaped <&>.
 Not escaped <&>.
 Not escaped &amp; &lt; &gt; &copy; &Aacute;.
 Not escaped &#0129; &#x00ff;.
-Not escaped &#xx; &#1f; &9; &_; &;.</p>}
+Not escaped &#xx; &#1f; &9; &_; &;.</p>'
 
       assert_html result, source
     end
   end
 
   def test_smart_text_in_tag_escaping
-    source = %q{
+    source = '
 p Escaped <&>.
   Protected &amp; &lt; &gt; &copy; &Aacute;.
   Protected &#0129; &#x00ff;.
   Escaped &#xx; &#1f; &9; &_; &;.
-}
+'
 
-    result = %q{<p>Escaped &lt;&amp;&gt;.
+    result = '<p>Escaped &lt;&amp;&gt;.
 Protected &amp; &lt; &gt; &copy; &Aacute;.
 Protected &#0129; &#x00ff;.
-Escaped &amp;#xx; &amp;#1f; &amp;9; &amp;_; &amp;;.</p>}
+Escaped &amp;#xx; &amp;#1f; &amp;9; &amp;_; &amp;;.</p>'
 
     assert_html result, source
   end
 
   def test_smart_text_mixed_with_tags
-    source = %q{
+    source = %q(
 p
   Text
   br
@@ -174,9 +173,9 @@ p
   #id
     #{'Good'}
   !
-}
+)
 
-    result = %q{<p>Text
+    result = '<p>Text
 <br />
 is
 <strong>really</strong>
@@ -187,13 +186,13 @@ And
 <i>more</i>...
 <span>Really</span>?!?
 <div class="bold">Really</div>!!!
-<div id="id">Good</div>!</p>}
+<div id="id">Good</div>!</p>'
 
     assert_html result, source
   end
 
   def test_smart_text_mixed_with_links
-    source = %q{
+    source = '
 p
   Text with
   a href="#1" link
@@ -212,9 +211,9 @@ p
   See (
   a href="#4" link
   )?
-}
+'
 
-    result = %q{<p>Text with
+    result = '<p>Text with
 <a href="#1">link</a>.
 Text with
 <a href="#2">another
@@ -223,13 +222,13 @@ to somewhere else.
 <a href="#3">This link</a>
 goes
 elsewhere.
-See (<a href="#4">link</a>)?</p>}
+See (<a href="#4">link</a>)?</p>'
 
     assert_html result, source
   end
 
   def test_smart_text_mixed_with_code
-    source = %q{
+    source = %q(
 p
   Try a list
   ul
@@ -239,12 +238,12 @@ p
   > which stops
   b here
   . Right?
-}
+)
 
-    result = %q{<p>Try a list
+    result = '<p>Try a list
 <ul><li>Item: 0</li><li>Item: 1</li></ul>
 which stops
-<b>here</b>. Right?</p>}
+<b>here</b>. Right?</p>'
 
     assert_html result, source
   end
@@ -252,26 +251,26 @@ which stops
   # Without unicode support, we can't distinguish uppercase and lowercase
   # unicode characters reliably. So we only test the basic text, not tag names.
   def test_basic_unicode_smart_text
-    source = %q{
+    source = '
 p
   是
   čip
   Čip
   Žůžo
   šíp
-}
+'
 
-        result = %q{<p>是
+    result = '<p>是
 čip
 Čip
 Žůžo
-šíp</p>}
+šíp</p>'
 
     assert_html result, source
   end
 
   def test_unicode_smart_text
-    source = %q{
+    source = '
 p
   是
   čip
@@ -280,14 +279,14 @@ p
   šíp
   .řek
     .
-}
+'
 
-          result = %q{<p>是
+    result = '<p>是
 čip
 Čip
 Žůžo
 šíp
-<div class="řek">.</div></p>}
+<div class="řek">.</div></p>'
 
     assert_html result, source
   end

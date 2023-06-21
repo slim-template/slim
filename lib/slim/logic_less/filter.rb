@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Slim
   # Handle logic less mode
   # This filter can be activated with the option "logic_less"
@@ -8,8 +9,8 @@ module Slim
     DEFAULT_ACCESS_ORDER = [:symbol, :string, :method, :instance_variable].freeze
 
     define_options logic_less: true,
-                   dictionary: 'self',
-                   dictionary_access: DEFAULT_ACCESS_ORDER
+      dictionary: "self",
+      dictionary_access: DEFAULT_ACCESS_ORDER
 
     def initialize(opts = {})
       super
@@ -17,7 +18,7 @@ module Slim
       access.each do |type|
         raise ArgumentError, "Invalid dictionary access #{type.inspect}" unless DEFAULT_ACCESS_ORDER.include?(type)
       end
-      raise ArgumentError, 'Option dictionary access is missing' if access.empty?
+      raise ArgumentError, "Option dictionary access is missing" if access.empty?
       @access = access.inspect
     end
 
@@ -25,8 +26,8 @@ module Slim
       if options[:logic_less]
         @context = unique_name
         [:multi,
-         [:code, "#{@context} = ::Slim::LogicLess::Context.new(#{options[:dictionary]}, #{@access})"],
-         super]
+          [:code, "#{@context} = ::Slim::LogicLess::Context.new(#{options[:dictionary]}, #{@access})"],
+          super]
       else
         exp
       end
@@ -37,9 +38,9 @@ module Slim
       method =
         if name =~ /\A!\s*(.*)/
           name = $1
-          'inverted_section'
+          "inverted_section"
         else
-          'section'
+          "section"
         end
       [:block, "#{@context}.#{method}(#{name.to_sym.inspect}) do", compile(content)]
     end
@@ -58,20 +59,20 @@ module Slim
     end
 
     def on_dynamic(code)
-      raise Temple::FilterError, 'Embedded code is forbidden in logic less mode'
+      raise Temple::FilterError, "Embedded code is forbidden in logic less mode"
     end
 
     def on_code(code)
-      raise Temple::FilterError, 'Embedded code is forbidden in logic less mode'
+      raise Temple::FilterError, "Embedded code is forbidden in logic less mode"
     end
 
     private
 
     def access(name)
       case name
-      when 'yield'
-        'yield'
-      when 'self'
+      when "yield"
+        "yield"
+      when "self"
         "#{@context}.to_s"
       else
         "#{@context}[#{name.to_sym.inspect}]"

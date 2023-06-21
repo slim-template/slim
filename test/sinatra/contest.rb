@@ -26,10 +26,21 @@ require "minitest/autorun"
 # block syntax. Adding setup or teardown instance methods defeats the purpose
 # of this library.
 class Minitest::Test
-  def self.setup(&block)     setup_blocks    << block  end
-  def self.teardown(&block)  teardown_blocks << block  end
-  def self.setup_blocks()    @setup_blocks    ||= []   end
-  def self.teardown_blocks() @teardown_blocks ||= []   end
+  def self.setup(&block)
+    setup_blocks << block
+  end
+
+  def self.teardown(&block)
+    teardown_blocks << block
+  end
+
+  def self.setup_blocks
+    @setup_blocks ||= []
+  end
+
+  def self.teardown_blocks
+    @teardown_blocks ||= []
+  end
 
   def setup_blocks(base = self.class)
     setup_blocks base.superclass if base.superclass.respond_to? :setup_blocks
@@ -45,13 +56,13 @@ class Minitest::Test
     end
   end
 
-  alias setup setup_blocks
-  alias teardown teardown_blocks
+  alias_method :setup, :setup_blocks
+  alias_method :teardown, :teardown_blocks
 
   def self.context(*name, &block)
     subclass = Class.new(self)
     remove_tests(subclass)
-    subclass.class_eval(&block) if block_given?
+    subclass.class_eval(&block) if block
     const_set(context_name(name.join(" ")), subclass)
   end
 
@@ -64,7 +75,7 @@ class Minitest::Test
     alias_method :describe, :context
   end
 
-private
+  private
 
   def self.context_name(name)
     # "Test#{sanitize_name(name).gsub(/(^| )(\w)/) { $2.upcase }}".to_sym
@@ -73,14 +84,14 @@ private
   end
 
   def self.test_name(name)
-    name = "test_#{sanitize_name(name).gsub(/\s+/,'_')}_0"
+    name = "test_#{sanitize_name(name).gsub(/\s+/, "_")}_0"
     name = name.succ while method_defined? name
     name.to_sym
   end
 
   def self.sanitize_name(name)
     # name.gsub(/\W+/, ' ').strip
-    name.gsub(/\W+/, ' ')
+    name.gsub(/\W+/, " ")
   end
 
   def self.remove_tests(subclass)

@@ -1,9 +1,9 @@
-require 'helper'
-require 'slim/erb_converter'
+require "helper"
+require "slim/erb_converter"
 
 class TestSlimERBConverter < TestSlim
   def test_converter
-        source = %q{
+    source = %q(
 doctype 5
 html
   head
@@ -28,7 +28,7 @@ html
       p Hello
         World!
       p= "dynamic text with\nnewline"
-}
+)
 
     result = %q{
 <!DOCTYPE html>

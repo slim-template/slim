@@ -1,5 +1,6 @@
 # frozen_string_literal: true
-require 'slim'
+
+require "slim"
 
 module Slim
   # Slim to ERB converter

@@ -1,22 +1,23 @@
 # frozen_string_literal: true
-require 'slim'
+
+require "slim"
 
 module Slim
   # @api private
   class Translator < Filter
     define_options :tr,
-                   tr_mode: :dynamic,
-                   tr_fn: '_'
+      tr_mode: :dynamic,
+      tr_fn: "_"
 
     if defined?(::I18n)
-      set_options tr_fn: '::Slim::Translator.i18n_text',
-                  tr: true
+      set_options tr_fn: "::Slim::Translator.i18n_text",
+        tr: true
     elsif defined?(::GetText)
-      set_options tr_fn: '::GetText._',
-                  tr: true
+      set_options tr_fn: "::GetText._",
+        tr: true
     elsif defined?(::FastGettext)
-      set_options tr_fn: '::FastGettext::Translation._',
-                  tr: true
+      set_options tr_fn: "::FastGettext::Translation._",
+        tr: true
     end
 
     def self.i18n_text(text)
@@ -63,7 +64,7 @@ module Slim
       end
 
       def call(exp)
-        @text, @captures = ''.dup, []
+        @text, @captures = +"", []
         result = compile(exp)
 
         text = @translate.call(@text)
@@ -90,7 +91,7 @@ module Slim
       define_options :tr_fn
 
       def call(exp)
-        @captures_count, @captures_var, @text = 0, unique_name, ''.dup
+        @captures_count, @captures_var, @text = 0, unique_name, +""
 
         result = compile(exp)
 
@@ -110,7 +111,7 @@ module Slim
       def on_slim_output(escape, code, content)
         @captures_count += 1
         @text << "%#{@captures_count}"
-        [:capture, "#{@captures_var}[#{@captures_count-1}]", [:slim, :output, escape, code, content]]
+        [:capture, "#{@captures_var}[#{@captures_count - 1}]", [:slim, :output, escape, code, content]]
       end
     end
   end

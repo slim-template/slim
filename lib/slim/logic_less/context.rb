@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Slim
   class LogicLess
     # @api private
@@ -17,7 +18,7 @@ module Slim
             yield
           else
             new_scope do
-              dict.inject(''.dup) do |result, d|
+              dict.inject(+"") do |result, d|
                 scope.dict = d
                 result << yield
               end
@@ -105,11 +106,9 @@ module Slim
         end
 
         def instance_variable?(name)
-          begin
-            @dict.instance_variable_defined?(name)
-          rescue NameError
-            false
-          end
+          @dict.instance_variable_defined?(name)
+        rescue NameError
+          false
         end
       end
 

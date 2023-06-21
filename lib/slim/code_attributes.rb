@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Slim
   # @api private
   class CodeAttributes < Filter
@@ -9,7 +10,7 @@ module Slim
     # @param [Array] attrs Array of temple expressions
     # @return [Array] Compiled temple expression
     def on_html_attrs(*attrs)
-      [:multi, *attrs.map {|a| compile(a) }]
+      [:multi, *attrs.map { |a| compile(a) }]
     end
 
     # Handle attribute expression `[:html, :attr, name, value]`
@@ -22,18 +23,18 @@ module Slim
         # We handle the attribute as a boolean attribute
         escape, code = value[2], value[3]
         case code
-        when 'true'
+        when "true"
           [:html, :attr, name, [:multi]]
-        when 'false', 'nil'
+        when "false", "nil"
           [:multi]
         else
           tmp = unique_name
           [:multi,
-           [:code, "#{tmp} = #{code}"],
-           [:if, tmp,
-            [:if, "#{tmp} == true",
-             [:html, :attr, name, [:multi]],
-             [:html, :attr, name, [:escape, escape, [:dynamic, tmp]]]]]]
+            [:code, "#{tmp} = #{code}"],
+            [:if, tmp,
+              [:if, "#{tmp} == true",
+                [:html, :attr, name, [:multi]],
+                [:html, :attr, name, [:escape, escape, [:dynamic, tmp]]]]]]
         end
       else
         # Attribute with merging
@@ -52,14 +53,14 @@ module Slim
       if delimiter = options[:merge_attrs][@attr]
         tmp = unique_name
         [:multi,
-         [:code, "#{tmp} = #{code}"],
-         [:if, "Array === #{tmp}",
-          [:multi,
-           [:code, "#{tmp} = #{tmp}.flatten"],
-           [:code, "#{tmp}.map!(&:to_s)"],
-           [:code, "#{tmp}.reject!(&:empty?)"],
-           [:escape, escape, [:dynamic, "#{tmp}.join(#{delimiter.inspect})"]]],
-          [:escape, escape, [:dynamic, tmp]]]]
+          [:code, "#{tmp} = #{code}"],
+          [:if, "Array === #{tmp}",
+            [:multi,
+              [:code, "#{tmp} = #{tmp}.flatten"],
+              [:code, "#{tmp}.map!(&:to_s)"],
+              [:code, "#{tmp}.reject!(&:empty?)"],
+              [:escape, escape, [:dynamic, "#{tmp}.join(#{delimiter.inspect})"]]],
+            [:escape, escape, [:dynamic, tmp]]]]
       else
         [:escape, escape, [:dynamic, code]]
       end

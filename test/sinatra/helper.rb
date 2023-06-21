@@ -1,28 +1,28 @@
-if ENV['COVERAGE']
-  require 'simplecov'
+if ENV["COVERAGE"]
+  require "simplecov"
   SimpleCov.start do
-    add_filter '/test/'
-    add_group 'sinatra-contrib', 'sinatra-contrib'
-    add_group 'rack-protection', 'rack-protection'
+    add_filter "/test/"
+    add_group "sinatra-contrib", "sinatra-contrib"
+    add_group "rack-protection", "rack-protection"
   end
 end
 
-ENV['APP_ENV'] = 'test'
-RUBY_ENGINE = 'ruby' unless defined? RUBY_ENGINE
+ENV["APP_ENV"] = "test"
+RUBY_ENGINE = "ruby" unless defined? RUBY_ENGINE
 
-require 'rack'
+require "rack"
 
 testdir = File.dirname(__FILE__)
 $LOAD_PATH.unshift testdir unless $LOAD_PATH.include?(testdir)
 
-libdir = File.dirname(File.dirname(__FILE__)) + '/lib'
+libdir = File.dirname(__FILE__, 2) + "/lib"
 $LOAD_PATH.unshift libdir unless $LOAD_PATH.include?(libdir)
 
-require 'minitest'
-require 'contest'
-require 'rack/test'
-require 'sinatra'
-require 'sinatra/base'
+require "minitest"
+require "contest"
+require "rack/test"
+require "sinatra"
+require "sinatra/base"
 
 class Sinatra::Base
   include Minitest::Assertions
@@ -65,7 +65,7 @@ class Minitest::Test
   # Sets up a Sinatra::Base subclass defined with the block
   # given. Used in setup or individual spec methods to establish
   # the application.
-  def mock_app(base=Sinatra::Base, &block)
+  def mock_app(base = Sinatra::Base, &block)
     @app = Sinatra.new(base, &block)
   end
 
@@ -75,10 +75,10 @@ class Minitest::Test
 
   def slim_app(&block)
     mock_app do
-      set :views, File.dirname(__FILE__) + '/views'
-      get('/', &block)
+      set :views, File.dirname(__FILE__) + "/views"
+      get("/", &block)
     end
-    get '/'
+    get "/"
   end
 
   def body
@@ -97,7 +97,7 @@ class Minitest::Test
     assert_equal Integer(expected), Integer(status)
   end
 
-  def assert_like(a,b)
+  def assert_like(a, b)
     pattern = /id=['"][^"']*["']|\s+/
     assert_equal a.strip.gsub(pattern, ""), b.strip.gsub(pattern, "")
   end
@@ -107,19 +107,19 @@ class Minitest::Test
   end
 
   def options(uri, params = {}, env = {}, &block)
-    request(uri, env.merge(:method => "OPTIONS", :params => params), &block)
+    request(uri, env.merge(method: "OPTIONS", params: params), &block)
   end
 
   def patch(uri, params = {}, env = {}, &block)
-    request(uri, env.merge(:method => "PATCH", :params => params), &block)
+    request(uri, env.merge(method: "PATCH", params: params), &block)
   end
 
   def link(uri, params = {}, env = {}, &block)
-    request(uri, env.merge(:method => "LINK", :params => params), &block)
+    request(uri, env.merge(method: "LINK", params: params), &block)
   end
 
   def unlink(uri, params = {}, env = {}, &block)
-    request(uri, env.merge(:method => "UNLINK", :params => params), &block)
+    request(uri, env.merge(method: "UNLINK", params: params), &block)
   end
 
   # Delegate other missing methods to response.

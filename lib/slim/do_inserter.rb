@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Slim
   # In Slim you don't need the do keyword sometimes. This
   # filter adds the missing keyword.
@@ -8,7 +9,7 @@ module Slim
   #
   # @api private
   class DoInserter < Filter
-    BLOCK_REGEX = /(\A(if|unless|else|elsif|when|in|begin|rescue|ensure|case)\b)|\bdo\s*(\|[^\|]*\|\s*)?\Z/
+    BLOCK_REGEX = /(\A(if|unless|else|elsif|when|in|begin|rescue|ensure|case)\b)|\bdo\s*(\|[^|]*\|\s*)?\Z/
 
     # Handle control expression `[:slim, :control, code, content]`
     #
@@ -16,7 +17,7 @@ module Slim
     # @param [Array] content Temple expression
     # @return [Array] Compiled temple expression
     def on_slim_control(code, content)
-      code = code + ' do' unless code =~ BLOCK_REGEX || empty_exp?(content)
+      code += " do" unless code =~ BLOCK_REGEX || empty_exp?(content)
       [:slim, :control, code, compile(content)]
     end
 
@@ -27,7 +28,7 @@ module Slim
     # @param [Array] content Temple expression
     # @return [Array] Compiled temple expression
     def on_slim_output(escape, code, content)
-      code = code + ' do' unless code =~ BLOCK_REGEX || empty_exp?(content)
+      code += " do" unless code =~ BLOCK_REGEX || empty_exp?(content)
       [:slim, :output, escape, code, compile(content)]
     end
   end

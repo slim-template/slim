@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Slim
   module Smart
     # Perform newline processing in the
@@ -7,8 +8,8 @@ module Slim
     # @api private
     class Filter < ::Slim::Filter
       define_options smart_text: true,
-                     smart_text_end_chars: '([{',
-                     smart_text_begin_chars: ',.;:!?)]}'
+        smart_text_end_chars: "([{",
+        smart_text_begin_chars: ",.;:!?)]}"
 
       def initialize(opts = {})
         super
@@ -51,13 +52,13 @@ module Slim
         # so we don't have to worry about that at all.
         block = [:multi]
         prev = nil
-        last_exp = exps.reject{ |exp| exp.first == :newline }.last unless @active && @append
+        last_exp = exps.reject { |exp| exp.first == :newline }.last unless @active && @append
         exps.each do |exp|
           @append = exp.equal?(last_exp)
           if @active
             @prepend = false if prev
           else
-            @prepend = prev && ( prev.first != :slim || prev[1] != :text )
+            @prepend = prev && (prev.first != :slim || prev[1] != :text)
           end
           block << compile(exp)
           prev = exp unless exp.first == :newline
@@ -90,7 +91,7 @@ module Slim
       private
 
       def chars_re(string)
-        Regexp.union(string.split(//))
+        Regexp.union(string.split(""))
       end
     end
   end

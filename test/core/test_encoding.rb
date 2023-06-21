@@ -1,4 +1,4 @@
-require 'helper'
+require "helper"
 
 class TestSlimEncoding < TestSlim
   def test_windows_crlf
@@ -8,13 +8,13 @@ class TestSlimEncoding < TestSlim
   end
 
   def test_binary
-    source = "| \xFF\xFF".dup
+    source = +"| \xFF\xFF"
     source.force_encoding(Encoding::BINARY)
 
-    result = "\xFF\xFF".dup
+    result = +"\xFF\xFF"
     result.force_encoding(Encoding::BINARY)
 
-    out = render(source, default_encoding: 'binary')
+    out = render(source, default_encoding: "binary")
     out.force_encoding(Encoding::BINARY)
 
     assert_equal result, out
@@ -22,7 +22,7 @@ class TestSlimEncoding < TestSlim
 
   def test_bom
     source = "\xEF\xBB\xBFh1 Hello World!"
-    result = '<h1>Hello World!</h1>'
+    result = "<h1>Hello World!</h1>"
     assert_html result, source
   end
 end

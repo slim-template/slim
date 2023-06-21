@@ -1,9 +1,10 @@
 # frozen_string_literal: true
+
 module Slim
   # @api private
   class TextCollector < Filter
     def call(exp)
-      @collected = ''.dup
+      @collected = +""
       super(exp)
       @collected
     end
@@ -31,7 +32,7 @@ module Slim
   # @api private
   class OutputProtector < Filter
     def call(exp)
-      @protect, @collected, @tag = [], ''.dup, object_id.abs.to_s(36)
+      @protect, @collected, @tag = [], +"", object_id.abs.to_s(36)
       super(exp)
       @collected
     end
@@ -78,7 +79,7 @@ module Slim
         define_options(name, *option_filter)
         klass.define_options(name)
         engines[name.to_sym] = proc do |options|
-          klass.new({}.update(options).delete_if {|k,v| !option_filter.include?(k) && k != name }.update(local_options))
+          klass.new({}.update(options).delete_if { |k, v| !option_filter.include?(k) && k != name }.update(local_options))
         end
       end
 
@@ -135,7 +136,7 @@ module Slim
       def on_slim_embedded(engine, body, attrs)
         tilt_engine = Tilt[engine] || raise(Temple::FilterError, "Tilt engine #{engine} is not available.")
         tilt_options = options[engine.to_sym] || {}
-        tilt_options[:default_encoding] ||= 'utf-8'
+        tilt_options[:default_encoding] ||= "utf-8"
         [:multi, tilt_render(tilt_engine, tilt_options, collect_text(body)), collect_newlines(body)]
       end
 
@@ -155,7 +156,8 @@ module Slim
       def tilt_render(tilt_engine, tilt_options, text)
         text = tilt_engine.new(tilt_options.merge(
           style: options[:pretty] ? :expanded : :compressed,
-          cache: false)) { text }.render
+          cache: false
+        )) { text }.render
         text = text.chomp
         [:static, text]
       end
@@ -189,9 +191,8 @@ module Slim
       set_options attributes: {}
 
       def on_slim_embedded(engine, body, attrs)
-
         unless options[:attributes].empty?
-          options[:attributes].map do|k, v|
+          options[:attributes].map do |k, v|
             attrs << [:html, :attr, k, [:static, v]]
           end
         end
@@ -207,7 +208,6 @@ module Slim
 
         [:html, :tag, options[:tag], attrs, body]
       end
-
     end
 
     # Javascript wrapper engine.
@@ -230,21 +230,21 @@ module Slim
     end
 
     # These engines are executed at compile time, embedded ruby is interpolated
-    register :markdown,   InterpolateTiltEngine
-    register :textile,    InterpolateTiltEngine
-    register :rdoc,       InterpolateTiltEngine
+    register :markdown, InterpolateTiltEngine
+    register :textile, InterpolateTiltEngine
+    register :rdoc, InterpolateTiltEngine
 
     # These engines are executed at compile time
-    register :coffee,     JavaScriptEngine,                engine: TiltEngine
-    register :less,       TagEngine,          tag: :style, engine: TiltEngine
-    register :sass,       TagEngine, :pretty, tag: :style, engine: SassEngine
-    register :scss,       TagEngine, :pretty, tag: :style, engine: SassEngine
+    register :coffee, JavaScriptEngine, engine: TiltEngine
+    register :less, TagEngine, tag: :style, engine: TiltEngine
+    register :sass, TagEngine, :pretty, tag: :style, engine: SassEngine
+    register :scss, TagEngine, :pretty, tag: :style, engine: SassEngine
 
     # Embedded javascript/css
     register :javascript, JavaScriptEngine
-    register :css,        TagEngine, tag: :style
+    register :css, TagEngine, tag: :style
 
     # Embedded ruby code
-    register :ruby,       RubyEngine
+    register :ruby, RubyEngine
   end
 end

@@ -2,22 +2,22 @@ source 'https://rubygems.org/'
 
 gemspec
 
-gem 'test-unit', '~> 3.5'
+gem 'kramdown', '~> 2.4'
 gem 'minitest', '~> 5.15'
 gem 'rake', '~> 13.0'
-gem 'kramdown', '~> 2.4'
 gem 'standard', '~> 1.29'
+gem 'test-unit', '~> 3.5'
 
 if ENV['TEMPLE'] && ENV['TEMPLE'] != 'master'
   gem 'temple', "= #{ENV['TEMPLE']}"
 else
   # Test against temple master by default
-  gem 'temple', :github => 'judofyr/temple'
+  gem 'temple', github: 'judofyr/temple'
 end
 
 if ENV['TILT']
   if ENV['TILT'] == 'master'
-    gem 'tilt', :github => 'rtomayko/tilt'
+    gem 'tilt', github: 'rtomayko/tilt'
   else
     gem 'tilt', "= #{ENV['TILT']}"
   end
@@ -28,7 +28,7 @@ if ENV['RAILS']
 
   # we need some smarter test logic for the different Rails versions
   if ENV['RAILS'] == 'main'
-    gem 'rails', :github => 'rails/rails', branch: 'main'
+    gem 'rails', github: 'rails/rails', branch: 'main'
   else
     gem 'rails', "= #{ENV['RAILS']}"
   end
@@ -38,8 +38,8 @@ if ENV['SINATRA']
   gem 'rack-test'
 
   if ENV['SINATRA'] == 'master'
-    gem 'sinatra', :github => 'sinatra/sinatra'
+    gem 'sinatra', github: 'sinatra/sinatra'
   else
-    gem 'sinatra', :tag => "v#{ENV['SINATRA']}"
+    gem 'sinatra', tag: "v#{ENV['SINATRA']}"
   end
 end

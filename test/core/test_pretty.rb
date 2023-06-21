@@ -1,4 +1,4 @@
-require 'helper'
+require "helper"
 
 class TestSlimPretty < TestSlim
   def setup
@@ -11,7 +11,7 @@ class TestSlimPretty < TestSlim
   end
 
   def test_pretty
-    source = %q{
+    source = %q(
 doctype 5
 html
   head
@@ -36,9 +36,9 @@ html
       p Hello
         World!
       p= "dynamic text with\nnewline"
-}
+)
 
-    result = %q{<!DOCTYPE html>
+    result = '<!DOCTYPE html>
 <html>
   <head>
     <title>Hello World!</title><!--Meta tags
@@ -71,34 +71,34 @@ html
       </p>
     </div>
   </body>
-</html>}
+</html>'
 
     assert_html result, source
   end
 
   def test_partials
-    body = %q{body
-  == render content}
+    body = 'body
+  == render content'
 
-    content = %q{div
-  | content}
+    content = 'div
+  | content'
 
-    source = %q{html
-  == render body, scope: self, locals: { content: content }}
+    source = 'html
+  == render body, scope: self, locals: { content: content }'
 
-    result = %q{<html>
+    result = '<html>
   <body>
     <div>
       content
     </div>
   </body>
-</html>}
+</html>'
 
-    assert_html result, source, scope: self, locals: {body: body, content: content }
+    assert_html result, source, scope: self, locals: {body: body, content: content}
   end
 
   def test_correct_line_number
-    source = %q{
+    source = "
 html
   head
   body
@@ -107,48 +107,48 @@ html
     = ''
     = ''
     = unknown_ruby_method
-}
+"
 
-    assert_ruby_error NameError,"(__TEMPLATE__):9", source
+    assert_ruby_error NameError, "(__TEMPLATE__):9", source
   end
 
   def test_unindenting
-    source = %q{
+    source = '
 span before
 span = " middle "
 span after
-}
+'
 
-    result = %q{<span>before</span><span> middle </span><span>after</span>}
+    result = "<span>before</span><span> middle </span><span>after</span>"
 
     assert_html result, source
 
-    source = %q{
+    source = %q(
 html
   body == "  <div>\n    <a>link</a>\n  </div>"
-}
+)
 
-    result = %q{<html>
+    result = '<html>
   <body>
     <div>
       <a>link</a>
     </div>
   </body>
-</html>}
+</html>'
     assert_html result, source
   end
 
   def test_helper_unindent
-    source = %q{
+    source = '
 = define_macro :content
      div
       a link
 html
   body
    == call_macro :content
-}
+'
 
-    result = %q{
+    result = '
 
 <html>
   <body>
@@ -156,7 +156,7 @@ html
       <a>link</a>
     </div>
   </body>
-</html>}
+</html>'
 
     assert_html result, source
   end

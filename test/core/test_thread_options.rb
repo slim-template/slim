@@ -1,8 +1,8 @@
-require 'helper'
+require "helper"
 
 class TestSlimThreadOptions < TestSlim
   def test_thread_options
-    source = %q{p.test}
+    source = "p.test"
 
     assert_html '<p class="test"></p>', source
     assert_html "<p class='test'></p>", source, attr_quote: "'"

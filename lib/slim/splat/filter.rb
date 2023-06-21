@@ -1,17 +1,18 @@
 # frozen_string_literal: true
+
 module Slim
   module Splat
     # @api private
     class Filter < ::Slim::Filter
       define_options :merge_attrs, :attr_quote, :sort_attrs, :default_tag, :format, :disable_capture,
-                     hyphen_attrs: %w(data aria), use_html_safe: ''.respond_to?(:html_safe?),
-                     hyphen_underscore_attrs: false
+        hyphen_attrs: %w[data aria], use_html_safe: "".respond_to?(:html_safe?),
+        hyphen_underscore_attrs: false
 
       def call(exp)
         @splat_options = nil
         exp = compile(exp)
         if @splat_options
-          opts = options.to_hash.reject {|k,v| !Filter.options.valid_key?(k) }.inspect
+          opts = options.to_hash.reject { |k, v| !Filter.options.valid_key?(k) }.inspect
           [:multi, [:code, "#{@splat_options} = #{opts}"], exp]
         else
           exp
@@ -25,18 +26,18 @@ module Slim
       # @param [Array] content Temple expression
       # @return [Array] Compiled temple expression
       def on_html_tag(name, attrs, content = nil)
-        return super if name != '*'
+        return super if name != "*"
         builder, block = make_builder(attrs[2..-1])
         if content
           [:multi,
-           block,
-           [:slim, :output, false,
-            "#{builder}.build_tag #{empty_exp?(content) ? '{}' : 'do'}",
-            compile(content)]]
+            block,
+            [:slim, :output, false,
+              "#{builder}.build_tag #{empty_exp?(content) ? "{}" : "do"}",
+              compile(content)]]
         else
           [:multi,
-           block,
-           [:dynamic, "#{builder}.build_tag"]]
+            block,
+            [:dynamic, "#{builder}.build_tag"]]
         end
       end
 
@@ -45,11 +46,11 @@ module Slim
       # @param [Array] attrs Array of temple expressions
       # @return [Array] Compiled temple expression
       def on_html_attrs(*attrs)
-        if attrs.any? {|attr| splat?(attr) }
+        if attrs.any? { |attr| splat?(attr) }
           builder, block = make_builder(attrs)
           [:multi,
-           block,
-           [:dynamic, "#{builder}.build_attrs"]]
+            block,
+            [:dynamic, "#{builder}.build_attrs"]]
         else
           super
         end
@@ -77,8 +78,8 @@ module Slim
               else
                 tmp = unique_name
                 [:multi,
-                 [:capture, tmp, compile(attr[3])],
-                 [:code, "#{builder}.attr(#{attr[2].inspect}, #{tmp})"]]
+                  [:capture, tmp, compile(attr[3])],
+                  [:code, "#{builder}.attr(#{attr[2].inspect}, #{tmp})"]]
               end
             elsif attr[0] == :slim && attr[1] == :splat
               [:code, "#{builder}.splat_attrs((#{attr[2]}))"]
@@ -86,7 +87,7 @@ module Slim
               attr
             end
         end
-        return builder, result
+        [builder, result]
       end
     end
   end
