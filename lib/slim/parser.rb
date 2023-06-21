@@ -70,9 +70,9 @@ module Slim
           @additional_attrs[k] = v[:additional_attrs]
         end
       end
-      keys = Regexp.union @attr_shortcut.keys.sort_by {|k| -k.size }
+      keys = Regexp.union @attr_shortcut.keys.sort_by! { |k| -k.size }
       @attr_shortcut_re = /\A(#{keys}+)((?:\p{Word}|-|\/\d+|:(\w|-)+)*)/
-      keys = Regexp.union @tag_shortcut.keys.sort_by {|k| -k.size }
+      keys = Regexp.union @tag_shortcut.keys.sort_by! { |k| -k.size }
       @tag_re = /\A(?:#{keys}|\*(?=[^\s]+)|(\p{Word}(?:\p{Word}|:|-)*\p{Word}|\p{Word}+))/
       keys = Regexp.escape @code_attr_delims.keys.join
       @code_attr_delims_re = /\A[#{keys}]/
