@@ -93,7 +93,7 @@ module Slim
         if Hash === value
           if @options[:hyphen_underscore_attrs]
             value.each do |n, v|
-              hyphen_attr("#{name}-#{n.to_s.gsub('_', '-')}", escape, v)
+              hyphen_attr("#{name}-#{n.to_s.tr('_', '-')}", escape, v)
             end
           else
             value.each do |n, v|
