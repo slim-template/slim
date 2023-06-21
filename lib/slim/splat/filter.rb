@@ -11,7 +11,7 @@ module Slim
         @splat_options = nil
         exp = compile(exp)
         if @splat_options
-          opts = options.to_hash.reject {|k,v| !Filter.options.valid_key?(k) }.inspect
+          opts = options.to_hash.reject { |k, v| !Filter.options.valid_key?(k) }.inspect
           [:multi, [:code, "#{@splat_options} = #{opts}"], exp]
         else
           exp
@@ -45,7 +45,7 @@ module Slim
       # @param [Array] attrs Array of temple expressions
       # @return [Array] Compiled temple expression
       def on_html_attrs(*attrs)
-        if attrs.any? {|attr| splat?(attr) }
+        if attrs.any? { |attr| splat?(attr) }
           builder, block = make_builder(attrs)
           [:multi,
            block,
@@ -86,7 +86,7 @@ module Slim
               attr
             end
         end
-        return builder, result
+        [builder, result]
       end
     end
   end

@@ -9,7 +9,7 @@ module Slim
     # @param [Array] attrs Array of temple expressions
     # @return [Array] Compiled temple expression
     def on_html_attrs(*attrs)
-      [:multi, *attrs.map {|a| compile(a) }]
+      [:multi, *attrs.map { |a| compile(a) }]
     end
 
     # Handle attribute expression `[:html, :attr, name, value]`

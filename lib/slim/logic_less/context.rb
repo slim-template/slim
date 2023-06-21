@@ -105,11 +105,9 @@ module Slim
         end
 
         def instance_variable?(name)
-          begin
-            @dict.instance_variable_defined?(name)
-          rescue NameError
-            false
-          end
+          @dict.instance_variable_defined?(name)
+        rescue NameError
+          false
         end
       end
 
