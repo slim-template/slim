@@ -33,8 +33,8 @@ Slim は 不可解にならない程度に view の構文を本質的な部品�
 * ソース: <https://github.com/slim-template/slim>
 * バグ:   <https://github.com/slim-template/slim/issues>
 * API ドキュメント:
-    * 最新の Gem: <https://rubydoc.info/gems/slim/frames> <https://www.omniref.com/ruby/gems/slim>
-    * GitHub master: <https://rubydoc.info/github/slim-template/slim/master/frames> <https://www.omniref.com/github/slim-template/slim>
+    * 最新の Gem: <https://rubydoc.info/gems/slim/frames>
+    * GitHub master: <https://rubydoc.info/github/slim-template/slim/master/frames>
 
 ## イントロダクション
 
