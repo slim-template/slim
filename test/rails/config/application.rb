@@ -5,7 +5,7 @@ require 'action_controller/railtie'
 require 'action_view/railtie'
 #require 'active_record/railtie'
 #require 'action_mailer/railtie'
-require 'sprockets/railtie'
+#require 'sprockets/railtie'
 require 'slim'
 
 module Dummy

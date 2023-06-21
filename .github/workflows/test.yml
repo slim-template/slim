@@ -49,3 +49,6 @@ jobs:
       - run: bundle install && bundle exec rake test:rails
         env:
           RAILS: 6.1.7
+      - run: bundle install && bundle exec rake test:rails
+        env:
+          RAILS: 7.0.5
