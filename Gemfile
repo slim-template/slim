@@ -6,6 +6,7 @@ gem 'test-unit', '~> 3.5'
 gem 'minitest', '~> 5.15'
 gem 'rake', '~> 13.0'
 gem 'kramdown', '~> 2.4'
+gem 'standard', '~> 1.29'
 
 if ENV['TEMPLE'] && ENV['TEMPLE'] != 'master'
   gem 'temple', "= #{ENV['TEMPLE']}"
