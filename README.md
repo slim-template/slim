@@ -32,7 +32,6 @@ A short list of the features...
 * Homepage: <https://slim-template.github.io>
 * Source: <https://github.com/slim-template/slim>
 * Bugs:   <https://github.com/slim-template/slim/issues>
-* List:   <https://groups.google.com/group/slim-template>
 * API documentation:
     * Latest Gem: <https://rubydoc.info/gems/slim/frames> <https://www.omniref.com/ruby/gems/slim>
     * GitHub master: <https://rubydoc.info/github/slim-template/slim/master/frames> <https://www.omniref.com/github/slim-template/slim>
@@ -1267,10 +1266,6 @@ Slim is released under the [MIT license](http://www.opensource.org/licenses/MIT)
 If you want to support this project please visit the GitHub sponsors page.
 
 [![GitHub Sponsors](https://img.shields.io/github/sponsors/slim-template)](https://github.com/sponsors/slim-template)
-
-## Discuss
-
-* [Google Group](http://groups.google.com/group/slim-template)
 
 ## Related projects
 

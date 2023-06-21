@@ -32,7 +32,6 @@ Slim は 不可解にならない程度に view の構文を本質的な部品�
 * ホームページ: <https://slim-template.github.io>
 * ソース: <https://github.com/slim-template/slim>
 * バグ:   <https://github.com/slim-template/slim/issues>
-* リスト:   <https://groups.google.com/group/slim-template>
 * API ドキュメント:
     * 最新の Gem: <https://rubydoc.info/gems/slim/frames> <https://www.omniref.com/ruby/gems/slim>
     * GitHub master: <https://rubydoc.info/github/slim-template/slim/master/frames> <https://www.omniref.com/github/slim-template/slim>
@@ -1231,10 +1230,6 @@ Slim は [MIT license](http://www.opensource.org/licenses/MIT) に基づいて�
 このプロジェクトをサポートしたい場合, GitHub sponsors のページを見てください。
 
 [![GitHub Sponsors](https://img.shields.io/github/sponsors/slim-template)](https://github.com/sponsors/slim-template)
-
-## 議論
-
-* [Google Group](http://groups.google.com/group/slim-template)
 
 ## 関連プロジェクト
 
