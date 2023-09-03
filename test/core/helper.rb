@@ -62,16 +62,8 @@ class TestSlim < Minitest::Test
   end
 
   def assert_backtrace(ex, from)
-    if defined?(RUBY_ENGINE) && RUBY_ENGINE == 'rbx'
-      # HACK: Rubinius stack trace sometimes has one entry more
-      if ex.backtrace[0] !~ /^#{Regexp.escape from}/
-        ex.backtrace[1] =~ /([^\s]+:\d+)/
-        assert_equal from, $1
-      end
-    else
-      ex.backtrace[0] =~ /([^\s]+:\d+)/
-      assert_equal from, $1
-    end
+    ex.backtrace[0] =~ /([^\s]+:\d+)/
+    assert_equal from, $1
   end
 
   def assert_ruby_syntax_error(from, source, options = {})
