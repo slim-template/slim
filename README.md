@@ -47,7 +47,7 @@ Slim's core syntax is guided by one thought: "What's the minimum required to mak
 
 As more people have contributed to Slim, there have been syntax additions influenced from their use of [Haml](https://github.com/haml/haml) and [Jade](https://github.com/visionmedia/jade).  The Slim team is open to these additions because we know beauty is in the eye of the beholder.
 
-Slim uses [Temple](https://github.com/judofyr/temple) for parsing/compilation and is also integrated into [Tilt](https://github.com/rtomayko/tilt), so it can be used together with [Sinatra](https://github.com/sinatra/sinatra) or plain [Rack](https://github.com/rack/rack).
+Slim uses [Temple](https://github.com/judofyr/temple) for parsing/compilation and is also integrated into [Tilt](https://github.com/jeremyevans/tilt), so it can be used together with [Sinatra](https://github.com/sinatra/sinatra) or plain [Rack](https://github.com/rack/rack).
 
 The architecture of Temple is very flexible and allows the extension of the parsing and compilation process without monkey-patching. This is used
 by the logic less plugin and the translator plugin which provides I18n. In logic-less mode you can use Slim if you like the Slim syntax to build your HTML but don't want to write Ruby in your templates.
@@ -877,7 +877,7 @@ body
 
 ## Embedded engines (Markdown, ...)
 
-Thanks to [Tilt](https://github.com/rtomayko/tilt), Slim has extensive support for embedding other template engines.
+Thanks to [Tilt](https://github.com/jeremyevans/tilt), Slim has extensive support for embedding other template engines.
 
 Examples:
 
@@ -1055,7 +1055,7 @@ Slim currently provides plugins for logic less mode, includes and I18n. See the 
 
 ### Tilt
 
-Slim uses [Tilt](https://github.com/rtomayko/tilt) to compile the generated code. If you want to use the Slim template directly, you can use the Tilt interface.
+Slim uses [Tilt](https://github.com/jeremyevans/tilt) to compile the generated code. If you want to use the Slim template directly, you can use the Tilt interface.
 
 ~~~ ruby
 Tilt.new['template.slim'].render(scope)

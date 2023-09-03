@@ -47,7 +47,7 @@ Slim の核となる構文は1つの考えによって導かれています: "�
 
 多くの人々の Slim への貢献によって, 彼らが使う [Haml](https://github.com/haml/haml) や [Jade](https://github.com/visionmedia/jade) の影響を受け構文の追加が行われています。 Slim の開発チームは美は見る人の目の中にあることを分っているので、こういった追加にオープンです。
 
-Slim は 構文解析/コンパイルに [Temple](https://github.com/judofyr/temple) を使い [Tilt](https://github.com/rtomayko/tilt) に組み込まれます。これにより [Sinatra](https://github.com/sinatra/sinatra) やプレーンな [Rack](https://github.com/rack/rack) とも一緒に使えます。
+Slim は 構文解析/コンパイルに [Temple](https://github.com/judofyr/temple) を使い [Tilt](https://github.com/jeremyevans/tilt) に組み込まれます。これにより [Sinatra](https://github.com/sinatra/sinatra) やプレーンな [Rack](https://github.com/rack/rack) とも一緒に使えます。
 
 Temple のアーキテクチャはとても柔軟で, モンキーパッチなしで構文解析とコンパイルのプロセスの拡張が可能です。これはロジックレスのプラグインや I18n が提供する翻訳プラグインに
 使用されます。ロジックレスモードでは HTML をビルドするために Slim の構文を使いたいが, テンプレートの中で Ruby を書きたくない場合にも Slim を使うことができます。
@@ -842,7 +842,7 @@ body
 
 ## 埋め込みエンジン (Markdown, ...)
 
-[Tilt](https://github.com/rtomayko/tilt)のおかげで, Slim は他のテンプレートエンジンの埋め込みに見事に対応しています。
+[Tilt](https://github.com/jeremyevans/tilt)のおかげで, Slim は他のテンプレートエンジンの埋め込みに見事に対応しています。
 
 例:
 
@@ -905,7 +905,7 @@ scss class="myClass":
 ## Slim の設定
 
 Slim とその基礎となる [Temple](https://github.com/judofyr/temple) は非常に柔軟に設定可能です。
-Slim を設定する方法はコンパイル機構に少し依存します。(Rails や [Tilt](https://github.com/rtomayko/tilt))。デフォルトオプションの設定は `Slim::Engine` クラスでいつでも可能です。Rails の 環境設定ファイルで設定可能です。例えば, config/environments/developers.rb で設定したいとします:
+Slim を設定する方法はコンパイル機構に少し依存します。(Rails や [Tilt](https://github.com/jeremyevans/tilt))。デフォルトオプションの設定は `Slim::Engine` クラスでいつでも可能です。Rails の 環境設定ファイルで設定可能です。例えば, config/environments/developers.rb で設定したいとします:
 
 ### デフォルトオプション
 
@@ -1020,7 +1020,7 @@ Slim はロジックレスモードと I18n, インクルードプラグイン�
 
 ### Tilt
 
-Slim は生成されたコードをコンパイルするために [Tilt](https://github.com/rtomayko/tilt) を使用します。Slim テンプレートを直接使いたい場合, Tilt インターフェイスが使用できます。
+Slim は生成されたコードをコンパイルするために [Tilt](https://github.com/jeremyevans/tilt) を使用します。Slim テンプレートを直接使いたい場合, Tilt インターフェイスが使用できます。
 
 ~~~ ruby
 Tilt.new['template.slim'].render(scope)
