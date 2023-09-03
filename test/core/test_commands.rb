@@ -73,23 +73,19 @@ class TestSlimCommands < Minitest::Test
     end
   end
 
-  # We cannot run these two on Travis, because we can't install libyaml.
-  # See https://github.com/slim-template/slim/issues/576
-  if ENV['TRAVIS'] && RUBY_ENGINE != 'rbx'
-    def test_locals_json
-      data = '{"name":"from slim"}'
-      prepare_common_test DYNAMIC_TEMPLATE, '--locals', data do |out, err|
-        assert err.empty?
-        assert_equal "<p>Hello from slim!</p>\n", out
-      end
+  def test_locals_json
+    data = '{"name":"from slim"}'
+    prepare_common_test DYNAMIC_TEMPLATE, '--locals', data do |out, err|
+      assert err.empty?
+      assert_equal "<p>Hello from slim!</p>\n", out
     end
+  end
 
-    def test_locals_yaml
-      data = "name: from slim"
-      prepare_common_test DYNAMIC_TEMPLATE, '--locals', data do |out, err|
-        assert err.empty?
-        assert_equal "<p>Hello from slim!</p>\n", out
-      end
+  def test_locals_yaml
+    data = "name: from slim"
+    prepare_common_test DYNAMIC_TEMPLATE, '--locals', data do |out, err|
+      assert err.empty?
+      assert_equal "<p>Hello from slim!</p>\n", out
     end
   end
 

@@ -41,7 +41,7 @@ A short list of the features...
 ### What is Slim?
 
 Slim is a fast, lightweight templating engine with support for __Rails 5 and later__. It has been heavily tested on all major ruby implementations. We use
-continuous integration (travis-ci).
+continuous integration (github actions).
 
 Slim's core syntax is guided by one thought: "What's the minimum required to make this work".
 
@@ -1221,16 +1221,12 @@ run the slow parsing benchmark which needs more time. You can also increase the 
 $ rake bench slow=1 iterations=1000
 ~~~
 
-We run the benchmarks for every commit on Travis-CI. Take a look at the newest benchmarking results: <http://travis-ci.org/slim-template/slim>
-
 ### Test suite and continuous integration
 
 Slim provides an extensive test-suite based on minitest. You can run the tests
 with 'rake test' and the rails integration tests with 'rake test:rails'.
 
 We are currently experimenting with human-readable literate tests which are written as markdown files: [TESTS.md](test/literate/TESTS.md)
-
-Travis-CI is used for continuous integration testing: <http://travis-ci.org/slim-template/slim>
 
 Slim is working well on all major Ruby implementations:
 
