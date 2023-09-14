@@ -34,7 +34,7 @@ A short list of the features...
 * Bugs:   <https://github.com/slim-template/slim/issues>
 * API documentation:
     * Latest Gem: <https://rubydoc.info/gems/slim/frames>
-    * GitHub master: <https://rubydoc.info/github/slim-template/slim/master/frames>
+    * GitHub main: <https://rubydoc.info/github/slim-template/slim/main/frames>
 
 ## Introduction
 
