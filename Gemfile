@@ -35,7 +35,7 @@ end
 if ENV['SINATRA']
   gem 'rack-test'
 
-  if ENV['SINATRA'] == 'master'
+  if ENV['SINATRA'] == 'main'
     gem 'sinatra', github: 'sinatra/sinatra'
   else
     gem 'sinatra', tag: "v#{ENV['SINATRA']}"

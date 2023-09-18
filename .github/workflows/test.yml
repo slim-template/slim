@@ -29,7 +29,13 @@ jobs:
           SINATRA: 2.2.4
       - run: bundle install && bundle exec rake test:sinatra
         env:
-          SINATRA: 3.0.5
+          SINATRA: 3.0.6
+      - run: bundle install && bundle exec rake test:sinatra
+        env:
+          SINATRA: 3.1.0
+      - run: bundle install && bundle exec rake test:sinatra
+        env:
+          SINATRA: main
   rails:
     runs-on: ubuntu-latest
     strategy:
