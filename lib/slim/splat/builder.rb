@@ -4,8 +4,9 @@ module Slim
   module Splat
     # @api private
     class Builder
-     # https://html.spec.whatwg.org/multipage/syntax.html#attributes-2
-     INVALID_ATTRIBUTE_NAME_REGEX = /[ \0"'>\/=]/
+      # https://html.spec.whatwg.org/multipage/syntax.html#attributes-2
+      INVALID_ATTRIBUTE_NAME_REGEX = /[ \0"'>\/=]/
+
       def initialize(options)
         @options = options
         @attrs = {}
@@ -18,7 +19,7 @@ module Slim
         elsif @options[:hyphen_attrs].include?(name) && Hash === value
           hyphen_attr(name, escape, value)
         elsif value != false && value != nil
-          attr(name, escape_html(value != true && escape, value))
+          attr(name, escape_html(escape, value))
         end
       end
 
@@ -101,12 +102,12 @@ module Slim
             end
           end
         else
-          attr(name, escape_html(value != true && escape, value))
+          attr(name, escape_html(escape, value))
         end
       end
 
       def escape_html(escape, value)
-        return value unless escape
+        return value if !escape || value == true
         @options[:use_html_safe] ? Temple::Utils.escape_html_safe(value) : Temple::Utils.escape_html(value)
       end
     end
