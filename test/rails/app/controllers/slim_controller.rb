@@ -32,6 +32,11 @@ class SlimController < ApplicationController
     end
   end
 
+  def variant
+    request.variant = :testvariant
+    render :normal
+  end
+
   def content_for
     @hello = "Hello Slim!"
   end

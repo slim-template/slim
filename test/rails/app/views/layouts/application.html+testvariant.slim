@@ -1,0 +1,10 @@
+doctype html
+
+html
+  head
+    title Variant
+    = csrf_meta_tag
+
+  body
+    = yield :page_heading
+    .content= yield

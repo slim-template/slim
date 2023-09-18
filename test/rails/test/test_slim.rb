@@ -9,6 +9,14 @@ class TestSlim < ActionDispatch::IntegrationTest
     assert_html "<h1>Hello Slim!</h1>"
   end
 
+  test "variant" do
+    get "/slim/variant"
+    assert_response :success
+    assert_template "slim/normal"
+    assert_template "layouts/application"
+    assert_equal @response.body, "<!DOCTYPE html><html><head><title>Variant</title></head><body><div class=\"content\"><h1>Hello Slim!</h1></div></body></html>"
+  end
+
   test "xml view" do
     get "/slim/xml"
     assert_response :success
