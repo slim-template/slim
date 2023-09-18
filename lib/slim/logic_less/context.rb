@@ -74,7 +74,7 @@ module Slim
               return @dict.instance_variable_get(var_name).call(&block) if instance_variable?(var_name)
             end
           end
-          @parent.lambda(name) if @parent
+          @parent.lambda(name, &block) if @parent
         end
 
         def [](name)

@@ -312,4 +312,19 @@ div
       'This is the menu'
     end
   end
+
+  def test_render_parent_lambda
+    source = %q{
+- list
+  == fn
+    p = string
+}
+
+    assert_html '<fn><p>str</p></fn><fn><p>str</p></fn><fn><p>str</p></fn>',
+                source, scope: {
+                  fn: ->(&block) { "<fn>#{block.call}</fn>" },
+                  list: [ "item1", "item2", "item3" ],
+                  string: "str"
+                }
+  end
 end
