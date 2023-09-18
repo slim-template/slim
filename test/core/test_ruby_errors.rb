@@ -106,6 +106,25 @@ ruby:
     assert_ruby_error NameError,"(__TEMPLATE__):4", source
   end
 
+  def test_embedded_ruby3
+    source = %q{
+h1 before
+ruby:
+  a = 1
+
+h1 between
+ruby:
+  b = a + 1
+
+  unknown_ruby_method
+
+  c = 3
+h1 third
+}
+
+    assert_ruby_error NameError,"(__TEMPLATE__):10", source
+  end
+
   def test_embedded_markdown
     source = %q{
 markdown:
