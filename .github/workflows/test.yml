@@ -48,6 +48,9 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.7
+      - run: bundle install && bundle exec rubocop
+        env:
+          RUBOCOP: yes
       - run: bundle install && bundle exec rake test:rails
         env:
           RAILS: 5.2.8
