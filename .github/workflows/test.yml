@@ -49,6 +49,7 @@ jobs:
         with:
           ruby-version: 2.7
       - run: bundle install && bundle exec rubocop
+        name: "Run RuboCop"
         env:
           RUBOCOP: yes
       - run: bundle install && bundle exec rake test:rails
