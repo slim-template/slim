@@ -49,26 +49,26 @@ jobs:
         with:
           ruby-version: 2.7
       - run: bundle install && bundle exec rake test:rails
-        name: "Rails 5.2.8"
+        name: "rake test:rails RAILS=5.2.8"
         env:
           RAILS: 5.2.8
       - run: bundle install && bundle exec rake test:rails
-        name: "Rails 6.0.6"
+        name: "rake test:rails RAILS=6.0.6"
         env:
           RAILS: 6.0.6
       - run: bundle install && bundle exec rake test:rails
-        name: "Rails 6.1.7"
+        name: "rake test:rails RAILS=6.1.7"
         env:
           RAILS: 6.1.7
       - run: bundle install && bundle exec rake test:rails
-        name: "Rails 7.0.7"
+        name: "rake test:rails RAILS=7.0.7"
         env:
           RAILS: 7.0.7
       - run: bundle install && bundle exec rake test:rails
-        name: "Rails 7.1.0"
+        name: "rake test:rails RAILS=7.1.0"
         env:
           RAILS: 7.1.0
       - run: bundle install && bundle exec rake test:rails
-        name: "Rails main"
+        name: "rake test:rails RAILS=main"
         env:
           RAILS: main
