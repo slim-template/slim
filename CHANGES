@@ -1,6 +1,8 @@
 Development
 
   * Fix logic less bug - #783
+  * Support Rails 7.1 - #936
+  * Fix splat arguments on Rails 7.1 - #942
 
 5.1.1 (2023-05-16)
 
