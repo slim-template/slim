@@ -35,12 +35,12 @@ module Slim
         end
         if @attrs[name]
           if delim = @options[:merge_attrs][name]
-            @attrs[name].concat(delim + value.to_s)
+            @attrs[name] += delim + value.to_s
           else
             raise("Multiple #{name} attributes specified")
           end
         else
-          @attrs[name] = value
+          @attrs[name] = value.to_s
         end
       end
 
