@@ -94,4 +94,9 @@ class TestSlim < ActionDispatch::IntegrationTest
     get "/slim/splat"
     assert_html "<div id=\"splat\"><splat>Hello</splat></div>"
   end
+
+  test "splat with delimiter" do
+    get "/slim/splat_with_delimiter"
+    assert_html "<div class=\"cute nice\">Hello</div>"
+  end
 end
