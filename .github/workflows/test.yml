@@ -23,16 +23,20 @@ jobs:
           ruby-version: ${{ matrix.ruby }}
       - run: bundle install && bundle exec rake test
       - run: bundle install && bundle exec rake test:sinatra
+        name: "rake test:rails SINATRA=2.2.4"
         env:
           SINATRA: 2.2.4
       - run: bundle install && bundle exec rake test:sinatra
+        name: "rake test:rails SINATRA=3.0.6"
         env:
           SINATRA: 3.0.6
       - run: bundle install && bundle exec rake test:sinatra
+        name: "rake test:rails SINATRA=3.1.0"
         if: ${{ matrix.ruby != '2.5' }}
         env:
           SINATRA: 3.1.0
       - run: bundle install && bundle exec rake test:sinatra
+        name: "rake test:rails SINATRA=main"
         if: ${{ matrix.ruby != '2.5' }}
         env:
           SINATRA: main
