@@ -41,3 +41,8 @@ if ENV['SINATRA']
     gem 'sinatra', tag: "v#{ENV['SINATRA']}"
   end
 end
+
+if ENV['RUBOCOP']
+  gem 'rubocop'
+  gem 'rubocop-rails'
+end
