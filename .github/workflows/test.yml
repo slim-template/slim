@@ -1,13 +1,11 @@
 name: test
 on:
   push:
-    branches:
-      - main
+    paths-ignore:
+      - '**.md'
   pull_request:
-    types:
-      - opened
-      - synchronize
-      - reopened
+    paths-ignore:
+      - '**.md'
   schedule:
     - cron: "0 15 * * 0"
 jobs:
