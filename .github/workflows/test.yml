@@ -40,7 +40,7 @@ jobs:
         if: ${{ matrix.ruby != '2.5' }}
         env:
           SINATRA: main
-  rails:
+  rails-5:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -54,6 +54,16 @@ jobs:
         name: "rake test:rails RAILS=5.2.8"
         env:
           RAILS: 5.2.8
+  rails-6:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7
       - run: bundle install && bundle exec rake test:rails
         name: "rake test:rails RAILS=6.0.6"
         env:
@@ -62,6 +72,16 @@ jobs:
         name: "rake test:rails RAILS=6.1.7"
         env:
           RAILS: 6.1.7
+  rails-7:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.0
       - run: bundle install && bundle exec rake test:rails
         name: "rake test:rails RAILS=7.0.7"
         env:
