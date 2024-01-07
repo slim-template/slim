@@ -21,26 +21,26 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
-      - run: bundle install && bundle exec rake test
-      - run: bundle install && bundle exec rake test:sinatra
+      - run: bundle update && bundle exec rake test
+      - run: bundle update && bundle exec rake test:sinatra
         name: "rake test:rails SINATRA=2.2.4"
         env:
           SINATRA: 2.2.4
-      - run: bundle install && bundle exec rake test:sinatra
+      - run: bundle update && bundle exec rake test:sinatra
         name: "rake test:rails SINATRA=3.0.6"
         env:
           SINATRA: 3.0.6
-      - run: bundle install && bundle exec rake test:sinatra
+      - run: bundle update && bundle exec rake test:sinatra
         name: "rake test:rails SINATRA=3.1.0"
         if: ${{ matrix.ruby != '2.5' }}
         env:
           SINATRA: 3.1.0
-      - run: bundle install && bundle exec rake test:sinatra
+      - run: bundle update && bundle exec rake test:sinatra
         name: "rake test:rails SINATRA=3.2.0"
         if: ${{ matrix.ruby != '2.5' }}
         env:
           SINATRA: 3.2.0
-      - run: bundle install && bundle exec rake test:sinatra
+      - run: bundle update && bundle exec rake test:sinatra
         name: "rake test:rails SINATRA=main"
         if: ${{ matrix.ruby != '2.5' }}
         env:
@@ -55,7 +55,7 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.7
-      - run: bundle install && bundle exec rake test:rails
+      - run: bundle update && bundle exec rake test:rails
         name: "rake test:rails RAILS=5.2.8"
         env:
           RAILS: 5.2.8
@@ -69,11 +69,11 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.7
-      - run: bundle install && bundle exec rake test:rails
+      - run: bundle update && bundle exec rake test:rails
         name: "rake test:rails RAILS=6.0.6"
         env:
           RAILS: 6.0.6
-      - run: bundle install && bundle exec rake test:rails
+      - run: bundle update && bundle exec rake test:rails
         name: "rake test:rails RAILS=6.1.7"
         env:
           RAILS: 6.1.7
@@ -87,15 +87,15 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 3.0
-      - run: bundle install && bundle exec rake test:rails
+      - run: bundle update && bundle exec rake test:rails
         name: "rake test:rails RAILS=7.0.7"
         env:
           RAILS: 7.0.8
-      - run: bundle install && bundle exec rake test:rails
+      - run: bundle update && bundle exec rake test:rails
         name: "rake test:rails RAILS=7.1.0"
         env:
           RAILS: 7.1.2
-      - run: bundle install && bundle exec rake test:rails
+      - run: bundle update && bundle exec rake test:rails
         name: "rake test:rails RAILS=main"
         env:
           RAILS: main
