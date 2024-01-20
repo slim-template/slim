@@ -92,7 +92,7 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.0
+          ruby-version: 3.3
       - run: bundle update && bundle exec rake test:rails
         name: "rake test:rails RAILS=7.0.8"
         env:
