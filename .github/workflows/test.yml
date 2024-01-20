@@ -23,26 +23,32 @@ jobs:
           ruby-version: ${{ matrix.ruby }}
       - run: bundle update && bundle exec rake test
       - run: bundle update && bundle exec rake test:sinatra
-        name: "rake test:rails SINATRA=2.2.4"
+        name: "rake test:sinatra SINATRA=2.2.4"
         env:
           SINATRA: 2.2.4
       - run: bundle update && bundle exec rake test:sinatra
-        name: "rake test:rails SINATRA=3.0.6"
+        name: "rake test:sinatra SINATRA=3.0.6"
+        if: ${{ matrix.ruby != '2.5' }}
         env:
           SINATRA: 3.0.6
       - run: bundle update && bundle exec rake test:sinatra
-        name: "rake test:rails SINATRA=3.1.0"
+        name: "rake test:sinatra SINATRA=3.1.0"
         if: ${{ matrix.ruby != '2.5' }}
         env:
           SINATRA: 3.1.0
       - run: bundle update && bundle exec rake test:sinatra
-        name: "rake test:rails SINATRA=3.2.0"
+        name: "rake test:sinatra SINATRA=3.2.0"
         if: ${{ matrix.ruby != '2.5' }}
         env:
           SINATRA: 3.2.0
       - run: bundle update && bundle exec rake test:sinatra
-        name: "rake test:rails SINATRA=main"
-        if: ${{ matrix.ruby != '2.5' }}
+        name: "rake test:sinatra SINATRA=4.0.0"
+        if: ${{ matrix.ruby != '2.5' && matrix.ruby != '2.6' }}
+        env:
+          SINATRA: 4.0.0
+      - run: bundle update && bundle exec rake test:sinatra
+        name: "rake test:sinatra SINATRA=main"
+        if: ${{ matrix.ruby != '2.5' && matrix.ruby != '2.6' }}
         env:
           SINATRA: main
   rails-5:
@@ -88,13 +94,13 @@ jobs:
         with:
           ruby-version: 3.0
       - run: bundle update && bundle exec rake test:rails
-        name: "rake test:rails RAILS=7.0.7"
+        name: "rake test:rails RAILS=7.0.8"
         env:
           RAILS: 7.0.8
       - run: bundle update && bundle exec rake test:rails
-        name: "rake test:rails RAILS=7.1.0"
+        name: "rake test:rails RAILS=7.1.3"
         env:
-          RAILS: 7.1.2
+          RAILS: 7.1.3
       - run: bundle update && bundle exec rake test:rails
         name: "rake test:rails RAILS=main"
         env:

@@ -38,6 +38,6 @@ if ENV['SINATRA']
   if ENV['SINATRA'] == 'main'
     gem 'sinatra', github: 'sinatra/sinatra'
   else
-    gem 'sinatra', tag: "v#{ENV['SINATRA']}"
+    gem 'sinatra', "= #{ENV['SINATRA']}"
   end
 end
