@@ -9,8 +9,18 @@ Gem::Specification.new do |s|
   s.email             = ['mail@daniel-mendler.de', 'andy@stonean.com', 'ifredwu@gmail.com']
   s.summary           = 'Slim is a template language.'
   s.description       = 'Slim is a template language whose goal is reduce the syntax to the essential parts without becoming cryptic.'
-  s.homepage          = 'http://github.com/slim-template/slim/'
+  s.homepage          = 'https://slim-template.github.io/'
   s.license           = 'MIT'
+
+  s.metadata = {
+    "bug_tracker_uri"   => "https://github.com/slim-template/slim/issues",
+    "changelog_uri"     => "https://github.com/slim-template/slim/blob/main/CHANGES",
+    "documentation_uri" => "https://rubydoc.info/gems/slim/frames",
+    "homepage_uri"      => "https://slim-template.github.io/",
+    "source_code_uri"   => "https://github.com/slim-template/slim",
+    "wiki_uri"          => "https://github.com/slim-template/slim/wiki",
+    "funding_uri"       => "https://github.com/sponsors/slim-template"
+  }
 
   s.files             = `git ls-files`.split("\n")
   s.executables       = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
