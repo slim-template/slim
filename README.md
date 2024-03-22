@@ -41,7 +41,7 @@ A short list of the features...
 ### What is Slim?
 
 Slim is a fast, lightweight templating engine with support for __Rails 5 and later__. It has been heavily tested on all major ruby implementations. We use
-continuous integration (github actions).
+continuous integration (GitHub actions).
 
 Slim's core syntax is guided by one thought: "What's the minimum required to make this work".
 
@@ -502,7 +502,7 @@ You can also break ruby attributes with backslash `\` or trailing `,` as describ
 #### Boolean attributes
 
 The attribute values `true`, `false` and `nil` are interpreted
-as booleans. If you use the attribute wrapper you can omit the attribute assigment.
+as booleans. If you use the attribute wrapper you can omit the attribute assignment.
 
 ~~~ slim
 input type="text" disabled="disabled"
@@ -696,7 +696,7 @@ which renders to
 ~~~ html
 <script data-binding="products" type="text/javascript">
 [{"name": "product1", "price": "$100"},
- {"name": "prodcut2", "price": "$200"}]
+ {"name": "product2", "price": "$200"}]
 </script>
 ~~~
 
@@ -1114,11 +1114,11 @@ There are two ways to resolve it:
 * Set `splat_prefix` to any custom value, double asterisk, for example: `splat_prefix: '**'`. Now structural directives should work as expected. Remember that now splat attributes should be written with new custom prefix before them.
 * Use alternative directive syntax without asterisk.
 
-#### Attribute delimeters
+#### Attribute delimiters
 
 Angular and slim both uses brackets in their syntax. So there are also two ways:
 * Use alternative syntax for binding (`bind-...` and so on)
-* Limit attribute delimeters to curly braces only:
+* Limit attribute delimiters to curly braces only:
 ```
 code_attr_delims: {
  '{' => '}',
@@ -1201,7 +1201,7 @@ There are plugins for various text editors (including the most important ones - 
 
 ### Template Converters (HAML, ERB, ...)
 
-* Slim can be converted to ERB using `slimrb` or `Slim::ERBConverter' which are both included in the Slim gem
+* Slim can be converted to ERB using `slimrb` or `Slim::ERBConverter` which are both included in the Slim gem
 * [Haml2Slim converter](https://github.com/slim-template/haml2slim)
 * [ERB2Slim, HTML2Slim converter](https://github.com/slim-template/html2slim)
 
