@@ -1259,9 +1259,14 @@ Slim is released under the [MIT license](http://www.opensource.org/licenses/MIT)
 
 ## Donations and sponsoring
 
-If you want to support this project please visit the GitHub sponsors page.
+This project relies on sponsoring for its continued maintenance. If you want to
+support the project, please visit the GitHub sponsors page.
 
 [![GitHub Sponsors](https://img.shields.io/github/sponsors/slim-template)](https://github.com/sponsors/slim-template)
+
+Premium sponsors:
+
+[Hakuna AG](https://github.com/hakuna)
 
 ## Related projects
 
