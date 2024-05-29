@@ -566,7 +566,7 @@ div class="first second third"
 
 ~~~ slim
 ruby:
-  def a_unless_current
+  def self.a_unless_current
     @page_current ? {tag: 'span'} : {tag: 'a', href: 'https://slim-template.github.io/'}
   end
 - @page_current = true
