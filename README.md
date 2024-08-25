@@ -1214,12 +1214,7 @@ There are plugins for various text editors (including the most important ones - 
    But we would be happy if you chose Slim also for any other reason, we assure
    you performance will not be an obstacle.*
 
-Run the benchmarks with `rake bench`. You can add the option `slow` to
-run the slow parsing benchmark which needs more time. You can also increase the number of iterations.
-
-~~~
-$ rake bench slow=1 iterations=1000
-~~~
+For up-to-date benchmarks, please refer to our dedicated [Template engine benchmarks](https://github.com/slim-template/benchmarks) repository.
 
 ### Test suite and continuous integration
 
