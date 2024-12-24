@@ -68,6 +68,10 @@ module Slim
           end
       end
 
+      opts.on('--cgi', 'Add HTTP headers to output for CGI') do
+        @options[:cgi] = true
+      end
+
       opts.on_tail('-h', '--help', 'Show this message') do
         puts opts
         exit
@@ -100,6 +104,13 @@ module Slim
           ERBConverter.new(file: @options[:file]).call(@options[:input].read)
         elsif @options[:compile]
           Engine.new(file: @options[:file]).call(@options[:input].read)
+        elsif @options[:cgi]
+          require 'cgi'
+          cgi = CGI.new
+          locals[:cgi] = cgi
+          cgi.out("text/html") do
+            Template.new(@options[:file]) { @options[:input].read }.render(nil, locals)
+          end
         else
           Template.new(@options[:file]) { @options[:input].read }.render(nil, locals)
         end
