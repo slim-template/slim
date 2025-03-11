@@ -902,7 +902,6 @@ Supported engines:
 | css: | none | Shortcut | Shortcut to embed css code and wrap in style tag |
 | sass: | sass-embedded or sassc or sass | Compile time | Embed sass code and wrap in style tag |
 | scss: | sass-embedded or sassc or sass | Compile time | Embed scss code and wrap in style tag |
-| less: | less | Compile time | Embed less css code and wrap in style tag |
 | coffee: | coffee-script | Compile time | Compile coffee script code and wrap in script tag |
 | markdown: | redcarpet/rdiscount/kramdown | Compile time + Interpolation | Compile markdown code and interpolate #\{variables} in text |
 | textile: | redcloth | Compile time + Interpolation | Compile textile code and interpolate #\{variables} in text |
@@ -918,7 +917,6 @@ You can also specify HTML attributes for the following embedded engines:
 * Javascript
 * CSS
 * CoffeeScript
-* LESS
 * SASS
 * SCSS
 

@@ -866,7 +866,6 @@ p: markdown: Tag with **inline** markdown!
 | css: | なし | ショートカット | css コードを埋め込み、style タグで囲む |
 | sass: | sass-embedded または sassc または sass | コンパイル時 | sass コードを埋め込み、style タグで囲む |
 | scss: | sass-embedded または sassc または sass | コンパイル時 | scss コードを埋め込み、style タグで囲む |
-| less: | less | コンパイル時 | less コードを埋め込み、style タグで囲む |
 | coffee: | coffee-script | コンパイル時 | CoffeeScript をコンパイルし、 script タグで囲む |
 | markdown: | redcarpet/rdiscount/kramdown | コンパイル時 + 展開 | Markdown をコンパイルし、テキスト中の # \{variables} を展開 |
 | textile: | redcloth | コンパイル時 + 展開 | textile をコンパイルし、テキスト中の # \{variables} を展開 |
@@ -883,7 +882,6 @@ Slim::Embedded.options[:markdown] = {auto_ids: false}
 * Javascript
 * CSS
 * CoffeeScript
-* LESS
 * SASS
 * SCSS
 

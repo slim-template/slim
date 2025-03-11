@@ -234,7 +234,6 @@ module Slim
 
     # These engines are executed at compile time
     register :coffee,     JavaScriptEngine,                engine: TiltEngine
-    register :less,       TagEngine,          tag: :style, engine: TiltEngine
     register :sass,       TagEngine, :pretty, tag: :style, engine: SassEngine
     register :scss,       TagEngine, :pretty, tag: :style, engine: SassEngine
 
