@@ -1294,7 +1294,7 @@ Template Converters (HAML, ERB, ...):
 
 Language ports/Similar languages:
 
-* [Skimpy (Python 3 template engine inspired by Slim)](https://github.com/opensourceame/skimpy)
+* [Trim-Template (Python 3 template engine inspired by Slim)](https://github.com/opensourceame/trim-template)
 * [Sliq (Slim/Liquid integration)](https://github.com/slim-template/sliq)
 * [Slm (Slim port to Javascript)](https://github.com/slm-lang/slm)
 * [Coffee script plugin for Slim](https://github.com/yury/coffee-views)
