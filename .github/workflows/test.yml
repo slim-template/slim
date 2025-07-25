@@ -42,10 +42,10 @@ jobs:
         env:
           SINATRA: 3.2.0
       - run: bundle update && bundle exec rake test:sinatra
-        name: "rake test:sinatra SINATRA=4.0.0"
+        name: "rake test:sinatra SINATRA=4.0.1"
         if: ${{ matrix.ruby != '2.5' && matrix.ruby != '2.6' }}
         env:
-          SINATRA: 4.0.0
+          SINATRA: 4.0.1
       - run: bundle update && bundle exec rake test:sinatra
         name: "rake test:sinatra SINATRA=4.1.1"
         if: ${{ matrix.ruby != '2.5' && matrix.ruby != '2.6' }}
@@ -121,9 +121,9 @@ jobs:
         with:
           ruby-version: 3.4
       - run: bundle update && bundle exec rake test:rails
-        name: "rake test:rails RAILS=8.0.1"
+        name: "rake test:rails RAILS=8.0.2"
         env:
-          RAILS: 8.0.1
+          RAILS: 8.0.2
       - run: bundle update && bundle exec rake test:rails
         name: "rake test:rails RAILS=main"
         env:
