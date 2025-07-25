@@ -3,8 +3,8 @@ source 'https://rubygems.org/'
 gemspec
 
 gem 'minitest', '~> 5.15'
-gem 'rake', '~> 13.0'
-gem 'kramdown', '~> 2.4'
+gem 'rake', '~> 13.3'
+gem 'kramdown', '~> 2.5'
 
 if ENV['TEMPLE'] && ENV['TEMPLE'] != 'master'
   gem 'temple', "= #{ENV['TEMPLE']}"
