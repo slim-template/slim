@@ -1194,7 +1194,6 @@ There are plugins for various text editors (including the most important ones - 
 * [Textmate / Sublime Text](https://github.com/slim-template/ruby-slim.tmbundle)
 * [Espresso text editor](https://github.com/slim-template/Slim-Sugar)
 * [Coda](https://github.com/slim-template/Coda-2-Slim.mode)
-* [Atom](https://github.com/slim-template/language-slim)
 * VS Code ([Official marketplace](https://marketplace.visualstudio.com/items?itemName=sianglim.slim), [Open VSX registry](https://open-vsx.org/extension/sianglim/slim))
 
 ### Template Converters (HAML, ERB, ...)
@@ -1279,7 +1278,6 @@ Syntax highlighting:
 * [Textmate / Sublime Text](https://github.com/slim-template/ruby-slim.tmbundle)
 * [Espresso text editor](https://github.com/slim-template/Slim-Sugar)
 * [Coda](https://github.com/slim-template/Coda-2-Slim.mode)
-* [Atom](https://github.com/slim-template/language-slim)
 
 Static code analysis:
 

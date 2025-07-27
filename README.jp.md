@@ -1158,7 +1158,6 @@ markdown:
 * [Textmate / Sublime Text](https://github.com/slim-template/ruby-slim.tmbundle)
 * [Espresso text editor](https://github.com/slim-template/Slim-Sugar)
 * [Coda](https://github.com/slim-template/Coda-2-Slim.mode)
-* [Atom](https://github.com/slim-template/language-slim)
 
 ### テンプレート変換 (HAML, ERB, ...)
 
@@ -1242,7 +1241,6 @@ Slim は [MIT license](http://www.opensource.org/licenses/MIT) に基づいて�
 * [Textmate / Sublime Text](https://github.com/slim-template/ruby-slim.tmbundle)
 * [Espresso text editor](https://github.com/slim-template/Slim-Sugar)
 * [Coda](https://github.com/slim-template/Coda-2-Slim.mode)
-* [Atom](https://github.com/slim-template/language-slim)
 
 静的コード解析:
 
