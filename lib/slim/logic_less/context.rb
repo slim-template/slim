@@ -43,8 +43,8 @@ module Slim
       end
 
       def inverted_section(name)
-        value = scope[name]
-        yield if !value || (value.respond_to?(:empty?) && value.empty?)
+        dict = scope[name]
+        yield if !dict || (dict.respond_to?(:empty?) && dict.empty?)
       end
 
       def to_s
