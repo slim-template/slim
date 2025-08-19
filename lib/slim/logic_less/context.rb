@@ -27,7 +27,8 @@ module Slim
       end
 
       def section(name)
-        if dict = scope[name]
+        dict = scope[name]
+        if dict && !(dict.respond_to?(:empty?) && dict.empty?)
           if !dict.respond_to?(:has_key?) && dict.respond_to?(:each)
             new_scope do
               dict.each do |d|

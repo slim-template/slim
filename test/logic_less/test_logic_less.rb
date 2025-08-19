@@ -302,6 +302,17 @@ a href=output_number Link
     assert_html'<li class="previous"><a href="prev">Older</a></li><li class="next"><a href="next">Newer</a></li>', source, scope: {prev_page: 'prev', next_page: 'next'}
   end
 
+  def test_empty_conditional  
+    source = %q{
+- prev_page
+  li.previous
+    a href=prev_page Older
+- next_page
+  li.next
+    a href=next_page Newer}
+    assert_html'<li class="next"><a href="next">Newer</a></li>', source, scope: {prev_page: '', next_page: 'next'}
+  end
+
   def test_render_with_yield
     source = %q{
 div
