@@ -1256,10 +1256,6 @@ support the project, please visit the GitHub sponsors page.
 
 [![GitHub Sponsors](https://img.shields.io/github/sponsors/slim-template)](https://github.com/sponsors/slim-template)
 
-Premium sponsors:
-
-[Hakuna AG](https://github.com/hakuna)
-
 ## Related projects
 
 Template compilation framework:
