@@ -48,25 +48,7 @@ module Slim
         tag = @attrs.delete('tag').to_s
         tag = @options[:default_tag] if tag.empty?
         if block
-          # This is a bit of a hack to get a universal capturing.
-          #
-          # TODO: Add this as a helper somewhere to solve these capturing issues
-          # once and for all.
-          #
-          # If we have Slim capturing disabled and the scope defines the method `capture` (i.e. Rails)
-          # we use this method to capture the content.
-          #
-          # otherwise we just use normal Slim capturing (yield).
-          #
-          # See https://github.com/slim-template/slim/issues/591
-          #     https://github.com/slim-template/slim#helpers-capturing-and-includes
-          #
-          content =
-            if @options[:disable_capture] && (scope = block.binding.eval('self')).respond_to?(:capture)
-              scope.capture(&block)
-            else
-              yield
-            end
+          content = capture_block_content(&block)
           "<#{tag}#{build_attrs}>#{content}</#{tag}>"
         else
           "<#{tag}#{build_attrs} />"
@@ -89,6 +71,23 @@ module Slim
       end
 
       private
+
+      # Captures block content using the appropriate capturing mechanism.
+      #
+      # If we have Slim capturing disabled and the scope defines the method `capture` (i.e. Rails)
+      # we use this method to capture the content.
+      #
+      # Otherwise we just use normal Slim capturing (yield).
+      #
+      # See https://github.com/slim-template/slim/issues/591
+      #     https://github.com/slim-template/slim#helpers-capturing-and-includes
+      def capture_block_content(&block)
+        if @options[:disable_capture] && (scope = block.binding.eval('self')).respond_to?(:capture)
+          scope.capture(&block)
+        else
+          yield
+        end
+      end
 
       def hyphen_attr(name, escape, value)
         if Hash === value
