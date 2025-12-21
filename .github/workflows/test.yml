@@ -7,7 +7,7 @@ on:
     paths-ignore:
       - '**.md'
   schedule:
-    - cron: "0 15 * * 0"
+    - cron: "6 8 * * 0"
 jobs:
   basic:
     runs-on: ubuntu-latest
