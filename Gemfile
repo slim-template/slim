@@ -2,6 +2,8 @@ source 'https://rubygems.org/'
 
 gemspec
 
+gem 'logger', '~> 1.7'
+gem 'ostruct', '~> 0.6'
 gem 'minitest', '~> 5.15'
 gem 'rake', '~> 13.3'
 gem 'kramdown', '~> 2.5'
