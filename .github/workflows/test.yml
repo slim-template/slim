@@ -8,6 +8,8 @@ on:
       - '**.md'
   schedule:
     - cron: "6 8 * * 0"
+permissions:
+  contents: read
 jobs:
   basic:
     runs-on: ubuntu-latest
