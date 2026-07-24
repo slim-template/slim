@@ -867,6 +867,7 @@ p: markdown: Tag with **inline** markdown!
 | sass: | sass-embedded または sassc または sass | コンパイル時 | sass コードを埋め込み、style タグで囲む |
 | scss: | sass-embedded または sassc または sass | コンパイル時 | scss コードを埋め込み、style タグで囲む |
 | coffee: | coffee-script | コンパイル時 | CoffeeScript をコンパイルし、 script タグで囲む |
+| asciidoc: | asciidoctor | コンパイル時 + 展開 | AsciiDoc をコンパイルし、テキスト中の # \{variables} を展開 |
 | markdown: | redcarpet/rdiscount/kramdown | コンパイル時 + 展開 | Markdown をコンパイルし、テキスト中の # \{variables} を展開 |
 | textile: | redcloth | コンパイル時 + 展開 | textile をコンパイルし、テキスト中の # \{variables} を展開 |
 | rdoc: | rdoc | コンパイル時 + 展開 | RDoc をコンパイルし、テキスト中の # \{variables} を展開 |

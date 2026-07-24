@@ -903,6 +903,7 @@ Supported engines:
 | sass: | sass-embedded or sassc or sass | Compile time | Embed sass code and wrap in style tag |
 | scss: | sass-embedded or sassc or sass | Compile time | Embed scss code and wrap in style tag |
 | coffee: | coffee-script | Compile time | Compile coffee script code and wrap in script tag |
+| asciidoc: | asciidoctor | Compile time + Interpolation | Compile AsciiDoc code and interpolate #\{variables} in text |
 | markdown: | redcarpet/rdiscount/kramdown | Compile time + Interpolation | Compile markdown code and interpolate #\{variables} in text |
 | textile: | redcloth | Compile time + Interpolation | Compile textile code and interpolate #\{variables} in text |
 | rdoc: | rdoc | Compile time + Interpolation | Compile rdoc code and interpolate #\{variables} in text |

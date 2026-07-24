@@ -6,6 +6,7 @@ gem 'logger', '~> 1.7'
 gem 'ostruct', '~> 0.6'
 gem 'minitest', '~> 5.15'
 gem 'rake', '~> 13.3'
+gem 'asciidoctor', '~> 2.0'
 gem 'kramdown', '~> 2.5'
 
 if ENV['TEMPLE'] && ENV['TEMPLE'] != 'master'

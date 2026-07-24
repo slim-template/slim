@@ -26,6 +26,7 @@ jobs:
         with:
           ruby-version: ${{ matrix.ruby }}
       - run: bundle update && bundle exec rake test
+        name: "rake test"
       - run: bundle update && bundle exec rake test:sinatra
         name: "rake test:sinatra SINATRA=2.2.4"
         env:
