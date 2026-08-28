@@ -63,9 +63,10 @@ module Slim
       end
 
       def call(exp)
-        @text, @captures = ''.dup, []
+        @text, @captures, @captures_var = ''.dup, [], unique_name
         result = compile(exp)
 
+        result.insert(1, [:code, "#{@captures_var}=[]"]) unless @captures.empty?
         text = @translate.call(@text)
         while text =~ /%(\d+)/
           result << [:static, $`] << @captures[$1.to_i - 1]
@@ -80,9 +81,10 @@ module Slim
       end
 
       def on_slim_output(escape, code, content)
-        @captures << [:slim, :output, escape, code, content]
+        capture = "#{@captures_var}[#{@captures.size}]"
+        @captures << [:dynamic, capture]
         @text << "%#{@captures.size}"
-        [:multi]
+        [:capture, capture, [:slim, :output, escape, code, content]]
       end
     end
 
