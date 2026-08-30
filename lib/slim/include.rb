@@ -21,7 +21,13 @@ module Slim
       raise Temple::FilterError, "'#{name}' not found in #{options[:include_dirs].join(':')}" unless file
       content = File.read(file)
       if file =~ /\.slim\Z/i
-        Thread.current[:slim_include_engine].call(content)
+        previous_file = Thread.current[:slim_include_file]
+        Thread.current[:slim_include_file] = file
+        begin
+          Thread.current[:slim_include_engine].call(content)
+        ensure
+          Thread.current[:slim_include_file] = previous_file
+        end
       else
         [:slim, :interpolate, content]
       end
@@ -30,7 +36,8 @@ module Slim
     protected
 
     def find_file(name)
-      current_dir = File.dirname(File.expand_path(options[:file]))
+      current_file = Thread.current[:slim_include_file] || options[:file]
+      current_dir = File.dirname(File.expand_path(current_file))
       options[:include_dirs].map {|dir| File.expand_path(File.join(dir, name), current_dir) }.find {|file| File.file?(file) }
     end
   end
