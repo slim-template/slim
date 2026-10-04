@@ -79,7 +79,7 @@ class TestSlim < ActionDispatch::IntegrationTest
   end
 
   test "form_for" do
-    get "/entries/edit/1"
+    get "/entries/1/edit"
     assert_match %r{action="/entries"}, @response.body
     assert_match %r{<label><b>Name</b></label>}, @response.body
     assert_xpath '//input[@id="entry_name" and @name="entry[name]" and @type="text"]'

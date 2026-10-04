@@ -1,60 +1,17 @@
 Dummy::Application.routes.draw do
-  # The priority is based upon order of creation:
-  # first created -> highest priority.
-
   resources :entries
-
-  # Sample of regular route:
-  #   match 'products/:id' => 'catalog#view'
-  # Keep in mind you can assign values other than :controller and :action
-
-  # Sample of named route:
-  #   match 'products/:id/purchase' => 'catalog#purchase', as: :purchase
-  # This route can be invoked with purchase_url(id: product.id)
-
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
-
-  # Sample resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
-
-  # Sample resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
-
-  # Sample resource route with more complex sub-resources
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', on: :collection
-  #     end
-  #   end
-
-  # Sample resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
-
-  # You can have the root of your site routed with "root"
-  # just remember to delete public/index.html.
-  # root to: "welcome#index"
-
-  # See how all your routes lay out with "rake routes"
-
-  # This is a legacy wild controller route that's not recommended for RESTful applications.
-  # Note: This route will make all actions in every controller accessible via GET requests.
-  get ':controller(/:action(/:id(.:format)))'
+  get "/slim/normal", to: "slim#normal"
+  get "/slim/variant", to: "slim#variant"
+  get "/slim/xml", to: "slim#xml"
+  get "/slim/helper", to: "slim#helper"
+  get "/slim/erb", to: "slim#erb"
+  get "/slim/no_layout", to: "slim#no_layout"
+  get "/slim/variables", to: "slim#variables"
+  get "/slim/partial", to: "slim#partial"
+  get "/slim/integers", to: "slim#integers"
+  get "/slim/thread_options", to: "slim#thread_options"
+  get "/slim/content_for", to: "slim#content_for"
+  get "/slim/attributes", to: "slim#attributes"
+  get "/slim/splat", to: "slim#splat"
+  get "/slim/splat_with_delimiter", to: "slim#splat_with_delimiter"
 end
