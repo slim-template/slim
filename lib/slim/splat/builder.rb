@@ -14,7 +14,14 @@ module Slim
 
       def code_attr(name, escape, value)
         if delim = @options[:merge_attrs][name]
-          value = Array === value ? value.join(delim) : value.to_s
+          if Array === value
+            value = value.flatten
+            value.map!(&:to_s)
+            value.reject!(&:empty?)
+            value = value.join(delim)
+          else
+            value = value.to_s
+          end
           attr(name, escape_html(escape, value)) unless value.empty?
         elsif @options[:hyphen_attrs].include?(name) && Hash === value
           hyphen_attr(name, escape, value)
