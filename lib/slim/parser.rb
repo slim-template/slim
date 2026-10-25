@@ -44,8 +44,28 @@ module Slim
       end
     end
 
+    # Building the syntax regexps costs as much as parsing a small template,
+    # and Rails builds a new parser for every template: share them between
+    # parsers with the same syntax options.
+    SYNTAX_CACHE = {}
+    SYNTAX_IVARS = %i[@attr_list_delims @code_attr_delims @tab_re @tab @tag_shortcut @attr_shortcut
+                      @additional_attrs @attr_shortcut_re @tag_re @code_attr_delims_re @attr_list_delims_re
+                      @embedded_re @attr_name @quoted_attr_re @code_attr_re @splat_attrs_regexp].freeze
+
     def initialize(opts = {})
       super
+      cache_key = [options[:tabsize], options[:shortcut], options[:default_tag], options[:attr_list_delims],
+                   options[:code_attr_delims], options[:splat_prefix], Embedded.engines.keys]
+      syntax = SYNTAX_CACHE[cache_key] ||= begin
+        initialize_syntax
+        SYNTAX_IVARS.map {|name| [name, instance_variable_get(name)] }.freeze
+      end
+      syntax.each {|name, value| instance_variable_set(name, value) }
+    end
+
+    private
+
+    def initialize_syntax
       @attr_list_delims = options[:attr_list_delims]
       @code_attr_delims = options[:code_attr_delims]
       tabsize = options[:tabsize]
@@ -88,6 +108,8 @@ module Slim
       splat_regexp_source = '\A\s*' + splat_prefix + '(?=[^\s]+)'
       @splat_attrs_regexp = Regexp.new(splat_regexp_source)
     end
+
+    public
 
     # Compile string to Temple expression
     #
