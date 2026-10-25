@@ -99,6 +99,12 @@ h1#title This is my title
     assert_html '<div class="hello world" id="notice" role="test">Hello World from @env</div><section role="abc">Hello World from @env</section>', source, shortcut: {'#' => {attr: 'id'}, '.' => {attr: 'class'}, '@' => {tag: 'section', attr: 'role'}}
   end
 
+  def test_parsers_with_different_syntax_options_do_not_share_syntax
+    assert_html %q{<section class="hello"></section>}, ".hello", default_tag: "section"
+    assert_html %q{<div class="hello"></div>}, ".hello"
+    assert_html %q{<div role="hello"></div>}, ".hello", shortcut: {"." => {attr: "role"}}
+  end
+
   def test_render_with_custom_array_shortcut
     source = %q{
 #user@.admin Daniel
