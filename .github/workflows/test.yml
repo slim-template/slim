@@ -12,7 +12,7 @@ permissions:
   contents: read
 jobs:
   basic:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
@@ -67,7 +67,7 @@ jobs:
         env:
           SINATRA: main
   rails-5:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
     steps:
@@ -83,7 +83,7 @@ jobs:
         env:
           RAILS: 5.2.8
   rails-6:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
     steps:
@@ -103,7 +103,7 @@ jobs:
         env:
           RAILS: 6.1.7
   rails-7:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
     steps:
@@ -127,7 +127,7 @@ jobs:
         env:
           RAILS: 7.2.3
   rails-8:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
     steps:
