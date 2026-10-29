@@ -67,8 +67,8 @@ module Slim
         result = compile(exp)
 
         text = @translate.call(@text)
-        while text =~ /%(\d+)/
-          result << [:static, $`] << @captures[$1.to_i - 1]
+        while text =~ /%([1-9]\d*)/
+          result << [:static, $`] << @captures.fetch($1.to_i - 1) { [:static, $&] }
           text = $'
         end
         result << [:static, text]
@@ -96,7 +96,7 @@ module Slim
 
         if @captures_count > 0
           result.insert(1, [:code, "#{@captures_var}=[]"])
-          result << [:slim, :output, false, "#{options[:tr_fn]}(#{@text.inspect}).gsub(/%(\\d+)/) { #{@captures_var}[$1.to_i-1] }", [:multi]]
+          result << [:slim, :output, false, "#{options[:tr_fn]}(#{@text.inspect}).gsub(/%([1-9]\\d*)/) { #{@captures_var}.fetch($1.to_i-1) { $& } }", [:multi]]
         else
           result << [:slim, :output, false, "#{options[:tr_fn]}(#{@text.inspect})", [:multi]]
         end
