@@ -57,17 +57,17 @@ module Slim
 
       def build_attrs
         attrs = @options[:sort_attrs] ? @attrs.sort_by(&:first) : @attrs
-        attrs.map do |k, v|
-          if v == true
-            if @options[:format] == :xhtml
-              " #{k}=#{@options[:attr_quote]}#{@options[:attr_quote]}"
-            else
-              " #{k}"
-            end
-          else
-            " #{k}=#{@options[:attr_quote]}#{v}#{@options[:attr_quote]}"
+        quote = @options[:attr_quote].to_s
+        buffer = ''.dup
+        attrs.each do |k, v|
+          buffer << ' ' << k
+          if v != true
+            buffer << '=' << quote << v.to_s << quote
+          elsif @options[:format] == :xhtml
+            buffer << '=' << quote << quote
           end
-        end.join
+        end
+        buffer
       end
 
       private
