@@ -4,6 +4,14 @@ module Slim
   class CodeAttributes < Filter
     define_options :merge_attrs
 
+    # HTML5 boolean attributes that should receive special treatment
+    BOOLEAN_ATTRIBUTES = %w[
+      allowfullscreen async autofocus autoplay checked controls default
+      defer disabled formnovalidate hidden inert ismap itemscope loop
+      multiple muted nomodule novalidate open playsinline readonly
+      required reversed selected truespeed
+    ].freeze
+
     # Handle attributes expression `[:html, :attrs, *attrs]`
     #
     # @param [Array] attrs Array of temple expressions
@@ -18,7 +26,7 @@ module Slim
     # @param [Array] value Value expression
     # @return [Array] Compiled temple expression
     def on_html_attr(name, value)
-      if value[0] == :slim && value[1] == :attrvalue && !options[:merge_attrs][name]
+      if value[0] == :slim && value[1] == :attrvalue && !options[:merge_attrs][name] && BOOLEAN_ATTRIBUTES.include?(name)
         # We handle the attribute as a boolean attribute
         escape, code = value[2], value[3]
         case code
@@ -36,7 +44,7 @@ module Slim
              [:html, :attr, name, [:escape, escape, [:dynamic, tmp]]]]]]
         end
       else
-        # Attribute with merging
+        # Attribute with merging or regular attribute
         @attr = name
         super
       end
