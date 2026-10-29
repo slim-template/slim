@@ -9,6 +9,8 @@ Example:
     include partial
     include partial.txt
 
+Relative paths in an included Slim template are resolved from that template's directory, so nested includes can refer to sibling files.
+
 Enable the include plugin with
 
     require 'slim/include'

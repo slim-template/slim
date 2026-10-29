@@ -1,3 +1,7 @@
+Next
+
+  * Resolve nested relative includes from the including template
+
 5.2.2 (2026-07-24)
 
   * Remove legacy less engine - #963
