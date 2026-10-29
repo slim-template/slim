@@ -1095,8 +1095,13 @@ HTTP streaming is enabled by default if you use a Rails version which supports i
 performance. The rendering time in total will increase. If you want to disable it use:
 
 ~~~ ruby
-Slim::RailsTemplate.set_options streaming: false
+# config/initializers/slim.rb
+ActiveSupport.on_load(:action_view) do
+  Slim::RailsTemplate.set_options streaming: false
+end
 ~~~
+
+`Slim::RailsTemplate` is defined once Action View is loaded: setting its options outside an `on_load` hook raises `NameError`.
 
 ### Angular2
 
